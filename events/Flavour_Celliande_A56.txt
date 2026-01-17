@@ -1,0 +1,136 @@
+namespace = celliande
+
+#17.01.2026
+#AME IS EVIL SOMEONE NEEDS TO SAVE US FROM HER INFLUENCE
+#01.17.2026
+
+country_event = { #Looming Shadows
+	id = celliande.1
+	title = celliande.1.t
+	desc = celliande.1.d
+	picture = KOBOLD_HOARD_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.1.a
+		451 = {
+			add_permanent_claim = ROOT
+		}
+		add_country_modifier = {
+			name = celliande_muster_fleet
+			duration = 1825
+		}
+		hidden_effect = {
+			set_country_flag = got_celliande_looming_shadows
+		}
+	}
+}
+
+country_event = { #Ultimatum
+	id = celliande.2
+	title = celliande.2.t
+	desc = celliande.2.d
+	picture = KOBOLD_HOARD_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	major = yes
+	major_trigger = {
+		tag = A56
+	}
+	
+	option = {
+		name = celliande.2.a
+		hawkfields_area = {
+			add_core = A56
+		}
+		if = {
+			limit = {
+				A56 = {
+					alliance_with = A34
+				}
+			}
+			every_owned_province = {
+				limit = {
+					is_core = A34
+				}
+				cede_province = A34
+			}
+		}
+		hidden_effect = {
+			A56 = {
+				set_country_flag = celliande_ultimatum_rejected
+			}
+		}
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 0
+				has_any_disaster = yes
+			}
+		}
+	}
+	option = {
+		name = celliande.2.b
+		hawkfields_area = {
+			cede_province = A56
+			add_core = A56
+		}
+		if = {
+			limit = {
+				A56 = {
+					alliance_with = A34
+				}
+			}
+			every_owned_province = {
+				limit = {
+					is_core = A34
+				}
+				cede_province = A34
+			}
+		}
+		hidden_effect = {
+			A56 = {
+				country_event = {
+					id = celliande.3
+					days = 7
+				}
+			}
+		}
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 0.1
+				has_any_disaster = no
+			}
+		}
+	}
+}
+
+country_event = { #Tellum accord
+	id = celliande.3
+	title = celliande.3.t
+	desc = celliande.3.d
+	picture = KOBOLD_HOARD_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.3.a
+		vassalize = A86
+		add_country_modifier = {
+			name = celliande_tellum_modifier
+			duration = 3650
+		}
+		A86 = {
+			if = {
+				limit = { total_development = 50 }
+				add_liberty_desire = 30
+			}
+		}
+	}
+}
