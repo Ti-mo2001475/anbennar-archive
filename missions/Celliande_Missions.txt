@@ -196,7 +196,7 @@ celliande_2_missions = {
 		}
 
 		effect = {
-			A86 = {
+			A48 = {
 				country_event = {
 					id = celliande.2
 				}
@@ -232,18 +232,67 @@ celliande_2_missions = {
 		}
 
 		provinces_to_highlight = {
-
+			OR = {
+				AND = {
+					area = arannen_area
+					NOT = { owned_by = ROOT }
+				}
+				AND = {
+					area = eastborders_area
+					NOT = {
+						owned_by = ROOT
+						owned_by_subject_of = ROOT
+					}
+					is_city = yes
+				}
+				AND = {
+					province_id = 904
+					NOT = {
+						num_of_units_in_province = {
+							amount = 5
+							type = infantry
+							who = ROOT
+						}
+					}
+				}
+			}
 		}
 
 		trigger = {
 			arannen_area = {
 				owned_by = ROOT
-
+			}
+			904 = {
+				num_of_units_in_province = {
+					amount = 5
+					type = infantry
+					who = ROOT
+				}
+			}
+			eastborders_area = {
+				type = all
+				OR = {
+					owned_by = ROOT
+					owned_by_subject_of = ROOT
+					is_city = no
+				}
 			}
 		}
 
 		effect = {
-			
+			904 = {
+				add_devastation = 50
+				if = {
+					limit = { has_fort_building_trigger = yes }
+					remove_fortifications = yes
+				}
+			}
+			add_splendor = 200
+			add_country_modifier = {
+				name = celliande_spite_modifier
+				duration = -1
+			}
+			custom_tooltip = celliande_eagle_lion.tt
 		}
 	}
 	celliande_castellan_problems = {
@@ -254,18 +303,73 @@ celliande_2_missions = {
 		}
 
 		provinces_to_highlight = {
-
+			is_capital_of = U16
 		}
 
 		trigger = {
-			arannen_area = {
-				owned_by = ROOT
-
+			U16 = {
+				OR = {
+					alliance_with = ROOT
+					has_opinion_modifier = {
+						who = ROOT
+						modifier = scornfully_insulted
+					}
+					exists = no
+				}
 			}
+			has_dip_advisor = yes
 		}
 
 		effect = {
-			
+			complex_dynamic_effect = {
+				first_custom_tooltip = celliande_castellan_problems.tt1
+				first_limit = "
+					U16 = {
+						alliance_with = ROOT
+					}
+				"
+				first_effect = "
+					add_favors = {
+						who = U16
+						amount = 10
+					}
+					custom_tooltip = celliande_castellan_problems.tt
+					hidden_effect = {
+						U11 = {
+							every_owned_province = {
+								add_permanent_claim = A56
+							}
+						}
+					}
+				"
+				second_custom_tooltip = celliande_castellan_problems.tt2
+				second_limit = "
+					U16 = {
+						has_opinion_modifier = {
+							who = ROOT
+							modifier = scornfully_insulted
+						}
+					}
+				"
+				second_effect = "
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						target = U16
+						months = 360
+					}
+				"
+				third_custom_tooltip = celliande_castellan_problems.tt3
+				third_limit = "
+					U16 = {
+						exists = no
+					}
+				"
+				third_effect = "
+					ourdia_region = {
+						add_permanent_claim = ROOT
+					}
+				"
+			}
 		}
 	}
 	celliande_beyond_coast = {
@@ -281,14 +385,100 @@ celliande_2_missions = {
 		}
 
 		trigger = {
-			arannen_area = {
-				owned_by = ROOT
-
+			ourdia_region = {
+				type = all
+				OR = {
+					owned_by = ROOT
+					owned_by_subject_of = ROOT
+					owned_by = U16
+					owned_by_subject_of = U16
+				}
+			}
+			U11 = {
+				exists = no
+			}
+			F32 = {
+				OR = {
+					has_opinion_modifier = {
+						who = ROOT
+						modifier = scornfully_insulted
+					}
+					exists = no
+				}
+			}
+			U07 = {
+				OR = {
+					has_opinion_modifier = {
+						who = ROOT
+						modifier = scornfully_insulted
+					}
+					exists = no
+				}
+			}
+			451 = {
+				num_of_units_in_province = {
+					amount = 6
+					type = infantry
+					who = ROOT
+				}
 			}
 		}
 
 		effect = {
+			if = {
+				limit = { F32 = { exists = yes } }
+				add_casus_belli = {
+					type = cb_insult
+					target = F32
+					months = 360
+				}
+			}
+			if = {
+				limit = { U07 = { exists = yes } }
+				add_casus_belli = {
+					type = cb_insult
+					target = U07
+					months = 360
+				}
+			}
 			
+			complex_dynamic_effect = {
+				first_custom_tooltip = celliande_beyond_coast.tt1
+				first_limit = "
+					OR = {
+						445 = {
+							is_city = no
+						}
+						447 = {
+							is_city = no
+						}
+						448 = {
+							is_city = no
+						}
+					}
+				"
+				first_effect = "
+					451 = {
+						kill_units = {
+							who = owner
+							type = infantry
+							amount = 3
+						}
+					}
+					445 = {
+						add_siberian_construction = 400
+					}
+					447 = {
+						add_siberian_construction = 400
+					}
+					448 = {
+						add_siberian_construction = 400
+					}
+				"
+			}
+			flooded_coast_area = {
+				add_claim = ROOT
+			}
 		}
 	}
 	celliande_serondor_expedition = {

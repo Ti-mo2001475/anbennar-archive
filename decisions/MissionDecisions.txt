@@ -1,0 +1,39 @@
+
+country_decisions = {
+
+	celliande_rise_hero_dec = {
+		potential = { has_country_flag = celliande_rise_hero_unlocked }
+		major = yes
+		allow = {
+			if = {
+				limit = { has_country_flag = celliande_rise_hero_aran }
+				NOT = {
+					employed_advisor = {
+						name = "Aran sil Varlosen"
+					}
+				}
+			}
+			if = {
+				limit = { has_country_flag = celliande_rise_hero_bull }
+				NOT = {
+					has_leader = "Bull of Kwinteme"
+				}
+			}
+			if = {
+				limit = { has_country_flag = celliande_rise_hero_serondor }
+				NOT = {
+					has_leader = "Serondor sil Sorncell"
+				}
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = { NOT = { has_country_flag = celliande_rising_hero_menu_open } }
+				country_event = {
+					id = celliande.7
+				}
+			}
+		}
+	}
+}

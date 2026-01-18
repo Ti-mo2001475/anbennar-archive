@@ -134,3 +134,142 @@ country_event = { #Tellum accord
 		}
 	}
 }
+
+country_event = { #On trail of Hero 1
+	id = celliande.4
+	title = celliande.4.t
+	desc = celliande.4.d
+	picture = KOBOLD_HOARD_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.4.a
+		U16 = {
+			if = {
+				limit = {
+					OR = {
+						alliance_with = ROOT
+						is_subject_of = ROOT
+					}
+				}
+				add_historical_friend_mutual = { tag = ROOT }
+			}
+		}
+		hidden_effect = {
+			country_event = {
+				id = celliande.5
+				days = 365
+			}
+		}
+	}
+}
+
+country_event = { #On trail of Hero 2
+	id = celliande.5
+	title = celliande.5.t
+	desc = celliande.5.d
+	picture = KOBOLD_HOARD_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.5.a
+		add_country_modifier = {
+			name = celliande_wayward_order
+			duration = 9125
+		}
+		hidden_effect = {
+			country_event = {
+				id = celliande.5
+				days = 1095
+			}
+		}
+	}
+}
+
+country_event = { #On trail of Hero 3
+	id = celliande.6
+	title = celliande.6.t
+	desc = celliande.6.d
+	picture = KOBOLD_HOARD_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.6.a
+		define_admiral = {
+			shock = 2
+			fire = 3
+			manuever = 5
+			siege = 2
+		}
+		remove_country_modifier = celliande_wayward_order
+	}
+}
+
+country_event = { #Rising a Hero
+	id = celliande.7
+	title = celliande.7.t
+	desc = celliande.7.d
+	picture = KOBOLD_HOARD_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		set_country_flag = celliande_rising_hero_menu_open
+	}
+	
+	option = {
+		name = celliande.7.a
+		trigger = {
+			has_country_flag = celliande_rise_hero_aran
+		}
+		hire_advisor = {
+			name = "Aran sil Varlosen"
+			type = natural_scientist
+			skill = 2
+			culture = milcori
+			discount = yes
+		}
+	}
+	option = {
+		name = celliande.7.b
+		trigger = {
+			has_country_flag = celliande_rise_hero_bull
+		}
+		define_general = {
+			name = "Bull of Kwinteme"
+			shock = 6
+			fire = 0
+			manuever = 2
+			siege = 4
+			trait = siege_specialist_personality
+			female = yes
+		}
+	}
+	option = {
+		name = celliande.7.c
+		trigger = {
+			has_country_flag = celliande_rise_hero_serondor
+		}
+		define_admiral = {
+			name = "Serondor sil Sorncell"
+			shock = 3
+			fire = 2
+			manuever = 7
+			siege = 3
+			trait = inspirational_captain_personality
+		}
+	}
+	option = {
+		name = celliande.7.d
+		
+	}
+	after = {
+		clr_country_flag = celliande_rising_hero_menu_open
+	}
+}
