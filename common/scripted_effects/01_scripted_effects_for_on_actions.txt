@@ -7692,6 +7692,23 @@ on_province_culture_converted_effect = {
 		add_base_production = 1
 		set_province_flag = arm_converted_bonus
 	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = celliande_convert_wexara
+			}
+		}
+		if = {
+			limit = { OR = { culture = wexonard culture = arannese } }
+			add_province_modifier = {
+				name = celliande_revival
+				duration = -1
+			}
+		}
+		else = {
+			remove_province_modifier = celliande_revival
+		}
+	}
 }
 
 on_colony_finished_effect = {
@@ -14661,17 +14678,48 @@ on_province_owner_change_effect = {
 	}
 	if = {
 		limit = {
-			has_country_flag = celliande_ultimatum_rejected
-			hawkfields_area = {
-				owned_by = A56
+			owner = { is_or_was_tag = { tag = A56 } #All of Celliande stuff
+		}
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = celliande_ultimatum_rejected
+				}
+				hawkfields_area = {
+					owned_by = A56
+				}
+			}
+			owner = {
+				clr_country_flag = celliande_ultimatum_rejected
+				country_event = {
+					id = celliande.3
+					days = 7
+				}
 			}
 		}
-		clr_country_flag = celliande_ultimatum_rejected
-		country_event = {
-			id = celliande.3
-			days = 7
+		if = {
+			limit = { province_id = 919 } }
+			owner = {
+				set_country_flag = anb_on_action_tracking_exploit_dev_flag
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = celliande_convert_wexara
+				}
+				OR = {
+					culture = wexonard
+					culture = arannese
+				}
+			}
+			add_province_modifier = {
+				name = celliande_revival
+				duration = -1
+			}
 		}
 	}
+	
 } #on_province_owner_change_effect bottom
 
 on_primary_culture_changed_effect = {
