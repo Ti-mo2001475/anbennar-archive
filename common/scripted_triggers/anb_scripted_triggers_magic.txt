@@ -3190,7 +3190,7 @@ necromancy_2_speak_with_dead_trigger = { # Speak With Dead
 	else = { is_overall_necromancy_level_2_minimum = yes }
 	[[player] has_mana_to_cast_spell = { school = necromancy level = 2 id = speak_with_dead } ]
 	is_lesser_in_union = no
-	NOT = { has_ruler_modifier = necromancy_2_speak_with_dead_mod }
+	NOT = { has_ruler_modifier = necromancy_2_speak_with_dead_mod has_ruler_modifier = necromancy_2_speak_with_dead_mod_01 }
 	OR = {
 		NOT = { adm = 5 }
 		NOT = { dip = 5 }
@@ -3211,7 +3211,7 @@ necromancy_2_steal_vitality_trigger = { # Steal Vitality
 	has_not_banned_necromancy = yes
 	is_overall_necromancy_level_2_minimum = yes
 	[[player] has_mana_to_cast_spell = { school = necromancy level = 2 id = steal_vitality } ]
-	NOT = { has_country_modifier = necromancy_2_steal_vitality_mod }
+	NOT = { has_country_modifier = necromancy_2_steal_vitality_mod has_country_modifier = necromancy_2_steal_vitality_mod_attrition }
 	capital_scope = {
 		base_tax = 2
 		base_production = 2
@@ -3252,13 +3252,19 @@ province_has_contagion = {
 has_cast_speak_with_dead = {
 	custom_trigger_tooltip = {
 		tooltip = has_cast_speak_with_dead
-		has_country_modifier = necromancy_2_speak_with_dead_mod
+		OR = {
+			has_country_modifier = necromancy_2_speak_with_dead_mod_01
+			has_country_modifier = necromancy_2_speak_with_dead_mod
+		}
 	}
 }
 has_cast_steal_vitality = {
 	custom_trigger_tooltip = {
 		tooltip = has_cast_steal_vitality
-		has_country_modifier = necromancy_2_steal_vitality_mod
+		OR = {
+			has_country_modifier = necromancy_2_steal_vitality_mod
+			has_country_modifier = necromancy_2_steal_vitality_mod_attrition
+		}
 	}
 }
 has_cast_undead_army = {

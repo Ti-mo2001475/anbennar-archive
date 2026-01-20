@@ -1882,7 +1882,7 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 		if = {
 			limit = { ruler_is_lich = yes total_ruler_stats = { amount = 6 } }
 			custom_tooltip = necromancy_2_speak_with_dead_spell_effect_6_tt
-			add_ruler_modifier = { name = necromancy_2_speak_with_dead_mod duration = 3650 }
+			add_necromancy_2_speak_with_dead_cost = { duration = 3650 }
 		}
 		else_if = {
 			limit = { NOT = { total_ruler_stats = { amount = 6 } } }
@@ -1891,16 +1891,16 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 		else_if = {
 			limit = { NOT = { total_ruler_stats = { amount = 9 } } }
 			custom_tooltip = necromancy_2_speak_with_dead_spell_effect_3_tt
-			add_ruler_modifier = { name = necromancy_2_speak_with_dead_mod duration = 3650 }
+			add_necromancy_2_speak_with_dead_cost = { duration = 3650 }
 		}
 		else_if = {
 			limit = { NOT = { total_ruler_stats = { amount = 12 } } }
 			custom_tooltip = necromancy_2_speak_with_dead_spell_effect_4_tt
-			add_ruler_modifier = { name = necromancy_2_speak_with_dead_mod duration = 5475 }
+			add_necromancy_2_speak_with_dead_cost = { duration = 5475 }
 		}
 		else = {
 			custom_tooltip = necromancy_2_speak_with_dead_spell_effect_5_tt
-			add_ruler_modifier = { name = necromancy_2_speak_with_dead_mod duration = 7300 }
+			add_necromancy_2_speak_with_dead_cost = { duration = 7300 }
 		}
 	}
 	
@@ -2072,6 +2072,15 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 		}
 	}
 }
+add_necromancy_2_speak_with_dead_cost = {
+	if = {
+		limit = { has_country_flag = necromancy_2_speak_with_dead_cost_01 }
+		add_ruler_modifier = { name = necromancy_2_speak_with_dead_mod_01 duration = $duration$ }
+	}
+	else = {
+		add_ruler_modifier = { name = necromancy_2_speak_with_dead_mod duration = $duration$ }
+	}
+}
 necromancy_2_steal_vitality_effect = { # Steal Vitality
 	increase_witch_king_points_medium = { level = necromancy_level_2_minimum }
 	if = {
@@ -2127,7 +2136,13 @@ necromancy_2_steal_vitality_effect = { # Steal Vitality
 			add_base_manpower = -1
 		}
 	}
-	add_country_modifier = { name = necromancy_2_steal_vitality_mod duration = 3650 }
+	if = {
+		limit = { has_country_flag = necromancy_2_steal_vitality_add_attrition }
+		add_country_modifier = { name = necromancy_2_steal_vitality_mod_attrition duration = 3650 }
+	}
+	else = {
+		add_country_modifier = { name = necromancy_2_steal_vitality_mod duration = 3650 }
+	}
 }
 necromancy_3_undead_army_effect = { # Undead Army
 	if = {

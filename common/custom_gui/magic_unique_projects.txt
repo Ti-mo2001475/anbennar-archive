@@ -1070,92 +1070,57 @@ custom_window = {
 	}
 }
 # Button 1
-custom_text_box = { name = lorent_project_1 potential = { always = no } tooltip = lorent_project_1.desc }
+custom_text_box = { name = labyrinth_of_sorncell potential = { always = no } tooltip = labyrinth_of_sorncell.desc }
 custom_button = {
-	name = lorent_project_1
+	name = labyrinth_of_sorncell
 	# potential = { } # Optional
-	trigger = { can_upgrade_project = { project = lorent_project_1 } }
-	effect = { start_magic_project = { project = lorent_project_1 } }
-	tooltip = lorent_project_1.desc
+	trigger = { can_upgrade_project = { project = labyrinth_of_sorncell } }
+	effect = {
+		start_magic_project = { project = labyrinth_of_sorncell }
+		if = {
+			limit = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 1 } }
+			hidden_effect = {
+				set_magic_experience_target = { type = country project = labyrinth_of_sorncell xptarget = 600 }
+				country_event = {
+					id = celliande.107
+				}
+			}
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 2 } }
+			hidden_effect = {
+				set_magic_experience_target = { type = country project = labyrinth_of_sorncell xptarget = 663 }
+				country_event = {
+					id = celliande.103
+				}
+			}
+		}
+		else = {
+			hidden_effect = {
+				country_event = {
+					id = celliande.100
+				}
+			}
+		}
+	}
+	tooltip = labyrinth_of_sorncell.desc
 }
 # Progressbar 1
-custom_text_box = { name = lorent_project_1_progress potential = { always = no } }
-custom_button = { name = lorent_project_1_progress potential = { always = no } }
+custom_text_box = { name = labyrinth_of_sorncell_progress potential = { always = no } }
+custom_button = { name = labyrinth_of_sorncell_progress potential = { always = no } }
 custom_icon = {
-	name = lorent_project_1_progress
+	name = labyrinth_of_sorncell_progress
 	frame = {
 		number = 100
-		trigger = { exactly_magic_project_level = { project = lorent_project_1 level = 3 } }
+		trigger = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 3 } }
 	}
 	frame = {
 		number = 66
-		trigger = { exactly_magic_project_level = { project = lorent_project_1 level = 2 } }
+		trigger = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 2 } }
 	}
 	frame = {
 		number = 33
-		trigger = { exactly_magic_project_level = { project = lorent_project_1 level = 1 } }
-	}
-	frame = {
-		number = 0
-		trigger = { always = yes }
-	}
-}
-# Button 2
-custom_text_box = { name = lorent_project_2 potential = { always = no } tooltip = lorent_project_2.desc }
-custom_button = {
-	name = lorent_project_2
-	# potential = { } # Optional
-	trigger = { can_upgrade_project = { project = lorent_project_2 } }
-	effect = { start_magic_project = { project = lorent_project_2 } }
-	tooltip = lorent_project_2.desc
-}
-# Progressbar 2
-custom_text_box = { name = lorent_project_2_progress potential = { always = no } }
-custom_button = { name = lorent_project_2_progress potential = { always = no } }
-custom_icon = {
-	name = lorent_project_2_progress
-	frame = {
-		number = 99
-		trigger = { exactly_magic_project_level = { project = lorent_project_2 level = 3 } }
-	}
-	frame = {
-		number = 66
-		trigger = { exactly_magic_project_level = { project = lorent_project_2 level = 2 } }
-	}
-	frame = {
-		number = 33
-		trigger = { exactly_magic_project_level = { project = lorent_project_2 level = 1 } }
-	}
-	frame = {
-		number = 0
-		trigger = { always = yes }
-	}
-}
-# Button 3
-custom_text_box = { name = lorent_project_3 potential = { always = no } tooltip = lorent_project_3.desc }
-custom_button = {
-	name = lorent_project_3
-	# potential = { } # Optional
-	trigger = { can_upgrade_project = { project = lorent_project_3 } }
-	effect = { start_magic_project = { project = lorent_project_3 } }
-	tooltip = lorent_project_3.desc
-}
-# Progressbar 3
-custom_text_box = { name = lorent_project_3_progress potential = { always = no } }
-custom_button = { name = lorent_project_3_progress potential = { always = no } }
-custom_icon = {
-	name = lorent_project_3_progress
-	frame = {
-		number = 99
-		trigger = { exactly_magic_project_level = { project = lorent_project_3 level = 3 } }
-	}
-	frame = {
-		number = 66
-		trigger = { exactly_magic_project_level = { project = lorent_project_3 level = 2 } }
-	}
-	frame = {
-		number = 33
-		trigger = { exactly_magic_project_level = { project = lorent_project_3 level = 1 } }
+		trigger = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 1 } }
 	}
 	frame = {
 		number = 0

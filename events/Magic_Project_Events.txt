@@ -8478,3 +8478,73 @@ country_event = {
 		}
 	}
 }
+#Labyrinth of Sorncell MAGICAL PROJECT
+#EVENT HANDLER
+#I really dont like having it here
+#Why cant we have handlers with rest of our events
+namespace = magic_project_labyrinth_of_sorncell
+
+country_event = { 
+	id = magic_project_labyrinth_of_sorncell.0
+	title = magic_project_labyrinth_of_sorncell.0.t
+	desc = magic_project_labyrinth_of_sorncell.0.d
+	picture = SPY_eventPicture
+	is_triggered_only = yes
+	hidden = yes
+	
+	option = {
+		name = magic_project_labyrinth_of_sorncell.0.a
+
+		if = {
+			limit = { has_country_flag = magic_project_completed_flag }
+			if = {
+				limit = { at_least_magic_project_level = { project = labyrinth_of_sorncell level = 3 } }
+				country_event = { id = celliande.110 }
+			}
+			else_if = {
+				limit = { at_least_magic_project_level = { project = labyrinth_of_sorncell level = 2 } }
+				country_event = { id = celliande.106 }
+			}
+			else_if = {
+				limit = { at_least_magic_project_level = { project = labyrinth_of_sorncell level = 1 } }
+				country_event = { id = celliande.102 }
+			}
+		}
+		else_if = {
+			limit = { check_variable = { current_experience_percent = 33 } NOT = { has_country_flag = magic_project_first_event_happened } }
+			set_country_flag = magic_project_first_event_happened
+			if = { 
+				limit = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 1 } }
+				country_event = { id = celliande.104 }
+			}
+		}
+		else_if = {
+			limit = { check_variable = { current_experience_percent = 50 } NOT = { has_country_flag = magic_project_second_event_happened } }
+			set_country_flag = magic_project_second_event_happened
+			if = {
+				limit = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 2 } }
+				country_event = { id = celliande.108 }
+			}
+			else_if = {
+				limit = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 0 } }
+				country_event = { id = celliande.101 }
+			}
+		}
+		else_if = {
+			limit = { check_variable = { current_experience_percent = 66 } NOT = { has_country_flag = magic_project_second_event_happened } }
+			set_country_flag = magic_project_second_event_happened
+			if = {
+				limit = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 1 } }
+				country_event = { id = celliande.105 }
+			}
+		}
+		else_if = {
+			limit = { check_variable = { current_experience_percent = 75 } NOT = { has_country_flag = magic_project_second_event_happened } }
+			set_country_flag = magic_project_second_event_happened
+			if = {
+				limit = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 2 } }
+				country_event = { id = celliande.109 }
+			}
+		}
+	}
+}
