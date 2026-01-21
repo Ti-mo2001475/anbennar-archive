@@ -2144,7 +2144,96 @@ custom_button = {
 		}
 	}
 }
-
+custom_button = { #Celliande Archeology
+	name = celliande_province_button
+	tooltip = celliande_province_button_tt
+	potential = {
+		owner = {
+			tag = A56
+		}
+	}
+	trigger = {
+		OR = {
+			AND = {
+				province_id = 419 #Varlosen
+				mission_completed = celliande_first_many
+			}
+			AND = {
+				province_id = 919 #Rhinmond
+				mission_completed = celliande_first_many
+			}
+			AND = {
+				province_id = 312 #Quintenbury
+				mission_completed = celliande_treachery_gisdenese
+			}
+			AND = {
+				province_id = 332 #Corseton
+				mission_completed = celliande_great_necropolis
+			}
+		}
+		owner = {
+			manpower = 2
+			mil_power = 50
+		}
+		has_building = mage_tower
+		if = {
+			limit = { has_province_flag = celliande_already_explored }
+			custom_trigger_tooltip = {
+				tooltip = celliande_already_explored.tt
+				always = no
+			}
+		}
+		else_if = {
+			limit = { has_province_flag = celliande_is_exploring }
+			custom_trigger_tooltip = {
+				tooltip = celliande_is_exploring.tt
+				always = no
+			}
+		}
+	}
+	effect = {
+		owner = {
+			add_manpower = -2
+			add_mil_power = -50
+		}
+		if = {
+			limit = { province_id = 419 }
+			country_event = {
+				id = celliande.150
+			}
+			hidden_effect = {
+				set_province_flag = celliande_is_exploring
+			}
+		}
+		else_if = {
+			limit = { province_id = 919 }
+			country_event = {
+				id = celliande.152
+			}
+			hidden_effect = {
+				set_province_flag = celliande_is_exploring
+			}
+		}
+		else_if = {
+			limit = { province_id = 312 }
+			country_event = {
+				id = celliande.157
+			}
+			hidden_effect = {
+				set_province_flag = celliande_is_exploring
+			}
+		}
+		else_if = {
+			limit = { province_id = 332 }
+			country_event = {
+				id = celliande.161
+			}
+			hidden_effect = {
+				set_province_flag = celliande_is_exploring
+			}
+		}
+	}
+}
 #################################
 # Anbennar Province UI Expanded #
 #################################
