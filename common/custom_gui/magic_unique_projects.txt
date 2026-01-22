@@ -1074,7 +1074,13 @@ custom_text_box = { name = labyrinth_of_sorncell potential = { always = no } too
 custom_button = {
 	name = labyrinth_of_sorncell
 	# potential = { } # Optional
-	trigger = { can_upgrade_project = { project = labyrinth_of_sorncell } }
+	trigger = {
+		can_upgrade_project = { project = labyrinth_of_sorncell }
+		if = {
+			limit = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 1 } }
+			mission_completed = celliande_second_bout
+		}
+	}
 	effect = {
 		start_magic_project = { project = labyrinth_of_sorncell }
 		if = {

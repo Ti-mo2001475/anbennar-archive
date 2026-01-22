@@ -318,6 +318,11 @@ country_event = { #On trail of Hero 4
 			}
 		}
 	}
+	after = {
+		hidden_effect = {
+			set_country_flag = celliande_uncovered_serondor
+		}
+	}
 }
 country_event = { #Outcry wex
 	id = celliande.9
@@ -424,6 +429,180 @@ country_event = { #Enter, the Nameless
 	after = {
 		hidden_effect = {
 			set_country_flag = celliande_nameless_flag
+		}
+	}
+}
+country_event = { #Fake Nerat
+	id = celliande.12
+	title = favored_RC.13.t
+	desc = favored_RC.13.d
+	picture = RELIGION_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	# Emulate aspect 1
+	option = {
+		name = "favored_RC.13.a"
+		add_ruler_modifier = {
+			name = favored_RC_nerat_t_a
+			hidden = yes
+			duration = -1
+		}
+		add_ruler_modifier = {
+			name = RC_withdrawn_meditation
+			duration = 1825
+		}
+		custom_tooltip = favored_tt
+		tooltip = {
+			add_ruler_modifier = {
+				name = RC_emulant_nerat_1
+				duration = -1
+			}
+		}
+		hidden_effect = {
+			country_event = {
+				id = favored_RC.14
+				days = 1826
+			}
+		}
+	}
+
+	# Emulate aspect 2
+	option = {
+		name = "favored_RC.13.b"
+		add_ruler_modifier = {
+			name = favored_RC_nerat_t_b
+			hidden = yes
+			duration = -1
+		}
+		add_ruler_modifier = {
+			name = RC_withdrawn_meditation
+			duration = 1825
+		}
+		custom_tooltip = favored_tt
+		tooltip = {
+			add_ruler_modifier = {
+				name = RC_emulant_nerat_2
+				duration = -1
+			}
+		}
+		hidden_effect = {
+			country_event = {
+				id = favored_RC.15
+				days = 1826
+			}
+		}
+	}
+
+	# Eschew emulation
+	option = {
+		name = "favored_RC.13.c"
+		add_prestige = 2
+		set_ruler_flag = RC_emulant_rejected_nerat
+	}
+}
+country_event = { #Final
+	id = celliande.13
+	title = celliande.13.t
+	desc = celliande.13.d
+	picture = KOBOLD_HOARD_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.13.a
+		add_prestige_or_monarch_power = { amount = 100 }
+		add_manpower = -5
+		the_borders_region = {
+			add_permanent_claim = ROOT
+		}
+	}
+}
+country_event = { #Hero Brasan
+	id = celliande.14
+	title = celliande.14.t
+	desc = celliande.14.d
+	picture = KOBOLD_HOARD_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.14.a
+		add_country_modifier = {
+			name = celliande_brasan_hero
+			duration = 3650
+		}
+	}
+}
+country_event = { #Necromantic Fashion
+	id = celliande.15
+	title = celliande.15.t
+	desc = celliande.15.d
+	picture = KOBOLD_HOARD_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.15.a
+		add_years_of_owned_provinces_production_income = {
+			years = 2
+			trigger = {
+				OR = {
+					trade_goods = cloth
+					trade_goods = silk
+				}
+			}
+		}
+	}
+}
+country_event = { #Renovation suprise
+	id = celliande.16
+	title = celliande.16.t
+	desc = celliande.16.d
+	picture = KOBOLD_HOARD_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.16.a
+		goto = 413
+		add_prestige = 25
+		413 = {
+			add_province_modifier = {
+				name = celliande_adventuring_hotspot
+				duration = 5475
+			}
+		}
+	}
+}
+country_event = { #Renovation suprise
+	id = celliande.17
+	title = celliande.17.t
+	desc = celliande.17.d
+	picture = KOBOLD_HOARD_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.17.a
+		add_prestige = 25
+		add_splendor = 100
+		add_country_modifier = {
+			name = celliande_rep
+			duration = 3650
+		}
+	}
+	option = {
+		name = celliande.17.b
+		add_country_modifier = {
+			name = celliande_border_claim
+			duration = 3650
 		}
 	}
 }
@@ -968,7 +1147,7 @@ country_event = { #Varlosen 1
 		name = celliande.150.a
 		add_treasury = -100
 		add_dip_power = -25
-		add_opinion = {
+		reverse_add_opinion = {
 			who = A85
 			modifier = celliande_tower_deal
 		}
@@ -987,7 +1166,7 @@ country_event = { #Varlosen 1
 				size = 2
 			}
 		}
-		add_opinion = {
+		reverse_add_opinion = {
 			who = A85
 			modifier = celliande_tower_attack
 		}
@@ -1284,6 +1463,10 @@ country_event = { #Rhinmond 5
 	after = {
 		hidden_effect = {
 			clr_country_flag = celliande_rebels_recruited
+			919 = {
+				clr_province_flag = celliande_is_exploring
+				set_province_flag = celliande_already_explored
+			}
 		}
 	}
 }
@@ -1320,13 +1503,13 @@ country_event = { #Quinterbury 1
 		}
 		if = {
 			limit = { NOT = { is_rival = A33 } }
-			add_opinion = {
+			reverse_add_opinion = {
 				who = A33
 				modifier = celliande_sponsored_adventurers
 			}
 		}
 		else = {
-			add_opinion = {
+			reverse_add_opinion = {
 				who = A55
 				modifier = celliande_sponsored_adventurers
 			}
@@ -1447,6 +1630,32 @@ country_event = { #Quinterbury 4
 			loyalty = 10
 		}
 	}
+	option = {
+		name = celliande.160.c
+		highlight = yes
+		trigger = {
+			is_overall_necromancy_level_1_minimum = yes
+		}
+		if = {
+			limit = { NOT = { has_country_flag = celliande_rise_hero_unlocked } }
+			custom_tooltip = celliande_unlock_rise_hero
+			hidden_effect = {
+				set_country_flag = celliande_rise_hero_unlocked
+			}
+		}
+		custom_tooltip = celliande_unlock_bull
+		hidden_effect = {
+			set_country_flag = celliande_rise_hero_bull
+		}
+	}
+	after = {
+		hidden_effect = {
+			312 = {
+				clr_province_flag = celliande_is_exploring
+				set_province_flag = celliande_already_explored
+			}
+		}
+	}
 }
 country_event = { #Corseton 1
 	id = celliande.161
@@ -1459,14 +1668,46 @@ country_event = { #Corseton 1
 	
 	option = {
 		name = celliande.161.a
-		goto = 332
-		
+		add_dip_power = -50
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 10
+		}
+		add_estate_influence_modifier = {
+			influence = 10
+			duration = 3650
+			estate = estate_church
+		}
+		add_estate_loyalty = {
+			estate = estate_mages
+			loyalty = -10
+		}
+		country_event = {
+			id = celliande.162
+			days = 365
+		}
 	}
 	option = {
 		name = celliande.161.b
 		goto = 332
 		332 = {
-			
+			spawn_rebels = {
+				size = 3
+				type = regent_court_rebels
+			}
+		}
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -30
+		}
+		add_estate_influence_modifier = {
+			influence = -20
+			duration = 3650
+			estate = estate_church
+		}
+		country_event = {
+			id = celliande.162
+			days = 182
 		}
 	}
 }
@@ -1481,14 +1722,10 @@ country_event = { #Corseton 2
 	
 	option = {
 		name = celliande.162.a
-		goto = 332
-		
-	}
-	option = {
-		name = celliande.162.b
-		goto = 332
-		332 = {
-			
+		custom_tooltip = celliande.162.tt
+		country_event = {
+			id = celliande.163
+			days = 182
 		}
 	}
 }
@@ -1503,14 +1740,42 @@ country_event = { #Corseton 3
 	
 	option = {
 		name = celliande.163.a
-		goto = 332
-		
+		add_country_modifier = {
+			name = celliande_wound
+			duration = 365
+		}
+		country_event = {
+			id = celliande.164
+		}
 	}
 	option = {
 		name = celliande.163.b
-		goto = 332
-		332 = {
-			
+		add_country_modifier = {
+			name = celliande_khet
+			duration = 3650
+		}
+		country_event = {
+			id = celliande.164
+			days = 365
+		}
+		every_known_country = {
+			limit = {
+				culture_group = kheteratan
+			}
+			add_opinion = {
+				who = ROOT
+				modifier = insulted
+				multiplier = 2
+			}
+		}
+	}
+	after = {
+		hidden_effect = {
+			country_event = {
+				id = celliande.165
+				days = 30
+				random = 60
+			}
 		}
 	}
 }
@@ -1525,21 +1790,55 @@ country_event = { #Corseton 4
 	
 	option = {
 		name = celliande.164.a
-		goto = 332
-		
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 10
+		}
+		332 = {
+			if = {
+				limit = {
+					NOT = {
+						has_great_project = {
+							type = the_necropolis
+							tier = 1
+						}
+					}
+				}
+				add_great_project_tier = {
+					type = the_necropolis
+					tier = 1
+				}
+			}
+			else = {
+				owner = {
+					add_treasury = 500
+				}
+			}
+		}
 	}
 	option = {
 		name = celliande.164.b
 		goto = 332
 		332 = {
-			
+			add_permanent_province_modifier = {
+				name = celliande_royal_necropolis
+				duration = -1
+			}
+		}
+	}
+	after = {
+		hidden_effect = {
+			332 = {
+				clr_province_flag = celliande_is_exploring
+				set_province_flag = celliande_already_explored
+			}
 		}
 	}
 }
 country_event = { #Corseton 5
 	id = celliande.165
 	title = celliande.165.t
-	desc = celliande.165.d
+	desc = celliande.165.desc
 	picture = KOBOLD_HOARD_eventPicture
 	
 	fire_only_once = yes
@@ -1547,14 +1846,42 @@ country_event = { #Corseton 5
 	
 	option = {
 		name = celliande.165.a
-		goto = 332
-		
+		hidden_effect = {
+			country_event = {
+				id = celliande.166
+			}
+		}
 	}
 	option = {
 		name = celliande.165.b
-		goto = 332
-		332 = {
-			
+		hidden_effect = {
+			country_event = {
+				id = celliande.166
+			}
+		}
+	}
+	option = {
+		name = celliande.165.c
+		hidden_effect = {
+			country_event = {
+				id = celliande.166
+			}
+		}
+	}
+	option = {
+		name = celliande.165.d
+		hidden_effect = {
+			country_event = {
+				id = celliande.166
+			}
+		}
+	}
+	option = {
+		name = celliande.165.e
+		hidden_effect = {
+			country_event = {
+				id = celliande.167
+			}
 		}
 	}
 }
@@ -1569,7 +1896,7 @@ country_event = { #Corseton 6
 	
 	option = {
 		name = celliande.166.a
-		
+		add_prestige = -10
 	}
 }
 country_event = { #Corseton 7
@@ -1583,7 +1910,9 @@ country_event = { #Corseton 7
 	
 	option = {
 		name = celliande.167.a
-		
+		add_prestige = 10
+		add_treasury = 200
+		change_mana = { amount = 25 }
 	}
 }
 country_event = { #Bounce back event

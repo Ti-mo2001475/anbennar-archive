@@ -646,11 +646,10 @@ celliande_3_missions = {
 		provinces_to_highlight = {
 			OR = {
 				AND = {
-					area = rhinmond_area
-					NOT = { owned_by = ROOT }
-				}
-				AND = {
-					area = gnollsgate_area
+					OR = {
+						area = rhinmond_area
+						area = gnollsgate_area
+					}
 					NOT = { owned_by = ROOT }
 				}
 				AND = {
@@ -731,19 +730,11 @@ celliande_3_missions = {
 
 		provinces_to_highlight = {
 			OR = {
-				AND = {
-					province_id = 919
-					NOT = { has_building = mage_tower }
-				}
-				AND = {
-					province_id = 413
-					NOT = { has_building = mage_tower }
-				}
-				AND = {
-					province_id = 419
-					NOT = { has_building = mage_tower }
-				}
+				province_id = 919
+				province_id = 413
+				province_id = 419
 			}
+			NOT = { has_building = mage_tower }
 		}
 
 		trigger = {
@@ -790,18 +781,32 @@ celliande_3_missions = {
 		}
 
 		provinces_to_highlight = {
-
+			
 		}
 
 		trigger = {
-			arannen_area = {
-				owned_by = ROOT
-
+			custom_trigger_tooltip = {
+				tooltip = celliande_first_many.tt1
+				has_country_flag = celliande_rise_hero_aran
+			}
+			has_estate_privilege = estate_mages_seek_magical_advice
+			estate_loyalty = {
+				estate = estate_mages
+				loyalty = 60
+			}
+			estate_influence = {
+				estate = estate_mages
+				influence = 60
 			}
 		}
 
 		effect = {
-			
+			define_advisor = {
+				type = court_mage
+				cost_multiplier = 0.5
+				skill = 2
+			}
+			custom_tooltip = celliande_first_many.tt2
 		}
 	}
 	celliande_second_bout = {
@@ -812,18 +817,50 @@ celliande_3_missions = {
 		}
 
 		provinces_to_highlight = {
-
+			OR = {
+				AND = {
+					province_id = 419
+					NOT = {
+						has_province_flag = celliande_already_explored
+					}
+				}
+				AND = {
+					province_id = 919
+					NOT = {
+						has_province_flag = celliande_already_explored
+					}
+				}
+			}
 		}
 
 		trigger = {
-			arannen_area = {
-				owned_by = ROOT
-
+			custom_trigger_tooltip = {
+				tooltip = celliande_second_bout.tt1
+				419 = {
+					has_province_flag = celliande_already_explored
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = celliande_second_bout.tt2
+				919 = {
+					has_province_flag = celliande_already_explored
+				}
+			}
+			has_mil_advisor_2 = yes
+			OR = {
+				court_mage = 2
+				has_adm_advisor_3 = yes
 			}
 		}
 
 		effect = {
-			
+			add_adm_power = 50
+			add_dip_power = 50
+			add_mil_power = 50
+			gisden_area = {
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = celliande_second_bout.tt3
 		}
 	}
 	celliande_treachery_gisdenese = {
@@ -834,18 +871,49 @@ celliande_3_missions = {
 		}
 
 		provinces_to_highlight = {
-
+			OR = {
+				province_id = 321
+				province_id = 326
+				AND = {
+					province_id = 312
+					NOT = { development = 10 }
+				}
+			}
+			NOT = { owned_by = ROOT }
 		}
 
 		trigger = {
-			arannen_area = {
+			326 = {
 				owned_by = ROOT
-
+			}
+			326 = {
+				owned_by = ROOT
+			}
+			312 = {
+				owned_by = ROOT
+				development = 10
 			}
 		}
 
 		effect = {
-			
+			ashfields_area = {
+				add_permanent_claim = ROOT
+			}
+			314 = {
+				add_permanent_claim = ROOT
+			}
+			add_country_modifier = {
+				name = celliande_punish_traitors
+				duration = 1825
+			}
+			326 = {
+				spawn_rebels = {
+					size = 1
+					type = nationalist_rebels
+					separatists_target = A75
+				}
+			}
+			custom_tooltip = celliande_treachery_gisdenese.tt
 		}
 	}
 	celliande_final_depth = {
@@ -856,18 +924,71 @@ celliande_3_missions = {
 		}
 
 		provinces_to_highlight = {
-
+			OR = {
+				AND = {
+					province_id = 419
+					NOT = {
+						has_province_flag = celliande_already_explored
+					}
+				}
+				AND = {
+					province_id = 919
+					NOT = {
+						has_province_flag = celliande_already_explored
+					}
+				}
+				AND = {
+					province_id = 312
+					NOT = {
+						has_province_flag = celliande_already_explored
+					}
+				}
+				AND = {
+					province_id = 332
+					NOT = {
+						has_province_flag = celliande_already_explored
+					}
+				}
+			}
 		}
 
 		trigger = {
-			arannen_area = {
-				owned_by = ROOT
-
+			custom_trigger_tooltip = {
+				tooltip = celliande_second_bout.tt1
+				419 = {
+					has_province_flag = celliande_already_explored
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = celliande_second_bout.tt2
+				919 = {
+					has_province_flag = celliande_already_explored
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = celliande_final_depth.tt1
+				312 = {
+					has_province_flag = celliande_already_explored
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = celliande_final_depth.tt2
+				332 = {
+					has_province_flag = celliande_already_explored
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = celliande_final_depth.tt3
+				has_country_modifier = celliande_stage_three
 			}
 		}
 
 		effect = {
-			
+			set_ruler_mage_effect = yes
+			add_country_modifier = {
+				name = celliande_tutelage
+				duration = -1
+			}
 		}
 	}
 	celliande_milcorissia_rises = {
@@ -880,18 +1001,58 @@ celliande_3_missions = {
 		}
 
 		provinces_to_highlight = {
-
-		}
-
-		trigger = {
-			arannen_area = {
-				owned_by = ROOT
-
+			OR = {
+				AND = {
+					region = the_borders_region
+					owned_by = ROOT
+					NOT = { culture = milcori }
+				}
+				AND = {
+					area = flooded_coast_area
+					NOT = { culture = milcori }
+				}
+				AND = {
+					culture = arannese
+					continent = europe
+				}
 			}
 		}
 
+		trigger = {
+			the_borders_region = {
+				type = all
+				OR = {
+					NOT = { owned_by = ROOT }
+					culture = milcori
+				}
+			}
+			flooded_coast_area = {
+				type = all
+				culture = milcori
+			}
+			europe = {
+				type = all
+				NOT = {
+					culture = arannese
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = celliande_milcorissia_rises.tt
+				has_country_flag = celliande_uncovered_serondor
+			}
+			has_personal_deity = nerat
+			has_mana = { amount = 50 }
+		}
+
 		effect = {
-			
+			change_mana = { amount = -50 }
+			country_event = {
+				id = celliande.12
+			}
+			country_event = {
+				id = celliande.13
+				days = 14
+			}
 		}
 	}
 }
@@ -910,15 +1071,67 @@ celliande_4_missions = {
 		}
 
 		provinces_to_highlight = {
-
+			superregion = western_cannor_superregion
+			is_capital = yes
+			owner = {
+				OR = {
+					tag = A11
+					has_country_flag = lilac_wars_moon_party
+				}
+			}
 		}
 
 		trigger = {
-			
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = celliande_moon_party.tt1
+					any_ally = {
+						has_country_flag = lilac_wars_moon_party
+					}
+					has_opinion_modifier = {
+						who = A11
+						modifier = royal_marriage
+					}
+					alliance_with = A11
+				}
+				custom_trigger_tooltip = {
+					tooltip = celliande_moon_party.tt2
+					calc_true_if = {
+						all_ally = {
+							has_country_flag = lilac_wars_moon_party
+							total_development = 50
+						}
+						amount = 2
+					}
+				}
+			}
 		}
 
 		effect = {
-			
+			add_country_modifier = {
+				name = celliande_memories
+				duration = 9125
+			}
+			complex_dynamic_effect = {
+				first_custom_tooltip = celliande_moon_party.tt3
+				first_limit = "
+					A57 = {
+						has_opinion_modifier = {
+							who = A11
+							modifier = royal_marriage
+						}
+						alliance_with = A11
+					}
+				"
+				first_effect = "
+					define_advisor = {
+						type = diplomat
+						cost_multiplier = 0.5
+						culture = pearlsedger
+						skill = 1
+					}
+				"
+			}
 		}
 	}
 	celliande_deep_waterharbor = {
@@ -930,15 +1143,63 @@ celliande_4_missions = {
 		}
 
 		provinces_to_highlight = {
-
+			province_id = 413
 		}
 
 		trigger = {
-			
+			413 = {
+				development = 30
+				NOT = {
+					has_construction = any
+				}
+				if = {
+					limit = { has_dlc = "Leviathan" }
+					num_of_times_expanded_infrastructure = 2
+				}
+				else = {
+					owner = {
+						adm_power = 50
+					}
+				}
+			}
+			treasury = 50
 		}
 
 		effect = {
-			
+			add_treasury = -50
+			if = {
+				limit = { NOT = { has_dlc = "Leviathan" } }
+				add_adm_power = -50
+			}
+			add_country_modifier = {
+				name = celliande_construction_material
+				duration = 9125
+			}
+			413 = {
+				add_permanent_province_modifier = {
+					name = celliande_deep_port
+					duration = -1
+				}
+				if = {
+					limit = { has_building = grand_shipyard }
+					add_base_manpower = 2
+				}
+				else_if = {
+					limit = { has_building = shipyard }
+					add_building_construction = {
+						building = grand_shipyard
+						speed = 0.5
+						cost = 0
+					}
+				}
+				else = {
+					add_building_construction = {
+						building = shipyard
+						speed = 1
+						cost = 0
+					}
+				}
+			}
 		}
 	}
 	celliande_bulwari_textile = {
@@ -949,15 +1210,56 @@ celliande_4_missions = {
 		}
 
 		provinces_to_highlight = {
-
+			superregion = bulwar_superregion
+			is_capital = yes
+			owner = {
+				any_owned_province = {
+					trade_goods = silk
+				}
+			}
 		}
 
 		trigger = {
-			
+			any_ally = {
+				capital_scope = {
+					superregion = bulwar_superregion
+				}
+				any_owned_province = {
+					trade_goods = silk
+				}
+				has_opinion = {
+					who = ROOT
+					value = 125
+				}
+				has_opinion_modifier = {
+					who = ROOT
+					modifier = sent_gift
+				}
+			}
+			num_of_light_ship = 5
 		}
 
 		effect = {
-			
+			random_ally = {
+				limit = {
+					capital_scope = {
+						superregion = bulwar_superregion
+					}
+				}
+				add_trust = {
+					who = ROOT
+					value = 15
+				}
+			}
+			412 = {
+				change_trade_goods = silk
+			}
+			414 = {
+				change_trade_goods = cloth
+			}
+			country_event = {
+				id = celliande.14
+			}
 		}
 	}
 	celliande_necromantic_fashion = {
@@ -969,15 +1271,62 @@ celliande_4_missions = {
 		}
 
 		provinces_to_highlight = {
-
+			OR = {
+				AND = {
+					province_id = 412
+					NOT = { base_production = 10 }
+				}
+				AND = {
+					province_id = 414
+					NOT = { base_production = 10 }
+				}
+				AND = {
+					province_id = 332
+					NOT = {
+						has_great_project = {
+							type = the_necropolis
+							tier = 1
+						}
+					}
+				}
+			}
 		}
 
 		trigger = {
-			
+			412 = {
+				base_production = 10
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			414 = {
+				base_production = 10
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			332 = {
+				has_great_project = {
+					type = the_necropolis
+					tier = 1
+				}
+			}
 		}
 
 		effect = {
-			
+			412 = {
+				add_permanent_province_modifier = {
+					name = celliande_milcori_corpsetry
+					duration = -1
+				}
+			}
+			414 = {
+				add_permanent_province_modifier = {
+					name = celliande_milcori_corpsetry
+					duration = -1
+				}
+			}
+			country_event = {
+				id = celliande.15
+			}
 		}
 	}
 }
@@ -996,15 +1345,53 @@ celliande_5_missions = {
 		}
 
 		provinces_to_highlight = {
-
+			province_id = 413
 		}
 
 		trigger = {
-			
+			OR = {
+				AND = {
+					mil_power = 50
+					treasury = 100
+				}
+				AND = {
+					mil_power = 50
+					treasury = 50
+					fortification_expert = 2
+				}
+			}
 		}
 
 		effect = {
-			
+			add_mil_power = -50
+			if = {
+				limit = { fortification_expert = 2 }
+				add_treasury = -50
+			}
+			else = {
+				add_treasury = -100
+			}
+			413 = {
+				add_province_modifier = {
+					name = celliande_capital_renovation
+					duration = 1825
+				}
+				if = {
+					limit = { has_fort_building_trigger = yes }
+					add_base_manpower = 2
+				}
+				else = {
+					add_building_construction = {
+						building = fort_15th
+						cost = 0
+						speed = 0.49
+					}
+				}
+			}
+			country_event = {
+				id = celliande.16
+				days = 1825
+			}
 		}
 	}
 	celliande_new_story = {
@@ -1015,15 +1402,39 @@ celliande_5_missions = {
 		}
 
 		provinces_to_highlight = {
-
+			province_id = 413
+			has_province_modifier = celliande_capital_renovation
 		}
 
 		trigger = {
-			
+			OR = {
+				num_of_estate_agendas_completed = {
+					estate = estate_adventurers
+					value = 1
+				}
+				num_of_estate_agendas_completed = {
+					estate = estate_nobles
+					value = 2
+				}
+			}
+			is_institution_enabled = renaissance
+			413 = {
+				NOT = {
+					has_province_modifier = celliande_capital_renovation
+				}
+			}
 		}
 
 		effect = {
-			
+			413 = {
+				add_province_modifier = {
+					name = celliande_capital_excavation
+					duration = 3650
+				}
+			}
+			country_event = {
+				id = celliande.17
+			}
 		}
 	}
 	celliande_from_grave = {
@@ -1034,15 +1445,83 @@ celliande_5_missions = {
 		}
 
 		provinces_to_highlight = {
-
+			continent = europe
+			is_capital = yes
+			owner = {
+				tag = A30
+				tag = A33
+				tag = A38
+				tag = A35
+				tag = A55
+				tag = A85
+			}
 		}
 
 		trigger = {
-			
+			OR = {
+				spymaster = 1
+				diplomat = 1
+				has_adm_advisor_2 = yes
+			}
+			has_institution = renaissance
+			calc_true_if = {
+				amount = 2
+				all_known_country = {
+					OR = {
+						tag = A30
+						tag = A33
+						tag = A38
+						tag = A35
+						tag = A55
+						tag = A85
+					}
+					OR = {
+						has_opinion = {
+							who = ROOT
+							value = 120
+						}
+						has_spy_network_from = {
+							who = ROOT
+							value = 25
+						}
+					}
+				}
+			}
 		}
 
 		effect = {
-			
+			every_known_country = {
+				limit = {
+					OR = {
+						tag = A30
+						tag = A33
+						tag = A38
+						tag = A35
+						tag = A55
+						tag = A85
+					}
+					OR = {
+						has_opinion = {
+							who = ROOT
+							value = 120
+						}
+						has_spy_network_from = {
+							who = ROOT
+							value = 25
+						}
+					}
+				}
+				413 = {
+					owner = {
+						add_adm_power = 25
+						add_dip_power = 25
+						add_mil_power = 25
+					}
+				}
+			}
+			country_event = {
+				id = celliande.10
+			}
 		}
 	}
 	celliande_great_necropolis = {
@@ -1053,15 +1532,60 @@ celliande_5_missions = {
 		}
 
 		provinces_to_highlight = {
-
+			OR = {
+				AND = {
+					OR = {
+						area = east_bisan_area
+						area = west_bisan_area
+					}
+					local_autonomy = 10
+					NOT = { has_province_modifier = autonomy_decreased }
+				}
+				AND = { 
+					province_id = 332
+					NOT = { development = 15 }
+				}
+			}
 		}
 
 		trigger = {
-			
+			east_bisan_area = {
+				type = all
+				owned_by = ROOT
+				NOT = { local_autonomy = 10 }
+				has_province_modifier = autonomy_decreased
+			}
+			west_bisan_area = {
+				type = all
+				owned_by = ROOT
+				NOT = { local_autonomy = 10 }
+				has_province_modifier = autonomy_decreased
+			}
+			332 = {
+				development = 15
+			}
 		}
 
 		effect = {
-			
+			332 = {
+				add_province_modifier = {
+					name = celliande_necropolis_renovation
+					duration = 3650
+				}
+			}
+			custom_tooltip = celliande_great_necropolis.tt1
+			hidden_effect = {
+				europe = {
+					limit = {
+						culture = arannese
+						NOT = {
+							owned_by = ROOT
+						}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			custom_tooltip = celliande_great_necropolis.tt2
 		}
 	}
 	celliande_last_arannese = {
@@ -1072,15 +1596,48 @@ celliande_5_missions = {
 		}
 
 		provinces_to_highlight = {
-
+			superregion = western_cannor_superregion
+			culture = arannese
+			NOT = { owned_by = ROOT }
 		}
 
 		trigger = {
-			
+			western_cannor_superregion = {
+				type = all
+				OR = {
+					owned_by = ROOT
+					NOT = { culture = arannese }
+				}
+			}
+			A60 = {
+				NOT = {
+					any_owned_province = {
+						region = the_borders_region
+					}
+				}
+			}
+			all_known_country = {
+				culture = arannese
+				has_opinion_modifier = {
+					who = ROOT
+					modifier = scornfully_insulted
+				}
+			}
 		}
 
 		effect = {
-			
+			every_owned_province = {
+				limit = {
+					culture = arannese
+				}
+				add_nationalism = -30
+			}
+			define_advisor = {
+				type = commandant
+				skill = 3
+				cost_multiplier = 0.5
+				culture = milcori
+			}
 		}
 	}
 }
