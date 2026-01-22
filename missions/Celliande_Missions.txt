@@ -1596,9 +1596,26 @@ celliande_5_missions = {
 		}
 
 		provinces_to_highlight = {
-			superregion = western_cannor_superregion
-			culture = arannese
-			NOT = { owned_by = ROOT }
+			OR = {
+				AND = {
+					superregion = western_cannor_superregion
+					culture = arannese
+					NOT = { owned_by = ROOT }
+				}
+				AND = {
+					is_capital = yes
+					owner = {
+						primary_culture = arannese
+						NOT = {
+							has_opinion_modifier = {
+								who = ROOT
+								modifier = scornfully_insulted
+							}
+						}
+					}
+				}
+			}
+			
 		}
 
 		trigger = {
@@ -1612,12 +1629,15 @@ celliande_5_missions = {
 			A60 = {
 				NOT = {
 					any_owned_province = {
-						region = the_borders_region
+						OR = {
+							region = the_borders_region
+							region = esmaria_region
+						}
 					}
 				}
 			}
 			all_known_country = {
-				culture = arannese
+				primary_culture = arannese
 				has_opinion_modifier = {
 					who = ROOT
 					modifier = scornfully_insulted
