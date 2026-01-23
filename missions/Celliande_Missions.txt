@@ -585,11 +585,13 @@ celliande_3_missions = {
 		}
 
 		effect = {
-			if = {
-				limit = { A57 = { ai = yes } }
-				declare_war_with_cb = {
-					casus_belli = cb_conquest
-					who = ROOT
+			A57 = {
+				if = {
+					limit = { ai = yes }
+					declare_war_with_cb = {
+						casus_belli = cb_conquest
+						who = ROOT
+					}
 				}
 			}
 			antir_drop_area = {
@@ -1075,31 +1077,42 @@ celliande_4_missions = {
 			is_capital = yes
 			owner = {
 				OR = {
-					tag = A11
-					has_country_flag = lilac_wars_moon_party
+					AND = {
+						tag = A11
+						marriage_with = ROOT
+						alliance_with = ROOT
+					}
+					AND = {
+						has_country_flag = lilac_wars_moon_party
+						total_development = 50
+						NOT = {
+							AND = {
+								marriage_with = ROOT
+								alliance_with = ROOT
+							}
+						}
+					}
 				}
 			}
 		}
 
-		trigger = {
+		trigger = {	
 			OR = {
 				custom_trigger_tooltip = {
 					tooltip = celliande_moon_party.tt1
 					any_ally = {
 						has_country_flag = lilac_wars_moon_party
 					}
-					has_opinion_modifier = {
-						who = A11
-						modifier = royal_marriage
-					}
+					marriage_with = A11
 					alliance_with = A11
 				}
 				custom_trigger_tooltip = {
 					tooltip = celliande_moon_party.tt2
 					calc_true_if = {
 						all_ally = {
-							has_country_flag = lilac_wars_moon_party
 							total_development = 50
+							has_country_flag = lilac_wars_moon_party
+							marriage_with = ROOT
 						}
 						amount = 2
 					}
@@ -1115,13 +1128,8 @@ celliande_4_missions = {
 			complex_dynamic_effect = {
 				first_custom_tooltip = celliande_moon_party.tt3
 				first_limit = "
-					A57 = {
-						has_opinion_modifier = {
-							who = A11
-							modifier = royal_marriage
-						}
-						alliance_with = A11
-					}
+					marriage_with = A11
+					alliance_with = A11
 				"
 				first_effect = "
 					define_advisor = {
@@ -1357,7 +1365,10 @@ celliande_5_missions = {
 				AND = {
 					mil_power = 50
 					treasury = 50
-					fortification_expert = 2
+					OR = {
+						fortification_expert = 1
+						has_mil_advisor_2 = yes
+					}
 				}
 			}
 		}
@@ -1365,7 +1376,7 @@ celliande_5_missions = {
 		effect = {
 			add_mil_power = -50
 			if = {
-				limit = { fortification_expert = 2 }
+				limit = { OR = { fortification_expert = 1 has_mil_advisor_2 = yes } }
 				add_treasury = -50
 			}
 			else = {
@@ -1461,7 +1472,7 @@ celliande_5_missions = {
 			OR = {
 				spymaster = 1
 				diplomat = 1
-				has_adm_advisor_2 = yes
+				has_dip_advisor_2 = yes
 			}
 			has_institution = renaissance
 			calc_true_if = {
