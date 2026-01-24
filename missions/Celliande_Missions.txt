@@ -196,6 +196,18 @@ celliande_2_missions = {
 		}
 
 		effect = {
+			arannen_area = {
+				add_permanent_claim = ROOT
+			}
+			eastborders_area = {
+				add_permanent_claim = ROOT
+			}
+			gnollsgate_area = {
+				add_permanent_claim = ROOT
+			}
+			rhinmond_area = {
+				add_permanent_claim = ROOT
+			}
 			A48 = {
 				country_event = {
 					id = celliande.2
@@ -204,7 +216,7 @@ celliande_2_missions = {
 			complex_dynamic_effect = {
 				first_custom_tooltip = celliande_future_borders_unrest
 				first_limit = "
-					A86 = {
+					A48 = {
 						has_disaster = sugamber_succession_war
 					}
 				"
@@ -352,11 +364,7 @@ celliande_2_missions = {
 					}
 				"
 				second_effect = "
-					add_casus_belli = {
-						type = cb_vassalize_mission
-						target = U16
-						months = 360
-					}
+					custom_tooltip = celliande_castellan_problems.crashingeffect
 				"
 				third_custom_tooltip = celliande_castellan_problems.tt3
 				third_limit = "
@@ -369,6 +377,23 @@ celliande_2_missions = {
 						add_permanent_claim = ROOT
 					}
 				"
+			}
+			hidden_effect = {
+				if = { #This effect crashes inside of complex_dynamic_effect even when hidden
+					limit = {
+						U16 = {
+							has_opinion_modifier = {
+								who = ROOT
+								modifier = scornfully_insulted
+							}
+						}
+					}
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						target = U16
+						months = 360
+					}
+				}
 			}
 		}
 	}
@@ -1229,20 +1254,20 @@ celliande_4_missions = {
 		}
 
 		trigger = {
-			any_ally = {
+			any_known_country = {
 				capital_scope = {
 					superregion = bulwar_superregion
-				}
-				any_owned_province = {
-					trade_goods = silk
-				}
-				has_opinion = {
-					who = ROOT
-					value = 125
 				}
 				has_opinion_modifier = {
 					who = ROOT
 					modifier = sent_gift
+				}
+				has_opinion = {
+					who = ROOT
+					value = 100
+				}
+				any_owned_province = {
+					trade_goods = silk
 				}
 			}
 			num_of_light_ship = 5
