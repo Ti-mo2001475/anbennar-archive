@@ -611,10 +611,19 @@ celliande_3_missions = {
 		}
 
 		effect = {
+			hidden_effect = {
+				416 = {
+					add_claim = A57
+				}
+			}
 			A57 = {
 				if = {
 					limit = { ai = yes }
-					declare_war = ROOT
+					declare_war_with_cb = {
+						casus_belli = cb_conquest
+						who = ROOT
+						war_goal_province = 416
+					}
 				}
 			}
 			antir_drop_area = {
