@@ -11,6 +11,19 @@ give_magical_infrastructure_ruler_bypass = {
 	set_ruler_flag = MI_permanent_bypass_flag
 }
 
+remove_magical_infrastructure_temp_bypass = {
+	custom_tooltip = remove_magical_infrastructure_temp_bypass
+	clr_country_flag = MI_temporary_bypass_flag
+}
+remove_magical_infrastructure_perm_bypass = {
+	custom_tooltip = remove_magical_infrastructure_perm_bypass
+	clr_country_flag = MI_permanent_bypass_flag
+}
+remove_magical_infrastructure_ruler_bypass = {
+	custom_tooltip = remove_magical_infrastructure_ruler_bypass
+	clr_ruler_flag = MI_permanent_bypass_flag
+}
+
 magical_fortress_suffer_setback = {
 	increase_magic_experience = { unmodified_amount = $amount$ }
 	custom_tooltip = tooltip_gain_on_complete_project
@@ -249,7 +262,20 @@ kill_a_lich_effect = {
 		change_dip = -6
 		change_mil = -6
 
-		hidden_effect = { country_event = { id = magic_project_lichdom.13 days = 1 } }
+		hidden_effect = { 
+			country_event = { id = magic_project_lichdom.13 days = 1 } 
+			if = {
+				limit = {
+					OR = {
+						artificery_locked_mixed_mode = yes
+						artificery_locked_artificery_mode = yes
+						artificery_tag_needs_artificers = yes
+					}
+					has_country_flag = artificery_unlocked
+				}
+				country_event = { id = magic_artificery_setup.1 days = 7 }
+			}
+		}
 	}
 }
 magic_project_clear_lichdom_government_flags = {
