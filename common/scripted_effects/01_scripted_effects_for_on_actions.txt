@@ -14690,7 +14690,7 @@ on_province_owner_change_effect = {
 	}
 	if = {
 		limit = {
-			owner = { is_or_was_tag = { tag = A56 } #All of Celliande stuff
+			owner = { is_or_was_tag = { tag = A56 } } #All of Celliande stuff
 		}
 		if = {
 			limit = {
@@ -14698,6 +14698,7 @@ on_province_owner_change_effect = {
 					has_country_flag = celliande_ultimatum_rejected
 				}
 				hawkfields_area = {
+					type = all
 					owned_by = A56
 				}
 			}
@@ -14710,7 +14711,7 @@ on_province_owner_change_effect = {
 			}
 		}
 		if = {
-			limit = { province_id = 919 } }
+			limit = { province_id = 919 }
 			owner = {
 				set_country_flag = anb_on_action_tracking_exploit_dev_flag
 			}
@@ -14727,6 +14728,16 @@ on_province_owner_change_effect = {
 			}
 			add_province_modifier = {
 				name = celliande_revival
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				mission_completed = celliande_beyond_coast
+				area = flooded_coast_area
+			}
+			add_province_modifier = {
+				name = celliande_seron_gov_modifier
 				duration = -1
 			}
 		}

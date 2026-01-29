@@ -471,6 +471,9 @@ celliande_2_missions = {
 		}
 
 		effect = {
+			country_event = {
+				id = celliande.4
+			}
 			if = {
 				limit = { F32 = { exists = yes } }
 				add_casus_belli = {
@@ -487,7 +490,6 @@ celliande_2_missions = {
 					months = 360
 				}
 			}
-			
 			complex_dynamic_effect = {
 				first_custom_tooltip = celliande_beyond_coast.tt1
 				first_limit = "
@@ -524,6 +526,15 @@ celliande_2_missions = {
 			}
 			flooded_coast_area = {
 				add_claim = ROOT
+			}
+			flooded_coast_area = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_province_modifier = {
+					name = celliande_seron_gov_modifier
+					duration = -1
+				}
 			}
 		}
 	}
@@ -698,11 +709,11 @@ celliande_3_missions = {
 		trigger = {
 			rhinmond_area = {
 				type = all
-				owned_by = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 			gnollsgate_area = {
 				type = all
-				owned_by = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 			919 = {
 				if = { limit = { has_dlc = "Cradle of Civilization" } 
@@ -1588,8 +1599,13 @@ celliande_5_missions = {
 						area = east_bisan_area
 						area = west_bisan_area
 					}
-					local_autonomy = 10
-					NOT = { has_province_modifier = autonomy_decreased }
+					OR = {
+						NOT = { owned_by = ROOT }
+						AND = {
+							local_autonomy = 10
+							NOT = { has_province_modifier = autonomy_decreased }
+						}
+					}
 				}
 				AND = { 
 					province_id = 332
