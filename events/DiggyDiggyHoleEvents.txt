@@ -6132,7 +6132,7 @@ country_event = {
 
 	immediate = { 
 		hidden_effect = { 
-			random_owned_province = { limit = { OR = { culture_group = orcish has_orcish_minority_trigger = yes } } save_event_target_as = event_province }
+			random_owned_province = { limit = { OR = { culture_is_orcish = yes has_orcish_minority_trigger = yes } } save_event_target_as = event_province }
 			random_known_country = { limit = { capital_scope = { superregion = escann_superregion } NOT = { culture_group = orcish culture_group = goblin } } save_event_target_as = event_country } 
 		} 
 	}
@@ -6145,7 +6145,7 @@ country_event = {
 		large_decrease_of_orcish_tolerance_effect = yes
 		event_target:event_province = {
 			if = {
-				limit = { culture_group = orcish }
+				limit = { culture_is_orcish = yes }
 				change_culture = ROOT
 				change_religion = ROOT 
 			}
@@ -6153,7 +6153,7 @@ country_event = {
 		}
 		event_target:event_country = {
 			random_owned_province = {
-				limit = { superregion = escann_superregion NOT = { culture_group = orcish } }
+				limit = { superregion = escann_superregion NOT = { culture_is_orcish = yes } }
 				add_orcish_minority_size_effect = yes
 			}
 		}
@@ -9816,8 +9816,8 @@ country_event = {
 		name = diggy.576.b
 		trigger = {
 			OR = {
-				culture_group = goblin
-				culture_group = kobold
+				culture_is_goblin = yes
+				culture_is_kobold = yes
 			}
 		}
 		highlight = yes
@@ -9881,15 +9881,15 @@ country_event = {
 			add_base_manpower = 1
 			if = {
 				limit = { 
-					ROOT = { culture_group = dwarven high_tolerance_goblin_race_trigger = yes } #you disgust me
-					NOT = { culture_group = goblin }
+					ROOT = { culture_is_dwarven = yes high_tolerance_goblin_race_trigger = yes } #you disgust me
+					NOT = { culture_is_goblin = yes }
 				}
 				add_goblin_minority_size_effect = yes
 			}
 			else_if = {
 				limit = { 
-					ROOT = { culture_group = goblin high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
-					NOT = { culture_group = dwarven }
+					ROOT = { culture_is_goblin = yes high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
+					NOT = { culture_is_dwarven = yes }
 				}
 				add_dwarven_minority_size_effect = yes
 			}
@@ -9900,15 +9900,15 @@ country_event = {
 			add_base_manpower = 1
 			if = {
 				limit = { 
-					ROOT = { culture_group = dwarven high_tolerance_goblin_race_trigger = yes } #you disgust me
-					NOT = { culture_group = goblin }
+					ROOT = { culture_is_dwarven = yes high_tolerance_goblin_race_trigger = yes } #you disgust me
+					NOT = { culture_is_goblin = yes }
 				}
 				add_goblin_minority_size_effect = yes
 			}
 			else_if = {
 				limit = { 
-					ROOT = { culture_group = goblin high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
-					NOT = { culture_group = dwarven }
+					ROOT = { culture_is_goblin = yes high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
+					NOT = { culture_is_dwarven = yes }
 				}
 				add_dwarven_minority_size_effect = yes
 			}
@@ -9919,15 +9919,15 @@ country_event = {
 			add_base_manpower = 1
 			if = {
 				limit = { 
-					ROOT = { culture_group = dwarven high_tolerance_goblin_race_trigger = yes } #you disgust me
-					NOT = { culture_group = goblin }
+					ROOT = { culture_is_dwarven = yes high_tolerance_goblin_race_trigger = yes } #you disgust me
+					NOT = { culture_is_goblin = yes }
 				}
 				add_goblin_minority_size_effect = yes
 			}
 			else_if = {
 				limit = { 
-					ROOT = { culture_group = goblin high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
-					NOT = { culture_group = dwarven }
+					ROOT = { culture_is_goblin = yes high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
+					NOT = { culture_is_dwarven = yes }
 				}
 				add_dwarven_minority_size_effect = yes
 			}
@@ -10879,8 +10879,8 @@ country_event = {
 		highlight = yes
 		trigger = { 
 			OR = {
-			culture_group = goblin 
-			culture_group = kobold 
+				culture_is_goblin = yes
+				culture_is_kobold = yes
 			}
 		}
 		event_target:event_province = { 
@@ -11862,9 +11862,9 @@ country_event = {
 	trigger = {
 		capital_scope = { continent = serpentspine }
 		OR = {
-			culture_group = dwarven
-			culture_group = goblin
-			culture_group = orcish
+			culture_is_dwarven = yes
+			culture_is_goblin = yes
+			culture_is_orcish = yes
 		}
 		any_owned_province = {
 			is_city = yes
@@ -12007,17 +12007,17 @@ country_event = {
 						is_city = yes
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin	
+							culture_is_dwarven = yes
+							culture_is_goblin = yes	
 						}
 						OR = {
 							AND = {
 								has_dwarven_minority_trigger = yes
-								ROOT = { NOT = { has_country_modifier = racial_pop_dwarven_purge has_country_modifier = racial_pop_dwarven_expulsion culture_group = dwarven } }
+								ROOT = { NOT = { has_country_modifier = racial_pop_dwarven_purge has_country_modifier = racial_pop_dwarven_expulsion culture_is_dwarven = yes } }
 							}
 							AND = {
 								has_goblin_minority_trigger = yes
-								ROOT = { NOT = { has_country_modifier = racial_pop_goblin_purge has_country_modifier = racial_pop_goblin_expulsion culture_group = goblin } }
+								ROOT = { NOT = { has_country_modifier = racial_pop_goblin_purge has_country_modifier = racial_pop_goblin_expulsion culture_is_goblin = yes } }
 							}
 							AND = {
 								has_orcish_minority_trigger = yes
@@ -12031,17 +12031,17 @@ country_event = {
 						is_city = yes
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin	
+							culture_is_dwarven = yes
+							culture_is_goblin = yes	
 						}
 						OR = {
 							AND = {
 								has_dwarven_minority_trigger = yes
-								ROOT = { NOT = { has_country_modifier = racial_pop_dwarven_purge has_country_modifier = racial_pop_dwarven_expulsion culture_group = dwarven } }
+								ROOT = { NOT = { has_country_modifier = racial_pop_dwarven_purge has_country_modifier = racial_pop_dwarven_expulsion culture_is_dwarven = yes } }
 							}
 							AND = {
 								has_goblin_minority_trigger = yes
-								ROOT = { NOT = { has_country_modifier = racial_pop_goblin_purge has_country_modifier = racial_pop_goblin_expulsion culture_group = goblin } }
+								ROOT = { NOT = { has_country_modifier = racial_pop_goblin_purge has_country_modifier = racial_pop_goblin_expulsion culture_is_goblin = yes } }
 							}
 							AND = {
 								has_orcish_minority_trigger = yes
@@ -12060,9 +12060,9 @@ country_event = {
 					any_owned_province = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -12084,9 +12084,9 @@ country_event = {
 					limit = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -12114,9 +12114,9 @@ country_event = {
 					any_owned_province = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -12138,9 +12138,9 @@ country_event = {
 					limit = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -12168,9 +12168,9 @@ country_event = {
 					any_owned_province = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -12193,9 +12193,9 @@ country_event = {
 					limit = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {

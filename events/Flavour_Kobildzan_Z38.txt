@@ -276,17 +276,17 @@ country_event = { #Artificer Malcontents
 		goto = malcontents_province
 		custom_tooltip = to_find_tayekan_1_tt 
 		random_owned_province = {
-			limit = { culture_group = kobold }
+			limit = { culture_is_kobold = yes }
 			remove_random_development = yes
 		}
 		event_target:malcontents_province = {
 			add_random_development = 2
 			if = {
-				limit = { NOT = { culture_group = kobold } }
+				limit = { NOT = { culture_is_kobold = yes } }
 				add_kobold_minority_size_effect = yes
 			}
 			if = {
-				limit = { NOT = { culture_group = gnomish } }
+				limit = { NOT = { culture_is_gnomish = yes } }
 				add_gnomish_minority_size_effect = yes
 			}
 			owner = {
@@ -579,7 +579,7 @@ country_event = { #Artificery As One
 					random_owned_province = {
 						limit = {
 							region = dragon_coast_region
-							NOT = { culture_group = gnomish } 
+							NOT = { culture_is_gnomish = yes } 
 							NOT = { has_large_gnomish_minority_trigger = yes }
 						}
 						add_gnomish_minority_size_effect = yes 
@@ -592,7 +592,7 @@ country_event = { #Artificery As One
 					random_owned_province = {
 						limit = {
 							region = dragon_coast_region
-							NOT = { culture_group = goblin } 
+							NOT = { culture_is_goblin = yes } 
 							NOT = { has_large_goblin_minority_trigger = yes }
 						}
 						add_goblin_minority_size_effect = yes 
