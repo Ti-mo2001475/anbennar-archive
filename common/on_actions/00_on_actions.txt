@@ -24758,6 +24758,46 @@ on_create_vassal = {
 # FROM = Capital province of the area - the first one listed in the area definition in map\area.txt
 # First province in state is set
 on_holy_order_established = {
+	FROM = {
+		if = {
+			limit = {
+				# Every Corinite holy order has these effects so I can just check the religion here
+				religion = corinite
+				NOT = { has_province_modifier = corinite_order_event_block }
+			}
+			trigger_switch = {
+				on_trigger = holy_order
+				begga_order = { owner = { country_event = { id = corinite.312 } } }
+				dame_order = { owner = { country_event = { id = corinite.314 } } }
+				esmaryal_order = { owner = { country_event = { id = corinite.315 } } }
+				nerat_order = { owner = { country_event = { id = corinite.320 } } }
+				ara_order = { owner = { country_event = { id = corinite.310 } } }
+				minara_order = { owner = { country_event = { id = corinite.317 } } }
+				munas_order = { owner = { country_event = { id = corinite.318 } } }
+				ryala_order = { add_province_triggered_modifier = cerisian_sisterhood_random_favors } # since the randomness here is fixed, use a PTM removed after 1 day to make it actually pick a random ally
+				balgar_order = { owner = { country_event = { id = corinite.311 } } }
+				corin_order = { owner = { country_event = { id = corinite.313 } } }
+				falah_order = { owner = { country_event = { id = corinite.316 } } }
+				nathalyne_order = {
+					owner = { country_event = { id = corinite.319 } }
+					area = { add_nationalism = -10 }
+				}
+				dookan_order = { owner = { country_event = { id = corinite.322 } } }
+				adean_order = {
+					owner = { country_event = { id = corinite.323 } }
+					area = { add_nationalism = -10 }
+				}
+				istralore_order = { owner = { country_event = { id = istralore.15 } } }
+				crimson_wings_protectors_order = { owner = { country_event = { id = verne.902 } } }
+				steward_of_the_crimson_wings_order = { owner = { country_event = { id = verne.903 } } }
+			}
+			add_province_modifier = {
+				name = corinite_order_event_block
+				hidden = yes
+				duration = -1
+			}
+		}
+	}
 	ROOT = {
 		if = {
 			limit = {
