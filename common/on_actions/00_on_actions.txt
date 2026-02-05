@@ -24755,7 +24755,7 @@ on_create_vassal = {
 }
 
 # ROOT = Country establishing it
-# FROM = Capital province of the area - the first one listed in the area definition in map\area.txt
+# FROM = The first province listed in the area definition in map\area.txt
 # First province in state is set
 on_holy_order_established = {
 	FROM = {
@@ -24833,6 +24833,212 @@ on_holy_order_established = {
 				owner = { has_estate_privilege = artifice_invention_table_war }
 			}
 			owner = { add_manpower = 2.5 }
+		}
+		if = {
+			limit = {
+				FROM = {
+					holy_order = shadow_warriors
+				}
+			}
+			add_corruption = 2
+			change_variable = {
+				which = ShadowWarriorsVar
+				value = 1
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							check_variable = {
+								which = ShadowWarriorsVar
+								value = 5
+							}
+							NOT = { has_country_flag = had_shadow_warriors_1 }
+						}
+						AND = {
+							check_variable = {
+								which = ShadowWarriorsVar
+								value = 10
+							}
+							NOT = { has_country_flag = had_shadow_warriors_2 }
+						}
+						AND = {
+							check_variable = {
+								which = ShadowWarriorsVar
+								value = 15
+							}
+							NOT = { has_country_flag = had_shadow_warriors_3 }
+						}
+						AND = {
+							check_variable = {
+								which = ShadowWarriorsVar
+								value = 20
+							}
+							NOT = { has_country_flag = had_shadow_warriors_4 }
+						}
+						AND = {
+							check_variable = {
+								which = ShadowWarriorsVar
+								value = 25
+							}
+							NOT = { has_country_flag = had_shadow_warriors_5 }
+						}
+						AND = {
+							check_variable = {
+								which = ShadowWarriorsVar
+								value = 30
+							}
+							NOT = { has_country_flag = had_shadow_warriors_6 }
+						}
+					}
+				}
+				country_event = {
+					id = sarhalevents.7
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						num_of_owned_provinces_with = {
+							has_province_modifier = shadow_warriors_state_mod
+							value = 15
+						}
+					}
+				}
+				FROM = {
+					add_province_modifier = {
+						name = shadow_warriors_state_mod
+						duration = -1
+					}
+				}
+				if = {
+					limit = { has_country_modifier = shadow_warriors_fraction_mod_14 }
+					remove_country_modifier = shadow_warriors_fraction_mod_14
+					add_country_modifier = {
+						name = shadow_warriors_fraction_mod_15
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = { has_country_modifier = shadow_warriors_fraction_mod_13 }
+					remove_country_modifier = shadow_warriors_fraction_mod_13
+					add_country_modifier = {
+						name = shadow_warriors_fraction_mod_14
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = { has_country_modifier = shadow_warriors_fraction_mod_12 }
+					remove_country_modifier = shadow_warriors_fraction_mod_12
+					add_country_modifier = {
+						name = shadow_warriors_fraction_mod_13
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = { has_country_modifier = shadow_warriors_fraction_mod_11 }
+					remove_country_modifier = shadow_warriors_fraction_mod_11
+					add_country_modifier = {
+						name = shadow_warriors_fraction_mod_12
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = { has_country_modifier = shadow_warriors_fraction_mod_10 }
+					remove_country_modifier = shadow_warriors_fraction_mod_10
+					add_country_modifier = {
+						name = shadow_warriors_fraction_mod_11
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = { has_country_modifier = shadow_warriors_fraction_mod_9 }
+					remove_country_modifier = shadow_warriors_fraction_mod_9
+					add_country_modifier = {
+						name = shadow_warriors_fraction_mod_10
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = { has_country_modifier = shadow_warriors_fraction_mod_8 }
+					remove_country_modifier = shadow_warriors_fraction_mod_8
+					add_country_modifier = {
+						name = shadow_warriors_fraction_mod_9
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = { has_country_modifier = shadow_warriors_fraction_mod_7 }
+					remove_country_modifier = shadow_warriors_fraction_mod_7
+					add_country_modifier = {
+						name = shadow_warriors_fraction_mod_8
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = { has_country_modifier = shadow_warriors_fraction_mod_6 }
+					remove_country_modifier = shadow_warriors_fraction_mod_6
+					add_country_modifier = {
+						name = shadow_warriors_fraction_mod_7
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = { has_country_modifier = shadow_warriors_fraction_mod_5 }
+					remove_country_modifier = shadow_warriors_fraction_mod_5
+					add_country_modifier = {
+						name = shadow_warriors_fraction_mod_6
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = { has_country_modifier = shadow_warriors_fraction_mod_4 }
+					remove_country_modifier = shadow_warriors_fraction_mod_4
+					add_country_modifier = {
+						name = shadow_warriors_fraction_mod_5
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = { has_country_modifier = shadow_warriors_fraction_mod_3 }
+					remove_country_modifier = shadow_warriors_fraction_mod_3
+					add_country_modifier = {
+						name = shadow_warriors_fraction_mod_4
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = { has_country_modifier = shadow_warriors_fraction_mod_2 }
+					remove_country_modifier = shadow_warriors_fraction_mod_2
+					add_country_modifier = {
+						name = shadow_warriors_fraction_mod_3
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = { has_country_modifier = shadow_warriors_fraction_mod_1 }
+					remove_country_modifier = shadow_warriors_fraction_mod_1
+					add_country_modifier = {
+						name = shadow_warriors_fraction_mod_2
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = { NOT = { has_country_modifier = shadow_warriors_fraction_mod_15 } }
+					add_country_modifier = {
+						name = shadow_warriors_fraction_mod_1
+						duration = -1
+					}
+				}
+			}
+			else = {
+				FROM = {
+					add_province_modifier = {
+						name = shadow_warriors_cringe_state_mod
+						duration = -1
+					}
+				}
+			}
 		}
 	}
 	# Having these effects here for Volcanic Truth prevents the error log spam from the tooltip
