@@ -185,7 +185,7 @@ country_event = { #On trail of Hero 2
 		hidden_effect = {
 			set_country_flag = had_celliande_wayward_order
 			country_event = {
-				id = celliande.5
+				id = celliande.6
 				days = 1095
 			}
 		}
@@ -204,6 +204,7 @@ country_event = { #On trail of Hero 3
 	option = {
 		name = celliande.6.a
 		define_admiral = {
+			name = "Aldres Serondoruni"
 			shock = 2
 			fire = 3
 			manuever = 5
@@ -518,6 +519,22 @@ country_event = { #Final
 		add_manpower = -5
 		the_borders_region = {
 			add_permanent_claim = ROOT
+		}
+		add_country_modifier = {
+			name = A75_true_heirs_of_milcorissia
+			duration = -1
+		}
+		change_tag = B94
+		hidden_effect = { restore_country_name = yes }
+		add_country_modifier = {
+			name = "centralization_modifier"
+			duration = 7300
+		}
+		if = {
+			limit = {
+				has_custom_ideas = no
+			}
+			country_event = { id = ideagroups.1 } #Swap Ideas
 		}
 	}
 }
@@ -1066,10 +1083,10 @@ country_event = { #Hallowed halls level 3
 	
 	option = {
 		name = celliande.108.a
-		custom_tooltip = celliande.108.btt
+		custom_tooltip = celliande.108.att
 		hidden_effect = {
 			add_country_modifier = {
-				name = celliande_will_die
+				name = celliande_darkness_light
 				duration = -1
 			}
 		}
@@ -1497,19 +1514,51 @@ country_event = { #Quinterbury 1
 	}
 	option = {
 		name = celliande.157.b
+		highlight = yes
+		trigger = {
+			OR = {
+				A33 = {
+					has_opinion = {
+						who = ROOT
+						value = 50
+					}
+				}
+				A55 = {
+					has_opinion = {
+						who = ROOT
+						value = 50
+					}
+				}
+			}
+		}
 		add_treasury = -200
 		add_estate_loyalty = {
 			estate = estate_adventurers
 			loyalty = 10
 		}
 		if = {
-			limit = { NOT = { is_rival = A33 } }
+			limit = {
+				A33 = {
+					has_opinion = {
+						who = ROOT
+						value = 50
+					}
+				}
+			}
 			reverse_add_opinion = {
 				who = A33
 				modifier = celliande_sponsored_adventurers
 			}
 		}
-		else = {
+		else_if = {
+			limit = {
+				A55 = {
+					has_opinion = {
+						who = ROOT
+						value = 50
+					}
+				}
+			}
 			reverse_add_opinion = {
 				who = A55
 				modifier = celliande_sponsored_adventurers
