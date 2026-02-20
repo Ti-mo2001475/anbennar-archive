@@ -1,3 +1,124 @@
+#Endralliande Political Organization
+estate_burghers_end_progressive_factions = {
+	icon = privilege_monopoly_of_goods_iron
+	max_absolutism = 0
+	loyalty = 0.1
+	influence = 0.1
+	is_valid = {
+		has_reform = overseas_governorate
+	}
+	can_select = {
+		always = yes
+	}
+	can_revoke = {
+		always = no
+	}
+	on_granted = {
+		hidden_effect = {
+			set_variable = {
+				which = end_agrarian_happiness
+				value = 50
+			}
+			set_variable = {
+				which = end_industrialist_happiness
+				value = 50
+			}
+			set_variable = {
+				which = end_imperialist_happiness
+				value = 50
+			}
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+		trade_company_investment_cost = -0.1
+		burghers_privilege_slots = 1
+	}
+	conditional_modifier = {
+		trigger = { 
+			check_variable = {
+				which = end_agrarian_happiness
+				value = 70
+			}
+		}
+		modifier = { 
+			loyalty_change_on_revoked = 0.05
+			candidate_random_bonus = 1
+		}
+	}
+	conditional_modifier = {
+		trigger = { 
+			check_variable = {
+				which = end_industrialist_happiness
+				value = 70
+			}
+		}
+		modifier = { 
+			artificers_capacity = 10
+			candidate_random_bonus = 1
+		}
+	}
+	conditional_modifier = {
+		trigger = { 
+			check_variable = {
+				which = end_imperialist_happiness
+				value = 70
+			}
+		}
+		modifier = {
+			liberty_desire_from_subject_development = -0.1
+			candidate_random_bonus = 1
+		}
+	}
+	#below 40, they are disloyal
+	conditional_modifier = {
+		trigger = {
+			NOT = {
+				check_variable = {
+					which = end_agrarian_happiness
+					value = 40
+				}
+			}	
+		}
+		modifier = { 
+			candidate_random_bonus = -1
+		}
+	}
+	conditional_modifier = {
+		trigger = { 
+			NOT = {
+				check_variable = {
+					which = end_industrialist_happiness
+					value = 40
+				}
+			}
+		}
+		modifier = { 
+			candidate_random_bonus = -1
+		}
+	}
+	conditional_modifier = {
+		trigger = { 
+			NOT = {
+				check_variable = {
+					which = end_imperialist_happiness
+					value = 40
+				}
+			}
+		}
+		modifier = { 
+			candidate_random_bonus = -1
+		}
+	}
+	
+	on_revoked = {}
+	on_invalid = {}
+	ai_will_do = {
+		factor = 0
+	}
+}
+
 estate_burghers_land_rights = {
 	icon = privilege_grant_autonomy
 	land_share = 5
