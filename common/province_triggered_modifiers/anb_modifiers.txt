@@ -7336,7 +7336,16 @@ Z60_jinqiu_war = {
 				who = Y02
 				value = 80
 			}
-			controls = 4842 #Jincheng
+			OR = {
+				controls = 4842 #Jincheng
+				any_ally = {
+					is_in_war = {
+						attacker_leader = ROOT
+						defender_leader = Y02
+					}
+					controls = 4842 #Jincheng
+				}
+			}
 		}
 		Z61 = { is_subject_of = Z60 } #Xiongxiap
 	}
@@ -7360,5 +7369,23 @@ Z60_jungle_war = {
 	on_activation = {
 		V23 = { country_event = { id = tsukqiao.32 } }
 		remove_province_triggered_modifier = Z60_jungle_war
+	}
+}
+G61_rebel_checker_ptm = {
+	hidden = yes
+	potential = { always = yes }
+	trigger = {
+		G61 = {
+			NOT = {
+				OR = {
+					num_of_rebel_armies = 1
+					num_of_rebel_controlled_provinces = 1
+				}
+			}
+		}
+	}
+	on_activation = {
+		G61 = { country_event = { id = flavour_kimanis.14 } }
+		remove_province_triggered_modifier = G61_rebel_checker_ptm
 	}
 }
