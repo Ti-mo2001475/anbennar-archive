@@ -1773,6 +1773,13 @@ necromancy_0_false_life_effect = { # False Life
 necromancy_1_steal_vitality_effect = { # Steal Vitality
 	custom_tooltip = necromancy_1_steal_vitality_effect_tt
 	necromancy_1_steal_vitality_sub_effect = { days = 1825 }
+	if = {
+		limit = { has_country_flag = necromancy_2_steal_vitality_add_attrition }
+		add_country_modifier = { name = necromancy_2_steal_vitality_mod_attrition duration = 3650 }
+	}
+	else = {
+		add_country_modifier = { name = necromancy_2_steal_vitality_mod duration = 3650 }
+	}
 }
 necromancy_1_steal_vitality_sub_effect = { # Steal Vitality sub-effect (not needed rn)
 	tooltip = {
@@ -1866,14 +1873,14 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 					ruler_is_homunculus = yes
 				}
 			}
-			add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = 36500 }
+			add_necromancy_2_speak_with_dead_cost = { duration = 36500 }
 		}
 		else_if = { #40 years
 			limit = {
 				fast_ruler_is_elven = yes
 				NOT = { ruler_culture = wood_elf }
 			}
-			add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = 14600 }
+			add_necromancy_2_speak_with_dead_cost = { duration = 14600 }
 		}
 		else_if = { #20 years
 			limit = {
@@ -1883,10 +1890,10 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 					fast_ruler_is_dwarven = yes
 				}
 			}
-			add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = 7300 }
+			add_necromancy_2_speak_with_dead_cost = { duration = 7300 }
 		}
 		else = { #8 years - default
-			add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = 2120 }
+			add_necromancy_2_speak_with_dead_cost = { duration = 2120 }
 		}
 	}
 	
@@ -2064,10 +2071,10 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 add_necromancy_2_speak_with_dead_cost = {
 	if = {
 		limit = { has_country_flag = necromancy_2_speak_with_dead_cost_01 }
-		add_ruler_modifier = { name = necromancy_2_speak_with_dead_mod_01 duration = $duration$ }
+		add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod_01 duration = $duration$ }
 	}
 	else = {
-		add_ruler_modifier = { name = necromancy_2_speak_with_dead_mod duration = $duration$ }
+		add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = $duration$ }
 	}
 }
 necromancy_2_remove_pain_effect = { # Remove Pain
@@ -2087,13 +2094,6 @@ necromancy_2_remove_pain_effect = { # Remove Pain
 		add_yearly_manpower = 1
 	}
 	else = { add_yearly_manpower = 2 } #default
-	if = {
-		limit = { has_country_flag = necromancy_2_steal_vitality_add_attrition }
-		add_country_modifier = { name = necromancy_2_steal_vitality_mod_attrition duration = 3650 }
-	}
-	else = {
-		add_country_modifier = { name = necromancy_2_steal_vitality_mod duration = 3650 }
-	}
 }
 necromancy_3_chronophage_effect = { # Chronophage
 	increase_witch_king_points_large = { level = necromancy_level_3 }
