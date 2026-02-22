@@ -242,7 +242,7 @@ feiten_skyport_handler_mod = {
 		owner = {
 			random_active_trade_node = {
 				limit = { same_trade_node_as = ROOT }
-				set_province_flag = feiten_node_has_skyport
+				set_province_flag = feiten_node_has_active_skyport
 			}
 		}
 		add_permanent_province_modifier = {
@@ -326,6 +326,12 @@ feiten_skyport_handler_mod = {
 	}
 	
 	on_deactivation = {
+		owner = {
+			random_active_trade_node = {
+				limit = { same_trade_node_as = ROOT }
+				clr_province_flag = feiten_node_has_active_skyport
+			}
+		}
 		remove_province_modifier = feiten_skypost_mod_visible
 		remove_trade_modifier = {
 			who = event_target:feiten_or_was_feiten_target
