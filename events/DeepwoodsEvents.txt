@@ -4522,7 +4522,7 @@ country_event = { #The Hunter's Gambit Tournament Start
 		}
 		hidden_effect = {
 			country_event = { id = deepwoods.102 days = 121 }
-			7011 = { province_event = { id = deepwoods.105 days = 241 } } #Round Outcome
+			country_event = { id = deepwoods.105 days = 241 } #Round Outcome
 		}
 	}
 
@@ -4568,20 +4568,12 @@ country_event = { #The Hunter's Gambit Tournament Start Handler
 		trigger = {
 			calc_true_if = {
 				amount = 2
-				all_known_country = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-				}
+				all_known_country = { has_country_flag = hunters_gambit_contender }
 			}
 		}
 		
 		every_known_country = {
-			limit = {
-				primary_culture = wood_elf
-				capital_scope = { superregion = deepwoods_superregion }
-				has_country_flag = hunters_gambit_contender
-			}
+			limit = { has_country_flag = hunters_gambit_contender }
 			country_event = { id = deepwoods.103 }
 		}
 		country_event = { id = deepwoods.103 }
@@ -4590,29 +4582,17 @@ country_event = { #The Hunter's Gambit Tournament Start Handler
 	option = { #Exactly two contestants
 		name = deepwoods.102.b
 		trigger = {
-			any_known_country = {
-				primary_culture = wood_elf
-				capital_scope = { superregion = deepwoods_superregion }
-				has_country_flag = hunters_gambit_contender
-			}
+			any_known_country = { has_country_flag = hunters_gambit_contender }
 			NOT = {
 				calc_true_if = {
 					amount = 2
-					all_known_country = {
-						primary_culture = wood_elf
-						capital_scope = { superregion = deepwoods_superregion }
-						has_country_flag = hunters_gambit_contender
-					}
+					all_known_country = { has_country_flag = hunters_gambit_contender }
 				}
 			}
 		}
 		
 		random_known_country = {
-			limit = {
-				primary_culture = wood_elf
-				capital_scope = { superregion = deepwoods_superregion }
-				has_country_flag = hunters_gambit_contender
-			}
+			limit = { has_country_flag = hunters_gambit_contender }
 			country_event = { id = deepwoods.108 days = 100 } #Final Gambit
 		}
 		country_event = { id = deepwoods.108 days = 100 } #Final Gambit
@@ -4623,11 +4603,7 @@ country_event = { #The Hunter's Gambit Tournament Start Handler
 		name = deepwoods.102.c
 		trigger = {
 			NOT = {
-				any_known_country = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-				}
+				any_known_country = { has_country_flag = hunters_gambit_contender }
 			}
 		}
 		country_event = { id = deepwoods.106 }
@@ -4644,9 +4620,7 @@ country_event = { #The Hunter's Gambit Tournament Preparations
 	is_triggered_only = yes
 
 	
-	trigger = {
-		has_country_flag = hunters_gambit_contender
-	}
+	trigger = { has_country_flag = hunters_gambit_contender }
 
 	option = { #Train Only
 		name = deepwoods.103.a
@@ -4655,16 +4629,40 @@ country_event = { #The Hunter's Gambit Tournament Preparations
 		if = {
 			limit = { army_tradition = 60 }
 			random_list = {
-				30 = { set_country_flag = hunters_gambit_two_vp custom_tooltip = hunters_gambit_get_two_VP_tt }
-				60 = { set_country_flag = hunters_gambit_one_vp custom_tooltip = hunters_gambit_get_one_VP_tt }
-				10 = { set_country_flag = hunters_gambit_zero_vp }
+				30 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 2
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				60 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 1
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				10 = {}
 			}
 		} 
 		else = {
 			random_list = {
-				20 = { set_country_flag = hunters_gambit_two_vp custom_tooltip = hunters_gambit_get_two_VP_tt }
-				50 = { set_country_flag = hunters_gambit_one_vp custom_tooltip = hunters_gambit_get_one_VP_tt }
-				30 = { set_country_flag = hunters_gambit_zero_vp }
+				20 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 2
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				50 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 1
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				30 = {}
 			}
 		}
 	}
@@ -4673,23 +4671,47 @@ country_event = { #The Hunter's Gambit Tournament Preparations
 		name = deepwoods.103.b
 		if = {
 			limit = { monthly_income = 111.11 }
-			add_treasury = 200
+			add_treasury = -200
 		}
 		else = { add_years_of_income = -0.15 }
 		custom_tooltip = hunters_gambit_need_inno_tt
 		if = {
 			limit = { innovativeness = 5 }
 			random_list = {
-				35 = { set_country_flag = hunters_gambit_two_vp custom_tooltip = hunters_gambit_get_two_VP_tt }
-				35 = { set_country_flag = hunters_gambit_one_vp custom_tooltip = hunters_gambit_get_one_VP_tt }
-				30 = { set_country_flag = hunters_gambit_zero_vp }
+				35 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 2
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				35 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 1
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				30 = {}
 			}
 		} 
 		else = {
 			random_list = {
-				25 = { set_country_flag = hunters_gambit_two_vp custom_tooltip = hunters_gambit_get_two_VP_tt }
-				25 = { set_country_flag = hunters_gambit_one_vp custom_tooltip = hunters_gambit_get_one_VP_tt }
-				50 = { set_country_flag = hunters_gambit_zero_vp }
+				25 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 2
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				25 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 1
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				50 = {}
 			}
 		}
 	}
@@ -4699,7 +4721,7 @@ country_event = { #The Hunter's Gambit Tournament Preparations
 		add_manpower = -1.5
 		if = {
 			limit = { monthly_income = 111.11 }
-			add_treasury = 200
+			add_treasury = -200
 		}
 		else = { add_years_of_income = -0.15 }
 		custom_tooltip = hunters_gambit_need_both_tt
@@ -4711,16 +4733,40 @@ country_event = { #The Hunter's Gambit Tournament Preparations
 				}
 			}
 			random_list = {
-				50 = { set_country_flag = hunters_gambit_two_vp custom_tooltip = hunters_gambit_get_two_VP_tt }
-				40 = { set_country_flag = hunters_gambit_one_vp custom_tooltip = hunters_gambit_get_one_VP_tt }
-				10 = { set_country_flag = hunters_gambit_zero_vp }
+				50 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 2
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				40 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 1
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				10 = {}
 			}
 		} 
 		else = {
 			random_list = {
-				45 = { set_country_flag = hunters_gambit_two_vp custom_tooltip = hunters_gambit_get_two_VP_tt }
-				35 = { set_country_flag = hunters_gambit_one_vp custom_tooltip = hunters_gambit_get_one_VP_tt }
-				20 = { set_country_flag = hunters_gambit_zero_vp }
+				45 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 2
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				35 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 1
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				20 = {}
 			}
 		}
 	}
@@ -4730,7 +4776,7 @@ country_event = { #The Hunter's Gambit Tournament Preparations
 		add_corruption = 2
 		if = {
 			limit = { monthly_income = 104.17 }
-			add_treasury = 500
+			add_treasury = -500
 		}
 		else = { add_years_of_income = -0.4 }
 		custom_tooltip = hunters_gambit_need_spy_tt
@@ -4757,13 +4803,14 @@ country_event = { #The Hunter's Gambit Tournament Preparations
 			random_list = {
 				45 = {
 					every_known_country = {
-						limit = {
-							has_country_flag = hunters_gambit_contender
+						limit = { has_country_flag = hunters_gambit_contender }
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = -2
 						}
-						set_country_flag = hunters_gambit_negative_two_vp
 					}
 				}
-				35 = { set_country_flag = hunters_gambit_zero_vp }
+				35 = {}
 				20 = { country_event = { id = deepwoods.104 } } # CHEATERS
 			}
 		}
@@ -4771,13 +4818,14 @@ country_event = { #The Hunter's Gambit Tournament Preparations
 			random_list = {
 				30 = {
 					every_known_country = {
-						limit = {
-							has_country_flag = hunters_gambit_contender
+						limit = { has_country_flag = hunters_gambit_contender }
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = -2
 						}
-						set_country_flag = hunters_gambit_negative_two_vp
 					}
 				}
-				50 = { set_country_flag = hunters_gambit_zero_vp }
+				50 = {}
 				20 = { country_event = { id = deepwoods.104 } } #CHEATERS
 			}
 		}
@@ -4815,7 +4863,7 @@ country_event = { #The Hunter's Gambit CHEATERS!
 	}
 }
 
-province_event = { #The Hunter's Gambit Round Handler
+country_event = { #The Hunter's Gambit Round Handler
 	id = deepwoods.105
 	title = deepwoods.105.t
 	desc = deepwoods.105.d
@@ -4825,247 +4873,46 @@ province_event = { #The Hunter's Gambit Round Handler
 	hidden = yes
 
 	immediate = {
+		save_event_target_as = hunters_gambit_round_loser
 		every_known_country = {
 			limit = { has_country_flag = hunters_gambit_contender }
-			set_variable = {
-				which = hunters_gambit_vp_tracker
-				value = 0
-			}
-			if = { 
-				limit = { has_country_flag = hunters_gambit_negative_two_vp }
-				change_variable = {
-					which = hunters_gambit_vp_tracker
-					value = -2
-				}
-				clr_country_flag = hunters_gambit_negative_two_vp
-			}
 			if = {
-				limit = { has_country_flag = hunters_gambit_two_vp }
-				change_variable = {
-					which = hunters_gambit_vp_tracker
-					value = 2
+				limit = {
+					event_target:hunters_gambit_round_loser = {
+						PREV = {
+							NOT = {
+								check_variable = {
+									which = hunters_gambit_vp_tracker
+									which = PREV
+								}
+							}
+						}
+					}
 				}
-				clr_country_flag = hunters_gambit_two_vp
+				save_event_target_as = hunters_gambit_round_loser
 			}
+		}
+		save_event_target_as = hunters_gambit_round_winner
+		every_known_country = {
+			limit = { has_country_flag = hunters_gambit_contender }
 			if = {
-				limit = { has_country_flag = hunters_gambit_one_vp }
-				change_variable = {
-					which = hunters_gambit_vp_tracker
-					value = 1
-				}
-				clr_country_flag = hunters_gambit_one_vp
-			}
-			clr_country_flag = hunters_gambit_zero_vp
-		}
-
-		if = {
-			limit = {
-				any_known_country = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-					check_variable = {
-						which = hunters_gambit_vp_tracker
-						value = 2
-					}
-				}
-			}
-			random_known_country = {
 				limit = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-					check_variable = {
-						which = hunters_gambit_vp_tracker
-						value = 2
-					}
-				}
-				set_country_flag = hunters_gambit_round_winner
-			}
-		}
-		else_if = {
-			limit = {
-				any_known_country = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-					check_variable = {
-						which = hunters_gambit_vp_tracker
-						value = 1
-					}
-				}
-			}
-			random_known_country = {
-				limit = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-					check_variable = {
-						which = hunters_gambit_vp_tracker
-						value = 1
-					}
-				}
-				set_country_flag = hunters_gambit_round_winner
-			}
-		}
-		else_if = {
-			limit = {
-				any_known_country = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-					check_variable = {
-						which = hunters_gambit_vp_tracker
-						value = 0
-					}
-				}
-			}
-			random_known_country = {
-				limit = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-					check_variable = {
-						which = hunters_gambit_vp_tracker
-						value = 0
-					}
-				}
-				set_country_flag = hunters_gambit_round_winner
-			}
-		}
-		else = {
-			limit = {
-				random_known_country = {
-					limit = {
-						primary_culture = wood_elf
-						capital_scope = { superregion = deepwoods_superregion }
-						has_country_flag = hunters_gambit_contender
-					}
-					set_country_flag = hunters_gambit_round_winner
-				}
-			}
-		}
-
-		if = {
-			limit = {
-				any_known_country = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-					NOT = {
-						has_country_flag = hunters_gambit_round_winner
-						check_variable = {
-							which = hunters_gambit_vp_tracker
-							value = 0
+					event_target:hunters_gambit_round_winner = {
+						PREV = {
+							check_variable = {
+								which = hunters_gambit_vp_tracker
+								which = PREV
+							}
+							NOT = {
+								is_variable_equal = {
+									which = hunters_gambit_vp_tracker
+									which = PREV
+								}
+							}
 						}
 					}
 				}
-			}
-			random_known_country = {
-				limit = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-					NOT = {
-						has_country_flag = hunters_gambit_round_winner
-						check_variable = {
-							which = hunters_gambit_vp_tracker
-							value = 0
-						}
-					}
-				}
-				set_country_flag = hunters_gambit_round_loser
-			}
-		}
-		else_if = {
-			limit = {
-				any_known_country = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-					NOT = {
-						has_country_flag = hunters_gambit_round_winner
-						check_variable = {
-							which = hunters_gambit_vp_tracker
-							value = 1
-						}
-					}
-				}
-			}
-			random_known_country = {
-				limit = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-					NOT = {
-						has_country_flag = hunters_gambit_round_winner
-						check_variable = {
-							which = hunters_gambit_vp_tracker
-							value = 1
-						}
-					}
-				}
-				set_country_flag = hunters_gambit_round_loser
-			}
-		}
-		else_if = {
-			limit = {
-				any_known_country = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-					NOT = {
-						has_country_flag = hunters_gambit_round_winner
-						check_variable = {
-							which = hunters_gambit_vp_tracker
-							value = 2
-						}
-					}
-				}
-			}
-			random_known_country = {
-				limit = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-					NOT = {
-						has_country_flag = hunters_gambit_round_winner
-						check_variable = {
-							which = hunters_gambit_vp_tracker
-							value = 2
-						}
-					}
-				}
-				set_country_flag = hunters_gambit_round_loser
-			}
-		}
-		else_if = {
-			limit = {
-				any_known_country = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-					NOT = { has_country_flag = hunters_gambit_round_winner }
-				}
-			}
-			random_known_country = {
-				limit = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-					NOT = { has_country_flag = hunters_gambit_round_winner }
-				}
-				set_country_flag = hunters_gambit_round_loser
-			}
-		}
-		else = {
-			random_known_country = {
-				limit = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-				}
-				set_country_flag = hunters_gambit_round_loser
+				save_event_target_as = hunters_gambit_round_winner
 			}
 		}
 	}
@@ -5076,28 +4923,33 @@ province_event = { #The Hunter's Gambit Round Handler
 
 		if = { 
 			limit = {
-				OR = {
-					AND = {
+				calc_true_if = {
+					amount = 3
+					has_country_flag = hunters_gambit_contender
+					all_known_country = {
 						has_country_flag = hunters_gambit_contender
-						any_known_country = {
-							primary_culture = wood_elf
-							capital_scope = { superregion = deepwoods_superregion }
-							has_country_flag = hunters_gambit_contender
-						}
-					}
-					AND = {
-						NOT = { has_country_flag = hunters_gambit_contender }
-						calc_true_if = {
-							amount = 2
-							all_known_country = {
-								primary_culture = wood_elf
-								capital_scope = { superregion = deepwoods_superregion }
-								has_country_flag = hunters_gambit_contender
-							}
-						}
+						NOT = { tag = event_target:hunters_gambit_round_loser }
 					}
 				}
 			}
+			every_known_country = {
+				limit = { has_country_flag = hunters_gambit_contender }
+				NOT = { tag = event_target:hunters_gambit_round_loser }
+				country_event = { id = deepwoods.103 days = 121 }
+			}
+			if = {
+				limit = { tag = event_target:hunters_gambit_round_loser }
+				random_known_country = {
+					limit = { has_country_flag = hunters_gambit_contender }
+					country_event = { id = deepwoods.105 days = 241 } #Round Outcome
+				}
+			}
+			else = {
+				country_event = { id = deepwoods.103 days = 121 } #Round Reset
+				country_event = { id = deepwoods.105 days = 241 } #Round Outcome
+			}
+		}
+		else = {
 			every_known_country = {
 				limit = { has_country_flag = hunters_gambit_contender }
 				country_event = { id = deepwoods.108 days = 100 } #Final Gambit
@@ -5108,25 +4960,8 @@ province_event = { #The Hunter's Gambit Round Handler
 			}
 			country_event = { id = deepwoods.109 days = 200 } #Final Gambit Handler
 		}
-		else = {
-			every_known_country = {
-				limit = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-					NOT = { has_country_flag = hunters_gambit_round_loser }
-				}
-				country_event = { id = deepwoods.103 days = 121 }
-			}
-			country_event = { id = deepwoods.103 } #Round Reset
-			7011 = { province_event = { id = deepwoods.105 days = 241 } } #Round Outcome
-		}
 		every_known_country = {
-			limit = {
-				primary_culture = wood_elf
-				capital_scope = { superregion = deepwoods_superregion }
-				has_country_flag = hunters_gambit_contender
-			}
+			limit = { has_country_flag = hunters_gambit_contender }
 			country_event = { id = deepwoods.107 }
 		}
 		if = {
@@ -5172,7 +5007,12 @@ country_event = { #The Hunter's Gambit Round Results with loc
 		add_mil_power = 25
 		add_prestige = 5
 		add_army_professionalism = 0.01
-		clr_country_flag = hunters_gambit_round_winner
+		hidden_effect = {
+			set_variable = {
+				which = hunters_gambit_vp_tracker
+				value = 0
+			}
+		}
 	}
 
 	option = { #We survived
@@ -5180,6 +5020,12 @@ country_event = { #The Hunter's Gambit Round Results with loc
 
 		add_mil_power = 20
 		add_army_professionalism = 0.005
+		hidden_effect = {
+			set_variable = {
+				which = hunters_gambit_vp_tracker
+				value = 0
+			}
+		}
 	}
 
 	option = { #We lost!
@@ -5188,7 +5034,12 @@ country_event = { #The Hunter's Gambit Round Results with loc
 		add_prestige = -10
 		add_legitimacy = -10
 		clr_country_flag = hunters_gambit_contender
-		clr_country_flag = hunters_gambit_round_loser
+		hidden_effect = {
+			set_variable = {
+				which = hunters_gambit_vp_tracker
+				value = 0
+			}
+		}
 	}
 }
 
@@ -5258,16 +5109,40 @@ country_event = { #The Hunter's Gambit Last Round
 		if = {
 			limit = { army_tradition = 60 }
 			random_list = {
-				30 = { set_country_flag = hunters_gambit_two_vp custom_tooltip = hunters_gambit_get_two_VP_tt }
-				60 = { set_country_flag = hunters_gambit_one_vp custom_tooltip = hunters_gambit_get_one_VP_tt }
-				10 = { set_country_flag = hunters_gambit_zero_vp }
+				30 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 2
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				60 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 1
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				10 = {}
 			}
 		} 
 		else = {
 			random_list = {
-				20 = { set_country_flag = hunters_gambit_two_vp custom_tooltip = hunters_gambit_get_two_VP_tt }
-				50 = { set_country_flag = hunters_gambit_one_vp custom_tooltip = hunters_gambit_get_one_VP_tt }
-				30 = { set_country_flag = hunters_gambit_zero_vp }
+				20 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 2
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				50 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 1
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				30 = {}
 			}
 		}
 	}
@@ -5276,23 +5151,47 @@ country_event = { #The Hunter's Gambit Last Round
 		name = deepwoods.108.b
 		if = {
 			limit = { monthly_income = 126.26 }
-			add_treasury = 500
+			add_treasury = -500
 		}
 		else = { add_years_of_income = -0.33 }
 		custom_tooltip = hunters_gambit_need_inno_tt
 		if = {
 			limit = { innovativeness = 5 }
 			random_list = {
-				35 = { set_country_flag = hunters_gambit_two_vp custom_tooltip = hunters_gambit_get_two_VP_tt }
-				35 = { set_country_flag = hunters_gambit_one_vp custom_tooltip = hunters_gambit_get_one_VP_tt }
-				30 = { set_country_flag = hunters_gambit_zero_vp }
+				35 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 2
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				35 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 1
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				30 = {}
 			}
 		} 
 		else = {
 			random_list = {
-				25 = { set_country_flag = hunters_gambit_two_vp custom_tooltip = hunters_gambit_get_two_VP_tt }
-				25 = { set_country_flag = hunters_gambit_one_vp custom_tooltip = hunters_gambit_get_one_VP_tt }
-				50 = { set_country_flag = hunters_gambit_zero_vp }
+				25 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 2
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				25 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 1
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				50 = {}
 			}
 		}
 	}
@@ -5302,7 +5201,7 @@ country_event = { #The Hunter's Gambit Last Round
 		add_yearly_manpower = -0.33
 		if = {
 			limit = { monthly_income = 126.26 }
-			add_treasury = 500
+			add_treasury = -500
 		}
 		else = { add_years_of_income = -0.33 }
 		custom_tooltip = hunters_gambit_need_both_tt
@@ -5314,16 +5213,40 @@ country_event = { #The Hunter's Gambit Last Round
 				}
 			}
 			random_list = {
-				50 = { set_country_flag = hunters_gambit_two_vp custom_tooltip = hunters_gambit_get_two_VP_tt }
-				40 = { set_country_flag = hunters_gambit_one_vp custom_tooltip = hunters_gambit_get_one_VP_tt }
-				10 = { set_country_flag = hunters_gambit_zero_vp }
+				50 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 2
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				40 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 1
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				10 = {}
 			}
 		} 
 		else = {
 			random_list = {
-				45 = { set_country_flag = hunters_gambit_two_vp custom_tooltip = hunters_gambit_get_two_VP_tt }
-				35 = { set_country_flag = hunters_gambit_one_vp custom_tooltip = hunters_gambit_get_one_VP_tt }
-				20 = { set_country_flag = hunters_gambit_zero_vp }
+				45 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 2
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				35 = {
+					change_variable = {
+						which = hunters_gambit_vp_tracker
+						value = 1
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				20 = {}
 			}
 		}
 	}
@@ -5349,58 +5272,9 @@ country_event = { #The Hunter's Gambit Last Round Handler
 		name = deepwoods.109.a
 
 		random_known_country = {
-			limit = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-			}
-			set_variable = {
-				which = hunters_gambit_vp_tracker
-				value = 0
-			}
-			if = {
-				limit = { has_country_flag = hunters_gambit_two_vp }
-				change_variable = {
-					which = hunters_gambit_vp_tracker
-					value = 2
-				}
-				clr_country_flag = hunters_gambit_two_vp
-			}
-			if = {
-				limit = { has_country_flag = hunters_gambit_one_vp }
-				change_variable = {
-					which = hunters_gambit_vp_tracker
-					value = 1
-				}
-				clr_country_flag = hunters_gambit_one_vp
-			}
-			clr_country_flag = hunters_gambit_zero_vp
+			limit = { has_country_flag = hunters_gambit_contender }
 			random_known_country = {
-				limit = {
-					primary_culture = wood_elf
-					capital_scope = { superregion = deepwoods_superregion }
-					has_country_flag = hunters_gambit_contender
-				}
-				set_variable = {
-					which = hunters_gambit_vp_tracker
-					value = 0
-				}
-				if = {
-					limit = { has_country_flag = hunters_gambit_two_vp }
-					change_variable = {
-						which = hunters_gambit_vp_tracker
-						value = 2
-					}
-					clr_country_flag = hunters_gambit_two_vp
-				}
-				if = {
-					limit = { has_country_flag = hunters_gambit_one_vp }
-					change_variable = {
-						which = hunters_gambit_vp_tracker
-						value = 1
-					}
-					clr_country_flag = hunters_gambit_one_vp
-				}
+				limit = { has_country_flag = hunters_gambit_contender }
 				if = {
 					limit = {
 						is_variable_equal = {
@@ -5410,12 +5284,12 @@ country_event = { #The Hunter's Gambit Last Round Handler
 					}
 					random_list = {
 						1 = {
-							set_country_flag = hunters_gambit_round_winner
-							PREV = { set_country_flag = hunters_gambit_round_loser }
+							save_event_target_as = hunters_gambit_round_winner
+							PREV = { save_event_target_as = hunters_gambit_round_loser }
 						}
 						1 = {
-							set_country_flag = hunters_gambit_round_loser
-							PREV = { set_country_flag = hunters_gambit_round_winner }
+							save_event_target_as = hunters_gambit_round_loser
+							PREV = { save_event_target_as = hunters_gambit_round_winner }
 						}
 					}
 				}
@@ -5426,12 +5300,12 @@ country_event = { #The Hunter's Gambit Last Round Handler
 							which = PREV
 						}
 					}
-					set_country_flag = hunters_gambit_round_winner
-					PREV = { set_country_flag = hunters_gambit_round_loser }
+					save_event_target_as = hunters_gambit_round_winner
+					PREV = { save_event_target_as = hunters_gambit_round_loser }
 				}
 				else = {
-					set_country_flag = hunters_gambit_round_loser
-					PREV = { set_country_flag = hunters_gambit_round_winner }
+					save_event_target_as = hunters_gambit_round_loser
+					PREV = { save_event_target_as = hunters_gambit_round_winner }
 				}
 			}
 		}
@@ -5448,7 +5322,7 @@ country_event = { #The Hunter's Gambit Last Round Results
 
 	option = { #Winner, option A
 		name = deepwoods.110.a
-		trigger = { has_country_flag = hunters_gambit_round_winner }
+		trigger = { tag = event_target:hunters_gambit_round_winner }
 		capital_scope = {
 			add_province_modifier = {
 				name = hunters_gambit_tournament_winner_mod_1
@@ -5459,7 +5333,7 @@ country_event = { #The Hunter's Gambit Last Round Results
 
 	option = { #Winner, option B
 		name = deepwoods.110.b
-		trigger = { has_country_flag = hunters_gambit_round_winner }
+		trigger = { tag = event_target:hunters_gambit_round_winner }
 		add_country_modifier = {
 			name = hunters_gambit_tournament_winner_mod_2
 			duration = -1
@@ -5468,7 +5342,7 @@ country_event = { #The Hunter's Gambit Last Round Results
 
 	option = { #Winner, option C
 		name = deepwoods.110.c
-		trigger = { has_country_flag = hunters_gambit_round_winner }
+		trigger = { tag = event_target:hunters_gambit_round_winner }
 		add_country_modifier = {
 			name = hunters_gambit_tournament_winner_mod_3
 			duration = -1
@@ -5477,21 +5351,24 @@ country_event = { #The Hunter's Gambit Last Round Results
 
 	option = { #Loser
 		name = deepwoods.110.e
-		trigger = { has_country_flag = hunters_gambit_round_loser }
+		trigger = { tag = event_target:hunters_gambit_round_loser }
 		add_army_professionalism = 0.05
 		add_mil_power = 100
 	}
 
 	after = {
-		if = { has_country_flag = hunters_gambit_round_winner }
-		every_known_country = {
-			limit = {
-				primary_culture = wood_elf
-				capital_scope = { superregion = deepwoods_superregion }
-				NOT = { has_country_flag = hunters_gambit_round_loser }
+		if = {
+			limit = { tag = event_target:hunters_gambit_round_winner }
+			every_known_country = {
+				limit = {
+					primary_culture = wood_elf
+					capital_scope = { superregion = deepwoods_superregion }
+					NOT = { tag = event_target:hunters_gambit_round_loser }
+				}
+				country_event = { id = deepwoods.111 }
 			}
-			country_event = { id = deepwoods.111 }
 		}
+		clr_country_flag = hunters_gambit_contender
 	}
 }
 
