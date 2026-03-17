@@ -25230,13 +25230,16 @@ on_holy_order_established = {
 				owner = { set_country_flag = spiked_log_jadd_holy_order_refund_mil }
 			}
 		}
-		# Jadd
+		# Jadd and OSC
 		else_if = {
 			limit = {
 				OR = {
+					# Jadd
 					holy_order = lightbringers_order_upgraded
 					holy_order = jasienes_daughters_order_upgraded
 					holy_order = militant_jadd_order_upgraded
+					# Old Sun Cult
+					holy_order = servants_of_surakel_order
 				}
 			}
 			area = {
@@ -25246,6 +25249,65 @@ on_holy_order_established = {
 					}
 					change_trade_goods = unknown
 				}
+			}
+		}
+		# Infernal Court
+		else_if = {
+			limit = {
+				holy_order = triadic_devotees_order
+			}
+			area = {
+				if = {
+					limit = {
+						OR = {
+							trade_goods = grain
+							trade_goods = livestock
+							trade_goods = fish
+						}
+					}
+					change_trade_goods = slaves
+				}
+			}
+		}
+		# Runefather Worship
+		else_if = {
+			limit = {
+				holy_order = clan_shadowhammer_order
+			}
+			area = {
+				shadowhammer_allegiance_increase_scripted_effect = yes
+			}
+		}
+		else_if = {
+			limit = {
+				holy_order = clan_darkstone_order
+			}
+			area = {
+				darkstone_allegiance_increase_scripted_effect = yes
+			}
+		}
+		else_if = {
+			limit = {
+				holy_order = groedi_az_an_order
+			}
+			area = {
+				groedi_az_an_allegiance_increase_scripted_effect = yes
+			}
+		}
+		else_if = {
+			limit = {
+				holy_order = amlruzskappa_order
+			}
+			area = {
+				amlruzskappa_allegiance_increase_scripted_effect = yes
+			}
+		}
+		else_if = {
+			limit = {
+				holy_order = furdanhund_order
+			}
+			area = {
+				furdanhund_allegiance_increase_scripted_effect = yes
 			}
 		}
 	}
