@@ -4522,7 +4522,6 @@ country_event = { #The Hunter's Gambit Tournament Start
 		}
 		hidden_effect = {
 			country_event = { id = deepwoods.102 days = 121 }
-			country_event = { id = deepwoods.105 days = 241 } #Round Outcome
 		}
 	}
 
@@ -4563,50 +4562,36 @@ country_event = { #The Hunter's Gambit Tournament Start Handler
 	is_triggered_only = yes
 	hidden = yes
 
-	option = { #At least three contestants
+	option = {
 		name = deepwoods.102.a
-		trigger = {
-			calc_true_if = {
-				amount = 2
-				all_known_country = { has_country_flag = hunters_gambit_contender }
-			}
-		}
-		
-		every_known_country = {
-			limit = { has_country_flag = hunters_gambit_contender }
-			country_event = { id = deepwoods.103 }
-		}
-		country_event = { id = deepwoods.103 }
-	}
-
-	option = { #Exactly two contestants
-		name = deepwoods.102.b
-		trigger = {
-			any_known_country = { has_country_flag = hunters_gambit_contender }
-			NOT = {
+		if = { #At least three contestants
+			limit = {
 				calc_true_if = {
 					amount = 2
 					all_known_country = { has_country_flag = hunters_gambit_contender }
 				}
 			}
+			every_known_country = {
+				limit = { has_country_flag = hunters_gambit_contender }
+				country_event = { id = deepwoods.103 }
+			}
+			country_event = { id = deepwoods.103 }
+			country_event = { id = deepwoods.105 days = 120 } #Round Outcome
 		}
-		
-		random_known_country = {
-			limit = { has_country_flag = hunters_gambit_contender }
-			country_event = { id = deepwoods.108 days = 100 } #Final Gambit
-		}
-		country_event = { id = deepwoods.108 days = 100 } #Final Gambit
-		country_event = { id = deepwoods.109 days = 200 } #Final Gambit Handler
-	}
-
-	option = { #Only one contestant
-		name = deepwoods.102.c
-		trigger = {
-			NOT = {
+		else_if = { #Exactly two contestants
+			limit = {
 				any_known_country = { has_country_flag = hunters_gambit_contender }
 			}
+			random_known_country = {
+				limit = { has_country_flag = hunters_gambit_contender }
+				country_event = { id = deepwoods.108 days = 100 } #Final Gambit
+			}
+			country_event = { id = deepwoods.108 days = 100 } #Final Gambit
+			country_event = { id = deepwoods.109 days = 200 } #Final Gambit Handler
 		}
-		country_event = { id = deepwoods.106 }
+		else = { #Only one contestant
+			country_event = { id = deepwoods.106 }
+		}
 	}
 }
 
@@ -4911,7 +4896,10 @@ country_event = { #The Hunter's Gambit Round Handler
 	hidden = yes
 
 	immediate = {
-		save_event_target_as = hunters_gambit_round_loser
+		random_country = {
+			limit = { has_country_flag = hunters_gambit_contender }
+			save_event_target_as = hunters_gambit_round_loser
+		}
 		every_known_country = {
 			limit = { has_country_flag = hunters_gambit_contender }
 			if = {
@@ -4930,7 +4918,10 @@ country_event = { #The Hunter's Gambit Round Handler
 				save_event_target_as = hunters_gambit_round_loser
 			}
 		}
-		save_event_target_as = hunters_gambit_round_winner
+		random_country = {
+			limit = { has_country_flag = hunters_gambit_contender }
+			save_event_target_as = hunters_gambit_round_winner
+		}
 		every_known_country = {
 			limit = { has_country_flag = hunters_gambit_contender }
 			if = {
