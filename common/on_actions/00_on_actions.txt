@@ -25098,7 +25098,17 @@ on_holy_order_established = {
 					owner = { country_event = { id = corinite.323 } }
 					area = { add_nationalism = -10 }
 				}
-				istralore_order = { owner = { country_event = { id = istralore.15 } } }
+				istralore_order = {
+					owner = { country_event = { id = istralore.15 } }
+					if = {
+						limit = {
+							owner = {
+								has_government_attribute = patronise_the_corinite_orders
+							}
+						}
+						corinite_improved_holy_order_mil = yes
+					}
+				}
 				crimson_wings_protectors_order = { owner = { country_event = { id = verne.902 } } }
 				steward_of_the_crimson_wings_order = { owner = { country_event = { id = verne.903 } } }
 			}
@@ -25308,6 +25318,22 @@ on_holy_order_established = {
 			}
 			area = {
 				furdanhund_allegiance_increase_scripted_effect = yes
+			}
+		}
+		# Molten Eternity
+		else_if = {
+			limit = {
+				OR = {
+					holy_order = kihokamalama_order
+					holy_order = tumirbedi_order
+					holy_order = tlokopinaztica_order
+				}
+			}
+			owner = {
+				change_variable = {
+					which = moltenEternityObligationVar
+					value = 100
+				}
 			}
 		}
 	}
