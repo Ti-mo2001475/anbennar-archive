@@ -24,7 +24,37 @@ open_stormwall = {
 					id = endless_ocean_events.100
 				}
 			}
-			set_global_flag = endless_ocean_first_opening
+			#REMOVE AFTER INSYAA PILLARS ARE MERGED
+			6234 = {
+				set_province_flag = unlocked_artifice_invention_reverse_mechanim_global
+				set_province_flag = unlocked_artifice_invention_industrial_automatories_global
+				set_province_flag = unlocked_artifice_invention_memory_module_global
+				set_province_flag = unlocked_artifice_invention_fireproof_plating_global
+				set_province_flag = unlocked_artifice_invention_okalu_scanners_global
+				set_province_flag = unlocked_artifice_invention_pillar_scouts_global
+				set_province_flag = unlocked_artifice_invention_behavioral_chip_global
+				set_province_flag = unlocked_artifice_invention_construction_bots_global
+				set_province_flag = unlocked_artifice_invention_mechanim_regiments_global
+				set_province_flag = unlocked_artifice_invention_auto_scribes_global
+				set_province_flag = unlocked_artifice_invention_crop_enlarge_global
+				set_province_flag = unlocked_artifice_invention_assisted_growth_global
+				set_province_flag = unlocked_artifice_invention_animal_gene_global
+				set_province_flag = unlocked_artifice_invention_titano_thorns_global
+				set_province_flag = unlocked_artifice_invention_titano_weed_global
+				set_province_flag = unlocked_artifice_invention_seed_siege_global
+				set_province_flag = unlocked_artifice_invention_tgs_farmland_global
+				set_province_flag = unlocked_artifice_invention_tgs_livestock_global
+				set_province_flag = unlocked_artifice_invention_titano_artif_global
+				set_province_flag = unlocked_artifice_invention_titano_cav_global
+				set_province_flag = unlocked_artifice_invention_sonic_amplifiers_global
+				set_province_flag = unlocked_artifice_invention_sonic_weaponary_global
+				set_province_flag = unlocked_artifice_invention_flak_cannons_global
+				set_province_flag = unlocked_artifice_invention_terrain_shaper_global
+				set_province_flag = unlocked_artifice_invention_steel_tracking_global
+				set_province_flag = unlocked_artifice_invention_memory_storage_global
+				set_province_flag = unlocked_artifice_invention_mechanim_deconstructor_global
+			}
+			set_global_flag = endless_ocean_first_opening #Please dont clear it
 		}
 		
 	}
@@ -1019,8 +1049,6 @@ move_pachpalka_effect = {
 					continent = oceania
 					NOT = {
 						superregion = hinuilands_superregion
-						region = titanoflora_valley_region
-						region = titanoflora_savanna_region
 						region = insyaan_mushroom_forest_region
 						region = event_target:pachpalka_location
 					}
@@ -1041,8 +1069,6 @@ move_pachpalka_effect = {
 					continent = oceania
 					NOT = {
 						superregion = hinuilands_superregion
-						region = titanoflora_valley_region
-						region = titanoflora_savanna_region
 						region = insyaan_mushroom_forest_region
 					}
 				}
@@ -1158,14 +1184,7 @@ insyaa_charkuchin_kobold_citadel_supplies_update_count_remove = {
 		}
 		remove_province_modifier = supplies_colony # Remove it in case the conquerer doensn't use supplies. If they do, it will be added back immediately
 		if = { # Different regions have different costs so we track them differently
-			limit = {
-				OR = {
-					region = jalaarkuchar_region
-					region = gamunkuchar_region
-					region = pirzakuchar_region
-					region = wayamokuchar_region
-				}
-			}
+			limit = { superregion = charkuchar_superregion }
 			FROM = {
 				insyaa_charkuchin_kobold_citadel_supplies_update_counter = {
 					region_group = charkuchar_range
@@ -1190,11 +1209,7 @@ insyaa_charkuchin_kobold_citadel_supplies_update_count_remove = {
 		}
 		else_if = {
 			limit = {
-				OR = {
-					region = titanoflora_valley_region
-					region = titanoflora_savanna_region
-					superregion = hinuilands_superregion
-				}
+				superregion = hinuilands_superregion
 			}
 			FROM = {
 				insyaa_charkuchin_kobold_citadel_supplies_update_counter = {
@@ -1225,14 +1240,7 @@ insyaa_charkuchin_kobold_citadel_supplies_update_count_remove = {
 	# That is not a concern when you lose a province
 	else = { # Otherwise, it's a province we need to spend monthly supplies on
 		if = { # Different regions have different costs so we track them differently
-			limit = {
-				OR = {
-					region = jalaarkuchar_region
-					region = gamunkuchar_region
-					region = pirzakuchar_region
-					region = wayamokuchar_region
-				}
-			}
+			limit = { superregion = charkuchar_superregion }
 			FROM = {
 				insyaa_charkuchin_kobold_citadel_supplies_update_counter = {
 					region_group = charkuchar_range
@@ -1257,11 +1265,7 @@ insyaa_charkuchin_kobold_citadel_supplies_update_count_remove = {
 		}
 		else_if = {
 			limit = {
-				OR = {
-					region = titanoflora_valley_region
-					region = titanoflora_savanna_region
-					superregion = hinuilands_superregion
-				}
+				superregion = hinuilands_superregion
 			}
 			FROM = {
 				insyaa_charkuchin_kobold_citadel_supplies_update_counter = {
@@ -1313,14 +1317,7 @@ insyaa_charkuchin_kobold_citadel_supplies_update_count_add = {
 			duration = -1
 		}
 		if = { # Different regions have different costs so we track them differently
-			limit = {
-				OR = {
-					region = jalaarkuchar_region
-					region = gamunkuchar_region
-					region = pirzakuchar_region
-					region = wayamokuchar_region
-				}
-			}
+			limit = { superregion = charkuchar_superregion }
 			owner = {
 				insyaa_charkuchin_kobold_citadel_supplies_update_counter = {
 					region_group = charkuchar_range
@@ -1345,11 +1342,7 @@ insyaa_charkuchin_kobold_citadel_supplies_update_count_add = {
 		}
 		else_if = {
 			limit = {
-				OR = {
-					region = titanoflora_valley_region
-					region = titanoflora_savanna_region
-					superregion = hinuilands_superregion
-				}
+				superregion = hinuilands_superregion
 			}
 			owner = {
 				insyaa_charkuchin_kobold_citadel_supplies_update_counter = {
@@ -1412,14 +1405,7 @@ insyaa_charkuchin_kobold_citadel_supplies_update_count_add = {
 			}
 		}
 		if = { # Different regions have different costs so we track them differently
-			limit = {
-				OR = {
-					region = jalaarkuchar_region
-					region = gamunkuchar_region
-					region = pirzakuchar_region
-					region = wayamokuchar_region
-				}
-			}
+			limit = { superregion = charkuchar_superregion }
 			owner = {
 				insyaa_charkuchin_kobold_citadel_supplies_update_counter = {
 					region_group = charkuchar_range
@@ -1444,11 +1430,7 @@ insyaa_charkuchin_kobold_citadel_supplies_update_count_add = {
 		}
 		else_if = {
 			limit = {
-				OR = {
-					region = titanoflora_valley_region
-					region = titanoflora_savanna_region
-					superregion = hinuilands_superregion
-				}
+				superregion = hinuilands_superregion
 			}
 			owner = {
 				insyaa_charkuchin_kobold_citadel_supplies_update_counter = {
@@ -1466,14 +1448,7 @@ insyaa_charkuchin_kobold_citadel_supplies_update_count_upgrade = {
 	remove_province_modifier = supplies_colony
 	# Reduce colony count by 1, increase city count by 1
 	if = { # Different regions have different costs so we track them differently
-		limit = {
-			OR = {
-				region = jalaarkuchar_region
-				region = gamunkuchar_region
-				region = pirzakuchar_region
-				region = wayamokuchar_region
-			}
-		}
+		limit = { superregion = charkuchar_superregion }
 		owner = {
 			insyaa_charkuchin_kobold_citadel_supplies_update_counter = {
 				region_group = charkuchar_range
@@ -1514,11 +1489,7 @@ insyaa_charkuchin_kobold_citadel_supplies_update_count_upgrade = {
 	}
 	else_if = {
 		limit = {
-			OR = {
-				region = titanoflora_valley_region
-				region = titanoflora_savanna_region
-				superregion = hinuilands_superregion
-			}
+			superregion = hinuilands_superregion
 		}
 		owner = {
 			insyaa_charkuchin_kobold_citadel_supplies_update_counter = {
@@ -1655,16 +1626,16 @@ insyaa_charkuchin_kobolds_released_setup = {
 	}
 	trigger_switch = {
 		on_trigger = government
-		monarchy = { add_government_reform = charkuchin_kobold_feudalism_reform }
-		republic = { add_government_reform = charkuchin_kobold_oligarchy_reform }
-		theocracy = { add_government_reform = charkuchin_kobold_monastic_order_reform }
+		monarchy = { add_government_reform = charkuchin_monarchy_reform }
+		republic = { add_government_reform = charkuchin_council_reform }
+		theocracy = { add_government_reform = charkuchin_citadel_clerical_administration }
 		tribal = {
 			change_government = monarchy
-			add_government_reform = charkuchin_kobold_feudalism_reform
+			add_government_reform = charkuchin_monarchy_reform
 		}
 		native = {
 			change_government = monarchy
-			add_government_reform = charkuchin_kobold_feudalism_reform
+			add_government_reform = charkuchin_monarchy_reform
 		}
 	}
 	country_event = { #Initial variable setup and some modifiers
@@ -1694,5 +1665,12 @@ insyaa_charkuchin_kobolds_released_setup = {
 		}
 		subtract_variable = { kobold_admin_tech = 1 }
 		insyaa_charkuchin_kobold_citadel_supplies_tech = yes
+	}
+}
+add_mechanim_minority_large_effect = {
+	custom_tooltip = add_mechanim_minority_large_effect_tooltip
+	hidden_effect = { 
+		add_mechanim_minority_size_effect = yes
+		add_mechanim_minority_size_effect = yes
 	}
 }
