@@ -3057,7 +3057,7 @@ custom_button = {
 		}
 		else = { clr_country_flag = eordand_window_open }
 	}
-	tooltip = taychendi_window_button_tt
+	tooltip = eurdand_window_button_tt
 }
 custom_button = {
 	name = eordand_window_button_close
@@ -3155,13 +3155,8 @@ custom_button = {
 		set_country_flag = eordand_passed_objective_3
 		upgrade_seasonal_court_level = yes
 		simple_dynamic_effect = {
-			first_custom_tooltip = eordand_objective_3_eordellon_tt
-			first_limit = "
-				has_global_modifier_value = {
-					which = tolerance_heretic
-					value = 2
-				}  
-			"
+			first_custom_tooltip = eordand_objective_heretic_tol_tt
+			first_limit = "tolerance_of_heretics = { amount = 2 }"
 			first_effect = "
 				add_country_modifier = {
 					name = eordand_eordellon_obj1b
@@ -3328,14 +3323,14 @@ custom_button = {
 					NOT = { religion = winter_court }
 				}
 			}
-			winter_court = 2
+			tolerance_of_heretics = { amount = 2 }
 		}
 	}
 	effect = {
 		set_country_flag = eordand_passed_objective_3
 		upgrade_seasonal_court_level = yes
 		simple_dynamic_effect = {
-			first_custom_tooltip = eordand_objective_3_autumn_tt
+			first_custom_tooltip = eordand_objective_heretic_tol_tt
 			first_limit = "winter_court = 2"
 			first_effect = "
 				add_country_modifier = {
@@ -3403,14 +3398,14 @@ custom_button = {
 					NOT = { religion = autumn_court }
 				}
 			}
-			autumn_court = 2
+			tolerance_of_heretics = { amount = 2 }
 		}
 	}
 	effect = {
 		set_country_flag = eordand_passed_objective_3
 		upgrade_seasonal_court_level = yes
 		simple_dynamic_effect = {
-			first_custom_tooltip = eordand_objective_3_eordellon_tt
+			first_custom_tooltip = eordand_objective_heretic_tol_tt
 			first_limit = "autumn_court = 2"
 			first_effect = "
 				add_country_modifier = {
@@ -3454,10 +3449,18 @@ custom_button = {
 custom_icon = {
 	name = eordand_got_objective_5_eordellon
 	potential = { has_country_flag = eordellon_influencer_unlocked }
+	frame = {
+		number = 59
+		trigger = {}
+	}
 	tooltip = eordellon.4.eordellon.unlock
 }
 custom_button = {
 	name = eordand_objective_5_eordellon
+	frame = {
+		number = 59
+		trigger = {}
+	}
 	trigger = {
 		NOT = {
 			any_known_country = { religion = eordellon }
@@ -3473,7 +3476,7 @@ custom_button = {
 					NOT = { has_province_modifier = estate_church_winter_tolerance_mod }
 				}
 			}
-			eordellon = 2
+			tolerance_of_heretics = { amount = 2 }
 		}
 	}
 	effect = {
@@ -3486,10 +3489,18 @@ custom_button = {
 custom_icon = {
 	name = eordand_got_objective_5_spring
 	potential = { has_country_flag = spring_influencer_unlocked }
+	frame = {
+		number = 55
+		trigger = {}
+	}
 	tooltip = eordellon.4.spring.unlock
 }
 custom_button = {
 	name = eordand_objective_5_spring
+	frame = {
+		number = 55
+		trigger = {}
+	}
 	trigger = {
 		NOT = {
 			any_known_country = { religion = spring_court }
@@ -3505,7 +3516,7 @@ custom_button = {
 					NOT = { has_province_modifier = estate_church_winter_tolerance_mod }
 				}
 			}
-			spring_court = 2
+			tolerance_of_heretics = { amount = 2 }
 		}
 	}
 	effect = {
@@ -3518,10 +3529,18 @@ custom_button = {
 custom_icon = {
 	name = eordand_got_objective_5_summer
 	potential = { has_country_flag = summer_influencer_unlocked }
+	frame = {
+		number = 56
+		trigger = {}
+	}
 	tooltip = eordellon.4.summer.unlock
 }
 custom_button = {
 	name = eordand_objective_5_summer
+	frame = {
+		number = 56
+		trigger = {}
+	}
 	trigger = {
 		NOT = {
 			any_known_country = { religion = summer_court }
@@ -3537,7 +3556,7 @@ custom_button = {
 					NOT = { has_province_modifier = estate_church_winter_tolerance_mod }
 				}
 			}
-			summer_court = 2
+			tolerance_of_heretics = { amount = 2 }
 		}
 	}
 	effect = {
@@ -3550,17 +3569,25 @@ custom_button = {
 custom_icon = {
 	name = eordand_got_objective_5_autumn
 	potential = { has_country_flag = autumn_influencer_unlocked }
+	frame = {
+		number = 57
+		trigger = {}
+	}
 	tooltip = eordellon.4.autumn.unlock
 }
 custom_button = {
 	name = eordand_objective_5_autumn
+	frame = {
+		number = 57
+		trigger = {}
+	}
 	trigger = {
 		NOT = {
 			any_known_country = { religion = autumn_court }
 		}
 		if = {
 			limit = { religion = winter_court }
-			autumn_court = 2
+			tolerance_of_heretics = { amount = 2 }
 		}
 		else = {
 			OR = {
@@ -3574,7 +3601,7 @@ custom_button = {
 						NOT = { has_province_modifier = estate_church_winter_tolerance_mod }
 					}
 				}
-				autumn_court = 2
+				tolerance_of_heretics = { amount = 2 }
 			}
 		}
 	}
@@ -3588,17 +3615,25 @@ custom_button = {
 custom_icon = {
 	name = eordand_got_objective_5_winter
 	potential = { has_country_flag = winter_influencer_unlocked }
+	frame = {
+		number = 58
+		trigger = {}
+	}
 	tooltip = eordellon.4.winter.unlock
 }
 custom_button = {
 	name = eordand_objective_5_winter
+	frame = {
+		number = 58
+		trigger = {}
+	}
 	trigger = {
 		NOT = {
 			any_known_country = { religion = winter_court }
 		}
 		if = {
 			limit = { religion = autumn_court }
-			winter_court = 2
+			tolerance_of_heretics = { amount = 2 }
 		}
 		else = {
 			OR = {
@@ -3612,7 +3647,7 @@ custom_button = {
 						NOT = { has_province_modifier = estate_church_winter_tolerance_mod }
 					}
 				}
-				winter_court = 2
+				tolerance_of_heretics = { amount = 2 }
 			}
 		}
 	}
