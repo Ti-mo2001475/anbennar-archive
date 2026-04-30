@@ -7469,16 +7469,6 @@ Z60_jinqiu_war = {
 				who = Y02
 				value = 80
 			}
-			OR = {
-				controls = 4842 #Jincheng
-				any_ally = {
-					is_in_war = {
-						attacker_leader = Z60
-						defender_leader = Y02
-					}
-					controls = 4842 #Jincheng
-				}
-			}
 		}
 		Z61 = { is_subject_of = Z60 } #Xiongxiap
 	}
@@ -7538,6 +7528,60 @@ ptm_foundationism_shepherds = {
 		remove_province_triggered_modifier = ptm_foundationism_shepherds
 	}
 
+	on_deactivation = {
+	}
+}
+
+#Eighard
+H14_war_for_domandrod_one_ptm = {
+	potential = {
+		always = yes
+	}
+
+	trigger = {
+		owner = {
+			war_score_against = {
+				who = H21 #Eordand
+				value = 50
+			}
+		}
+	}
+
+	on_activation = {
+		add_province_triggered_modifier = H14_war_for_domandrod_two_ptm
+		remove_province_triggered_modifier = H14_war_for_domandrod_one_ptm
+		owner = {
+			country_event = { #Without a Trace
+				id = flavour_eighard.14
+			}
+		}
+	}
+	on_deactivation = {
+	}
+}
+
+H14_war_for_domandrod_two_ptm = {
+	potential = {
+		always = yes
+	}
+
+	trigger = {
+		owner = {
+			war_score_against = {
+				who = H21 #Eordand
+				value = 100
+			}
+		}
+	}
+
+	on_activation = {
+		remove_province_triggered_modifier = H14_war_for_domandrod_two_ptm
+		owner = {
+			country_event = { #Cowardice
+				id = flavour_eighard.23
+			}
+		}
+	}
 	on_deactivation = {
 	}
 }
@@ -7615,5 +7659,21 @@ A80_the_war_of_masks_checker = {
 			}
 		}
 		remove_province_triggered_modifier = A80_the_war_of_masks_checker
+	}
+}
+shadowdreamer_xazor_randomness_ptm = {
+	potential = { always = yes }
+	hidden = yes
+	trigger = { always = yes }
+	on_activation = {
+		owner = {
+			if = {
+				limit = {
+					has_country_flag = H83_hunting_the_bat
+				}
+				country_event = { id = shadowdreamer.31 days = 29 }
+			}
+		}
+		remove_province_triggered_modifier = shadowdreamer_xazor_randomness_ptm
 	}
 }
