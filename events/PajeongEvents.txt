@@ -77,7 +77,26 @@ country_event = { #Disaster Start
 country_event = { #Disaster End
 	id = pajeong.2
 	title = pajeong.2.t
-	desc = pajeong.2.desc
+	desc = {
+		trigger = {
+			OR = {
+				has_estate_privilege = estate_burghers_disobedience_of_the_merchants
+				has_estate_privilege = estate_nobles_disobedience_of_the_hwalbaek
+				has_estate_privilege = estate_church_disobedience_of_the_neoksamaji
+			}
+		}
+		desc = pajeong.2.desc.A
+	}
+	desc = {
+		trigger = {
+			NOT = {
+				has_estate_privilege = estate_burghers_disobedience_of_the_merchants
+				has_estate_privilege = estate_nobles_disobedience_of_the_hwalbaek
+				has_estate_privilege = estate_church_disobedience_of_the_neoksamaji
+			}
+		}
+		desc = pajeong.2.desc.B
+	}
 	picture = 12_Maratha_Estate_eventPicture
 	
 	is_triggered_only = yes
@@ -867,17 +886,10 @@ country_event = { #Hwalbaek demand Forced Conscription
 	
 	option = {
 		name = pajeong.25.a
-		if = {
-			limit = { has_saved_event_target = pajeong_target_1 }
-			event_target:pajeong_target_1 = { add_base_manpower = -1 }
-		}
-		if = {
-			limit = { has_saved_event_target = pajeong_target_2 }
-			event_target:pajeong_target_2 = { add_base_manpower = -1 }
-		}
-		if = {
-			limit = { has_saved_event_target = pajeong_target_3 }
-			event_target:pajeong_target_3 = { add_base_manpower = -1 }
+		do_same_event_target_effect = {
+			3 = yes
+			event_target_name = pajeong_target
+			effect = "add_base_manpower = -1"
 		}
 		add_manpower = 0.25
 		add_estate_loyalty = {
@@ -1143,23 +1155,15 @@ country_event = { #Raiders at the Gates!
 	
 	option = {
 		name = pajeong.40.a
-		event_target:pajeong_target_1 = {
-			add_province_modifier = {
-				name = pajeong_decadent_rule
-				duration = 3650 #10 years
-			}
-		}
-		event_target:pajeong_target_2 = {
-			add_province_modifier = {
-				name = pajeong_decadent_rule
-				duration = 3650 #10 years
-			}
-		}
-		event_target:pajeong_target_3 = {
-			add_province_modifier = {
-				name = pajeong_decadent_rule
-				duration = 3650 #10 years
-			}
+		do_same_event_target_effect = {
+			3 = yes
+			event_target_name = pajeong_target
+			effect = "
+				add_province_modifier = {
+					name = pajeong_decadent_rule
+					duration = 3650 #10 years
+				}
+			"
 		}
 	}
 	

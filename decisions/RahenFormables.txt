@@ -12,6 +12,10 @@ country_decisions = {
 				NOT = { tag = R61 } 
 				mission_completed = pasiragha_unity_of_spirit_land
 			}
+			OR = { 
+				NOT = { tag = R54 } 
+				mission_completed = R54_the_third_harimraj
+			}
 			NOT = { exists = R70 }
 			normal_or_historical_nations = yes
 			was_never_end_game_tag_trigger = yes
@@ -57,6 +61,11 @@ country_decisions = {
 				}
 				mission_completed = R51_second_final_harimraj
 			}
+			if = {
+				limit = { is_or_was_tag = { tag = R77 } }
+				mission_completed = vanrahar_2_rule_harimari
+				NOT = { has_country_modifier = vanrahar_die_cast }
+			}
 			hidden_trigger = {
 				NOT = { has_country_flag = L62_no_harimraj }
 			}
@@ -99,6 +108,23 @@ country_decisions = {
 				limit = { NOT = { has_global_flag = destroyed_raj } }
 				set_global_flag = destroyed_raj
 			}
+
+			# Parusahan Saya MT
+			hidden_effect = {
+				if = {
+					limit = {
+						is_or_was_tag = { 
+							tag = R54
+						}
+					}
+					remove_country_modifier = R54_grand_ambitions_I
+					remove_country_modifier = R54_grand_ambitions_II
+					remove_country_modifier = R54_grand_ambitions_II
+					remove_country_modifier = R54_grand_ambitions_IV
+					remove_country_modifier = R54_grand_ambitions_V
+				}
+			}
+			
 		}
 		ai_will_do = {
 			factor = 1
@@ -115,6 +141,7 @@ country_decisions = {
 			}
 			NOT = { exists = R71 }
 			NOT = { tag = R38 }
+			NOT = { has_country_flag = R54_only_harimraj } # Parusahan Saya
 			normal_or_historical_nations = yes
 			was_never_end_game_tag_trigger = yes
 		}
@@ -207,6 +234,7 @@ country_decisions = {
 			NOT = { exists = R72 }
 			normal_or_historical_nations = yes
 			was_never_end_game_tag_trigger = yes
+			NOT = { has_country_flag = R54_only_harimraj } # Parusahan Saya
 			NOT = { has_country_flag = formed_dhugajir_flag }
 		}
 		provinces_to_highlight = {
@@ -324,6 +352,7 @@ country_decisions = {
 			NOT = { tag = R08 } #Tiltaghar
 			NOT = { tag = R97 }
 			NOT = { exists = R73 }
+			NOT = { has_country_flag = R54_only_harimraj } # Parusahan Saya
 			normal_or_historical_nations = yes
 			was_never_end_game_tag_trigger = yes
 			NOT = {
@@ -408,6 +437,7 @@ country_decisions = {
 			NOT = { exists = R74 }
 			normal_or_historical_nations = yes
 			was_never_end_game_tag_trigger = yes
+			NOT = { has_country_flag = R54_only_harimraj } # Parusahan Saya
 			NOT = { has_country_flag = formed_ghankedhen_flag }
 		}
 		provinces_to_highlight = {
@@ -481,6 +511,7 @@ country_decisions = {
 			was_never_end_game_tag_trigger = yes
 			NOT = { has_country_flag = formed_dhujat_flag }
 			NOT = { has_country_flag = R36_enjoy_fish_life } #Endhuvi
+			NOT = { has_country_flag = R54_only_harimraj } # Parusahan Saya
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -533,10 +564,10 @@ country_decisions = {
 			}
 			set_government_rank_scripted_effect = { rank = 2 }
 			add_prestige = 50
-			#if = {
-			#	limit = { has_custom_ideas = no }
-			#	country_event = { id = ideagroups.1 } #Swap Ideas
-			#}
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
 			add_country_modifier = {
 				name = "centralization_modifier"
 				duration = 7300
@@ -557,12 +588,16 @@ country_decisions = {
 					NOT = { primary_culture = ghankedhen }
 					NOT = { primary_culture = raghamidesh }
 				}
-				primary_culture = royal_harimari
+				OR = {
+					primary_culture = primal_harimari
+					primary_culture = royal_harimari
+				}
 			}
 			NOT = { tag = R51 tag = R77 tag = R38 tag = F99 tag = R61 }
 			NOT = { exists = R76 }
 			normal_or_historical_nations = yes
 			was_never_end_game_tag_trigger = yes
+			NOT = { has_country_flag = R54_only_harimraj } # Parusahan Saya
 			NOT = { has_country_flag = formed_sardhasi_flag }
 		}
 		provinces_to_highlight = {
@@ -592,7 +627,10 @@ country_decisions = {
 						NOT = { primary_culture = ghankedhen }
 						NOT = { primary_culture = raghamidesh }
 					}
-					primary_culture = royal_harimari
+					OR = {
+						primary_culture = primal_harimari
+						primary_culture = royal_harimari
+					}
 				}
 			}
 			adm_tech = 10
@@ -645,6 +683,11 @@ country_decisions = {
 				duration = 7300
 			}
 			set_country_flag = formed_sardhasi_flag
+
+			if = {
+				limit = { has_country_flag = umdaj_chose_sardhasi }
+				add_country_modifier = { name = umdaj_elephant_king duration = -1 }
+			}
 		}
 		ai_will_do = {
 			factor = 1
@@ -660,6 +703,8 @@ country_decisions = {
 			normal_or_historical_nations = yes
 			was_never_end_game_tag_trigger = yes
 			NOT = { has_country_flag = formed_vanrahar_flag }
+			NOT = { has_country_flag = umdaj_chose_sardhasi }
+			NOT = { has_country_flag = R54_only_harimraj } # Parusahan Saya
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -686,6 +731,7 @@ country_decisions = {
 		}
 		allow = {
 			is_at_war = no
+			religion = high_philosophy
 			army_tradition = 40
 			owns_core_province = 4378
 			owns_core_province = 4394
@@ -704,7 +750,6 @@ country_decisions = {
 			change_tag = R77
 			hidden_effect = { restore_country_name = yes }
 			swap_non_generic_missions = yes
-			capital_scope = { add_base_manpower = 3 }
 			hidden_effect = {
 				every_owned_province = {
 					limit = {
@@ -733,6 +778,12 @@ country_decisions = {
 			}
 			set_country_flag = formed_vanrahar_flag
 			lock_racial_admin = yes
+			country_event = { id = vanrahar.0 }
+			custom_tooltip = harimaraj_formation_warning_tt
+			
+			#For missions vanrahar_4_the_tearing_claw and vanrahar_1_into_inner_rahen
+			set_country_flag = anb_on_action_tracking_exploit_dev_flag
+			set_country_flag = anb_track_casualties_from_battles_won
 		}
 		ai_will_do = {
 			factor = 1
@@ -768,6 +819,7 @@ country_decisions = {
 			NOT = { exists = R97 }
 			NOT = { tag = R09 }
 			NOT = { tag = R73 }
+			NOT = { has_country_flag = R54_only_harimraj } # Parusahan Saya
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -794,7 +846,10 @@ country_decisions = {
 			}
 		}
 		allow = {
-			has_government_attribute = is_heroic_realm
+			custom_trigger_tooltip = {
+				tooltip = mechanic_is_heroic_realm
+				has_government_attribute = is_heroic_realm
+			}
 			if = {
 				limit = { NOT = { mission_completed = R11_heroic_victory } }
 				owns_core_province = 4460
@@ -808,10 +863,13 @@ country_decisions = {
 				region = shamakhad_region
 			}
 			is_at_war = no
-			has_estate_privilege = estate_adventurers_heroes_in_the_army
-			OR = {
-				caste_fluidity_is_fluid = yes
-				caste_fluidity_is_neutral = yes
+			if = {
+				limit = { ai = no }
+				has_estate_privilege = estate_adventurers_heroes_in_the_army
+				OR = {
+					caste_fluidity_is_fluid = yes
+					caste_fluidity_is_neutral = yes
+				}
 			}
 		}
 		effect = {
@@ -907,6 +965,7 @@ country_decisions = {
 				has_country_flag = formed_suryavar_flag
 				has_government_attribute = is_raja
 			}
+			NOT = { has_country_flag = R54_only_harimraj } # Parusahan Saya
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -1015,6 +1074,7 @@ country_decisions = {
 				tag = R09
 			}
 			NOT = { has_country_flag = formed_lohanparayan_flag }
+			NOT = { has_country_flag = R54_only_harimraj } # Parusahan Saya
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -1053,17 +1113,24 @@ country_decisions = {
 			government_rank = 2
 			religion = high_philosophy
 			legitimacy = 95
-			OR = {
-				NOT = {
-					num_of_estate_privileges = {
-						estate = estate_adventurers
-						value = 2
+			if = {
+				limit = { tag = R10 } #Sarnavan
+				NOT = { dynasty = "of the Lotus Claw" }
+			}
+			if = {
+				limit = { ai = no }
+				OR = {
+					NOT = {
+						num_of_estate_privileges = {
+							estate = estate_adventurers
+							value = 2
+						}
 					}
-				}
-				NOT = {
-					estate_influence = {
-						estate = estate_adventurers
-						influence = 25
+					NOT = {
+						estate_influence = {
+							estate = estate_adventurers
+							influence = 25
+						}
 					}
 				}
 			}
@@ -1101,14 +1168,17 @@ country_decisions = {
 			}
 			set_country_flag = formed_end_game_tag_flag
 			set_capital = 4476
-			every_country = {
-				limit = {
-					capital_scope = {
-						superregion = rahen_superregion
+			custom_tooltip = form_lohanparayan_return_event.tt
+			hidden_effect = {
+				every_country = {
+					limit = {
+						capital_scope = {
+							superregion = rahen_superregion
+						}
 					}
-				}
-				country_event = {
-					id = rahen.105
+					country_event = {
+						id = rahen.105
+					}
 				}
 			}
 			dhujat_region = { add_permanent_claim = R00	}
