@@ -25062,11 +25062,58 @@ on_holy_order_established = {
 			}
 		}
 		# Corinite
+		# First, check if you have the Patronised Holy Orders gov attribute, then give an extra bonus
+		# based on whether it's a adm, dip, or mil based order
+		# Then, fire specific events for individual orders
+		# Finally, add the eternal province modifier to make sure you don't get these again
 		else_if = {
 			limit = {
 				# Every Corinite holy order has these effects so I can just check the religion here
 				religion = corinite
 				NOT = { has_province_modifier = corinite_order_event_block }
+			}
+			if = { # These 'patronised holy orders' all have the same extra effect - one for mil, one for adm, one for dip
+				limit = {
+					owner = {
+						has_government_attribute = patronise_the_corinite_orders
+					}
+					if = {
+						limit = {
+							OR = {
+								holy_order = istralore_order
+								holy_order = balgar_order
+								holy_order = corin_order
+								holy_order = falah_order
+								holy_order = nathalyne_order
+								holy_order = dookan_order
+								holy_order = adean_order
+							}
+						}
+						corinite_improved_holy_order_mil = yes
+					}
+					else_if = {
+						limit = {
+							OR = {
+								holy_order = begga_order
+								holy_order = dame_order
+								holy_order = esmaryal_order
+								holy_order = nerat_order
+							}
+						}
+						corinite_improved_holy_order_adm = yes
+					}
+					else_if = {
+						limit = {
+							OR = {
+								holy_order = ara_order
+								holy_order = minara_order
+								holy_order = munas_order
+								holy_order = ryala_order
+							}
+						}
+						corinite_improved_holy_order_dip = yes
+					}
+				}
 			}
 			trigger_switch = {
 				on_trigger = holy_order
@@ -25098,17 +25145,7 @@ on_holy_order_established = {
 					owner = { country_event = { id = corinite.323 } }
 					area = { add_nationalism = -10 }
 				}
-				istralore_order = {
-					owner = { country_event = { id = istralore.15 } }
-					if = {
-						limit = {
-							owner = {
-								has_government_attribute = patronise_the_corinite_orders
-							}
-						}
-						corinite_improved_holy_order_mil = yes
-					}
-				}
+				istralore_order = { owner = { country_event = { id = istralore.15 } } }
 				crimson_wings_protectors_order = { owner = { country_event = { id = verne.902 } } }
 				steward_of_the_crimson_wings_order = { owner = { country_event = { id = verne.903 } } }
 			}
