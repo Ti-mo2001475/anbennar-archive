@@ -4885,7 +4885,7 @@ country_event = { #The Betrayal of the Oni!
 								}
 							}
 							save_event_target_as = command_move_target_candidate_1
-							set_province_flag = command_move_target_candidate_1
+							set_province_flag = command_move_target_flag
 						}
 					}
 					command_move_orc_slave_state = {
@@ -4908,7 +4908,7 @@ country_event = { #The Betrayal of the Oni!
 								}
 							}
 							save_event_target_as = command_move_target_candidate_1
-							set_province_flag = command_move_target_candidate_1
+							set_province_flag = command_move_target_flag
 						}
 					}
 					command_move_orc_slave_state = {
@@ -5569,17 +5569,15 @@ country_event = { # Thunderfist Movement Menu
 	immediate = {
 		hidden_effect = {
 			set_country_flag = command_move_menu_open_flag
-			command_generate_move_target_canditates = yes
+			command_generate_move_target_canditates = { index = 1 }
+			command_generate_move_target_canditates = { index = 2 }
+			command_generate_move_target_canditates = { index = 3 }
 		}
 	}
 
 	option = { # Choose first
 		name = the_command.100.a
-		trigger = {
-			any_owned_province = {
-				has_province_flag = command_move_target_candidate_1
-			}
-		}
+		trigger = { has_saved_event_target = command_move_target_candidate_1 }
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -5595,19 +5593,11 @@ country_event = { # Thunderfist Movement Menu
 			tag = R63
 			target = command_move_target_candidate_1
 		}
-		
-		hidden_effect = {
-			clr_country_flag = command_move_menu_open_flag
-		}
 	}
 
 	option = { # Choose second
 		name = the_command.100.b
-		trigger = {
-			any_owned_province = {
-				has_province_flag = command_move_target_candidate_2
-			}
-		}
+		trigger = { has_saved_event_target = command_move_target_candidate_2 }
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -5623,19 +5613,11 @@ country_event = { # Thunderfist Movement Menu
 			tag = R63
 			target = command_move_target_candidate_2
 		}
-		
-		hidden_effect = {
-			clr_country_flag = command_move_menu_open_flag
-		}
 	}
 
 	option = { # Choose third
 		name = the_command.100.c
-		trigger = {
-			any_owned_province = {
-				has_province_flag = command_move_target_candidate_3
-			}
-		}
+		trigger = { has_saved_event_target = command_move_target_candidate_3 }
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -5651,27 +5633,16 @@ country_event = { # Thunderfist Movement Menu
 			tag = R63
 			target = command_move_target_candidate_3
 		}
-		
-		hidden_effect = {
-			clr_country_flag = command_move_menu_open_flag
-		}
 	}
 	
 	option = {
 		name = the_command.100.dd
 		highlight = yes
-		
-		hidden_effect = {
-			clr_country_flag = command_move_menu_open_flag
-		}
 	}
 	
 	after = {
-		every_owned_province = {
-			clr_province_flag = command_move_target_candidate_1
-			clr_province_flag = command_move_target_candidate_2
-			clr_province_flag = command_move_target_candidate_3
-		}
+		clr_country_flag = command_move_menu_open_flag
+		every_owned_province = { clr_province_flag = command_move_target_flag }
 		if = {
 			limit = { ai = yes }
 			command_slave_state_cede_surrounding = { tag = R63 }
@@ -5689,21 +5660,17 @@ country_event = { # Bloodsong Movement Menu
 	is_triggered_only = yes
 	
 	immediate = {
-		
 		hidden_effect = {
 			set_country_flag = command_move_menu_open_flag
-			
-			command_generate_move_target_canditates = yes
+			command_generate_move_target_canditates = { index = 1 }
+			command_generate_move_target_canditates = { index = 2 }
+			command_generate_move_target_canditates = { index = 3 }
 		}
 	}
 
 	option = { # Choose first
 		name = the_command.100.a
-		trigger = {
-			any_owned_province = {
-				has_province_flag = command_move_target_candidate_1
-			}
-		}
+		trigger = { has_saved_event_target = command_move_target_candidate_1 }
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -5719,19 +5686,11 @@ country_event = { # Bloodsong Movement Menu
 			tag = R64
 			target = command_move_target_candidate_1
 		}
-		
-		hidden_effect = {
-			clr_country_flag = command_move_menu_open_flag
-		}
 	}
 
 	option = { # Choose second
 		name = the_command.100.b
-		trigger = {
-			any_owned_province = {
-				has_province_flag = command_move_target_candidate_2
-			}
-		}
+		trigger = { has_saved_event_target = command_move_target_candidate_2 }
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -5747,19 +5706,11 @@ country_event = { # Bloodsong Movement Menu
 			tag = R64
 			target = command_move_target_candidate_2
 		}
-		
-		hidden_effect = {
-			clr_country_flag = command_move_menu_open_flag
-		}
 	}
 
 	option = { # Choose third
 		name = the_command.100.c
-		trigger = {
-			any_owned_province = {
-				has_province_flag = command_move_target_candidate_3
-			}
-		}
+		trigger = { has_saved_event_target = command_move_target_candidate_3 }
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -5775,27 +5726,16 @@ country_event = { # Bloodsong Movement Menu
 			tag = R64
 			target = command_move_target_candidate_3
 		}
-		
-		hidden_effect = {
-			clr_country_flag = command_move_menu_open_flag
-		}
 	}
 	
 	option = {
 		name = the_command.100.dd
 		highlight = yes
-		
-		hidden_effect = {
-			clr_country_flag = command_move_menu_open_flag
-		}
 	}
 	
 	after = {
-		every_owned_province = {
-			clr_province_flag = command_move_target_candidate_1
-			clr_province_flag = command_move_target_candidate_2
-			clr_province_flag = command_move_target_candidate_3
-		}
+		clr_country_flag = command_move_menu_open_flag
+		every_owned_province = { clr_province_flag = command_move_target_flag }
 		if = {
 			limit = { ai = yes }
 			command_slave_state_cede_surrounding = { tag = R64 }
@@ -14019,7 +13959,7 @@ country_event = { # spawning the tiger command
 								}
 							}
 							save_event_target_as = command_move_target_candidate_1
-							set_province_flag = command_move_target_candidate_1
+							set_province_flag = command_move_target_flag
 						}
 					}
 					command_move_orc_slave_state = { #they move themselves to shamakhad, so the player doesn't pay for it or get buffs
@@ -14043,7 +13983,7 @@ country_event = { # spawning the tiger command
 								}
 							}
 							save_event_target_as = command_move_target_candidate_2
-							set_province_flag = command_move_target_candidate_2
+							set_province_flag = command_move_target_flag
 						}
 					}
 					command_move_orc_slave_state = {
@@ -14447,7 +14387,7 @@ country_event = { # spawning the elephant command
 								}
 							}
 							save_event_target_as = command_move_target_candidate_1
-							set_province_flag = command_move_target_candidate_1
+							set_province_flag = command_move_target_flag
 						}
 					}
 					command_move_orc_slave_state = {
@@ -14471,7 +14411,7 @@ country_event = { # spawning the elephant command
 								}
 							}
 							save_event_target_as = command_move_target_candidate_2
-							set_province_flag = command_move_target_candidate_2
+							set_province_flag = command_move_target_flag
 						}
 					}
 					command_move_orc_slave_state = {
@@ -14845,7 +14785,7 @@ country_event = { # spawning the dragon command
 								}
 							}
 							save_event_target_as = command_move_target_candidate_1
-							set_province_flag = command_move_target_candidate_1
+							set_province_flag = command_move_target_flag
 						}
 					}
 					command_move_orc_slave_state = {
@@ -14874,7 +14814,7 @@ country_event = { # spawning the dragon command
 								}
 							}
 							save_event_target_as = command_move_target_candidate_2
-							set_province_flag = command_move_target_candidate_2
+							set_province_flag = command_move_target_flag
 						}
 					}
 					command_move_orc_slave_state = {

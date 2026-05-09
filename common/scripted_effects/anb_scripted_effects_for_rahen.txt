@@ -1807,12 +1807,10 @@ command_generate_move_target_canditates = {
 					}
 				}
 				NOT = { is_core = R62 }
+				NOT = { has_province_flag = command_move_target_flag }
 			}
-			area = {
-				limit = { owned_by = R62 }
-				save_event_target_as = command_move_target_candidate_1
-				set_province_flag = command_move_target_candidate_1
-			}
+			save_event_target_as = command_move_target_candidate_$index$
+			set_province_flag = command_move_target_flag
 		}
 	}
 	else_if = {
@@ -1837,6 +1835,7 @@ command_generate_move_target_canditates = {
 					}
 				}
 				NOT = { is_core = ROOT }
+				NOT = { has_province_flag = command_move_target_flag }
 			}
 		}
 		random_owned_area = {
@@ -1860,9 +1859,10 @@ command_generate_move_target_canditates = {
 					}
 				}
 				NOT = { is_core = ROOT }
+				NOT = { has_province_flag = command_move_target_flag }
 			}
-			save_event_target_as = command_move_target_candidate_1
-			set_province_flag = command_move_target_candidate_1
+			save_event_target_as = command_move_target_candidate_$index$
+			set_province_flag = command_move_target_flag
 		}
 	}
 	else = {
@@ -1886,182 +1886,10 @@ command_generate_move_target_canditates = {
 						}
 					}
 				}
+				NOT = { has_province_flag = command_move_target_flag }
 			}
-			save_event_target_as = command_move_target_candidate_1
-			set_province_flag = command_move_target_candidate_1
-		}
-	}
-	if = {
-		limit = {
-			any_owned_province = {
-				continent = asia
-				area_for_scope_province = {
-					type = all
-					owned_by = ROOT
-					is_capital = no
-				}
-				area_for_scope_province = {
-					NOT = { culture_group = hobgoblin }
-				}
-				NOT = {
-					has_province_flag = command_move_target_candidate_1
-				}
-				any_neighbor_province = {
-					owner = {
-						NOT = {
-							tag = R62
-							is_subject_of = R62
-							alliance_with = R62
-						}
-					}
-				}
-				NOT = { is_core = ROOT }
-			}
-		}
-		random_owned_area = {
-			limit = {
-				continent = asia
-				area_for_scope_province = {
-					type = all
-					owned_by = ROOT
-					is_capital = no
-				}
-				area_for_scope_province = {
-					NOT = { culture_group = hobgoblin }
-				}
-				NOT = {
-					has_province_flag = command_move_target_candidate_1
-				}
-				any_neighbor_province = {
-					owner = {
-						NOT = {
-							tag = R62
-							is_subject_of = R62
-							alliance_with = R62
-						}
-					}
-				}
-				NOT = { is_core = ROOT }
-			}
-			save_event_target_as = command_move_target_candidate_2
-			set_province_flag = command_move_target_candidate_2
-		}
-	}
-	else = {
-		random_owned_area = {
-			limit = {
-				continent = asia
-				area_for_scope_province = {
-					type = all
-					owned_by = ROOT
-					is_capital = no
-				}
-				area_for_scope_province = {
-					NOT = { culture_group = hobgoblin }
-				}
-				NOT = {
-					has_province_flag = command_move_target_candidate_1
-				}
-				any_neighbor_province = {
-					owner = {
-						NOT = {
-							tag = R62
-							is_subject_of = R62
-							alliance_with = R62
-						}
-					}
-				}
-			}
-			save_event_target_as = command_move_target_candidate_2
-			set_province_flag = command_move_target_candidate_2
-		}
-	}
-	if = {
-		limit = {
-			any_owned_province = {
-				continent = asia
-				area_for_scope_province = {
-					type = all
-					owned_by = ROOT
-					is_capital = no
-				}
-				area_for_scope_province = {
-					NOT = { culture_group = hobgoblin }
-				}
-				NOT = {
-					has_province_flag = command_move_target_candidate_1
-					has_province_flag = command_move_target_candidate_2
-				}
-				any_neighbor_province = {
-					owner = {
-						NOT = {
-							tag = R62
-							is_subject_of = R62
-							alliance_with = R62
-						}
-					}
-				}
-				NOT = { is_core = ROOT }
-			}
-		}
-		random_owned_area = {
-			limit = {
-				continent = asia
-				area_for_scope_province = {
-					type = all
-					owned_by = ROOT
-					is_capital = no
-				}
-				area_for_scope_province = {
-					NOT = { culture_group = hobgoblin }
-				}
-				NOT = {
-					has_province_flag = command_move_target_candidate_1
-					has_province_flag = command_move_target_candidate_2
-				}
-				any_neighbor_province = {
-					owner = {
-						NOT = {
-							tag = R62
-							is_subject_of = R62
-							alliance_with = R62
-						}
-					}
-				}
-				NOT = { is_core = ROOT }
-			}
-			save_event_target_as = command_move_target_candidate_3
-			set_province_flag = command_move_target_candidate_3
-		}
-	}
-	else = {
-		random_owned_area = {
-			limit = {
-				continent = asia
-				area_for_scope_province = {
-					type = all
-					owned_by = ROOT
-					is_capital = no
-				}
-				area_for_scope_province = {
-					NOT = { culture_group = hobgoblin }
-				}
-				NOT = {
-					has_province_flag = command_move_target_candidate_1
-					has_province_flag = command_move_target_candidate_2
-				}
-				any_neighbor_province = {
-					owner = {
-						NOT = {
-							tag = R62
-							is_subject_of = R62
-							alliance_with = R62
-						}
-					}
-				}
-			}
-			save_event_target_as = command_move_target_candidate_3
-			set_province_flag = command_move_target_candidate_3
+			save_event_target_as = command_move_target_candidate_$index$
+			set_province_flag = command_move_target_flag
 		}
 	}
 }
@@ -2110,6 +1938,21 @@ command_move_orc_slave_state = { #tag = R63 OR R64   target = command_move_targe
 	event_target:$target$ = {
 		area = {
 			limit = { owned_by = R62 }
+			if = { #Command is using "grant subject core/claim" interaction
+				limit = { is_permanent_claim = R62 }
+				remove_claim = R62
+				add_permanent_claim = $tag$
+			}
+			if = {
+				limit = { is_claim = R62 }
+				remove_claim = R62
+				add_claim = $tag$
+			}
+			if = {
+				limit = { is_territorial_core = R62 }
+				remove_territorial_core = R62
+				add_territorial_core = $tag$
+			}
 			cede_province = $tag$
 			if = {
 				limit = { is_core = R62 }
@@ -2121,9 +1964,7 @@ command_move_orc_slave_state = { #tag = R63 OR R64   target = command_move_targe
 	hidden_effect = {
 		$tag$ = {
 			every_owned_province = {
-				limit = {
-					NOT = { has_province_flag = $target$ }
-				}
+				limit = { NOT = { has_province_flag = command_move_target_flag } }
 				if = {
 					limit = { has_province_flag = command_converted_province_flag }
 					add_base_manpower = -2
@@ -2164,6 +2005,11 @@ command_move_orc_slave_state = { #tag = R63 OR R64   target = command_move_targe
 					}
 					clr_province_flag = command_converted_province_flag
 				}
+				if = {
+					limit = { is_territorial_core = $tag$ }
+					remove_territorial_core = $tag$
+					add_territorial_core = R62
+				}
 				cede_province = R62
 				if = {
 					limit = { is_core = $tag$ }
@@ -2192,11 +2038,7 @@ command_move_orc_slave_state = { #tag = R63 OR R64   target = command_move_targe
 				
 				set_province_flag = command_converted_province_flag
 			}
-			every_owned_province = {
-				clr_province_flag = command_move_target_candidate_1
-				clr_province_flag = command_move_target_candidate_2
-				clr_province_flag = command_move_target_candidate_3
-			}
+			every_owned_province = { clr_province_flag = command_move_target_flag }
 			
 			change_variable = {
 				which = number_of_times_moved
@@ -3091,7 +2933,7 @@ temple_area_joins_shaman_revolt = {
 					}
 				}
 				save_event_target_as = command_move_target_candidate_1
-				set_province_flag = command_move_target_candidate_1
+				set_province_flag = command_move_target_flag
 			}
 		}
 		command_move_orc_slave_state = {
@@ -3112,7 +2954,7 @@ temple_area_joins_shaman_revolt = {
 					}
 				}
 				save_event_target_as = command_move_target_candidate_1
-				set_province_flag = command_move_target_candidate_1
+				set_province_flag = command_move_target_flag
 			}
 		}
 		command_move_orc_slave_state = {
