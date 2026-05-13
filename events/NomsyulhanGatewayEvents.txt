@@ -132,32 +132,71 @@ country_event = {
 	
 	is_triggered_only = yes
 	
-	option = { # hire adventurers
+	option = { #Hire adventurers
 		name = nomsyulhan_gateway.10.a
+
+		if = {
+			limit = { ai = no }
+			add_treasury = -100
+			add_estate_influence_modifier = {
+				estate = estate_adventurers
+				desc = numsyulhan_adventur_to_the_rift
+				duration = 3650
+				influence = 10
+			}
+		}
+		set_country_flag = nomsyulhan_exploring_riff
 		country_event = { id = nomsyulhan_gateway.11 days = 10 }
 	}
 	
-	option = { # use the army
+	option = { #Use the army
 		name = nomsyulhan_gateway.10.b
+
+		if = {
+			limit = { ai = no }
+			add_manpower = -8
+			add_mil_power = -100
+		}
+		set_country_flag = nomsyulhan_exploring_riff
 		country_event = { id = nomsyulhan_gateway.11 days = 10 }
 	}
 	
-	option = { # use spirit guides
+	option = { #Use spirit guides
 		name = nomsyulhan_gateway.10.c
 		highlight = yes
-		trigger = {
-			primary_culture = soulseeker_ogre
+		trigger = { primary_culture = soulseeker_ogre }
+
+		if = {
+			limit = { ai = no }
+			add_dip_power = -100
+			add_country_modifier = {
+				name = nomsyulhan_alterated_spirits
+				duration = 3650
+			}
 		}
+		set_country_flag = nomsyulhan_exploring_riff
 		country_event = { id = nomsyulhan_gateway.11 days = 10 }
 	}
 	
-	option = { # use shamans
+	option = { #Use shamans
 		name = nomsyulhan_gateway.10.e
 		highlight = yes
-		trigger = {
-			primary_culture = eagle_command
+		trigger = { primary_culture = eagle_command }
+
+		if = {
+			limit = { ai = no }
+			add_adm_power = -100
+			add_estate_loyalty = {
+				estate = estate_mages
+				loyalty = -10
+			}
 		}
+		set_country_flag = nomsyulhan_exploring_riff
 		country_event = { id = nomsyulhan_gateway.11 days = 10 }
+	}
+
+	option = { #Not for now
+		name = nomsyulhan_gateway.10.f
 	}
 }
 
@@ -168,21 +207,22 @@ country_event = {
 	picture = COURT_eventPicture
 	
 	is_triggered_only = yes
-
-	immediate = {
-		hidden_effect = {
-			6838 = {
-				create_colony = 1000
-				add_province_modifier = {
-					name = nomsyulhan_incomplete_gateway
-					duration = -1
-				}
-			}
-		}
-	}
 	
 	option = { 
 		name = nomsyulhan_gateway.11.a
+
+		clr_country_flag = nomsyulhan_exploring_riff
+		6838 = {
+			create_colony = 1000
+			add_province_modifier = {
+				name = nomsyulhan_incomplete_gateway
+				duration = -1
+			}
+			add_great_project = {
+				type = nomsyulhan_crossing
+				instant = yes
+			}
+		}
 	}
 }
 
