@@ -929,6 +929,7 @@ country_event = {
 		clr_country_flag = harem_entrepreneurial_heir
 		clr_country_flag = harem_generous_heir
 		clr_country_flag = harem_fairest_heir
+		harpylen_new_heir = yes
 	}
 }
 
@@ -1194,6 +1195,7 @@ country_event = {
 			female = yes
 		}
 		hyti_new_heir_effect = yes
+		harpylen_new_heir = yes
 	}
 }
 
@@ -1551,6 +1553,7 @@ country_event = {
 			dynasty = original_dynasty
 		}
 		hyti_new_heir_effect = yes
+		harpylen_new_heir = yes
 	}
 }
 
@@ -1626,6 +1629,7 @@ country_event = {
 				age = 15
 			}
 			hyti_new_heir_effect = yes
+			harpylen_new_heir = yes
 		}
 	}
 }
@@ -1696,6 +1700,7 @@ country_event = {
 			claim = 65
 		}
 		hyti_new_heir_effect = yes
+		harpylen_new_heir = yes
 		event_target:target_province = {
 			add_base_manpower = 1
 		}
@@ -1898,6 +1903,7 @@ country_event = {
 				claim = 45
 			}
 			hyti_new_heir_effect = yes
+			harpylen_new_heir = yes
 		}
 	}
 	
@@ -2137,7 +2143,7 @@ country_event = {
 	
 	is_triggered_only = yes
 	
-	trigger = { }
+	trigger = { owns = 660 }
 	
 	option = {
 		name = harpy_events.123.a
@@ -2152,6 +2158,48 @@ country_event = {
 			add_base_tax = 2
 			add_base_production = 2
 			add_base_manpower = 2
+		}
+	}
+
+	option = {
+		name = harpy_events.123.c
+		trigger = {
+			OR = {
+				was_tag = F81
+				was_tag = F80
+			}
+		}
+		set_capital = 660
+		660 = {
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 2
+		}
+		if = {
+			limit = { was_tag = F81 }
+			change_country_color = { country = F81 }
+		}
+		else = {
+			change_country_color = { country = F80 }
+		}
+	}
+
+	option = {
+		name = harpy_events.123.dd
+		trigger = {
+			OR = {
+				was_tag = F81
+				was_tag = F80
+			}
+		}
+		add_legitimacy_or_monarch_power = { VAL = 5 } 
+		add_prestige_excess_to_splendour_effect = { VAL = 10 }
+		if = {
+			limit = { was_tag = F81 }
+			change_country_color = { country = F81 }
+		}
+		else = {
+			change_country_color = { country = F80 }
 		}
 	}
 }
@@ -2934,6 +2982,15 @@ country_event = {
 			}
 			"
 		}
+		if = {
+			limit = {
+				tag = F98 # Harpylen
+			}
+			change_variable = { # This count is used for the mission Beyond Bulwar
+				which = F98_render_unto_total_dev_transferred
+				which = HAR_dev_transfer
+			}
+		}
 		while = {
 			limit = {
 				check_variable = {
@@ -2947,6 +3004,18 @@ country_event = {
 			change_variable = {
 				which = HAR_dev_transfer
 				value = -1
+			}
+		}
+		if = { # placeholder custom tooltip?
+			limit = {
+				tag = F98 # Harpylen
+				mission_completed = F98_cultivate_sanarenni
+			}
+			every_subject_country = {
+				change_mana = { amount = -10 }
+				ROOT = {
+					change_mana = { amount = 10 }
+				}
 			}
 		}
 	}
@@ -2966,7 +3035,7 @@ country_event = { #button three - get vassalisation
 		every_neighbor_country = {
 			export_to_variable = {
 				which = HARtotalDev
-				value = trigger_value:development
+				value = trigger_value:total_development
 			}
 			divide_variable = {
 				which = HARtotalDev
@@ -2986,6 +3055,13 @@ country_event = { #button three - get vassalisation
 						months = 120
 					}
 				}
+			}
+		}
+		if = {
+			limit = { mission_completed = F98_announce_intent }
+			every_province = {
+				limit = { fast_has_pop_of_race = { race = harpy } }
+				add_permanent_claim = ROOT
 			}
 		}
 	}
@@ -3017,6 +3093,7 @@ country_event = {
 				female = yes
 			}
 			hyti_new_heir_effect = yes
+			harpylen_new_heir = yes
 		}
 		else_if = {
 			limit = { 
