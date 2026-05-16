@@ -250,8 +250,27 @@ country_event = { #The Gleaming Caehn/Horde
 province_event = { #Baildelk's Call
 	id = golden_tremor_events.5
 	title = golden_tremor_events.5.t
-	desc = golden_tremor_events.5.desc
 	picture = indiangfx_ECONOMY_eventPicture
+
+	desc = {
+		desc = golden_tremor_events.5.rhidrinDesc
+		trigger = { has_ruler_flag = I57_is_rhidrin_flag }
+	}
+
+	desc = {
+		desc = golden_tremor_events.5.baildelkDesc
+		trigger = { has_ruler_flag = I57_is_baildelk_flag }
+	}
+
+	desc = {
+		desc = golden_tremor_events.5.neitherDesc
+		trigger = {
+			NOT = {
+				has_ruler_flag = I57_is_rhidrin_flag
+				has_ruler_flag = I57_is_baildelk_flag 
+			}
+		}
+	}
 
 	is_triggered_only = yes
 
@@ -314,7 +333,7 @@ country_event = { #The Golden Codex
 	option = {
 		name = golden_tremor_events.7.a
 		custom_tooltip = I57_lose_mission_effects_tt
-		remove_country_modifier = I57_ogre_auxilieries
+		remove_country_modifier = I57_ogre_auxiliaries
 		add_country_modifier = {
 			name = I57_the_golden_codex_mod
 			duration = -1
@@ -328,8 +347,17 @@ country_event = { #The Golden Codex
 country_event = { #The Golden Call Falls Silent
 	id = golden_tremor_events.10
 	title = golden_tremor_events.10.t
-	desc = golden_tremor_events.10.desc
 	picture = KING_SICK_IN_BED_eventPicture
+
+	desc = {
+		trigger = { NOT = { mission_completed = I57_3_6_the_golden_codex } }
+		desc = golden_tremor_events.10.elseDesc
+	}
+
+	desc = {
+		trigger = { mission_completed = I57_3_6_the_golden_codex }
+		desc = golden_tremor_events.10.rhidrinDesc
+	}
 
 	is_triggered_only = yes
 	fire_only_once = yes

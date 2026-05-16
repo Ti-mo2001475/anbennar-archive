@@ -8249,22 +8249,22 @@ castanor_5_missions_FP_strong_centaurs_path = {
 				limit = { J33 = { exists = yes } }
 				owner = { tag = J33 }
 			}
-			else = { owner = { has_country_flag = federation_leader } }
+			else = { owner = { is_federation_leader = yes } }
 		}
 		
 		trigger = {
 			if = {
 				limit = {
 					J33 = { exists = yes }
-					reverse_has_opinion = {
-						who = J33
-						value = 150
-					}
+				}
+				reverse_has_opinion = {
+					who = J33
+					value = 150
 				}
 			}
 			else = {
 				any_country = {
-					has_country_flag = federation_leader
+					is_federation_leader = yes
 					has_opinion = {
 						who = ROOT
 						value = 150
@@ -8360,7 +8360,7 @@ castanor_5_missions_FP_strong_centaurs_path = {
 			}
 			else = {
 				random_country = {
-					limit = { has_country_flag = federation_leader }
+					limit = { is_federation_leader = yes }
 					add_trust = {
 						who = ROOT
 						value = 20
@@ -8492,7 +8492,7 @@ castanor_5_missions_FP_strong_lake_fed_path = {
 						J33 = { is_rival = B32 }
 					}
 				}
-				num_of_owned_provinces_with = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 					value = 5
 					region = northern_pass_region
 					has_fort_building_trigger = yes
@@ -8545,7 +8545,7 @@ castanor_5_missions_FP_strong_lake_fed_path = {
 			}
 			else = {
 				add_country_modifier = {
-					name = castanor_establishing_embassies
+					name = castanor_establishing_embassies_modifier
 					duration = 10950
 				}
 				4202 = { # Northern Pass
@@ -10762,7 +10762,7 @@ castanor_4_missions_succession_war_patrician = {
 		}
 	}
 
-	castanor_sucession_war_win_the_hearts_and_minds_patrician = {
+	castanor_succession_war_win_the_hearts_and_minds_patrician = {
 		icon = regents_contracts
 		position = 4
 		required_missions = { castanor_succession_war_tipping_the_balance }

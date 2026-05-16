@@ -271,6 +271,21 @@ custom_button = {
 			limit = { religion = skaldhyrric_faith }
 			if = {
 				limit = {
+					has_country_flag = reveria_skald_final_reward
+				}
+				custom_trigger_tooltip = {
+					tooltip = swap_deity_tt_7
+					OR = {
+						NOT = { has_country_flag = skaldhyrric_faith_deity_switch_cooldown }
+						had_country_flag = {
+							flag = skaldhyrric_faith_deity_switch_cooldown
+							days = 365
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
 					has_country_flag = skaldhyrric_fast_deity_change
 				}
 				custom_trigger_tooltip = {
@@ -335,7 +350,7 @@ custom_button = {
 					}
 				}
 			}
-			if = {
+			else_if = {
 				limit = {
 					has_government_attribute = yudunyovi_dedicated_followers
 				}
@@ -468,9 +483,9 @@ custom_button = {
 			has_adopted_cult = centaur_cult
 			has_adopted_cult = kobold_cult
 			has_adopted_cult = cube_cult
-			has_adopted_cult = ancestor_worship_cult
 			has_adopted_cult = grobilazk_cult
 			has_adopted_cult = scribble_cult
+			has_adopted_cult = chivalry_cult
 		}
 		has_dlc = "Rights of Man"
 	}
@@ -493,18 +508,18 @@ custom_button = {
 					has_country_flag = enabled_cult_switching
 				}
 			}
-			custom_trigger_tooltip = {
-				tooltip = swap_cult_regular_tt_20
-				OR = {
-					NOT = { has_country_flag = switched_active_cult_cooldown }
-					had_country_flag = {
-						flag = switched_active_cult_cooldown
-						days = 7300 #20 years
-					}
-				}
-			}
 			if = {
 				limit = { has_country_flag = spiked_log_very_flexible_cults }
+				custom_trigger_tooltip = {
+					tooltip = swap_cult_regular_tt_10
+					OR = {
+						NOT = { has_country_flag = switched_active_cult_cooldown }
+						had_country_flag = {
+							flag = switched_active_cult_cooldown
+							days = 3650 #10 years
+						}
+					}
+				}
 				if = {
 					limit = {
 						government = republic
@@ -516,6 +531,16 @@ custom_button = {
 				}
 			}
 			else = {
+				custom_trigger_tooltip = {
+					tooltip = swap_cult_regular_tt_20
+					OR = {
+						NOT = { has_country_flag = switched_active_cult_cooldown }
+						had_country_flag = {
+							flag = switched_active_cult_cooldown
+							days = 7300 #20 years
+						}
+					}
+				}
 				if = {
 					limit = {
 						government = republic
@@ -541,7 +566,7 @@ custom_button = {
 				has_country_flag = uses_primary_cult
 			}
 			hidden_effect = { set_country_flag = track_primary_cult_change_cost }
-			country_event = { id = goblinic_shamanism_flavor.602 }
+			country_event = { id = goblinic_shamanism_flavor.4 }
 		}
 		else_if = {
 			limit = {
@@ -557,7 +582,7 @@ custom_button = {
 			else = {
 				reduce_legitimacy_large_effect = yes
 			}
-			country_event = { id = goblinic_shamanism_flavor.603 }
+			country_event = { id = goblinic_shamanism_flavor.5 }
 		}
 	}
 }
@@ -570,12 +595,45 @@ custom_button = {
 		religion = shadow_pact
 	}
 	trigger = {
+		if = {
+			limit = {
+				has_country_flag = shadow_pact_double_cost_reroll
+			}
+			church_power = 50
+		}
+		else_if = {
+			limit = {
+				has_country_flag = shadow_pact_no_cost_reroll
+			}
+		}
+		else = {
+			church_power = 25
+		}
 		custom_trigger_tooltip = {
 			tooltip = shadow_pact_can_reroll_portent_tt
 			shadow_pact_can_reroll = yes
+			NOT = { #to avoid a bug with double rerolls
+				capital_scope = {
+					has_active_triggered_province_modifier = shadow_pact_reroll_randomisation_ptm
+				}
+			}
 		}
 	}
 	effect = {
+		if = {
+			limit = {
+				has_country_flag = shadow_pact_double_cost_reroll
+			}
+			add_church_power = -50
+		}
+		else_if = {
+			limit = {
+				has_country_flag = shadow_pact_no_cost_reroll
+			}
+		}
+		else = {
+			add_church_power = -25
+		}
 		hidden_effect = {
 			capital_scope = {
 				add_province_triggered_modifier = shadow_pact_reroll_randomisation_ptm
@@ -584,15 +642,15 @@ custom_button = {
 	}
 }
 
-custom_icon = {
-	name = secondary_religion_blocked_steward
-	potential = {
-		is_emperor_of_china = yes
-		religion = the_hunt
+# custom_icon = {
+# 	name = secondary_religion_blocked_steward
+# 	potential = {
+# 		is_emperor_of_china = yes
+# 		religion = the_hunt
 		
-	}
-	tooltip = secondary_religion_change_blocked_steward_tooltip
-}
+# 	}
+# 	tooltip = secondary_religion_change_blocked_steward_tooltip
+# }
 
 custom_icon = {
 	name = high_philosophy_visvatma
@@ -820,10 +878,158 @@ custom_icon = {
 	}
 }
 
+custom_button = {
+	name = view_aspects
+	frame = {
+		number = 1
+		trigger = {
+			OR = {
+				religion = uelos_cult #Anglican
+				religion = elven_forebears #Protestant
+			}
+		}
+	}
+	frame = {
+		number = 2
+		trigger = {
+			OR = {
+				religion = black_doctrine #Anglican
+				religion = devouring_path #Protestant
+			}
+		}
+	}
+	frame = {
+		number = 3
+		trigger = {
+			OR = {
+				religion = aakhetist #Anglican
+				religion = oren_nayiru_reformed #Protestant
+			}
+		}
+	}
+	frame = {
+		number = 4
+		trigger = {
+			OR = {
+				religion = kvangahga #Anglican
+				religion = rune_scribes #Protestant
+			}
+		}
+	}
+	frame = {
+		number = 5
+		trigger = {
+			OR = {
+				religion = great_dookan #Anglican
+				religion = gotiriei #Protestant
+			}
+		}
+	}
+	frame = {
+		number = 6
+		trigger = {
+			OR = {
+				religion = old_dookan #Anglican
+				religion = bulgu_orazan #Protestant
+			}
+		}
+	}
+	frame = {
+		number = 7
+		trigger = {
+			OR = {
+				religion = the_hunt #Anglican
+				religion = aycha_alpa #Protestant
+			}
+		}
+	}
+	frame = {
+		number = 8
+		trigger = {
+			OR = {
+				religion = dai_nadeilhil #Anglican
+				religion = transmutative_path #Protestant
+			}
+		}
+	}
+	frame = {
+		number = 9
+		trigger = {
+			OR = {
+				religion = mazhthramazh #Anglican
+				religion = endless_ocean #Protestant
+			}
+		}
+	}
+	frame = {
+		number = 10
+		trigger = {
+			OR = {
+				religion = askaeorg #Anglican
+				religion = foundationism #Protestant
+			}
+		}
+	}
+	frame = {
+		number = 11
+		trigger = {
+			religion = fey_court
+		}
+	}
+	frame = {
+		number = 12
+		trigger = {
+			religion = suhans_praxis
+		}
+	}
+	frame = {
+		number = 13
+		trigger = {
+			religion = levaajan
+		}
+	}
+	frame = {
+		number = 14
+		trigger = {
+			religion = irdaeos_worship
+		}
+	}
+	frame = {
+		number = 15
+		trigger = {
+			religion = fangaulan_pantheon
+		}
+	}
+	frame = {
+		number = 16
+		trigger = {
+			religion = sky_domain
+		}
+	}
+	frame = {
+		number = 17
+		trigger = {
+			religion = dunborgula
+		}
+	}
+	frame = {
+		number = 18
+		trigger = {
+			religion = manago_poku # anglican
+		}
+	}
+}
+
+#Runefather
+custom_window = {
+	name = runefather_bar_window
+	potential = {
+		religion = runefather_worship
+	}
+}
 custom_icon = {
 	name = runefather_bar_shadowhammer_1
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -843,7 +1049,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_shadowhammer_2
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -867,7 +1072,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_shadowhammer_3
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -891,7 +1095,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_shadowhammer_4
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -915,7 +1118,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_shadowhammer_5
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -933,7 +1135,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_darkstone_1
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -953,7 +1154,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_darkstone_2
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -977,7 +1177,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_darkstone_3
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1001,7 +1200,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_darkstone_4
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1025,7 +1223,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_darkstone_5
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1043,7 +1240,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_groedi_az_an_1
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1063,7 +1259,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_groedi_az_an_2
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1087,7 +1282,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_groedi_az_an_3
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1111,7 +1305,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_groedi_az_an_4
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1135,7 +1328,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_groedi_az_an_5
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1153,7 +1345,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_amlruzskappa_1
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1173,7 +1364,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_amlruzskappa_2
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1197,7 +1387,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_amlruzskappa_3
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1221,7 +1410,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_amlruzskappa_4
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 			tag = H94
@@ -1245,7 +1433,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_amlruzskappa_5
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1263,7 +1450,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_furdanhund_1
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1283,7 +1469,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_furdanhund_2
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1307,7 +1492,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_furdanhund_3
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1331,7 +1515,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_furdanhund_4
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1355,7 +1538,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_furdanhund_5
 	potential = {
-		religion = runefather_worship
 		NOT = {
 			OR = {
 				tag = H94
@@ -1373,7 +1555,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_might_1
 	potential = {
-		religion = runefather_worship
 		OR = {
 			tag = H94
 			was_tag = H94
@@ -1391,7 +1572,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_might_2
 	potential = {
-		religion = runefather_worship
 		OR = {
 			tag = H94
 			was_tag = H94
@@ -1413,7 +1593,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_might_3
 	potential = {
-		religion = runefather_worship
 		OR = {
 			tag = H94
 			was_tag = H94
@@ -1435,7 +1614,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_might_4
 	potential = {
-		religion = runefather_worship
 		OR = {
 			tag = H94
 			was_tag = H94
@@ -1457,7 +1635,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_might_5
 	potential = {
-		religion = runefather_worship
 		OR = {
 			tag = H94
 			was_tag = H94
@@ -1473,7 +1650,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_mercy_1
 	potential = {
-		religion = runefather_worship
 		OR = {
 			tag = H94
 			was_tag = H94
@@ -1491,7 +1667,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_mercy_2
 	potential = {
-		religion = runefather_worship
 		OR = {
 			tag = H94
 			was_tag = H94
@@ -1513,7 +1688,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_mercy_3
 	potential = {
-		religion = runefather_worship
 		OR = {
 			tag = H94
 			was_tag = H94
@@ -1535,7 +1709,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_mercy_4
 	potential = {
-		religion = runefather_worship
 		OR = {
 			tag = H94
 			was_tag = H94
@@ -1557,7 +1730,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_mercy_5
 	potential = {
-		religion = runefather_worship
 		OR = {
 			tag = H94
 			was_tag = H94
@@ -1573,7 +1745,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_majesty_1
 	potential = {
-		religion = runefather_worship
 		OR = {
 			tag = H94
 			was_tag = H94
@@ -1591,7 +1762,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_majesty_2
 	potential = {
-		religion = runefather_worship
 		OR = {
 			tag = H94
 			was_tag = H94
@@ -1613,7 +1783,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_majesty_3
 	potential = {
-		religion = runefather_worship
 		OR = {
 			tag = H94
 			was_tag = H94
@@ -1635,7 +1804,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_majesty_4
 	potential = {
-		religion = runefather_worship
 		OR = {
 			tag = H94
 			was_tag = H94
@@ -1657,7 +1825,6 @@ custom_icon = {
 custom_icon = {
 	name = runefather_bar_majesty_5
 	potential = {
-		religion = runefather_worship
 		OR = {
 			tag = H94
 			was_tag = H94
@@ -1891,15 +2058,15 @@ custom_button = { #gamyi
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { ruler_religion = elikhetist }
 		5863 = {
-			np_holy_site_is_available_for_pilgrimmage = yes
+			np_holy_site_is_available_for_pilgrimage = yes
 		}
 	}
 	effect = {
 		set_ruler_flag = np_gamyi
-		np_pilgrimmage_setup = yes
+		np_pilgrimage_setup = yes
 		if = {
 			limit = {
 				has_country_flag = noukahi_gamyi_pilgrimage_completed_at_least_once
@@ -1920,15 +2087,15 @@ custom_button = { #lelanan
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { ruler_religion = elikhetist }
 		6599 = {
-			np_holy_site_is_available_for_pilgrimmage = yes
+			np_holy_site_is_available_for_pilgrimage = yes
 		}
 	}
 	effect = {
 		set_ruler_flag = np_lelanan
-		np_pilgrimmage_setup = yes
+		np_pilgrimage_setup = yes
 		if = {
 			limit = {
 				has_country_flag = noukahi_lelanan_pilgrimage_completed_at_least_once
@@ -1949,15 +2116,15 @@ custom_button = { #junansuar
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { ruler_religion = elikhetist }
 		5808 = {
-			np_holy_site_is_available_for_pilgrimmage = yes
+			np_holy_site_is_available_for_pilgrimage = yes
 		}
 	}
 	effect = {
 		set_ruler_flag = np_junansuar
-		np_pilgrimmage_setup = yes
+		np_pilgrimage_setup = yes
 		if = {
 			limit = {
 				has_country_flag = noukahi_junansuar_pilgrimage_completed_at_least_once
@@ -1978,15 +2145,15 @@ custom_button = { #Nazhni
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { ruler_religion = elikhetist }
 		5941 = {
-			np_holy_site_is_available_for_pilgrimmage = yes
+			np_holy_site_is_available_for_pilgrimage = yes
 		}
 	}
 	effect = {
 		set_ruler_flag = np_nazhni
-		np_pilgrimmage_setup = yes
+		np_pilgrimage_setup = yes
 		if = {
 			limit = {
 				has_country_flag = noukahi_nazhni_pilgrimage_completed_at_least_once
@@ -2007,15 +2174,15 @@ custom_button = { #Ardim qarast
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { ruler_religion = elikhetist }
 		6063 = {
-			np_holy_site_is_available_for_pilgrimmage = yes
+			np_holy_site_is_available_for_pilgrimage = yes
 		}
 	}
 	effect = {
 		set_ruler_flag = np_ardimqarast
-		np_pilgrimmage_setup = yes
+		np_pilgrimage_setup = yes
 		if = {
 			limit = {
 				has_country_flag = noukahi_ardimqarast_pilgrimage_completed_at_least_once
@@ -2036,15 +2203,15 @@ custom_button = { #Kunolo
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { ruler_religion = elikhetist }
 		5710 = {
-			np_holy_site_is_available_for_pilgrimmage = yes
+			np_holy_site_is_available_for_pilgrimage = yes
 		}
 	}
 	effect = {
 		set_ruler_flag = np_kunolo
-		np_pilgrimmage_setup = yes
+		np_pilgrimage_setup = yes
 		if = {
 			limit = {
 				has_country_flag = noukahi_kunolo_pilgrimage_completed_at_least_once
@@ -2065,15 +2232,15 @@ custom_button = { #Niramit
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { ruler_religion = elikhetist }
 		5481 = {
-			np_holy_site_is_available_for_pilgrimmage = yes
+			np_holy_site_is_available_for_pilgrimage = yes
 		}
 	}
 	effect = {
 		set_ruler_flag = np_niramit
-		np_pilgrimmage_setup = yes
+		np_pilgrimage_setup = yes
 		if = {
 			limit = {
 				has_country_flag = noukahi_niramit_pilgrimage_completed_at_least_once
@@ -2094,15 +2261,15 @@ custom_button = { #Sprigi Twani
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { ruler_religion = elikhetist }
 		6690 = {
-			np_holy_site_is_available_for_pilgrimmage = yes
+			np_holy_site_is_available_for_pilgrimage = yes
 		}
 	}
 	effect = {
 		set_ruler_flag = np_sprigitwani
-		np_pilgrimmage_setup = yes
+		np_pilgrimage_setup = yes
 		if = {
 			limit = {
 				has_country_flag = noukahi_sprigitwani_pilgrimage_completed_at_least_once
@@ -2165,12 +2332,12 @@ custom_button = { #Kheterat
 	tooltip = "Kheterat"
 	potential = { has_country_flag = noukahi_pantheon_pilgrimage_khet_open }
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		ruler_religion = elikhetist
 	}
 	effect = {
 		set_ruler_flag = np_kheterat
-		np_pilgrimmage_setup = yes
+		np_pilgrimage_setup = yes
 		custom_tooltip = noukahi_kheterat_tooltip_full_effect_tooltip
 	}
 }
@@ -2222,77 +2389,129 @@ custom_button = {
 }
 custom_button = { #Jezarpizu
 	name = noukahi_pantheon_pilgrimage_unique_button_1
-	tooltip = "§gUnknown§!"
+	tooltip = jezarpizu_tooltip
 	potential = { has_country_flag = noukahi_pantheon_pilgrimage_unique_open }
 	frame = {
 		number = 1
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { religion = elikhetist }
 		custom_trigger_tooltip = {
 			tooltip = np_jezarpizu_tt
 			6659 = {
-				np_holy_site_is_available_for_pilgrimmage = yes
+				np_holy_site_is_available_for_pilgrimage = yes
 			}
 		}
 	}
 	effect = {
 		set_ruler_flag = np_jezarpizu
-		np_pilgrimmage_setup = yes
+		np_pilgrimage_setup = yes
 	}
 }
 custom_icon = {
 	name = noukahi_pantheon_pilgrimage_unique_button_1_gilded
 	potential = { has_country_flag = np_jezarpizu_pilgrimage_complete }
 }
-custom_button = {#special unused
+custom_button = {#special used for monument temple_ruby_bronze
 	name = noukahi_pantheon_pilgrimage_unique_button_2
-	tooltip = ""
+	tooltip = "Samishesha"
 	potential = { has_country_flag = noukahi_pantheon_pilgrimage_unique_open }
 	frame = {
 		number = 2
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { religion = elikhetist }
-		always = no #remove when implemented
-		#special condition here
+		owns = 5774
+		5774 = {
+			has_great_project = {
+				type = temple_ruby_bronze
+				tier = 3
+			}
+			sarhal_owner_can_use_temple_ruby_bronze = yes
+		}
 	}
 	effect = {
-		#set the flag here
-		#np_pilgrimmage_setup = yes
-	} #put the effect here
+		set_ruler_flag = np_temple_ruby_bronze
+		np_pilgrimage_setup = yes
+	}
 }
-# custom_icon = {
-# 	name = noukahi_pantheon_pilgrimage_unique_button_2_gilded
-# 	potential = { has_country_flag = np_XXXXXXXX_pilgrimage_complete }
-# }
-custom_button = {#special unused
+custom_icon = {
+	name = noukahi_pantheon_pilgrimage_unique_button_2_gilded
+	potential = { has_country_flag = np_temple_ruby_bronze_pilgrimage_complete }
+}
+custom_button = {#Zena Effelai Pilgrimage
 	name = noukahi_pantheon_pilgrimage_unique_button_3
-	tooltip = ""
+	tooltip = effelai_superregion
 	potential = { has_country_flag = noukahi_pantheon_pilgrimage_unique_open }
 	frame = {
 		number = 3
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { religion = elikhetist }
-		#special condition here
-		always = no #remove when implemented
-	}
+		if = {
+			limit = {
+				has_global_flag = effelai_pilgrimage_available
+			}
+			if = {
+				limit = {
+					NOT = {
+						exists = G15 #Sel'Parura
+					}
+				}
+				2378 = { #Andwohii
+					np_holy_site_is_available_for_pilgrimage = yes
+				}
+			}
+			else = {
+				G15 = { #Sel'Parura
+					OR = {
+						religion = noukahi_pantheon
+						is_subject_of = ROOT
+						alliance_with =  ROOT
+						has_opinion = {
+							who = ROOT
+							value = 100
+						}
+					}
+				}
+				OR = {
+					medium_tolerance_ruinborn_race_trigger = yes
+					high_tolerance_ruinborn_race_trigger = yes
+				}
+			}
+		}
+		else = {
+			custom_trigger_tooltip = {
+				tooltip = zena_np_effelai_pilgrimage_tt
+				always = no
+			}	
+		}
+	}	
+
 	effect = {
-		#set the flag here
-		#np_pilgrimmage_setup = yes
+		set_ruler_flag = np_effelai
+		np_pilgrimage_setup = yes
+		if = {
+			limit = {
+				has_country_flag = noukahi_effelai_pilgrimage_completed_at_least_once
+			}
+			custom_tooltip = noukahi_effelai_tooltip_full_effect_tooltip
+		}
+		else = {
+			custom_tooltip = noukahi_effelai_tooltip_cryptic_effect_tooltip
+		}
 	} #put the effect here
 }
-# custom_icon = {
-# 	name = noukahi_pantheon_pilgrimage_unique_button_3_gilded
-# 	potential = { has_country_flag = np_XXXXXXXX_pilgrimage_complete }
-# }
+custom_icon = {
+ 	name = noukahi_pantheon_pilgrimage_unique_button_3_gilded
+ 	potential = { has_ruler_modifier = np_effelai_pilgrimage }
+}
 custom_button = {#special unused
 	name = noukahi_pantheon_pilgrimage_unique_button_4
 	tooltip = ""
@@ -2302,14 +2521,14 @@ custom_button = {#special unused
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { religion = elikhetist }
 		#special condition here
 		always = no #remove when implemented
 	}
 	effect = {
 		#set the flag here
-		#np_pilgrimmage_setup = yes
+		#np_pilgrimage_setup = yes
 	} #put the effect here
 }
 # custom_icon = {
@@ -2325,14 +2544,14 @@ custom_button = {#special unused
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { religion = elikhetist }
 		always = no #to be changed
 		#special condition here
 	}
 	effect = {
 		#set the flag here
-		#np_pilgrimmage_setup = yes
+		#np_pilgrimage_setup = yes
 	} #put the effect here
 }
 # custom_icon = {
@@ -2348,14 +2567,14 @@ custom_button = {#special unused
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { religion = elikhetist }
 		always = no #to be changed
 		#special condition here
 	}
 	effect = {
 		#set the flag here
-		#np_pilgrimmage_setup = yes
+		#np_pilgrimage_setup = yes
 	} #put the effect here
 }
 # custom_icon = {
@@ -2371,14 +2590,14 @@ custom_button = {#tag specific
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { religion = elikhetist }
 		always = no #to be changed
 		#special condition here
 	}
 	effect = {
 		#set the flag here
-		#np_pilgrimmage_setup = yes
+		#np_pilgrimage_setup = yes
 	} #put the effect here
 }
 # custom_icon = {
@@ -2394,14 +2613,14 @@ custom_button = {#tag specific
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { religion = elikhetist }
 		always = no #to be changed
 		#special condition here
 	}
 	effect = {
 		#set the flag here
-		#np_pilgrimmage_setup = yes
+		#np_pilgrimage_setup = yes
 	} #put the effect here
 }
 # custom_icon = {
@@ -2417,14 +2636,14 @@ custom_button = {#tag specific
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { religion = elikhetist }
 		always = no #to be changed
 		#special condition here
 	}
 	effect = {
 		#set the flag here
-		#np_pilgrimmage_setup = yes
+		#np_pilgrimage_setup = yes
 	} #put the effect here
 }
 # custom_icon = {
@@ -2440,14 +2659,14 @@ custom_button = {#tag specific
 		trigger = {}
 	}
 	trigger = {
-		np_can_go_on_pilgrimmage = yes
+		np_can_go_on_pilgrimage = yes
 		NOT = { religion = elikhetist }
 		always = no #to be changed
 		#special condition here
 	}
 	effect = {
 		#set the flag here
-		#np_pilgrimmage_setup = yes
+		#np_pilgrimage_setup = yes
 	} #put the effect here
 }
 # custom_icon = {
@@ -2730,3 +2949,22 @@ custom_button = {
 ######################################
 ##Taychendi Religious Reforms UI END##
 ######################################
+
+custom_window = {
+	name = speaking_memory_memory_window
+	potential = { religion = speaking_memory }
+}
+
+custom_icon = {
+	name = speaking_memory_ancestory_background
+}
+
+custom_text_box = {
+	name = speaking_memory_ancestory_text
+	tooltip = speaking_memory_ancestory_text_desc
+}
+
+custom_text_box = {
+	name = speaking_memory_ancestory_top_text
+	tooltip = speaking_memory_ancestory_top_text_desc
+}
