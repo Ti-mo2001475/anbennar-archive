@@ -15982,34 +15982,30 @@ on_five_year_pulse_3 = {
 		clr_country_flag = frontier_timer_10
 		country_event = { id = gerudian_settlement.0 }
 	}
-	else = {
-		if = {
-			limit = {
-				has_country_flag = frontier_timer_5
-			}
-			clr_country_flag = frontier_timer_5
-			set_country_flag = frontier_timer_10
+	else_if = {
+		limit = {
+			has_country_flag = frontier_timer_5
 		}
-		else = {
-			if = {
-				limit = { #hopefully better for performance to put the conditions here, to avoid needless flag cycling
-					NOT = { 
-						is_year = 1575
-					} 
-					capital_scope = {
-						OR = {
-							region = dalr_region
-							region = olavlund_region
-							region = gerudian_frontier_region
-						}
-					}
-					NOT = {
-						tag = Z89 #Digoveda
-					}
-				}	
-				set_country_flag = frontiertimer5
+		clr_country_flag = frontier_timer_5
+		set_country_flag = frontier_timer_10
+	}	
+	else_if = {
+		limit = { #hopefully better for performance to put the conditions here, to avoid needless flag cycling
+			NOT = { 
+				is_year = 1575
+			} 
+			capital_scope = {
+				OR = {
+					region = dalr_region
+					region = olavlund_region
+					region = gerudian_frontier_region
+				}
 			}
-		}
+			NOT = {
+				tag = Z89 #Digoveda
+			}
+		}	
+		set_country_flag = frontier_timer_5
 	}
 }
 
