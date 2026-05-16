@@ -9,62 +9,22 @@ country_event = { #Call of the Frontier!
 	is_triggered_only = yes
 
 	trigger = {
-		year = 1470
-		NOT = {
-			is_year = 1575
-		}
-		capital_scope = {
-			superregion = gerudia_superregion
-		}
-		NOT = {
-			OR = { #you won't get frontiers if you're colonizing normally, but I don't want these guys to expand early
-				tag = Z89 #digoveda
-				tag = Z18 #frozenmaw
-				tag = Z47 #doombringer
-				tag = Z19 #broken jaw
-			}
-		}
-		NOT = {
-			OR = {
-				is_year = 1475 #if you're already colonizing this introduces you to the system
-				any_owned_province = {
-					is_colony = yes
-					OR = {
-						superregion = gerudia_superregion
-						region = northern_pass_region
-					}
-				}
-		}
-		any_owned_province = {
-			any_empty_neighbor_province = {
-				OR = {
-					superregion = gerudia_superregion
-					region = northern_pass_region
+		OR = {
+			is_year = 1480
+			AND = { #everyone but vaengheim gets a head start
+				is_year = 1465
+				NOT = {
+					tag = Z88 #Vaengheim
 				}
 			}
-		}
-	}
-
-	immediate = {
-		random_owned_province = {
-			limit = {
-				any_empty_neighbor_province = {
-					OR = {
-						superregion = gerudia_superregion
-						region = northern_pass_region
-					}
-				}	
-			}
-			 random_empty_neighbor_province = {
-				save_event_target_as = gerudian_settlement_target
-			 }
 		}
 	}
 
 	option = {
 		name = "gerudian_settlement.0"
-		event_target:gerudian_settlement_target = {
-			add_siberian_construction = 50
+		add_country_modifier = {
+			name = gerudian_settlement_frontiers
+			duration = 365
 		}
 	}
 }

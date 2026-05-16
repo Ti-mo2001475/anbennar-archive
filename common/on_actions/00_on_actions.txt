@@ -15710,7 +15710,6 @@ on_five_year_pulse_3 = {
 		khetist.3               #Shocking Secret of Dameria Khet.
 		flavour_zena.70         #Zena Fauna/Relic Handler
 		flavour_bonecarver.100 	#Increasing Anguish
-		gerudian_settlement.0   #Gerudian Frontier/Northern Pass settlement system
     }
 
 	# Kumarkand
@@ -15976,6 +15975,45 @@ on_five_year_pulse_3 = {
 	}
 }
 
+#gerudian frontier settlement 15 year pulse jank
+if = { 
+	limit = {
+		has_country_flag = frontiertimer2
+	}
+	clr_country_flag = frontiertimer2
+	country_event = gerudian_settlement.0
+}
+else = {
+	if = {
+		limit = {
+			has_country_flag = frontiertimer1
+		}
+	clr_country_flag = frontiertimer1
+	set_country_flag = frontiertimer2
+	}
+	else = {
+		if = {
+			limit = { #hopefully better for performance to put the conditions here, to avoid needless flag cycling
+				NOT = { 
+					is_year = 1575
+				} 
+				capital_scope = {
+					OR = {
+						region = dalr_region
+						region = olavlund_region
+						region = gerudian_frontier_region
+					}
+					NOT = {
+						tag = Z89 #Digoveda
+						}
+				}
+			}	
+			set_country_flag = frontiertimer1
+		}
+	}
+}
+
+	
 on_five_year_pulse_4 = {
 	# if = { #fail-safe for flavor_pap.7, making religious leagues happen at some point if there is no PAP
 		# limit = {
