@@ -44,11 +44,6 @@ marketplace = {
 		#Anbennar
 		anbennar_building_effect = yes
 		on_built_trade_building_effect = yes
-
-		if = {
-			limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
-			FROM = { change_government_reform_progress = 4 }
-		}
 		if = {
 			limit = { FROM = { has_government_attribute = adoptive_kartel_clans_reform_effect } }
 			FROM = { change_government_reform_progress = 6 }
@@ -65,30 +60,7 @@ marketplace = {
 				duration = 7300
 			}
 		}
-		if = {
-			limit = { owner = { has_estate_privilege = estate_burghers_U10_construction_rights } }
-			area = {
-				limit = { owned_by = FROM }
-				add_province_modifier = {
-					name = U10_affluent_reclaimation
-					duration = -1
-				}
-			}
-		}
-
-		if = { #Zulbur
-			limit = {
-				FROM = { has_country_flag = L80_building_upgrade }
-			}
-			add_province_modifier = {
-				name = L80_market_buff
-				duration = -1
-			}
-		}
-
-
-		gronstunad_building_authority_effect = { value = 1 }
-		sponsored_adventurers_building_reform_effect = { value = 5 type = trade }
+		gronstunad_building_authority_effect = { value = 1 }		
 	}
 	on_destroyed = {
 		remove_development_from_building = {
@@ -96,25 +68,7 @@ marketplace = {
 			type = production
 			value = 1
 		}
-		on_trade_building_destroyed_effect = yes
-		if = {
-			limit = {
-				NOT = {
-					area_for_scope_province = {
-						owned_by = FROM
-						has_trade_building_trigger = yes
-					}
-				}
-			}
-			area = {
-				limit = { owned_by = FROM }
-				remove_province_modifier = U10_affluent_reclaimation
-			}
-		}
-		if = { #Zulbur
-			limit = { FROM = { has_country_flag = L80_building_upgrade } }
-			remove_province_modifier = L80_market_buff
-		}
+		on_trade_building_destroyed_effect = yes		
 	}
 
 	on_construction_started = {  #Fires when you start the construction,  ROOT - Province FROM - Country that started 1.35
@@ -150,10 +104,6 @@ workshop = {
 		#Anbennar
 		anbennar_building_effect = yes
 		if = {
-			limit = { FROM = { has_estate_privilege = estate_dragon_command_war_room_rights } }
-			FROM = { add_legitimacy = 0.5 }
-		}
-		if = {
 			limit = {
 				FROM = {
 					religion = genie_cult
@@ -165,9 +115,7 @@ workshop = {
 				duration = 7300
 			}
 		}
-
 		gronstunad_building_authority_effect = { value = 1 }
-		sponsored_adventurers_building_reform_effect = { value = 5 type = prod }
 		if = {
 			limit = {
 				FROM = { tag = I14 }
@@ -175,28 +123,14 @@ workshop = {
 				has_province_modifier = gor_vazumbrog_dragons_wound
 			}
 			hidden_effect = { province_event = { id = flavour_gor_vazumbrog.207 } }
-		}
-
-		if = { #Zulbur
-			limit = {
-				FROM = { has_country_flag = L80_building_upgrade_2 }
-			}
-			add_province_modifier = {
-				name = L80_workshop_buff
-				duration = -1
-			}
-		}
+		}		
 	}
 	on_destroyed = {
+		on_production_building_destroyed_effect = yes
 		remove_development_from_building = {
 			building = workshop
 			type = production
 			value = 1
-		}
-
-		if = { #Zulbur
-			limit = { FROM = { has_country_flag = L80_building_upgrade_2 } }
-			remove_province_modifier = L80_workshop_buff
 		}
 	}
 	on_obsolete = {
@@ -233,10 +167,6 @@ temple = {
 		#Anbennar
 		anbennar_building_effect = yes
 		if = {
-			limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
-			FROM = { change_government_reform_progress = 4 }
-		}
-		if = {
 			limit = {
 				FROM = { has_government_attribute = on_church_built_clergy_loyalty }
 			}
@@ -248,31 +178,13 @@ temple = {
 			}
 		}
 		if = {
-			limit = {
-				FROM = { has_government_attribute = temples_modifier }
-				owned_by = FROM 
-			}
-			add_province_modifier = {
-				name = gov_expanded_temple_rights_mod
-				duration = -1
-			}
-		}
-		if = {
 			limit = { FROM = { religion = ynn_river_worship } }
 			FROM = { add_authority = 2 }
-		}
-		if = {
-			limit = { FROM = { has_estate_privilege = estate_tiger_command_war_room_rights } }
-			FROM = { add_legitimacy = 0.5 }
 		}
 		Y72_add_dev_from_building = { #1.35, Chien Binhrung
 			building = temple
 			type = tax
 			value = 1 
-		}
-		if = {
-			limit = { FROM = { tag = I98 mission_completed = I98_involuntary_revenue_service } }
-			add_province_modifier = { name = I98_IRS_activities duration = -1 }
 		}
 		if = {
 			limit = {
@@ -288,9 +200,7 @@ temple = {
 		}
 		if = {
 			limit = {
-				FROM = {
-					has_estate_privilege = estate_church_corinsfield_church_raisings
-				}
+				FROM = { has_estate_privilege = estate_church_corinsfield_church_raisings }
 			}
 			add_base_tax = 1
 		}
@@ -308,14 +218,6 @@ temple = {
 		}
 	
 		gronstunad_building_authority_effect = { value = 1 }
-		sponsored_adventurers_building_reform_effect = { value = 5 type = tax }
-		
-		if = {
-			limit = { province_group = infernal_court_temples }
-			infernal_deity_upgrade_effect = yes
-		}
-		spirit_fort_awakening_effect = yes
-
 		if = {
 			limit = {
 				FROM = {
@@ -380,15 +282,6 @@ temple = {
 						id = flavour_great_storm.16
 					}
 				}
-			}
-		}
-		if = { #Zulbur
-			limit = {
-				FROM = { has_country_flag = L80_building_upgrade }
-			}
-			add_province_modifier = {
-				name = L80_temple_buff
-				duration = -1
 			}
 		}
 		# Anbennar - Parusahan Saya MT - The Iron Soul
@@ -459,16 +352,7 @@ temple = {
 			}
 			add_base_tax = -1
 		}
-		remove_province_modifier = I98_IRS_activities
 		remove_province_modifier = zokka_tithe
-		remove_province_modifier = xiaken_temple_grounds_mod
-		remove_province_modifier = R36_countryside_schools_mod
-		if = { #Zulbur
-			limit = { FROM = { has_country_flag = L80_building_upgrade } }
-			remove_province_modifier = L80_temple_buff
-		}
-		remove_province_modifier = A80_expand_the_theatre_temples
-		remove_province_modifier = harpylen_temple_roost
 	}
 	on_obsolete = {
 		gronstunad_building_authority_effect = { value = -1 }
@@ -517,10 +401,6 @@ barracks = {
 		#Anbennar
 		anbennar_building_effect = yes
 		if = {
-			limit = { FROM = { has_estate_privilege = estate_boar_command_war_room_rights } }
-			FROM = { add_legitimacy = 0.5 }
-		}
-		if = {
 			limit = {
 				FROM = {
 					religion = genie_cult
@@ -532,8 +412,6 @@ barracks = {
 				duration = 7300
 			}
 		}
-
-
 		gronstunad_building_authority_effect = { value = 1 }
 		
 		if = { #Degakheion
@@ -542,27 +420,10 @@ barracks = {
 				name = G46_barracks_buff
 				duration = -1
 			}
-		}
-
-		if = { #Zulbur
-			limit = {
-				FROM = { has_country_flag = L80_building_upgrade_2 }
-			}
-			add_province_modifier = {
-				name = L80_barrack_buff
-				duration = -1
-			}
-		}
-
-		# Huugeta Mercenary Enterprise
-		if = {
-			limit = {
-				FROM = { has_country_flag = S45_mercenary_enterprise }
-			}
-			FROM = { S45_add_momentum = { value = 1 action = building } }
-		}
+		}		
 	} 
 	on_destroyed = {
+		on_manpower_building_destroyed_effect = yes
 		# if = {
 			# limit = {
 				# FROM = {
@@ -587,12 +448,6 @@ barracks = {
 			limit = { FROM = { has_country_flag = degakheion_manpower_building_buff } }
 			remove_province_modifier = G46_barracks_buff
 		}
-
-		if = { #Zulbur
-			limit = { FROM = { has_country_flag = L80_building_upgrade_2 } }
-			remove_province_modifier = L80_barrack_buff
-		}
-		remove_province_modifier = harpylen_barrack_roost
 	}
 	on_obsolete = {
 		gronstunad_building_authority_effect = { value = -1 }
@@ -1827,34 +1682,12 @@ cathedral = {
 				}
 			}
 		}
-		if = {
-			limit = {
-				FROM = { has_government_attribute = temples_modifier }
-				owned_by = FROM 
-			}
-			add_province_modifier = {
-				name = gov_expanded_temple_rights_mod
-				duration = -1
-			}
-		}
 		#Anbennar
 		anbennar_building_effect = yes
-		if = {
-			limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
-			FROM = { change_government_reform_progress = 4 }
-		}
-		if = {
-			limit = { FROM = { has_estate_privilege = estate_tiger_command_war_room_rights } }
-			FROM = { add_legitimacy = 0.5 }
-		}
 		Y72_add_dev_from_building = { #1.35, Chien Binhrung
 			building = cathedral 
 			type = tax
 			value = 2 
-		}
-		if = {
-			limit = { FROM = { tag = I98 mission_completed = I98_involuntary_revenue_service } }
-			add_province_modifier = { name = I98_IRS_activities duration = -1 }
 		}
 		if = {
 			limit = { FROM = { has_government_attribute = command_tiger_elevation_modifier } }
@@ -1865,9 +1698,7 @@ cathedral = {
 		}
 		if = {
 			limit = {
-				FROM = {
-					has_estate_privilege = estate_church_corinsfield_church_raisings
-				}
+				FROM = { has_estate_privilege = estate_church_corinsfield_church_raisings }
 			}
 			add_base_tax = 2
 		}
@@ -1894,7 +1725,6 @@ cathedral = {
 			set_province_flag = triplet_gained_development_cathedral
 		}
 		gronstunad_building_authority_effect = { value = 3 }
-		sponsored_adventurers_building_reform_effect = { value = 5 type = tax }
 		
 		if = {
 			limit = {
@@ -1907,21 +1737,7 @@ cathedral = {
 				duration = -1
 			}
 			remove_province_modifier = zokka_tithe
-		}
-		if = {
-			limit = { province_group = infernal_court_temples }
-			infernal_deity_upgrade_effect = yes
-		}
-		spirit_fort_awakening_effect = yes
-		if = { #Zulbur
-			limit = {
-				FROM = { has_country_flag = L80_building_upgrade }
-			}
-			add_province_modifier = {
-				name = L80_temple_buff
-				duration = -1
-			}
-		}
+		}		
 	}
 	on_destroyed = {
 		on_province_tax_building_destroyed_estate_privileges_effect = yes
@@ -1956,17 +1772,8 @@ cathedral = {
 			}
 			add_base_tax = -2
 		}
-		remove_province_modifier = I98_IRS_activities
 		remove_province_modifier = commmand_tiger_temple_buff
 		remove_province_modifier = zokka_tithe_better
-		remove_province_modifier = xiaken_temple_grounds_mod
-		remove_province_modifier = R36_countryside_schools_mod
-		if = { #Zulbur
-			limit = { FROM = { has_country_flag = L80_building_upgrade } }
-			remove_province_modifier = L80_temple_buff
-		}
-		remove_province_modifier = A80_expand_the_theatre_temples
-		remove_province_modifier = harpylen_temple_roost
 	}
 	on_obsolete = {
 	}
@@ -2186,34 +1993,7 @@ trade_depot = {
 		#Anbennar
 		anbennar_building_effect = yes
 		on_built_trade_building_effect = yes
-		if = {
-			limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
-			FROM = { change_government_reform_progress = 4 }
-		}
-
-
 		gronstunad_building_authority_effect = { value = 3 }
-		sponsored_adventurers_building_reform_effect = { value = 5 type = trade }
-
-		if = {
-			limit = { owner = { has_estate_privilege = estate_burghers_U10_construction_rights } }
-			area = {
-				limit = { owned_by = FROM }
-				add_province_modifier = {
-					name = U10_affluent_reclaimation
-					duration = -1
-				}
-			}
-		}
-		if = { #Zulbur
-			limit = {
-				FROM = { has_country_flag = L80_building_upgrade }
-			}
-			add_province_modifier = {
-				name = L80_market_buff
-				duration = -1
-			}
-		}
 	}
 	on_destroyed = {
 		remove_development_from_building = {
@@ -2221,25 +2001,7 @@ trade_depot = {
 			type = production
 			value = 2
 		}
-		on_trade_building_destroyed_effect = yes
-		if = {
-			limit = {
-				NOT = {
-					area_for_scope_province = {
-						owned_by = FROM
-						has_trade_building_trigger = yes
-					}
-				}
-			}
-			area = {
-				limit = { owned_by = FROM }
-				remove_province_modifier = U10_affluent_reclaimation
-			}
-		}
-		if = { #Zulbur
-			limit = { FROM = { has_country_flag = L80_building_upgrade } }
-			remove_province_modifier = L80_market_buff
-		}
+		on_trade_building_destroyed_effect = yes		
 	}
 	on_obsolete = {
 		gronstunad_building_authority_effect = { value = -3 }
@@ -2360,12 +2122,6 @@ training_fields = {
 		#}
 		#Anbennar
 		anbennar_building_effect = yes
-		if = {
-			limit = { FROM = { has_estate_privilege = estate_boar_command_war_room_rights } }
-			FROM = { add_legitimacy = 0.5 }
-		}
-
-
 		gronstunad_building_authority_effect = { value = 3 }
 		
 		if = { #Taychendi Empire
@@ -2383,26 +2139,9 @@ training_fields = {
 				duration = -1
 			}
 		}
-
-		if = { #Zulbur
-			limit = {
-				FROM = { has_country_flag = L80_building_upgrade_2 }
-			}
-			add_province_modifier = {
-				name = L80_barrack_buff
-				duration = -1
-			}
-		}
-
-		# Huugeta Mercenary Enterprise
-		if = {
-			limit = {
-				FROM = { has_country_flag = S45_mercenary_enterprise }
-			}
-			FROM = { S45_add_momentum = { value = 1 action = building } }
-		}
 	}
 	on_destroyed = {
+		on_manpower_building_destroyed_effect = yes
 		#update_improved_military_buildings_modifier = { #1.35
 		#	building = training_fields
 		#}
@@ -2416,7 +2155,6 @@ training_fields = {
 			limit = { FROM = { has_country_flag = degakheion_manpower_building_buff } }
 			remove_province_modifier = G46_training_fields_buff
 		}
-		remove_province_modifier = harpylen_barrack_roost
 		# if = {
 			# limit = {
 				# FROM = {
@@ -2426,12 +2164,7 @@ training_fields = {
 			# FROM = {
 				# add_manpower = -1
 			# }
-		# }
-
-		if = { #Zulbur
-			limit = { FROM = { has_country_flag = L80_building_upgrade_2 } }
-			remove_province_modifier = L80_barrack_buff
-		}
+		# }		
 	}
 	on_obsolete = {
 		remove_development_from_building = {
@@ -2787,34 +2520,7 @@ stock_exchange = {
 		#Anbennar
 		anbennar_building_effect = yes
 		on_built_trade_building_effect = yes
-		if = {
-			limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
-			FROM = { change_government_reform_progress = 4 }
-		}
-
-
-		gronstunad_building_authority_effect = { value = 4 }
-		sponsored_adventurers_building_reform_effect = { value = 5 type = trade }
-
-		if = {
-			limit = { owner = { has_estate_privilege = estate_burghers_U10_construction_rights } }
-			area = {
-				limit = { owned_by = FROM }
-				add_province_modifier = {
-					name = U10_affluent_reclaimation
-					duration = -1
-				}
-			}
-		}
-		if = { #Zulbur
-			limit = {
-				FROM = { has_country_flag = L80_building_upgrade }
-			}
-			add_province_modifier = {
-				name = L80_market_buff
-				duration = -1
-			}
-		}
+		gronstunad_building_authority_effect = { value = 4 }	
 	}
 	on_destroyed = {
 		remove_development_from_building = {
@@ -2823,24 +2529,6 @@ stock_exchange = {
 			value = 3
 		}
 		on_trade_building_destroyed_effect = yes
-		if = {
-			limit = {
-				NOT = {
-					area_for_scope_province = {
-						owned_by = FROM
-						has_trade_building_trigger = yes
-					}
-				}
-			}
-			area = {
-				limit = { owned_by = FROM }
-				remove_province_modifier = U10_affluent_reclaimation
-			}
-		}
-		if = { #Zulbur
-			limit = { FROM = { has_country_flag = L80_building_upgrade } }
-			remove_province_modifier = L80_market_buff
-		}
 	}
 	on_obsolete = {
 	}
@@ -2875,33 +2563,14 @@ counting_house = {
 		}
 		#Anbennar
 		anbennar_building_effect = yes
-		if = {
-			limit = { FROM = { has_estate_privilege = estate_dragon_command_war_room_rights } }
-			FROM = { add_legitimacy = 0.5 }
-		}
-
 		gronstunad_building_authority_effect = { value = 4 }
-		sponsored_adventurers_building_reform_effect = { value = 5 type = prod }
-
-		if = { #Zulbur
-			limit = {
-				FROM = { has_country_flag = L80_building_upgrade_2 }
-			}
-			add_province_modifier = {
-				name = L80_workshop_buff
-				duration = -1
-			}
-		}
 	}
 	on_destroyed = {
+		on_production_building_destroyed_effect = yes
 		remove_development_from_building = {
 			building = counting_house
 			type = production
 			value = 2
-		}
-		if = { #Zulbur
-			limit = { FROM = { has_country_flag = L80_building_upgrade_2 } }
-			remove_province_modifier = L80_workshop_buff
 		}
 	}
 	on_obsolete = {
