@@ -686,7 +686,6 @@ country_event = { #Deranne Tales
 	option = { # Derhilde's Tale
 		name = flavour_deranne.19.b
 
-		custom_tooltip = deranne_derhilde_tale.tt
 		if = {
 			limit = { has_country_flag = deranne_tale_upgrade }
 			add_country_modifier = {
@@ -719,7 +718,6 @@ country_event = { #Deranne Tales
 	option = { # Lilac Wars Tale
 		name = flavour_deranne.19.c
 
-		custom_tooltip = deranne_lilac_war_tale.tt
 		if = {
 			limit = { has_country_flag = deranne_tale_upgrade }
 			add_country_modifier = {
@@ -756,7 +754,6 @@ country_event = { #Deranne Tales
 			has_country_flag = A02_dtc_established
 		}
 
-		custom_tooltip = deranne_dtc_tale.tt
 		if = {
 			limit = { has_country_flag = deranne_tale_upgrade }
 			add_country_modifier = {
@@ -793,7 +790,6 @@ country_event = { #Deranne Tales
 			mission_completed = deranne_derhildes_will
 		}
 
-		custom_tooltip = deranne_withered_roses_tale.tt
 		if = {
 			limit = { has_country_flag = deranne_tale_upgrade }
 			add_country_modifier = {
@@ -831,7 +827,6 @@ country_event = { #Deranne Tales
 			mission_completed = deranne_seaflower_blossom
 		}
 
-		custom_tooltip = deranne_rosepeace_tale.tt
 		if = {
 			limit = { has_country_flag = deranne_tale_upgrade }
 			add_country_modifier = {
@@ -868,7 +863,6 @@ country_event = { #Deranne Tales
 			mission_completed = deranne_center_of_three_worlds
 		}
 
-		custom_tooltip = deranne_westport_tale.tt
 		if = {
 			limit = { has_country_flag = deranne_tale_upgrade }
 			add_country_modifier = {
@@ -1353,16 +1347,83 @@ country_event = { #Dam Upgrade - Adbrabohvi
 	option = {
 		name = flavour_deranne.24.a
 
-		deranne_upgrade_dam_scripted_effect = {
-			province_id = 1133
-			dam_name = ynnic_dam_adbrabohvi
-		}
+		custom_tooltip = deranne_adbrabohvi_upgrade.tt
 		1133 = {
+			hidden_effect = {
+				clr_province_flag = deranne_dam_tier_1_flag
+				clr_province_flag = deranne_dam_tier_2_flag
+				clr_province_flag = deranne_dam_tier_3_flag
+				if = {
+					limit = {
+						has_great_project = {
+							type = ynnic_dam_adbrabohvi
+							tier = 2
+						}
+					}
+					add_great_project_tier = {
+						type = ynnic_dam_adbrabohvi
+						tier = 1
+					}
+					clr_province_flag = deranne_dam_construction_flag
+					set_province_flag = deranne_dam_tier_3_flag
+				}
+				else_if = {
+					limit = {
+						has_great_project = {
+							type = ynnic_dam_adbrabohvi
+							tier = 1
+						}
+					}
+					add_great_project_tier = {
+						type = ynnic_dam_adbrabohvi
+						tier = 1
+					}
+					clr_province_flag = deranne_dam_construction_flag
+					set_province_flag = deranne_dam_tier_2_flag
+				}	
+				else_if = {
+					limit = {
+						has_great_project = {
+							type = ynnic_dam_adbrabohvi
+							tier = 0
+						}
+					}
+					add_great_project_tier = {
+						type = ynnic_dam_adbrabohvi
+						tier = 1
+					}
+					clr_province_flag = deranne_dam_construction_flag
+					set_province_flag = deranne_dam_tier_1_flag
+				}	
+			}
 			add_trade_modifier = {
 				who = ROOT
 				duration = -1
 				power = 25
 				key = DERANNE_YNN_TRADE_SHARE
+			}
+		}
+		if = {
+			limit = {
+				1133 = {
+					NOT = { has_province_modifier = deranne_dtc_establishment }
+				}
+			}
+			1133 = {
+				add_province_modifier = {
+					name = deranne_dtc_establishment
+					duration = -1
+				}
+			}
+		}
+		else = {
+			1133 = {
+				every_neighbor_province = {
+					add_province_modifier = {
+						name = deranne_dtc_investment
+						duration = 3650
+					}
+				}
 			}
 		}
 	}
@@ -1379,16 +1440,83 @@ country_event = { #Dam Upgrade - Vels bacar
 	option = {
 		name = flavour_deranne.25.a
 		
-		deranne_upgrade_dam_scripted_effect = {
-			province_id = 1138
-			dam_name = ynnic_dam_vels_bacar
-		}
-		1133 = {
+		custom_tooltip = deranne_vels_bacar_upgrade.tt
+		1138 = {
+			hidden_effect = {
+				clr_province_flag = deranne_dam_tier_1_flag
+				clr_province_flag = deranne_dam_tier_2_flag
+				clr_province_flag = deranne_dam_tier_3_flag
+				if = {
+					limit = {
+						has_great_project = {
+							type = ynnic_dam_vels_bacar
+							tier = 2
+						}
+					}
+					add_great_project_tier = {
+						type = ynnic_dam_vels_bacar
+						tier = 1
+					}
+					clr_province_flag = deranne_dam_construction_flag
+					set_province_flag = deranne_dam_tier_3_flag
+				}
+				else_if = {
+					limit = {
+						has_great_project = {
+							type = ynnic_dam_vels_bacar
+							tier = 1
+						}
+					}
+					add_great_project_tier = {
+						type = ynnic_dam_vels_bacar
+						tier = 1
+					}
+					clr_province_flag = deranne_dam_construction_flag
+					set_province_flag = deranne_dam_tier_2_flag
+				}	
+				else_if = {
+					limit = {
+						has_great_project = {
+							type = ynnic_dam_vels_bacar
+							tier = 0
+						}
+					}
+					add_great_project_tier = {
+						type = ynnic_dam_vels_bacar
+						tier = 1
+					}
+					clr_province_flag = deranne_dam_construction_flag
+					set_province_flag = deranne_dam_tier_1_flag
+				}	
+			}
 			add_trade_modifier = {
 				who = ROOT
 				duration = -1
 				power = 25
 				key = DERANNE_YNN_TRADE_SHARE
+			}
+		}
+		if = {
+			limit = {
+				1138 = {
+					NOT = { has_province_modifier = deranne_dtc_establishment }
+				}
+			}
+			1138 = {
+				add_province_modifier = {
+					name = deranne_dtc_establishment
+					duration = -1
+				}
+			}
+		}
+		else = {
+			1138 = {
+				every_neighbor_province = {
+					add_province_modifier = {
+						name = deranne_dtc_investment
+						duration = 3650
+					}
+				}
 			}
 		}
 	}
@@ -1404,17 +1532,84 @@ country_event = { #Dam Upgrade - Bosancovac
 	
 	option = {
 		name = flavour_deranne.26.a
-
-		deranne_upgrade_dam_scripted_effect = {
-			province_id = 1165
-			dam_name = ynnic_dam_bosancovac
-		}
+	
+		custom_tooltip = deranne_bosancovac_upgrade.tt
 		1165 = {
+			hidden_effect = {
+				clr_province_flag = deranne_dam_tier_1_flag
+				clr_province_flag = deranne_dam_tier_2_flag
+				clr_province_flag = deranne_dam_tier_3_flag
+				if = {
+					limit = {
+						has_great_project = {
+							type = ynnic_dam_bosancovac
+							tier = 2
+						}
+					}
+					add_great_project_tier = {
+						type = ynnic_dam_bosancovac
+						tier = 1
+					}
+					clr_province_flag = deranne_dam_construction_flag
+					set_province_flag = deranne_dam_tier_3_flag
+				}
+				else_if = {
+					limit = {
+						has_great_project = {
+							type = ynnic_dam_bosancovac
+							tier = 1
+						}
+					}
+					add_great_project_tier = {
+						type = ynnic_dam_bosancovac
+						tier = 1
+					}
+					clr_province_flag = deranne_dam_construction_flag
+					set_province_flag = deranne_dam_tier_2_flag
+				}	
+				else_if = {
+					limit = {
+						has_great_project = {
+							type = ynnic_dam_bosancovac
+							tier = 0
+						}
+					}
+					add_great_project_tier = {
+						type = ynnic_dam_bosancovac
+						tier = 1
+					}
+					clr_province_flag = deranne_dam_construction_flag
+					set_province_flag = deranne_dam_tier_1_flag
+				}	
+			}
 			add_trade_modifier = {
 				who = ROOT
 				duration = -1
 				power = 25
 				key = DERANNE_YNN_TRADE_SHARE
+			}
+		}
+		if = {
+			limit = {
+				1165 = {
+					NOT = { has_province_modifier = deranne_dtc_establishment }
+				}
+			}
+			1165 = {
+				add_province_modifier = {
+					name = deranne_dtc_establishment
+					duration = -1
+				}
+			}
+		}
+		else = {
+			1165 = {
+				every_neighbor_province = {
+					add_province_modifier = {
+						name = deranne_dtc_investment
+						duration = 3650
+					}
+				}
 			}
 		}
 	}
@@ -1431,16 +1626,83 @@ country_event = { #Dam Upgrade - Mocbarja
 	option = {
 		name = flavour_deranne.27.a
 
-		deranne_upgrade_dam_scripted_effect = {
-			province_id = 1186
-			dam_name = ynnic_dam_mocbarja
-		}
-		1165 = {
+		custom_tooltip = deranne_mocbarja_upgrade.tt
+		1186 = {
+			hidden_effect = {
+				clr_province_flag = deranne_dam_tier_1_flag
+				clr_province_flag = deranne_dam_tier_2_flag
+				clr_province_flag = deranne_dam_tier_3_flag
+				if = {
+					limit = {
+						has_great_project = {
+							type = ynnic_dam_mocbarja
+							tier = 2
+						}
+					}
+					add_great_project_tier = {
+						type = ynnic_dam_mocbarja
+						tier = 1
+					}
+					clr_province_flag = deranne_dam_construction_flag
+					set_province_flag = deranne_dam_tier_3_flag
+				}
+				else_if = {
+					limit = {
+						has_great_project = {
+							type = ynnic_dam_mocbarja
+							tier = 1
+						}
+					}
+					add_great_project_tier = {
+						type = ynnic_dam_mocbarja
+						tier = 1
+					}
+					clr_province_flag = deranne_dam_construction_flag
+					set_province_flag = deranne_dam_tier_2_flag
+				}	
+				else_if = {
+					limit = {
+						has_great_project = {
+							type = ynnic_dam_mocbarja
+							tier = 0
+						}
+					}
+					add_great_project_tier = {
+						type = ynnic_dam_mocbarja
+						tier = 1
+					}
+					clr_province_flag = deranne_dam_construction_flag
+					set_province_flag = deranne_dam_tier_1_flag
+				}	
+			}
 			add_trade_modifier = {
 				who = ROOT
 				duration = -1
 				power = 25
 				key = DERANNE_YNN_TRADE_SHARE
+			}
+		}
+		if = {
+			limit = {
+				1186 = {
+					NOT = { has_province_modifier = deranne_dtc_establishment }
+				}
+			}
+			1186 = {
+				add_province_modifier = {
+					name = deranne_dtc_establishment
+					duration = -1
+				}
+			}
+		}
+		else = {
+			1186 = {
+				every_neighbor_province = {
+					add_province_modifier = {
+						name = deranne_dtc_investment
+						duration = 3650
+					}
+				}
 			}
 		}
 	}
