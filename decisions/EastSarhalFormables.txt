@@ -119,6 +119,10 @@ country_decisions = {
 		}
 		
 		allow = {
+			if = {
+				limit = { tag = S37 ai = no }
+				mission_completed = S37_sovereignty
+			}
 			religion = beast_memory
 			#is_tribal = no
 			is_at_war = no
@@ -508,14 +512,14 @@ country_decisions = {
         ai_importance = 400
     }
 
-	yehatirha_nation = { #mengi jadd formable yethatirha
+	yehatirha_nation = { #mengi jadd formable yehatirha
 		major = yes 
 		
 		potential = {
 			religion = the_jadd
 			culture_group = mengi
 			was_never_end_game_tag_trigger = yes
-			NOT = { exists = S89 } #yethatirha - its the formable 
+			NOT = { exists = S89 } #yehatirha - its the formable 
 		}
 
 		provinces_to_highlight = {
@@ -726,6 +730,12 @@ country_decisions = {
 				religion = zaradyrra
 			}
 			NOT = { exists = L87 }
+			if = {
+				limit = {
+					tag = L77
+				}
+				mission_completed = karach_axta_take_over
+			}
 			custom_trigger_tooltip = {
 				tooltip = ashhana_formable_need_revolt_tt
 				has_global_flag = ashhana_revolt_happened_global
@@ -842,7 +852,7 @@ country_decisions = {
 			}
 			if = {
 				limit = { has_country_modifier = L76_pain_into_weapons_1 }
-				custom_tooltip = L76_pain_into_weapons_upgrade
+				custom_tooltip = L76_pain_into_weapons_upgrade_tt
 				hidden_effect = { remove_country_modifier = L76_pain_into_weapons_1 add_country_modifier = { name = L76_pain_into_weapons_2 duration = -1 } }
 			}
 			hidden_effect = {
