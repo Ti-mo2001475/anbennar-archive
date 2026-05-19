@@ -21170,6 +21170,79 @@ deranne_upgrade_sarhal_dominance_privilege_effect = {
 	}
 }
 
+deranne_upgrade_dam_scripted_effect = {
+	1133 = {
+		clr_province_flag = deranne_dam_tier_1_flag
+		clr_province_flag = deranne_dam_tier_2_flag
+		clr_province_flag = deranne_dam_tier_3_flag
+		if = {
+			limit = {
+				has_great_project = {
+					type = ynnic_dam_adbrabohvi
+					tier = 2
+				}
+			}
+			add_great_project_tier = {
+				type = ynnic_dam_adbrabohvi
+				tier = 1
+			}
+			clr_province_flag = deranne_dam_construction_flag
+			set_province_flag = deranne_dam_tier_3_flag
+		}
+		else_if = {
+			limit = {
+				has_great_project = {
+					type = ynnic_dam_adbrabohvi
+					tier = 1
+				}
+			}
+			add_great_project_tier = {
+				type = ynnic_dam_adbrabohvi
+				tier = 1
+			}
+			clr_province_flag = deranne_dam_construction_flag
+			set_province_flag = deranne_dam_tier_2_flag
+		}	
+		else_if = {
+			limit = {
+				has_great_project = {
+					type = ynnic_dam_adbrabohvi
+					tier = 0
+				}
+			}
+			add_great_project_tier = {
+				type = ynnic_dam_adbrabohvi
+				tier = 1
+			}
+			clr_province_flag = deranne_dam_construction_flag
+			set_province_flag = deranne_dam_tier_1_flag
+		}	
+	}
+	if = {
+		limit = {
+			1133 = {
+				NOT = { has_province_modifier = deranne_dtc_establishment }
+			}
+		}
+		1133 = {
+			add_province_modifier = {
+				name = deranne_dtc_establishment
+				duration = -1
+			}
+		}
+	}
+	else = {
+		1133 = {
+			every_neighbor_province = {
+				add_province_modifier = {
+					name = deranne_dtc_investment
+					duration = 3650
+				}
+			}
+		}
+	}
+}
+
 #Wild Hunt
 increase_caehns_authority = {
 	if = {
