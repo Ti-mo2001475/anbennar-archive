@@ -281,7 +281,7 @@ umbral_fog_update = { #updates the fog when you conquer
 }
 
 umbral_expansion_effect = {
-	random_owned_province = { limit = { region = $regionname$_region } add_permanent_province_modifier = { name = S90_shadow_rift_major duration = -1 } }
+	random_owned_province = { limit = { region = $regionname$_region has_building = mage_tower } add_permanent_province_modifier = { name = S90_shadow_rift_major duration = -1 } }
     change_variable = { which = uc_shadow_capacity value = 5 }
     change_variable = { which = S90_major_rift_count value = 1 }
     set_country_flag = S90_$regionname$_expansion_done
@@ -290,7 +290,7 @@ umbral_expansion_effect = {
 }
 
 umbral_expansion_effect_2 = {
-	random_owned_province = { limit = { region = $regionname$_region } add_permanent_province_modifier = { name = S90_shadow_rift_major duration = -1 } }
+	random_owned_province = { limit = { region = $regionname$_region has_building = mage_tower } add_permanent_province_modifier = { name = S90_shadow_rift_major duration = -1 } }
 	change_variable = { which = uc_shadow_capacity value = 5 }
 	change_variable = { which = S90_major_rift_count value = 1 }
 	set_country_flag = S90_$regionname$_expansion_done
@@ -556,6 +556,15 @@ umbral_assimilation_effect = {
 		}
 		set_country_flag = S90_assimilated_elven
 		anb_sarhal_cultural_union = { elven = yes }
+		hidden_effect = {
+			if = { # if you needed to accept them since they colonised
+				limit = { accepted_culture = moon_elf }
+				anb_add_accepted_culture_or_dip_power = {
+					culture = moon_elf
+					free = yes
+				}
+			}
+		}
 	}
 	if = {
 		limit = {
@@ -682,6 +691,7 @@ uc_ritual_disable_active_power = {
 		limit = { uc_is_empowerment_active = { type = $type$ slot = 4 } }
 		deactivate_uc_power_of_type_in_slot_effect = { type = $type$ slot = 4 }
 	}
+	uc_calc_free_capacity = yes
 }
 uc_spirits_power_1_activate_effect = { # spirits_incorporeal_accompaniment
 	custom_tooltip = spirits_incorporeal_accompaniment_tt
@@ -864,21 +874,26 @@ uc_dusk_power_3_activate_effect = { # dusk_even_souls_kneel
 uc_dusk_power_3_deactivate_effect = { # dusk_even_souls_kneel
 	custom_tooltip = dusk_even_souls_kneel_tt
 	hidden_effect = {
-		clr_country_flag = early_imperialism_flag 
+		if = {
+			limit = {
+				NOT = { has_age_ability = ab_splintered_lands }
+			}
+			clr_country_flag = early_imperialism_flag
+		}
 	}
 }
 uc_dusk_power_4_activate_effect = { # dusk_what_lurks_in_the_dark
 	custom_tooltip = dusk_what_lurks_in_the_dark_tt
 	hidden_effect = {
 		set_country_flag = S90_what_lurks_in_the_dark
-		set_country_flag = enchantment_mass_charm_no_count_war_magic
+		set_country_flag = enchantment_heartstring_no_count_war_magic
 	}
 }
 uc_dusk_power_4_deactivate_effect = { # dusk_what_lurks_in_the_dark
 	custom_tooltip = dusk_what_lurks_in_the_dark_tt
 	hidden_effect = {
 		clr_country_flag = S90_what_lurks_in_the_dark
-		clr_country_flag = enchantment_mass_charm_no_count_war_magic
+		clr_country_flag = enchantment_heartstring_no_count_war_magic
 	}
 }
 uc_dusk_power_5_activate_effect = { # dusk_ritual

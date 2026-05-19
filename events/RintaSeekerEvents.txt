@@ -1534,7 +1534,6 @@ country_event = {
 	
 	is_triggered_only = yes
 	fire_only_once = yes
-	hidden = yes
 
 	immediate = {
 		hidden_effect = {
@@ -3439,9 +3438,20 @@ country_event = { #On Alefisol Shows
 
 	is_triggered_only = yes
 
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					has_province_modifier = rinta_infernal_resonance
+				}
+				save_event_target_as = rinta_tar1
+			}
+		}
+	}
+
 	option = {
 		name = rinta_seeker_events.263.a
-
+		goto = rinta_tar1
 		ai_chance = { factor = 1 }
 	}
 }
@@ -3968,23 +3978,15 @@ country_event = { #Adeeni Wealth
 			estate = estate_adeen
 			loyalty = -20
 		}
-		if = {
-			limit = { has_saved_event_target = rinta_adeen_rebel_location_1 }
-			event_target:rinta_adeen_rebel_location_1 = {
+		do_same_event_target_effect = {
+			2 = yes
+			event_target_name = rinta_adeen_rebel_location
+			effect = "
 				spawn_rebels = {
 					type = adeen_rebels
 					size = 2
 				}
-			}
-			if = {
-				limit = { has_saved_event_target = rinta_adeen_rebel_location_2 }
-				event_target:rinta_adeen_rebel_location_2 = {
-					spawn_rebels = {
-						type = adeen_rebels
-						size = 2
-					}
-				}
-			}
+			"
 		}
 		ai_chance = { factor = 1 }
 	}
@@ -6177,7 +6179,7 @@ country_event = {
 }
 
 country_event = {
-	id = rinta_seeker_events.524 #The Gods Aren’t Dead
+	id = rinta_seeker_events.524 #The Gods Arenï¿½t Dead
 	title = rinta_seeker_events.524.t
 	desc = rinta_seeker_events.524.desc
 	picture = ELVEN_CONSTELLATION_eventPicture
@@ -6553,16 +6555,11 @@ country_event = {
 		if = {
 			limit = { has_country_flag = rinta_convert_provs_flag }
 			capital_scope = { change_religion = rinta_seekers }
-			event_target:sarhaly_prov_converts_1 = { change_religion = rinta_seekers } #10
-			event_target:sarhaly_prov_converts_2 = { change_religion = rinta_seekers }
-			event_target:sarhaly_prov_converts_3 = { change_religion = rinta_seekers }
-			event_target:sarhaly_prov_converts_4 = { change_religion = rinta_seekers }
-			event_target:sarhaly_prov_converts_5 = { change_religion = rinta_seekers }
-			event_target:sarhaly_prov_converts_6 = { change_religion = rinta_seekers }
-			event_target:sarhaly_prov_converts_7 = { change_religion = rinta_seekers }
-			event_target:sarhaly_prov_converts_8 = { change_religion = rinta_seekers }
-			event_target:sarhaly_prov_converts_9 = { change_religion = rinta_seekers }
-			event_target:sarhaly_prov_converts_10 = { change_religion = rinta_seekers }
+			do_same_event_target_effect = {
+				10 = yes
+				event_target_name = sarhaly_prov_converts
+				effect = "change_religion = rinta_seekers"
+			}
 		}
 		else = { change_religion = rinta_seekers }
 	}

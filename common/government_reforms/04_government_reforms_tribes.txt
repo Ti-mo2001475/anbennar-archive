@@ -940,6 +940,7 @@ centaur_horde = {
 			has_reform = centaur_horde
 			culture_group = centaur
 		}
+		NOT = { has_reform = I55_centaur_horde }
 	}
 	nomad = yes
 	allow_migration = yes
@@ -980,12 +981,7 @@ centaur_horde = {
 I55_centaur_horde = { #Black Herd
 	icon = "horde_riding"
 	allow_normal_conversion = no
-	potential = {
-		OR = {
-			has_reform = I55_centaur_horde
-			culture_group = centaur
-		}
-	}
+	potential = { has_reform = I55_centaur_horde }
 	nomad = yes
 	allow_migration = yes
 	raze_province = yes
@@ -1494,6 +1490,7 @@ martial_society_reform = {
 		NOT = {has_government_attribute = centaur_nomadism_attribute}
 		NOT = { OR = { has_reform = wood_elf_salla has_reform = wood_elf_salla_non_rangers } }
 		NOT = { has_reform = ashhana_tribe }
+		NOT = { has_reform = mechanim_migratory_reform }
 	}
 	modifiers = {
 		global_manpower_modifier = 0.2
@@ -1516,6 +1513,7 @@ civil_society_reform = {
 		NOT = {has_government_attribute = centaur_nomadism_attribute}
 		NOT = { OR = { has_reform = wood_elf_salla has_reform = wood_elf_salla_non_rangers } }
 		NOT = { has_reform = ashhana_tribe }
+		NOT = { has_reform = mechanim_migratory_reform }
 	}
 	icon = "tribal_civil_society"
 	modifiers = {
@@ -1751,6 +1749,7 @@ religious_societies_reform = {
 		NOT = {has_government_attribute = centaur_nomadism_attribute}
 		NOT = { OR = { has_reform = wood_elf_salla has_reform = wood_elf_salla_non_rangers } }
 		NOT = { has_reform = ashhana_tribe }
+		NOT = { has_reform = mechanim_migratory_reform }
 	}
 	modifiers = {
 		stability_cost_modifier = -0.1
@@ -1777,6 +1776,7 @@ lip_service_reform = {
 		NOT = {has_government_attribute = centaur_nomadism_attribute}
 		NOT = { OR = { has_reform = wood_elf_salla has_reform = wood_elf_salla_non_rangers } }
 		NOT = { has_reform = ashhana_tribe }
+		NOT = { has_reform = mechanim_migratory_reform }
 	}
 	modifiers = {
 		land_maintenance_modifier = -0.1
@@ -2066,6 +2066,7 @@ retain_tribal_hierarchy_reform = {
 		NOT = { eligible_for_gov_tribal_reform_monster_non_horde = yes }
 		NOT = {has_government_attribute = centaur_nomadism_attribute}
 		NOT = { OR = { has_reform = wood_elf_salla has_reform = wood_elf_salla_non_rangers } }
+		NOT = { has_reform = mechanim_migratory_reform }
 	}
 	modifiers = {
 		governing_capacity = 150
@@ -2091,6 +2092,7 @@ centralize_tribal_power_reform = {
 		NOT = { eligible_for_gov_tribal_reform_monster_non_horde = yes }
 		NOT = {has_government_attribute = centaur_nomadism_attribute}
 		NOT = { OR = { has_reform = wood_elf_salla has_reform = wood_elf_salla_non_rangers } }
+		NOT = { has_reform = mechanim_migratory_reform }
 	}
 	modifiers = {
 		core_creation = -0.05
@@ -2317,6 +2319,7 @@ horde_barbaric_despoilers_reform = {
 		}
 		NOT = {
 			has_reform = great_centaur_horde
+			has_reform = I55_magocratic_caehnate
 		}
 		has_dlc = "The Cossacks"
 	}
@@ -2882,6 +2885,7 @@ tribe_becomes_horde_reform = {
 		NOT = { has_reform = centaur_horde }
 		NOT = { has_reform = centaur_settled }
 		NOT = { has_reform = great_centaur_horde }
+		NOT = { has_reform = I55_magocratic_caehnate }
 		NOT = { has_reform = gnoll_pack }
 		NOT = { eligible_for_gov_tribal_reform_monster_non_horde = yes }
 		NOT = { OR = { has_reform = wood_elf_salla has_reform = wood_elf_salla_non_rangers } }
@@ -2950,7 +2954,10 @@ centaur_rule_from_the_storm_reform = {
 	}
 	trigger = {
 		has_government_attribute = centaur_nomadism_attribute
-		has_reform = great_centaur_horde
+		OR = {
+			has_reform = great_centaur_horde
+			has_reform = I55_magocratic_caehnate
+		}
 	}
 	modifiers = {
 		leader_land_shock = 1
@@ -3610,6 +3617,7 @@ war_as_art = {
 	lock_level_when_selected = yes
 	potential = {
 		culture = ashhana_lizardfolk
+		NOT = { have_had_reform = war_as_art_gasha }
 	}
 	modifiers = {
 		recover_army_morale_speed = 0.2
@@ -3622,18 +3630,65 @@ war_as_art = {
 	}
 }
 
+war_as_art_gasha = {
+	icon = "rein_in_the_tribes"
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	potential = {
+		culture = ashhana_lizardfolk
+		OR = {
+			has_reform = war_as_art_gasha
+			have_had_reform = war_as_art_gasha
+		}
+	}
+	modifiers = {
+		recover_army_morale_speed = 0.2
+	}
+	custom_attributes = {
+		war_as_art_ability = yes
+		raze_province = yes
+	}
+	ai = {
+		factor = 50
+	}
+}
+
 rally_to_the_roar = {
 	icon = "organising_our_religion_reform"
 	allow_normal_conversion = no
 	lock_level_when_selected = yes
 	potential = {
 		culture = ashhana_lizardfolk
+		NOT = { have_had_reform = rally_to_the_roar_gasha }
 	}
 	modifiers = {
 		war_exhaustion = -0.1
 	}
 	custom_attributes = {
 		rally_to_the_roar_ability = yes
+	}
+	ai = {
+		factor = 50
+	}
+}
+
+rally_to_the_roar_gasha = {
+	icon = "organising_our_religion_reform"
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	potential = {
+		culture = ashhana_lizardfolk
+		OR = {
+			has_reform = rally_to_the_roar_gasha
+			have_had_reform = rally_to_the_roar_gasha
+		}	
+	}
+	modifiers = {
+		war_exhaustion = -0.1
+	}
+	custom_attributes = {
+		rally_to_the_roar_ability = yes
+		raze_province = yes
 	}
 	ai = {
 		factor = 50
@@ -3729,7 +3784,7 @@ festivals_of_blood = {
 	}
 	effect = {
 		hidden_effect = {
-			set_country_flag = ashhana_festivals_of_blood_effect
+			set_variable = { which = ashhana_festivals_of_blood_var value = 2 }
 		}
 	}
 	ai = {
@@ -3829,7 +3884,6 @@ mteibhar_delathine_confederation = {
 	heir = no
 	republican_name = yes
 	rulers_can_be_generals = yes
-	republic = yes
 	queen = no
 	modifiers = {
 		min_autonomy = 25
@@ -3873,7 +3927,6 @@ mteibhar_centralized_delath = {
 	heir = no
 	republican_name = yes
 	rulers_can_be_generals = yes
-	republic = yes
 	queen = no
 	modifiers = {
 		min_autonomy = 10
@@ -3916,7 +3969,6 @@ mteibhar_grand_confederation = {
 	heir = no
 	republican_name = yes
 	rulers_can_be_generals = yes
-	republic = yes
 	queen = no
 	modifiers = {
 		stability_cost_modifier = -0.2
@@ -4008,6 +4060,7 @@ B28_rule_of_the_strong = {
 		is_monstrous_horde = yes
 		enables_horde_idea_group = yes
 		enables_aristocratic_idea_group = no
+		disables_estate_mages = yes
 	}
 	modifiers = {
 		stability_cost_modifier = 1
@@ -4072,5 +4125,164 @@ B43_embrace_high_chivalry_reform = {
 	}
 	effect = {
 		custom_tooltip = B43_reform_progress_when_crusade.tt
+	}
+}
+
+# Mechanim
+mechanim_learning = {
+	icon = "organising_our_religion_reform"
+	potential = {
+		has_reform = mechanim_migratory_reform
+	}
+	lock_level_when_selected = yes
+	effect = {
+		custom_tooltip = mechanim_learning_migration_tt
+		increase_all_tolerances = { size = large }
+	}
+	ai = {
+		factor = 50
+	}
+}
+
+mechanim_self_reflection = {
+	icon = "fist_in_air"
+	potential = {
+		has_reform = mechanim_migratory_reform
+	}
+	lock_level_when_selected = yes
+	effect = {
+		custom_tooltip = mechanim_self_reflection_tt
+		decrease_all_tolerances = { size = medium }
+	}
+	ai = {
+		factor = 50
+	}
+}
+
+mechanim_dialogue = {
+	icon = "monks"
+	potential = {
+		has_reform = mechanim_migratory_reform
+	}
+	lock_level_when_selected = yes
+	effect = {
+		custom_tooltip = mechanim_dialogue_tt
+		increase_all_tolerances = { size = small }
+	}
+	ai = {
+		factor = 50
+	}
+}
+
+mechanim_treasuretroves = {
+	icon = "bulwar_twelve_families"
+	potential = {
+		has_reform = mechanim_migratory_reform
+	}
+	lock_level_when_selected = yes
+	effect = {
+		custom_tooltip = mechanim_treasuretroves_tt
+		add_country_modifier = { name = mechanim_treasuretroves_mod duration = -1 } 
+	}
+	modifiers = {
+		loot_amount = 0.5
+	}
+	ai = {
+		factor = 50
+	}
+}
+mechanim_hubs = {
+	icon = "plundered_knowledge"
+	potential = {
+		has_reform = mechanim_migratory_reform
+	}
+	lock_level_when_selected = yes
+	effect = {
+		custom_tooltip = mechanim_hubs_tt
+		add_country_modifier = { name = mechanim_hubs_mod duration = -1 } 
+	}
+	modifiers = {
+		innovativeness_gain = 0.25
+	}
+	ai = {
+		factor = 50
+	}
+}
+mechanim_testament = {
+	icon = "asian_scripture"
+	potential = {
+		has_reform = mechanim_migratory_reform
+	}
+	lock_level_when_selected = yes
+	effect = {
+		custom_tooltip = mechanim_testament_tt
+		add_country_modifier = { name = mechanim_testament_mod duration = -1 } 
+	}
+	modifiers = {
+		tolerance_own = 1
+	}
+	ai = {
+		factor = 50
+	}
+}
+mechanim_skirmishing = {
+	icon = "native_martial_tradition_reform"
+	potential = {
+		has_reform = mechanim_migratory_reform
+	}
+	lock_level_when_selected = yes
+	effect = {
+		set_country_flag = mechanim_skirmishing_taken
+		custom_tooltip = mechanim_skirmishing_tt
+	}
+	modifiers = {
+		land_forcelimit = 3
+		global_regiment_cost = -0.2
+	}
+	ai = {
+		factor = 50
+	}
+}
+
+mechanim_synthesis = {
+	icon = "paper_with_seal"
+	potential = {
+		has_reform = mechanim_migratory_reform
+	}
+	lock_level_when_selected = yes
+	effect = {
+		set_country_flag = mechanim_synthesis_taken
+		custom_tooltip = mechanim_synthesis_tt
+	}
+	ai = {
+		factor = 50
+	}
+}
+mechanim_reiteration = {
+	icon = "compass"
+	potential = {
+		has_reform = mechanim_migratory_reform
+	}
+	lock_level_when_selected = yes
+	effect = {
+		set_country_flag = mechanim_reiteration_taken
+		custom_tooltip = mechanim_reiteration_tt
+	}
+	ai = {
+		factor = 50
+	}
+}
+mechanim_tradition = {
+	icon = "constitution"
+	potential = {
+		has_reform = mechanim_migratory_reform
+	}
+	lock_level_when_selected = yes
+	effect = {
+		set_country_flag = mechanim_tradition_taken
+		custom_tooltip = mechanim_tradition_tt
+	}
+	ai = {
+		factor = 50
 	}
 }
