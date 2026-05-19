@@ -21171,29 +21171,47 @@ deranne_upgrade_sarhal_dominance_privilege_effect = {
 }
 
 deranne_upgrade_dam_scripted_effect = {
-	1133 = {
+	$province_id$ = {
 		clr_province_flag = deranne_dam_tier_1_flag
 		clr_province_flag = deranne_dam_tier_2_flag
 		clr_province_flag = deranne_dam_tier_3_flag
 		if = {
 			limit = {
 				has_great_project = {
-					type = ynnic_dam_adbrabohvi
+					type = $dam_name$
 					tier = 2
+				}
+				NOT = {
+					has_great_project = {
+						type = $dam_name$
+						tier = 3
+					}
 				}
 			}
 			add_great_project_tier = {
-				type = ynnic_dam_adbrabohvi
+				type = $dam_name$
 				tier = 1
 			}
 			clr_province_flag = deranne_dam_construction_flag
 			set_province_flag = deranne_dam_tier_3_flag
 		}
-		else_if = {
+		if = {
 			limit = {
 				has_great_project = {
-					type = ynnic_dam_adbrabohvi
+					type = $dam_name$
 					tier = 1
+				}
+				NOT = {
+					OR = {
+						has_great_project = {
+							type = $dam_name$
+							tier = 2
+						}
+						has_great_project = {
+							type = $dam_name$
+							tier = 3
+						}
+					}
 				}
 			}
 			add_great_project_tier = {
@@ -21208,6 +21226,22 @@ deranne_upgrade_dam_scripted_effect = {
 				has_great_project = {
 					type = ynnic_dam_adbrabohvi
 					tier = 0
+				}
+				NOT = {
+					OR = {
+						has_great_project = {
+							type = $dam_name$
+							tier = 1
+						}
+						has_great_project = {
+							type = $dam_name$
+							tier = 2
+						}
+						has_great_project = {
+							type = $dam_name$
+							tier = 3
+						}
+					}
 				}
 			}
 			add_great_project_tier = {
