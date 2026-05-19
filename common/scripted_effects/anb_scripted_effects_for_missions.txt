@@ -21202,29 +21202,23 @@ deranne_upgrade_dam_scripted_effect = {
 					tier = 1
 				}
 				NOT = {
-					OR = {
-						has_great_project = {
-							type = $dam_name$
-							tier = 2
-						}
-						has_great_project = {
-							type = $dam_name$
-							tier = 3
-						}
+					has_great_project = {
+						type = $dam_name$
+						tier = 2
 					}
 				}
 			}
 			add_great_project_tier = {
-				type = ynnic_dam_adbrabohvi
+				type = $dam_name$
 				tier = 1
 			}
 			clr_province_flag = deranne_dam_construction_flag
 			set_province_flag = deranne_dam_tier_2_flag
 		}	
-		else_if = {
+		if = {
 			limit = {
 				has_great_project = {
-					type = ynnic_dam_adbrabohvi
+					type = $dam_name$
 					tier = 0
 				}
 				NOT = {
@@ -21233,19 +21227,11 @@ deranne_upgrade_dam_scripted_effect = {
 							type = $dam_name$
 							tier = 1
 						}
-						has_great_project = {
-							type = $dam_name$
-							tier = 2
-						}
-						has_great_project = {
-							type = $dam_name$
-							tier = 3
-						}
 					}
 				}
 			}
 			add_great_project_tier = {
-				type = ynnic_dam_adbrabohvi
+				type = $dam_name$
 				tier = 1
 			}
 			clr_province_flag = deranne_dam_construction_flag
@@ -21254,11 +21240,11 @@ deranne_upgrade_dam_scripted_effect = {
 	}
 	if = {
 		limit = {
-			1133 = {
+			$province_id$ = {
 				NOT = { has_province_modifier = deranne_dtc_establishment }
 			}
 		}
-		1133 = {
+		$province_id$ = {
 			add_province_modifier = {
 				name = deranne_dtc_establishment
 				duration = -1
@@ -21266,7 +21252,7 @@ deranne_upgrade_dam_scripted_effect = {
 		}
 	}
 	else = {
-		1133 = {
+		$province_id$ = {
 			every_neighbor_province = {
 				add_province_modifier = {
 					name = deranne_dtc_investment
