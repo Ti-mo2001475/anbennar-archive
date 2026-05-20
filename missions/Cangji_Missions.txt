@@ -1,3 +1,6 @@
+#Coded by Nedac
+#Written and designed by Reti
+
 cangji_1 = {
 	slot = 1
 	generic = no
@@ -2116,6 +2119,7 @@ cangji_4_lower = {
 					NOT = { has_owner_religion = yes }
 					owner = {
 						NOT = {
+							religion = kalyin_worshippers
 							num_of_owned_provinces_with = {
 								value = 16
 								region = north_yanshen_region
@@ -2132,11 +2136,19 @@ cangji_4_lower = {
 				owned_by = ROOT
 			}
 			4925 = { can_build_cinder_monastery = yes }
-			num_of_owned_provinces_with = {
-				value = 16
-				region = north_yanshen_region
-				has_owner_religion = yes
+			OR = {
+				num_of_owned_provinces_with = {
+					value = 16
+					region = north_yanshen_region
+					has_owner_religion = yes
+				}
+				AND = {
+					religion = kalyin_worshippers
+					has_harmonized_with = raheni
+					has_harmonized_with = halessi
+				}
 			}
+			
 			OR = {
 				custom_trigger_tooltip = {
 					tooltip = V05_jiangyang_adm_advisor_tt
