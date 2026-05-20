@@ -210,6 +210,40 @@ country_event = {
 	}
 }
 
+country_event = { #Event to remove fluidity privileges if you don't want them
+	id = estate_castes_events.3
+	title = estate_castes_events.3.title
+	desc = estate_castes_events.3.desc
+	picture = TIGER_THRONE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = estate_castes_events.3.a
+	}
+
+	option = {
+		name = estate_castes_events.3.b
+		if = {
+			limit = { caste_fluidity_is_fluid = yes }
+			remove_neutral_caste_privileges = yes
+			remove_rigid_caste_privileges = yes
+			remove_neutral_or_rigid_caste_privileges = yes
+		}
+		else_if = {
+			limit = { caste_fluidity_is_neutral = yes }
+			remove_fluid_caste_privileges = yes
+			remove_rigid_caste_privileges = yes
+			remove_fluid_or_rigid_caste_privileges = yes
+		}
+		else = {
+			remove_fluid_caste_privileges = yes
+			remove_neutral_caste_privileges = yes
+			remove_fluid_or_neutral_caste_privileges = yes
+		}
+	}
+}
+
 country_event = {
 	id = estate_castes_events.100
 	title = estate_castes_events.100.title
