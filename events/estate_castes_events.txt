@@ -226,20 +226,29 @@ country_event = { #Event to remove fluidity privileges if you don't want them
 		name = estate_castes_events.3.b
 		if = {
 			limit = { caste_fluidity_is_fluid = yes }
-			remove_neutral_caste_privileges = yes
-			remove_rigid_caste_privileges = yes
-			remove_neutral_or_rigid_caste_privileges = yes
+			custom_tooltip = remove_fluid_caste_privileges_tt
+			hidden_effect = {
+				remove_neutral_caste_privileges = yes
+				remove_rigid_caste_privileges = yes
+				remove_neutral_or_rigid_caste_privileges = yes
+			}
 		}
 		else_if = {
 			limit = { caste_fluidity_is_neutral = yes }
-			remove_fluid_caste_privileges = yes
-			remove_rigid_caste_privileges = yes
-			remove_fluid_or_rigid_caste_privileges = yes
+			custom_tooltip = remove_neutral_caste_privileges_tt
+			hidden_effect = {
+				remove_fluid_caste_privileges = yes
+				remove_rigid_caste_privileges = yes
+				remove_fluid_or_rigid_caste_privileges = yes
+			}
 		}
 		else = {
-			remove_fluid_caste_privileges = yes
-			remove_neutral_caste_privileges = yes
-			remove_fluid_or_neutral_caste_privileges = yes
+			custom_tooltip = remove_rigid_caste_privileges_tt
+			hidden_effect = {
+				remove_fluid_caste_privileges = yes
+				remove_neutral_caste_privileges = yes
+				remove_fluid_or_neutral_caste_privileges = yes
+			}
 		}
 	}
 }
