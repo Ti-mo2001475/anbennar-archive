@@ -392,6 +392,12 @@ estate_middlecastes_sell_promotions = {
 		modifier = { dip_advisor_cost = -0.25 }
 		is_bad = yes
 	}
+	on_granted = {
+		estate_fluidity_privilege_tt = {
+			fluid = yes
+			privilege = estate_middlecastes_sell_promotions
+		}
+	}
 	ai_will_do = {
 		factor = 10
 		modifier = {
@@ -429,6 +435,13 @@ estate_middlecastes_land_of_commerce = {
 			}
 		}
 		modifier = { country_diplomatic_power = 1 }
+	}
+	on_granted = {
+		estate_fluidity_privilege_tt = {
+			fluid = yes
+			rigid = yes
+			privilege = estate_middlecastes_land_of_commerce
+		}
 	}
 	ai_will_do = {
 		factor = 10
@@ -535,6 +548,13 @@ estate_middlecastes_admirals = {
 			navy_tradition_decay = -0.005
 		}
 	}
+	on_granted = {
+		estate_fluidity_privilege_tt = {
+			fluid = yes
+			neutral = yes
+			privilege = estate_middlecastes_admirals
+		}
+	}
 	ai_will_do = {
 		factor = 0
 	}
@@ -598,6 +618,13 @@ estate_middlecastes_enforced_interfaith_dialogue = {
 			tolerance_heretic = 2
 		}
 	}
+	on_granted = {
+		estate_fluidity_privilege_tt = {
+			fluid = yes
+			neutral = yes
+			privilege = estate_middlecastes_enforced_interfaith_dialogue
+		}
+	}
 	ai_will_do = {
 		factor = 0
 	}
@@ -636,6 +663,13 @@ estate_middlecastes_control_over_monetary_policy = {
 			inflation_reduction = 0.15
 			interest = -0.5
 			production_efficiency = 0.05
+		}
+	}
+	on_granted = {
+		estate_fluidity_privilege_tt = {
+			fluid = yes
+			neutral = yes
+			privilege = estate_middlecastes_control_over_monetary_policy
 		}
 	}
 	ai_will_do = {
@@ -726,10 +760,6 @@ estate_middlecastes_excluse_trade_rights = {
 	loyalty = 0.05
 	is_valid = {
 		has_dlc = "Emperor"
-		OR = {
-			caste_fluidity_is_rigid = yes
-			caste_fluidity_is_neutral = yes
-		}
 		num_of_owned_provinces_with = {
 			value = 3
 			province_has_center_of_trade_of_level = 1
@@ -742,6 +772,11 @@ estate_middlecastes_excluse_trade_rights = {
 		}
 	}
 	on_granted = {
+		estate_fluidity_privilege_tt = {
+			rigid = yes
+			neutral = yes
+			privilege = estate_middlecastes_excluse_trade_rights
+		}
 		custom_tooltip = estate_middlecastes_exclusive_trade_rights_enact_tooltip
 		random_owned_province = {
 			limit = {
@@ -1553,6 +1588,12 @@ estate_middlecastes_sarstayri_investments = {
 	conditional_modifier = {
 		trigger = { caste_fluidity_is_neutral = yes }
 		modifier = { native_assimilation = 0.5 }
+	}
+	on_granted = {
+		estate_fluidity_privilege_tt = {
+			neutral = yes
+			privilege = estate_middlecastes_sarstayri_investments
+		}
 	}
 	on_granted = {
 		enable_estate_action = {
