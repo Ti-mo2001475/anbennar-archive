@@ -24759,17 +24759,17 @@ on_create_vassal = {
 # First province in state is set
 on_holy_order_established = {
 	ROOT = {
+		if = {
+			limit = {
+				has_estate_privilege = artifice_invention_table_war
+			}
+			add_manpower = 2.5
+		}
 		# Shadow Pact
 		if = {
 			limit = {
-				owner = { has_estate_privilege = artifice_invention_table_war }
-			}
-			owner = { add_manpower = 2.5 }
-		}
-		if = {
-			limit = {
 				FROM = {
-					holy_order = shadow_warriors_order
+					holy_order = shadow_warriors_order # works
 				}
 			}
 			add_corruption = 2
