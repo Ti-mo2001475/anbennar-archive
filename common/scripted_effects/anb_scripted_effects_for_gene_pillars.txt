@@ -394,6 +394,13 @@ gene_pillar_successful_end_expedition_effect = {
 	}
 }
 
+# Reduces stability/adm, set party killed modifier, and abandons the expedition
+gene_pillar_fail_expedition = {
+	reduce_stability_or_adm_power = yes
+	add_country_modifier = { name = gene_pillars_got_killed duration = 3650 } # 10 years
+	gene_pillar_abandon_expedition_effect = { province_notification_event = yes }
+}
+
 #Begins the expedition
 gene_pillar_start_exploration_of_level = {
 	# c	ustom_tooltip = gene_pillar_start_exploration_of_level_$level$_tt
@@ -1129,9 +1136,7 @@ gene_pillars_lose_hp_effect = {
 			is_exploring_any_gene_pillar = yes
 			# in case you trigger this twice by e.g. having two health loss effects in one option
 		}
-		reduce_stability_or_adm_power = yes
-		set_country_flag = gene_pillars_got_killed
-		gene_pillar_abandon_expedition_effect = { province_notification_event = yes }
+		gene_pillar_fail_expedition = yes
 	}
 }
 
