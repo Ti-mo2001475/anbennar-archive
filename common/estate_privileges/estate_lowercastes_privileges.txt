@@ -495,19 +495,9 @@ estate_lowercastes_mediators = {
 	max_absolutism = -5
 	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
 	loyalty = -0.05
-	can_select = {
-		OR = {
-			caste_fluidity_is_fluid = yes
-			caste_fluidity_is_neutral = yes
-		}
-	}
+	can_select = { caste_fluidity_is_fluid_or_neutral = yes }
 	conditional_modifier = {
-		trigger = {
-			OR = {
-				caste_fluidity_is_fluid = yes
-				caste_fluidity_is_neutral = yes
-			}
-		}
+		trigger = { caste_fluidity_is_fluid_or_neutral = yes }
 		modifier = { country_admin_power = 1 }
 	}
 	on_granted = {
@@ -871,29 +861,14 @@ estate_lowercastes_weapon_ban = {
 estate_lowercastes_maintained_infrastructure = {
 	icon = privilege_dev_cost
 	influence = 0.05
-	can_select = {
-		OR = {
-			caste_fluidity_is_neutral = yes
-			caste_fluidity_is_rigid = yes
-		}
-	}
+	can_select = { caste_fluidity_is_neutral_or_rigid = yes }
 	conditional_modifier = {
-		trigger = {
-			OR = {
-				caste_fluidity_is_neutral = yes
-				caste_fluidity_is_rigid = yes
-			}
-		}
+		trigger = { caste_fluidity_is_neutral_or_rigid = yes }
 		modifier = { global_manpower_modifier = -0.10 }
 		is_bad = yes
 	}
 	conditional_modifier = {
-		trigger = {
-			OR = {
-				caste_fluidity_is_neutral = yes
-				caste_fluidity_is_rigid = yes
-			}
-		}
+		trigger = { caste_fluidity_is_neutral_or_rigid = yes }
 		modifier = {
 			build_cost = -0.10
 			build_time = -0.20	
@@ -917,19 +892,9 @@ estate_lowercastes_resticted_imports = {
 	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
 	loyalty = 0.10
 	influence = 0.05
-	can_select = {
-		OR = {
-			caste_fluidity_is_neutral = yes
-			caste_fluidity_is_rigid = yes
-		}
-	}
+	can_select = { caste_fluidity_is_neutral_or_rigid = yes }
 	conditional_modifier = {
-		trigger = {
-			OR = {
-				caste_fluidity_is_neutral = yes
-				caste_fluidity_is_rigid = yes
-			}
-		}
+		trigger = { caste_fluidity_is_neutral_or_rigid = yes }
 		modifier = {
 			global_trade_power = -0.1
 			middlecastes_loyalty_modifier = -0.1	
@@ -937,12 +902,7 @@ estate_lowercastes_resticted_imports = {
 		is_bad = yes
 	}
 	conditional_modifier = {
-		trigger = {
-			OR = {
-				caste_fluidity_is_neutral = yes
-				caste_fluidity_is_rigid = yes
-			}
-		}
+		trigger = { caste_fluidity_is_neutral_or_rigid = yes }
 		modifier = { global_trade_goods_size_modifier = 0.1	}
 	}
 	on_granted = {

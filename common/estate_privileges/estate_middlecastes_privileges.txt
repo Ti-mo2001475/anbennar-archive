@@ -421,19 +421,9 @@ estate_middlecastes_land_of_commerce = {
 	max_absolutism = -5
 	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
 	loyalty = -0.05
-	can_select = {
-		OR = {
-			caste_fluidity_is_fluid = yes
-			caste_fluidity_is_rigid = yes
-		}
-	}
+	can_select = { caste_fluidity_is_fluid_or_rigid = yes }
 	conditional_modifier = {
-		trigger = {
-			OR = {
-				caste_fluidity_is_fluid = yes
-				caste_fluidity_is_rigid = yes
-			}
-		}
+		trigger = { caste_fluidity_is_fluid_or_rigid = yes }
 		modifier = { country_diplomatic_power = 1 }
 	}
 	on_granted = {
@@ -528,21 +518,13 @@ estate_middlecastes_admirals = {
 	loyalty = 0.05
 	can_select = {
 		navy_tradition = 30
-		OR = {
-			caste_fluidity_is_fluid = yes
-			caste_fluidity_is_neutral = yes
-		}
+		caste_fluidity_is_fluid_or_neutral = yes
 	}
 	on_granted = {
 		add_navy_tradition = -15
 	}
 	conditional_modifier = {
-		trigger = {
-			OR = {
-				caste_fluidity_is_fluid = yes
-				caste_fluidity_is_neutral = yes
-			}
-		}
+		trigger = { caste_fluidity_is_fluid_or_neutral = yes }
 		modifier = {
 			admiral_cost = -0.25
 			navy_tradition_decay = -0.005
@@ -600,19 +582,9 @@ estate_middlecastes_enforced_interfaith_dialogue = {
 	max_absolutism = -5
 	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
 	loyalty = 0.05
-	can_select = {
-		OR = {
-			caste_fluidity_is_fluid = yes
-			caste_fluidity_is_neutral = yes
-		}
-	}
+	can_select = { caste_fluidity_is_fluid_or_neutral = yes }
 	conditional_modifier = {
-		trigger = {
-			OR = {
-				caste_fluidity_is_fluid = yes
-				caste_fluidity_is_neutral = yes
-			}
-		}
+		trigger = { caste_fluidity_is_fluid_or_neutral = yes }
 		modifier = {
 			tolerance_heathen = 2
 			tolerance_heretic = 2
@@ -636,29 +608,14 @@ estate_middlecastes_control_over_monetary_policy = {
 	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 2 } }
 	influence = 0.05
 	loyalty = 0.05
-	can_select = {
-		OR = {
-			caste_fluidity_is_fluid = yes
-			caste_fluidity_is_neutral = yes
-		}
-	}
+	can_select = { caste_fluidity_is_fluid_or_neutral = yes }
 	conditional_modifier = {
-		trigger = {
-			OR = {
-				caste_fluidity_is_fluid = yes
-				caste_fluidity_is_neutral = yes
-			}
-		}
+		trigger = { caste_fluidity_is_fluid_or_neutral = yes }
 		modifier = { all_power_cost = 0.05 }
 		is_bad = yes
 	}
 	conditional_modifier = {
-		trigger = {
-			OR = {
-				caste_fluidity_is_fluid = yes
-				caste_fluidity_is_neutral = yes
-			}
-		}
+		trigger = { caste_fluidity_is_fluid_or_neutral = yes }
 		modifier = {
 			inflation_reduction = 0.15
 			interest = -0.5
@@ -765,12 +722,7 @@ estate_middlecastes_excluse_trade_rights = {
 			province_has_center_of_trade_of_level = 1
 		}
 	}
-	can_select = {
-		OR = {
-			caste_fluidity_is_rigid = yes
-			caste_fluidity_is_neutral = yes
-		}
-	}
+	can_select = { caste_fluidity_is_neutral_or_rigid = yes }
 	on_granted = {
 		estate_fluidity_privilege_tt = {
 			rigid = yes
