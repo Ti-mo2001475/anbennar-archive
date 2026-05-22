@@ -4622,22 +4622,37 @@ anbennar_building_effect = {
 				has_country_modifier = zerat_shalazar_prestige_build
 			}
 			change_variable = {
-				which = zerat_shalazr_prestige_counter
+				which = zerat_shalazar_prestige_counter
 				value = 1
 			}
 			if = {
 				limit = {
 					check_variable = {
-						which = zerat_shalazr_prestige_counter
+						which = zerat_shalazar_prestige_counter
 						value = 10
 					}
 				}
 				anzara_add_gov_power = { amount = 1 }
 				set_variable = {
-					which = zerat_shalazr_prestige_counter
+					which = zerat_shalazar_prestige_counter
 					value = 0
 				}
 			}
+		}
+	}
+
+	if = {
+		limit = {
+			has_province_flag = A24_clan_manor_construction
+			owned_by = A24
+			num_of_buildings_in_province = 2
+		}
+		hidden_effect = {
+			province_event = { id = westmoors.20 }
+			province_event = { id = westmoors.21 }
+			province_event = { id = westmoors.22 }
+			province_event = { id = westmoors.23 }
+			province_event = { id = westmoors.24 }
 		}
 	}
 }
@@ -5379,7 +5394,7 @@ apply_all_owned_NZOC_province = {
 	owner = {
 		#Increment variable for tooltip
 		change_variable = {
-			which = nzoc_provinces_effected_positive
+			which = nzoc_provinces_affected_positive
 			value = 1
 		}
 
@@ -5432,7 +5447,7 @@ apply_debuff_NZOC_country_scope = {
 			#increment debuffed province count
 			event_target:the_centaur_who_moved = {
 				change_variable = {
-    				which = nzoc_provinces_effected_negative
+    				which = nzoc_provinces_affected_negative
     				value = 1
    				}
 			}			
@@ -11976,20 +11991,20 @@ tsukqiao_mask_of_might_effect_calc = {
 	if = {
 		limit = { has_country_flag = tsukqiao_upgrade_might_2 }
 		add_or_extend_ruler_modifier = {
-			name = tsukqiao_doctrine_of_might_3
+			name = tsukqiao_mask_of_might_3
 			duration = 7300
 		}
 	}
 	else_if = {
 		limit = { has_country_flag = tsukqiao_upgrade_might_1 }
 		add_or_extend_ruler_modifier = {
-			name = tsukqiao_doctrine_of_might_2
+			name = tsukqiao_mask_of_might_2
 			duration = 5475
 		}
 	}
 	else = {
 		add_or_extend_ruler_modifier = {
-			name = tsukqiao_doctrine_of_might_1
+			name = tsukqiao_mask_of_might_1
 			duration = 3650
 		}
 	}
@@ -12643,6 +12658,8 @@ anb_mechanim_cultural_union = {
 		anb_add_accepted_culture_or_dip_power = { culture = nightengine_mechanim free = yes }
 		anb_add_accepted_culture_or_dip_power = { culture = orderwrought_mechanim free = yes }
 		anb_add_accepted_culture_or_dip_power = { culture = soullistener_mechanim free = yes }
+		anb_add_accepted_culture_or_dip_power = { culture = pure_mechanim free = yes }
+		anb_add_accepted_culture_or_dip_power = { culture = wildcolor_mechanim free = yes }
 	}
 }
 
