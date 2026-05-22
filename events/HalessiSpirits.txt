@@ -1536,6 +1536,59 @@ country_event = { #Temple Restoration menu
 	}
 }
 
+# Setup temple objects at start of game
+# Have to show the object first in order to hide them later on :pdx:
+country_event = {
+	id = spirits.006
+	title = none
+	desc = none
+	picture = none
+	hidden = yes
+	fire_only_once = yes
+	immediate = {
+		# yanshen
+		show_ambient_object = high_temple_4925
+		show_ambient_object = high_temple_4979
+		show_ambient_object = high_temple_4871
+		show_ambient_object = high_temple_4930
+		show_ambient_object = high_temple_4949
+		show_ambient_object = high_temple_4859
+		show_ambient_object = high_temple_4839_damaged
+		show_ambient_object = high_temple_4951
+		show_ambient_object = high_temple_4811
+		show_ambient_object = high_temple_4618_damaged
+		# rahen
+		show_ambient_object = high_temple_4438
+		show_ambient_object = high_temple_4450
+		show_ambient_object = high_temple_4411
+		show_ambient_object = high_temple_4384
+		show_ambient_object = high_temple_4380
+		show_ambient_object = high_temple_4397
+		show_ambient_object = high_temple_4417
+		show_ambient_object = high_temple_4469
+		show_ambient_object = high_temple_4465
+		show_ambient_object = high_temple_4630_damaged
+		show_ambient_object = high_temple_4546_damaged
+		show_ambient_object = high_temple_4633_damaged
+		show_ambient_object = high_temple_4510
+		show_ambient_object = high_temple_4527
+		show_ambient_object = high_temple_4499
+		show_ambient_object = high_temple_4396
+		show_ambient_object = high_temple_4488
+		show_ambient_object = high_temple_4420
+		# vimdatrong
+		show_ambient_object = high_temple_4964_damaged
+		show_ambient_object = high_temple_4955_damaged
+		show_ambient_object = high_temple_4764
+		show_ambient_object = high_temple_4941_damaged
+		show_ambient_object = high_temple_4580
+		show_ambient_object = high_temple_4570
+		# don't bother showing ruined temples at start, they can't be repaired
+	}
+	option = {
+		name = none
+	}
+}
 
 
 country_event = { # reset menu
@@ -1816,27 +1869,27 @@ province_event = {	#Temple Purified
 		if = {
 			limit = { has_province_flag = was_temple_complex }
 			hidden_effect = {
-				purify_temple_wards = yes
 				remove_province_modifier = corrupted_temple_complex_inactive
 				add_permanent_province_modifier = { name = temple_complex duration = -1 }
+				purify_temple_wards = yes
 			}
 			clr_province_flag = was_temple_complex
 		}
 		if = {
 			limit = { has_province_flag = was_damaged_temple_complex }
 			hidden_effect = {
-				purify_temple_wards = yes
 				remove_province_modifier = corrupted_temple_complex_inactive
 				add_permanent_province_modifier = { name = damaged_temple_complex duration = -1 }
+				purify_temple_wards = yes
 			}
 			clr_province_flag = was_damaged_temple_complex
 		}
 		if = {
 			limit = { has_province_flag = was_derelict_temple_complex }
 			hidden_effect = {
-				purify_temple_wards = yes
 				remove_province_modifier = corrupted_temple_complex_inactive
 				add_permanent_province_modifier = { name = derelict_temple_complex duration = -1 }
+				purify_temple_wards = yes
 			}
 			clr_province_flag = was_derelict_temple_complex
 		}
