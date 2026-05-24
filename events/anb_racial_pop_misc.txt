@@ -1530,7 +1530,6 @@ country_event = {
 	hidden = yes
 
 	trigger = {
-		has_country_flag = hide_half_orc_creation
 		#Not available in Silverforge while Orcs slaves are oppressed
 		NOT = {
 			tag = A73
@@ -1719,8 +1718,15 @@ country_event = {
 
 		custom_tooltip = racial_pop_grow_horc_tt
 		
-		country_event = {
-			id = racial_pop_misc.2
+		if = {
+			limit = {
+				NOT = {
+					has_country_flag = hide_half_orc_creation
+				}
+			}
+			country_event = {
+				id = racial_pop_misc.2
+			}
 		}		
 
 		tooltip = {
