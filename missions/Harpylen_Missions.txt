@@ -205,7 +205,10 @@ F98_col_1 = {
 					province_id = 6271
 					NOT = {
 						AND = {
-							has_province_modifier = F98_t3_roost_yria
+							OR = {
+								has_province_modifier = F98_t3_roost_yria
+								ROOT = { harpylen_t3_roost_at_max_capacity = yes }
+							}
 							OR = {
 								development = 45
 								num_of_times_expanded_infrastructure = 3
@@ -241,14 +244,17 @@ F98_col_1 = {
 			num_of_owned_provinces_with = {
 				value = 20
 				region = olavlund_region
-				has_building = temple
+				has_tax_building_trigger = yes
 			}
 			vaengrheim_area = {
 				type = all
 				F98_st_country_or_non_sovereign_subject_holds = yes
 			}
 			6271 = {
-				has_province_modifier = F98_t3_roost_yria
+				OR = {
+					has_province_modifier = F98_t3_roost_yria
+					ROOT = { harpylen_t3_roost_at_max_capacity = yes }
+				}
 				OR = {
 					development = 45
 					num_of_times_expanded_infrastructure = 3
@@ -532,7 +538,7 @@ F98_col_2 = {
 							OR = {
 								num_of_times_expanded_infrastructure = 1
 								AND = {
-									NOT = { has_dlc = "Leviathan" }
+									NOT = { has_dlc = "Leviathan" owned_by = ROOT }
 									development = 15	
 								}
 							}
@@ -553,7 +559,7 @@ F98_col_2 = {
 							OR = {
 								num_of_times_expanded_infrastructure = 1
 								AND = {
-									NOT = { has_dlc = "Leviathan" }
+									NOT = { has_dlc = "Leviathan" owned_by = ROOT }
 									development = 15	
 								}
 							}
@@ -574,6 +580,7 @@ F98_col_2 = {
 						if = {
 							limit = {
 								has_dlc = "Leviathan"
+								owned_by = ROOT
 							}
 							num_of_times_expanded_infrastructure = 1
 						}
@@ -597,6 +604,7 @@ F98_col_2 = {
 						if = {
 							limit = {
 								has_dlc = "Leviathan"
+								owned_by = ROOT
 							}
 							num_of_times_expanded_infrastructure = 1
 						}
@@ -1406,7 +1414,10 @@ F98_col_3 = {
 					NOT = {
 						AND = {
 							F98_st_country_or_non_sovereign_subject_holds = yes
-							has_province_modifier = F98_t3_roost_yria
+							OR = {
+								has_province_modifier = F98_t3_roost_yria
+								ROOT = { harpylen_t3_roost_at_max_capacity = yes }
+							}
 							OR = {
 								has_great_project = {
 									type = crater_of_the_martyr
@@ -1427,7 +1438,10 @@ F98_col_3 = {
 			}
 			6118 = { # Senidmot
 				F98_st_country_or_non_sovereign_subject_holds = yes
-				has_province_modifier = F98_t3_roost_yria
+				OR = {
+					has_province_modifier = F98_t3_roost_yria
+					ROOT = { harpylen_t3_roost_at_max_capacity = yes }
+				}
 			}
 			any_subject_country = {
 				religion = sky_domain
@@ -1500,6 +1514,7 @@ F98_col_3 = {
 						fast_owns_less_than_num_pops_of_race = { race = harpy amount = 1 } 
 						harpylen_encouraged_migration = yes
 						is_subject_of = ROOT
+						has_been_insulted_by_root = yes
 					}				
 					AND = {
 						is_great_power = yes
@@ -1530,10 +1545,8 @@ F98_col_3 = {
 			all_known_country = {
 				OR = {
 					fast_owns_less_than_num_pops_of_race = { race = harpy amount = 1 }
-					OR = {
-						harpylen_encouraged_migration = yes
-						has_been_insulted_by_root = yes
-					}
+					harpylen_encouraged_migration = yes
+					has_been_insulted_by_root = yes
 					is_subject_of = ROOT
 				}
 			}
@@ -1682,7 +1695,10 @@ F98_col_3 = {
 					NOT = { F98_st_country_or_non_sovereign_subject_holds = yes }
 				}
 				AND = {
-					has_province_modifier = F98_t3_roost_yria
+					OR = {
+						has_province_modifier = F98_t3_roost_yria
+						ROOT = { harpylen_t3_roost_at_max_capacity = yes }
+					}
 					NOT = {
 						AND = {
 							development = 50
@@ -1958,17 +1974,22 @@ F98_col_4 = {
 				limit = { NOT = { exists = J54 } }
 				random_subject_country = {
 					limit = { has_country_flag = harpylen_fp_vassal }
-					change_tag = J54
-					hidden_effect = {
+					tooltip = { change_tag = J54 }	#need to be in an event to update harpylen gamestate 
+					hidden_effect = {				#clicking the subject provinces the same day of the change_tag effect was causing CTD
 						add_country_modifier = {
 							name = centaur_zeal_timer
 							duration = -1
 						}
 					}
+					change_religion = irdaeos_worship
 				}
+			}
+			else = {
+				J54 = { change_religion = irdaeos_worship }
 			}
 			custom_tooltip = harpylen_divine_tt
 			hidden_effect = {
+				country_event = { id = flavour_harpylen.48 }
 				5029 = {
 					add_trade_modifier = {
 						who = ROOT
@@ -2388,7 +2409,10 @@ F98_col_4 = {
 						AND = {
 							has_building = ramparts
 							has_fort_building_trigger = yes
-							has_province_modifier = F98_t3_roost_yria
+							OR = {
+								has_province_modifier = F98_t3_roost_yria
+								ROOT = { harpylen_t3_roost_at_max_capacity = yes }
+							}
 						}
 					}
 				}
@@ -2403,7 +2427,10 @@ F98_col_4 = {
 			6125 = {
 				has_building = ramparts
 				has_fort_building_trigger = yes
-				has_province_modifier = F98_t3_roost_yria
+				OR = {
+					has_province_modifier = F98_t3_roost_yria
+					ROOT = { harpylen_t3_roost_at_max_capacity = yes }
+				}
 			}
 			has_estate_privilege = estate_church_independent_inquisition
 			has_estate_privilege = estate_church_religious_state
@@ -2770,20 +2797,23 @@ F98_col_5 = {
 						cede_province = PREV
 					}
 				}
-				if = {
-					limit = { culture = wood_elf }
-					change_tag = I45
-				}
-				else_if = {
-					limit = { culture = forest_goblin }
-					if = {
-						limit = { religion = goblinic_shamanism }
-						change_tag = Z86
+				tooltip = {	#need to be in an event to update harpylen gamestate 
+					if = {	#clicking the subject provinces the same day of the change_tag effect was causing CTD
+						limit = { culture = wood_elf }
+						change_tag = I45
 					}
-					else = { change_tag = Z87 }
+					else_if = {
+						limit = { culture = forest_goblin }
+						if = {
+							limit = { religion = goblinic_shamanism }
+							change_tag = Z86
+						}
+						else = { change_tag = Z87 }
+					}
+					else = { change_tag = Z54 }
 				}
-				else = { change_tag = Z54 }
 			}
+			hidden_effect = { country_event = { id = flavour_harpylen.49 } }
 			custom_tooltip = harpylen_under_leaf_tt2
 		} 
 	}
@@ -2857,7 +2887,10 @@ F98_col_5 = {
 			}
 			6300 = {
 				owned_by = ROOT
-				has_province_modifier = F98_t3_roost_yria
+				OR = {
+					has_province_modifier = F98_t3_roost_yria
+					ROOT = { harpylen_t3_roost_at_max_capacity = yes }
+				}
 			}
 			golden_highway_xianjie = {
 				type = all

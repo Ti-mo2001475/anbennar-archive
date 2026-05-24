@@ -176,6 +176,7 @@ province_event = {
 				clr_country_flag = gene_pillar_is_exploring_level_2_pillar
 				clr_country_flag = gene_pillar_is_exploring_level_3_pillar
 			}
+			remove_province_modifier = gene_pillar_currently_explored_pillar
 		}
 	}
 
@@ -383,6 +384,7 @@ province_event = {
 		name = gene_pillars.40.a
 		save_trade_goods = yes
 		change_trade_goods = precursor_relics
+		set_province_flag = permanent_precursor_relics
 	}
 
 	#Get  Precursor Relics
@@ -404,6 +406,13 @@ province_event = {
 	title = gene_pillars.41.t
 	desc = gene_pillars.41.d
 	picture = GOOD_WITH_MONARCH_eventPicture
+
+	trigger = {
+		OR = {
+			has_province_modifier = gene_pillars_rich_precursor_relics
+			trade_goods = precursor_relics
+		}
+	}
 	
 	is_triggered_only = yes
 
@@ -9329,6 +9338,7 @@ country_event = {
 			name = "Manui the Spearguard"
 			culture = huinui
 			religion = endless_ocean
+			female = yes
 			cost_multiplier = 0.33
 			skill = 3
 		}
@@ -15825,7 +15835,7 @@ country_event = {
 		hidden_effect = { set_country_flag = gene_pillars_has_pending_event }
 	}
 
-	option = { # Draconic Genie Magic: A Primer
+	option = { # Draconic Gene Magic: A Primer
 		name = gene_pillars.935.a
 
 		gene_pillars_dragon_library_unwind_damage = yes
@@ -16004,7 +16014,7 @@ country_event = {
 			tooltip = {
 				6386 = {
 					add_province_modifier = {
-						name = gene_pillars_dragon_kobold_unrest_minus_2
+						name = gene_pillars_dragon_lizard_unrest_minus_2
 						duration = 3650 # 10 years
 					}
 				}
@@ -16015,7 +16025,7 @@ country_event = {
 						has_lizardfolk_majority_trigger = yes
 					}
 					add_province_modifier = {
-						name = gene_pillars_dragon_kobold_unrest_minus_2
+						name = gene_pillars_dragon_lizard_unrest_minus_2
 						duration = 3650 # 10 years
 					}
 				}
@@ -16578,9 +16588,7 @@ country_event = {
 				NOT = { aPUI_check_variable = { name = gene_pillar_health value = 1 } }
 			}
 		}
-		reduce_stability_or_adm_power = yes
-		set_country_flag = gene_pillars_got_killed
-		gene_pillar_abandon_expedition_effect = { province_notification_event = yes }
+		gene_pillar_fail_expedition = yes
 	}
 }
 

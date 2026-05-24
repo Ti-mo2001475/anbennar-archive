@@ -536,6 +536,8 @@ estate_church_clerical_ministers = {
 				NOT = { religion = rune_scribes }
 				NOT = { religion = gotiriei }
 				NOT = { religion = foundationism }
+				NOT = { religion = dunborgula }
+				NOT = { religion = mumambarra }
 			}
 			if = {
 				limit = {
@@ -635,6 +637,8 @@ estate_church_clerical_ministers = {
 				religion = rune_scribes
 				religion = gotiriei
 				religion = foundationism
+				religion = dunborgula
+				religion = mumambarra
 			}
 		}
 		modifier = {
@@ -4670,7 +4674,12 @@ estate_church_vir_awareness = {
 		has_personal_deity = vir_awareness
 	}
 	on_granted = {
-		set_country_flag = infinite_self_no_seize
+		if = {
+			limit = { 
+				NOT = { has_country_flag = infinite_self_no_seize }
+			}
+			set_country_flag = infinite_self_no_seize
+		}
 	}
 	can_revoke = {
 		had_country_flag = {
@@ -4687,6 +4696,7 @@ estate_church_vir_awareness = {
 			name = vir_awareness_mastered
 			duration = -1
 		}
+		clr_country_flag = infinite_self_no_seize
 		country_event = {
 			id = infinite_self.1
 		}
