@@ -1,12 +1,65 @@
 image: alpine:latest
 
 before_script:
-  - apk add --no-cache file bash python3 grep
+  - apk add --no-cache file bash python3 grep git
+
+workflow:
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "new-master" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "steam"
+    - if: $CI_COMMIT_BRANCH == "new-master" || $CI_COMMIT_BRANCH == "steam"
+    - when: never
 
 encoding-checks:
   script:
-    - bash scripts/encoding.sh -t -l -i
+    - |
+      # Determine which files changed.
+      # MR pipeline: use GitLab's built-in merge-base SHA (no fetch needed).
+      # Branch pipeline (post-merge): diff the merge commit against its first parent.
+      if [ -n "$CI_MERGE_REQUEST_DIFF_BASE_SHA" ]; then
+        BASE="$CI_MERGE_REQUEST_DIFF_BASE_SHA"
+      else
+        BASE="HEAD~1"
+      fi
+
+      CHANGED_TXT=$(git diff --name-only --diff-filter=ACMR "$BASE..HEAD" | grep -E '\.txt$' || true)
+      CHANGED_YML=$(git diff --name-only --diff-filter=ACMR "$BASE..HEAD" | grep -E '\.yml$' || true)
+
+      FAIL=0
+
+      if [ -n "$CHANGED_TXT" ]; then
+        echo "Checking encoding and indentation for changed .txt files:"
+        echo "$CHANGED_TXT"
+        bash scripts/encoding.sh -t -i $CHANGED_TXT || FAIL=1
+      else
+        echo "No .txt files changed. Skipping text encoding/indentation checks."
+      fi
+
+      if [ -n "$CHANGED_YML" ]; then
+        echo "Checking encoding for changed .yml files:"
+        echo "$CHANGED_YML"
+        bash scripts/encoding.sh -l $CHANGED_YML || FAIL=1
+      else
+        echo "No .yml files changed. Skipping localization encoding checks."
+      fi
+
+      if [ $FAIL -eq 1 ]; then exit 1; fi
 
 loc-key-collision:
   script:
-    - python3 scripts/hash_collision_detect.py
+    - |
+      # Determine which localisation files changed.
+      if [ -n "$CI_MERGE_REQUEST_DIFF_BASE_SHA" ]; then
+        BASE="$CI_MERGE_REQUEST_DIFF_BASE_SHA"
+      else
+        BASE="HEAD~1"
+      fi
+
+      CHANGED_YML=$(git diff --name-only --diff-filter=ACMR "$BASE..HEAD" | grep '^localisation/.*\.yml$' || true)
+
+      if [ -n "$CHANGED_YML" ]; then
+        echo "Checking key collisions for changed localisation files:"
+        echo "$CHANGED_YML"
+        python3 scripts/hash_collision_detect.py $CHANGED_YML
+      else
+        echo "No localisation files changed. Skipping key collision check."
+      fi
