@@ -5,24 +5,14 @@ before_script:
 
 workflow:
   rules:
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "new-master" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "steam"
-    - if: $CI_COMMIT_BRANCH == "new-master" || $CI_COMMIT_BRANCH == "steam"
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && ($CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "new-master" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "steam")
     - when: never
 
 encoding-checks:
   script:
     - |
-      # Determine which files changed.
-      # MR pipeline: use GitLab's built-in merge-base SHA (no fetch needed).
-      # Branch pipeline (post-merge): diff the merge commit against its first parent.
-      if [ -n "$CI_MERGE_REQUEST_DIFF_BASE_SHA" ]; then
-        BASE="$CI_MERGE_REQUEST_DIFF_BASE_SHA"
-      else
-        BASE="HEAD~1"
-      fi
-
-      CHANGED_TXT=$(git diff --name-only --diff-filter=ACMR "$BASE..HEAD" | grep -E '\.txt$' || true)
-      CHANGED_YML=$(git diff --name-only --diff-filter=ACMR "$BASE..HEAD" | grep -E '^localisation/.*\.yml$' || true)
+      CHANGED_TXT=$(git diff --name-only --diff-filter=ACMR "$CI_MERGE_REQUEST_DIFF_BASE_SHA..HEAD" | grep -E '\.txt$' || true)
+      CHANGED_YML=$(git diff --name-only --diff-filter=ACMR "$CI_MERGE_REQUEST_DIFF_BASE_SHA..HEAD" | grep -E '^localisation/.*\.yml$' || true)
 
       FAIL=0
 
@@ -47,14 +37,7 @@ encoding-checks:
 loc-key-collision:
   script:
     - |
-      # Determine which localisation files changed.
-      if [ -n "$CI_MERGE_REQUEST_DIFF_BASE_SHA" ]; then
-        BASE="$CI_MERGE_REQUEST_DIFF_BASE_SHA"
-      else
-        BASE="HEAD~1"
-      fi
-
-      CHANGED_YML=$(git diff --name-only --diff-filter=ACMR "$BASE..HEAD" | grep '^localisation/.*\.yml$' || true)
+      CHANGED_YML=$(git diff --name-only --diff-filter=ACMR "$CI_MERGE_REQUEST_DIFF_BASE_SHA..HEAD" | grep '^localisation/.*\.yml$' || true)
 
       if [ -n "$CHANGED_YML" ]; then
         echo "Checking key collisions for changed localisation files:"
