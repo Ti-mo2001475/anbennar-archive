@@ -13,41 +13,18 @@ pipelines:
           - git push --mirror git@github.com:JayBean/Anbennar-PublicFork.git
     - parallel:
       - step:
-          name: 'Decisions Encoding'
+          name: 'Encoding & Syntax Checks'
           condition:
               changesets:
                 includePaths:
                   - "decisions/*.txt"
-          script:
-            - echo "Checking decisions encoding..."
-            - /bin/bash checkEncoding.sh -d
-      - step:
-          name: 'Events Encoding'
-          condition:
-              changesets:
-                includePaths:
                   - "events/*.txt"
-          script:
-            - echo "Checking events encoding..."
-            - /bin/bash checkEncoding.sh -e
-      - step:
-          name: 'Localization Encoding'
-          condition:
-              changesets:
-                includePaths:
+                  - "missions/*.txt"
+                  - "common/**/*.txt"
                   - "localisation/*.yml"
           script:
-            - echo "Checking localization encoding..."
-            - /bin/bash checkEncoding.sh -l
-      - step:
-          name: 'Brackets Syntax'
-          condition:
-              changesets:
-                includePaths:
-                  - "**.txt"
-          script:
-            - echo "Checking localization encoding..."
-            - /bin/bash checkEncoding.sh -i
+            - echo "Running encoding and syntax checks..."
+            - /bin/bash scripts/encoding.sh -t -l -i
       - step:
           name: 'Loc key collision check'
           condition:
