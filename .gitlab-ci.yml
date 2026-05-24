@@ -5,14 +5,19 @@ before_script:
 
 workflow:
   rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && ($CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "new-master" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "steam")
+    - if: ($CI_COMMIT_BRANCH == "new-master" || $CI_COMMIT_BRANCH == "steam" || $CI_COMMIT_BRANCH == "GitlabPRPipeline") && $CI_PIPELINE_SOURCE == "push"
     - when: never
 
 validate:
   script:
     - |
-      CHANGED_TXT=$(git diff --name-only --diff-filter=ACMR "$CI_MERGE_REQUEST_DIFF_BASE_SHA..HEAD" | grep -E '\.txt$' || true)
-      CHANGED_YML=$(git diff --name-only --diff-filter=ACMR "$CI_MERGE_REQUEST_DIFF_BASE_SHA..HEAD" | grep -E '^localisation/.*\.yml$' || true)
+      if [ "$CI_COMMIT_BEFORE_SHA" = "0000000000000000000000000000000000000000" ]; then
+        CHANGED_TXT=$(git diff-tree --no-commit-id --name-only -r HEAD | grep -E '\.txt$' || true)
+        CHANGED_YML=$(git diff-tree --no-commit-id --name-only -r HEAD | grep -E '^localisation/.*\.yml$' || true)
+      else
+        CHANGED_TXT=$(git diff --name-only --diff-filter=ACMR "$CI_COMMIT_BEFORE_SHA..$CI_COMMIT_SHA" | grep -E '\.txt$' || true)
+        CHANGED_YML=$(git diff --name-only --diff-filter=ACMR "$CI_COMMIT_BEFORE_SHA..$CI_COMMIT_SHA" | grep -E '^localisation/.*\.yml$' || true)
+      fi
 
       FAIL=0
 
