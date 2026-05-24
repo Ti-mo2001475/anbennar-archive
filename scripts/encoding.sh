@@ -262,8 +262,8 @@ process_indentation() {
     declare -i TOTAL=0
 
     for f in "${files[@]}"; do
-        LEFT=$(LC_ALL=windows-1252 grep -o '^[^#]*' "$f" | grep -o '{' | wc -l)
-        RIGHT=$(LC_ALL=windows-1252 grep -o '^[^#]*' "$f" | grep -o '}' | wc -l)
+        LEFT=$(LC_ALL=C grep -o '^[^#]*' "$f" | grep -o '{' | wc -l)
+        RIGHT=$(LC_ALL=C grep -o '^[^#]*' "$f" | grep -o '}' | wc -l)
         TOTAL+=1
 
         if [ $LEFT != $RIGHT ]; then
