@@ -54,12 +54,15 @@ gor_vazumbrog_1_1 = {
 			custom_tooltip = " "
 			if = {
 				limit = {
-					if = {
-						limit = { has_dlc = "Cradle of Civilization" }
-						2884 = { has_supply_depot = ROOT }
-					}
-					else = {
-						2884 = { has_building = regimental_camp }
+					OR = {
+						AND = {
+							has_dlc = "Cradle of Civilization"
+							2884 = { has_supply_depot = ROOT }
+						}
+						AND = {
+							NOT = { has_dlc = "Cradle of Civilization" }
+							2884 = { has_forcelimit_building_trigger = yes }
+						}
 					}
 				} #Dwarovrod[24]
 				custom_tooltip = GV_TT_BOGIG_VAZUMBROG_BONUS_YES
@@ -100,7 +103,7 @@ gor_vazumbrog_1_1 = {
 								has_supply_depot = ROOT
 							}
 							else = {
-								has_building = regimental_camp
+								has_forcelimit_building_trigger = yes
 							}
 						}
 					}
@@ -121,7 +124,7 @@ gor_vazumbrog_1_1 = {
 					has_supply_depot = ROOT
 				}
 				else = {
-					has_building = regimental_camp
+					has_forcelimit_building_trigger = yes
 				}
 			}
 		}
@@ -195,7 +198,7 @@ gor_vazumbrog_1_2 = {
 								has_supply_depot = ROOT
 							}
 							else = {
-								has_building = regimental_camp
+								has_forcelimit_building_trigger = yes
 							}
 						}
 					}
@@ -215,7 +218,7 @@ gor_vazumbrog_1_2 = {
 					has_supply_depot = ROOT
 				}
 				else = {
-					has_building = regimental_camp
+					has_forcelimit_building_trigger = yes
 				}
 			}
 		}
@@ -1087,7 +1090,7 @@ gor_vazumbrog_2_1 = {
 								has_supply_depot = ROOT
 							}
 							else = {
-								has_building = regimental_camp
+								has_forcelimit_building_trigger = yes
 							}
 						}
 					}
@@ -1132,7 +1135,7 @@ gor_vazumbrog_2_1 = {
 					has_supply_depot = ROOT
 				}
 				else = {
-					has_building = regimental_camp
+					has_forcelimit_building_trigger = yes
 				}
 				if = {
 					limit = { owned_by = ROOT }
@@ -1234,7 +1237,7 @@ gor_vazumbrog_2_1 = {
 								has_supply_depot = ROOT
 							}
 							else = {
-								has_building = regimental_camp
+								has_forcelimit_building_trigger = yes
 							}
 						}
 					}
@@ -1265,7 +1268,7 @@ gor_vazumbrog_2_1 = {
 					has_supply_depot = ROOT
 				}
 				else = {
-					has_building = regimental_camp
+					has_forcelimit_building_trigger = yes
 				}
 			}
 		}
@@ -1375,7 +1378,7 @@ gor_vazumbrog_2_2 = {
 				NOT = { has_supply_depot = ROOT }
 			}
 			else = {
-				NOT = { has_building = regimental_camp }
+				NOT = { has_forcelimit_building_trigger = yes }
 			}
 		}
 
@@ -1402,7 +1405,7 @@ gor_vazumbrog_2_2 = {
 					has_supply_depot = ROOT
 				}
 				else = {
-					has_building = regimental_camp
+					has_forcelimit_building_trigger = yes
 				}
 			}
 		}
@@ -1732,6 +1735,7 @@ gor_vazumbrog_2_3 = {
 		position = 8
 
 		trigger = {
+			if = {
 				limit = { has_dlc = "Cradle of Civilization" }
 				army_professionalism = 0.4
 			}
@@ -2016,7 +2020,7 @@ gor_vazumbrog_2_4 = {
 						has_supply_depot = ROOT
 					}
 					else = {
-						has_building = regimental_camp
+						has_forcelimit_building_trigger = yes
 					}
 				}
 			}
