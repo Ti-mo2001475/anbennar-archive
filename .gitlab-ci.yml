@@ -31,9 +31,8 @@ validate:
         echo "$CHANGED_YML"
         bash scripts/encoding.sh -l $CHANGED_YML || FAIL=1
 
-        echo "=== Checking key collisions for changed localisation files ==="
-        echo "$CHANGED_YML"
-        python3 scripts/hash_collision_detect.py $CHANGED_YML || FAIL=1
+        echo "=== Checking key collisions (all localisation files, to catch collisions with unchanged keys) ==="
+        python3 scripts/hash_collision_detect.py || FAIL=1
       else
         echo "--- No localisation files changed, skipping ---"
       fi
