@@ -12056,7 +12056,10 @@ add_production_manufactory_building = {
 
 kobildzan_form_nation_effect = {
 	change_tag = Z38
-	hidden_effect = { restore_country_name = yes }
+	hidden_effect = {
+		restore_country_name = yes
+		set_country_flag = formed_end_game_tag_flag
+	}
 	swap_non_generic_missions = yes
 	custom_tooltip = tooltip_missions_extended
 	189 = {
@@ -13553,5 +13556,19 @@ add_years_of_separatism_in_owned_provinces = { #Goes from 1-10, accepts - values
 		every_owned_province = {
 			add_nationalism = $years$
 		}
+	}
+}
+
+ban_orcish_slavery_scripted_effect = {
+	remove_country_modifier = orcish_slaves_in_colonies
+	every_subject_country = {
+		limit = { is_colonial_nation = yes }
+		remove_country_modifier = orcish_slaves_in_colonies
+	}
+	custom_tooltip = tooltip_no_orcish_slaves_in_colonies
+	add_country_modifier = {
+		name = orcish_slaves_in_colonies_cooldown
+		duration = 3650
+		hidden = yes
 	}
 }
