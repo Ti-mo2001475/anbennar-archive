@@ -133,9 +133,18 @@ S61_ibekisedara_slot_1 = {
 				accepted_culture = antmvura
 				accepted_culture = wakoodak
 			}
-			OR = {
-				army_professionalism = 0.10
-				mil_power = 200
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				OR = {
+					army_professionalism = 0.10
+					mil_power = 200
+				}
+			}
+			else = {
+				OR = {
+					army_tradition = 50
+					mil_power = 200
+				}
 			}
 			has_mil_advisor_2 = yes
 		} 
@@ -146,13 +155,23 @@ S61_ibekisedara_slot_1 = {
 			set_country_flag = S61_the_ways_of_war_complete
 			S61_upgrade_ways_of_war = yes
 
+			
 			if = {
-				limit = {
-					NOT = {
-						army_professionalism = 0.1
+				limit = { has_dlc = "Cradle of Civilization" }
+				if = {
+					limit = {
+						NOT = { army_professionalism = 0.1 }
 					}
+					add_mil_power = -200
 				}
-				add_mil_power = -200
+			}
+			else = {
+				if = {
+					limit = {
+						NOT = { army_tradition = 50 }
+					}
+					add_mil_power = -200
+				}
 			}
 		} 
 	}
