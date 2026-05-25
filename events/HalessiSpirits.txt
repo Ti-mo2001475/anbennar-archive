@@ -1536,81 +1536,6 @@ country_event = { #Temple Restoration menu
 	}
 }
 
-# Setup temple objects at start of game
-# Have to show the object first in order to hide them later on :pdx:
-country_event = {
-	id = spirits.006
-	title = none
-	desc = none
-	picture = none
-	hidden = yes
-	fire_only_once = yes
-	immediate = {
-		# yanshen
-		show_ambient_object = high_temple_4925
-		show_ambient_object = high_temple_4979
-		show_ambient_object = high_temple_4871
-		show_ambient_object = high_temple_4930
-		show_ambient_object = high_temple_4949
-		show_ambient_object = high_temple_4859
-		show_ambient_object = high_temple_4839_damaged
-		show_ambient_object = high_temple_4951
-		show_ambient_object = high_temple_4811
-		show_ambient_object = high_temple_4618_damaged
-		# rahen
-		show_ambient_object = high_temple_4438
-		show_ambient_object = high_temple_4450
-		show_ambient_object = high_temple_4411
-		show_ambient_object = high_temple_4384
-		show_ambient_object = high_temple_4380
-		show_ambient_object = high_temple_4397
-		show_ambient_object = high_temple_4417
-		show_ambient_object = high_temple_4469
-		show_ambient_object = high_temple_4465
-		show_ambient_object = high_temple_4630_damaged
-		show_ambient_object = high_temple_4546_damaged
-		show_ambient_object = high_temple_4633_damaged
-		show_ambient_object = high_temple_4510
-		show_ambient_object = high_temple_4527
-		show_ambient_object = high_temple_4499
-		show_ambient_object = high_temple_4396
-		show_ambient_object = high_temple_4488
-		show_ambient_object = high_temple_4420
-		# vimdatrong
-		show_ambient_object = high_temple_4964_damaged
-		show_ambient_object = high_temple_4955_damaged
-		show_ambient_object = high_temple_4764
-		show_ambient_object = high_temple_4941_damaged
-		show_ambient_object = high_temple_4580
-		show_ambient_object = high_temple_4570
-		# don't bother showing ruined temples at start, they can't be repaired
-	}
-	option = {
-		name = none
-	}
-}
-
-
-country_event = { # reset menu
-	id = spirits.018
-	title = spirits.018.title
-	desc = spirits.018.desc
-	picture = EMPTY_eventPicture
-	
-	is_triggered_only = yes
-	hidden = yes
-	
-	trigger = {
-		always = yes
-	}
-	
-	option = {
-		name = spirits.018.a
-		clr_country_flag = temple_restoration_menu_reset
-		country_event = { id = spirits.005 }
-	}
-}
-
 province_event = { #Cleanup event to clear restoration/corruption/temple quest flags if a province being restored/temple being explored is lost
 	id = spirits.006
 	title = spirits.006.t
@@ -2698,6 +2623,26 @@ country_event = { #Rumors of Ancient Secrets
 	}
 }
 
+country_event = { # reset menu
+	id = spirits.018
+	title = spirits.018.title
+	desc = spirits.018.desc
+	picture = EMPTY_eventPicture
+	
+	is_triggered_only = yes
+	hidden = yes
+	
+	trigger = {
+		always = yes
+	}
+	
+	option = {
+		name = spirits.018.a
+		clr_country_flag = temple_restoration_menu_reset
+		country_event = { id = spirits.005 }
+	}
+}
+
 country_event = {	#Hidden event to determine if temple is damaged by siege
 	id = spirits.019
 	title = spirits.019.t
@@ -2782,6 +2727,60 @@ country_event = { #Evaluate if you still have temple provinces
 			limit = { NOT = { any_owned_province = { province_group = temple_province_group } } }
 			clr_country_flag = owns_high_temple
 		}
+	}
+}
+
+# Setup temple objects at start of game
+# Have to show the object first in order to hide them later on :pdx:
+country_event = {
+	id = spirits.021
+	title = none
+	desc = none
+	picture = none
+	hidden = yes
+	fire_only_once = yes
+	immediate = {
+		# yanshen
+		show_ambient_object = high_temple_4925
+		show_ambient_object = high_temple_4979
+		show_ambient_object = high_temple_4871
+		show_ambient_object = high_temple_4930
+		show_ambient_object = high_temple_4949
+		show_ambient_object = high_temple_4859
+		show_ambient_object = high_temple_4839_damaged
+		show_ambient_object = high_temple_4951
+		show_ambient_object = high_temple_4811
+		show_ambient_object = high_temple_4618_damaged
+		# rahen
+		show_ambient_object = high_temple_4438
+		show_ambient_object = high_temple_4450
+		show_ambient_object = high_temple_4411
+		show_ambient_object = high_temple_4384
+		show_ambient_object = high_temple_4380
+		show_ambient_object = high_temple_4397
+		show_ambient_object = high_temple_4417
+		show_ambient_object = high_temple_4469
+		show_ambient_object = high_temple_4465
+		show_ambient_object = high_temple_4630_damaged
+		show_ambient_object = high_temple_4546_damaged
+		show_ambient_object = high_temple_4633_damaged
+		show_ambient_object = high_temple_4510
+		show_ambient_object = high_temple_4527
+		show_ambient_object = high_temple_4499
+		show_ambient_object = high_temple_4396
+		show_ambient_object = high_temple_4488
+		show_ambient_object = high_temple_4420
+		# vimdatrong
+		show_ambient_object = high_temple_4964_damaged
+		show_ambient_object = high_temple_4955_damaged
+		show_ambient_object = high_temple_4764
+		show_ambient_object = high_temple_4941_damaged
+		show_ambient_object = high_temple_4580
+		show_ambient_object = high_temple_4570
+		# don't bother showing ruined temples at start, they can't be repaired
+	}
+	option = {
+		name = none
 	}
 }
 
