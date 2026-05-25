@@ -455,11 +455,23 @@ kimanis_2_missions = {
 			}
 		}
 		trigger = {
-			OR = {
-				army_professionalism = 0.2
-				AND = {
-					army_professionalism = 0.1
-					mil_power = 100
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				OR = {
+					army_professionalism = 0.2
+					AND = {
+						army_professionalism = 0.1
+						mil_power = 100
+					}
+				}
+			}
+			else = {
+				OR = {
+					army_tradition = 60
+					AND = {
+						army_tradition = 40
+						mil_power = 100
+					}
 				}
 			}
 			trade_goods_produced_amount = {
@@ -473,8 +485,17 @@ kimanis_2_missions = {
 		}
 		effect = {
 			if = {
-				limit = { NOT= { army_professionalism = 0.2 } }
-				add_mil_power = -100
+				limit = { has_dlc = "Cradle of Civilization" }
+				if = {
+					limit = { NOT = { army_professionalism = 0.2 } }
+					add_mil_power = -100
+				}
+			}
+			else = {
+				if = {
+					limit = { NOT = { army_tradition = 60 } }
+					add_mil_power = -100
+				}
 			}
 			country_event = {
 				id = flavour_kimanis.12 # the generals troupe
