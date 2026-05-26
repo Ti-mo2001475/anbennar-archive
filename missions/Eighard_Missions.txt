@@ -2109,11 +2109,23 @@ H14_missions_accepted_3 = {
 				}
 			}
 			army_size = 40
-			OR = {
-				army_professionalism = 0.2
-				AND = {
-					army_professionalism = 0.1
-					mil_power = 100
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				OR = {
+					army_professionalism = 0.2
+					AND = {
+						army_professionalism = 0.1
+						mil_power = 100
+					}
+				}
+			}
+			else = {
+				OR = {
+					army_tradition = 60
+					AND = {
+						army_tradition = 50
+						mil_power = 100
+					}
 				}
 			}
 			eord_peitar_stronghold_group = {
@@ -2123,12 +2135,17 @@ H14_missions_accepted_3 = {
 		}
 		effect = {
 			if = {
-				limit = {
-					NOT = {
-						army_professionalism = 0.2
-					}
+				limit = { has_dlc = "Cradle of Civilization" }
+				if = {
+					limit = { NOT = { army_professionalism = 0.2 } }
+					add_mil_power = -100
 				}
-				add_mil_power = -100
+			}
+			else = {
+				if = {
+					limit = { NOT = { army_tradition = 60 } }
+					add_mil_power = -100
+				}
 			}
 			country_event = { #Iaochri
 				id = flavour_eighard.15
