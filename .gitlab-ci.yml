@@ -1,7 +1,12 @@
 image: alpine:latest
 
+variables:
+    GIT_DEPTH: "1"
+    GIT_FETCH_EXTRA_FLAGS: --quiet --no-tags
+
 before_script:
     - apk add --no-cache file bash python3 grep git
+    - git config --global maintenance.auto false
 
 workflow:
     rules:
@@ -10,6 +15,7 @@ workflow:
 
 validate:
     script:
+        - git fetch --filter=blob:none --no-tags --depth=1 origin "$CI_COMMIT_BEFORE_SHA"
         - |
             # --- detect changed files ---
             if [ "$CI_COMMIT_BEFORE_SHA" = "0000000000000000000000000000000000000000" ]; then
