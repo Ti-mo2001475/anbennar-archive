@@ -536,6 +536,8 @@ estate_church_clerical_ministers = {
 				NOT = { religion = rune_scribes }
 				NOT = { religion = gotiriei }
 				NOT = { religion = foundationism }
+				NOT = { religion = dunborgula }
+				NOT = { religion = mumambarra }
 			}
 			if = {
 				limit = {
@@ -635,6 +637,8 @@ estate_church_clerical_ministers = {
 				religion = rune_scribes
 				religion = gotiriei
 				religion = foundationism
+				religion = dunborgula
+				religion = mumambarra
 			}
 		}
 		modifier = {
@@ -3702,14 +3706,14 @@ estate_church_subsidized_cult_hunters = {
 	influence = 0.05
 	is_valid = {
 		religion_group = cannorian
-		NOT = { religion = infernal_court }
+		NOT = { 
+			religion = infernal_court 
+			has_country_flag = no_cult_hunters
+		}
 	}
 	can_select = {
 		religion_group = cannorian
-		NOT = {
-			religion = infernal_court
-			has_country_flag = no_cult_hunters
-		}
+		NOT = { religion = infernal_court }
 	}
 	on_granted = {
 		custom_tooltip = less_cult_events_tt
@@ -5205,7 +5209,7 @@ estate_church_primacy_of_haruspicy = {
 		else_if = {
 			limit = { has_country_flag = shadow_warriors_haruspicy_2_1 }
 			set_country_flag = shadow_pact_no_cost_reroll
-			custom_tooltip = shadow_warriors_portent_tt
+			custom_tooltip = shadow_warriors_portent_tt_1
 			add_country_modifier = {
 				name = shadow_warriors_haruspicy_2_1
 				duration = -1

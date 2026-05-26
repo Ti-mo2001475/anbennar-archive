@@ -2225,7 +2225,7 @@ succession_culture_religion_effect = {
 	if = {
 		limit = {
 			NOT = { has_reform = elective_monarchy }
-			NOT = { has_reform = polish_elective_monarchy }
+			# NOT = { has_reform = polish_elective_monarchy }
 			NOT = { has_reform = racial_tolerance_reform }
 			has_regency = no
 			NOT = { has_country_flag = had_culture_religion_reaction_event_flag }
@@ -11412,6 +11412,16 @@ on_built_tax_building_effect = {
 		#	add_reform_center = zoroastrian
 		#}
 	}
+	if = {
+		limit = {
+			FROM = { has_government_attribute = temples_modifier }
+			owned_by = FROM 
+		}
+		add_province_modifier = {
+			name = gov_expanded_temple_rights_mod
+			duration = -1
+		}
+	}
 	
 	#Drozma Tur
 	if = {
@@ -11490,6 +11500,42 @@ on_built_tax_building_effect = {
 			duration = -1
 		}
 	}
+	if = {
+		limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
+		FROM = { change_government_reform_progress = 4 }
+	}
+	if = {
+		limit = { FROM = { has_estate_privilege = estate_tiger_command_war_room_rights } }
+		FROM = { add_legitimacy = 0.5 }
+	}
+	if = {
+		limit = { FROM = { tag = I98 mission_completed = I98_involuntary_revenue_service } }
+		add_province_modifier = { name = I98_IRS_activities duration = -1 }
+	}
+	sponsored_adventurers_building_reform_effect = { value = 5 type = tax }
+	if = {
+		limit = { province_group = infernal_court_temples }
+		infernal_deity_upgrade_effect = yes
+	}
+	spirit_fort_awakening_effect = yes
+	if = { #Zulbur
+		limit = {
+			FROM = { has_country_flag = L80_building_upgrade }
+		}
+		add_province_modifier = {
+			name = L80_temple_buff
+			duration = -1
+		}
+	}
+}
+
+on_tax_building_destroyed_effect = {
+	remove_province_modifier = I98_IRS_activities
+	remove_province_modifier = xiaken_temple_grounds_mod
+	remove_province_modifier = R36_countryside_schools_mod
+	remove_province_modifier = L80_temple_buff
+	remove_province_modifier = A80_expand_the_theatre_temples
+	remove_province_modifier = harpylen_temple_roost
 }
 
 on_built_manpower_building_effect = {	
@@ -11527,13 +11573,36 @@ on_built_manpower_building_effect = {
 			duration = -1
 		}
 	}
+	if = {
+		limit = { FROM = { has_estate_privilege = estate_boar_command_war_room_rights } }
+		FROM = { add_legitimacy = 0.5 }
+	}
+	if = { #Zulbur
+		limit = {
+			FROM = { has_country_flag = L80_building_upgrade_2 }
+		}
+		add_province_modifier = {
+			name = L80_barrack_buff
+			duration = -1
+		}
+	}
+	# Huugeta Mercenary Enterprise
+	if = {
+		limit = {
+			FROM = { has_country_flag = S45_mercenary_enterprise }
+		}
+		FROM = { S45_add_momentum = { value = 1 action = building } }
+	}
+}
+
+on_manpower_building_destroyed_effect = {
+	remove_province_modifier = L80_barrack_buff
+	remove_province_modifier = harpylen_barrack_roost
 }
 
 on_built_production_building_effect = {
-
 	#Drozma Tur
 	dt_community_recognition_mil_effect = yes
-
 	# Nansalen
 	if = { 
 		limit = { 
@@ -11545,7 +11614,24 @@ on_built_production_building_effect = {
 		}
 		add_dwarven_minority_size_effect = yes
 	}
+	if = {
+		limit = { FROM = { has_estate_privilege = estate_dragon_command_war_room_rights } }
+		FROM = { add_legitimacy = 0.5 }
+	}
+	sponsored_adventurers_building_reform_effect = { value = 5 type = prod }
+	if = { #Zulbur
+		limit = {
+			FROM = { has_country_flag = L80_building_upgrade_2 }
+		}
+		add_province_modifier = {
+			name = L80_workshop_buff
+			duration = -1
+		}
+	}
+}
 
+on_production_building_destroyed_effect = {
+	remove_province_modifier = L80_workshop_buff
 }
 
 on_built_any_fort_building_effect = {	# THIS = Province,  FROM = Builder (not necessairly owner, can be overlord)
@@ -11605,6 +11691,30 @@ on_any_fort_construction_started_effect = { #Fires when you start the constructi
 
 on_built_trade_building_effect = {
 	if = {
+		limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
+		FROM = { change_government_reform_progress = 4 }
+	}
+	if = { #Zulbur
+		limit = {
+			FROM = { has_country_flag = L80_building_upgrade }
+		}
+		add_province_modifier = {
+			name = L80_market_buff
+			duration = -1
+		}
+	}
+	sponsored_adventurers_building_reform_effect = { value = 5 type = trade }
+	if = {
+		limit = { owner = { has_estate_privilege = estate_burghers_U10_construction_rights } }
+		area = {
+			limit = { owned_by = FROM }
+			add_province_modifier = {
+				name = U10_affluent_reclaimation
+				duration = -1
+			}
+		}
+	}
+	if = {
 		limit = {
 			owner = { mission_completed = F98_wayward_princess }
 			harpy_roost_st_has_any_roost = yes
@@ -11618,6 +11728,19 @@ on_built_trade_building_effect = {
 }
 on_trade_building_destroyed_effect = {
 	remove_province_modifier = harpylen_market_roost
+	remove_province_modifier = L80_market_buff
+	if = {
+		limit = {
+			has_province_modifier = U10_affluent_reclaimation
+			NOT = {
+				area_for_scope_province = {
+					owned_by = FROM
+					has_trade_building_trigger = yes
+				}
+			}
+		}
+		area = { remove_province_modifier = U10_affluent_reclaimation }
+	}
 }
 
 on_built_manufactory_effect = {
@@ -13246,6 +13369,14 @@ startup_1444_effects = {
 		if = {
 			limit = { religion_dragon_turtle_viable = yes }
 			set_country_flag = allowed_dragon_turtle_outside_religon
+		}
+
+		#Tsukqiao No Necromancy
+		if = {
+			limit = {
+				tag = Z60
+			}
+			ban_necromancy = { country = yes }
 		}
 	}
 }
