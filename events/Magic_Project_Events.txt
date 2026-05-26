@@ -2643,10 +2643,24 @@ country_event = { #Artifact of Enthrallment 2 - Finding the Way (Journey to the 
 			id = 3b
 			next = 4
 			else = "
-				add_adm_power = -50
-				add_dip_power = -50
-				add_mil_power = -50
-				add_random_ruler_skill = yes
+				if = {
+					limit = {
+						adm = 6
+						dip = 6
+						mil = 6
+					}
+					random_list = {
+						1 = { add_adm_power = 33 }
+						1 = { add_dip_power = 33 }
+						1 = { add_mil_power = 33 }
+					}
+				}
+				else = {
+					add_adm_power = -33
+					add_dip_power = -33
+					add_mil_power = -33
+					add_random_ruler_skill = yes
+				}
 				artifact_of_enthrallment_story_unravels = yes
 			"
 		}
@@ -2668,7 +2682,7 @@ country_event = { #Artifact of Enthrallment 3 - Visiting the Smith (Romance of t
 		name = magic_project_artifact_of_enthrallment.4.a
 		ai_chance = { factor = 1 }
 
-		artifact_of_enthrallment_tell_the_story = { id = 4a next = 5 else = "add_adm_power = -25" }
+		artifact_of_enthrallment_tell_the_story = { id = 4a next = 5 else = "add_adm_power = -33" }
 	}
 
 	option = { # Take a Detour
@@ -5889,7 +5903,6 @@ country_event = { #Lich Revival Interregnum
 		else_if = {
 			limit = { has_country_flag = esthil_varina_lich }
 			tooltip = { define_ruler = { age = 33 name = "Varina" dynasty = "Escer" female = yes max_random_adm = 0 max_random_dip = 0 max_random_mil = 0 hide_skills = yes } }
-			B54_se_apply_lich_queen_modifiers = yes
 		}
 		else_if = {
 			limit = { has_country_flag = wyvernheart_the_regent_lich }
@@ -5930,6 +5943,11 @@ country_event = { #Lich Revival Interregnum
 				limit = { ruler_is_witch_king = yes }
 				become_a_witch_king_effect = yes
 			}
+
+			else_if = { limit = { has_country_flag = esthil_varina_lich }
+				B54_se_apply_lich_queen_modifiers = yes
+			}
+
 
 			if = { #MT content
 				limit = {
@@ -6703,13 +6721,18 @@ country_event = { #Army of the Dead 6 - Discover Corpse Recycling
 
 	option = { #Sacrifice your heir
 		name = magic_project_army_of_the_dead.9.c
+		trigger = { has_heir = yes }
 
 		custom_tooltip = aotd_real_warning_tt
-		if = {
-			limit = { has_heir = yes }
-			kill_heir = { allow_new_heir = no }
-		}
-		else = { add_prestige = -50 }
+		kill_heir = { allow_new_heir = no }
+		add_country_modifier = { name = studying_aotd_mod_2 duration = -1 desc = until_advancement_concludes }
+	}
+	option = { #No heir, sacrifice some other child
+		name = magic_project_army_of_the_dead.9.c2
+		trigger = { has_heir = no }
+
+		custom_tooltip = aotd_real_warning_tt
+		add_prestige = -50
 		add_country_modifier = { name = studying_aotd_mod_2 duration = -1 desc = until_advancement_concludes }
 	}
 
