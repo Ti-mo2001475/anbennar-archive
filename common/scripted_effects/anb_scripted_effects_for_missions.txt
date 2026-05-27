@@ -38,7 +38,10 @@ form_crimson_caehnate = {
 	change_tag = I89
 	custom_tooltip = centaur_unlock_cb_tooltip
 	hidden_effect = { set_country_flag = centaur_special_cb }
-	hidden_effect = { restore_country_name = yes }
+	hidden_effect = {
+		restore_country_name = yes
+		set_country_flag = formed_end_game_tag_flag
+	}
 	swap_non_generic_missions = yes
 	remove_non_electors_emperors_from_empire_effect = yes
 	change_government = tribal
@@ -105,14 +108,6 @@ form_crimson_caehnate = {
 			# centaur_horde_6 = { remove_country_modifier = centaur_horde_6 }
 			
 		# }
-		if = {
-			limit = { has_country_modifier = subjugated_horde }
-			remove_country_modifier = subjugated_horde
-		}
-		if = {
-			limit = { has_country_modifier = settled_horde }
-			remove_country_modifier = settled_horde
-		}
 		add_country_modifier = {
 			name = centaur_zeal_timer
 			duration = 365
@@ -21189,6 +21184,12 @@ deranne_upgrade_dam_scripted_effect = {
 					type = $dam_name$
 					tier = 2
 				}
+				NOT = {
+					has_great_project = {
+						type = $dam_name$
+						tier = 3
+					}
+				}
 			}
 			add_great_project_tier = {
 				type = $dam_name$
@@ -21197,11 +21198,17 @@ deranne_upgrade_dam_scripted_effect = {
 			clr_province_flag = deranne_dam_construction_flag
 			set_province_flag = deranne_dam_tier_3_flag
 		}
-		else_if = {
+		if = {
 			limit = {
 				has_great_project = {
 					type = $dam_name$
 					tier = 1
+				}
+				NOT = {
+					has_great_project = {
+						type = $dam_name$
+						tier = 2
+					}
 				}
 			}
 			add_great_project_tier = {
@@ -21211,11 +21218,19 @@ deranne_upgrade_dam_scripted_effect = {
 			clr_province_flag = deranne_dam_construction_flag
 			set_province_flag = deranne_dam_tier_2_flag
 		}	
-		else_if = {
+		if = {
 			limit = {
 				has_great_project = {
 					type = $dam_name$
 					tier = 0
+				}
+				NOT = {
+					OR = {
+						has_great_project = {
+							type = $dam_name$
+							tier = 1
+						}
+					}
 				}
 			}
 			add_great_project_tier = {
@@ -21938,10 +21953,10 @@ S88_move_buildings_effect = {
 S88_sea_migration_effect = {
 	hidden_effect = {
 		$province$ = { cede_province = ROOT move_capital_effect = yes }
-		event_target:S85_old_capital = { S88_move_buildings_effect = { target = $province$ } }
+		event_target:S88_old_capital = { S88_move_buildings_effect = { target = $province$ } }
 		add_core = $province$
-		remove_core = event_target:S85_old_capital
-		event_target:S85_old_capital = { change_tribal_land = ROOT decolonize = yes }
+		remove_core = event_target:S88_old_capital
+		event_target:S88_old_capital = { change_tribal_land = ROOT decolonize = yes }
 		add_government_reform = native_federation_reform
 		add_government_reform = native_chiefdom_reform
 		$province$ = { change_religion = genie_cult }
@@ -22322,6 +22337,7 @@ enable_iochandization_effect = {
 	}
 	if = {
 		limit = {
+			has_reform = iochand_hezoggdoum
 			NOT = {
 				ruler_culture = creek_gnome
 				ruler_culture = iochander
@@ -23141,6 +23157,7 @@ anzara_shalazar_convert_effect = { #This is done so it targets provinces not you
 				NOT = {
 					has_province_modifier = zerat_prototype_ashhana_compounds
 					has_province_modifier = zerat_prototype_ashhana_compounds_upgraded
+					has_province_modifier = zerat_the_shadow_compounds
 				}
 			}
 		}
@@ -23153,6 +23170,7 @@ anzara_shalazar_convert_effect = { #This is done so it targets provinces not you
 				NOT = {
 					has_province_modifier = zerat_prototype_ashhana_compounds
 					has_province_modifier = zerat_prototype_ashhana_compounds_upgraded
+					has_province_modifier = zerat_the_shadow_compounds
 				}
 			}
 			change_culture = ROOT
@@ -23171,6 +23189,7 @@ anzara_shalazar_convert_effect = { #This is done so it targets provinces not you
 				NOT = {
 					has_province_modifier = zerat_prototype_ashhana_compounds
 					has_province_modifier = zerat_prototype_ashhana_compounds_upgraded
+					has_province_modifier = zerat_the_shadow_compounds
 				}
 			}
 			change_culture = ROOT
@@ -23313,4 +23332,24 @@ anzara_make_compound = {
 	change_culture = ashhana_lizardfolk
 	change_religion = zaradyrra
 	custom_tooltip = " " #Linebreak
+}
+
+anzara_gain_subjugation_cb = {
+	custom_tooltip = zerat_subjugation_cb_$region$
+	hidden_effect = {
+		random_known_country = {
+			limit = {
+				capital_scope = {
+					region = $region$
+				}
+				NOT = { is_subject_of = ROOT }
+				NOT = { alliance_with = ROOT }
+			}
+			reverse_add_casus_belli = {
+				type = cb_vassalize_mission
+				months = 240
+				target = ROOT
+			}
+		}
+	}
 }

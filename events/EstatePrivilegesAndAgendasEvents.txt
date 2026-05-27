@@ -53,10 +53,10 @@ country_event = {
 			limit = { has_reform = elective_monarchy }
 			remove_government_reform = elective_monarchy
 		}
-		else_if = { 
-			limit = { has_reform = polish_elective_monarchy } 
-			remove_government_reform = polish_elective_monarchy
-		}
+		# else_if = { 
+		# 	limit = { has_reform = polish_elective_monarchy } 
+		# 	remove_government_reform = polish_elective_monarchy
+		# }
 		#set_legacy_government = administrative_monarchy
 		remove_heir = {}
 		add_absolutism = 10
@@ -792,6 +792,53 @@ country_event = {
 		}
 	}
 
+	option = {
+		name = estate_privileges_and_agendas_events.3.mt
+		trigger = { has_country_flag = estate_monstrous_tribes_present_agenda }
+		start_estate_agenda = estate_monstrous_tribes
+		goto = estate_monstrous_tribes
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 1.5
+				NOT = {
+					estate_loyalty = {
+						loyalty = 30
+						estate = estate_monstrous_tribes
+					}
+				}
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					estate_loyalty = {
+						loyalty = 20
+						estate = estate_monstrous_tribes
+					}
+				}
+			}
+			modifier = {
+				factor = 1.5
+				estate_influence = {
+					influence = 70
+					estate = estate_monstrous_tribes
+				}
+			}
+			modifier = {
+				factor = 2
+				is_absolutism_active = yes
+				num_of_estate_privileges = {
+					estate = estate_monstrous_tribes
+					value = 1
+				}
+				estate_loyalty = {
+					estate = estate_monstrous_tribes
+					higher_than_influence = no
+				}
+			}
+		}
+	}
+
 	# option = {
 	# 	name = estate_privileges_and_agendas_events.3.i
 	# 	trigger = { has_country_flag = estate_dhimmi_present_agenda }
@@ -980,53 +1027,6 @@ country_event = {
 				}
 				estate_loyalty = {
 					estate = estate_mages
-					higher_than_influence = no
-				}
-			}
-		}
-	}
-
-	option = {
-		name = estate_privileges_and_agendas_events.3.mt
-		trigger = { has_country_flag = estate_monstrous_tribes_present_agenda }
-		start_estate_agenda = estate_monstrous_tribes
-		goto = estate_monstrous_tribes
-		ai_chance = {
-			factor = 1
-			modifier = {
-				factor = 1.5
-				NOT = {
-					estate_loyalty = {
-						loyalty = 30
-						estate = estate_monstrous_tribes
-					}
-				}
-			}
-			modifier = {
-				factor = 2
-				NOT = {
-					estate_loyalty = {
-						loyalty = 20
-						estate = estate_monstrous_tribes
-					}
-				}
-			}
-			modifier = {
-				factor = 1.5
-				estate_influence = {
-					influence = 70
-					estate = estate_monstrous_tribes
-				}
-			}
-			modifier = {
-				factor = 2
-				is_absolutism_active = yes
-				num_of_estate_privileges = {
-					estate = estate_monstrous_tribes
-					value = 1
-				}
-				estate_loyalty = {
-					estate = estate_monstrous_tribes
 					higher_than_influence = no
 				}
 			}

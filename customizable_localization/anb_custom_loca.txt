@@ -20998,6 +20998,7 @@ defined_text = {
         localisation_key = I27_establish_hawk_aviary_button_tt
         trigger = {
             owner = { has_country_modifier = mythical_cavalry_hawks } 
+            mission_completed = I27_a_home_for_hawks_too
         }
     }
 }
@@ -22502,6 +22503,28 @@ defined_text = {
 		}
 	}
 }
+defined_text = {
+	name = GetHarpylenOddestDesc
+	random = no
+	text = {
+		localisation_key = F98_the_oddest_hunts_desc_hyti
+		trigger = { was_tag = F81 }
+	}
+	text = {
+		localisation_key = F98_the_oddest_hunts_desc_gen
+	}
+}
+defined_text = {
+	name = GetHarpylenWingWaveDesc
+	random = no
+	text = {
+		localisation_key = F98_wing_and_wave_desc_hyti
+		trigger = { was_tag = F81 }
+	}
+	text = {
+		localisation_key = F98_wing_and_wave_desc_gen
+	}
+}
 
 defined_text = {
 	name = GetHytiTitle
@@ -22968,7 +22991,7 @@ defined_text = {
                     }
                     NOT = {
                         num_of_units_in_province = {
-                            amount = 2
+                            amount = 1
                             who = ROOT
                         }
                     }
@@ -23090,7 +23113,7 @@ defined_text = {
                     }
                     NOT = {
                         num_of_units_in_province = {
-                            amount = 4
+                            amount = 3
                             who = ROOT
                         }
                     }
@@ -23509,3 +23532,84 @@ defined_text = {
     }
 }
 
+defined_text = {
+    name = A80_second_small_war_capital_tt
+    random = no
+    text = {
+        localisation_key = A80_second_small_war_capital_yes
+        trigger = {
+            A80 = {
+                all_war_enemy_countries = {
+                    OR = {
+                        NOT = { is_in_war = { casus_belli = cb_second_small_war } }
+                        is_free_or_tributary_trigger = no
+                        capital_scope = {
+                            controller = {
+                                OR = {
+                                    tag = A80
+                                    is_subject_of = A80
+                                    alliance_with = A80
+                                    overlord = { alliance_with = A80 }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    text = {
+        localisation_key = A80_second_small_war_capital_no
+        trigger = {
+            always = yes
+        }
+    }
+}
+defined_text = {
+    name = A80_second_small_war_region_tt
+    random = no
+    text = {
+        localisation_key = A80_second_small_war_region_yes
+        trigger = {
+            small_country_region = {
+                type = all
+                controller = {
+                    OR = {
+                        tag = A80
+                        is_subject_of = A80
+                        alliance_with = A80
+                        overlord = { alliance_with = A80 }
+                        NOT = { is_in_war = { casus_belli = cb_second_small_war } }
+                    }
+                }
+            }
+        }
+    }
+    text = {
+        localisation_key = A80_second_small_war_region_no
+        trigger = {
+            always = yes
+        }
+    }
+}
+defined_text = {
+    name = A80_second_small_war_warscore_tt
+    random = no
+    text = {
+        localisation_key = A80_second_small_war_warscore_yes
+        trigger = {
+            A80 = {
+                war_score_against = {
+                    who = event_target:small_war_target
+                    value = 75
+                }
+            }
+        }
+    }
+    text = {
+        localisation_key = A80_second_small_war_warscore_no
+        trigger = {
+            always = yes
+        }
+    }
+}

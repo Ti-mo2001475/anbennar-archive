@@ -479,13 +479,39 @@ country_event = { #Agitate the Small Country
 				break_alliance = A64
 				break_alliance = A65
 			}
-			random_known_country = {
+			if = {
 				limit = {
-					is_subject = no
-					culture_is_halfling = no
-					small_country_region = { country_or_non_sovereign_subject_holds = PREV }
+					A01 = {
+						exists = yes
+						is_free_or_tributary_trigger = yes
+						small_country_region = { country_or_non_sovereign_subject_holds = PREV }
+					}
 				}
-				save_global_event_target_as = small_war_target
+				A01 = {
+					save_global_event_target_as = small_war_target
+				}
+			}
+			else_if = {
+				limit = {
+					A13 = {
+						exists = yes
+						is_free_or_tributary_trigger = yes
+						small_country_region = { country_or_non_sovereign_subject_holds = PREV }
+					}
+				}
+				A13 = {
+					save_global_event_target_as = small_war_target
+				}
+			}
+			else = {
+				random_known_country = {
+					limit = {
+						is_free_or_tributary_trigger = yes
+						culture_is_halfling = no
+						small_country_region = { country_or_non_sovereign_subject_holds = PREV }
+					}
+					save_global_event_target_as = small_war_target
+				}
 			}
 		}
 		declare_war_with_cb = {
@@ -558,9 +584,9 @@ country_event = { #Agitate the Small Country
 				if = {
 					limit = { NOT = { alliance_with = ROOT } }
 					create_alliance = ROOT
-					join_all_offensive_wars_of = ROOT
-					set_country_flag = A80_small_war_rebel_side
 				}
+				join_all_offensive_wars_of = ROOT
+				set_country_flag = A80_small_war_rebel_side
 			}
 			add_country_modifier = {
 				name = A80_diplo_upkeep_mod
@@ -569,14 +595,7 @@ country_event = { #Agitate the Small Country
 			capital_scope = {
 				add_province_triggered_modifier = A80_second_small_war_checker
 			}
-			every_war_enemy_country = {
-				limit = {
-					is_in_war = { casus_belli = cb_second_small_war }
-					is_free_or_tributary_trigger = yes
-					NOT = { small_country_region = { country_or_non_sovereign_subject_holds = PREV } }
-				}
-				white_peace = A80
-			}
+			country_event = { id = iochand.104 days = 1}
 		}
 		applefields_area = {
 			add_core = ROOT
@@ -637,6 +656,7 @@ country_event = { #Barrowshire Buddies
 				add_core = A97
 				cede_province = A97
 			}
+			A97 = { set_country_flag = formed_end_game_tag_flag }
 			ROOT = {
 				create_subject = {
 					subject_type = hezoggdoum
@@ -644,7 +664,13 @@ country_event = { #Barrowshire Buddies
 				}
 			}
 			small_country_region = {
-				limit = { country_or_non_sovereign_subject_holds = ROOT }
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+					NOT = {
+						area = pearpoint_area
+						area = applefields_area
+					}
+				}
 				if = {
 					limit = { is_core = owner }
 					remove_core = owner
@@ -2873,30 +2899,16 @@ country_event = { #Establish Cannor Hezoggdoum Menu
 		name = iochand.60.b
 		ai_chance = { factor = 0 }
 		trigger = {
+			NOT = { exists = A97 }
 			NOT = {
-				AND = {
-					NOT = { exists = A97 }
-					the_borders_area = {
-						type = all
-						country_or_non_sovereign_subject_holds = ROOT
-					}
-				}
-			}
-		}
-		custom_tooltip = A80_establish_small_country
-		if = {
-			limit = {
-				NOT = { exists = A97 }
 				the_borders_area = {
 					type = all
 					country_or_non_sovereign_subject_holds = ROOT
 				}
 			}
-			custom_tooltip = BONUS_REWARD_YES
 		}
-		else = {
-			custom_tooltip = BONUS_REWARD_NO
-		}
+		custom_tooltip = A80_establish_small_country
+		custom_tooltip = BONUS_REWARD_NO
 		tooltip = {
 			create_subject = { subject_type = hezoggdoum subject = A97 }
 		}
@@ -2924,30 +2936,16 @@ country_event = { #Establish Cannor Hezoggdoum Menu
 		name = iochand.60.e
 		ai_chance = { factor = 0 }
 		trigger = {
+			NOT = { exists = Z38 }
 			NOT = {
-				AND = {
-					NOT = { exists = Z38 }
-					dragonheights_area = {
-						type = all
-						country_or_non_sovereign_subject_holds = ROOT
-					}
-				}
-			}
-		}
-		custom_tooltip = A80_establish_kobildzan
-		if = {
-			limit = {
-				NOT = { exists = Z38 }
 				dragonheights_area = {
 					type = all
 					country_or_non_sovereign_subject_holds = ROOT
 				}
 			}
-			custom_tooltip = BONUS_REWARD_YES
 		}
-		else = {
-			custom_tooltip = BONUS_REWARD_NO
-		}
+		custom_tooltip = A80_establish_kobildzan
+		custom_tooltip = BONUS_REWARD_NO
 		tooltip = {
 			create_subject = { subject_type = hezoggdoum subject = Z38 }
 		}
@@ -2975,30 +2973,16 @@ country_event = { #Establish Cannor Hezoggdoum Menu
 		name = iochand.60.i
 		ai_chance = { factor = 0 }
 		trigger = {
+			NOT = { exists = B78 }
 			NOT = {
-				AND = {
-					NOT = { exists = B78 }
-					carneteria_area = {
-						type = all
-						country_or_non_sovereign_subject_holds = ROOT
-					}
-				}
-			}
-		}
-		custom_tooltip = A80_establish_carneter
-		if = {
-			limit = {
-				NOT = { exists = B78 }
 				carneteria_area = {
 					type = all
 					country_or_non_sovereign_subject_holds = ROOT
 				}
 			}
-			custom_tooltip = BONUS_REWARD_YES
 		}
-		else = {
-			custom_tooltip = BONUS_REWARD_NO
-		}
+		custom_tooltip = A80_establish_carneter
+		custom_tooltip = BONUS_REWARD_NO
 		tooltip = {
 			create_subject = { subject_type = hezoggdoum subject = B78 }
 		}
@@ -3026,9 +3010,9 @@ country_event = { #Establish Cannor Hezoggdoum Menu
 		name = iochand.60.j
 		ai_chance = { factor = 0 }
 		trigger = {
+			NOT = { exists = A58 }
 			NOT = {
 				AND = {
-					NOT = { exists = A58 }
 					west_damesear_area = {
 						type = all
 						country_or_non_sovereign_subject_holds = ROOT
@@ -3041,23 +3025,7 @@ country_event = { #Establish Cannor Hezoggdoum Menu
 			}
 		}
 		custom_tooltip = A80_establish_dameria
-		if = {
-			limit = {
-				NOT = { exists = A58 }
-				west_damesear_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				east_damesear_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-			}
-			custom_tooltip = BONUS_REWARD_YES
-		}
-		else = {
-			custom_tooltip = BONUS_REWARD_NO
-		}
+		custom_tooltip = BONUS_REWARD_NO
 		tooltip = {
 			create_subject = { subject_type = hezoggdoum subject = A58 }
 		}
@@ -3089,9 +3057,9 @@ country_event = { #Establish Cannor Hezoggdoum Menu
 		name = iochand.60.k
 		ai_chance = { factor = 0 }
 		trigger = {
+			NOT = { exists = A79 }
 			NOT = {
 				AND = {
-					NOT = { exists = A79 }
 					dragondowns_area = {
 						type = all
 						country_or_non_sovereign_subject_holds = ROOT
@@ -3104,23 +3072,7 @@ country_event = { #Establish Cannor Hezoggdoum Menu
 			}
 		}
 		custom_tooltip = A80_establish_gnomish_hierarchy
-		if = {
-			limit = {
-				NOT = { exists = A79 }
-				dragondowns_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				dragonpoint_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-			}
-			custom_tooltip = BONUS_REWARD_YES
-		}
-		else = {
-			custom_tooltip = BONUS_REWARD_NO
-		}
+		custom_tooltip = BONUS_REWARD_NO
 		tooltip = {
 			create_subject = { subject_type = hezoggdoum subject = A79 }
 		}
@@ -3152,30 +3104,16 @@ country_event = { #Establish Cannor Hezoggdoum Menu
 		name = iochand.60.o
 		ai_chance = { factor = 0 }
 		trigger = {
+			NOT = { exists = A51 }
 			NOT = {
-				AND = {
-					NOT = { exists = A51 }
-					south_alen_area = {
-						type = all
-						country_or_non_sovereign_subject_holds = ROOT
-					}
-				}
-			}
-		}
-		custom_tooltip = A80_establish_ginnfield
-		if = {
-			limit = {
-				NOT = { exists = A51 }
 				south_alen_area = {
 					type = all
 					country_or_non_sovereign_subject_holds = ROOT
 				}
 			}
-			custom_tooltip = BONUS_REWARD_YES
 		}
-		else = {
-			custom_tooltip = BONUS_REWARD_NO
-		}
+		custom_tooltip = A80_establish_ginnfield
+		custom_tooltip = BONUS_REWARD_NO
 		tooltip = {
 			create_subject = { subject_type = hezoggdoum subject = A51 }
 		}
@@ -3218,6 +3156,93 @@ country_event = {
 	option = {
 		name = iochand.70.a
 		country_event = { id = iochand.60 }
+	}
+}
+
+country_event = { #The End of Big Words
+	id = iochand.80
+	title = iochand.80.t 
+	desc = iochand.80.d
+	picture = CULTURE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = iochand.80.a
+		white_peace = event_target:small_war_target
+		small_country_region = {
+			limit = {
+				NOT = {
+					owner = {
+						OR = {
+							AND = {
+								culture_is_halfling = yes
+								is_free_or_tributary_trigger = yes
+							}
+							tag = A80
+							is_subject_of = A80
+						}
+					}
+				}
+			}
+			cede_province = A80
+		}
+	}
+
+	after = {
+		remove_country_modifier = A80_diplo_upkeep_mod
+		clear_global_event_target = small_war_target
+	}
+}
+
+country_event = { #A Dream Extinguished
+	id = iochand.81
+	title = iochand.81.t 
+	desc = iochand.81.d
+	picture = BANKRUPTCY_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = iochand.81.a
+		white_peace = event_target:small_war_target
+		southroy_area = {
+			limit = { country_or_non_sovereign_subject_holds = A80 }
+			cede_province = A01
+		}
+		iochand_area = {
+			limit = { country_or_non_sovereign_subject_holds = A80 }
+			cede_province = A01
+		}
+		reaver_coast_area = {
+			limit = { country_or_non_sovereign_subject_holds = A80 }
+			cede_province = A13
+		}
+		gnomish_pass_area = {
+			limit = { country_or_non_sovereign_subject_holds = A80 }
+			cede_province = A13
+		}
+		small_country_region = {
+			limit = {
+				OR = {
+					country_or_non_sovereign_subject_holds = A80
+					owner = { has_country_flag = A80_small_war_rebel_side }
+				}
+			}
+			if = {
+				limit = { culture = redfoot_halfling }
+				cede_province = A01
+			}
+			else_if = {
+				limit = { culture = bluefoot_halfling }
+				cede_province = A13
+			}
+		}
+	}
+
+	after = {
+		remove_country_modifier = A80_diplo_upkeep_mod
+		clear_global_event_target = small_war_target
 	}
 }
 
@@ -3374,6 +3399,28 @@ country_event = { #Cede region Daccasded and Triarchy for country
 				}
 				cede_province = U31
 			}
+		}
+	}
+}
+
+country_event = {
+	id = iochand.104
+	title = iochand.104.t
+	desc = iochand.104.d
+	picture = TRADEGOODS_eventPicture
+	
+	is_triggered_only = yes
+	hidden = yes
+	
+	option = {
+		name = iochand.104.a
+		every_war_enemy_country = {
+			limit = {
+				is_in_war = { casus_belli = cb_second_small_war }
+				is_free_or_tributary_trigger = yes
+				NOT = { small_country_region = { country_or_non_sovereign_subject_holds = PREV } }
+			}
+			white_peace = A80
 		}
 	}
 }

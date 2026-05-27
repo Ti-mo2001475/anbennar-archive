@@ -522,22 +522,28 @@ esthil_missions_c1 = {
 					if = { limit = { NOT = { province_with_mineable_goods = yes } }
 						province_event = { id = flavor_esthil.111 }
 					}
+					else = {
+						B54_se_apply_current_deadmines_reapfields = { type = deadmines }
+					}
 					add_province_modifier = { name = divination_1_deposit_divination_local_mod duration = 1825 }
-					B54_se_apply_current_deadmines_reapfields = { type = deadmines }
 				}
 				serpentsmarck_area = {
 					if = { limit = { NOT = { province_with_mineable_goods = yes } }
 						province_event = { id = flavor_esthil.111 }
 					}
+					else = {
+						B54_se_apply_current_deadmines_reapfields = { type = deadmines }
+					}
 					add_province_modifier = { name = divination_1_deposit_divination_local_mod duration = 1825 }
-					B54_se_apply_current_deadmines_reapfields = { type = deadmines }
 				}
 				860 = {
 					if = { limit = { NOT = { province_with_mineable_goods = yes } }
 						province_event = { id = flavor_esthil.111 }
 					}
+					else = {
+						B54_se_apply_current_deadmines_reapfields = { type = deadmines }
+					}
 					add_province_modifier = { name = divination_1_deposit_divination_local_mod duration = 1825 }
-					B54_se_apply_current_deadmines_reapfields = { type = deadmines }
 				}
 			}
 		}
@@ -950,7 +956,11 @@ esthil_missions_d1_hidden = {
 		}
 		
 		effect = {
-			country_event = { id = flavor_esthil.20 }
+			865 = {
+				rename_capital = "Skull Keep"
+				change_province_name = "Skull Keep"
+				add_province_modifier = { name = B54_pmod_skull_keep duration = -1 }
+			}
 		}
 	}
 
@@ -1454,6 +1464,7 @@ esthil_missions_c2 = {
 				hidden_effect = { set_province_flag = B54_pflag_morgurax_monument save_global_event_target_as = B54_global_et_morgurax_location }
 				custom_tooltip = B54_tt_newline	
 				add_great_project = { type = the_north_citadel_morgurax_monument instant = yes }
+				hidden_effect = { add_province_triggered_modifier = B54_ptm_morgurax_tracker }
 			}
 			custom_tooltip = B54_tt_morgurax_moveable
 			set_country_flag = cannot_form_castanor
@@ -1480,7 +1491,10 @@ esthil_missions_c2 = {
 		}
 		
 		effect = {
-			country_event = { id = flavor_esthil.22 }
+			# country_event = { id = flavor_esthil.22 }
+			set_country_flag = completed_B54_black_empire_rising
+	 		B54_se_apply_lich_queen_modifiers = yes
+ 			custom_tooltip = B54_tt_esthil_lich_queen_of_escann
 		}
 	}
 }
