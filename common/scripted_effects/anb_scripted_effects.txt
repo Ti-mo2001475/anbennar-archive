@@ -4622,22 +4622,37 @@ anbennar_building_effect = {
 				has_country_modifier = zerat_shalazar_prestige_build
 			}
 			change_variable = {
-				which = zerat_shalazr_prestige_counter
+				which = zerat_shalazar_prestige_counter
 				value = 1
 			}
 			if = {
 				limit = {
 					check_variable = {
-						which = zerat_shalazr_prestige_counter
+						which = zerat_shalazar_prestige_counter
 						value = 10
 					}
 				}
 				anzara_add_gov_power = { amount = 1 }
 				set_variable = {
-					which = zerat_shalazr_prestige_counter
+					which = zerat_shalazar_prestige_counter
 					value = 0
 				}
 			}
+		}
+	}
+
+	if = {
+		limit = {
+			has_province_flag = A24_clan_manor_construction
+			owned_by = A24
+			num_of_buildings_in_province = 2
+		}
+		hidden_effect = {
+			province_event = { id = westmoors.20 }
+			province_event = { id = westmoors.21 }
+			province_event = { id = westmoors.22 }
+			province_event = { id = westmoors.23 }
+			province_event = { id = westmoors.24 }
 		}
 	}
 }
@@ -5379,7 +5394,7 @@ apply_all_owned_NZOC_province = {
 	owner = {
 		#Increment variable for tooltip
 		change_variable = {
-			which = nzoc_provinces_effected_positive
+			which = nzoc_provinces_affected_positive
 			value = 1
 		}
 
@@ -5432,7 +5447,7 @@ apply_debuff_NZOC_country_scope = {
 			#increment debuffed province count
 			event_target:the_centaur_who_moved = {
 				change_variable = {
-    				which = nzoc_provinces_effected_negative
+    				which = nzoc_provinces_affected_negative
     				value = 1
    				}
 			}			
@@ -12041,7 +12056,10 @@ add_production_manufactory_building = {
 
 kobildzan_form_nation_effect = {
 	change_tag = Z38
-	hidden_effect = { restore_country_name = yes }
+	hidden_effect = {
+		restore_country_name = yes
+		set_country_flag = formed_end_game_tag_flag
+	}
 	swap_non_generic_missions = yes
 	custom_tooltip = tooltip_missions_extended
 	189 = {
@@ -12643,6 +12661,8 @@ anb_mechanim_cultural_union = {
 		anb_add_accepted_culture_or_dip_power = { culture = nightengine_mechanim free = yes }
 		anb_add_accepted_culture_or_dip_power = { culture = orderwrought_mechanim free = yes }
 		anb_add_accepted_culture_or_dip_power = { culture = soullistener_mechanim free = yes }
+		anb_add_accepted_culture_or_dip_power = { culture = pure_mechanim free = yes }
+		anb_add_accepted_culture_or_dip_power = { culture = wildcolor_mechanim free = yes }
 	}
 }
 
@@ -13536,5 +13556,19 @@ add_years_of_separatism_in_owned_provinces = { #Goes from 1-10, accepts - values
 		every_owned_province = {
 			add_nationalism = $years$
 		}
+	}
+}
+
+ban_orcish_slavery_scripted_effect = {
+	remove_country_modifier = orcish_slaves_in_colonies
+	every_subject_country = {
+		limit = { is_colonial_nation = yes }
+		remove_country_modifier = orcish_slaves_in_colonies
+	}
+	custom_tooltip = tooltip_no_orcish_slaves_in_colonies
+	add_country_modifier = {
+		name = orcish_slaves_in_colonies_cooldown
+		duration = 3650
+		hidden = yes
 	}
 }

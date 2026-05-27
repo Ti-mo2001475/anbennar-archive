@@ -1786,7 +1786,7 @@ cb_take_mandate = {
 			religion_group = gnollish
 			religion_group = bulwari
 			religion_group = tanibic_religion
-			has_country_flag = can_claim_mandate
+			# has_country_flag = can_claim_mandate
 			religion = dalcabba
 			AND = {
 				religion = the_hunt
@@ -1853,6 +1853,7 @@ cb_force_tributary_anb = {
 				culture_group = ogre # anbennar
 				NOT = { culture = skyfall_ogre }
 				NOT = { culture = seacrest_ogre }
+				NOT = { culture = soulseeker_ogre }
 			}
             religion = feast_of_the_gods # anbennar, required for mechanics
 			AND = {
@@ -1869,7 +1870,6 @@ cb_force_tributary_anb = {
 	}
 
 	prerequisites = {
-		is_emperor_of_china = no
 		FROM = { is_subject = no }
 		OR = {
 			NOT = { is_sri_baginda = yes }
@@ -1949,12 +1949,14 @@ cb_force_tributary_anb = {
 				} 
 			}
 		}
+		FROM = { is_emperor_of_china = no }
 	}
+	
 	war_goal = take_capital_force_tributary_anb
 }
 
 cb_force_tributary_mission = {
-
+	
 	valid_for_subject = no
 
 	is_triggered_only = yes

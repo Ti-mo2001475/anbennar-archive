@@ -794,6 +794,15 @@ set_up_artifice_system = {
 		set_country_flag = artificery_choice
 	}
 	else_if = {
+		limit = { #you have no flags and are a spawnable
+			is_not_in_mage_mode = yes
+			is_not_in_mixed_mode = yes
+			is_not_in_artificery_mode = yes
+		}
+		set_country_flag = magic_artificery_mage_only
+	}
+
+	if = {
 		limit = {
 			OR = {
 				has_estate_privilege = estate_artificers_organization_pillar_expedition
@@ -806,15 +815,7 @@ set_up_artifice_system = {
 		remove_estate_privilege = estate_artificers_organization_mechanim_base
 
 		set_country_flag = artificery_choice
-		country_event = { id = magic_artificery_setup.2 }
-	}
-	else_if = {
-		limit = { #you have no flags and are a spawnable
-			is_not_in_mage_mode = yes
-			is_not_in_mixed_mode = yes
-			is_not_in_artificery_mode = yes
-		}
-		set_country_flag = magic_artificery_mage_only
+		country_event = { id = magic_artificery_setup.2 } #<- event
 	}
 	update_artifice_points = yes
 }
@@ -2401,24 +2402,6 @@ artifice_research_select_innovation_options_effect = {
 				trigger = {
 					NOT = {
 						OR = {
-							has_country_flag = research_artifice_invention_conversation_calibrator
-							has_country_flag = unlocked_artifice_invention_conversation_calibrator
-							has_country_flag = artifice_researching_economic
-							has_country_flag = artifice_researching_military
-						}
-					}
-					culture_group = gnomish
-				}
-				set_country_flag = research_artifice_invention_conversation_calibrator
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
-			}
-			1 = {
-				trigger = {
-					NOT = {
-						OR = {
 							has_country_flag = research_artifice_invention_voice_vessels
 							has_country_flag = unlocked_artifice_invention_voice_vessels
 							has_country_flag = artifice_researching_economic
@@ -3755,6 +3738,24 @@ artifice_research_select_innovation_options_effect = {
 				}
 			}
 			#Society
+			1 = {
+				trigger = {
+					NOT = {
+						OR = {
+							has_country_flag = research_artifice_invention_conversation_calibrator
+							has_country_flag = unlocked_artifice_invention_conversation_calibrator
+							has_country_flag = artifice_researching_economic
+							has_country_flag = artifice_researching_military
+						}
+					}
+					culture_group = gnomish
+				}
+				set_country_flag = research_artifice_invention_conversation_calibrator
+				subtract_variable = {
+					which = artificeResearchOptionsTier2
+					value = 1
+				}
+			}
 			1 = {
 				trigger = {
 					NOT = {
@@ -5587,6 +5588,12 @@ artifice_magic_switch_to_artificery_only_mode = {
 					days = 1
 				}
 			}
+			if = { #To prevent player from picking magic only mode if they previously decided to have artificery 
+				limit = { #Losing artificery after gaining it is unsupported in the system and has undefined behavior involved (for example, what happens to currently-researching inventions).
+					has_country_flag = unlocked_artificery_by_pillar
+				}
+				set_country_flag = artificery_needed
+			}
 		}
 	}
 }
@@ -5606,6 +5613,11 @@ artifice_magic_switch_to_magic_only_mode = {
 				limit = { has_banned_magic = yes }
 				unban_magic = yes
 			}
+			if = { #Gained by Exploring Pillars
+				limit = { has_country_flag = unlocked_artificery_by_pillar } #Player chose not to explore artificery
+				clr_country_flag = unlocked_artificery_by_pillar
+				clr_country_flag = artificery_choice
+			}
 		}
 	}
 }
@@ -5616,6 +5628,7 @@ artifice_magic_switch_to_mixed_mode = {
 	if = {
 		limit = { NOT = { has_country_flag = magic_artificery_mixed } }
 		add_country_modifier = { name = magic_artificery_mixed_mod duration = -1 }
+		custom_tooltip = magic_artificery_mixed_tt
 		hidden_effect = {
 			change_mana = yes #update mana bar
 			clr_country_flag = magic_artificery_mage_only
@@ -5637,6 +5650,12 @@ artifice_magic_switch_to_mixed_mode = {
 					id = magic_artificery_setup.2
 					days = 1
 				}
+			}
+			if = { #To prevent player from picking magic only mode if they previously decided to have artificery
+				limit = { #Losing artificery after gaining it is unsupported in the system and has undefined behavior involved (for example, what happens to currently-researching inventions).
+					has_country_flag = unlocked_artificery_by_pillar
+				}
+				set_country_flag = artificery_needed
 			}
 		}
 	}
@@ -6157,18 +6176,6 @@ artifice_unlock_random_invention_effect = {
 						}
 					}
 					set_country_flag = unlocked_artifice_invention_great_processor
-				}
-				1 = {
-					trigger = {
-						NOT = {
-							OR = {
-								has_country_flag = research_artifice_invention_conversation_calibrator
-								has_country_flag = unlocked_artifice_invention_conversation_calibrator
-							}
-						}
-						culture_group = gnomish
-					}
-					set_country_flag = unlocked_artifice_invention_conversation_calibrator
 				}
 				1 = {
 					trigger = {
@@ -6765,6 +6772,18 @@ artifice_unlock_random_invention_effect = {
 					trigger = {
 						NOT = {
 							OR = {
+								has_country_flag = research_artifice_invention_conversation_calibrator
+								has_country_flag = unlocked_artifice_invention_conversation_calibrator
+							}
+						}
+						culture_group = gnomish
+					}
+					set_country_flag = unlocked_artifice_invention_conversation_calibrator
+				}
+				1 = {
+					trigger = {
+						NOT = {
+							OR = {
 								has_country_flag = research_artifice_invention_game_of_khet
 								has_country_flag = unlocked_artifice_invention_game_of_khet
 							}
@@ -7220,7 +7239,6 @@ disable_all_artifice_inventions = {
 		remove_estate_privilege = artifice_invention_fey_spray
 		remove_estate_privilege = artifice_invention_scrapperclaws
 		remove_estate_privilege = artifice_invention_great_processor
-		remove_estate_privilege = artifice_invention_conversation_calibrator
 		# tier 1 military
 		remove_estate_privilege = artifice_invention_portable_turrets
 		remove_estate_privilege = artifice_invention_sparkdrive_rifles
@@ -7258,6 +7276,7 @@ disable_all_artifice_inventions = {
 		remove_estate_privilege = artifice_invention_mirage_detector_3000
 		remove_estate_privilege = artifice_invention_think_thought_transmitters
 		remove_estate_privilege = artifice_invention_game_of_khet
+		remove_estate_privilege = artifice_invention_conversation_calibrator
 		# tier 2 military
 		remove_estate_privilege = artifice_invention_wandlocks
 		remove_estate_privilege = artifice_invention_balloonboost_packs
@@ -8255,5 +8274,16 @@ unlock_all_invention_from = { #too lazy to split each racial invention -Fahes
 		unlock_invention_from = { invention = bureaucratizer tag = $tag$ }
 		unlock_invention_from = { invention = runethought_network tag = $tag$ }
 		unlock_invention_from = { invention = negotiation_nexus tag = $tag$ }
+	}
+}
+get_partial_artificery_for_gene_pillar_exploration = {
+	if = {
+		limit = { #Im not really sure how this limit should look like
+			NOT = { has_country_flag = artificery_unlocked }
+			NOT = { has_country_flag = artificery_choice }
+		}
+		set_country_flag = artifice_no_base_privileges
+		set_country_flag = unlocked_artificery_by_pillar
+		unlock_artificery = yes
 	}
 }
