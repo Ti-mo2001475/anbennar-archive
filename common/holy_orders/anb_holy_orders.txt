@@ -4372,10 +4372,27 @@ arrowsent_holy_order = {
     cost = 100
     cost_type = adm_power
     per_province_effect = {
+        add_base_tax = 1
+        hidden_effect = {
+            owner = {
+                change_variable = { arrowsentvariable = 1}
+                country_event = { id = kinbond.1 }
+            }
+        }
+        
     }
     per_province_abandon_effect = {
+        add_base_tax = -1
+        hidden_effect = {
+            owner = {
+                change_variable = { arrowsentvariable = -1}
+                country_event = {id = kinbond.1 }
+            }
+        }
     }
     modifier = {
+        local_friendly_movement_speed = 0.1
+
     }
     ai_priority = {
         factor = 0
@@ -4386,16 +4403,33 @@ arrowsent_holy_order = {
 forestguard_holy_order = {
     icon = GFX_holy_orders_button
     trigger = {
-        always = no
+        religion = kinbond
     }
     color = { 255 255 255 }
     cost = 100
     cost_type = adm_power
     per_province_effect = {
+        add_base_manpower = 1
+        hidden_effect = {
+
+            owner = {
+                change_variable = { forestguardvariable = 1 }
+                country_event = { id =  kinbond.1 }
+            }
+
+        }
     }
     per_province_abandon_effect = {
+        add_base_manpower = -1
+        hidden_effect = {
+            owner = {
+                change_variable = { forestguardvariable = -1}
+                country_event = { id = kinbond.1 }
+            }
+        }
     }
     modifier = {
+        local_build_cost = -0.1
     }
     ai_priority = {
         factor = 0
