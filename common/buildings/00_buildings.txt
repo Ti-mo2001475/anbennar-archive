@@ -297,6 +297,21 @@ temple = {
 			add_prosperity = 30
 			set_province_flag = R54_iron_soul_used
 		}
+		#Shirgriis
+		if = {
+			limit = {
+				province_id = 4848
+				owner = { religion = devouring_path }
+				development = 12
+				NOT = { has_province_flag = shirgrii_khelorvalshi_repaired }
+			}
+			set_province_flag = shirgrii_khelorvalshi_repaired
+			remove_province_modifier = shirgrii_ruined_khelorvalshi
+			add_province_modifier = {
+				name = shirgrii_khelorvalshi
+				duration = -1
+			}
+		}
 	}
 	on_destroyed = {
 		on_province_tax_building_destroyed_estate_privileges_effect = yes
@@ -1740,7 +1755,22 @@ cathedral = {
 				duration = -1
 			}
 			remove_province_modifier = zokka_tithe
-		}		
+		}
+		#Shirgriis
+		if = {
+			limit = {
+				province_id = 4848
+				owner = { religion = devouring_path }
+				development = 12
+				NOT = { has_province_flag = shirgrii_khelorvalshi_repaired }
+			}
+			set_province_flag = shirgrii_khelorvalshi_repaired
+			remove_province_modifier = shirgrii_ruined_khelorvalshi
+			add_province_modifier = {
+				name = shirgrii_khelorvalshi
+				duration = -1
+			}
+		}	
 	}
 	on_destroyed = {
 		on_province_tax_building_destroyed_estate_privileges_effect = yes
@@ -5168,6 +5198,15 @@ mage_tower = {
 		}
 		#Dragon Turtle
 		FROM = { dragon_turtle_change_friendship = { dragon_turtle = monzaketzya amount = 3 } }
+
+		if = {
+			limit = { has_province_modifier = shirgrii_maintenance_no_tower }
+			remove_province_modifier = shirgrii_maintenance_no_tower
+			add_province_modifier = {
+				name = shirgrii_maintenance_tower
+				duration = -1
+			}
+		}
 	}
 	on_destroyed = {
 		on_destroyed_manufactory_effect = yes
@@ -5382,6 +5421,17 @@ mage_tower = {
 		B54_se_remove_manufactory_province_modifiers = { mage_tower = yes }
 		remove_province_modifier = H14_magic_unrivaled #Eighard
 		FROM = { dragon_turtle_change_friendship = { dragon_turtle = monzaketzya amount = -3 } }
+
+		if = {
+			limit = {
+				has_province_modifier = shirgrii_maintenance_tower
+			}
+			remove_province_modifier = shirgrii_maintenance_tower
+			add_province_modifier = {
+				name = shirgrii_maintenance_no_tower
+				duration = -1
+			}
+		}
 	}
 
 	on_construction_started = {  #Fires when you start the construction,  ROOT - Province FROM - Country that started 1.35
