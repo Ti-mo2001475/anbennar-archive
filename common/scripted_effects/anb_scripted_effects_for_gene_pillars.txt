@@ -544,9 +544,9 @@ gene_pillar_generic_then_specific_event = {
 			### Add Speed modifiers above here ###
 
 			round_variable = { which = GenePillarsSpeed value = 0 }
-			if = { # clamp speed at minimum of 2 months
-				limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 2 } } }
-				set_variable = { GenePillarsSpeed = 2 }
+			if = { # clamp speed at minimum of 6 months
+				limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 6 } } }
+				set_variable = { GenePillarsSpeed = 6 }
 			}
 			else_if = { # clamp speed at maximum of 24 months
 				limit = { check_variable = { which = GenePillarsSpeed value = 24 } }
@@ -650,26 +650,6 @@ gene_pillar_generic_then_specific_event = {
 				limit = { is_variable_equal = { which = GenePillarsSpeed value = 6 } }
 				country_event = { id = gene_pillars.1000 days = 91 } #Generic event handler
 				country_event = { id = gene_pillars.$specific_event$ days = 182 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 5 } }
-				country_event = { id = gene_pillars.1000 days = 76 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 152 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 4 } }
-				country_event = { id = gene_pillars.1000 days = 61 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 122 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 3 } }
-				country_event = { id = gene_pillars.1000 days = 45 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 90 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 2 } }
-				country_event = { id = gene_pillars.1000 days = 30 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 60 } #Next event in chain
 			}
 
 			# This is just so the initial event doesn't advance the progress bar
