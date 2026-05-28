@@ -1260,7 +1260,7 @@ country_event = {
 		}
 	}
 }
-#Mission menu
+#religious objectives event for ai
 country_event = {
 	id = eordellon.4
 	title = eordellon.4.t
@@ -1268,55 +1268,50 @@ country_event = {
 	picture = BLANK_eventPicture
 	
 	is_triggered_only = yes
+	trigger = {
+		OR = {
+			religion = eordellon
+			religion = spring_court
+			religion = summer_court
+			religion = autumn_court
+			religion = winter_court
+		}
+		ai = yes
+	}
+
+	option = {
+		name = eordellon.4.exit
+		ai_chance = { factor = 0 }
+	}
 	option = {
 		trigger = {
 			NOT = { has_country_flag = seasonal_objective_one }
+			treasury = 100
 		}
 		name = eordellon.4.generic.one
-		if = {
-			limit = {
-				treasury = 50
+		add_treasury = -50
+		capital_scope = {
+			add_province_modifier = {
+				name = seasonal_building_embassy
+				duration = -1
 			}
-			add_treasury = -50
-			capital_scope = {
-				add_province_modifier = {
-					name = seasonal_building_embassy
-					duration = -1
-				}
-			}
-			upgrade_seasonal_court_level = yes
-			set_country_flag = seasonal_objective_one
-			hidden_effect = {
-				set_variable = {
-				which = seasonalEmbassySubmit
-				value = 0
-				}
-				set_variable = {
-					which = seasonalEmbassyIgnore
-					value = 0
-				}
-				set_variable = {
-					which = seasonalEmbassyEqual
-					value = 0
-				}
-				country_event = { id = eordellon.7 days = 31 }
-			}
-			custom_tooltip = eordellon.4.embassytt
 		}
-		else = {
-			custom_tooltip = eordellon.4.generic.one.tt
-			tooltip = {
-				add_treasury = -50
-				capital_scope = {
-					add_province_modifier = {
-						name = seasonal_building_embassy
-						duration = -1
-					}
-				}
-				upgrade_seasonal_court_level = yes
-				set_country_flag = seasonal_objective_one
-				custom_tooltip = eordellon.4.embassytt
+		upgrade_seasonal_court_level = yes
+		set_country_flag = seasonal_objective_one
+		hidden_effect = {
+			set_variable = {
+			which = seasonalEmbassySubmit
+			value = 0
 			}
+			set_variable = {
+				which = seasonalEmbassyIgnore
+				value = 0
+			}
+			set_variable = {
+				which = seasonalEmbassyEqual
+				value = 0
+			}
+			country_event = { id = eordellon.7 days = 31 }
 		}
 	}
 	option = {
@@ -1324,88 +1319,40 @@ country_event = {
 		goto = 2049
 		trigger = {
 			NOT = { has_country_flag = seasonal_objective_two }
+			owns = 2049
+			NOT = { exists = H08 }
 		}
-		if = {
-			limit = {
-				NOT = { exists = H08 }
-				2049 = {
-					owned_by = ROOT
-				}
-			}
-			upgrade_seasonal_court_level = yes
-			set_country_flag = seasonal_objective_two
-		}
-		else = {
-			custom_tooltip = eordellon.4.generic.two.tt
-			tooltip = {
-				upgrade_seasonal_court_level = yes
-				set_country_flag = seasonal_objective_two
-			}
-		}
+		upgrade_seasonal_court_level = yes
+		set_country_flag = seasonal_objective_two
 	}
 	option = {
 		name = eordellon.4.eordellon.one
 		trigger = {
-			religion=eordellon
+			religion = eordellon
 			NOT = { has_country_flag = seasonal_objective_three }
+			owns = 1775
+			owns = 2007
+			owns = 2037
+			owns = 2159
 		}
+		upgrade_seasonal_court_level = yes
+		set_country_flag = seasonal_objective_three
 		if = {
-			limit = {
-				1775 = {
-					owned_by = ROOT
-				}
-				2007 = {
-					owned_by = ROOT
-				}
-				2037 = {
-					owned_by = ROOT
-				}
-				2159 = {
-					owned_by = ROOT
-				}
+			limit = { 
+				spring_court = 2 
+				summer_court = 2 
+				autumn_court = 2 
+				winter_court = 2 
 			}
-			upgrade_seasonal_court_level = yes
-			set_country_flag = seasonal_objective_three
-			if = {
-				limit = { 
-					spring_court = 2 
-					summer_court = 2 
-					autumn_court = 2 
-					winter_court = 2 
-				}
-				add_country_modifier = {
-					name = eordand_eordellon_obj1b
-					duration = -1
-				}
-			}
-			else = {
-				add_country_modifier = {
-					name = eordand_eordellon_obj1a
-					duration = -1
-				}
+			add_country_modifier = {
+				name = eordand_eordellon_obj1b
+				duration = -1
 			}
 		}
 		else = {
-			custom_tooltip = eordellon.4.eordellon.one.tt
-			tooltip = {
-				if = {
-					limit = { 
-						spring_court = 2 
-						summer_court = 2 
-						autumn_court = 2 
-						winter_court = 2 
-					}
-					add_country_modifier = {
-						name = eordand_eordellon_obj1b
-						duration = -1
-					}
-				}
-				else = {
-					add_country_modifier = {
-						name = eordand_eordellon_obj1a
-						duration = -1
-					}
-				}
+			add_country_modifier = {
+				name = eordand_eordellon_obj1a
+				duration = -1
 			}
 		}
 	}
@@ -1414,556 +1361,240 @@ country_event = {
 		trigger = {
 			religion = eordellon
 			NOT = { has_country_flag = seasonal_objective_four }
-		}
-		if = {
-			limit = {
-				num_of_owned_provinces_with = {
-					religion = eordellon
-					OR = {
-						superregion = ynn_superregion  
-						superregion = deepwoods_superregion  
-					}
-					value = 5
+			num_of_owned_provinces_with = {
+				religion = eordellon
+				OR = {
+					superregion = ynn_superregion  
+					superregion = deepwoods_superregion  
 				}
-			}
-			add_country_modifier = {
-				name = eordand_eordellon_obj2
-				duration = -1
-			}
-			upgrade_seasonal_court_level = yes
-			set_country_flag = seasonal_objective_four
-		}
-		else = {
-			custom_tooltip = eordellon.4.eordellon.two.tt
-			tooltip = {
-				add_country_modifier = {
-					name = eordand_eordellon_obj2
-					duration = -1
-				}
-				upgrade_seasonal_court_level = yes
-				set_country_flag = seasonal_objective_four
+				value = 5
 			}
 		}
+		add_country_modifier = {
+			name = eordand_eordellon_obj2
+			duration = -1
+		}
+		upgrade_seasonal_court_level = yes
+		set_country_flag = seasonal_objective_four
 	}
 	option = {
 		name = eordellon.4.spring.one
 		trigger = {
 			religion = spring_court
 			NOT = { has_country_flag = seasonal_objective_three }
-		}
-		if = {
-			limit = {
-				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-					value = 8
-					trade_goods = precursor_relics 
-				}
-			}
-			add_country_modifier = {
-				name = eordand_spring_obj1
-				duration = -1
-			}
-			upgrade_seasonal_court_level = yes
-			set_country_flag = seasonal_objective_three
-		}
-		else = {
-			custom_tooltip = eordellon.4.spring.one.tt
-			tooltip = {
-				add_country_modifier = {
-					name = eordand_spring_obj1
-					duration = -1
-				}
-				upgrade_seasonal_court_level = yes
-				set_country_flag = seasonal_objective_three
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 8
+				trade_goods = precursor_relics 
 			}
 		}
+		add_country_modifier = {
+			name = eordand_spring_obj1
+			duration = -1
+		}
+		upgrade_seasonal_court_level = yes
+		set_country_flag = seasonal_objective_three
 	}
 	option = {
 		name = eordellon.4.spring.two
 		trigger = {
 			religion = spring_court
 			NOT = { has_country_flag = seasonal_objective_four }
-		}
-		if = {
-			limit = {
-				trade_goods_produced_amount = {
-					trade_goods = grain
-					amount = 30
-				}
-			}
-			add_country_modifier = {
-				name = eordand_spring_obj2
-				duration = -1
-			}
-			upgrade_seasonal_court_level = yes
-			set_country_flag = seasonal_objective_four
-		}
-		else = {
-			custom_tooltip = eordellon.4.spring.two.tt
-			tooltip = {
-				add_country_modifier = {
-					name = eordand_spring_obj2
-					duration = -1
-				}
-				upgrade_seasonal_court_level = yes
-				set_country_flag = seasonal_objective_four
+			trade_goods_produced_amount = {
+				trade_goods = grain
+				amount = 30
 			}
 		}
+		add_country_modifier = {
+			name = eordand_spring_obj2
+			duration = -1
+		}
+		upgrade_seasonal_court_level = yes
+		set_country_flag = seasonal_objective_four
 	}
 	option = {
 		name = eordellon.4.summer.one
 		trigger = {
 			religion = summer_court
 			NOT = { has_country_flag = seasonal_objective_three }
-		}
-		if = {
-			limit = {
-				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-					value = 5
-					region = haraf_region
-				}
-			}
-			add_country_modifier = {
-				name = eordand_summer_obj1
-				duration = -1
-			}
-			upgrade_seasonal_court_level = yes
-			set_country_flag = seasonal_objective_three
-		}
-		else = {
-			custom_tooltip = eordellon.4.summer.one.tt
-			tooltip = {
-				add_country_modifier = {
-					name = eordand_summer_obj1
-					duration = -1
-				}
-				upgrade_seasonal_court_level = yes
-				set_country_flag = seasonal_objective_three
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 5
+				region = haraf_region
 			}
 		}
-		
+		add_country_modifier = {
+			name = eordand_summer_obj1
+			duration = -1
+		}
+		upgrade_seasonal_court_level = yes
+		set_country_flag = seasonal_objective_three
 	}
 	option = {
 		name = eordellon.4.summer.two
 		trigger = {
 			religion = summer_court
 			NOT = { has_country_flag = seasonal_objective_four }
-		}
-		if = {
-			limit = {
-				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-					value = 5
-					NOT = {
-						OR = {
-							superregion = ynn_superregion  
-							superregion = deepwoods_superregion  
-							region = haraf_region
-							superregion = broken_lands_superregion  
-							superregion = eordand_superregion 
-						}
-					}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 5
+				NOT = {
+					superregion = ynn_superregion  
+					superregion = deepwoods_superregion  
+					region = haraf_region
+					superregion = broken_lands_superregion  
+					superregion = eordand_superregion 
 				}
 			}
-			upgrade_seasonal_court_level = yes
-			set_country_flag = seasonal_objective_four
-			add_country_modifier = {
-				name = eordand_summer_obj2
-				duration = -1
-			}
 		}
-		else = {
-			custom_tooltip = eordellon.4.summer.two.tt
-			tooltip = {
-				upgrade_seasonal_court_level = yes
-				set_country_flag = seasonal_objective_four
-				add_country_modifier = {
-					name = eordand_summer_obj2
-					duration = -1
-				}
-			}
+		upgrade_seasonal_court_level = yes
+		set_country_flag = seasonal_objective_four
+		add_country_modifier = {
+			name = eordand_summer_obj2
+			duration = -1
 		}
 	}
 	option = {
 		name = eordellon.4.autumn.one
 		trigger = {
-			religion=autumn_court
+			religion = autumn_court
 			NOT = { has_country_flag = seasonal_objective_three }
+			NOT = {
+				any_known_country = { religion = winter_court }
+			}
+			OR = {
+				eordand_superregion = {
+					OR = {
+						is_city = no
+						NOT = { religion = winter_court }
+					}
+				}
+				winter_court = 2
+			}
 		}
 		if = {
-			limit = {
-				NOT = {
-					any_known_country = {
-						religion = winter_court
-					}
-				}
-				OR = {
-					eordand_superregion = {
-						OR = {
-							is_city = no
-							NOT = { religion = winter_court }
-						}
-					}
-					winter_court = 2
-				}
+			limit = { winter_court = 2 }
+			add_country_modifier = {
+				name = eordand_autumn_obj1b
+				duration = -1
 			}
-			if = {
-				limit = { 
-					winter_court = 2 
-				}
-				add_country_modifier = {
-					name = eordand_autumn_obj1b
-					duration = -1
-				}
-			}
-			else = {
-				add_country_modifier = {
-					name = eordand_autumn_obj1a
-					duration = -1
-				}
-			}
-			upgrade_seasonal_court_level = yes
-			set_country_flag = seasonal_objective_three
 		}
 		else = {
-			custom_tooltip = eordellon.4.autumn.one.tt
-			tooltip = {
-				if = {
-					limit = { 
-						winter_court = 2 
-					}
-					add_country_modifier = {
-						name = eordand_autumn_obj1b
-						duration = -1
-					}
-				}
-				else = {
-					add_country_modifier = {
-						name = eordand_autumn_obj1a
-						duration = -1
-					}
-				}
-				upgrade_seasonal_court_level = yes
-				set_country_flag = seasonal_objective_three
+			add_country_modifier = {
+				name = eordand_autumn_obj1a
+				duration = -1
 			}
 		}
+		upgrade_seasonal_court_level = yes
+		set_country_flag = seasonal_objective_three
 	}
 	option = {
 		name = eordellon.4.autumn.two
 		trigger = {
 			religion = autumn_court
 			NOT = { has_country_flag = seasonal_objective_four }
-		}
-		if = {
-			limit = {
-				any_known_country = {
-					capital_scope = {
-						continent = europe 
-					}
-					ROOT = {
-						has_won_war_against = {
-						  who = PREV
-						  max_years_since = 20
-						}
+			any_known_country = {
+				capital_scope = { continent = europe }
+				ROOT = {
+					has_won_war_against = {
+						who = PREV
+						max_years_since = 20
 					}
 				}
 			}
-			add_country_modifier = {
-				name = eordand_autumn_obj2
-				duration = -1
-			}
-			upgrade_seasonal_court_level = yes
-			set_country_flag = seasonal_objective_four
 		}
-		else = {
-			custom_tooltip = eordellon.4.autumn.two.tt
-			tooltip = {
-				add_country_modifier = {
-					name = eordand_autumn_obj2
-					duration = -1
-				}
-				upgrade_seasonal_court_level = yes
-				set_country_flag = seasonal_objective_four
-			}
+		add_country_modifier = {
+			name = eordand_autumn_obj2
+			duration = -1
 		}
-		
+		upgrade_seasonal_court_level = yes
+		set_country_flag = seasonal_objective_four
 	}
 	option = {
 		name = eordellon.4.winter.one
 		trigger = {
 			religion = winter_court
 			NOT = { has_country_flag = seasonal_objective_three }
+			NOT = {
+				any_known_country = { religion = autumn_court }
+			}
+			OR = {
+				eordand_superregion = {
+					OR = {
+						is_city = no
+						NOT = { religion = autumn_court }
+					}
+				}
+				autumn_court = 2
+			}
 		}
 		if = {
-			limit = {
-				NOT = {
-					any_known_country = {
-						religion = autumn_court
-					}
-				}
-				OR = {
-					eordand_superregion = {
-						OR = {
-							is_city = no
-							NOT = { religion = autumn_court }
-						}
-					}
-					autumn_court = 2
-				}
+			limit = { autumn_court = 2 }
+			add_country_modifier = {
+				name = eordand_winter_obj1b
+				duration = -1
 			}
-			if = {
-				limit = { 
-					autumn_court = 2 
-				}
-				add_country_modifier = {
-					name = eordand_winter_obj1b
-					duration = -1
-				}
-			}
-			else = {
-				add_country_modifier = {
-					name = eordand_winter_obj1a
-					duration = -1
-				}
-			}
-			upgrade_seasonal_court_level = yes
-			set_country_flag = seasonal_objective_three
 		}
 		else = {
-			custom_tooltip = eordellon.4.winter.one.tt
-			tooltip = {
-				if = {
-					limit = { 
-						autumn_court = 2 
-					}
-					add_country_modifier = {
-						name = eordand_winter_obj1b
-						duration = -1
-					}
-				}
-				else = {
-					add_country_modifier = {
-						name = eordand_winter_obj1a
-						duration = -1
-					}
-				}
-				upgrade_seasonal_court_level = yes
-				set_country_flag = seasonal_objective_three
+			add_country_modifier = {
+				name = eordand_winter_obj1a
+				duration = -1
 			}
 		}
-		
+		upgrade_seasonal_court_level = yes
+		set_country_flag = seasonal_objective_three
 	}
 	option = {
 		name = eordellon.4.winter.two
 		trigger = {
 			religion = winter_court
 			NOT = { has_country_flag = seasonal_objective_four }
-			
+			country_has_non_ruinborn_accepted_culture = { amount = 3 }
 		}
-		if = {
-			limit = { country_has_non_ruinborn_accepted_culture = { amount = 3 } }
-			upgrade_seasonal_court_level = yes
-			set_country_flag = seasonal_objective_four
-			add_country_modifier = {
-				name = eordand_winter_obj2
-				duration = -1
-			}
-		}
-		else = {
-			custom_tooltip = eordellon.4.winter.two.tt
-			tooltip = {
-				upgrade_seasonal_court_level = yes
-				set_country_flag = seasonal_objective_four
-				add_country_modifier = {
-					name = eordand_winter_obj2
-					duration = -1
-				}
-			}
+		upgrade_seasonal_court_level = yes
+		set_country_flag = seasonal_objective_four
+		add_country_modifier = {
+			name = eordand_winter_obj2
+			duration = -1
 		}
 	}
 	option = {
 		name = eordellon.4.eordellon.unlock
 		trigger = {
 			NOT = { has_country_flag = eordellon_influencer_unlocked }
+			NOT = { any_known_country = { religion = eordellon } }
 		}
-		if = {
-			limit = {
-				NOT = {
-					any_known_country = {
-						religion = eordellon
-					}
-				}
-				OR = {
-					NOT = {
-						eordand_superregion = {
-							is_city = yes
-							religion = eordellon
-							NOT = { has_province_modifier = estate_church_spring_tolerance_mod }
-							NOT = { has_province_modifier = estate_church_summer_tolerance_mod }
-							NOT = { has_province_modifier = estate_church_autumn_tolerance_mod }
-							NOT = { has_province_modifier = estate_church_winter_tolerance_mod }
-						}
-					}
-					eordellon = 2
-				}
-			}
-			set_country_flag = eordellon_influencer_unlocked
-		}
-		else = {
-			custom_tooltip = eordellon.4.eordellon.unlock.tt
-			tooltip = {
-				set_country_flag = eordellon_influencer_unlocked
-			}
-		}
+		set_country_flag = eordellon_influencer_unlocked
 	}
 	option = {
 		name = eordellon.4.spring.unlock
 		trigger = {
 			NOT = { has_country_flag = spring_influencer_unlocked }
+			NOT = { any_known_country = { religion = spring_court } }
 		}
-		if = {
-			limit = {
-				NOT = {
-					any_known_country = {
-						religion = spring_court
-					}
-				}
-				OR = {
-					NOT = {
-						eordand_superregion = {
-							is_city = yes
-							religion = spring_court
-							NOT = { has_province_modifier = estate_church_spring_tolerance_mod }
-							NOT = { has_province_modifier = estate_church_summer_tolerance_mod }
-							NOT = { has_province_modifier = estate_church_autumn_tolerance_mod }
-							NOT = { has_province_modifier = estate_church_winter_tolerance_mod }
-						}
-					}
-					spring_court = 2
-				}
-			}
-			set_country_flag = spring_influencer_unlocked
-		}
-		else = {
-			custom_tooltip = eordellon.4.spring.unlock.tt
-			tooltip = {
-				set_country_flag = spring_influencer_unlocked
-			}
-		}
+		set_country_flag = spring_influencer_unlocked
 	}
 	option = {
 		name = eordellon.4.summer.unlock
 		trigger = {
 			NOT = { has_country_flag = summer_influencer_unlocked }
+			NOT = { any_known_country = { religion = summer_court } }
 		}
-		if = {
-			limit = {
-				NOT = {
-					any_known_country = {
-						religion = summer_court
-					}
-				}
-				OR = {
-					NOT = {
-						eordand_superregion = {
-							is_city = yes
-							religion = summer_court
-							NOT = { has_province_modifier = estate_church_spring_tolerance_mod }
-							NOT = { has_province_modifier = estate_church_summer_tolerance_mod }
-							NOT = { has_province_modifier = estate_church_autumn_tolerance_mod }
-							NOT = { has_province_modifier = estate_church_winter_tolerance_mod }
-						}
-					}
-					summer_court = 2
-				}
-			}
-			set_country_flag = summer_influencer_unlocked
-		}
-		else = {
-			custom_tooltip = eordellon.4.summer.unlock.tt
-			tooltip = {
-				set_country_flag = summer_influencer_unlocked
-			}
-		}
+		set_country_flag = summer_influencer_unlocked
 	}
 	option = {
 		name = eordellon.4.autumn.unlock
 		trigger = {
 			NOT = { has_country_flag = autumn_influencer_unlocked }
+			NOT = { any_known_country = { religion = autumn_court } }
 		}
-		if = {
-			limit = {
-				NOT = {
-					any_known_country = {
-						religion = autumn_court
-					}
-				}
-				OR = {
-					AND = {
-						NOT = {
-							eordand_superregion = {
-								is_city = yes
-								religion = autumn_court
-								NOT = { has_province_modifier = estate_church_spring_tolerance_mod }
-								NOT = { has_province_modifier = estate_church_summer_tolerance_mod }
-								NOT = { has_province_modifier = estate_church_autumn_tolerance_mod }
-								NOT = { has_province_modifier = estate_church_winter_tolerance_mod }
-							}
-						}
-						NOT = { religion = winter_court }
-					}
-					autumn_court = 2
-				}
-			}
-			set_country_flag = autumn_influencer_unlocked
-		}
-		else = {
-			custom_tooltip = eordellon.4.autumn.unlock.tt
-			tooltip = {
-				set_country_flag = autumn_influencer_unlocked
-			}
-		}
+		set_country_flag = autumn_influencer_unlocked
 	}
 	option = {
 		name = eordellon.4.winter.unlock
 		trigger = {
 			NOT = { has_country_flag = winter_influencer_unlocked }
+			NOT = { any_known_country = { religion = winter_court } }
 		}
-		if = {
-			limit = {
-				NOT = {
-					any_known_country = {
-						religion = winter_court
-					}
-				}
-				OR = {
-					AND = {
-						NOT = {
-							eordand_superregion = {
-								is_city = yes
-								religion = winter_court
-								NOT = { has_province_modifier = estate_church_spring_tolerance_mod }
-								NOT = { has_province_modifier = estate_church_summer_tolerance_mod }
-								NOT = { has_province_modifier = estate_church_autumn_tolerance_mod }
-								NOT = { has_province_modifier = estate_church_winter_tolerance_mod }
-							}
-						}
-						NOT = { religion = autumn_court }
-					}
-					winter_court = 2
-				}
-			}
-			set_country_flag = winter_influencer_unlocked
-		}
-		else = {
-			custom_tooltip = eordellon.4.winter.unlock.tt
-			tooltip = {
-				set_country_flag = winter_influencer_unlocked
-			}
-		}
-	}
-	option = {
-		name = eordellon.4.exit
-	}
-	
+		set_country_flag = winter_influencer_unlocked
+	}	
 }
 #Start up event initialization
 country_event = {
