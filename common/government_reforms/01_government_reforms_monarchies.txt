@@ -3444,59 +3444,59 @@ revolutionary_empire_reform = {
 # 	}
 # }
 
-polish_elective_monarchy = {
-	icon = "elective_monarchy"
-	allow_normal_conversion = no 
-	lock_level_when_selected = yes
-	potential = {
-		always = no	#anbennar
-		OR = {
-			has_reform = polish_elective_monarchy
-			AND = {
-				is_playing_custom_nation = yes
-				have_had_reform = polish_elective_monarchy
-			}
-		}
-	}
-	legacy_equivalent = elective_monarchy_legacy
-	lock_level_when_selected = yes
-	valid_for_nation_designer = yes
-	nation_designer_cost = 50
-	nation_designer_trigger = {
-		has_dlc = "Lions of the North"
-	}
-	modifiers = {
-		global_unrest = -1
-		max_absolutism = -30
-		nobles_influence_modifier = 0.05
-		reform_progress_growth = -0.2
-	}
+# polish_elective_monarchy = {
+# 	icon = "elective_monarchy"
+# 	allow_normal_conversion = no 
+# 	lock_level_when_selected = yes
+# 	potential = {
+# 		always = no	#anbennar
+# 		OR = {
+# 			has_reform = polish_elective_monarchy
+# 			AND = {
+# 				is_playing_custom_nation = yes
+# 				have_had_reform = polish_elective_monarchy
+# 			}
+# 		}
+# 	}
+# 	legacy_equivalent = elective_monarchy_legacy
+# 	lock_level_when_selected = yes
+# 	valid_for_nation_designer = yes
+# 	nation_designer_cost = 50
+# 	nation_designer_trigger = {
+# 		has_dlc = "Lions of the North"
+# 	}
+# 	modifiers = {
+# 		global_unrest = -1
+# 		max_absolutism = -30
+# 		nobles_influence_modifier = 0.05
+# 		reform_progress_growth = -0.2
+# 	}
 
-	conditional = {
-		allow = { has_dlc = "Res Publica" }
-		is_elective = yes
-		custom_attributes = {
-			has_polish_election = yes
-			locked_government_type = yes
-		}
-	}
+# 	conditional = {
+# 		allow = { has_dlc = "Res Publica" }
+# 		is_elective = yes
+# 		custom_attributes = {
+# 			has_polish_election = yes
+# 			locked_government_type = yes
+# 		}
+# 	}
 
-	conditional = {
-		allow = { NOT = { has_dlc = "Res Publica" } }
-		custom_attributes = {
-			locked_government_type = yes
-		}
-	}
-	conditional = {
-		allow = {
-			OR = {
-				has_dlc = "Common Sense"
-				has_dlc = "Domination"
-			}
-		}
-		has_parliament = yes
-	}
-}
+# 	conditional = {
+# 		allow = { NOT = { has_dlc = "Res Publica" } }
+# 		custom_attributes = {
+# 			locked_government_type = yes
+# 		}
+# 	}
+# 	conditional = {
+# 		allow = {
+# 			OR = {
+# 				has_dlc = "Common Sense"
+# 				has_dlc = "Domination"
+# 			}
+# 		}
+# 		has_parliament = yes
+# 	}
+# }
 
 # polish_autocratic_monarchy = {
 # 	icon = "king"
@@ -6854,8 +6854,6 @@ varamhar_eternal_empire = {
 		NOT = { has_reform = varamhar_eternal_empire_mandate }
 	}
 	valid_for_nation_designer = no
-	has_term_election = yes
-	duration = 1000
 	heir = no
 	queen = no
 	conditional = {
@@ -6874,6 +6872,8 @@ varamhar_eternal_empire = {
 		locked_government_type = yes
 		better_long_lived = yes
 		locked_T1_reform = yes
+		foreign_slave_rulers = yes
+		immortal_rulers = yes #Currently not checked for anywhere, just for tooltip
 	}
 	conditional = {
 		allow = { has_dlc = "Third Rome" }
@@ -6898,8 +6898,6 @@ varamhar_eternal_empire_mandate = {
 		}
 	}
 	valid_for_nation_designer = no
-	has_term_election = yes
-	duration = 1000
 	heir = no
 	queen = no
 	conditional = {
@@ -6918,6 +6916,8 @@ varamhar_eternal_empire_mandate = {
 		locked_government_type = yes
 		better_long_lived = yes
 		locked_T1_reform = yes
+		foreign_slave_rulers = yes
+		immortal_rulers = yes #Currently not checked for anywhere, just for tooltip
 	}
 	conditional = {
 		allow = { has_dlc = "Third Rome" }
@@ -7123,8 +7123,6 @@ konolkhatep_gnolls_sorrow_reform_horutep = {
 	lock_level_when_selected = yes
 	fixed_rank = 3
 	rulers_can_be_generals = no
-	has_term_election = yes
-	duration = 1000
 	heir = no
 	queen = no
 
@@ -7140,6 +7138,8 @@ konolkhatep_gnolls_sorrow_reform_horutep = {
 		disabled_expelling_human = yes
 		disabled_purging_human = yes
 		locked_T1_reform = yes
+		foreign_slave_rulers = yes
+		immortal_rulers = yes #Currently not checked for anywhere, just for tooltip
 	}
 
 	ai = { factor = 100 }
@@ -7165,8 +7165,6 @@ F66_eternal_empire = {
 	heir = no
 	queen = no
 	rulers_can_be_generals = no
-	has_term_election = yes
-	duration = 1000
 	
 	modifiers = {
 		global_prosperity_growth = 0.25
@@ -7185,6 +7183,8 @@ F66_eternal_empire = {
 		konolkhatep_slave_raids = yes
 		locked_government_type = yes
 		locked_T1_reform = yes
+		foreign_slave_rulers = yes
+		immortal_rulers = yes #Currently not checked for anywhere, just for tooltip
 	}
 
 	ai = { factor = 100 }
@@ -16001,7 +16001,6 @@ tsukqiao_throne_of_lies_reform = {
 		max_absolutism = 20
 		same_culture_advisor_cost = -0.1
 		eunuchs_anb_influence_modifier = 0.1
-		necromancy_experience_mod = -1
 		block_introduce_heir = yes
 	}
 	effect = { }
@@ -16040,7 +16039,6 @@ tsukqiao_the_humble_domain_reform = {
 		governing_capacity_modifier = 0.20
 		advisor_cost = -0.15
 		eunuchs_anb_influence_modifier = 0.1
-		necromancy_experience_mod = -1
 	}
 	effect = {
 	}
