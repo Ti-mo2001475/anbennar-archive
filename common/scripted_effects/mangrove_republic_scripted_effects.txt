@@ -650,21 +650,21 @@ mangrove_bio_infra_final_upgrade = {
 	if = {
 		limit = { NOT = { has_province_flag = mangrove_bio_infra_finished } }
 		mangrove_bio_infra_add_auxiliary_effect = yes
-		if = {
-			limit = { FROM = { has_country_flag = mangrove_capstone_unlocked } }
-			remove_province_modifier = mangrove_bio_infra_decay
-		}
 		clr_province_flag = mangrove_bio_infra_stage_4
 		set_province_flag = mangrove_bio_infra_finished
+		if = {
+			limit = { is_capital = yes }
+			FROM = { mangrove_unlock_deving = yes }
+		}
+		if = {
+			limit = { FROM = { has_country_flag = mangrove_deving_unlocked } }
+			remove_province_modifier = mangrove_bio_infra_decay
+		}
 		mangrove_bio_infra_final_cost = yes
 		FROM = {
 			hidden_effect = {
 				change_variable = { mangrove_bio_infra_finished_count = 1 }
 			}
-		}
-		if = {
-			limit = { is_capital = yes }
-			FROM = { mangrove_unlock_capstone = yes }
 		}
 	}
 	else = {
@@ -674,8 +674,8 @@ mangrove_bio_infra_final_upgrade = {
 	}
 }
 
-mangrove_unlock_capstone = {
-	set_country_flag = mangrove_capstone_unlocked
+mangrove_unlock_deving = {
+	set_country_flag = mangrove_deving_unlocked
 	every_owned_province = {
 		limit = {
 			region = tagaala_mangroves_region
