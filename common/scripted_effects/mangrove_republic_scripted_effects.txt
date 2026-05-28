@@ -654,6 +654,7 @@ mangrove_bio_infra_final_upgrade = {
 		set_province_flag = mangrove_bio_infra_finished
 		if = {
 			limit = { is_capital = yes }
+			mangrove_unlock_capstone = yes
 			FROM = { mangrove_unlock_deving = yes }
 		}
 		if = {
@@ -670,6 +671,76 @@ mangrove_bio_infra_final_upgrade = {
 	else = {
 		tooltip = {
 			mangrove_bio_infra_add_auxiliary_effect = yes
+		}
+	}
+}
+
+mangrove_unlock_capstone = {
+	if = {
+		limit = {
+			FROM = { is_or_was_tag = { tag = P21 } }
+			province_id = 6954
+		}
+		add_province_modifier = { name = mangrove_capstone_P21 duration = -1 }
+	}
+	if = {
+		limit = {
+			FROM = { is_or_was_tag = { tag = P22 } }
+			province_id = 6956
+		}
+		add_province_modifier = { name = mangrove_capstone_P22 duration = -1 }
+		custom_tooltip = mangrove_level_up_divination_tt # need custom tt since ROOT is the province not the tag
+		hidden_effect = {
+			FROM = {
+				if = {
+					limit = { is_estate_divination_level_3 = no }
+					country_event = { id = mangrove.6 } # change ROOT to country to avoid error log
+				}
+				else = {
+					add_country_modifier = { name = mangrove_magic_xp_20 duration = 9125 } # 25 years
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			FROM = { is_or_was_tag = { tag = P23 } }
+			province_id = 6957
+		}
+		FROM = { add_country_modifier = { name = mangrove_enable_sea_beast duration = -1 } } # remove this one once this tag actually gets hinuiprawns
+		add_province_modifier = { name = mangrove_capstone_P23 duration = -1 }
+	}
+	if = {
+		limit = {
+			FROM = { is_or_was_tag = { tag = P24 } }
+			province_id = 6961
+		}
+		add_province_modifier = { name = mangrove_capstone_P24 duration = -1 }
+	}
+	if = {
+		limit = {
+			FROM = { is_or_was_tag = { tag = P25 } }
+			province_id = 6962
+		}
+		add_province_modifier = { name = mangrove_capstone_P25 duration = -1 }
+	}
+	if = {
+		limit = {
+			FROM = { is_or_was_tag = { tag = P26 } }
+			province_id = 6966
+		}
+		add_province_modifier = { name = mangrove_capstone_P26 duration = -1 }
+		custom_tooltip = mangrove_level_up_enchantment_tt # need custom tt since ROOT is the province not the tag
+		hidden_effect = {
+			FROM = {
+				if = {
+					limit = { is_estate_enchantment_level_3 = no }
+					country_event = { id = mangrove.7 } # change ROOT to country to avoid error log
+				}
+				else = {
+					add_country_modifier = { name = mangrove_magic_xp_20 duration = 9125 } # 25 years
+				}
+			}
 		}
 	}
 }
