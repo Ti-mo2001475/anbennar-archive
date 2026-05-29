@@ -217,7 +217,7 @@ fi
 
 for mode in "${modes[@]}"; do
     case "$mode" in
-        t) process_txt_files "text" "./events/*.txt ./missions/*.txt ./decisions/*.txt" "${remaining_files[@]}" ;;
+        t) process_txt_files "text" "./events/*.txt ./missions/*.txt ./decisions/*.txt ./common/*/*.txt" "${remaining_files[@]}" ;;
         l) process_localization "${remaining_files[@]}" ;;
         i) process_indentation "${remaining_files[@]}" ;;
     esac
