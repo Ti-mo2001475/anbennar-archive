@@ -363,21 +363,12 @@ clear_oracle_prophecy_flag = {
 ######################
 
  #Effects for when caste fluidity changes, happens AFTERWARDS
-on_caste_fluidity_change = {
-	if = {
-		limit = { caste_fluidity_is_fluid = yes }
-		on_fluid_caste_fluidity = yes
-	}
-	else_if = {
-		limit = { caste_fluidity_is_neutral = yes }
-		on_neutral_caste_fluidity = yes
-	}
-	else = { on_rigid_caste_fluidity = yes }
-
+on_caste_fluidity_change = { #Hidden effect
 	country_event = { id = estate_castes_events.3 } #Event to remove fluidity privileges if desired
 }
 
-on_fluid_caste_fluidity = {
+on_fluid_caste_fluidity = { #Hidden effect
+	on_caste_fluidity_change = yes
 	if = {
 		limit = { has_estate_privilege = estate_middlecastes_excluse_trade_rights }
 		every_owned_province = {
@@ -390,14 +381,16 @@ on_fluid_caste_fluidity = {
 	}
 }
 
-on_neutral_caste_fluidity = {
+on_neutral_caste_fluidity = { #Hidden effect
+	on_caste_fluidity_change = yes
 	if = {
 		limit = { has_estate_privilege = estate_middlecastes_excluse_trade_rights }
 		every_owned_province = { remove_province_modifier = estate_burghers_exclusive_trade_rights_negate_mod }
 	}
 }
 
-on_rigid_caste_fluidity = {
+on_rigid_caste_fluidity = { #Hidden effect
+	on_caste_fluidity_change = yes
 	if = {
 		limit = { has_estate_privilege = estate_middlecastes_excluse_trade_rights }
 		every_owned_province = {
@@ -410,33 +403,80 @@ on_rigid_caste_fluidity = {
 	}
 }
 
-check_fluidity_change = {
+ #Effects for when caste fluidity changes, happens BEFOREHAND
+on_pre_caste_fluidity_change = { } #Hidden effect
+
+on_pre_fluid_caste_fluidity = {
+	custom_tooltip = caste_fluidity_is_fluid_tt
+	hidden_effect = {
+		on_pre_caste_fluidity_change = yes
+	}
+}
+
+on_pre_neutral_caste_fluidity = {
+	custom_tooltip = caste_fluidity_is_neutral_tt
+	hidden_effect = {
+		on_pre_caste_fluidity_change = yes
+	}
+}
+
+on_pre_rigid_caste_fluidity = {
+	custom_tooltip = caste_fluidity_is_rigid_tt
+	hidden_effect = {
+		on_pre_caste_fluidity_change = yes
+	}
+}
+
+#Checks if caste fluidity has changed from neutral > fluid or rigid > neutral
+check_fluidity_increase = {
 	if = {
-		limit = {
-			OR = {
-				AND = { #Checks for fluid-neutral change
-					check_variable = { casteFluidityVar = $min_value1$ }
-					NOT = { check_variable = { casteFluidityVar = $max_value1$ } }
-				}
-				AND = { #Checks for neutral-rigid change
-					check_variable = { casteFluidityVar = $min_value2$ }
-					NOT = { check_variable = { casteFluidityVar = $max_value2$ } }
-				}
-			}
+		limit = { #Checks for neutral > fluid change
+			check_variable = { casteFluidityVar = $min_value1$ }
+			NOT = { check_variable = { casteFluidityVar = $max_value1$ } }
 		}
-		on_caste_fluidity_change = yes
+		on_[[pre]pre_]fluid_caste_fluidity = yes
+	}
+	else_if = {
+		limit = { #Checks for rigid > neutral change
+			check_variable = { casteFluidityVar = $min_value2$ }
+			NOT = { check_variable = { casteFluidityVar = $max_value2$ } }
+		}
+		on_[[pre]pre_]neutral_caste_fluidity = yes
+	}
+}
+
+#Checks if caste fluidity has changed from fluid > neutral or neutral > rigid
+check_fluidity_decrease = {
+	if = {
+		limit = { #Checks for fluid > neutral change
+			check_variable = { casteFluidityVar = $min_value1$ }
+			NOT = { check_variable = { casteFluidityVar = $max_value1$ } }
+		}
+		on_[[pre]pre_]neutral_caste_fluidity = yes
+	}
+	else_if = {
+		limit = { #Checks for neutral > rigid change
+			check_variable = { casteFluidityVar = $min_value2$ }
+			NOT = { check_variable = { casteFluidityVar = $max_value2$ } }
+		}
+		on_[[pre]pre_]rigid_caste_fluidity = yes
 	}
 }
 
 caste_fluidity_increase_minute = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_increase_minute_tt
+		check_fluidity_increase = { #For effects that need to happen before fluidity changes
+			min_value1 = 30 max_value1 = 32
+			min_value2 = 63 max_value2 = 65
+			pre = yes
+		}
 		hidden_effect = {
 			change_variable = { which = casteFluidityVar value = 3 }
 			if = { limit = { check_variable = { casteFluidityVar = 100 } }
 				set_variable = { which = casteFluidityVar value = 100 }
 			}
-			check_fluidity_change = {
+			check_fluidity_increase = { #For effects that happen after fluidity changes
 				min_value1 = 33 max_value1 = 35
 				min_value2 = 66 max_value2 = 68
 			}
@@ -451,12 +491,17 @@ caste_fluidity_increase_minute = {
 caste_fluidity_increase_small = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_increase_small_tt
+		check_fluidity_increase = { #For effects that need to happen before fluidity changes
+			min_value1 = 28 max_value1 = 32
+			min_value2 = 61 max_value2 = 65
+			pre = yes
+		}
 		hidden_effect = {
 			change_variable = { which = casteFluidityVar value = 5 }
 			if = { limit = { check_variable = { casteFluidityVar = 100 } }
 				set_variable = { which = casteFluidityVar value = 100 }
 			}
-			check_fluidity_change = {
+			check_fluidity_increase = { #For effects that happen after fluidity changes
 				min_value1 = 33 max_value1 = 37
 				min_value2 = 66 max_value2 = 70
 			}
@@ -471,12 +516,17 @@ caste_fluidity_increase_small = {
 caste_fluidity_increase_medium = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_increase_medium_tt
+		check_fluidity_increase = { #For effects that need to happen before fluidity changes
+			min_value1 = 23 max_value1 = 32
+			min_value2 = 56 max_value2 = 65
+			pre = yes
+		}
 		hidden_effect = {
 			change_variable = { which = casteFluidityVar value = 10 }
 			if = { limit = { check_variable = { casteFluidityVar = 100 } }
 				set_variable = { which = casteFluidityVar value = 100 }
 			}
-			check_fluidity_change = {
+			check_fluidity_increase = { #For effects that happen after fluidity changes
 				min_value1 = 33 max_value1 = 42
 				min_value2 = 66 max_value2 = 75
 			}
@@ -491,12 +541,17 @@ caste_fluidity_increase_medium = {
 caste_fluidity_increase_large = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_increase_large_tt
+		check_fluidity_increase = { #For effects that need to happen before fluidity changes
+			min_value1 = 18 max_value1 = 32
+			min_value2 = 51 max_value2 = 65
+			pre = yes
+		}
 		hidden_effect = {
 			change_variable = { which = casteFluidityVar value = 15 }
 			if = { limit = { check_variable = { casteFluidityVar = 100 } }
 				set_variable = { which = casteFluidityVar value = 100 }
 			}
-			check_fluidity_change = {
+			check_fluidity_increase = { #For effects that happen after fluidity changes
 				min_value1 = 33 max_value1 = 47
 				min_value2 = 66 max_value2 = 80
 			}
@@ -511,12 +566,17 @@ caste_fluidity_increase_large = {
 caste_fluidity_increase_huge = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_increase_huge_tt
+		check_fluidity_increase = { #For effects that need to happen before fluidity changes
+			min_value1 = 13 max_value1 = 32
+			min_value2 = 46 max_value2 = 65
+			pre = yes
+		}
 		hidden_effect = {
 			change_variable = { which = casteFluidityVar value = 20 }
 			if = { limit = { check_variable = { casteFluidityVar = 100 } }
 				set_variable = { which = casteFluidityVar value = 100 }
 			}
-			check_fluidity_change = {
+			check_fluidity_increase = { #For effects that happen after fluidity changes
 				min_value1 = 33 max_value1 = 52
 				min_value2 = 66 max_value2 = 85
 			}
@@ -531,12 +591,17 @@ caste_fluidity_increase_huge = {
 caste_fluidity_increase_gargantuan = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_increase_gargantuan_tt
+		check_fluidity_increase = { #For effects that need to happen before fluidity changes
+			min_value1 = 8 max_value1 = 32
+			min_value2 = 41 max_value2 = 65
+			pre = yes
+		}
 		hidden_effect = {
 			change_variable = { which = casteFluidityVar value = 25 }
 			if = { limit = { check_variable = { casteFluidityVar = 100 } }
 				set_variable = { which = casteFluidityVar value = 100 }
 			}
-			check_fluidity_change = {
+			check_fluidity_increase = { #For effects that happen after fluidity changes
 				min_value1 = 33 max_value1 = 57
 				min_value2 = 66 max_value2 = 90
 			}
@@ -551,12 +616,17 @@ caste_fluidity_increase_gargantuan = {
 caste_fluidity_decrease_minute = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_decrease_minute_tt
+		check_fluidity_decrease = { #For effects that need to happen before fluidity changes
+			min_value1 = 33 max_value1 = 35
+			min_value2 = 66 max_value2 = 68
+			pre = yes
+		}
 		hidden_effect = {
 			subtract_variable = { which = casteFluidityVar value = 3 }
 			if = { limit = { NOT = { check_variable = { casteFluidityVar = 0 } } }
 				set_variable = { which = casteFluidityVar value = 0 }
 			}
-			check_fluidity_change = {
+			check_fluidity_decrease = { #For effects that happen after fluidity changes
 				min_value1 = 30 max_value1 = 32
 				min_value2 = 63 max_value2 = 65
 			}
@@ -571,12 +641,17 @@ caste_fluidity_decrease_minute = {
 caste_fluidity_decrease_small = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_decrease_small_tt
+		check_fluidity_decrease = { #For effects that need to happen before fluidity changes
+			min_value1 = 33 max_value1 = 37
+			min_value2 = 66 max_value2 = 70
+			pre = yes
+		}
 		hidden_effect = {
 			subtract_variable = { which = casteFluidityVar value = 5 }
 			if = { limit = { NOT = { check_variable = { casteFluidityVar = 0 } } }
 				set_variable = { which = casteFluidityVar value = 0 }
 			}
-			check_fluidity_change = {
+			check_fluidity_decrease = { #For effects that happen after fluidity changes
 				min_value1 = 28 max_value1 = 32
 				min_value2 = 61 max_value2 = 65
 			}
@@ -591,12 +666,17 @@ caste_fluidity_decrease_small = {
 caste_fluidity_decrease_medium = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_decrease_medium_tt
+		check_fluidity_decrease = { #For effects that need to happen before fluidity changes
+			min_value1 = 33 max_value1 = 42
+			min_value2 = 66 max_value2 = 75
+			pre = yes
+		}
 		hidden_effect = {
 			subtract_variable = { which = casteFluidityVar value = 10 }
 			if = { limit = { NOT = { check_variable = { casteFluidityVar = 0 } } }
 				set_variable = { which = casteFluidityVar value = 0 }
 			}
-			check_fluidity_change = {
+			check_fluidity_decrease = { #For effects that happen after fluidity changes
 				min_value1 = 23 max_value1 = 32
 				min_value2 = 56 max_value2 = 65
 			}
@@ -611,12 +691,17 @@ caste_fluidity_decrease_medium = {
 caste_fluidity_decrease_large = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_decrease_large_tt
+		check_fluidity_decrease = { #For effects that need to happen before fluidity changes
+			min_value1 = 33 max_value1 = 47
+			min_value2 = 66 max_value2 = 80
+			pre = yes
+		}
 		hidden_effect = {
 			subtract_variable = { which = casteFluidityVar value = 15 }
 			if = { limit = { NOT = { check_variable = { casteFluidityVar = 0 } } }
 				set_variable = { which = casteFluidityVar value = 0 }
 			}
-			check_fluidity_change = {
+			check_fluidity_decrease = { #For effects that happen after fluidity changes
 				min_value1 = 18 max_value1 = 32
 				min_value2 = 51 max_value2 = 65
 			}
@@ -631,12 +716,17 @@ caste_fluidity_decrease_large = {
 caste_fluidity_decrease_huge = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_decrease_huge_tt
+		check_fluidity_decrease = { #For effects that need to happen before fluidity changes
+			min_value1 = 33 max_value1 = 52
+			min_value2 = 66 max_value2 = 85
+			pre = yes
+		}
 		hidden_effect = {
 			subtract_variable = { which = casteFluidityVar value = 20 }
 			if = { limit = { NOT = { check_variable = { casteFluidityVar = 0 } } }
 				set_variable = { which = casteFluidityVar value = 0 }
 			}
-			check_fluidity_change = {
+			check_fluidity_decrease = { #For effects that happen after fluidity changes
 				min_value1 = 13 max_value1 = 32
 				min_value2 = 46 max_value2 = 65
 			}
@@ -651,12 +741,17 @@ caste_fluidity_decrease_huge = {
 caste_fluidity_decrease_gargantuan = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_decrease_gargantuan_tt
+		check_fluidity_decrease = { #For effects that need to happen before fluidity changes
+			min_value1 = 33 max_value1 = 57
+			min_value2 = 66 max_value2 = 90
+			pre = yes
+		}
 		hidden_effect = {
 			subtract_variable = { which = casteFluidityVar value = 25 }
 			if = { limit = { NOT = { check_variable = { casteFluidityVar = 0 } } }
 				set_variable = { which = casteFluidityVar value = 0 }
 			}
-			check_fluidity_change = {
+			check_fluidity_decrease = { #For effects that happen after fluidity changes
 				min_value1 = 8 max_value1 = 32
 				min_value2 = 41 max_value2 = 65
 			}
