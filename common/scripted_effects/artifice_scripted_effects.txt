@@ -366,7 +366,7 @@ update_artifice_points = {
 				}
 			}
 
-			#Varainé artificer cap from allies/subjects
+			#Varaine artificer cap from allies/subjects
 			if = {
 				limit = {
 					has_government_attribute = is_varaine_alchemical_corps
@@ -2402,24 +2402,6 @@ artifice_research_select_innovation_options_effect = {
 				trigger = {
 					NOT = {
 						OR = {
-							has_country_flag = research_artifice_invention_conversation_calibrator
-							has_country_flag = unlocked_artifice_invention_conversation_calibrator
-							has_country_flag = artifice_researching_economic
-							has_country_flag = artifice_researching_military
-						}
-					}
-					culture_group = gnomish
-				}
-				set_country_flag = research_artifice_invention_conversation_calibrator
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
-			}
-			1 = {
-				trigger = {
-					NOT = {
-						OR = {
 							has_country_flag = research_artifice_invention_voice_vessels
 							has_country_flag = unlocked_artifice_invention_voice_vessels
 							has_country_flag = artifice_researching_economic
@@ -3756,6 +3738,24 @@ artifice_research_select_innovation_options_effect = {
 				}
 			}
 			#Society
+			1 = {
+				trigger = {
+					NOT = {
+						OR = {
+							has_country_flag = research_artifice_invention_conversation_calibrator
+							has_country_flag = unlocked_artifice_invention_conversation_calibrator
+							has_country_flag = artifice_researching_economic
+							has_country_flag = artifice_researching_military
+						}
+					}
+					culture_group = gnomish
+				}
+				set_country_flag = research_artifice_invention_conversation_calibrator
+				subtract_variable = {
+					which = artificeResearchOptionsTier2
+					value = 1
+				}
+			}
 			1 = {
 				trigger = {
 					NOT = {
@@ -5628,6 +5628,7 @@ artifice_magic_switch_to_mixed_mode = {
 	if = {
 		limit = { NOT = { has_country_flag = magic_artificery_mixed } }
 		add_country_modifier = { name = magic_artificery_mixed_mod duration = -1 }
+		custom_tooltip = magic_artificery_mixed_tt
 		hidden_effect = {
 			change_mana = yes #update mana bar
 			clr_country_flag = magic_artificery_mage_only
@@ -6175,18 +6176,6 @@ artifice_unlock_random_invention_effect = {
 						}
 					}
 					set_country_flag = unlocked_artifice_invention_great_processor
-				}
-				1 = {
-					trigger = {
-						NOT = {
-							OR = {
-								has_country_flag = research_artifice_invention_conversation_calibrator
-								has_country_flag = unlocked_artifice_invention_conversation_calibrator
-							}
-						}
-						culture_group = gnomish
-					}
-					set_country_flag = unlocked_artifice_invention_conversation_calibrator
 				}
 				1 = {
 					trigger = {
@@ -6783,6 +6772,18 @@ artifice_unlock_random_invention_effect = {
 					trigger = {
 						NOT = {
 							OR = {
+								has_country_flag = research_artifice_invention_conversation_calibrator
+								has_country_flag = unlocked_artifice_invention_conversation_calibrator
+							}
+						}
+						culture_group = gnomish
+					}
+					set_country_flag = unlocked_artifice_invention_conversation_calibrator
+				}
+				1 = {
+					trigger = {
+						NOT = {
+							OR = {
 								has_country_flag = research_artifice_invention_game_of_khet
 								has_country_flag = unlocked_artifice_invention_game_of_khet
 							}
@@ -7228,6 +7229,7 @@ disable_all_artifice_inventions = {
 		remove_estate_privilege = artifice_invention_plane_of_water_teleporter
 		remove_estate_privilege = artifice_invention_self_cleaning_parchment
 		remove_estate_privilege = artifice_invention_superfast_elevators
+		remove_estate_privilege = artifice_invention_box_of_holding
 		# tier 1 society
 		remove_estate_privilege = artifice_invention_viewcatcher
 		remove_estate_privilege = artifice_invention_sending_stones
@@ -7238,13 +7240,11 @@ disable_all_artifice_inventions = {
 		remove_estate_privilege = artifice_invention_fey_spray
 		remove_estate_privilege = artifice_invention_scrapperclaws
 		remove_estate_privilege = artifice_invention_great_processor
-		remove_estate_privilege = artifice_invention_conversation_calibrator
 		# tier 1 military
 		remove_estate_privilege = artifice_invention_portable_turrets
 		remove_estate_privilege = artifice_invention_sparkdrive_rifles
 		remove_estate_privilege = artifice_invention_vorpal_bullets
 		remove_estate_privilege = artifice_invention_magic_missile_deployer
-		remove_estate_privilege = artifice_invention_box_of_holding
 		remove_estate_privilege = artifice_invention_ancestral_golems
 		remove_estate_privilege = artifice_invention_antimagic_field_generator
 		remove_estate_privilege = artifice_invention_believable_ruin_bomb
@@ -7276,6 +7276,7 @@ disable_all_artifice_inventions = {
 		remove_estate_privilege = artifice_invention_mirage_detector_3000
 		remove_estate_privilege = artifice_invention_think_thought_transmitters
 		remove_estate_privilege = artifice_invention_game_of_khet
+		remove_estate_privilege = artifice_invention_conversation_calibrator
 		# tier 2 military
 		remove_estate_privilege = artifice_invention_wandlocks
 		remove_estate_privilege = artifice_invention_balloonboost_packs

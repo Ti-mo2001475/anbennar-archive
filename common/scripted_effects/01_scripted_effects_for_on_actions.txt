@@ -2225,7 +2225,7 @@ succession_culture_religion_effect = {
 	if = {
 		limit = {
 			NOT = { has_reform = elective_monarchy }
-			NOT = { has_reform = polish_elective_monarchy }
+			# NOT = { has_reform = polish_elective_monarchy }
 			NOT = { has_reform = racial_tolerance_reform }
 			has_regency = no
 			NOT = { has_country_flag = had_culture_religion_reaction_event_flag }
@@ -13369,6 +13369,20 @@ startup_1444_effects = {
 		if = {
 			limit = { religion_dragon_turtle_viable = yes }
 			set_country_flag = allowed_dragon_turtle_outside_religon
+		}
+
+		#Tsukqiao No Necromancy
+		if = {
+			limit = {
+				tag = Z60
+			}
+			ban_necromancy = { country = yes }
+		}
+
+		# Setup high temple objects
+		if = {
+			limit = { owns = 4871 }
+			country_event = { id = spirits.021 }
 		}
 	}
 }
