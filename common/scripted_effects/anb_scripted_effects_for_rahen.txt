@@ -430,36 +430,36 @@ on_pre_rigid_caste_fluidity = {
 #Checks if caste fluidity has changed from neutral > fluid or rigid > neutral
 check_fluidity_increase = {
 	if = {
-		limit = { #Checks for neutral > fluid change
+		limit = { #Checks for rigid > neutral change
 			check_variable = { casteFluidityVar = $min_value1$ }
 			NOT = { check_variable = { casteFluidityVar = $max_value1$ } }
 		}
-		on_[[pre]pre_]fluid_caste_fluidity = yes
+		on_[[pre]pre_]neutral_caste_fluidity = yes
 	}
 	else_if = {
-		limit = { #Checks for rigid > neutral change
+		limit = { #Checks for neutral > fluid change
 			check_variable = { casteFluidityVar = $min_value2$ }
 			NOT = { check_variable = { casteFluidityVar = $max_value2$ } }
 		}
-		on_[[pre]pre_]neutral_caste_fluidity = yes
+		on_[[pre]pre_]fluid_caste_fluidity = yes
 	}
 }
 
 #Checks if caste fluidity has changed from fluid > neutral or neutral > rigid
 check_fluidity_decrease = {
 	if = {
-		limit = { #Checks for fluid > neutral change
+		limit = { #Checks for neutral > rigid change
 			check_variable = { casteFluidityVar = $min_value1$ }
 			NOT = { check_variable = { casteFluidityVar = $max_value1$ } }
 		}
-		on_[[pre]pre_]neutral_caste_fluidity = yes
+		on_[[pre]pre_]rigid_caste_fluidity = yes
 	}
 	else_if = {
-		limit = { #Checks for neutral > rigid change
+		limit = { #Checks for fluid > neutral change
 			check_variable = { casteFluidityVar = $min_value2$ }
 			NOT = { check_variable = { casteFluidityVar = $max_value2$ } }
 		}
-		on_[[pre]pre_]rigid_caste_fluidity = yes
+		on_[[pre]pre_]neutral_caste_fluidity = yes
 	}
 }
 
