@@ -38,7 +38,10 @@ form_crimson_caehnate = {
 	change_tag = I89
 	custom_tooltip = centaur_unlock_cb_tooltip
 	hidden_effect = { set_country_flag = centaur_special_cb }
-	hidden_effect = { restore_country_name = yes }
+	hidden_effect = {
+		restore_country_name = yes
+		set_country_flag = formed_end_game_tag_flag
+	}
 	swap_non_generic_missions = yes
 	remove_non_electors_emperors_from_empire_effect = yes
 	change_government = tribal
@@ -105,14 +108,6 @@ form_crimson_caehnate = {
 			# centaur_horde_6 = { remove_country_modifier = centaur_horde_6 }
 			
 		# }
-		if = {
-			limit = { has_country_modifier = subjugated_horde }
-			remove_country_modifier = subjugated_horde
-		}
-		if = {
-			limit = { has_country_modifier = settled_horde }
-			remove_country_modifier = settled_horde
-		}
 		add_country_modifier = {
 			name = centaur_zeal_timer
 			duration = 365
@@ -21189,6 +21184,12 @@ deranne_upgrade_dam_scripted_effect = {
 					type = $dam_name$
 					tier = 2
 				}
+				NOT = {
+					has_great_project = {
+						type = $dam_name$
+						tier = 3
+					}
+				}
 			}
 			add_great_project_tier = {
 				type = $dam_name$
@@ -21197,11 +21198,17 @@ deranne_upgrade_dam_scripted_effect = {
 			clr_province_flag = deranne_dam_construction_flag
 			set_province_flag = deranne_dam_tier_3_flag
 		}
-		else_if = {
+		if = {
 			limit = {
 				has_great_project = {
 					type = $dam_name$
 					tier = 1
+				}
+				NOT = {
+					has_great_project = {
+						type = $dam_name$
+						tier = 2
+					}
 				}
 			}
 			add_great_project_tier = {
@@ -21211,11 +21218,19 @@ deranne_upgrade_dam_scripted_effect = {
 			clr_province_flag = deranne_dam_construction_flag
 			set_province_flag = deranne_dam_tier_2_flag
 		}	
-		else_if = {
+		if = {
 			limit = {
 				has_great_project = {
 					type = $dam_name$
 					tier = 0
+				}
+				NOT = {
+					OR = {
+						has_great_project = {
+							type = $dam_name$
+							tier = 1
+						}
+					}
 				}
 			}
 			add_great_project_tier = {
@@ -23142,6 +23157,7 @@ anzara_shalazar_convert_effect = { #This is done so it targets provinces not you
 				NOT = {
 					has_province_modifier = zerat_prototype_ashhana_compounds
 					has_province_modifier = zerat_prototype_ashhana_compounds_upgraded
+					has_province_modifier = zerat_the_shadow_compounds
 				}
 			}
 		}
@@ -23154,6 +23170,7 @@ anzara_shalazar_convert_effect = { #This is done so it targets provinces not you
 				NOT = {
 					has_province_modifier = zerat_prototype_ashhana_compounds
 					has_province_modifier = zerat_prototype_ashhana_compounds_upgraded
+					has_province_modifier = zerat_the_shadow_compounds
 				}
 			}
 			change_culture = ROOT
@@ -23172,6 +23189,7 @@ anzara_shalazar_convert_effect = { #This is done so it targets provinces not you
 				NOT = {
 					has_province_modifier = zerat_prototype_ashhana_compounds
 					has_province_modifier = zerat_prototype_ashhana_compounds_upgraded
+					has_province_modifier = zerat_the_shadow_compounds
 				}
 			}
 			change_culture = ROOT

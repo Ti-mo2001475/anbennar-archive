@@ -681,7 +681,10 @@ country_decisions = {
 				move_capital_effect = yes
 			}
 			change_tag = B96
-			hidden_effect = { restore_country_name = yes }
+			hidden_effect = {
+				restore_country_name = yes
+				set_country_flag = formed_end_game_tag_flag
+			}
 			#swap_non_generic_missions = yes #for later lol
 			add_country_modifier = {
 				name = "centralization_modifier"
@@ -866,7 +869,10 @@ country_decisions = {
 				}
 			}
 			change_tag = A13
-			hidden_effect = { restore_country_name = yes }
+			hidden_effect = {
+				restore_country_name = yes
+				set_country_flag = formed_end_game_tag_flag
+			}
 			swap_non_generic_missions = yes
 			remove_non_electors_emperors_from_empire_effect = yes
 			increase_government_rank_scripted_effect = { rank = 2 }
@@ -943,7 +949,10 @@ country_decisions = {
 				move_capital_effect = yes
 			}
 			change_tag = A01
-			hidden_effect = { restore_country_name = yes }
+			hidden_effect = {
+				restore_country_name = yes
+				set_country_flag = formed_end_game_tag_flag
+			}
 			swap_non_generic_missions = yes
 			remove_non_electors_emperors_from_empire_effect = yes
 			increase_government_rank_scripted_effect = { rank = 2 }
@@ -1029,7 +1038,10 @@ country_decisions = {
 		}
 		effect = {
 			change_tag = A97
-			hidden_effect = { restore_country_name = yes }
+			hidden_effect = {
+				restore_country_name = yes
+				set_country_flag = formed_end_game_tag_flag
+			}
 			remove_non_electors_emperors_from_empire_effect = yes
 			swap_non_generic_missions = yes
 			increase_government_rank_scripted_effect = { rank = 2 }
@@ -1175,7 +1187,10 @@ country_decisions = {
 			}
 			change_tag = A79
 			country_event = { id = ideagroups.1 } #Change ideas
-			hidden_effect = { restore_country_name = yes }
+			hidden_effect = {
+				restore_country_name = yes
+				set_country_flag = formed_end_game_tag_flag
+			}
 			swap_non_generic_missions = yes
 			remove_non_electors_emperors_from_empire_effect = yes
 			increase_government_rank_scripted_effect = { rank = 3 }
@@ -1264,13 +1279,15 @@ country_decisions = {
 			remove_non_electors_emperors_from_empire_effect = yes
 			increase_government_rank_scripted_effect = { rank = 2 }
 			hidden_effect = {
-				A19 = { #Iochand mission use this tag as trigger
-					override_country_name = COLONIAL_ENDRALLIANDE_Daccasded
-				}
                 if = {
                     limit = { ai = yes }
                     southroy_area = { add_permanent_claim = A80 }
                 }
+				else = {
+					A19 = { #Iochand mission use this tag as trigger
+						override_country_name = COLONIAL_ENDRALLIANDE_Daccasded
+					}
+				}
 				if = {
 					limit = { has_country_modifier = restructuring_administration }
 					remove_country_modifier = restructuring_administration

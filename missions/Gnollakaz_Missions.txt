@@ -241,7 +241,7 @@ gnollakaz_3 = {
 		provinces_to_highlight = {  
 			OR = {
 				AND = {
-					NOT = { owned_by = ROOT }
+					NOT = { owned_by = ROOT owned_by = L28 }
 					OR = {
 						province_group = mothers_sorrow_group
 						AND = {
@@ -261,18 +261,21 @@ gnollakaz_3 = {
 		} 
 
 		trigger = {  
-			mothers_sorrow_group = { type = all owned_by = ROOT }
+			mothers_sorrow_group = { type = all OR = { owned_by = ROOT owned_by = L28 } } # L28 is koroshesh
 			custom_trigger_tooltip = {
 				tooltip = U09_kheterata_province_autonomy_tt
 				kheterata_region = {
 					type = all
 					OR = {
 						area = elizna_area
-						AND = {
-							owned_by = ROOT
-							OR = {
-								NOT = { local_autonomy = 30 }
-								has_province_modifier = autonomy_decreased
+						OR = {
+							owned_by = L28
+							AND = {
+								owned_by = ROOT
+								OR = {
+									NOT = { local_autonomy = 30 }
+									has_province_modifier = autonomy_decreased
+								}
 							}
 						}
 					}
