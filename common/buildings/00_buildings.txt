@@ -423,7 +423,50 @@ barracks = {
 				name = G46_barracks_buff
 				duration = -1
 			}
-		}		
+		}
+
+		#The Defiant
+		if = {
+			limit = {
+				owner = { 
+					owns = 4917 
+					capital_scope = { superregion = yanshen_superregion }
+					OR = {
+						primary_culture = jiangyang
+						accepted_culture = jiangyang
+					}
+					NOT = { religion = devouring_path }
+					NOT = { religion = black_doctrine }
+				}
+				4917 = {
+					has_great_project = {
+						type = thousand_words_assembly
+						tier = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					4917 = {
+						has_great_project = {
+							type = thousand_words_assembly
+							tier = 3
+						}
+					}
+					has_building = soldier_households 
+				}
+				add_province_modifier = {
+					name = the_defiant_barracks_buff_upgrade
+					duration = -1
+				}
+			}
+			else = {
+				add_province_modifier = {
+					name = the_defiant_barracks_buff
+					duration = -1
+				}
+			}
+		}
 	} 
 	on_destroyed = {
 		on_manpower_building_destroyed_effect = yes
@@ -451,6 +494,9 @@ barracks = {
 			limit = { FROM = { has_country_flag = degakheion_manpower_building_buff } }
 			remove_province_modifier = G46_barracks_buff
 		}
+
+		remove_province_modifier = the_defiant_barracks_buff
+		remove_province_modifier = the_defiant_barracks_buff_upgrade
 	}
 	on_obsolete = {
 		gronstunad_building_authority_effect = { value = -1 }
@@ -1217,6 +1263,48 @@ regimental_camp = {
 			}
 		}
 
+		#The Defiant
+		if = {
+			limit = {
+				owner = { 
+					owns = 4917 
+					capital_scope = { superregion = yanshen_superregion }
+					OR = {
+						primary_culture = jiangyang
+						accepted_culture = jiangyang
+					}
+					NOT = { religion = devouring_path }
+					NOT = { religion = black_doctrine }
+				}
+				4917 = {
+					has_great_project = {
+						type = thousand_words_assembly
+						tier = 2
+					}
+				}
+			}
+			if = {
+				limit = {
+					4917 = {
+						has_great_project = {
+							type = thousand_words_assembly
+							tier = 3
+						}
+					}
+					has_building = soldier_households 
+				}
+				add_province_modifier = {
+					name = the_defiant_regiment_camp_buff_upgrade
+					duration = -1
+				}
+			}
+			else = {
+				add_province_modifier = {
+					name = the_defiant_regiment_camp_buff
+					duration = -1
+				}
+			}
+		}
 	}
 	on_destroyed = {
 		#update_improved_military_buildings_modifier = { #1.35
@@ -1234,6 +1322,9 @@ regimental_camp = {
 			limit = { has_province_modifier = zerat_regimental_camp }
 			remove_province_modifier = zerat_regimental_camp
 		}
+
+		remove_country_modifier = the_defiant_regiment_camp_buff
+		remove_country_modifier = the_defiant_regiment_camp_buff_upgrade
 	}
 	on_obsolete = {
 		gronstunad_building_authority_effect = { value = -2 }
@@ -2143,6 +2234,49 @@ training_fields = {
 				duration = -1
 			}
 		}
+
+		#The Defiant
+		if = {
+			limit = {
+				owner = { 
+					owns = 4917 
+					capital_scope = { superregion = yanshen_superregion }
+					OR = {
+						primary_culture = jiangyang
+						accepted_culture = jiangyang
+					}
+					NOT = { religion = devouring_path }
+					NOT = { religion = black_doctrine }
+				}
+				4917 = {
+					has_great_project = {
+						type = thousand_words_assembly
+						tier = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					4917 = {
+						has_great_project = {
+							type = thousand_words_assembly
+							tier = 3
+						}
+					}
+					has_building = soldier_households 
+				}
+				add_province_modifier = {
+					name = the_defiant_barracks_buff_upgrade
+					duration = -1
+				}
+			}
+			else = {
+				add_province_modifier = {
+					name = the_defiant_barracks_buff
+					duration = -1
+				}
+			}
+		}
 	}
 	on_destroyed = {
 		on_manpower_building_destroyed_effect = yes
@@ -2169,6 +2303,9 @@ training_fields = {
 				# add_manpower = -1
 			# }
 		# }		
+
+		remove_province_modifier = the_defiant_barracks_buff
+		remove_province_modifier = the_defiant_barracks_buff_upgrade
 	}
 	on_obsolete = {
 		remove_development_from_building = {
@@ -2840,6 +2977,49 @@ conscription_center = {
 				duration = -1
 			}
 		}
+
+		#The Defiant
+		if = {
+			limit = {
+				owner = { 
+					owns = 4917 
+					capital_scope = { superregion = yanshen_superregion }
+					OR = {
+						primary_culture = jiangyang
+						accepted_culture = jiangyang
+					}
+					NOT = { religion = devouring_path }
+					NOT = { religion = black_doctrine }
+				}
+				4917 = {
+					has_great_project = {
+						type = thousand_words_assembly
+						tier = 2
+					}
+				}
+			}
+			if = {
+				limit = {
+					4917 = {
+						has_great_project = {
+							type = thousand_words_assembly
+							tier = 3
+						}
+					}
+					has_building = soldier_households 
+				}
+				add_province_modifier = {
+					name = the_defiant_regiment_camp_buff_upgrade
+					duration = -1
+				}
+			}
+			else = {
+				add_province_modifier = {
+					name = the_defiant_regiment_camp_buff
+					duration = -1
+				}
+			}
+		}
 	}
 	on_destroyed = {
 		remove_development_from_building = {
@@ -2858,6 +3038,9 @@ conscription_center = {
 			limit = { has_province_modifier = zerat_conscription_center }
 			remove_province_modifier = zerat_conscription_center
 		}
+
+		remove_country_modifier = the_defiant_regiment_camp_buff
+		remove_country_modifier = the_defiant_regiment_camp_buff_upgrade
 	}
 	on_obsolete = {
 	}
@@ -4410,6 +4593,48 @@ soldier_households = {
 				duration = -1
 			}
 		}
+
+		#The Defiant
+		if = {
+			limit = {
+				owner = { 
+					owns = 4917 
+					capital_scope = { superregion = yanshen_superregion }
+					OR = {
+						primary_culture = jiangyang
+						accepted_culture = jiangyang
+					}
+					NOT = { religion = devouring_path }
+					NOT = { religion = black_doctrine }
+				}
+				4917 = {
+					has_great_project = {
+						type = thousand_words_assembly
+						tier = 3
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_manpower_building_trigger = yes
+				}
+				remove_province_modifier = the_defiant_barracks_buff
+				add_province_modifier = {
+					name = the_defiant_barracks_buff_upgrade
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					has_forcelimit_building_trigger = yes
+				}
+				remove_province_modifier = the_defiant_regiment_camp_buff
+				add_province_modifier = {
+					name = the_defiant_regiment_camp_buff_upgrade
+					duration = -1
+				}
+			}
+		}
 	}
 
 	on_destroyed = {
@@ -4475,6 +4700,28 @@ soldier_households = {
 		if = {
 			limit = { has_province_modifier = zerat_soldiers_household }
 			remove_province_modifier = zerat_soldiers_household
+		}
+
+		#The Defiant
+		if = {
+			limit = {
+				has_province_modifier = the_defiant_barracks_buff_upgrade
+			}
+			remove_province_modifier = the_defiant_barracks_buff_upgrade
+			add_province_modifier = {
+				name = the_defiant_barracks_buff
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				has_province_modifier = the_defiant_regiment_camp_buff_upgrade
+			}
+			remove_province_modifier = the_defiant_regiment_camp_buff_upgrade
+			add_province_modifier = {
+				name = the_defiant_regiment_camp_buff
+				duration = -1
+			}
 		}
 	}
 	on_obsolete = {

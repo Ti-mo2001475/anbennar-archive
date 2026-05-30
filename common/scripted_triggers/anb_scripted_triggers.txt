@@ -6075,3 +6075,30 @@ has_any_state_edict = {
 		has_state_edict = edict_castanor_patrician_administration
 	}
 }
+
+is_member_of_yanszin_league_scripted_trigger = {
+	custom_trigger_tooltip = {
+		tooltip = is_member_of_yanszin_league_TT
+		OR = {
+			is_or_was_tag = { tag = Y10 }
+			is_or_was_tag = { tag = Y04 }
+			is_or_was_tag = { tag = Y08 }
+			is_or_was_tag = { tag = Y07 }
+			is_or_was_tag = { tag = Y06 }
+			is_or_was_tag = { tag = Z59 }
+			is_or_was_tag = { tag = V22 }
+		}
+	}
+}
+
+can_use_thousand_words_assembly_scripted_trigger = {
+	OR = {
+		is_member_of_yanszin_league_scripted_trigger = yes
+		full_idea_group = trade_ideas
+	}
+	OR = {
+		owner = { primary_culture = jiangszun }
+		accepted_culture = jiangszun
+	}
+	has_estate = estate_eunuchs_anb
+}

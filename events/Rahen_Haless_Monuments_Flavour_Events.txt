@@ -1,0 +1,65 @@
+namespace = rahen_haless_monument_flavour
+
+country_event = { #Port of Two Spirits modifier Tracker
+	id = rahen_haless_monument_flavour.1
+	title = rahen_haless_monument_flavour.1.t
+	desc = rahen_haless_monument_flavour.1.d
+	picture = ULMISBAR_eventPicture
+
+	hidden = yes
+	is_triggered_only = yes
+	trigger = {
+		owns = 4774
+		4774 = {
+			has_great_project = {
+				type = port_of_two_spirits
+				tier = 2
+			}
+		}
+	}
+
+	option = {
+		name = rahen_haless_monument_flavour.1.a
+
+		every_owned_province = {
+			limit = {
+				NOT = { province_has_center_of_trade_of_level = 1 }
+				OR = {
+					has_province_modifier = port_of_two_spirits_trade_center_modifier_1
+					has_province_modifier = port_of_two_spirits_trade_center_modifier_2
+				}
+			}
+			remove_province_modifier = port_of_two_spirits_trade_center_modifier_1
+			remove_province_modifier = port_of_two_spirits_trade_center_modifier_2
+		}
+		every_owned_province = {
+			limit = {
+				province_has_center_of_trade_of_level = 1
+				NOT = {
+					has_province_modifier = port_of_two_spirits_trade_center_modifier_1
+					has_province_modifier = port_of_two_spirits_trade_center_modifier_2
+				}
+			}
+			if = {
+				limit = {
+					4774 = {
+						has_great_project = {
+							type = port_of_two_spirits
+							tier = 3
+						}
+					}
+				}
+				add_province_modifier = {
+					name = port_of_two_spirits_trade_center_modifier_2
+					duration = -1
+				}
+			}
+			else = {
+				add_province_modifier = {
+					name = port_of_two_spirits_trade_center_modifier_1
+					duration = -1
+				}
+			}
+		}
+	}
+}

@@ -4254,3 +4254,1032 @@ nomsyulhan_crossing = {
 		}
 	}
 }
+
+port_of_two_spirits = {
+	start = 4774 #Kuta
+
+	date = 1444.1.1
+
+	can_be_moved = no
+
+	starting_tier = 0
+
+	#project type
+	type = monument
+
+	build_trigger = {
+		if = {
+			limit = { has_province_flag = destroyed_monument_flag }
+			custom_trigger_tooltip = {
+				tooltip = monument_destroyed_tt
+				NOT = { has_province_flag = destroyed_monument_flag }
+			}
+		}
+	}
+
+	can_use_modifiers_trigger = {
+		owner = {
+			NOT = { tag = Y65 }
+			NOT = { religion = devouring_path }
+		}
+	}
+
+	can_upgrade_trigger = {
+		owner = {
+			NOT = { tag = Y65 }
+			NOT = { religion = devouring_path }
+		}
+	}
+
+	keep_trigger = {}
+
+	#tier data
+	tier_0 = {
+		upgrade_time = {
+			months = 0
+		}
+
+		cost_to_upgrade = {
+			factor = 0
+		}
+
+		province_modifiers = {
+
+		}
+
+		area_modifier = {
+
+		}
+
+		country_modifiers = {
+
+		}
+
+		on_upgraded = {
+			
+		}
+	}
+
+	tier_1 = {
+		upgrade_time = {
+			months = 120
+		}
+
+		cost_to_upgrade = {
+			factor = 1000
+		}
+
+		province_modifiers = {
+			province_trade_power_value = 3
+			local_development_cost = -0.10
+		}
+
+		area_modifier = {
+			
+		}
+
+		region_modifier = {
+			
+		}
+
+		country_modifiers = {
+
+		}
+
+		on_upgraded = {
+			4774 = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+		}
+	}
+
+	tier_2 = {
+		upgrade_time = {
+			months = 240
+		}
+
+		cost_to_upgrade = {
+			factor = 2500
+		}
+
+		province_modifiers = {
+			province_trade_power_value = 6
+			local_development_cost = -0.20
+		}
+
+		area_modifier = {
+
+		}
+
+		region_modifier = {
+			
+		}
+
+		country_modifiers = {
+
+		}
+
+		conditional_modifier = {
+			tooltip_potential = { owner = { religion = mystic_accord } }
+			trigger = { owner = { religion = mystic_accord } }
+			modifier = {
+				global_missionary_strength = 0.02
+				tolerance_own = 1
+			}
+		}
+
+		conditional_modifier = {
+			tooltip_potential = { owner = { NOT = { religion = mystic_accord } } }
+			trigger = { owner = { NOT = { religion = mystic_accord } } }
+			modifier = {
+				global_colonial_growth = 10
+				ship_trade_power_modifier = 0.15
+			}
+		}
+
+		on_upgraded = {
+			4774 = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+			if = {
+				limit = {
+					owner = { NOT = { religion = mystic_accord } }
+				}
+				custom_tooltip = port_of_two_spirits_trade_center_modifier_1_TT
+				hidden_effect = {
+					every_owned_province = {
+						limit = { province_has_center_of_trade_of_level = 1 }
+						add_province_modifier = {
+							name = port_of_two_spirits_trade_center_modifier_1
+							duration = -1
+						}
+					}
+				}
+				custom_tooltip = port_of_two_spirits_MA_teaser_TT
+			}
+			else = {
+				custom_tooltip = port_of_two_spirits_NON_MA_teaser_TT
+			}
+		}
+	}
+
+	tier_3 = {
+		
+		upgrade_time = {
+			months = 480
+		}
+
+		cost_to_upgrade = {
+			factor = 5000
+		}
+
+		province_modifiers = {
+			province_trade_power_value = 10
+			local_development_cost = -0.35
+		}
+
+		area_modifier = {
+
+		}
+
+		region_modifier = {
+			
+		}
+
+		country_modifiers = {
+
+		}
+
+		on_upgraded = {
+			4774 = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+				add_permanent_province_modifier = {
+					name = JY_LF_port
+					duration = -1
+				}
+			}
+			4963 = { remove_province_modifier = JY_LF_port }
+			if = {
+				limit = {
+					owner = { NOT = { religion = mystic_accord } }
+				}
+				custom_tooltip = port_of_two_spirits_trade_center_modifier_2_TT
+				hidden_effect = {
+					every_owned_province = {
+						remove_province_modifier = port_of_two_spirits_trade_center_modifier_1	
+					}
+					every_owned_province = {
+						limit = { province_has_center_of_trade_of_level = 1 }
+						add_province_modifier = {
+							name = port_of_two_spirits_trade_center_modifier_2
+							duration = -1
+						}
+					}
+				}
+				custom_tooltip = port_of_two_spirits_MA_teaser_TT
+			}
+			else = {
+				custom_tooltip = port_of_two_spirits_3_reward_TT
+				custom_tooltip = port_of_two_spirits_NON_MA_teaser_TT
+			}
+		}
+	}
+}
+
+
+thousand_words_assembly = {
+	start = 4859 #Yanzhong
+
+	date = 1444.1.1
+
+	can_be_moved = no
+
+	starting_tier = 1
+
+	#project type
+	type = monument
+
+	build_trigger = {
+		if = {
+			limit = { has_province_flag = destroyed_monument_flag }
+			custom_trigger_tooltip = {
+				tooltip = monument_destroyed_tt
+				NOT = { has_province_flag = destroyed_monument_flag }
+			}
+		}
+	}
+
+	can_use_modifiers_trigger = {
+		owner = {
+			can_use_thousand_words_assembly_scripted_trigger = yes
+		}
+	}
+
+	can_upgrade_trigger = {
+		owner = {
+			custom_trigger_tooltip = {
+				tooltip = owns_league_of_yanszin_coreland_TT
+				owns_core_province = 4851
+				owns_core_province = 4933
+				owns_core_province = 4855
+				owns_core_province = 4859
+				owns_core_province = 4950
+				owns_core_province = 4858
+				owns_core_province = 4861
+				owns_core_province = 4854
+				owns_core_province = 4853
+				owns_core_province = 4849
+			}
+			can_use_thousand_words_assembly_scripted_trigger = yes
+			if = {
+				limit = {
+					4859 = {
+						has_great_project = {
+							type = thousand_words_assembly
+							tier = 3
+						}
+					}
+				}
+				4844 = {
+					trade_share = {
+						country = ROOT
+						share = 60
+					}
+				}
+				4925 = {
+					trade_share = {
+						country = ROOT
+						share = 60
+					}
+				}
+				4879 = {
+					trade_share = {
+						country = ROOT
+						share = 60
+					}
+				}
+				4859 = {
+					trade_share = {
+						country = ROOT
+						share = 60
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					4859 = {
+						has_great_project = {
+							type = thousand_words_assembly
+							tier = 2
+						}
+					}
+				}
+				OR = {
+					tag = V19 #Yanszin
+					4859 = {
+						trade_share = {
+							country = ROOT
+							share = 50
+						}
+					}
+				}
+			}
+		}
+	}
+
+	keep_trigger = {}
+
+	#tier data
+	tier_0 = {
+		upgrade_time = {
+			months = 0
+		}
+
+		cost_to_upgrade = {
+			factor = 0
+		}
+
+		province_modifiers = {
+
+		}
+
+		area_modifier = {
+
+		}
+
+		country_modifiers = {
+
+		}
+
+		on_upgraded = {
+			
+		}
+	}
+
+	tier_1 = {
+		upgrade_time = {
+			months = 120
+		}
+
+		cost_to_upgrade = {
+			factor = 1000
+		}
+
+		province_modifiers = {
+			local_governing_cost = -0.2
+		}
+
+		area_modifier = {
+			
+		}
+
+		region_modifier = {
+			
+		}
+
+		country_modifiers = {
+			eunuchs_anb_loyalty_modifier = 0.05
+		}
+
+		on_upgraded = {
+			custom_tooltip = thousand_words_assembly_yanszin_buff_1_TT
+			hidden_effect = {
+				4851 = {
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_1
+						duration = -1
+					}
+				}
+				4933 = {
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_1
+						duration = -1
+					}
+				}
+				4855 = {
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_1
+						duration = -1
+					}
+				}
+				4859 = {
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_1
+						duration = -1
+					}
+				}
+				4950 = {
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_1
+						duration = -1
+					}
+				}
+				4858 = {
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_1
+						duration = -1
+					}
+				}
+				4861 = {
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_1
+						duration = -1
+					}
+				}
+				4854 = {
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_1
+						duration = -1
+					}
+				}
+				4853 = {
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_1
+						duration = -1
+					}
+				}
+				4849 = {
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_1
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	tier_2 = {
+		upgrade_time = {
+			months = 240
+		}
+
+		cost_to_upgrade = {
+			factor = 2500
+		}
+
+		province_modifiers = {
+			local_governing_cost = -0.4
+		}
+
+		area_modifier = {
+
+		}
+
+		region_modifier = {
+			
+		}
+
+		country_modifiers = {
+			eunuchs_anb_loyalty_modifier = 0.10
+			placed_merchant_power = 5
+		}
+
+		on_upgraded = {
+			custom_tooltip = thousand_words_assembly_agendas_merchant_1_TT
+			custom_tooltip = thousand_words_assembly_yanszin_buff_2_TT
+			hidden_effect = {
+				4851 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_2
+						duration = -1
+					}
+				}
+				4933 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_2
+						duration = -1
+					}
+				}
+				4855 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_2
+						duration = -1
+					}
+				}
+				4859 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_2
+						duration = -1
+					}
+				}
+				4950 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_2
+						duration = -1
+					}
+				}
+				4858 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_2
+						duration = -1
+					}
+				}
+				4861 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_2
+						duration = -1
+					}
+				}
+				4854 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_2
+						duration = -1
+					}
+				}
+				4853 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_2
+						duration = -1
+					}
+				}
+				4849 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_2
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	tier_3 = {
+		
+		upgrade_time = {
+			months = 480
+		}
+
+		cost_to_upgrade = {
+			factor = 5000
+		}
+
+		province_modifiers = {
+			local_governing_cost = -0.6
+		}
+
+		area_modifier = {
+
+		}
+
+		region_modifier = {
+			
+		}
+
+		country_modifiers = {
+			eunuchs_anb_loyalty_modifier = 0.10
+			placed_merchant_power = 10
+		}
+
+		on_upgraded = {
+			custom_tooltip = thousand_words_assembly_agendas_merchant_2_TT
+			custom_tooltip = thousand_words_assembly_yanszin_buff_3_TT
+			hidden_effect = {
+				4851 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_3
+						duration = -1
+					}
+				}
+				4933 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_3
+						duration = -1
+					}
+				}
+				4855 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_3
+						duration = -1
+					}
+				}
+				4859 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_3
+						duration = -1
+					}
+				}
+				4950 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_3
+						duration = -1
+					}
+				}
+				4858 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_3
+						duration = -1
+					}
+				}
+				4861 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_3
+						duration = -1
+					}
+				}
+				4854 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_3
+						duration = -1
+					}
+				}
+				4853 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_3
+						duration = -1
+					}
+				}
+				4849 = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
+					add_province_modifier = {
+						name = thousand_words_assembly_yanszin_buff_3
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+
+the_defiant = {
+	start = 4917 #Jiangchang
+
+	date = 1444.1.1
+
+	can_be_moved = no
+
+	starting_tier = 1
+
+	#project type
+	type = monument
+
+	build_trigger = {
+
+	}
+
+	can_use_modifiers_trigger = {
+		owner = {
+			capital_scope = { superregion = yanshen_superregion }
+			OR = {
+				primary_culture = jiangyang
+				accepted_culture = jiangyang
+			}
+			NOT = { religion = devouring_path }
+			NOT = { religion = black_doctrine }
+		}
+	}
+
+	can_upgrade_trigger = {
+		owner = {
+			capital_scope = { superregion = yanshen_superregion }
+			OR = {
+				primary_culture = jiangyang
+				accepted_culture = jiangyang
+			}
+			NOT = { religion = devouring_path }
+			NOT = { religion = black_doctrine }
+		}
+	}
+
+	keep_trigger = {}
+
+	#tier data
+	tier_0 = {
+		upgrade_time = {
+			months = 0
+		}
+
+		cost_to_upgrade = {
+			factor = 0
+		}
+
+		province_modifiers = {
+
+		}
+
+		area_modifier = {
+
+		}
+
+		country_modifiers = {
+
+		}
+
+		on_upgraded = {
+			
+		}
+	}
+
+	tier_1 = {
+		upgrade_time = {
+			months = 120
+		}
+
+		cost_to_upgrade = {
+			factor = 1000
+		}
+
+		province_modifiers = {
+			local_defensiveness = 0.1
+			local_fort_maintenance_modifier = -0.2
+		}
+
+		area_modifier = {
+			
+		}
+
+		region_modifier = {
+			
+		}
+
+		country_modifiers = {
+
+		}
+
+		on_upgraded = {
+			custom_tooltip = the_defiant_barracks_TT
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_manpower_building_trigger = yes
+					}
+					add_province_modifier = {
+						name = the_defiant_barracks_buff
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	tier_2 = {
+		upgrade_time = {
+			months = 240
+		}
+
+		cost_to_upgrade = {
+			factor = 2500
+		}
+
+		province_modifiers = {
+			local_defensiveness = 0.2
+			local_fort_maintenance_modifier = -0.4		
+		}
+
+		area_modifier = {
+
+		}
+
+		region_modifier = {
+			
+		}
+
+		country_modifiers = {
+
+		}
+
+		on_upgraded = {
+			custom_tooltip = the_defiant_barracks_TT
+			custom_tooltip = the_defiant_regiment_camps_TT
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_forcelimit_building_trigger = yes
+					}
+					add_province_modifier = {
+						name = the_defiant_barracks_buff
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	tier_3 = {
+		
+		upgrade_time = {
+			months = 480
+		}
+
+		cost_to_upgrade = {
+			factor = 5000
+		}
+
+		province_modifiers = {
+			local_defensiveness = 0.33
+			local_fort_maintenance_modifier = -0.6
+		}
+
+		area_modifier = {
+
+		}
+
+		region_modifier = {
+			
+		}
+
+		country_modifiers = {
+
+		}
+
+		on_upgraded = {
+			custom_tooltip = the_defiant_barracks_TT
+			custom_tooltip = the_defiant_regiment_camps_TT
+			custom_tooltip = the_defiant_soldier_household_TT
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_building = soldier_households
+						has_manpower_building_trigger = yes
+					}
+					remove_province_modifier = the_defiant_barracks_buff
+					add_province_modifier = {
+						name = the_defiant_barracks_buff_upgrade
+						duration = -1
+					}
+				}
+				every_owned_province = {
+					limit = {
+						has_building = soldier_households
+						has_forcelimit_building_trigger = yes
+					}
+					remove_province_modifier = the_defiant_regiment_camp_buff
+					add_province_modifier = {
+						name = the_defiant_regiment_camp_buff_upgrade
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+
+house_of_fire_and_water = {
+	start = 4949 #Louyip
+
+	date = 1444.1.1
+
+	can_be_moved = no
+
+	starting_tier = 1
+
+	#project type
+	type = monument
+
+	build_trigger = {
+
+	}
+
+	can_use_modifiers_trigger = {
+
+	}
+
+	can_upgrade_trigger = {
+
+	}
+
+	keep_trigger = {}
+
+	#tier data
+	tier_0 = {
+		upgrade_time = {
+			months = 0
+		}
+
+		cost_to_upgrade = {
+			factor = 0
+		}
+
+		province_modifiers = {
+
+		}
+
+		area_modifier = {
+
+		}
+
+		country_modifiers = {
+
+		}
+
+		on_upgraded = {
+			
+		}
+	}
+
+	tier_1 = {
+		upgrade_time = {
+			months = 120
+		}
+
+		cost_to_upgrade = {
+			factor = 1000
+		}
+
+		province_modifiers = {
+
+		}
+
+		area_modifier = {
+			
+		}
+
+		region_modifier = {
+			
+		}
+
+		country_modifiers = {
+
+		}
+
+		on_upgraded = {
+			
+		}
+	}
+
+	tier_2 = {
+		upgrade_time = {
+			months = 240
+		}
+
+		cost_to_upgrade = {
+			factor = 2500
+		}
+
+		province_modifiers = {
+			
+		}
+
+		area_modifier = {
+
+		}
+
+		region_modifier = {
+			
+		}
+
+		country_modifiers = {
+
+		}
+
+		on_upgraded = {
+			
+		}
+	}
+
+	tier_3 = {
+		
+		upgrade_time = {
+			months = 480
+		}
+
+		cost_to_upgrade = {
+			factor = 5000
+		}
+
+		province_modifiers = {
+			
+		}
+
+		area_modifier = {
+
+		}
+
+		region_modifier = {
+			
+		}
+
+		country_modifiers = {
+
+		}
+
+		on_upgraded = {
+
+		}
+	}
+}
