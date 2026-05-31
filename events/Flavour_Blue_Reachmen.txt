@@ -1,0 +1,527 @@
+namespace = flavour_blue_reachmen
+
+# Promotion
+country_event = {
+    id = flavour_blue_reachmen.1
+    title = flavour_blue_reachmen.1.t
+    desc = flavour_blue_reachmen.1.desc
+    picture = ELECTION_REPUBLICAN_eventPicture
+    is_triggered_only = yes
+    option = {
+        name = flavour_blue_reachmen.1.a
+        random_known_country = {
+            limit = { has_country_flag = BR_former_vic_leader@ROOT }
+            every_core_province = {
+                add_permanent_claim = ROOT
+            }
+            if = {
+                limit = {
+                    tag = Z22 # Celmaldor
+                    overlord_of = Z21 # Serpentgard
+                }
+                Z21 = { grant_independence = yes }
+                ROOT = { create_march = Z21 }
+            }
+            clr_country_flag = BR_former_vic_leader@ROOT
+        }
+    }
+}
+
+# Fate of the Adshaws
+country_event = {
+    id = flavour_blue_reachmen.2
+    title = flavour_blue_reachmen.2.t
+    desc = flavour_blue_reachmen.2.desc
+    picture = REFORM_eventPicture
+    is_triggered_only = yes
+    option = {
+        name = flavour_blue_reachmen.2.a
+        hidden_effect = {
+            northern_greatwoods_area = {
+                add_core = Z26
+                cede_province = Z26
+            }
+        }
+        create_subject = {
+            subject_type = vic_league_member
+            subject = Z26
+        }
+        Z26 = {
+            add_country_modifier = { name = BR_southern_frontier duration = -1 }
+        }
+    }
+    option = {
+        name = flavour_blue_reachmen.2.b
+        trigger = {
+            hidden_trigger = { exists = Z26 }
+            Z26 = { NOT = { total_development = 150 } }
+        }
+        highlight = yes
+        custom_tooltip = BR_inherit_adshaw_tt
+        inherit = Z26
+        Z26 = {
+            every_core_province = {
+                remove_core = Z26
+            }
+            hidden_effect = {
+                ROOT = {
+                    export_to_variable = { which = adshawDev value = total_development who = PREV }
+                }
+            }
+        }
+        hidden_effect = {
+            while = { limit = { check_variable = { adshawDev = 1 } }
+                add_dip_power = -2
+                change_variable = { adshawDev = -1 }
+            }
+        }
+    }
+    option = {
+        name = flavour_blue_reachmen.2.c
+        trigger = {
+            OR = {
+                NOT = { exists = Z26 }
+                Z26 = { total_development = 150 }
+            }
+        }
+    }
+}
+
+# Lessons of Malliath
+country_event = {
+    id = flavour_blue_reachmen.3
+    title = flavour_blue_reachmen.3.t
+    desc = flavour_blue_reachmen.3.desc
+    picture = BIG_BOOK_eventPicture
+    is_triggered_only = yes
+    option = {
+        name = flavour_blue_reachmen.3.a
+        add_country_modifier = { name = Z21_lessons_of_malliath_1 duration = -1 }
+    }
+}
+
+# Serpent's Protection
+country_event = {
+    id = flavour_blue_reachmen.4
+    title = flavour_blue_reachmen.4.t
+    desc = flavour_blue_reachmen.4.desc
+    picture = CONQUEST_eventPicture
+    is_triggered_only = yes
+    option = {
+        name = flavour_blue_reachmen.4.a
+        ai_chance = { factor = 1 }
+        tooltip = {
+            Z21 = {
+                grant_independence = yes
+                add_historical_friend = ROOT
+            }
+            add_historical_friend = Z21
+            every_subject_country = {
+                limit = { is_subject_of_type = vic_league_member }
+                grant_independence = yes
+                Z21 = {
+                    create_subject = {
+                        subject_type = vic_league_member
+                        subject = PREV
+                    }
+                }
+                remove_country_modifier = BR_reached_out
+            }
+            Z21 = { vassalize = Z22 }
+        }
+        Z21 = { country_event = { id = flavour_blue_reachmen.15 } }
+    }
+    option = {
+        name = flavour_blue_reachmen.4.b
+        ai_chance = {
+            factor = 1
+            modifier = {
+                factor = 0
+                NOT = { army_size = Z21 }
+                has_50_opinion_improved_relation = { target = Z21 }
+            }
+        }
+        Z21 = {
+            country_event = { id = flavour_blue_reachmen.16 }
+        }
+    }
+}
+
+# Elven Marriage
+country_event = {
+    id = flavour_blue_reachmen.5
+    title = flavour_blue_reachmen.5.t
+    desc = flavour_blue_reachmen.5.desc
+    picture = NEW_HEIR_eventPicture
+    is_triggered_only = yes
+    option = {
+        name = flavour_blue_reachmen.5.a
+        696 = {
+            add_half_elven_minority_size_effect = yes
+            province_event = { id = flavour_blue_reachmen.6 days = 7300 }
+        }
+        anb_add_accepted_culture_or_dip_power = {
+            culture = alenic_half_elf
+            free = yes
+        }
+        custom_tooltip = Z21_enable_branch_order_minority_buff_tt
+    }
+}
+
+# Increase in Half-Elven Population
+province_event = {
+    id = flavour_blue_reachmen.6
+    title = flavour_blue_reachmen.6.t
+    desc = flavour_blue_reachmen.6.desc
+    picture = NEW_HEIR_eventPicture
+    is_triggered_only = yes
+    trigger = {
+        has_half_elven_majority_trigger = no
+    }
+    option = {
+        name = flavour_blue_reachmen.6.a
+        if = { limit = { has_large_half_elven_minority_trigger = yes }
+            change_culture = alenic_half_elf
+        }
+        else = {
+            add_half_elven_minority_size_effect = yes
+            province_event = { id = flavour_blue_reachmen.6 days = 7300 }
+        }
+    }
+}
+
+# The Body
+country_event = {
+    id = flavour_blue_reachmen.7
+    title = flavour_blue_reachmen.7.t
+    desc = flavour_blue_reachmen.7.desc
+    picture = NAVAL_MILITARY_eventPicture
+    is_triggered_only = yes
+    immediate = {
+        hidden_effect = {
+            if = { limit = { frostbridges_area = { type = all owned_by = ROOT } }
+                set_country_flag = Z21_maldorians_sword_found
+            }
+        }
+    }
+    option = {
+        name = flavour_blue_reachmen.7.a
+        trigger = { NOT = { has_country_flag = Z21_maldorians_sword_found } }
+        add_prestige = 25
+    }
+    option = {
+        name = flavour_blue_reachmen.7.b
+        trigger = { has_country_flag = Z21_maldorians_sword_found }
+        add_prestige = 25
+        country_event = { id = flavour_blue_reachmen.8 days = 200 random = 100 }
+    }
+}
+
+# The Blade
+country_event = {
+    id = flavour_blue_reachmen.8
+    title = flavour_blue_reachmen.8.t
+    desc = flavour_blue_reachmen.8.desc
+    picture = EXCALIBUR_eventPicture
+    is_triggered_only = yes
+    fire_only_once = yes
+    option = {
+        name = flavour_blue_reachmen.8.a
+        add_country_modifier = { name = Z21_maldorians_sword duration = -1 }
+        define_ruler = {
+            name = "Aeril 'Silmaldorian'"
+            dynasty = "Serpentsgard"
+            adm = 4
+            dip = 3
+            mil = 6
+            male = yes
+            culture = alenic_half_elf
+        }
+        add_ruler_personality = righteous_personality
+        add_ruler_personality = fierce_negotiator_personality
+        define_ruler_to_general = {
+            fire = 2
+            shock = 5
+            manuever = 3
+            siege = 0
+            trait = cuirassier_leader_personality
+        }
+        custom_tooltip = Z21_half_elven_local_noble_heir_tt
+        set_country_flag = Z21_half_elven_local_noble_heir
+    }
+}
+
+# Kobold Governance
+country_event = {
+    id = flavour_blue_reachmen.9
+    title = flavour_blue_reachmen.9.t
+    desc = flavour_blue_reachmen.9.desc
+    picture = KOBOLD_HOARD_eventPicture
+    is_triggered_only = yes
+    option = {
+        name = flavour_blue_reachmen.9.a
+        dragon_coast_region = {
+            if = { limit = { culture_group = kobold }
+                change_culture = kobildzani_kobold
+            }
+        }
+        coddorran_heights_area = {
+            if = { limit = { culture_group = kobold }
+                change_culture = kobildzani_kobold
+            }
+        }
+        dragon_coast_starting_kobold_provinces = {
+            add_core = Z38
+            cede_province = Z38
+        }
+        create_subject = {
+            subject_type = personal_union
+            subject = Z38
+        }
+        Z38 = {
+            add_country_modifier = { name = Z21_lessons_of_malliath_2 duration = -1 }
+            if = { limit = { NOT = { government = theocracy } }
+                change_government = theocracy
+            }
+            change_religion = ROOT
+            country_event = { id = monstrous.4 }
+            add_government_reform = Z21_order_of_malliath
+            override_country_name = Z21_SECOND_ORDER
+        }
+        add_country_modifier = { name = Z21_drake_knights duration = -1 }
+    }
+    option = {
+        name = flavour_blue_reachmen.9.b
+        dragon_coast_region = {
+            if = { limit = { culture_group = kobold }
+                change_culture = kobildzani_kobold
+            }
+        }
+        coddorran_heights_area = {
+            if = { limit = { culture_group = kobold }
+                change_culture = kobildzani_kobold
+            }
+        }
+        anb_add_accepted_culture_or_dip_power = {
+            culture = kobildzani_kobold
+            free = yes
+        }
+        add_country_modifier = { name = Z21_drake_knights duration = -1 }
+    }
+}
+
+# Hidden - Kobolds Return
+country_event = {
+    id = flavour_blue_reachmen.10
+    title = none
+    desc = none
+    picture = none
+    is_triggered_only = yes
+    hidden = yes
+    trigger = {
+        mission_completed = Z21_guardians_of_the_two_heads
+        any_owned_or_subject_province = {
+            province_group = dragon_coast_starting_kobold_provinces
+            NOT = { culture_group = kobold }
+        }
+    }
+    immediate = {
+        random_owned_or_subject_province = {
+            limit = {
+                province_group = dragon_coast_starting_kobold_provinces
+                NOT = { culture_group = kobold }
+            }
+            if = { limit = { ROOT = { has_country_flag = Z21_disable_kobold_return_notification } }
+                change_culture = kobildzani_kobold
+            }
+            else = {
+                province_event = { id = flavour_blue_reachmen.11 }
+            }
+        }
+    }
+    option = {
+        name = none
+    }
+}
+
+# Kobolds Return Notification
+province_event = {
+    id = flavour_blue_reachmen.11
+    title = flavour_blue_reachmen.11.t
+    desc = flavour_blue_reachmen.11.desc
+    picture = DRAGON_FLY_eventPicture
+    is_triggered_only = yes
+    option = {
+        name = flavour_blue_reachmen.11.a
+        change_culture = kobildzani_kobold
+    }
+    option = {
+        name = flavour_blue_reachmen.11.b
+        change_culture = kobildzani_kobold
+        FROM = { set_country_flag = Z21_disable_kobold_return_notification }
+    }
+}
+
+# A Question of Culture - copy of vanilla event
+country_event = {
+	id = flavour_blue_reachmen.12
+	title = culture_religion_events.22.t
+	desc = culture_religion_events.22.d
+	picture = {
+		trigger = { NOT = { has_dlc = "Cradle of Civilization" } }
+		picture = BAD_WITH_MONARCH_eventPicture
+	}
+	picture = {
+		trigger = { has_dlc = "Cradle of Civilization" }
+		picture = KING_OF_FOREIGN_CUSTOMS_eventPicture
+	}
+	is_triggered_only = yes
+    fire_only_once = yes
+	immediate = {
+		hidden_effect = {
+			set_ruler_flag = culture_question
+			export_to_variable = {
+				variable_name = new_monarch_culture
+				value = ruler_culture
+			}
+		}
+	}
+	option = {
+		name = culture_religion_events.22.a
+		ai_chance = {
+			factor = 5
+			modifier = {
+				factor = 5
+				dominant_culture = new_variable:ruler_culture
+			}
+		}
+		change_primary_culture = new_variable:ruler_culture
+	}
+	option = {
+		name = culture_religion_events.22.b
+		ai_chance = {
+			factor = 95
+		}
+		add_prestige = 10
+	}
+	after = {
+		set_variable = {
+			which = new_monarch_culture
+			value = -1
+		}
+	}
+}
+
+# Reach Nationhood
+country_event = {
+	id = flavour_blue_reachmen.13
+    title = flavour_blue_reachmen.13.t
+    desc = flavour_blue_reachmen.13.desc
+    picture = LIBERUM_VETO_eventPicture
+    is_triggered_only = yes
+    option = {
+        name = flavour_blue_reachmen.13.a
+        trigger_switch = {
+            on_trigger = tag
+            Z21 = { add_country_modifier = { name = BR_legacy_of_our_city_Z21 duration = -1 } } # serpentgard
+            Z24 = { add_country_modifier = { name = BR_legacy_of_our_city_Z24 duration = -1 } } # envermarck
+            Z25 = { add_country_modifier = { name = BR_legacy_of_our_city_Z25 duration = -1 } } # dinesck
+            Z29 = { add_country_modifier = { name = BR_legacy_of_our_city_Z29 duration = -1 } } # coldmarket
+            Z30 = { add_country_modifier = { name = BR_legacy_of_our_city_Z30 duration = -1 } } # everwharf
+            Z31 = { add_country_modifier = { name = BR_legacy_of_our_city_Z31 duration = -1 } } # reachspier
+            Z32 = { add_country_modifier = { name = BR_legacy_of_our_city_Z32 duration = -1 } } # alencay
+            Z33 = { add_country_modifier = { name = BR_legacy_of_our_city_Z33 duration = -1 } } # frostwall
+        }
+        blue_reachman_cities = {
+            add_local_autonomy = -100
+            add_nationalism = -5
+        }
+    }
+}
+
+# Hidden - Branch Order Upgrade
+province_event = {
+	id = flavour_blue_reachmen.14
+    title = none
+    desc = none
+    picture = none
+    is_triggered_only = yes
+    hidden = yes
+    trigger = { has_province_modifier = Z21_expanding_the_branch }
+    option = {
+        trigger_switch = {
+            on_trigger = has_province_modifier
+            Z21_branch_order_1 = {
+                remove_province_modifier = Z21_branch_order_1
+                add_permanent_province_modifier = { name = Z21_branch_order_2 duration = -1 }
+                # this event was fired from custom ui, so need ptm to have proper rng
+                add_province_triggered_modifier = Z21_add_random_elven_minority_ptm
+                add_base_tax = 1
+                Z21_place_branch_order_zoc_mods = { level_2 = yes }
+            }
+            Z21_branch_order_2 = {
+                remove_province_modifier = Z21_branch_order_2
+                add_permanent_province_modifier = { name = Z21_branch_order_3 duration = -1 }
+                add_kobold_minority_size_effect = yes
+                add_base_manpower = 1
+                Z21_place_branch_order_zoc_mods = { level_3 = yes }
+            }
+            Z21_head_branch_1 = {
+                remove_province_modifier = Z21_head_branch_1
+                add_permanent_province_modifier = { name = Z21_head_branch_2 duration = -1 }
+                # this event was fired from custom ui, so need ptm to have proper rng
+                add_province_triggered_modifier = Z21_add_random_elven_minority_ptm
+                add_base_tax = 1
+                Z21_place_head_branch_zoc_mods = { level_2 = yes }
+            }
+            Z21_head_branch_2 = {
+                remove_province_modifier = Z21_head_branch_2
+                add_permanent_province_modifier = { name = Z21_head_branch_3 duration = -1 }
+                add_kobold_minority_size_effect = yes
+                add_base_manpower = 1
+                Z21_place_head_branch_zoc_mods = { level_3 = yes }
+            }
+        }
+    }
+}
+
+# Celmaldor Accepts
+country_event = {
+	id = flavour_blue_reachmen.15
+    title = flavour_blue_reachmen.15.t
+    desc = flavour_blue_reachmen.15.desc
+    picture = CONQUEST_eventPicture
+    is_triggered_only = yes
+    option = {
+        name = flavour_blue_reachmen.15.a
+        grant_independence = yes
+        add_historical_friend = Z22
+        Z22 = {
+            add_historical_friend = Z21
+            every_subject_country = {
+                limit = { is_subject_of_type = vic_league_member }
+                grant_independence = yes
+                Z21 = {
+                    create_subject = {
+                        subject_type = vic_league_member
+                        subject = PREV
+                    }
+                }
+                remove_country_modifier = BR_reached_out
+            }
+        }
+        vassalize = Z22
+    }
+}
+
+# Celmaldor Rejects
+country_event = {
+	id = flavour_blue_reachmen.16
+    title = flavour_blue_reachmen.16.t
+    desc = flavour_blue_reachmen.16.desc
+    picture = DEBATE_REPUBLICAN_eventPicture
+    is_triggered_only = yes
+    option = {
+        name = flavour_blue_reachmen.16.a
+    }
+}

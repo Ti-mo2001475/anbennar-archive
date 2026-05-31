@@ -12599,6 +12599,197 @@ H89_remove_orc_pop_in_escann = {
 	}
 }
 
+# Blue Reachmen
+
+# use on the province that is being upgraded
+Z21_place_branch_order_zoc_mods = {
+	custom_tooltip = Z21_place_zoc_mods_tt
+	tooltip = {
+		[[level_1] 5690 = { add_province_modifier = { name = Z21_branch_order_1_zoc duration = -1 } } ]
+		[[level_2] 5690 = { add_province_modifier = { name = Z21_branch_order_2_zoc duration = -1 } } ]
+		[[level_3] 5690 = { add_province_modifier = { name = Z21_branch_order_3_zoc duration = -1 } } ]
+	}
+	hidden_effect = {
+		owner = {
+			if = { limit = { overlord = { mission_completed = Z21_centralize_the_order } }
+				overlord = { save_event_target_as = Z21_branch_order_overlord }
+			}
+			else = {
+				save_event_target_as = Z21_branch_order_overlord
+			}
+		}
+		if = { limit = { has_saved_event_target = Z21_branch_order_overlord }
+			every_neighbor_province = {
+				limit = { country_or_subject_holds = event_target:Z21_branch_order_overlord }
+				[[level_1]
+				if = {
+					limit = {
+						NOT = {
+							has_province_modifier = Z21_head_branch_1_zoc
+							has_province_modifier = Z21_head_branch_2_zoc
+							has_province_modifier = Z21_head_branch_3_zoc
+							has_province_modifier = Z21_branch_order_1_zoc
+							has_province_modifier = Z21_branch_order_2_zoc
+							has_province_modifier = Z21_branch_order_3_zoc
+						}
+					}
+					add_province_modifier = { name = Z21_branch_order_1_zoc duration = -1 }
+				}
+				]
+				[[level_2]
+				if = {
+					limit = {
+						NOT = {
+							has_province_modifier = Z21_head_branch_1_zoc
+							has_province_modifier = Z21_head_branch_2_zoc
+							has_province_modifier = Z21_head_branch_3_zoc
+							has_province_modifier = Z21_branch_order_2_zoc
+							has_province_modifier = Z21_branch_order_3_zoc
+						}
+					}
+					remove_province_modifier = Z21_branch_order_1_zoc
+					add_province_modifier = { name = Z21_branch_order_2_zoc duration = -1 }
+				}
+				]
+				[[level_3]
+				if = {
+					limit = {
+						NOT = {
+							has_province_modifier = Z21_head_branch_1_zoc
+							has_province_modifier = Z21_head_branch_2_zoc
+							has_province_modifier = Z21_head_branch_3_zoc
+							has_province_modifier = Z21_branch_order_3_zoc
+						}
+					}
+					remove_province_modifier = Z21_branch_order_1_zoc
+					remove_province_modifier = Z21_branch_order_2_zoc
+					add_province_modifier = { name = Z21_branch_order_3_zoc duration = -1 }
+				}
+				]
+			}
+		}
+	}
+}
+
+# use on the province that is being upgraded
+# prioritize head branch zoc over branch order zoc
+Z21_place_head_branch_zoc_mods = {
+	custom_tooltip = Z21_place_zoc_mods_tt
+	tooltip = {
+		[[level_1] 5690 = { add_province_modifier = { name = Z21_head_branch_1_zoc duration = -1 } } ]
+		[[level_2] 5690 = { add_province_modifier = { name = Z21_head_branch_2_zoc duration = -1 } } ]
+		[[level_3] 5690 = { add_province_modifier = { name = Z21_head_branch_3_zoc duration = -1 } } ]
+	}
+	hidden_effect = {
+		owner = {
+			if = { limit = { overlord = { mission_completed = Z21_centralize_the_order } }
+				overlord = { save_event_target_as = Z21_branch_order_overlord }
+			}
+			else = {
+				save_event_target_as = Z21_branch_order_overlord
+			}
+		}
+		if = { limit = { has_saved_event_target = Z21_branch_order_overlord }
+			every_neighbor_province = {
+				limit = { country_or_subject_holds = event_target:Z21_branch_order_overlord }
+				[[level_1]
+				if = {
+					limit = {
+						NOT = {
+							has_province_modifier = Z21_head_branch_1_zoc
+							has_province_modifier = Z21_head_branch_2_zoc
+							has_province_modifier = Z21_head_branch_3_zoc
+						}
+					}
+					remove_province_modifier = Z21_branch_order_1_zoc
+					remove_province_modifier = Z21_branch_order_2_zoc
+					remove_province_modifier = Z21_branch_order_3_zoc
+					add_province_modifier = { name = Z21_head_branch_1_zoc duration = -1 }
+				}
+				]
+				[[level_2]
+				if = {
+					limit = {
+						NOT = {
+							has_province_modifier = Z21_head_branch_2_zoc
+							has_province_modifier = Z21_head_branch_3_zoc
+						}
+					}
+					remove_province_modifier = Z21_branch_order_1_zoc
+					remove_province_modifier = Z21_branch_order_2_zoc
+					remove_province_modifier = Z21_branch_order_3_zoc
+					remove_province_modifier = Z21_head_branch_1_zoc
+					add_province_modifier = { name = Z21_head_branch_2_zoc duration = -1 }
+				}
+				]
+				[[level_3]
+				if = {
+					limit = {
+						NOT = { has_province_modifier = Z21_head_branch_3_zoc }
+					}
+					remove_province_modifier = Z21_branch_order_1_zoc
+					remove_province_modifier = Z21_branch_order_2_zoc
+					remove_province_modifier = Z21_branch_order_3_zoc
+					remove_province_modifier = Z21_head_branch_1_zoc
+					remove_province_modifier = Z21_head_branch_2_zoc
+					add_province_modifier = { name = Z21_head_branch_3_zoc duration = -1 }
+				}
+				]
+			}
+		}
+	}
+}
+
+# looks complex, it's just edge case handling
+# removes branch order mods and neighboring zoc mods
+# re-applies zoc mods to applicable neighboring provinces (downgrades appropriately)
+Z21_remove_branch_order_and_zoc_mods = {
+	clr_province_flag = Z21_branch_order_built
+	remove_province_modifier = Z21_head_branch_3
+	remove_province_modifier = Z21_head_branch_2
+	remove_province_modifier = Z21_head_branch_1
+	remove_province_modifier = Z21_branch_order_3
+	remove_province_modifier = Z21_branch_order_2
+	remove_province_modifier = Z21_branch_order_1
+	every_neighbor_province = {
+		remove_province_modifier = Z21_head_branch_3_zoc
+		remove_province_modifier = Z21_head_branch_2_zoc
+		remove_province_modifier = Z21_head_branch_1_zoc
+		remove_province_modifier = Z21_branch_order_3_zoc
+		remove_province_modifier = Z21_branch_order_2_zoc
+		remove_province_modifier = Z21_branch_order_1_zoc
+		if = { # re-apply zoc mods if owner of neighbor province can use branch orders
+			limit = {
+				owner = {
+					OR = {
+						mission_completed = Z21_centralize_the_order
+						overlord = { mission_completed = Z21_centralize_the_order }
+					}
+				}
+				any_neighbor_province = { has_province_flag = Z21_branch_order_built }
+			}
+			if = { limit = { any_neighbor_province = { has_province_modifier = Z21_head_branch_3 } }
+				add_province_modifier = { name = Z21_head_branch_3_zoc duration = -1 }
+			}
+			else_if = { limit = { any_neighbor_province = { has_province_modifier = Z21_head_branch_2 } }
+				add_province_modifier = { name = Z21_head_branch_2_zoc duration = -1 }
+			}
+			else_if = { limit = { any_neighbor_province = { has_province_modifier = Z21_head_branch_1 } }
+				add_province_modifier = { name = Z21_head_branch_1_zoc duration = -1 }
+			}
+			else_if = { limit = { any_neighbor_province = { has_province_modifier = Z21_branch_order_3 } }
+				add_province_modifier = { name = Z21_branch_order_3_zoc duration = -1 }
+			}
+			else_if = { limit = { any_neighbor_province = { has_province_modifier = Z21_branch_order_2 } }
+				add_province_modifier = { name = Z21_branch_order_2_zoc duration = -1 }
+			}
+			else_if = { limit = { any_neighbor_province = { has_province_modifier = Z21_branch_order_1 } }
+				add_province_modifier = { name = Z21_branch_order_1_zoc duration = -1 }
+			}
+		}
+	}
+}
+
 #Chien Binhrung
 
 Y72_upgrade_spirit_queens = {
