@@ -20633,6 +20633,47 @@ on_province_owner_change = {
 			}
 		}
 	}
+
+	#House of Fire and Water
+	if = {
+		limit = {
+			province_id = 4949
+		}
+		if = {
+			limit = {
+				owner = {
+					can_use_house_of_fire_and_water = yes
+				}
+				has_great_project = {
+					type = house_of_fire_and_water
+					tier = 2
+				}
+			}
+			if = {
+				limit = {
+					has_great_project = {
+						type = house_of_fire_and_water
+						tier = 3
+					}
+				}
+				add_country_modifier = {
+					name = house_of_fire_and_water_artificery_buff_2
+					duration = -1
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = house_of_fire_and_water_artificery_buff_1
+					duration = -1
+				}
+			}
+		}
+		PREV = {
+			remove_country_modifier = house_of_fire_and_water_artificery_buff_1
+			remove_country_modifier = house_of_fire_and_water_artificery_buff_2
+			disband_mercenary_company = merc_war_alchemists
+		}
+	}
 }
 
 # country 1.35
