@@ -588,6 +588,13 @@ hytiranyalen_2 = {
 					duration = -1
 				}
 			}
+			custom_tooltip = hyti_bulwar_claim_tt
+			hidden_effect = {
+				bulwar_proper_region = {
+					limit = { area_for_scope_province = { is_neighbor_of = ROOT } }
+					add_claim = ROOT
+				}
+			}
 		} 
 	}
 
@@ -674,7 +681,7 @@ hytiranyalen_2 = {
 				development = 35
 				OR = {
 					NOT = { num_free_building_slots = 1 }
-					num_of_times_expanded_infrastructure = 4
+					num_of_times_expanded_infrastructure = 3
 				}
 				OR = {
 					hold_condition = { Repaired = yes }
@@ -704,7 +711,7 @@ hytiranyalen_2 = {
 						development = 35
 						OR = {
 							NOT = { num_free_building_slots = 1 }
-							num_of_times_expanded_infrastructure = 4
+							num_of_times_expanded_infrastructure = 3
 						}
 						hold_condition = { Repaired = yes }
 					}
@@ -715,7 +722,7 @@ hytiranyalen_2 = {
 						development = 35
 						OR = {
 							NOT = { num_free_building_slots = 1 }
-							num_of_times_expanded_infrastructure = 4
+							num_of_times_expanded_infrastructure = 3
 						}
 						hold_condition = { Repaired = yes }
 					}
@@ -734,7 +741,10 @@ hytiranyalen_2 = {
 					limit = {
 						has_terrain = dwarven_hold
 						development = 35
-						NOT = { num_free_building_slots = 1 }
+						OR = {
+							NOT = { num_free_building_slots = 1 }
+							num_of_times_expanded_infrastructure = 3
+						}
 					}
 					restored_hold = yes
 					add_province_modifier = {
@@ -1103,6 +1113,7 @@ hytiranyalen_3 = {
 
 		trigger = {
 			2942 = {
+				owned_by = ROOT
 				has_trade_building_trigger = yes
 				has_manufactory_trigger = yes
 				any_neighbor_province = {
@@ -1263,6 +1274,10 @@ hytiranyalen_3 = {
 				}
 			}
 			custom_tooltip = hyti_base_trains_tt
+			if = {
+				limit = { NOT = { adm_tech = 12 } }
+				custom_tooltip = hyti_base_trains_notech_tt
+			}
 		} 
 	}
 
@@ -1590,6 +1605,10 @@ hytiranyalen_4 = {
 		} 
 
 		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = hyti_song_breakthrough
+				has_country_flag = hyti_song_breakthrough
+			}
 			655 = {
 				has_great_project = {
 					type = mount_lazzaward
@@ -1662,8 +1681,15 @@ hytiranyalen_5 = {
 
 		trigger = {
 			OR = {
-				receives_military_access_from = F26
 				controls = 655
+				655 = {
+					owner = {
+						OR = {
+							gives_military_access_to = ROOT
+							is_subject_of = ROOT
+						}
+					}
+				}
 			}
 			has_estate_privilege = estate_mages_seek_magical_advice
 		} 

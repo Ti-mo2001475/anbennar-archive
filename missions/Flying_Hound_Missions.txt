@@ -34,15 +34,21 @@ Flying_Hound_1 = {
 					which = feudalism
 					value = 35
 				}
+				set_province_flag = B43_home_of_the_stray_duplicate_flag # to avoid hitting the same province twice
 			}
 			random_owned_province = {
-				limit = { has_building = native_irrigation }
+				limit = { has_building = native_irrigation NOT = { has_province_flag = B43_home_of_the_stray_duplicate_flag } }
 				add_base_tax = 1
 				add_base_production = 1
 				add_base_manpower = 1
 				add_institution_embracement = {
 					which = feudalism
 					value = 35
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					clr_province_flag = B43_home_of_the_stray_duplicate_flag
 				}
 			}
 		}
@@ -821,6 +827,7 @@ Flying_Hound_3 = {
 				}
 				AND = {
 					region = south_castanor_region
+					owned_by = ROOT
 					NOT = { has_building = native_storehouse }
 				}
 				AND = {
@@ -1099,8 +1106,8 @@ Flying_Hound_4 = {
 				who = B46
 				modifier = B43_we_shall_endure
 			}
-			B41 = { force_remove_rival = B46 add_historical_friend = B46 } #Earworm - Grasshopper Muncher
-			B46 = { force_remove_rival = B41 add_historical_friend = B41 } #Grasshopper Muncher - Earworm
+			B41 = { force_remove_rival = B46 add_historical_friend = B46 create_alliance = B46 } #Earworm - Grasshopper Muncher
+			B46 = { force_remove_rival = B41 add_historical_friend = B41 create_alliance = B41 } #Grasshopper Muncher - Earworm
 			add_ruler_modifier = {
 				name = B43_unifier_of_the_clans
 				duration = 3650
@@ -1118,7 +1125,10 @@ Flying_Hound_4 = {
 				owned_by = B48
 				AND = {
 					area = dostans_way_area
-					NOT = { owned_by = ROOT }
+					NOT = { 
+						country_or_non_sovereign_subject_holds = ROOT 
+						owned_by = B41
+					}
 				}
 			}
 		} 
@@ -1155,7 +1165,12 @@ Flying_Hound_4 = {
 			else = {
 				num_of_war_reparations = 2
 			}
-			dostans_way_area = { owned_by = ROOT }
+			dostans_way_area = { 
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT 
+					owned_by = B41
+				}
+			}
 		} 
 
 		effect = {
@@ -1276,7 +1291,13 @@ Flying_Hound_5 = {
 
 		trigger = {
 			army_size_percentage = 0.9
-			army_professionalism = 0.2
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				army_professionalism = 0.2
+			}
+			else = {
+				army_tradition = 60
+			}
 		}
 
 		effect = {

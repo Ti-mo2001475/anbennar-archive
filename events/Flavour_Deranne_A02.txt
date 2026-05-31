@@ -103,7 +103,7 @@ country_event = { #A Question of Legitimacy
 	option = {
 		name = flavour_deranne.4.a
 
-		add_legitimacy = -20
+		add_legitimacy = -10
 		custom_tooltip = deranne_question_of_legitimacy.tt
 		hidden_effect = {
 			if = {
@@ -171,6 +171,19 @@ country_event = { #Dealing with the Sorncosti
 					duration = 3650
 				}
 				add_devastation = -50
+			}
+			every_subject_country = {
+				every_owned_province = {
+					limit = {
+						culture = sorncosti 
+						trade_goods = wine
+					}
+					add_province_modifier = {
+						name = deranne_sorncosti_wines
+						duration = 3650
+					}
+					add_devastation = -50
+				}
 			}
 		}
 	}
@@ -262,9 +275,10 @@ country_event = { #To Kneel
 		name = flavour_deranne.7.b
 		ai_chance = { factor = 0 }
 
+		add_legitimacy = 10
 		add_estate_loyalty = {
 			estate = estate_nobles
-			loyalty = -20
+			loyalty = -10
 		}
 		add_estate_influence_modifier = {
 			estate = estate_nobles
@@ -279,20 +293,6 @@ country_event = { #To Kneel
 			remove_province_modifier = deranne_lorentish_resistance
 		}
 		add_stability = -1
-		random_owned_province = {
-			limit = { culture = high_lorentish }
-			spawn_rebels = {
-				type = noble_rebels
-				size = 3
-			}
-		}
-		random_owned_province = {
-			limit = { culture = high_lorentish }
-			spawn_rebels = {
-				type = noble_rebels
-				size = 3
-			}
-		}
 		random_owned_province = {
 			limit = { culture = high_lorentish }
 			spawn_rebels = {
@@ -654,7 +654,6 @@ country_event = { #The Greatest Tale
 
 		custom_tooltip = deranne_upgraded_tales.tt
 		set_country_flag = deranne_tale_upgrade
-		remove_country_modifier = deranne_great_antipathy
 		add_country_modifier = {
 			name = deranne_captain_of_seas
 			duration = -1
@@ -687,7 +686,6 @@ country_event = { #Deranne Tales
 	option = { # Derhilde's Tale
 		name = flavour_deranne.19.b
 
-		custom_tooltip = deranne_derhilde_tale.tt
 		if = {
 			limit = { has_country_flag = deranne_tale_upgrade }
 			add_country_modifier = {
@@ -720,7 +718,6 @@ country_event = { #Deranne Tales
 	option = { # Lilac Wars Tale
 		name = flavour_deranne.19.c
 
-		custom_tooltip = deranne_lilac_war_tale.tt
 		if = {
 			limit = { has_country_flag = deranne_tale_upgrade }
 			add_country_modifier = {
@@ -757,7 +754,6 @@ country_event = { #Deranne Tales
 			has_country_flag = A02_dtc_established
 		}
 
-		custom_tooltip = deranne_dtc_tale.tt
 		if = {
 			limit = { has_country_flag = deranne_tale_upgrade }
 			add_country_modifier = {
@@ -794,7 +790,6 @@ country_event = { #Deranne Tales
 			mission_completed = deranne_derhildes_will
 		}
 
-		custom_tooltip = deranne_withered_roses_tale.tt
 		if = {
 			limit = { has_country_flag = deranne_tale_upgrade }
 			add_country_modifier = {
@@ -832,7 +827,6 @@ country_event = { #Deranne Tales
 			mission_completed = deranne_seaflower_blossom
 		}
 
-		custom_tooltip = deranne_rosepeace_tale.tt
 		if = {
 			limit = { has_country_flag = deranne_tale_upgrade }
 			add_country_modifier = {
@@ -869,7 +863,6 @@ country_event = { #Deranne Tales
 			mission_completed = deranne_center_of_three_worlds
 		}
 
-		custom_tooltip = deranne_westport_tale.tt
 		if = {
 			limit = { has_country_flag = deranne_tale_upgrade }
 			add_country_modifier = {
@@ -1354,6 +1347,7 @@ country_event = { #Dam Upgrade - Adbrabohvi
 	option = {
 		name = flavour_deranne.24.a
 
+		custom_tooltip = deranne_adbrabohvi_upgrade.tt
 		deranne_upgrade_dam_scripted_effect = {
 			province_id = 1133
 			dam_name = ynnic_dam_adbrabohvi
@@ -1380,6 +1374,7 @@ country_event = { #Dam Upgrade - Vels bacar
 	option = {
 		name = flavour_deranne.25.a
 		
+		custom_tooltip = deranne_vels_bacar_upgrade.tt
 		deranne_upgrade_dam_scripted_effect = {
 			province_id = 1138
 			dam_name = ynnic_dam_vels_bacar
@@ -1405,7 +1400,8 @@ country_event = { #Dam Upgrade - Bosancovac
 	
 	option = {
 		name = flavour_deranne.26.a
-
+	
+		custom_tooltip = deranne_bosancovac_upgrade.tt
 		deranne_upgrade_dam_scripted_effect = {
 			province_id = 1165
 			dam_name = ynnic_dam_bosancovac
@@ -1432,6 +1428,7 @@ country_event = { #Dam Upgrade - Mocbarja
 	option = {
 		name = flavour_deranne.27.a
 
+		custom_tooltip = deranne_mocbarja_upgrade.tt
 		deranne_upgrade_dam_scripted_effect = {
 			province_id = 1186
 			dam_name = ynnic_dam_mocbarja
