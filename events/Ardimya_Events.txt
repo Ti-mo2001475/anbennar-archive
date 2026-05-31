@@ -840,3 +840,39 @@ country_event = {
 		}
 	}
 } 
+
+#transfer province...
+country_event = {
+	id = ardimya.15
+	title = ardimya.15.t
+	desc = ardimya.15.d
+	picture = COLONIZATION_eventPicture
+	is_triggered_only = yes
+	hidden = yes
+	
+	
+	trigger = {
+		S91 = { exists = yes }
+		S91 = { 
+			is_colonial_nation_of = ROOT
+		}
+	}
+	
+	
+	option = {
+		name = ardimya.15.a
+		ardimya_region = {
+			limit = {
+				owned_by = ROOT
+			}
+			cede_province = S91
+			if = {
+				limit = {
+					is_core = ROOT
+				}
+				add_core = S91
+				remove_core = ROOT
+			}
+		}
+	}
+} 
