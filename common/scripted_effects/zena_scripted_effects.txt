@@ -462,6 +462,10 @@ zena_relic_purchase_effect = { #Buuying relics
 			which = zena_relic_cost
 			which = zena_relic_multiplier
 		}
+		multiply_variable = { #Relics too costly for what they provide
+			which = zena_relic_cost
+			value = 0.5
+		}
 	}
 }
 
@@ -1144,4 +1148,12 @@ clr_all_blueprint_flags_effect = { #Clears the blueprint flags for when the menu
 	clr_country_flag = zena_orvzana_capital
 	clr_country_flag = zena_temple_province
 	clr_country_flag = zena_blueprints_open
+}
+
+zena_hint_print_effect = { #Say that five times fast. Anyway, hints for the Relics/Blueprints
+	if = {
+		limit = { has_country_flag = zena_$hint$_acquired }
+		custom_tooltip = zena_$hint$_acquired_tt
+	}
+	else = { custom_tooltip = zena_$hint$_to_get_tt }
 }
