@@ -538,7 +538,7 @@ gene_pillar_generic_then_specific_event = {
 			}
 			if = { # double speed
 				limit = { has_country_flag = gene_pillars_exploration_events_double_speed }
-				divide_variable = { GenePillarsSpeed = 2 }
+				multiply_variable = { GenePillarsSpeed = 0.5 }
 			}
 
 			### Add Speed modifiers above here ###
@@ -553,103 +553,114 @@ gene_pillar_generic_then_specific_event = {
 				set_variable = { GenePillarsSpeed = 24 }
 			}
 
-			# slower speeds
-			if = { # a little quicker to avoid overlapping with abandoning expedition cooldown
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 24 } }
-				country_event = { id = gene_pillars.1000 days = 362 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 725 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 23 } }
-				country_event = { id = gene_pillars.1000 days = 350 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 700 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 22 } }
-				country_event = { id = gene_pillars.1000 days = 335 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 680 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 21 } }
-				country_event = { id = gene_pillars.1000 days = 319 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 638 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 20 } }
-				country_event = { id = gene_pillars.1000 days = 304 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 608 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 19 } }
-				country_event = { id = gene_pillars.1000 days = 289 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 578 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 18 } }
-				country_event = { id = gene_pillars.1000 days = 274 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 548 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 17 } }
-				country_event = { id = gene_pillars.1000 days = 258 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 517 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 16 } }
-				country_event = { id = gene_pillars.1000 days = 243 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 487 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 15 } }
-				country_event = { id = gene_pillars.1000 days = 228 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 456 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 14 } }
-				country_event = { id = gene_pillars.1000 days = 213 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 426 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 13 } }
-				country_event = { id = gene_pillars.1000 days = 198 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 395 } #Next event in chain
-			}
-			# base speed
-			if = {
+			if = { # base speed x = 12
 				limit = { is_variable_equal = { which = GenePillarsSpeed value = 12 } }
 				country_event = { id = gene_pillars.1000 days = 182 } #Generic event handler
 				country_event = { id = gene_pillars.$specific_event$ days = 365 } #Next event in chain
 			}
-			# quicker speeds
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 11 } }
-				country_event = { id = gene_pillars.1000 days = 167 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 334 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 10 } }
-				country_event = { id = gene_pillars.1000 days = 152 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 304 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 9 } }
-				country_event = { id = gene_pillars.1000 days = 137 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 274 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 8 } }
-				country_event = { id = gene_pillars.1000 days = 122 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 244 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 7 } }
-				country_event = { id = gene_pillars.1000 days = 107 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 214 } #Next event in chain
-			}
-			if = {
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 6 } }
-				country_event = { id = gene_pillars.1000 days = 91 } #Generic event handler
-				country_event = { id = gene_pillars.$specific_event$ days = 182 } #Next event in chain
+			if = { # binary tree start at 15, skip 12 (min:6 max:24)
+				limit = { NOT = { is_variable_equal = { which = GenePillarsSpeed value = 12 } } }
+				if = { limit = { check_variable = { which = GenePillarsSpeed value = 15 } }
+					if = { limit = { check_variable = { which = GenePillarsSpeed value = 20 } }
+						if = { limit = { check_variable = { which = GenePillarsSpeed value = 22 } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 22 } }
+								country_event = { id = gene_pillars.1000 days = 335 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 680 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 23 } }
+								country_event = { id = gene_pillars.1000 days = 350 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 700 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 24 } }
+								# a little quicker to avoid overlapping with abandoning expedition cooldown
+								country_event = { id = gene_pillars.1000 days = 362 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 725 } #Next event in chain
+							}
+						}
+						if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 22 } } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 20 } }
+								country_event = { id = gene_pillars.1000 days = 304 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 608 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 21 } }
+								country_event = { id = gene_pillars.1000 days = 319 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 638 } #Next event in chain
+							}
+						}
+					}
+					if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 20 } } }
+						if = { limit = { check_variable = { which = GenePillarsSpeed value = 18 } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 18 } }
+								country_event = { id = gene_pillars.1000 days = 274 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 548 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 19 } }
+								country_event = { id = gene_pillars.1000 days = 289 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 578 } #Next event in chain
+							}
+						}
+						if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 18 } } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 15 } }
+								country_event = { id = gene_pillars.1000 days = 228 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 456 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 16 } }
+								country_event = { id = gene_pillars.1000 days = 243 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 487 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 17 } }
+								country_event = { id = gene_pillars.1000 days = 258 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 517 } #Next event in chain
+							}
+						}
+					}
+				}
+				if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 15 } } }
+					if = { limit = { check_variable = { which = GenePillarsSpeed value = 10 } }
+						if = { limit = { check_variable = { which = GenePillarsSpeed value = 13 } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 13 } }
+								country_event = { id = gene_pillars.1000 days = 198 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 395 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 14 } }
+								country_event = { id = gene_pillars.1000 days = 213 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 426 } #Next event in chain
+							}
+						}
+						if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 12 } } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 10 } }
+								country_event = { id = gene_pillars.1000 days = 152 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 304 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 11 } }
+								country_event = { id = gene_pillars.1000 days = 167 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 334 } #Next event in chain
+							}
+						}
+					}
+					if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 10 } } }
+						if = { limit = { check_variable = { which = GenePillarsSpeed value = 8 } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 8 } }
+								country_event = { id = gene_pillars.1000 days = 122 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 244 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 9 } }
+								country_event = { id = gene_pillars.1000 days = 137 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 274 } #Next event in chain
+							}
+						}
+						if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 8 } } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 6 } }
+								country_event = { id = gene_pillars.1000 days = 91 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 182 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 7 } }
+								country_event = { id = gene_pillars.1000 days = 107 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 214 } #Next event in chain
+							}
+						}
+					}
+				}
 			}
 
 			# This is just so the initial event doesn't advance the progress bar
