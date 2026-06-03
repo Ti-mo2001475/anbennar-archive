@@ -482,10 +482,18 @@ vandipha_2 = {
 		effect = {
 			simple_dynamic_effect = {
 				first_custom_tooltip = L62_to_scare_a_cat_cor_tt
-				first_limit = "OR = { any_known_country = { OR = { religion = high_philosophy religion = suhans_praxis } any_owned_province = { is_reformation_center = yes } } }"
+				first_limit = "any_known_country = {
+					any_owned_province = { is_reformation_center = yes }
+					religion = suhans_praxis
+				}"
 				first_effect = "add_mil_power = -100 add_treasury = -100 country_event = { id = flavour_vandipha.2 } custom_tooltip = L62_to_scare_a_cat_ei_tt"
 				second_custom_tooltip = L62_to_scare_a_cat_no_cor_tt
-				second_limit = "any_known_country = { religion = high_philosophy has_opinion = { who = ROOT value = 150 } total_development = 300 }"
+				second_limit = "NOT = {
+					any_known_country = {
+						any_owned_province = { is_reformation_center = yes }
+						religion = suhans_praxis
+					}
+				}"
 				second_effect = "add_adm_power = 100 add_dip_power = 100 add_mil_power = 100"
 			}
 		} 
