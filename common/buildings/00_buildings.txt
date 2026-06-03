@@ -300,6 +300,7 @@ temple = {
 	}
 	on_destroyed = {
 		on_province_tax_building_destroyed_estate_privileges_effect = yes
+		on_tax_building_destroyed_effect = yes
 		remove_development_from_building = {
 			building = temple
 			type = tax
@@ -490,10 +491,11 @@ shipyard = {
 		}
 		#Anbennar
 		anbennar_building_effect = yes
-
+		on_built_shipyard_building_effect = yes
 		gronstunad_building_authority_effect = { value = 1 }
 	}
 	on_destroyed = {
+		on_shipyard_building_destroyed_effect = yes
 		remove_development_from_building = {
 			building = shipyard
 			type = production
@@ -848,56 +850,11 @@ coastal_defence = {
 	on_built = {
 		#Anbennar
 		anbennar_building_effect = yes
-
+		on_built_coast_defense_building_effect = yes
 		gronstunad_building_authority_effect = { value = 1 }
-		#karassk
-		if = {
-			limit = {
-				FROM = {
-					has_country_flag = L68_sailors_on_defense
-				}
-			}
-			add_province_modifier = {
-				name = L68_coastal_defense_sailors
-				duration = -1
-			}
-		}
-		#Izmeri the Black Stone City
-		if = {
-			limit = {
-				5631 = {
-					owned_by = FROM
-					has_great_project = {
-						type = izmeri_the_black_stone_city
-						tier = 2
-					}
-					owner = { can_use_izmeri_the_black_stone_city = yes }
-				}
-				NOT = { has_province_modifier = izmeri_expand_the_buildings }
-			}
-			add_province_modifier = {
-				name = izmeri_expand_the_buildings
-				duration = -1
-			}
-		}
-		#Dragon Turtle
-		FROM = { dragon_turtle_change_friendship = { dragon_turtle = monzaketzya amount = 3 } }
 	}
 	on_destroyed = {
-		if = {
-			limit = { 
-				has_province_modifier = L68_coastal_defense_sailors
-			}
-			remove_province_modifier = L68_coastal_defense_sailors
-		}
-		if = {
-			limit = { 
-				has_province_modifier = izmeri_expand_the_buildings
-			}
-			remove_province_modifier = izmeri_expand_the_buildings
-		}
-		#Dragon Turtle
-		FROM = { dragon_turtle_change_friendship = { dragon_turtle = monzaketzya amount = -3 } }
+		on_coast_defense_building_destroyed_effect = yes
 	}
 	modifier = {
 		blockade_force_required = 0.5
@@ -939,14 +896,7 @@ courthouse = {
 		}
 		#Anbennar
 		anbennar_building_effect = yes
-		if = {
-			limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
-			FROM = { change_government_reform_progress = 4 }
-		}
-		if = {
-			limit = { FROM = { has_estate_privilege = estate_wolf_command_war_room_rights } }
-			FROM = { add_legitimacy = 0.5 }
-		}
+		on_built_courthouse_building_effect = yes
 		if = {
 			limit = {
 				FROM = {
@@ -964,6 +914,7 @@ courthouse = {
 		gronstunad_building_authority_effect = { value = 1 }
 	}
 	on_destroyed = {
+		on_courthouse_building_destroyed_effect = yes
 		remove_development_from_building = {
 			building = courthouse
 			type = tax
@@ -1059,6 +1010,7 @@ dock = {
 		}
 		#Anbennar
 		anbennar_building_effect = yes
+		on_built_sailor_building_effect = yes
 		if = {
 			limit = {
 				FROM = {
@@ -1072,38 +1024,15 @@ dock = {
 			}
 		}
 		gronstunad_building_authority_effect = { value = 1 }
-
-		if = {
-			limit = {
-				FROM = {
-					has_estate_privilege = estate_nobility_lizardfolk_imperial_fisheries
-				}
-				OR = {
-					province_id = 5896 
-					province_id = 5898
-					province_id = 5834
-					province_id = 3259
-					province_id = 3258
-				}
-			}
-			add_province_modifier = {
-				name = lizardfolk_imperial_fisheries
-				duration = -1
-			}
-		}
-
 		z22_white_harbour_build_check = yes
 	}
 
 	on_destroyed = {
+		on_sailor_building_destroyed_effect = yes
 		remove_development_from_building = {
 			building = dock
 			type = production
 			value = 1
-		}
-		if = {
-			limit = { has_province_modifier = lizardfolk_imperial_fisheries }
-			remove_province_modifier = lizardfolk_imperial_fisheries
 		}
 	}
 	on_obsolete = {
@@ -1179,29 +1108,15 @@ regimental_camp = {
 		}
 		#Anbennar
 		anbennar_building_effect = yes
-		if = {
-			limit = { FROM = { has_estate_privilege = estate_boar_command_war_room_rights } }
-			FROM = { add_legitimacy = 0.5 }
-		}
+		on_built_forcelimit_building_effect = yes
 		#update_improved_military_buildings_modifier = { #1.35
 		#	building = regimental_camp
 		#}
-
 		if = {
 			limit = { FROM = { mission_completed = vanrahar_5_build_warrior_housing } }
 			add_province_modifier = { name = vanrahar_improved_impressment_1 duration = -1 }
 		}
-
 		gronstunad_building_authority_effect = { value = 2 }
-
-		# Huugeta Mercenary Enterprise
-		if = {
-			limit = {
-				FROM = { has_country_flag = S45_mercenary_enterprise }
-			}
-			FROM = { S45_add_momentum = { value = 1 action = building } }
-		}
-
 		#Zerat
 		if = {
 			limit = {
@@ -1218,6 +1133,7 @@ regimental_camp = {
 
 	}
 	on_destroyed = {
+		on_forcelimit_building_destroyed_effect = yes
 		#update_improved_military_buildings_modifier = { #1.35
 		#	building = regimental_camp
 		#}
@@ -1227,12 +1143,7 @@ regimental_camp = {
 			value = 1
 		}
 		remove_province_modifier = vanrahar_improved_impressment_1
-
-		#Zerat
-		if = {
-			limit = { has_province_modifier = zerat_regimental_camp }
-			remove_province_modifier = zerat_regimental_camp
-		}
+		remove_province_modifier = zerat_regimental_camp
 	}
 	on_obsolete = {
 		gronstunad_building_authority_effect = { value = -2 }
@@ -1574,64 +1485,19 @@ naval_battery = {
 	on_built = {
 		#Anbennar
 		anbennar_building_effect = yes
+		on_built_coast_defense_building_effect = yes
 		if = {
 			limit = { province_id = 4551 owner = { mission_completed = R38_relock_the_gate } }
 			add_province_modifier = { name = bhuvauri_gatehouse_of_rahen duration = -1 }
 		}
-
 		gronstunad_building_authority_effect = { value = 2 }
-		#karassk
-		if = {
-			limit = {
-				FROM = {
-					has_country_flag = L68_sailors_on_defense
-				}
-			}
-			add_province_modifier = {
-				name = L68_coastal_defense_sailors
-				duration = -1
-			}
-		}
-		#Izmeri the Black Stone City
-		if = {
-			limit = {
-				5631 = {
-					owned_by = FROM
-					has_great_project = {
-						type = izmeri_the_black_stone_city
-						tier = 2
-					}
-					owner = { can_use_izmeri_the_black_stone_city = yes }
-				}
-				NOT = { has_province_modifier = izmeri_expand_the_buildings }
-			}
-			add_province_modifier = {
-				name = izmeri_expand_the_buildings
-				duration = -1
-			}
-		}
-		#Dragon Turtle
-		FROM = { dragon_turtle_change_friendship = { dragon_turtle = monzaketzya amount = 3 } }
 	}
 	on_destroyed = {
+		on_coast_defense_building_destroyed_effect = yes
 		if = {
 			limit = { province_id = 4551 }
 			remove_province_modifier = bhuvauri_gatehouse_of_rahen
 		}
-		if = {
-			limit = { 
-				has_province_modifier = L68_coastal_defense_sailors
-			}
-			remove_province_modifier = L68_coastal_defense_sailors
-		}
-		if = {
-			limit = { 
-				has_province_modifier = izmeri_expand_the_buildings
-			}
-			remove_province_modifier = izmeri_expand_the_buildings
-		}
-		#Dragon Turtle
-		FROM = { dragon_turtle_change_friendship = { dragon_turtle = monzaketzya amount = -3 } }
 	}
 
 	on_construction_started = {  #Fires when you start the construction,  ROOT - Province FROM - Country that started 1.35
@@ -1743,6 +1609,7 @@ cathedral = {
 	}
 	on_destroyed = {
 		on_province_tax_building_destroyed_estate_privileges_effect = yes
+		on_tax_building_destroyed_effect = yes
 		remove_development_from_building = {
 			building = cathedral
 			type = tax
@@ -2046,6 +1913,7 @@ grand_shipyard = {
 		}
 		#Anbennar
 		anbennar_building_effect = yes
+		on_built_shipyard_building_effect = yes
 		if = {
 			limit = { province_id = 4372 owner = { mission_completed = iyarhashar_bavijay_shipyard } }
 			add_province_modifier = { name = iyarhashar_bavijay_shipyard duration = -1 }
@@ -2054,14 +1922,11 @@ grand_shipyard = {
 		gronstunad_building_authority_effect = { value = 3 }
 	}
 	on_destroyed = {
+		on_shipyard_building_destroyed_effect = yes
 		remove_development_from_building = {
 			building = grand_shipyard
 			type = production
 			value = 2
-		}
-		if = {
-			limit = { has_province_modifier = sca_swe_danish_shipyard }
-			remove_province_modifier = sca_swe_danish_shipyard
 		}
 		if = {
 			limit = { province_id = 4372 has_province_modifier = iyarhashar_bavijay_shipyard }
@@ -2613,19 +2478,11 @@ town_hall = {
 		}
 		#Anbennar
 		anbennar_building_effect = yes
-		if = {
-			limit = { FROM = { has_estate_privilege = estate_wolf_command_war_room_rights } }
-			FROM = { add_legitimacy = 0.5 }
-		}
-		if = {
-			limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
-			FROM = { change_government_reform_progress = 4 }
-		}
-		
-
+		on_built_courthouse_building_effect = yes
 		gronstunad_building_authority_effect = { value = 2 }
 	}
 	on_destroyed = {
+		on_courthouse_building_destroyed_effect = yes
 		remove_development_from_building = {
 			building = town_hall
 			type = tax
@@ -2730,38 +2587,16 @@ drydock = {
 		}
 		#Anbennar
 		anbennar_building_effect = yes
-
+		on_built_sailor_building_effect = yes
 		gronstunad_building_authority_effect = { value = 3 }
-
-		if = {
-			limit = {
-				FROM = {
-					has_estate_privilege = estate_nobility_lizardfolk_imperial_fisheries
-				}
-				OR = {
-					province_id = 5896 
-					province_id = 5898
-					province_id = 5834
-					province_id = 3259
-					province_id = 3258
-				}
-			}
-			add_province_modifier = {
-				name = lizardfolk_imperial_fisheries
-				duration = -1
-			}
-		}
 	}
 
 	on_destroyed = {
+		on_sailor_building_destroyed_effect = yes
 		remove_development_from_building = {
 			building = drydock
 			type = production
 			value = 2
-		}
-		if = {
-			limit = { has_province_modifier = lizardfolk_imperial_fisheries }
-			remove_province_modifier = lizardfolk_imperial_fisheries
 		}
 	}
 	on_obsolete = {
@@ -2805,26 +2640,12 @@ conscription_center = {
 
 		#Anbennar
 		anbennar_building_effect = yes
-		if = {
-			limit = { FROM = { has_estate_privilege = estate_boar_command_war_room_rights } }
-			FROM = { add_legitimacy = 0.5 }
-		}
-
+		on_built_forcelimit_building_effect = yes
 		if = {
 			limit = { FROM = { mission_completed = vanrahar_5_build_warrior_housing } }
 			add_province_modifier = { name = vanrahar_improved_impressment_2 duration = -1 }
 		}
-
 		gronstunad_building_authority_effect = { value = 4 }
-
-		# Huugeta Mercenary Enterprise
-		if = {
-			limit = {
-				FROM = { has_country_flag = S45_mercenary_enterprise }
-			}
-			FROM = { S45_add_momentum = { value = 1 action = building } }
-		}
-
 		#Zerat
 		if = {
 			limit = {
@@ -2840,22 +2661,18 @@ conscription_center = {
 		}
 	}
 	on_destroyed = {
+		on_forcelimit_building_destroyed_effect = yes
 		remove_development_from_building = {
 			building = conscription_center
 			type = manpower
 			value = 2
 		}
-
 		remove_province_modifier = vanrahar_improved_impressment_2
 
 		#update_improved_military_buildings_modifier = { #1.35
 		#	building = conscription_center
 		#}
-
-		if = {
-			limit = { has_province_modifier = zerat_conscription_center }
-			remove_province_modifier = zerat_conscription_center
-		}
+		remove_province_modifier = zerat_conscription_center
 	}
 	on_obsolete = {
 	}
@@ -5663,33 +5480,6 @@ restoring_hold = {
 	}
 }
 
-triunic_road = {
-	cost = 50
-	time = 6
-
-	indestructible = yes
-
-	build_trigger = {
-	}
-
-	modifier = {
-	}
-
-	on_built = {
-		hidden_effect = {
-			remove_building = triunic_road
-			add_permanent_province_modifier = {
-				name = federation_triunic_road
-				duration = -1
-			}
-		}
-    }
-
-	ai_will_do = {
-		factor = 0
-	}
-}
-
 world_tree_lvl_1 = {
 	cost = 2000
 	time = 60
@@ -6220,146 +6010,6 @@ kobold_citadel_expansion = {
 			}
 		}
 	} 
-
-	ai_will_do = {
-		factor = 0
-	}
-}
-
-garden_of_secrets_0 = {
-	cost = 100
-	time = 120
-
-	indestructible = yes
-
-	build_trigger = {
-		has_building = garden_of_secrets_0
-	}
-
-	modifier = {
-		global_tax_income = -12
-	}
-
-	ai_will_do = {
-		factor = 0
-	}
-}
-
-garden_of_secrets_1 = {
-	cost = 100
-	time = 120
-
-	indestructible = yes
-
-	build_trigger = {
-		has_building = garden_of_secrets_1
-	}
-
-	modifier = {
-		global_tax_income = -12
-		spy_offence = 0.3
-	}
-
-	on_built = {
-		hidden_effect = { remove_building = garden_of_secrets_0 }
-    }
-
-	ai_will_do = {
-		factor = 0
-	}
-}
-
-garden_of_secrets_2 = {
-	cost = 100
-	time = 120
-
-	indestructible = yes
-
-	build_trigger = {
-		has_building = garden_of_secrets_2
-	}
-
-	modifier = {
-		global_tax_income = -12
-		spy_offence = 0.3
-		discovered_relations_impact = -0.5
-	}
-
-	on_built = {
-		hidden_effect = { remove_building = garden_of_secrets_1 }
-    }
-
-	ai_will_do = {
-		factor = 0
-	}
-}
-
-garden_of_secrets_3 = {
-	cost = 100
-	time = 120
-
-	indestructible = yes
-
-	build_trigger = {
-		has_building = garden_of_secrets_3
-	}
-
-	modifier = {
-		global_tax_income = -12
-		spy_offence = 0.3
-		discovered_relations_impact = -0.5
-		rebel_support_efficiency = 1.0
-	}
-
-	on_built = {
-		hidden_effect = { remove_building = garden_of_secrets_2 }
-    }
-
-	ai_will_do = {
-		factor = 0
-	}
-}
-
-jaddari_sunset_temple = {
-	cost = 2000
-	time = 120
-
-	build_trigger = {
-		has_building = jaddari_sunset_temple
-	}
-
-	modifier = {
-		allowed_num_of_buildings = 1
-		all_power_cost = -0.025
-
-	}
-
-	on_built = {
-
-    }
-
-	ai_will_do = {
-		factor = 0
-	}
-}
-
-jaddari_sunrise_temple = {
-	cost = 2000
-	time = 120
-
-	build_trigger = {
-		has_building = jaddari_sunrise_temple
-	}
-
-	modifier = {
-		allowed_num_of_buildings = 1
-		all_power_cost = -0.025
-
-	}
-
-	on_built = {
-
-    }
 
 	ai_will_do = {
 		factor = 0
