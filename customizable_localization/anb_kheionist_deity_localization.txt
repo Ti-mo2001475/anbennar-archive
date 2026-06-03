@@ -289,3 +289,134 @@ defined_text = {
 
     text = { localisation_key = degariesDesc }
 }
+
+#Besolaki
+defined_text = {
+    name = BesolakiMagicOpinionCheck
+	random = no
+
+    text = {
+        localisation_key = yes_mark
+		trigger = {
+			any_country = {
+				OR = {
+					tag = A85 #Magisterium
+					has_reform = magocracy_reform
+					ruler_is_powerful_mage = yes
+				}
+				has_opinion = {
+					who = ROOT
+					value = 50
+				}
+			}
+		}
+    }
+
+    text = { localisation_key = no_mark }
+}
+
+defined_text = {
+    name = BesolakiMagicDamestearCheck
+	random = no
+
+    text = {
+        localisation_key = yes_mark
+		trigger = {
+			any_country = {
+				NOT = { culture_group = kheionai_ruinborn_elf }
+				any_owned_province = { trade_goods = damestear }
+				OR = {
+					has_opinion = {
+						who = ROOT
+						value = 200
+					}
+					AND = {
+						ROOT = { faction_in_power = beso_nautabhen }
+						has_opinion = {
+							who = ROOT
+							value = 175
+						}
+					}
+				}
+			}
+		}
+    }
+
+    text = { localisation_key = no_mark }
+}
+
+defined_text = {
+    name = BesolakiKheionaiOpinionCheck
+	random = no
+
+    text = {
+        localisation_key = yes_mark
+		trigger = {
+			G49 = { #Lokemeion
+				has_opinion = {
+					who = ROOT
+					value = 100
+				}
+			}
+			G55 = { #Eneion
+				has_opinion = {
+					who = ROOT
+					value = 100
+				}
+			}
+		}
+    }
+
+    text = { localisation_key = no_mark }
+}
+
+defined_text = {
+    name = BesolakiKheionaiOpinion2Check
+	random = no
+
+    text = {
+        localisation_key = yes_mark
+		trigger = {
+			OR = {
+				G49 = { #Lokemeion
+					has_opinion = {
+						who = ROOT
+						value = 100
+					}
+				}
+				G55 = { #Eneion
+					has_opinion = {
+						who = ROOT
+						value = 100
+					}
+				}
+			}
+		}
+    }
+
+    text = { localisation_key = no_mark }
+}
+
+defined_text = {
+    name = NautabhenPowerCheck
+	random = no
+
+    text = {
+        localisation_key = yes_mark
+		trigger = { faction_in_power = beso_nautabhen }
+    }
+
+    text = { localisation_key = no_mark }
+}
+
+defined_text = {
+    name = SkighubhenPowerCheck
+	random = no
+
+    text = {
+        localisation_key = yes_mark
+		trigger = { faction_in_power = beso_skighubhen }
+    }
+
+    text = { localisation_key = no_mark }
+}

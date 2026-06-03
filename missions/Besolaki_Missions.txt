@@ -24,141 +24,22 @@ G54_1_missions = {
 		trigger = {
 			is_subject = no
 			is_at_war = no
-			OR = {
+			if = {
+				limit = { exists = G53 }
 				total_development = G53 #Empkeios
-				NOT = { exists = G53 }
 			}
-			OR = {
+			if = {
+				limit = { exists = G58 }
 				total_development = G58 #Keyolion
-				NOT = { exists = G58 }
 			}
-			OR = {
-				has_spy_network_in = {
-					who = G53 #Empkeios
-					value = 100
-				}
-				hidden_trigger = {
-					AND = {
-						faction_in_power = beso_skighubhen
-						has_spy_network_in = {
-							who = G53 #Empkeios
-							value = 75
-						}
-					}
-				}
-				AND = {
-					reverse_has_opinion = {
-						who = G53 #Empkeios
-						value = 100
-					}
-					has_spy_network_in = {
-						who = G53 #Empkeios
-						value = 50
-					}
-				}
-				hidden_trigger = {
-					AND = {
-						reverse_has_opinion = {
-							who = G53 #Empkeios
-							value = 100
-						}
-						faction_in_power = beso_skighubhen
-						has_spy_network_in = {
-							who = G53 #Empkeios
-							value = 25
-						}
-					}
-				}
-				hidden_trigger = {
-					AND = {
-						faction_in_power = beso_nautabhen
-						reverse_has_opinion = {
-							who = G53 #Empkeios
-							value = 75
-						}
-						has_spy_network_in = {
-							who = G53 #Empkeios
-							value = 50
-						}
-					}
-				}
-				NOT = { exists = G53 } #Empkeios
-			}
-			OR = {
-				has_spy_network_in = {
-					who = G58 #Keyolion
-					value = 100
-				}
-				hidden_trigger = {
-					AND = {
-						faction_in_power = beso_skighubhen
-						has_spy_network_in = {
-							who = G58 #Keyolion
-							value = 75
-						}
-					}
-				}
-				AND = {
-					reverse_has_opinion = {
-						who = G58 #Keyolion
-						value = 100
-					}
-					has_spy_network_in = {
-						who = G58 #Keyolion
-						value = 50
-					}
-				}
-				hidden_trigger = {
-					AND = {
-						reverse_has_opinion = {
-							who = G58 #Keyolion
-							value = 100
-						}
-						faction_in_power = beso_skighubhen
-						has_spy_network_in = {
-							who = G58 #Keyolion
-							value = 25
-						}
-					}
-				}
-				hidden_trigger = {
-					AND = {
-						faction_in_power = beso_nautabhen
-						reverse_has_opinion = {
-							who = G58 #Keyolion
-							value = 75
-						}
-						has_spy_network_in = {
-							who = G58 #Keyolion
-							value = 50
-						}
-					}
-				}
-				NOT = { exists = G58 } #Keyolion
-			}
-			custom_trigger_tooltip = {
-				tooltip = G54_lowered_sn_op_reqs_tt
-				always = yes
-			}
+			G54_faction_trigger = { tag = G53 } #Empkeios
+			G54_faction_trigger = { tag = G58 } #Keyolion
 		}
 
 		effect = {
+			custom_tooltip = G54_empkeios_keyolion_effect_tt
 			tooltip = {
-				G53 = { #Empkeios
-					every_owned_province = {
-						add_permanent_claim = G58 #Keyolion
-					}
-					every_war_enemy_country = {
-						white_peace = PREV
-					}
-				}
 				G58 = { #Keyolion
-					every_owned_province = {
-						add_permanent_claim = G53 #Empkeios
-					}
-					every_war_enemy_country = {
-						white_peace = PREV
-					}
 					declare_war_with_cb = {
 						casus_belli = cb_annex
 						who = G53 #Empkeios
@@ -228,10 +109,8 @@ G54_1_missions = {
 					NOT = { exists = G58 } #Keyolion
 				}
 				AND = {
-					NOT = { 
-						exists = G58 #Keyolion
-						exists = G53 #Empkeios
-					}
+					NOT = { exists = G58 } #Keyolion
+					NOT = { exists = G53 } #Empkeios
 				}
 			}
 			
@@ -467,15 +346,10 @@ G54_1_missions = {
 					}
 					faction_in_power = beso_caribhen
 				}
-			}
-			has_kheionist_deity = { deity = dip }
-			custom_trigger_tooltip = {
-				tooltip = G56_magic_likes_you_req_tt
-				always = yes
-			}
-			custom_trigger_tooltip = {
-				tooltip = G54_damestear_likes_you_req_tt
-				always = yes
+				custom_trigger_tooltip = {
+					tooltip = G56_magic_likes_you_req_tt
+					always = no
+				}
 			}
 		}
 
@@ -524,9 +398,6 @@ G54_1_missions = {
 				}
 			}
 			custom_tooltip = G54_damestear_likes_you
-			tooltip = {
-				capital_scope = { change_trade_goods = damestear }
-			}
 			hidden_effect = {
 				if = {
 					limit = {
@@ -702,6 +573,7 @@ G54_2_missions = {
 			}
 			calc_true_if = {
 				amount = 3
+				desc = G54_devand_claims_tt
 				devand_region = {
 					type = all
 					is_claim = ROOT
@@ -1256,6 +1128,7 @@ G54_3_missions = {
 						modifier = G54_became_peasant_republic
 					}
 				}
+				custom_tooltip = linebreak_tt
 				if = {
 					limit = { is_subject = yes }
 					country_event = {
@@ -1933,7 +1806,7 @@ G54_4_missions = {
 
 		trigger = {
 			if = {
-				limit = { has_dlc = Domination  has_estate = estate_church }
+				limit = { has_dlc = Domination has_estate = estate_church }
 				has_estate_privilege = estate_church_clerical_education
 			}
 			else = { government_reform_progress = 50 }
@@ -1942,11 +1815,11 @@ G54_4_missions = {
 			2677 = { #Besolaki
 				NOT = { devastation = 1 }
 				grown_by_development = 3 
+				custom_trigger_tooltip = {
+					tooltip = G54_lokemeion_or_eneion_like_you_req_tt
+					always = yes
+				}
 			} 
-			custom_trigger_tooltip = {
-				tooltip = G54_lokemeion_or_eneion_like_you_req_tt
-				always = yes
-			}
 		}
 
 		effect = {
@@ -2182,6 +2055,7 @@ G54_4_missions = {
 			}
 			calc_true_if = {
 				amount = 10
+				desc = G54_devand_colonize_tt
 				devand_region = {
 					type = all
 					OR = {
@@ -2689,17 +2563,14 @@ G54_5_missions = {
 				set_country_flag = besolaki_peasants_flag 
 				add_government_reform = peasants_republic
 			}
-			add_faction = beso_caribhen
-			add_faction = beso_kheinbhen
-			add_faction = beso_nautabhen
-			add_faction = beso_skighubhen
-			add_faction = beso_dhorbhen
+			custom_tooltip = G54_add_factions_tt
 			add_stability = -1
 			hidden_effect = {
-				add_faction_influence = {
-					faction = beso_caribhen
-					influence = -80
-				}
+				add_faction = beso_caribhen
+				add_faction = beso_kheinbhen
+				add_faction = beso_nautabhen
+				add_faction = beso_skighubhen
+				add_faction = beso_dhorbhen
 			}
 		}
 	}

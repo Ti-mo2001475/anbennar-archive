@@ -2,7 +2,7 @@
 is_valid_nekhei = {
 	if = {
 		limit = { overlord = { OR = { tag = G51 was_tag = G51 } } } #Arpedifer
-		tag = G53 #Empkeios
+		tag = $tag$
 		is_subject_of_type = nekhei
 	}
 	else_if = {
@@ -383,4 +383,63 @@ can_use_degalistea = {
 	}
 	culture_group = kheionai_ruinborn_elf
 	religion = kheionism
+}
+
+#Besolaki
+G54_faction_subtrigger = {
+	if = {
+		limit = { faction_in_power = $faction$ }
+		$trigger$ = {
+			who = $tag$
+			value = $low_value$
+		}
+	}
+	else = {
+		has_spy_network_in = {
+			who = $tag$
+			value = $high_value$
+		}
+	}
+}
+G54_faction_trigger = {
+	if = {
+		limit = { exists = $tag$ }
+		OR = {
+			G54_faction_subtrigger = {
+				faction = beso_skighubhen
+				trigger = has_spy_network_in
+				tag = $tag$
+				low_value = 75
+				high_value = 100
+			}
+			AND = {
+				G54_faction_subtrigger = {
+					faction = beso_nautabhen
+					trigger = reverse_has_opinion
+					tag = $tag$
+					low_value = 75
+					high_value = 100
+				}
+				G54_faction_subtrigger = {
+					faction = beso_skighubhen
+					trigger = has_spy_network_in
+					tag = $tag$
+					low_value = 25
+					high_value = 50
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = G54_faction_trigger_tt
+				always = no
+			}
+		}
+	}
+	else = {
+		[[$area$]
+			$area$ = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		]
+	}
 }
