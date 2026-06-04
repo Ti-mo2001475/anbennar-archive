@@ -38,13 +38,21 @@ colors = {
 
 
 vanilla_hashes = load_vanilla_hashes()
-path = 'localisation'
+
+# Collect files to process: from command-line arguments, or default to all of localisation/
+if len(sys.argv) > 1:
+    yml_files = [f for f in sys.argv[1:] if os.path.isfile(f)]
+else:
+    loc_path = 'localisation'
+    yml_files = [os.path.join(loc_path, f) for f in os.listdir(loc_path)
+                 if os.path.isfile(os.path.join(loc_path, f))]
 
 hashes = {}
 errors = []
 
-for file_name in os.listdir(path):
-    with open(os.path.join(path, file_name), 'r', encoding="utf-8-sig", errors="ignore") as file:
+for file_path in yml_files:
+    file_name = os.path.basename(file_path)
+    with open(file_path, 'r', encoding="utf-8-sig", errors="ignore") as file:
         text = file.readlines()
         for i in range(0, len(text)):
             line = text[i].split('#')[0].strip()
