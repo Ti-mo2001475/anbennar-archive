@@ -728,7 +728,17 @@ custom_button = { #Merfolk Settlements
 		}
 	}
 }
-custom_button = { #Deathwinds
+
+#Deathwinds
+custom_window = {
+	name = aPUI_deathwinds_window
+	potential = {
+		has_open_aPUI_in_province = { name = deathwinds }
+	}
+}
+custom_text_box = { name = aPUI_deathwinds_title }
+
+custom_button = {
 	name = aPUI_deathwinds_button
     potential = {
 		has_eligible_aPUI_deathwinds_in_province = yes
@@ -736,9 +746,13 @@ custom_button = { #Deathwinds
 	trigger = {
 	}
 	effect = {
-		hidden_effect = {
+		# hidden_effect = {
 			open_aPUI_in_province = { name = deathwinds }
-		}
+			set_aPUI_cap = {
+				name = deathwinds
+				amount = 100
+			}
+		# }
 	}
 	tooltip = aPUI_deathwinds_button_tt
 }
@@ -749,6 +763,38 @@ custom_button = { #Deathwinds dummy
 	}
 	tooltip = aPUI_deathwinds_button_dummy_tt
 }
+
+custom_text_box = { name = aPUI_deathwinds_windward_value }
+custom_text_box = { name = aPUI_deathwinds_deathwinds_value }
+
+custom_button = {
+	name = aPUI_deathwinds_upgrades_button_1
+	effect = {
+		change_aPUI_var_provincial = { name = deathwinds amount = 25 }
+	}
+}
+custom_button = {
+	name = aPUI_deathwinds_upgrades_area_button_1
+	effect = {
+		change_aPUI_var_provincial = { name = deathwinds amount = -25 }
+	}
+}
+
+custom_button = {
+	name = aPUI_deathwinds_upgrades_button_2
+	effect = {
+		change_aPUI_var_provincial = {
+			name = deathwinds_juice
+			amount = 50
+		}
+	}
+}
+
+custom_icon = {
+	name = aPUI_deathwinds_progress
+	frame_variable = aPUI_deathwinds_framevar
+}
+custom_button = { name = aPUI_deathwinds_frame }
 
 #Slot 2 - Province type button
 custom_button = { #Dummy closed
@@ -4229,15 +4275,4 @@ custom_button = {
 			kobold_citadel_effect = { effect = kobold_citadel_start_upgrading_ordinance }
 		}
 	}
-}
-
-#Deathwinds
-custom_window = {
-	name = aPUI_deathwinds_window
-	potential = {
-		has_open_aPUI_in_province = { name = deathwinds }
-	}
-}
-custom_text_box = {
-	name = aPUI_deathwinds_title
 }
