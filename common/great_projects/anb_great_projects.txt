@@ -4,7 +4,7 @@ marrhold_dwarovar_tunnel = {
 	start = 4097
 
 	# date built in real life (so anything built during game time will be there if you start a game after that date)
-	date = 1855.06.20
+	date = 1000.06.20
 
 	#time to build
 	time = { months = 180 }
@@ -23,26 +23,15 @@ marrhold_dwarovar_tunnel = {
 
 	#can we build it?
 	build_trigger = {
-		FROM = {
-			owns_or_vassal_of = 4097
-			is_subject = no
-			adm_tech = 16
-			NOT = { capital_scope = { continent = serpentspine } }
-		}
-		NOT = { 4065 = { has_great_project = { type = dwarovar_marrhold_tunnel } has_construction = dwarovar_marrhold_tunnel } }
+		
 	}
 
 	#what to do when it's built
 	on_built = {
-		add_canal = marrhold_dwarovar_tunnel
-		set_global_flag = marrhold_tunnel_opened
-		owner = { country_event = { id = diggy.401 } }
 	}
 
 	#what to do when it's destroyed
 	on_destroyed = {
-		remove_canal = marrhold_dwarovar_tunnel
-		clr_global_flag = marrhold_tunnel_opened
 	}
 
 	#can our country use it?
@@ -50,7 +39,13 @@ marrhold_dwarovar_tunnel = {
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		NOT = { 4065 = { has_great_project = { type = dwarovar_marrhold_tunnel } has_construction = dwarovar_marrhold_tunnel  } }
+		FROM = {
+			owns_or_vassal_of = 4097
+			is_subject = no
+			adm_tech = 16
+			NOT = { capital_scope = { continent = serpentspine } }
+		}
+		NOT = { 4065 = { has_great_project = { type = dwarovar_marrhold_tunnel } has_construction = dwarovar_marrhold_tunnel } }
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
@@ -96,7 +91,14 @@ marrhold_dwarovar_tunnel = {
 		country_modifiers = { global_trade_power = 0.02 }
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {}
+		on_upgraded = {
+			if = {
+				limit = { NOT = { has_global_flag = marrhold_tunnel_opened } }
+				set_global_flag = marrhold_tunnel_opened
+				add_canal = marrhold_dwarovar_tunnel
+				owner = { country_event = { id = diggy.401 } }
+			}
+		}
 	}
 
 	tier_2 = {
@@ -172,27 +174,14 @@ dwarovar_marrhold_tunnel = {
 
 	#can we build it?
 	build_trigger = {
-		FROM = {
-			owns_or_vassal_of = 4065
-			is_subject = no
-			adm_tech = 12
-			capital_scope = { continent = serpentspine }
-		}
-		NOT = { 4097 = { has_great_project = { type = marrhold_dwarovar_tunnel } has_construction = marrhold_dwarovar_tunnel } }
 	}
 
 	#what to do when it's built
 	on_built = {
-		add_canal = dwarovar_marrhold_tunnel
-		set_global_flag = marrhold_tunnel_opened
-		set_global_flag = marrhold_tunnel_1
-		owner = { country_event = { id = diggy.402 } }
 	}
 
 	#what to do when it's destroyed
 	on_destroyed = {
-		remove_canal = dwarovar_marrhold_tunnel
-		clr_global_flag = marrhold_tunnel_opened
 	}
 
 	#can our country use it?
@@ -200,7 +189,12 @@ dwarovar_marrhold_tunnel = {
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		NOT = { 4097 = { has_great_project = { type = marrhold_dwarovar_tunnel } has_construction = marrhold_dwarovar_tunnel  } }
+		FROM = {
+			owns_or_vassal_of = 4065
+			is_subject = no
+			adm_tech = 12
+			capital_scope = { continent = serpentspine }
+		}
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
@@ -248,7 +242,15 @@ dwarovar_marrhold_tunnel = {
 		country_modifiers = { global_trade_power = 0.02 }
 
 		#what effects happen when this tier is achieved
-		on_upgraded = {}
+		on_upgraded = {
+			if = {
+				limit = { NOT = { has_global_flag = marrhold_tunnel_opened } }
+				add_canal = dwarovar_marrhold_tunnel
+				set_global_flag = marrhold_tunnel_opened
+				set_global_flag = marrhold_tunnel_1
+				owner = { country_event = { id = diggy.402 } }
+			}
+		}
 	}
 
 	tier_2 = {
