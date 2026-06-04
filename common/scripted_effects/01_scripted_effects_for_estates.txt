@@ -2521,6 +2521,13 @@ on_province_owner_change_estate_privileges_effect = {
 			name = estate_burghers_monopoly_of_textiles_mod
 			duration = -1
 		}
+		if = {
+			limit = { owner = { has_country_flag = karach_improved_burgher_monopolies_again } }
+			add_province_modifier = {
+				name = improved_province_monopoly_karach_burgher
+				duration = -1
+			}
+		}
 	}
 	if = {
 		limit = {
@@ -2577,6 +2584,22 @@ on_province_owner_change_estate_privileges_effect = {
 		add_province_modifier = {
 			name = estate_burghers_monopoly_of_dyes_mod
 			duration = -1
+		}
+		if = {
+			limit = { owner = { has_country_flag = karach_improved_dgp_monopolies } }
+			if = {
+				limit = { owner = { has_country_flag = karach_improved_burgher_monopolies_again } }
+				add_province_modifier = {
+					name = improved_province_monopoly_karach_burgher
+					duration = -1
+				}
+			}
+			else = {
+				add_province_modifier = {
+					name = improved_province_monopoly_karach
+					duration = -1
+				}
+			}
 		}
 	}
 	if = {
@@ -2638,6 +2661,22 @@ on_province_owner_change_estate_privileges_effect = {
 			name = estate_burghers_monopoly_of_glass_mod
 			duration = -1
 		}
+		if = {
+			limit = { owner = { has_country_flag = karach_improved_dgp_monopolies } }
+			if = {
+				limit = { owner = { has_country_flag = karach_improved_burgher_monopolies_again } }
+				add_province_modifier = {
+					name = improved_province_monopoly_karach_burgher
+					duration = -1
+				}
+			}
+			else = {
+				add_province_modifier = {
+					name = improved_province_monopoly_karach
+					duration = -1
+				}
+			}
+		}
 	}
 	if = {
 		limit = {
@@ -2685,6 +2724,22 @@ on_province_owner_change_estate_privileges_effect = {
 		add_province_modifier = {
 			name = estate_burghers_monopoly_of_paper_mod
 			duration = -1
+		}
+		if = {
+			limit = { owner = { has_country_flag = karach_improved_dgp_monopolies } }
+			if = {
+				limit = { owner = { has_country_flag = karach_improved_burgher_monopolies_again } }
+				add_province_modifier = {
+					name = improved_province_monopoly_karach_burgher
+					duration = -1
+				}
+			}
+			else = {
+				add_province_modifier = {
+					name = improved_province_monopoly_karach
+					duration = -1
+				}
+			}
 		}
 	}
 	if = {
@@ -2734,6 +2789,26 @@ on_province_owner_change_estate_privileges_effect = {
 			name = estate_church_monopoly_of_incense_mod
 			duration = -1
 		}
+		if = {
+			limit = {
+				owner = { has_country_flag = karach_incense_wool_monopoly_upgrade }
+			}
+			if = {
+				limit = {
+					owner = { has_country_flag = karach_improved_church_monopolies_again }
+				}
+				add_province_modifier = {
+					name = improved_province_monopoly_karach_church
+					duration = -1
+				}
+			}
+			else = {
+				add_province_modifier = {
+					name = improved_province_monopoly_karach
+					duration = -1
+				}
+			}
+		}
 	}
 	if = {
 		limit = {
@@ -2769,6 +2844,26 @@ on_province_owner_change_estate_privileges_effect = {
 		add_province_modifier = {
 			name = estate_church_monopoly_of_wool_mod
 			duration = -1
+		}
+		if = {
+			limit = {
+				owner = { has_country_flag = karach_incense_wool_monopoly_upgrade }
+			}
+			if = {
+				limit = {
+					owner = { has_country_flag = karach_improved_church_monopolies_again }
+				}
+				add_province_modifier = {
+					name = improved_province_monopoly_karach_church
+					duration = -1
+				}
+			}
+			else = {
+				add_province_modifier = {
+					name = improved_province_monopoly_karach
+					duration = -1
+				}
+			}
 		}
 	}
 	if = {
@@ -2858,6 +2953,22 @@ on_province_owner_change_estate_privileges_effect = {
 			name = estate_nobles_monopoly_of_metals_mod
 			duration = -1
 		}
+		if = {
+			limit = { owner = { has_country_flag = karach_improved_smelting_monopoly } }
+			if = {
+				limit = { owner = { has_country_flag = karach_improved_nobles_monopolies_again } }
+				add_province_modifier = {
+					name = improved_province_monopoly_karach_nobles
+					duration = -1
+				}
+			}
+			else = {
+				add_province_modifier = {
+					name = improved_province_monopoly_karach
+					duration = -1
+				}
+			}
+		}
 	}
 	if = {
 		limit = {
@@ -2912,7 +3023,33 @@ on_province_owner_change_estate_privileges_effect = {
 			owner = {
 				has_estate_privilege = estate_nobles_monopoly_of_livestock
 			}
-			trade_goods = livestock
+			OR = {
+				trade_goods = livestock
+				AND = {
+					ROOT = { has_country_flag = karach_improved_livestock_monopolies }
+					trade_goods = grain
+				}
+			}
+			if = {
+				limit = { 
+					owner = { 
+						has_country_flag = karach_improved_livestock_monopolies 
+					} 
+				}
+				if = {
+					limit = { owner = { has_country_flag = karach_improved_nobles_monopolies_again } }
+					add_province_modifier = {
+						name = improved_province_monopoly_karach_nobles
+						duration = -1
+					}
+				}
+				else = {
+					add_province_modifier = {
+						name = improved_province_monopoly_karach
+						duration = -1
+					}
+				}
+			}
 		}
 		add_province_modifier = {
 			name = estate_nobles_monopoly_of_livestock_mod
@@ -2965,6 +3102,22 @@ on_province_owner_change_estate_privileges_effect = {
 		add_province_modifier = {
 			name = estate_nobles_monopoly_of_gems_mod
 			duration = -1
+		}
+		if = {
+			limit = { owner = { has_country_flag = karach_upgraded_gem_monopoly } }
+			if = {
+				limit = { owner = { has_country_flag = karach_improved_nobles_monopolies_again } }
+				add_province_modifier = {
+					name = improved_province_monopoly_karach_nobles
+					duration = -1
+				}
+			}
+			else = {
+				add_province_modifier = {
+					name = improved_province_monopoly_karach
+					duration = -1
+				}
+			}
 		}
 	}
 	if = {
@@ -3036,13 +3189,114 @@ on_province_owner_change_estate_privileges_effect = {
 	if = {
 		limit = {
 			owner = {
-				has_estate_privilege = estate_noble_monopoly_of_fuel
+				OR = {
+					has_estate_privilege = estate_noble_monopoly_of_fuel
+					has_estate_privilege = estate_nobles_monopoly_of_exotic_wood
+				}
 			}
 			trade_goods = tropical_wood
 		}
 		add_province_modifier = {
 			name = estate_noble_monopoly_of_fuel_mod
 			duration = -1
+		}
+		if = {
+			limit = { owner = { has_country_flag = karach_improved_nobles_monopolies_again } }
+			add_province_modifier = {
+				name = improved_province_monopoly_karach_nobles
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = improved_province_monopoly_karach
+				duration = -1
+			}
+		}
+	}
+
+	if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_burghers_monopoly_of_naval_supplies_fish
+			}
+			OR = {
+				trade_goods = naval_supplies
+				trade_goods = fish
+			}
+		}
+		add_province_modifier = {
+			name = estate_burghers_monopoly_of_naval_supplies_fish_mod
+			duration = -1
+		}
+		if = {
+			limit = { owner = { has_country_flag = karach_improved_burgher_monopolies_again } }
+			add_province_modifier = {
+				name = improved_province_monopoly_karach_burgher
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = improved_province_monopoly_karach
+				duration = -1
+			}
+		}
+	}
+
+	if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_church_monopoly_of_spices
+			}
+			trade_goods = spices
+		}
+		add_province_modifier = {
+			name = estate_church_monopoly_of_spices_mod
+			duration = -1
+		}
+		if = {
+			limit = {
+				owner = { has_country_flag = karach_improved_church_monopolies_again }
+			}
+			add_province_modifier = {
+				name = improved_province_monopoly_karach_church
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = improved_province_monopoly_karach
+				duration = -1
+			}
+		}
+	}
+
+	if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_church_monopoly_of_sugar
+			}
+			trade_goods = sugar
+		}
+		add_province_modifier = {
+			name = estate_church_monopoly_of_sugar_mod
+			duration = -1
+		}
+		if = {
+			limit = {
+				owner = { has_country_flag = karach_improved_church_monopolies_again }
+			}
+			add_province_modifier = {
+				name = improved_province_monopoly_karach_church
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = improved_province_monopoly_karach
+				duration = -1
+			}
 		}
 	}
 	# if = {
