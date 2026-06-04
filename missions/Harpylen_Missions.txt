@@ -535,13 +535,7 @@ F98_col_2 = {
 						AND = {
 							has_production_building_trigger = yes
 							has_manufactory_trigger = yes
-							OR = {
-								num_of_times_expanded_infrastructure = 1
-								AND = {
-									NOT = { has_dlc = "Leviathan" }
-									development = 15	
-								}
-							}
+							development = 15
 						}
 					}
 				}
@@ -556,13 +550,7 @@ F98_col_2 = {
 						AND = {
 							has_production_or_gold_building_trigger = yes
 							has_production_manufactory_or_gold_trigger = yes
-							OR = {
-								num_of_times_expanded_infrastructure = 1
-								AND = {
-									NOT = { has_dlc = "Leviathan" }
-									development = 15	
-								}
-							}
+							development = 15	
 						}
 					}
 				}
@@ -577,15 +565,7 @@ F98_col_2 = {
 					AND = {
 						has_production_building_trigger = yes
 						has_manufactory_trigger = yes
-						if = {
-							limit = {
-								has_dlc = "Leviathan"
-							}
-							num_of_times_expanded_infrastructure = 1
-						}
-						else = {
-							development = 15	
-						}
+						development = 15
 					}
 				}
 			}
@@ -600,15 +580,7 @@ F98_col_2 = {
 					AND = {
 						has_production_or_gold_building_trigger = yes
 						has_production_manufactory_or_gold_trigger = yes
-						if = {
-							limit = {
-								has_dlc = "Leviathan"
-							}
-							num_of_times_expanded_infrastructure = 1
-						}
-						else = {
-							development = 15	
-						}
+						development = 15
 					}
 				}
 			}
@@ -1512,6 +1484,7 @@ F98_col_3 = {
 						fast_owns_less_than_num_pops_of_race = { race = harpy amount = 1 } 
 						harpylen_encouraged_migration = yes
 						is_subject_of = ROOT
+						has_been_insulted_by_root = yes
 					}				
 					AND = {
 						is_great_power = yes
@@ -1542,10 +1515,8 @@ F98_col_3 = {
 			all_known_country = {
 				OR = {
 					fast_owns_less_than_num_pops_of_race = { race = harpy amount = 1 }
-					OR = {
-						harpylen_encouraged_migration = yes
-						has_been_insulted_by_root = yes
-					}
+					harpylen_encouraged_migration = yes
+					has_been_insulted_by_root = yes
 					is_subject_of = ROOT
 				}
 			}
@@ -1980,7 +1951,11 @@ F98_col_4 = {
 							duration = -1
 						}
 					}
+					change_religion = irdaeos_worship
 				}
+			}
+			else = {
+				J54 = { change_religion = irdaeos_worship }
 			}
 			custom_tooltip = harpylen_divine_tt
 			hidden_effect = {
