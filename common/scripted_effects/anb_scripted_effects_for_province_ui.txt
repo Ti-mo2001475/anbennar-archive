@@ -63,23 +63,14 @@ change_aPUI_var_country = {
 change_aPUI_var_provincial = {
 	# To change the 'currency' use  'change_aPUI_var = { name = <name> amount = 10 }' to increase it by 10.
 	# You can also specify the name of a variable if you wish to calculate the quantity instead of using a static value
-	custom_tooltip = "change_variable"
 	[[amount] change_variable = { aPUI_$name$_var = $amount$ } ]
 	[[var_amount] change_variable = { which = aPUI_$name$_var which = $var_amount$ } ]
-	# hidden_effect = {
-	custom_tooltip = "cap_aPUI_var"
+	hidden_effect = {
 		cap_aPUI_var = { name = $name$ }
-	custom_tooltip = "update_aPUI_var_bar"
 		if = {
-			limit = { ai = no }
+			limit = { FROM = { ai = no } }
 			update_aPUI_var_bar = { name = $name$ }
 		}
-	# }
-	# Copy the framevariable to the province for the progress bar
-	custom_tooltip = "set_variable"
-	set_variable = {
-		which = aPUI_$name$_framevar
-		which = FROM
 	}
 }
 set_aPUI_cap = {
@@ -91,17 +82,17 @@ change_aPUI_cap = {
 	[[which] change_variable = { which = aPUI_$name$_capacity which = $which$ } ]
 }
 update_aPUI_var_bar = { # This prevents the framevar going negative and then showing 100%
-	# hidden_effect = {
+	hidden_effect = {
 		if = { limit = { check_variable = { which = aPUI_$name$_var value = 0 } }
 			set_variable = { which = aPUI_$name$_framevar which = aPUI_$name$_var }
 			divide_variable = { which = aPUI_$name$_framevar which = aPUI_$name$_capacity }
 			multiply_variable = { which = aPUI_$name$_framevar value = 100 }
 		}
 		else = { set_variable = { which = aPUI_$name$_framevar value = 0 } }
-	# }
+	}
 }
 cap_aPUI_var = { # When the 'currency' goes above your capacity, or drops into negatives
-	# hidden_effect = {
+	hidden_effect = {
 		if = {
 			limit = { NOT = { check_variable = { which = aPUI_$name$_var value = 0 } } }
 			set_variable = { which = aPUI_$name$_var value = 0 }
@@ -110,7 +101,7 @@ cap_aPUI_var = { # When the 'currency' goes above your capacity, or drops into n
 			limit = { check_variable = { which = aPUI_$name$_var which = aPUI_$name$_capacity } }
 			set_variable = { which = aPUI_$name$_var which = aPUI_$name$_capacity }
 		}
-	# }
+	}
 }
 set_aPUI_var = {
 	[[value] set_variable = { which = aPUI_$name$_var value = $value$ } ]
