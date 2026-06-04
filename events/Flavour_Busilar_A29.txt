@@ -1,78 +1,60 @@
 
-namespace = flavour_busilar
+namespace = busilar
 
-#Ekha events
 country_event = {
-	id = flavour_busilar.1
-	title = flavour_busilar.1.t
-	desc = flavour_busilar.1.d
+	id = busilar.1
+	title = busilar.1.t
+	desc = busilar.1.d
 	picture = SONGHAI_RULER_eventPicture
 
 	is_triggered_only = yes
 
 	option = {
-		name = flavour_busilar.1.a
-		U08 = {
-			country_event = {
-			id = flavour_ekha.3
-			days = 4
-			}
-		}
-	}
-	option = {
-		name = flavour_busilar.1.b
-		ai_chance = { factor = 0 }
-		hidden_effect = {
-			U08 = {
-				country_event = {
-					id = flavour_ekha.4
-					days = 90
+		name = busilar.1.a
+		for = {
+			amount = 5
+			effect = "
+				random_owned_province = {
+					limit = { region = businor_region }
+					add_province_modifier = ravelian_society
 				}
-			}
+			"
 		}
-	}
-}
-
-country_event = {
-	id = flavour_busilar.2
-	title = flavour_busilar.2.t
-	desc = flavour_busilar.2.d
-	picture = GREAT_SPIRIT_CINULAU_PLAIN_eventPicture
-
-	fire_only_once = yes
-	is_triggered_only = yes
-
-	trigger = {
-		tag = A29
-	}
-
-	option = {
-		name = flavour_busilar.2.a
 		add_country_modifier = {
-				name = U08_Ekhasi_patronage
-				duration = 3850
+			name = A29_development_society
+			duration = 300
 		}
-		1259 = {
-				add_trade_modifier = {
-					who = A29
-					duration = 3850
-					power = 60
-					key = A29_favourable_terms
-				}
+		kalavend_region = {
+			add_permanent_claim = ROOT
 		}
 	}
 }
 
 country_event = {
-	id = flavour_busilar.3
-	title = flavour_busilar.3.t
-	desc = flavour_busilar.3.d
-	picture = GREAT_SPIRIT_CINULAU_PLAIN_eventPicture
+	id = busilar.2
+	title = busilar.2.t
+	desc = busilar.2.d
+	picture = SONGHAI_RULER_eventPicture
 
-	fire_only_once = yes
 	is_triggered_only = yes
 
+	immediate = {
+		hidden_effect = {
+			set_estate_privilege = estate_planetouched_organization_scattered
+			set_country_flag = has_planetouched_estate
+		}
+	}
+
 	option = {
-		name = flavour_busilar.3.a
+		name = busilar.2.a
+		custom_tooltip = A29_planetouched_unlock
+		change_variable = { which = planetouched_agenda_good_var value = 1 }
+		set_country_flag = recently_done_planetouched_agenda
+	}
+	option = {
+		name = busilar.2.b
+		custom_tooltip = A29_planetouched_unlock
+		change_variable = { which = planetouched_agenda_bad_var value = 1 }
+		set_country_flag = recently_done_against_planetouched_agenda
 	}
 }

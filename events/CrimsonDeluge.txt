@@ -664,7 +664,12 @@ province_event = { #Particularly strong rain causes devastation
 			owner = { religion = corinite }
 		}
 		add_devastation = 10
-
+		if = {
+			limit = {
+				has_country_flag = A29_deluge_better
+			}
+			add_legitimacy = 10
+		}
 		owner = { add_karma = -10 }
 	}
 	#Other
@@ -732,7 +737,16 @@ province_event = { #Flagellants cause unrest
 			name = flagellants_in_the_streets
 			value = 5
 		}
-
+		if = { #busilar
+			limit = {
+				owner = {
+					has_country_flag = A29_deluge_better
+				}
+			}
+			owner = {
+				add_yearly_manpower = 0.1
+			}
+		}
 		owner = { add_karma = -5 }
 	}
 	#Other
@@ -1494,5 +1508,9 @@ country_event = { #Mage burned as a witch
 		}
 
 		add_karma = 5
+	}
+	option = {
+		name = "deluge.13.busilar"
+		highlight = yes
 	}
 }
