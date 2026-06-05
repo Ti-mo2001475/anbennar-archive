@@ -758,6 +758,125 @@ estate_mages_organization_onyxguard = { #Lake Federation
 	}
 }
 
+estate_mages_organization_sanarenni = { #Bulwari Harpies/Naleni
+	icon = privilege_promote_maratha_nobility
+	max_absolutism = -10
+	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 2 } }
+	influence = 0.25
+	land_share = 5
+	is_valid = {
+		has_custom_spell_list_of_group = { group = harpy }
+		NOT = { has_mages_special_organization_privilege = yes }
+	}
+	can_select = { can_pay_for_organization_swap = { estate = mages } }
+	can_revoke = {
+		always = no
+	}
+	on_granted = {
+		pay_for_organization_swap = { organization = sanarenni }
+		hidden_effect = {
+			if = {
+				limit = { NOT = { is_year = 1445 } }
+				take_estate_land_share_massive = { estate = estate_mages }
+			}
+		}
+	}
+	on_revoked = {
+	}
+	on_invalid = {
+		custom_tooltip = estate_mages_jaherian_invalid_tooltip
+		hidden_effect = {
+			if = {
+				limit = { NOT = { has_mages_organization_privilege = yes } }
+				set_estate_privilege = estate_mages_organization_state
+			}
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+		global_unrest = -2
+		enchantment_experience_mod = 0.1
+	}
+
+	conditional_modifier = {	
+		trigger = {
+			num_of_subjects = 1
+			NOT = { num_of_subjects = 2 }
+		}
+		modifier = {
+			mages_estate_experience_mod = 0.02
+		}
+	}
+
+	conditional_modifier = {	
+		trigger = {
+			num_of_subjects = 2
+			NOT = { num_of_subjects = 3 }
+		}
+		modifier = {
+			mages_estate_experience_mod = 0.04
+		}
+	}
+
+	conditional_modifier = {	
+		trigger = {
+			num_of_subjects = 3
+			NOT = { num_of_subjects = 4 }
+		}
+		modifier = {
+			mages_estate_experience_mod = 0.06
+		}
+	}
+
+	conditional_modifier = {	
+		trigger = {
+			num_of_subjects = 4
+			NOT = { num_of_subjects = 5 }
+		}
+		modifier = {
+			mages_estate_experience_mod = 0.08
+		}
+	}
+
+	conditional_modifier = {	
+		trigger = {
+			num_of_subjects = 5
+		}
+		modifier = {
+			mages_estate_experience_mod = 0.1
+		}
+	}
+	
+	ai_will_do = {
+		factor = 5
+		modifier = {
+			factor = 0.8
+			OR = {
+				NOT = { crown_land_share = 40 }
+				AND = {
+					is_absolutism_active = yes
+					NOT = { crown_land_share = 60 }
+				}
+			}
+		}
+		modifier = {
+			factor = 0.8
+			OR = {
+				NOT = { crown_land_share = 30 }
+				AND = {
+					is_absolutism_active = yes
+					NOT = { crown_land_share = 50 }
+				}
+			}
+		}
+		modifier = {
+			factor = 0.8
+			is_absolutism_active = yes
+		}
+	}
+}
+
 #############################
 ### SPECIAL ORGANIZATIONS ###
 #############################
