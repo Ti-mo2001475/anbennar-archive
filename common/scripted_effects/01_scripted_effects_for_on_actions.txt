@@ -5259,52 +5259,14 @@ on_battle_lost_country_effect = {
 on_battle_won_province_effect = {
 	if = {
 		limit = {
-			from = {
+			FROM = {
 				tag = REB
-				is_rebel_type = revolutionary_rebels
-			}
-			owner = {
-				any_owned_province = {
-					region = root
-					has_revolution_in_province = yes
-				}
-				# NOT = { has_disaster = french_revolution }
-				NOT = { has_disaster = revolution }
-				NOT = { has_spawned_rebels = revolutionary_rebels }
 			}
 		}
-		owner = { country_event = { id = center_of_revolution.1600 } }
+		on_battle_won_province_effect_from_reb = yes
 	}
-
+	
 	#Anbennar
-	if = {
-		limit = {
-			from = {
-				tag = REB
-				is_rebel_type = pretender_rebels
-			}
-			owner = {
-				tag = A48
-				has_disaster = sugamber_succession_war
-			}
-		}
-		owner = { country_event = { id = flavor_sugamber.9 } }
-	}
-
-	if = { limit = { has_province_flag = nsc_duel } #Mages vs Artificers duel during the 'Rise of Artificery' NSC incident
-		if = { limit = { NOT = { has_province_flag = nsc_duel_null } }
-			if = { limit = { from = { tag = REB is_rebel_type = artificer_duelists_rebels } }
-				owner = { country_event = { id = new_sun_cult.203 } }
-			}
-			if = { limit = { from = { tag = REB is_rebel_type = mage_duelists_rebels } }
-				owner = { country_event = { id = new_sun_cult.204 } }
-			}
-		}
-		else = {
-			owner = { country_event = { id = new_sun_cult.205 } }
-		}
-	}
-
 	if = {
 		limit = {
 			ROOT = {
@@ -5320,168 +5282,7 @@ on_battle_won_province_effect = {
 			}
 		}
 	}
-
-	if = {
-		limit = {
-			from = {
-				tag = REB
-				is_rebel_type = allclan_rabble
-			}
-			owner = {
-				tag = I98
-				check_variable = {
-					which = tithicIncrement
-					value = 1
-				}
-				NOT = {
-					check_variable = {
-						which = tithicIncrement
-						value = 2
-					}
-				}
-			}
-		}
-		I98 = { country_event = { id = allclan.23 } }
-	}
-	if = {
-		limit = {
-			from = {
-				tag = REB
-				is_rebel_type = allclan_rabble
-			}
-			owner = {
-				tag = I98
-				check_variable = {
-					which = tithicIncrement
-					value = 2
-				}
-				NOT = {
-					check_variable = {
-						which = tithicIncrement
-						value = 3
-					}
-				}
-			}
-		}
-		I98 = { country_event = { id = allclan.24 } }
-	}
-	if = {
-		limit = {
-			from = {
-				tag = REB
-				is_rebel_type = allclan_rabble
-			}
-			owner = {
-				tag = I98
-				check_variable = {
-					which = tithicIncrement
-					value = 3
-				}
-				NOT = {
-					check_variable = {
-						which = tithicIncrement
-						value = 4
-					}
-				}
-			}
-		}
-		I98 = { country_event = { id = allclan.25 } }
-	}
-	if = {
-		limit = {
-			from = {
-				tag = REB
-				is_rebel_type = allclan_rabble
-			}
-			owner = {
-				tag = I98
-				check_variable = {
-					which = tithicIncrement
-					value = 4
-				}
-				NOT = {
-					check_variable = {
-						which = tithicIncrement
-						value = 5
-					}
-				}
-			}
-		}
-		I98 = { country_event = { id = allclan.26 } }
-	}
-	if = {
-		limit = {
-			FROM = {
-				tag = REB
-				is_rebel_type = allclan_rabble
-			}
-			owner = {
-				tag = I98
-				check_variable = {
-					which = tithicIncrement
-					value = 5
-				}
-			}
-		}
-		I98 = { country_event = { id = allclan.27 } }
-	}
-
-	if = {
-		limit = { 
-			owner = {
-				OR = {
-					tag = Y17 #Gushuokguan
-					was_tag = Y17 #Gushuokguan
-				}
-				any_hired_mercenary_company = {
-					template = merc_dacite_dragons
-					location = { province_id = ROOT }
-				}
-			}
-			FROM = {
-				tag = REB
-				is_rebel_type = spirit_swarms 
-			}
-		}
-		owner = {
-			change_variable = {
-				which = gushuokguan_dacite_dragons_death_toll
-				which = land_units_killed
-			}
-		}
-	}
-	else_if = {
-		limit = { 
-			owner = {
-				overlord = {
-					OR = {
-						tag = Y17 #Gushuokguan
-						was_tag = Y17 #Gushuokguan
-					}
-					any_hired_mercenary_company = {
-						template = merc_dacite_dragons
-						location = { province_id = ROOT }
-					}
-				}
-			}
-			FROM = {
-				tag = REB
-				is_rebel_type = spirit_swarms 
-			}
-		}
-		owner = {
-			overlord = {
-				set_variable = {
-					which = land_units_killed
-					which = PREV
-				}
-				change_variable = {
-					which = gushuokguan_dacite_dragons_death_toll
-					which = land_units_killed
-				}
-			}
-		}
-	}
+	
 	if = {
 		limit = { 
 			FROM = {
@@ -5621,6 +5422,181 @@ on_battle_won_province_effect = {
 			change_variable = {
 				which = troopsKilledByXhazobineCurrent
 				which = land_units_killed
+			}
+		}
+	}
+}
+on_battle_won_province_effect_from_reb = {
+	if = {
+		limit = {
+			FROM = {
+				is_rebel_type = revolutionary_rebels
+			}
+			owner = {
+				any_owned_province = {
+					region = root
+					has_revolution_in_province = yes
+				}
+				# NOT = { has_disaster = french_revolution }
+				NOT = { has_disaster = revolution }
+				NOT = { has_spawned_rebels = revolutionary_rebels }
+			}
+		}
+		owner = { country_event = { id = center_of_revolution.1600 } }
+	}
+	#Anbennar
+	if = {
+		limit = {
+			FROM = {
+				is_rebel_type = pretender_rebels
+			}
+			owner = {
+				tag = A48
+				has_disaster = sugamber_succession_war
+			}
+		}
+		owner = { country_event = { id = flavor_sugamber.9 } }
+	}
+	if = { limit = { has_province_flag = nsc_duel } #Mages vs Artificers duel during the 'Rise of Artificery' NSC incident
+		if = { limit = { NOT = { has_province_flag = nsc_duel_null } }
+			if = { limit = { FROM = { is_rebel_type = artificer_duelists_rebels } }
+				owner = { country_event = { id = new_sun_cult.203 } }
+			}
+			if = { limit = { FROM = { is_rebel_type = mage_duelists_rebels } }
+				owner = { country_event = { id = new_sun_cult.204 } }
+			}
+		}
+		if = { limit = { has_province_flag = nsc_duel_null }
+			owner = { country_event = { id = new_sun_cult.205 } }
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				is_rebel_type = allclan_rabble
+			}
+			owner = {
+				tag = I98
+			}
+		}
+		owner = {
+			if = {
+				limit = {
+					check_variable = {
+						which = tithicIncrement
+						value = 1
+					}
+					NOT = {
+						check_variable = {
+							which = tithicIncrement
+							value = 2
+						}
+					}
+				}
+				country_event = { id = allclan.23 }
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = tithicIncrement
+						value = 2
+					}
+					NOT = {
+						check_variable = {
+							which = tithicIncrement
+							value = 3
+						}
+					}
+				}
+				country_event = { id = allclan.24 }
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = tithicIncrement
+						value = 3
+					}
+					NOT = {
+						check_variable = {
+							which = tithicIncrement
+							value = 4
+						}
+					}
+				}
+				country_event = { id = allclan.25 }
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = tithicIncrement
+						value = 4
+					}
+					NOT = {
+						check_variable = {
+							which = tithicIncrement
+							value = 5
+						}
+					}
+				}
+				country_event = { id = allclan.26 }
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = tithicIncrement
+						value = 5
+					}
+				}
+				I98 = { country_event = { id = allclan.27 } }
+			}
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				is_rebel_type = spirit_swarms 
+			}
+		}
+		if = {
+			limit = { 
+				owner = {
+					is_or_was_tag = { tag = Y17 } #Gushuokguan
+					any_hired_mercenary_company = {
+						template = merc_dacite_dragons
+						location = { province_id = ROOT }
+					}
+				}
+			}
+			owner = {
+				change_variable = {
+					which = gushuokguan_dacite_dragons_death_toll
+					which = land_units_killed
+				}
+			}
+		}
+		else_if = {
+			limit = { 
+				owner = {
+					overlord = {
+						is_or_was_tag = { tag = Y17 } #Gushuokguan
+						any_hired_mercenary_company = {
+							template = merc_dacite_dragons
+							location = { province_id = ROOT }
+						}
+					}
+				}
+			}
+			owner = {
+				overlord = {
+					set_variable = {
+						which = land_units_killed
+						which = PREV
+					}
+					change_variable = {
+						which = gushuokguan_dacite_dragons_death_toll
+						which = land_units_killed
+					}
+				}
 			}
 		}
 	}
