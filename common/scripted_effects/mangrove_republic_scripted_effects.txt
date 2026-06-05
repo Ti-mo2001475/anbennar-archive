@@ -675,73 +675,67 @@ mangrove_bio_infra_final_upgrade = {
 	}
 }
 
+# you can regain the province mod after being conquered
+# but you can't get the magic school level again
 mangrove_unlock_capstone = {
+	mangrove_unlock_capstone_sub_effect = { tag = P21 }
+	mangrove_unlock_capstone_sub_effect = { tag = P22 level_divination = yes }
+	mangrove_unlock_capstone_sub_effect = { tag = P23 }
+	mangrove_unlock_capstone_sub_effect = { tag = P24 }
+	mangrove_unlock_capstone_sub_effect = { tag = P25 }
+	mangrove_unlock_capstone_sub_effect = { tag = P26 level_enchantment = yes }
+}
+
+mangrove_unlock_capstone_sub_effect = {
 	if = {
 		limit = {
-			FROM = { is_or_was_tag = { tag = P21 } }
-			province_id = 6954
-		}
-		add_province_modifier = { name = mangrove_capstone_P21 duration = -1 }
-	}
-	if = {
-		limit = {
-			FROM = { is_or_was_tag = { tag = P22 } }
-			province_id = 6956
-		}
-		add_province_modifier = { name = mangrove_capstone_P22 duration = -1 }
-		custom_tooltip = mangrove_level_up_divination_tt # need custom tt since ROOT is the province not the tag
-		hidden_effect = {
 			FROM = {
-				if = {
-					limit = { is_estate_divination_level_3 = no }
-					country_event = { id = mangrove.6 } # change ROOT to country to avoid error log
-				}
-				else = {
-					add_country_modifier = { name = mangrove_magic_xp_20 duration = 9125 } # 25 years
+				is_or_was_tag = { tag = $tag$ }
+				NOT = {
+					any_owned_province = {
+						region = tagaala_mangroves_region
+						has_province_modifier = mangrove_capstone_$tag$
+					}
 				}
 			}
 		}
-	}
-	if = {
-		limit = {
-			FROM = { is_or_was_tag = { tag = P23 } }
-			province_id = 6957
-		}
-		FROM = { add_country_modifier = { name = mangrove_enable_sea_beast duration = -1 } } # remove this one once this tag actually gets hinuiprawns
-		add_province_modifier = { name = mangrove_capstone_P23 duration = -1 }
-	}
-	if = {
-		limit = {
-			FROM = { is_or_was_tag = { tag = P24 } }
-			province_id = 6961
-		}
-		add_province_modifier = { name = mangrove_capstone_P24 duration = -1 }
-	}
-	if = {
-		limit = {
-			FROM = { is_or_was_tag = { tag = P25 } }
-			province_id = 6962
-		}
-		add_province_modifier = { name = mangrove_capstone_P25 duration = -1 }
-	}
-	if = {
-		limit = {
-			FROM = { is_or_was_tag = { tag = P26 } }
-			province_id = 6966
-		}
-		add_province_modifier = { name = mangrove_capstone_P26 duration = -1 }
-		custom_tooltip = mangrove_level_up_enchantment_tt # need custom tt since ROOT is the province not the tag
-		hidden_effect = {
-			FROM = {
-				if = {
-					limit = { is_estate_enchantment_level_3 = no }
-					country_event = { id = mangrove.7 } # change ROOT to country to avoid error log
-				}
-				else = {
-					add_country_modifier = { name = mangrove_magic_xp_20 duration = 9125 } # 25 years
+		add_province_modifier = { name = mangrove_capstone_$tag$ duration = -1 }
+		[[level_divination]
+		if = {
+			limit = { FROM = { NOT = { has_country_flag = mangrove_magic_level_unlocked } } }
+			custom_tooltip = mangrove_level_up_divination_tt # need custom tt since ROOT is the province not the tag
+			hidden_effect = {
+				FROM = {
+					if = {
+						limit = { is_estate_divination_level_3 = no }
+						country_event = { id = mangrove.6 } # change ROOT to country to avoid error log
+					}
+					else = {
+						add_country_modifier = { name = mangrove_magic_xp_20 duration = 9125 } # 25 years
+					}
+					set_country_flag = mangrove_magic_level_unlocked
 				}
 			}
 		}
+		]
+		[[level_enchantment]
+		if = {
+			limit = { FROM = { NOT = { has_country_flag = mangrove_magic_level_unlocked } } }
+			custom_tooltip = mangrove_level_up_enchantment_tt # need custom tt since ROOT is the province not the tag
+			hidden_effect = {
+				FROM = {
+					if = {
+						limit = { is_estate_enchantment_level_3 = no }
+						country_event = { id = mangrove.7 } # change ROOT to country to avoid error log
+					}
+					else = {
+						add_country_modifier = { name = mangrove_magic_xp_20 duration = 9125 } # 25 years
+					}
+					set_country_flag = mangrove_magic_level_unlocked
+				}
+			}
+		}
+		]
 	}
 }
 
