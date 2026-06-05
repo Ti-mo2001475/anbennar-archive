@@ -1,189 +1,115 @@
-# events for kheionai death winds & warding
+#Events for kheionai systems (Deathwinds, Nekheis, Degarikes, etc)
 namespace = kheionai
 
-# setup event for Kheionai and introduction to deathwinds
+#Setup event for the to deathwinds
 country_event = {
 	id = kheionai.0
-	title = kheionai.0.t
-	desc = kheionai.0.d
-	picture = BIG_BOOK_eventPicture
+	title = none
+	desc = none
+	picture = none
 	
 	is_triggered_only = yes
 	fire_only_once = yes
-	# hidden = yes
+	hidden = yes
 	
 	trigger = {
-		any_owned_province = {
-			region = alecand_region
-		}
-		NOT = { is_year = 1445 }
+		owns = 2728 #Arpedifer
 		NOT = { has_country_flag = deathwinds_setup }
 	}
 	
-	immediate = {
-		has_country_flag = deathwinds_setup
+	option = {
+		name = none
+		set_country_flag = deathwinds_setup
 		
 		#Deathwinds aPUI bar setup
 		alecand_region = {
 			set_province_flag = aPUI_deathwinds_flag
 			set_aPUI_cap = { name = deathwinds amount = 108 } #9 years in months (9*12=108)
 		}
-		# hidden_effect = {
-		# 	#Do the first storm in 1 year
-		# 	if = {
-		# 		limit = {
-		# 			owns = 2728
-		# 		}
-		# 		2728 = {
-		# 			province_event = {
-		# 				id = kheionai.1
-		# 				days = 365
-		# 				random = 180
-		# 			}
-		# 		}
-		# 	}
-		# }
-	}
-	
-	option = {
-		# custom_tooltip = kheionai_first_event_tt
-		name = kheionai.0.a
-		# alecand_region = {
-		# 	limit = {
-		# 		owned_by = ROOT
-		# 	}
-		# 	hidden_effect = {
-		# 		setup_for_deathwinds = yes
-		# 		add_permanent_province_modifier = {
-		# 			name = kheionai_warding_efforts
-		# 			duration = -1
-		# 		}
-		# 	}
-		# }
-		# if = {
-		# 	limit = {
-		# 		any_owned_province = {
-		# 			has_province_modifier = kheionai_warded_city
-		# 		}
-		# 	}
-		# 	every_owned_province = {
-		# 		limit = {
-		# 			has_province_modifier = kheionai_warded_city
-		# 		}
-		# 		add_permanent_windward_level = {
-		# 			level = 2
-		# 		}
-		# 	}
-		# }
-		
-		# if = {
-		# 	limit = {
-		# 		any_owned_province = {
-		# 			has_province_modifier = shielded_by_highlands
-		# 		}
-		# 	}
-		# 	every_owned_province = {
-		# 		limit = {
-		# 			has_province_modifier = shielded_by_highlands
-		# 		}
-		# 		add_permanent_windward_level = {
-		# 			level = 1
-		# 		}
-		# 	}
-		# }
-		
-		# if = {
-		# 	limit = {
-		# 		any_owned_province = {
-		# 			has_province_modifier = shielded_by_metei
-		# 		}
-		# 	}
-		# 	every_owned_province = {
-		# 		limit = {
-		# 			has_province_modifier = shielded_by_metei
-		# 		}
-		# 		add_permanent_windward_level = {
-		# 			level = 2
-		# 		}
-		# 	}
-		# }
+		hidden_effect = {
+			#Do the first storm on Jan 1st 1445
+			2728 = { #Arpedifer
+				province_event = {
+					id = kheionai.1 #6 months before warning event
+					days = 231 #June 1st 1444
+				}
+				set_province_flag = deathwinds_warning_event
+			}
+		}
 	}
 }
 
-# # Death winds brewing
-# province_event = {
-# 	id = kheionai.1
-# 	title = kheionai.1.t
-# 	desc = kheionai.1.d
-# 	picture = WOUNDED_SOLDIERS_eventPicture
+#Deathwinds Handler Event
+province_event = {
+	id = kheionai.1
+	title = none
+	desc = none
+	picture = none
 
-# 	is_triggered_only = yes
-# 	hidden = yes
+	is_triggered_only = yes
+	hidden = yes
 
-# 	immediate = {
-# 		hidden_effect = {
-# 			setup_deathwinds = {
-# 				alecand = yes
-# 			}
-# 			owner = {
-# 				every_country = {
-# 					limit = {
-# 						any_owned_province = {
-# 							region = alecand_region
-# 						}
-# 					}
-# 					country_event = { id = kheionai.10 }
-# 				}
-# 			}
-# 		}
-# 		set_province_flag = deathwinds_controller_prov # To avoid it getting declonized cause that'd be BAD
-# 	}
+	immediate = { }
 
-# 	option = {
-# 		name = kheionai.1.a
-# 		every_country = {
-# 			limit = {
-# 				any_owned_province = {
-# 					region = alecand_region
-# 				}
-# 			}
-# 			country_event = {
-# 				id = kheionai.9
-# 				days = 365
-# 			}
-# 		}
-# 		hidden_effect = {
-# 			province_event = {
-# 				id = kheionai.8
-# 				days = 1460
-# 				random = 730
-# 			}
-# 		}
-# 	}
-# }
+	option = {
+		name = none
+		#Cycles between which 4 events based one which province flag is set
+		trigger_switch = {
+			on_trigger = has_province_flag
+			deathwinds_warning_event = {
+				#Every country with a province in Alecand gets the deathwinds warning event
+				alecand_region = { owner = { country_event = { id = kheionai.3 } } }
 
-# #generate warding on forts
-# province_event = {
-# 	id = kheionai.2
-# 	title = kheionai.2.t
-# 	desc = kheionai.2.d
-# 	picture = BIG_BOOK_eventPicture
+				#Prep the deathwinds start event
+				province_event = { id = kheionai.2 days = 180 } #6 months
+				clr_province_flag = deathwinds_warning_event
+				set_province_flag = deathwinds_start_event
+			}
+			deathwinds_start_event = {
+				#Every country with a province in Alecand gets the deathwinds start event
+				alecand_region = { owner = { country_event = { id = kheionai.4 } } }
+
+				#Prep the deathwinds destruction event
+				province_event = { id = kheionai.2 days = 365 } #1 year
+				clr_province_flag = deathwinds_start_event
+				set_province_flag = deathwinds_destruction_event
+			}
+			deathwinds_destruction_event = {
+				#Every country with a province in Alecand gets the deathwinds destruction event
+				alecand_region = { owner = { country_event = { id = kheionai.5 } } }
+
+				#Prep the deathwinds ends event
+				province_event = { id = kheionai.2 days = 365 } #1 year
+				clr_province_flag = deathwinds_destruction_event
+				set_province_flag = deathwinds_end_event
+			}
+			deathwinds_end_event = {
+				#Every country with a province in Alecand gets the deathwinds ends event
+				alecand_region = { owner = { country_event = { id = kheionai.6 } } }
+
+				#Prep the deathwinds warning event
+				province_event = { id = kheionai.2 days = 2370 } #6.5 years
+				clr_province_flag = deathwinds_end_event
+				set_province_flag = deathwinds_warning_event
+			}
+		}
+	}
+}
+
+#Second event to activate a PTM
+province_event = {
+	id = kheionai.2
+	title = none
+	desc = none
+	picture = none
 	
-# 	is_triggered_only = yes
-# 	hidden = yes
-	
-# 	trigger = {
-# 		region = alecand_region
-# 	}
+	is_triggered_only = yes
+	hidden = yes
 
-# 	option = {
-# 		name = kheionai.2.a
-# 		create_deathwind_ward_level_from_fort = yes
-# 		every_neighbor_province = {
-# 			create_deathwind_ward_level_from_fort = yes
-# 		}
-# 	}
-# }
+	option = {
+		name = none
+	}
+}
 
 # #generate warding on mage towers
 # province_event = {
