@@ -32,7 +32,8 @@ validate:
             if [ -n "$CHANGED_TXT" ]; then
               echo "=== Checking encoding and indentation for changed .txt files ==="
               echo "$CHANGED_TXT"
-              bash scripts/encoding.sh -t -i $CHANGED_TXT || FAIL=1
+              IFS=$'\n' read -r -d '' -a CHANGED_TXT_ARR <<<"$CHANGED_TXT"
+              bash scripts/encoding.sh -t -i "${CHANGED_TXT_ARR[@]}" || FAIL=1
             else
               echo "--- No .txt files changed, skipping ---"
             fi
