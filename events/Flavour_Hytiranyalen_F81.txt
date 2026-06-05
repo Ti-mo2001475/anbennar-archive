@@ -293,8 +293,24 @@ country_event = {
 				name = hyti_palace_mod
 				duration = -1
 			}
+			if = {
+				limit = { hold_condition = { Damaged = yes } }
+				add_province_modifier = {
+					name = hyti_repair_mod
+					duration = -1
+					desc = hyti_until_repaired
+				}
+			}
 		}
+		set_country_flag = harpy_roost_upgrade
 		custom_tooltip = hyti_surf_hold1_tt
+		tooltip = {
+			add_province_modifier = {
+				name = hyti_repair_mod
+				duration = -1
+				desc = hyti_until_repaired
+			}
+		}
 		set_country_flag = hyti_surf_hold
 		add_country_modifier = {
 			name = hyti_colonizing_mod
@@ -341,13 +357,18 @@ country_event = {
 
 	option = {
 		name = hyti.9.a
-		set_country_flag = harpy_roost_upgrade
 		add_country_modifier = {
 			name = hyti_civil_engineer
 			duration = 7200
 		}
 		2963 = { harpy_roost_build_tier_2_free_nocap = yes }
 		custom_tooltip = hyti_surf_hold2_tt
+		hidden_effect = {
+			serpentreach_region = {
+				limit = { has_terrain = dwarven_road }
+				add_permanent_claim = ROOT
+			}
+		}
 		set_country_flag = harpy_roost_terrain_allow_dwarven_hold_surface
 		if = {
 			limit = {
@@ -360,7 +381,7 @@ country_event = {
 			custom_tooltip = hyti_build_watercourse
 			set_country_flag = hyti_bulwar_water
 			601 = { add_permanent_claim = ROOT }
-		}		
+		}	
 	}
 }
 
@@ -392,6 +413,7 @@ country_event = {
 		}
 		set_country_flag = hyti_song_breakthrough
 		custom_tooltip = hyti_can_slowly_research
+		remove_estate_privilege = estate_artificers_hyti_circle
 		if = {
 			limit = { has_country_flag = hyti_dreamer_alive }
 			custom_tooltip = hyti_dreamer_alive_tt
@@ -481,8 +503,9 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
-		owns = 2931
-		owns = 4236
+		has_country_flag = hyti_station
+		owns_or_non_sovereign_subject_of = 2931
+		owns_or_non_sovereign_subject_of = 4236
 	}
 
 	option = {
@@ -581,6 +604,25 @@ country_event = {
 				duration = -1
 			}
 		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = { has_terrain = cavern }
+				remove_province_modifier = hyti_cave_mod6
+				add_province_modifier = {
+					name = hyti_cave_mod5
+					duration = -1
+				}
+			}
+		}
+		custom_tooltip = hyti_cave_mod_reduction
+		tooltip = {
+			remove_province_modifier = hyti_cave_mod6
+			add_province_modifier = {
+				name = hyti_cave_mod5
+				duration = -1
+			}
+		}
+		custom_tooltip = hyti_cave_mod_reduction2
 	}
 }
 
@@ -594,7 +636,6 @@ country_event = {
 
 	option = {
 		name = hyti.15.a
-		remove_estate_privilege = estate_artificers_hyti_circle
 		hidden_effect = { remove_country_modifier = hyti_slow_research_mod }
 		custom_tooltip = hyti_odd_hunt_tt	#remember to talk abouth both the monument and the odd hunt
 		set_country_flag = hyti_odd_hunt

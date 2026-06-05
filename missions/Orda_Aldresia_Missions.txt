@@ -406,9 +406,13 @@ orda_aldresia_2 = {
 			if = { 
 				limit = { has_ruler_flag = aldresia_emil_alive }
 				change_dip = 1
-				magic_school_level_up = { type = ruler school = evocation }
-				magic_school_level_up = { type = ruler school = evocation }
-				magic_school_level_up = { type = ruler school = evocation }
+				custom_tooltip = magic_school_ruler_level_up_tt
+				custom_tooltip = evocation_3
+				hidden_effect = {
+					magic_school_level_up = { type = ruler school = evocation }
+					magic_school_level_up = { type = ruler school = evocation }
+					magic_school_level_up = { type = ruler school = evocation }
+				}
 			}
 		}
 	}
@@ -484,32 +488,26 @@ orda_aldresia_3 = {
 		icon = mission_african_gold
 		required_missions = { redeem_our_name }
 		position = 3
-		
+
 		trigger = {
-			custom_trigger_tooltip = {
-				tooltip = redeem_our_name_tt
-			}
 			treasury = 250
 			has_estate_privilege = estate_burghers_commercial_board_of_advice
-			calc_true_if = {
-				amount = 3
-				all_known_country = {
-					8 = {
-						any_trade_node_member_country = {
+			8 = {
+				calc_true_if = {
+					amount = 3
+					custom_trigger_tooltip = {
+						tooltip = cut_their_purse_tt
+						all_trade_node_member_country = {
 							has_opinion = {
 								who = ROOT
 								value = 100
 							}
 						}
 					}
-					has_opinion = {
-						who = ROOT
-						value = 100
-					}
 				}
 			}
 		}
-		
+
 		effect = {
 			add_treasury = -250
 			add_country_modifier = {
@@ -521,7 +519,7 @@ orda_aldresia_3 = {
 				set_bankruptcy = A85
 			}
 			else = {
-				A85 = { country_event = { id = flavor_magisterium.37 }} 
+				A85 = { country_event = { id = flavor_magisterium.37 }}
 			}
 		}
 	}
@@ -1067,7 +1065,13 @@ orda_aldresia_4 = {
 					NOT = { army_size = ROOT }
 				}
 			}
-			army_professionalism = 0.10
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" } 
+				army_professionalism = 0.10
+			}
+			else = {
+				army_tradition = 50
+			}
 		}
 		
 		effect = {
@@ -1384,8 +1388,14 @@ orda_aldresia_5 = {
 		
 		trigger = {
 			num_of_regiments_at_full_drill = 50
-			army_tradition = 80
-			army_professionalism = 0.80
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" } 
+				army_tradition = 80
+				army_professionalism = 0.80
+			}
+			else = {
+				army_tradition = 90
+			}
 		}
 		
 		effect = {

@@ -2876,6 +2876,7 @@ ravenmarch_4_missions = {
 				release_with_religion_and_culture = { tag = L28 religion = corinite culture = korosheshi }
 				L28 = {
 					add_country_modifier = { name = ravenmarch_bulwar_salahad_march duration = -1 }
+					set_country_flag = formed_end_game_tag_flag
 				}
 				create_march = L28
 			}
@@ -3043,8 +3044,14 @@ ravenmarch_5_missions = {
 		}
 		
 		trigger = {
-			army_tradition = 50
-			army_professionalism = 0.4
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" } 
+				army_tradition = 50
+				army_professionalism = 0.4
+			}
+			else = {
+				army_tradition = 70
+			}
 			marrhold_area = {
 				owned_by = ROOT
 				type = all
