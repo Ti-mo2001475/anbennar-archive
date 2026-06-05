@@ -3243,12 +3243,10 @@ on_province_religion_changed_effect = { #Randomizer has fixed outcomes on this o
 					cost = 0.75
 				}
 			}
-			if = {
-				limit = {
-					owner = { has_church_aspect = foundationism_shepherds }
-				}
-				set_province_flag = foundationism_shepherds_flag_for_ptm
-				owner = {
+			owner = {
+				if = {
+					limit = { has_church_aspect = foundationism_shepherds }
+					change_variable = { FoundationismShepherdsDev = 1 }
 					capital_scope = {
 						remove_province_triggered_modifier = ptm_foundationism_shepherds
 						add_province_triggered_modifier = ptm_foundationism_shepherds
@@ -5593,8 +5591,14 @@ on_battle_won_province_effect = {
 				rebel_is_holohana = yes
 			}
 		}
-		FROM = {
-			holohana_injury_trigger_switch = yes
+		if = {
+			limit = { has_province_flag = holohana_is_here_flag }
+			FROM = {
+				holohana_injury_trigger_switch = yes
+			}
+		}
+		else = {
+			set_province_flag = holohana_migrated_from_fight
 		}
 	}
 
@@ -5728,6 +5732,15 @@ on_battle_lost_province_effect = {
 	if = {
 		limit = { has_province_flag = holohana_give_credit }
 		holohana_give_credit_for_kill = yes
+	}
+	if = {
+		limit = { has_province_flag = holohana_migrated_from_fight }
+		clr_province_flag = holohana_migrated_from_fight
+		FROM = {
+			country_event = {
+				id = holohana_events.300
+			}
+		}
 	}
 
 	if = {
@@ -11527,6 +11540,22 @@ on_built_tax_building_effect = {
 			duration = -1
 		}
 	}
+
+	#Shirgriis
+	if = {
+		limit = {
+			province_id = 4848
+			owner = { religion = devouring_path }
+			development = 12
+			NOT = { has_province_flag = shirgrii_khelorvalshi_repaired }
+		}
+		set_province_flag = shirgrii_khelorvalshi_repaired
+		remove_province_modifier = shirgrii_ruined_khelorvalshi
+		add_province_modifier = {
+			name = shirgrii_khelorvalshi
+			duration = -1
+		}
+	}
 }
 
 on_tax_building_destroyed_effect = {
@@ -11742,6 +11771,92 @@ on_trade_building_destroyed_effect = {
 		area = { remove_province_modifier = U10_affluent_reclaimation }
 	}
 }
+
+on_built_coast_defense_building_effect = {
+	if = {	#karassk
+		limit = {
+			owner = { has_country_flag = L68_sailors_on_defense }
+		}
+		add_province_modifier = {
+			name = L68_coastal_defense_sailors
+			duration = -1
+		}
+	}
+	if = {	#Izmeri the Black Stone City
+		limit = {
+			5631 = {
+				owned_by = FROM
+				has_great_project = {
+					type = izmeri_the_black_stone_city
+					tier = 2
+				}
+				owner = { can_use_izmeri_the_black_stone_city = yes }
+			}
+			NOT = { has_province_modifier = izmeri_expand_the_buildings }
+		}
+		add_province_modifier = {
+			name = izmeri_expand_the_buildings
+			duration = -1
+		}
+	}
+	FROM = { dragon_turtle_change_friendship = { dragon_turtle = monzaketzya amount = 3 } }
+}
+on_coast_defense_building_destroyed_effect = {
+	remove_province_modifier = L68_coastal_defense_sailors
+	remove_province_modifier = izmeri_expand_the_buildings
+	FROM = { dragon_turtle_change_friendship = { dragon_turtle = monzaketzya amount = -3 } }
+}
+
+on_built_sailor_building_effect = {
+	if = {
+		limit = {
+			FROM = { has_estate_privilege = estate_nobility_lizardfolk_imperial_fisheries }
+			OR = {
+				province_id = 5896 
+				province_id = 5898
+				province_id = 5834
+				province_id = 3259
+				province_id = 3258
+			}
+		}
+		add_province_modifier = {
+			name = lizardfolk_imperial_fisheries
+			duration = -1
+		}
+	}
+}
+on_sailor_building_destroyed_effect = {
+	remove_province_modifier = lizardfolk_imperial_fisheries
+}
+
+on_built_forcelimit_building_effect = {
+	if = {
+		limit = { FROM = { has_estate_privilege = estate_boar_command_war_room_rights } }
+		FROM = { add_legitimacy = 0.5 }
+	}
+	if = {	# Huugeta Mercenary Enterprise
+		limit = {
+			FROM = { has_country_flag = S45_mercenary_enterprise }
+		}
+		FROM = { S45_add_momentum = { value = 1 action = building } }
+	}
+}
+on_forcelimit_building_destroyed_effect = {}
+
+on_built_courthouse_building_effect = {
+	if = {
+		limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
+		FROM = { change_government_reform_progress = 4 }
+	}
+	if = {
+		limit = { FROM = { has_estate_privilege = estate_wolf_command_war_room_rights } }
+		FROM = { add_legitimacy = 0.5 }
+	}
+}
+on_courthouse_building_destroyed_effect = {}
+
+on_built_shipyard_building_effect = {}
+on_shipyard_building_destroyed_effect = {}
 
 on_built_manufactory_effect = {
 

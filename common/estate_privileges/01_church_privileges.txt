@@ -5848,3 +5848,62 @@ estate_church_H83_dreamforgery_4 = {
 		church_privilege_slots = 1
 	}
 }
+
+estate_church_caretaking_of_the_shirgriis = {
+	icon = estate_church_fund_madrasas
+	land_share = 5
+	max_absolutism = 0
+	influence = 0.20
+	loyalty = 0.10
+	is_valid = {
+		religion = devouring_path
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = shirgrii_owns_any_tt
+			any_owned_province = {
+				province_group = all_starting_shirgrii
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = shirgrii_caretaking_effect_tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = { province_group = all_starting_shirgrii }
+				if = {
+					limit { has_building = mage_tower }
+					add_province_modifier = {
+						name = shirgrii_maintenance_tower
+						duration = -1
+					}
+				}
+				else = {
+					add_province_modifier = {
+						name = shirgrii_maintenance_no_tower
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	can_revoke = {
+		always = yes
+	}
+	on_invalid_province  = {
+		remove_province_modifier = shirgrii_maintenance_tower
+		remove_province_modifier = shirgrii_maintenance_no_tower
+	}
+	on_revoked_province = {
+		remove_province_modifier = shirgrii_maintenance_tower
+		remove_province_modifier = shirgrii_maintenance_no_tower
+	}
+	penalties = {
+
+	}
+	benefits = {
+		relation_with_same_religion = 10
+		reverse_relation_with_same_religion = 10
+		same_religion_advisor_cost = -0.05
+	}
+}
