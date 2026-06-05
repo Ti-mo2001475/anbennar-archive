@@ -5285,63 +5285,6 @@ on_battle_won_province_effect = {
 	
 	if = {
 		limit = { 
-			FROM = {
-				tag = REB
-				is_rebel_type = asarta_merfolk_rebels
-			}
-		}
-		if = {
-			limit = {
-				owner = {
-					has_country_flag = asarta_merfolk_rebels1 
-				}
-			}
-			owner = {
-				country_event = {
-					id = asarta.5
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				owner = {
-					has_country_flag = asarta_merfolk_rebels2
-				}
-			}
-			owner = {
-				country_event = {
-					id = asarta.7
-				}
-			}
-		}
-		owner = {
-			clr_country_flag = asarta_merfolk_rebels1
-			clr_country_flag = asarta_merfolk_rebels2 
-		}
-	}
-	if = {
-		limit = { 
-			owner = {
-				has_country_flag = asarta_remove_sep
-			}
-			FROM = {
-				tag = REB #Must put REB in front of rebel type check, for error log reasons
-				is_rebel_type = nationalist_rebels
-			}
-			owner = {
-				NOT = {
-					num_of_rebel_armies = 1
-				}
-			}
-		}
-		owner = {
-			country_event = {
-				id = asarta.17
-			}
-		}
-	}
-	if = {
-		limit = { 
 			has_ruler_leader_from = I33
 			has_ruler_leader_from = I30
 		}
@@ -5350,15 +5293,6 @@ on_battle_won_province_effect = {
 				id = flavour_ayeth.16
 			}
 		}
-	}
-	
-
-	if = { #Shuvuush generic missions
-		limit = {
-			FROM = { tag = REB is_rebel_type = face_stealers_rebels }
-			owner = { has_mission = shuvuush_to_forget }
-		}
-		owner = { set_country_flag = has_defeated_face_stealer }
 	}
 
 	#Bibyobi
@@ -5385,26 +5319,6 @@ on_battle_won_province_effect = {
 		}
 	}
 
-	if = {
-		limit = {
-			FROM = {
-				tag = REB
-				rebel_is_holohana = yes
-			}
-		}
-		FROM = {
-			holohana_injury_trigger_switch = yes
-		}
-	}
-
-	if = { # Ardimyan Minors
-		limit = {
-			has_province_flag = current_qeyikul_warband_uprising
-			FROM = { tag = REB }
-		}
-		owner = { country_event = { id = flavour_AYN.1001 } }
-	}
-
 	#Xhaz spells
 	if = {
 		limit = {
@@ -5426,6 +5340,7 @@ on_battle_won_province_effect = {
 		}
 	}
 }
+
 on_battle_won_province_effect_from_reb = {
 	if = {
 		limit = {
@@ -5456,6 +5371,26 @@ on_battle_won_province_effect_from_reb = {
 			}
 		}
 		owner = { country_event = { id = flavor_sugamber.9 } }
+	}
+	if = {
+		limit = { 
+			FROM = {
+				is_rebel_type = nationalist_rebels
+			}
+			owner = {
+				has_country_flag = asarta_remove_sep
+			}
+			owner = {
+				NOT = {
+					num_of_rebel_armies = 1
+				}
+			}
+		}
+		owner = {
+			country_event = {
+				id = asarta.17
+			}
+		}
 	}
 	if = { limit = { has_province_flag = nsc_duel } #Mages vs Artificers duel during the 'Rise of Artificery' NSC incident
 		if = { limit = { NOT = { has_province_flag = nsc_duel_null } }
@@ -5600,6 +5535,64 @@ on_battle_won_province_effect_from_reb = {
 			}
 		}
 	}
+	if = {
+		limit = { 
+			FROM = {
+				is_rebel_type = asarta_merfolk_rebels
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = asarta_merfolk_rebels1 
+				}
+			}
+			owner = {
+				country_event = {
+					id = asarta.5
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				owner = {
+					has_country_flag = asarta_merfolk_rebels2
+				}
+			}
+			owner = {
+				country_event = {
+					id = asarta.7
+				}
+			}
+		}
+		owner = {
+			clr_country_flag = asarta_merfolk_rebels1
+			clr_country_flag = asarta_merfolk_rebels2 
+		}
+	}
+	if = { #Shuvuush generic missions
+		limit = {
+			FROM = { is_rebel_type = face_stealers_rebels }
+			owner = { has_mission = shuvuush_to_forget }
+		}
+		owner = { set_country_flag = has_defeated_face_stealer }
+	}
+	if = {
+		limit = {
+			FROM = {
+				rebel_is_holohana = yes
+			}
+		}
+		FROM = {
+			holohana_injury_trigger_switch = yes
+		}
+	}
+	if = { # Ardimyan Minors
+		limit = {
+			has_province_flag = current_qeyikul_warband_uprising
+		}
+		owner = { country_event = { id = flavour_AYN.1001 } }
+	}
 }
 
 on_battle_lost_province_effect = {
@@ -5608,7 +5601,7 @@ on_battle_lost_province_effect = {
 		limit = {
 			FROM = { tag = I43 }
 			province_id = 6258
-			NOT = { has_country_flag = silentblade_ritual_complete }
+			NOT = { has_global_flag = silentblade_ritual_complete }
 		}
 
 		I43 = { country_event = { id = silentblade.5 } }
@@ -5620,14 +5613,7 @@ on_battle_lost_province_effect = {
 				TAG = B32
 				has_disaster = castanor_succession_war
 			}
-			ROOT = {
-				NOT = {
-					num_of_units_in_province = {
-						who = B61
-						amount = 1
-					}
-				}
-			}
+			units_in_province = B61
 		}
 		set_province_flag = castanor_stack_wipe
 	}
