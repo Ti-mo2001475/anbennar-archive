@@ -176,6 +176,7 @@ province_event = {
 				clr_country_flag = gene_pillar_is_exploring_level_2_pillar
 				clr_country_flag = gene_pillar_is_exploring_level_3_pillar
 			}
+			remove_province_modifier = gene_pillar_currently_explored_pillar
 		}
 	}
 
@@ -383,6 +384,7 @@ province_event = {
 		name = gene_pillars.40.a
 		save_trade_goods = yes
 		change_trade_goods = precursor_relics
+		set_province_flag = permanent_precursor_relics
 	}
 
 	#Get  Precursor Relics
@@ -404,6 +406,13 @@ province_event = {
 	title = gene_pillars.41.t
 	desc = gene_pillars.41.d
 	picture = GOOD_WITH_MONARCH_eventPicture
+
+	trigger = {
+		OR = {
+			has_province_modifier = gene_pillars_rich_precursor_relics
+			trade_goods = precursor_relics
+		}
+	}
 	
 	is_triggered_only = yes
 
@@ -2097,7 +2106,7 @@ country_event = {
 }
 
 
-# The Floor’s moving
+# The Floor's moving
 country_event = {
 	id = gene_pillars.212
 	title = gene_pillars.212.t
@@ -2154,7 +2163,7 @@ country_event = {
 		}
 	}
 
-	option = { # Wait, it’s a lever
+	option = { # Wait, it's a lever
 		name = gene_pillars.212.e
 		trigger = {
 			gene_pillars_has_archetype_in_party = { archetype = artificer }
@@ -2258,13 +2267,13 @@ country_event = {
 		}
 	}
 
-	option = { # don’t like this 
+	option = { # don't like this 
 		name = gene_pillars.214.b
 				
 		gene_pillars_lose_xp_effect = { amount = 1 }
 	}
 
-	option = { # won’t be an issue
+	option = { # won't be an issue
 		name = gene_pillars.214.c
 		trigger = {
 			OR = {
@@ -2453,7 +2462,7 @@ country_event = {
 
 	immediate = { hidden_effect = { set_country_flag = gene_pillars_has_pending_event } }
 
-	option = { # We’ll stay here.
+	option = { # We'll stay here.
 		name = gene_pillars.218.a
 	}
 	after = {
@@ -2480,7 +2489,7 @@ country_event = {
 
 	immediate = { hidden_effect = { set_country_flag = gene_pillars_has_pending_event } }
 
-	option = { # Didn’t quite catch that
+	option = { # Didn't quite catch that
 		name = gene_pillars.221.a
 		trigger = {
 			hidden_trigger = {
@@ -2950,7 +2959,7 @@ country_event = {
 		gene_pillars_add_loot_effect = { amount = 20 }
 	}
 
-	option = { # know what they’re feeling
+	option = { # know what they're feeling
 		name = gene_pillars.226.f
 		trigger = {
 			is_or_was_tag = { tag = M18 }
@@ -3015,7 +3024,7 @@ country_event = {
 
 	immediate = { hidden_effect = { set_country_flag = gene_pillars_has_pending_event } }
 
-	option = { # This isn’t very host-ly behavior
+	option = { # This isn't very host-ly behavior
 		name = gene_pillars.231.a
 
 		random_list = {
@@ -3026,7 +3035,7 @@ country_event = {
 		}
 	}
 
-	option = { # I’ll protect you  
+	option = { # I'll protect you  
 		name = gene_pillars.231.b
 		trigger = {
 			gene_pillars_has_paladin_in_party = yes
@@ -3294,7 +3303,7 @@ country_event = {
 
 	immediate = { hidden_effect = { set_country_flag = gene_pillars_has_pending_event } }
 
-	option = { # This won’t be fun
+	option = { # This won't be fun
 		name = gene_pillars.234.a
 
 		gene_pillars_lose_hp_effect = { amount = 2 }
@@ -3425,7 +3434,7 @@ country_event = {
 		gene_pillars_add_xp_effect = { amount = 2 }
 	}
 
-	option = { # Let’s clear the path
+	option = { # Let's clear the path
 		name = gene_pillars.235.e
 		trigger = {
 			OR = {
@@ -3604,7 +3613,7 @@ country_event = {
 
 	immediate = { hidden_effect = { set_country_flag = gene_pillars_has_pending_event } }
 
-	option = { # It’s all so much
+	option = { # It's all so much
 		name = gene_pillars.237.a
 
 		gene_pillars_lose_hp_effect = { amount = 2 }
@@ -5861,7 +5870,7 @@ country_event = {
 		}
 	}
 
-	option = { # It’s not real
+	option = { # It's not real
 		name = gene_pillars.415.c
 		
 		gene_pillars_add_xp_effect = { amount = 1 }
@@ -6839,7 +6848,7 @@ country_event = {
 		gene_pillars_lose_hp_effect = { amount = 1 }
 	}
 
-	option = { # isn’t this life
+	option = { # isn't this life
 		name = gene_pillars.436.b
 
 		random_list = {
@@ -6904,7 +6913,7 @@ country_event = {
 
 	immediate = { hidden_effect = { set_country_flag = gene_pillars_has_pending_event } }
 
-	option = { # But that isn’t me
+	option = { # But that isn't me
 		name = gene_pillars.437.a
 
 		gene_pillars_lose_hp_effect = { amount = 2 }
@@ -6924,7 +6933,7 @@ country_event = {
 		}
 	}
 
-	option = { # This can’t be real
+	option = { # This can't be real
 		name = gene_pillars.437.c
 		trigger = {
 			gene_pillars_is_at_least_party_level = { level = 2 }
@@ -7095,7 +7104,7 @@ country_event = {
 				has_country_flag = gene_pillar_is_exploring_level_1_pillar
 			}
 			hidden_effect = {
-				gene_pillars_set_up_progress_bar = { events = 10 }
+				gene_pillars_set_up_progress_bar = { events = 12 }
 			}
 			gene_pillar_generic_then_specific_event = { specific_event = 511 }
 		}
@@ -9329,6 +9338,7 @@ country_event = {
 			name = "Manui the Spearguard"
 			culture = huinui
 			religion = endless_ocean
+			female = yes
 			cost_multiplier = 0.33
 			skill = 3
 		}
@@ -10288,7 +10298,7 @@ country_event = {
 		gene_pillars_add_loot_effect = { amount = 10 }
 	}
 
-	option = { # That’s awful… 
+	option = { # That's awful... 
 		name = gene_pillars.722.b
 
 		trigger = { 
@@ -10944,7 +10954,7 @@ country_event = {
 		gene_pillars_add_xp_effect = { amount = 2 }
 	}
 
-	option = { # seem… familiar
+	option = { # seem... familiar
 		name = gene_pillars.735.e
 
 		trigger = {
@@ -11346,7 +11356,7 @@ country_event = {
 		gene_pillars_add_xp_effect = { amount = 1 }
 	}
 
-	option = { # I’ll simply make a new way through!
+	option = { # I'll simply make a new way through!
 		name = gene_pillars.813.c
 		trigger = { 
 			gene_pillars_has_barbarian_in_party = yes 
@@ -12484,7 +12494,7 @@ country_event = {
 		}
 	}
 
-	option = { # let’s fill it in with debris
+	option = { # let's fill it in with debris
 		name = gene_pillars.830.b
 
 		gene_pillars_lose_xp_effect = { amount = 1 }
@@ -12554,7 +12564,7 @@ country_event = {
 
 	immediate = { hidden_effect = { set_country_flag = gene_pillars_has_pending_event } }
 
-	option = { # Let’s turn it on
+	option = { # Let's turn it on
 		name = gene_pillars.831.a
 
 		gene_pillars_add_loot_effect = { amount = 15 }
@@ -13272,7 +13282,7 @@ country_event = {
 
 	immediate = { hidden_effect = { set_country_flag = gene_pillars_has_pending_event } }
 
-	option = { # Let’s not.
+	option = { # Let's not.
 		name = gene_pillars.840.a
 
 		gene_pillars_add_xp_effect = { amount = 1 }
@@ -15306,7 +15316,6 @@ country_event = {
 				gene_pillars_dragon_power_core_removed_province = yes
 			}
 		}
-		highlight = yes
 
 		gene_pillars_add_xp_effect = { amount = 1 }
 		random_list = {
@@ -15326,12 +15335,14 @@ country_event = {
 	option = { # Try replacing the power source
 		name = gene_pillars.932.d
 		trigger = {
-			NOT = {
-				gene_pillars_dragon_power_core_activated_province = yes
-				gene_pillars_dragon_power_core_removed_province = yes
+			hidden_trigger = {
+				NOT = {
+					gene_pillars_dragon_power_core_activated_province = yes
+					gene_pillars_dragon_power_core_removed_province = yes
+					precursor_relics = 1
+				}
 			}
 			damestear = 1
-			NOT = { precursor_relics = 1 }
 		}
 		highlight = yes
 
@@ -15349,12 +15360,14 @@ country_event = {
 	option = { # We have seen things like this
 		name = gene_pillars.932.e
 		trigger = {
-			NOT = {
-				gene_pillars_dragon_power_core_activated_province = yes
-				gene_pillars_dragon_power_core_removed_province = yes
+			hidden_trigger = {
+				NOT = {
+					gene_pillars_dragon_power_core_activated_province = yes
+					gene_pillars_dragon_power_core_removed_province = yes
+					damestear = 1
+				}
 			}
 			precursor_relics = 1
-			NOT = { damestear = 1 }
 		}
 		highlight = yes
 
@@ -15377,9 +15390,11 @@ country_event = {
 	option = { # With an update to the power...
 		name = gene_pillars.932.f
 		trigger = {
-			NOT = {
-				gene_pillars_dragon_power_core_activated_province = yes
-				gene_pillars_dragon_power_core_removed_province = yes
+			hidden_trigger = {
+				NOT = {
+					gene_pillars_dragon_power_core_activated_province = yes
+					gene_pillars_dragon_power_core_removed_province = yes
+				}
 			}
 			precursor_relics = 1
 			damestear = 1
@@ -15395,9 +15410,11 @@ country_event = {
 	option = { # Contain and manipulate
 		name = gene_pillars.932.g
 		trigger = {
-			NOT = {
-				gene_pillars_dragon_power_core_activated_province = yes
-				gene_pillars_dragon_power_core_removed_province = yes
+			hidden_trigger = {
+				NOT = {
+					gene_pillars_dragon_power_core_activated_province = yes
+					gene_pillars_dragon_power_core_removed_province = yes
+				}
 			}
 			gene_pillars_has_mage_in_party = yes
 			is_estate_enchantment_level_1_minimum = yes
@@ -15413,9 +15430,11 @@ country_event = {
 	option = { # This should go like this...
 		name = gene_pillars.932.h
 		trigger = {
-			NOT = {
-				gene_pillars_dragon_power_core_activated_province = yes
-				gene_pillars_dragon_power_core_removed_province = yes
+			hidden_trigger = {
+				NOT = {
+					gene_pillars_dragon_power_core_activated_province = yes
+					gene_pillars_dragon_power_core_removed_province = yes
+				}
 			}
 			gene_pillars_has_artificer_in_party = yes
 			tier_2_artificer_estate = yes
@@ -15432,9 +15451,11 @@ country_event = {
 		name = gene_pillars.932.i
 
 		trigger = {
-			NOT = {
-				gene_pillars_dragon_power_core_activated_province = yes
-				gene_pillars_dragon_power_core_removed_province = yes
+			hidden_trigger = {
+				NOT = {
+					gene_pillars_dragon_power_core_activated_province = yes
+					gene_pillars_dragon_power_core_removed_province = yes
+				}
 			}
 			gene_pillars_has_rogue_in_party = yes
 		}
@@ -15457,7 +15478,6 @@ country_event = {
 				gene_pillars_dragon_power_core_removed_province = yes
 			}
 		}
-		highlight = yes
 
 		add_years_of_income = 0.5
 		gene_pillars_add_xp_effect = { amount = 1 }
@@ -15476,6 +15496,10 @@ country_event = {
 }
 
 # Draconic suppression matrix
+# some event options clear gene_pillars_suppression_matrix_reward
+# this is because option d sets this flag but doesn't disable the matrix
+# so if you fail the expedition and come to this event again,
+# you won't be able to take a disqualifying option and maintain the reward flag
 country_event = {
 	id = gene_pillars.933
 	title = gene_pillars.933.t
@@ -15483,14 +15507,23 @@ country_event = {
 		trigger = {
 			gene_pillars_has_kobold_in_party = yes
 			gene_pillars_dragon_power_core_activated_province = yes
+			gene_pillars_dragon_suppression_matrix_disabled_province = no
 		}
 		desc = gene_pillars.933.desc.kobold_active_power
 	}
 	desc = {
 		trigger = {
 			gene_pillars_dragon_power_core_activated_province = yes
+			gene_pillars_dragon_suppression_matrix_disabled_province = no
 		}
 		desc = gene_pillars.933.desc.active_power
+	}
+	desc = {
+		trigger = {
+			gene_pillars_dragon_power_core_activated_province = yes
+			gene_pillars_dragon_suppression_matrix_disabled_province = yes
+		}
+		desc = gene_pillars.933.desc.active_power_disabled
 	}
 	desc = {
 		trigger = {
@@ -15508,33 +15541,17 @@ country_event = {
 
 	immediate = {
 		hidden_effect = { set_country_flag = gene_pillars_has_pending_event }
-		if = { ### placeholder tooltip, or extra event text?
-			limit = {
-				gene_pillars_dragon_power_core_activated_province = yes
-			}
-			if = {
-				limit = {
-					culture_is_kobold = yes
-				}
-				gene_pillars_lose_hp_effect = { amount = 2 }
-				set_country_flag = gene_pillar_dragon_kobold_suppression # 50% -1 HP on subsequent encounters
-			}
-			else_if = {
-				limit = {
-					OR = {
-						high_tolerance_kobold_race_trigger = yes
-						medium_tolerance_kobold_race_trigger = yes
-					}
-				}
-				gene_pillars_lose_hp_effect = { amount = 1 }
-				set_country_flag = gene_pillar_dragon_kobold_suppression # 50% -1 HP on subsequent encounters
-			}
-			gene_pillars_add_xp_effect = { amount = 2 }
-		}
 	}
 
 	option = { # destroy it
 		name = gene_pillars.933.a
+		trigger = {
+			gene_pillars_dragon_power_core_activated_province = yes
+			hidden_trigger = { gene_pillars_dragon_suppression_matrix_disabled_province = no }
+		}
+		highlight = yes
+
+		gene_pillars_dragon_suppression_matrix_damage = yes
 		
 		generic_increase_of_racial_tolerance_effect = { race = kobold large = yes }
 		if = {
@@ -15550,35 +15567,41 @@ country_event = {
 			}
 		}
 		add_dip_power = 15
-		event_target:gene_pillar_exploration_province = {
-			set_province_flag = gene_pillars_dragon_suppression_disabled
-		}
+		gene_pillars_dragon_disable_matrix = yes
+		clr_country_flag = gene_pillars_suppression_matrix_reward
 	}
 
 	option = { # turn it off
 		name = gene_pillars.933.b
+		trigger = {
+			gene_pillars_dragon_power_core_activated_province = yes
+			hidden_trigger = { gene_pillars_dragon_suppression_matrix_disabled_province = no }
+		}
+		highlight = yes
 
-		if = {
-			limit = {
-				gene_pillars_dragon_power_core_activated_province = yes
-			}
-			hidden_effect = { set_country_flag = gene_pillars_draconic_suppress_deactivated }
-		}
+		gene_pillars_dragon_suppression_matrix_damage = yes
+
 		add_adm_power = 15
-		event_target:gene_pillar_exploration_province = {
-			set_province_flag = gene_pillars_dragon_suppression_disabled
-		}
+		gene_pillars_dragon_disable_matrix = yes
+		gene_pillars_dragon_suppression_matrix_reward_hint = yes
 	}
 
 	option = { # We can use this
 		name = gene_pillars.933.c
 		trigger = {
-			NOT = {
-				culture_is_kobold = yes
-				high_tolerance_kobold_race_trigger = yes
+			gene_pillars_dragon_power_core_activated_province = yes
+			custom_trigger_tooltip = {
+				tooltip = gene_pillars_dragon_kobold_not_integrated_or_primary
+				NOT = {
+					culture_is_kobold = yes
+					high_tolerance_kobold_race_trigger = yes
+				}
 			}
+			hidden_trigger = { gene_pillars_dragon_suppression_matrix_disabled_province = no }
 		}
 		highlight = yes
+
+		gene_pillars_dragon_suppression_matrix_damage = yes
 
 		generic_decrease_of_racial_tolerance_effect = { race = kobold large = yes }
 		custom_tooltip = gene_pillar_dragon_kobold_suppress_tt
@@ -15593,21 +15616,20 @@ country_event = {
 				}
 			}
 		}
-		if = {
-			limit = {
-				gene_pillars_dragon_power_core_activated_province = yes
-			}
-			hidden_effect = { set_country_flag = gene_pillars_draconic_suppress_deactivated }
-		}
+		gene_pillars_dragon_suppression_matrix_reward_hint = yes
 	}
 
 	option = { # Can we adapt this to suppress our people?
 		name = gene_pillars.933.d
 		trigger = {
+			gene_pillars_dragon_power_core_activated_province = yes
 			ruler_has_personality = cruel_personality
 			has_mana = { amount = 25 }
+			hidden_trigger = { gene_pillars_dragon_suppression_matrix_disabled_province = no }
 		}
 		highlight = yes
+
+		gene_pillars_dragon_suppression_matrix_damage = yes
 
 		add_dip_power = -25
 		change_mana = { amount = -25 }
@@ -15615,14 +15637,17 @@ country_event = {
 			name = gene_pillars_dragon_unrest_minus_2
 			duration = 5475 # 15 years
 		}
+		clr_country_flag = gene_pillars_suppression_matrix_reward
 	}
 
 	option = { # Can we learn anything?
 		name = gene_pillars.933.e
-		trigger = {
-			
+		trigger = { # this option is a fallback for if the matrix was disabled or power core is off
+			OR = {
+				gene_pillars_dragon_power_core_activated_province = no
+				gene_pillars_dragon_suppression_matrix_disabled_province = yes
+			}
 		}
-		highlight = yes
 
 		add_adm_power = 10
 		add_dip_power = 10
@@ -15632,12 +15657,13 @@ country_event = {
 	option = { # It would make a fine trophy
 		name = gene_pillars.933.f
 		trigger = {
-			
+			gene_pillars_dragon_power_core_activated_province = no
+			gene_pillars_dragon_suppression_matrix_disabled_province = no
 		}
-		highlight = yes
 
 		gene_pillars_add_loot_effect = { amount = 5 }
-			hidden_effect = { set_country_flag = gene_pillars_draconic_suppress_deactivated }
+		gene_pillars_dragon_disable_matrix = yes
+		# clr_country_flag = gene_pillars_suppression_matrix_reward # unnecessary since once power core is on, it can't be turned off
 	}
 	
 	after = {
@@ -15686,15 +15712,6 @@ country_event = {
 
 	immediate = {
 		hidden_effect = { set_country_flag = gene_pillars_has_pending_event }
-		if = {
-			limit = {
-				has_country_flag = gene_pillar_dragon_kobold_suppression
-			}
-			random = {
-				chance = 50
-				gene_pillars_lose_hp_effect = { amount = 1 }
-			}
-		}
 	}
 
 	option = { # How could anyone do this?
@@ -15704,6 +15721,8 @@ country_event = {
 			primary_culture_insyaa_kobold = yes
 		}
 		highlight = yes
+
+		gene_pillars_dragon_kobold_suppression_damage = yes
 		
 		random = {
 			chance = 50
@@ -15722,6 +15741,8 @@ country_event = {
 		}
 		highlight = yes
 
+		gene_pillars_dragon_kobold_suppression_damage = yes
+
 		add_stability = -1
 		add_prestige = -25
 		add_country_modifier = {
@@ -15739,12 +15760,15 @@ country_event = {
 		}
 		highlight = yes
 
+		gene_pillars_dragon_kobold_suppression_damage = yes
+
 		random = {
 			chance = 50
 			add_stability = -1
 		}
 		add_prestige = -25
 		gene_pillars_add_xp_effect = { amount = 2 }
+		kdc_remove_aspect_3 = yes
 		unlock_kobold_dragon_cult_for_colour_slot_upgrade = {
 			COLOUR = black
 			SLOT = 3
@@ -15755,15 +15779,16 @@ country_event = {
 	option = { # Can we learn anything from this horror? (non kobold)
 		name = gene_pillars.934.d
 		trigger = {
-			primary_culture_insyaa_kobold = no
+			culture_is_kobold = no
 			NOT = { ruler_has_personality = scholar_personality }
 		}
-		highlight = yes
+
+		gene_pillars_dragon_kobold_suppression_damage = yes
 
 		add_dip_power = -15
 		add_prestige = -25
 		add_country_modifier = {
-			name = gene_pillars_dragon_tech_cost_10
+			name = gene_pillars_dragon_tech_cost_5
 			duration = 1825 # 5 years
 		}
 		gene_pillars_add_xp_effect = { amount = 2 }
@@ -15772,10 +15797,12 @@ country_event = {
 	option = { # Can we learn anything from this horror? (non kobold, scholar)
 		name = gene_pillars.934.e
 		trigger = {
-			primary_culture_insyaa_kobold = no
+			hidden_trigger = { culture_is_kobold = no }
 			ruler_has_personality = scholar_personality
 		}
 		highlight = yes
+
+		gene_pillars_dragon_kobold_suppression_damage = yes
 
 		add_prestige = -25
 		add_country_modifier = {
@@ -15806,47 +15833,12 @@ country_event = {
 
 	immediate = {
 		hidden_effect = { set_country_flag = gene_pillars_has_pending_event }
-		# These damage effects will need to be explained in the event loc
-		# Default is 50/50 for -1/-2 hp, but a couple of ways to make it -1/0 hp
-		random_list = {
-			1 = {
-				gene_pillars_lose_hp_effect = { amount = 1 }
-			}
-			1 = {
-				if = {
-					limit = {
-						OR = {
-							AND = {
-								gene_pillars_has_artificer_in_party = yes
-								tier_3_artificer_estate = yes
-							}
-							AND = {
-								gene_pillars_has_mage_in_party = yes
-								is_estate_enchantment_level_3 = yes
-							}
-						}
-					}
-					gene_pillars_add_hp_effect = { amount = 0 }
-				}
-				else = {
-					gene_pillars_lose_hp_effect = { amount = 2 }
-				}
-			}
-		}
-		if = {
-			limit = {
-				has_country_flag = gene_pillar_dragon_kobold_suppression
-			}
-			random = {
-				chance = 50
-				gene_pillars_lose_hp_effect = { amount = 1 }
-			}
-		}
 	}
 
-	option = { # Draconic Genie Magic: A Primer
+	option = { # Draconic Gene Magic: A Primer
 		name = gene_pillars.935.a
-		
+
+		gene_pillars_dragon_library_unwind_damage = yes
 		if = {
 			limit = {
 				is_cannorian_kobold_primary_culture = yes
@@ -15895,6 +15887,7 @@ country_event = {
 	option = { # Spirits: the future of clean power
 		name = gene_pillars.935.b
 
+		gene_pillars_dragon_library_unwind_damage = yes
 		if = {
 			limit = {
 				tier_3_artificer_estate = yes
@@ -15930,15 +15923,18 @@ country_event = {
 	option = { # On the nature of kobolds
 		name = gene_pillars.935.c
 
+		gene_pillars_dragon_library_unwind_damage = yes
 		if = {
 			limit = {
 				primary_culture_insyaa_kobold = yes
 			}
 			custom_tooltip = every_province_kobold_majority_tt
 			tooltip = {
-				add_province_modifier = {
-					name = gene_pillars_kobold_productivity
-					duration = 3650 # 10 years
+				6386 = {
+					add_province_modifier = {
+						name = gene_pillars_kobold_productivity
+						duration = 3650 # 10 years
+					}
 				}
 			}
 			hidden_effect = {
@@ -15971,9 +15967,11 @@ country_event = {
 			}
 			custom_tooltip = every_province_kobold_majority_tt
 			tooltip = {
-				add_province_modifier = {
-					name = gene_pillars_dragon_kobold_unrest_minus_2
-					duration = 3650 # 10 years
+				6386 = {
+					add_province_modifier = {
+						name = gene_pillars_dragon_kobold_unrest_minus_2
+						duration = 3650 # 10 years
+					}
 				}
 			}
 			hidden_effect = {
@@ -16007,15 +16005,18 @@ country_event = {
 	option = { # Worlds beyond worlds
 		name = gene_pillars.935.d
 
+		gene_pillars_dragon_library_unwind_damage = yes
 		if = {
 			limit = {
 				culture_is_lizardfolk = yes
 			}
 			custom_tooltip = every_province_lizardfolk_majority_tt
 			tooltip = {
-				add_province_modifier = {
-					name = gene_pillars_dragon_kobold_unrest_minus_2
-					duration = 3650 # 10 years
+				6386 = {
+					add_province_modifier = {
+						name = gene_pillars_dragon_lizard_unrest_minus_2
+						duration = 3650 # 10 years
+					}
 				}
 			}
 			hidden_effect = {
@@ -16024,7 +16025,7 @@ country_event = {
 						has_lizardfolk_majority_trigger = yes
 					}
 					add_province_modifier = {
-						name = gene_pillars_dragon_kobold_unrest_minus_2
+						name = gene_pillars_dragon_lizard_unrest_minus_2
 						duration = 3650 # 10 years
 					}
 				}
@@ -16083,15 +16084,6 @@ country_event = {
 
 	immediate = {
 		hidden_effect = { set_country_flag = gene_pillars_has_pending_event }
-		if = {
-			limit = {
-				has_country_flag = gene_pillar_dragon_kobold_suppression
-			}
-			random = {
-				chance = 50
-				gene_pillars_lose_hp_effect = { amount = 1 }
-			}
-		}
 	}
 
 	option = { # Strong mage shield
@@ -16102,6 +16094,8 @@ country_event = {
 			is_estate_abjuration_level_3 = yes
 		}
 		highlight = yes
+
+		gene_pillars_dragon_kobold_suppression_damage = yes
 		
 		gene_pillars_add_xp_effect = { amount = 2 }
 		gene_pillars_lose_hp_effect = { amount = 1 }
@@ -16116,6 +16110,8 @@ country_event = {
 			is_estate_abjuration_level_1_minimum = yes
 		}
 		highlight = yes
+
+		gene_pillars_dragon_kobold_suppression_damage = yes
 
 		gene_pillars_add_xp_effect = { amount = 1 }
 		random_list = {
@@ -16138,6 +16134,8 @@ country_event = {
 		}
 		highlight = yes
 
+		gene_pillars_dragon_kobold_suppression_damage = yes
+
 		gene_pillars_add_xp_effect = { amount = 2 }
 		gene_pillars_lose_hp_effect = { amount = 1 }
 		gene_pillars_add_loot_effect = { amount = 5 }
@@ -16149,6 +16147,8 @@ country_event = {
 			gene_pillars_has_artificer_in_party = yes
 		}
 		highlight = yes
+
+		gene_pillars_dragon_kobold_suppression_damage = yes
 
 		gene_pillars_add_xp_effect = { amount = 1 }
 		random_list = {
@@ -16169,6 +16169,8 @@ country_event = {
 			gene_pillars_has_rogue_in_party = yes
 		}
 		highlight = yes
+
+		gene_pillars_dragon_kobold_suppression_damage = yes
 
 		gene_pillars_add_xp_effect = { amount = 2 }
 		random_list = {
@@ -16193,6 +16195,8 @@ country_event = {
 		}
 		highlight = yes
 
+		gene_pillars_dragon_kobold_suppression_damage = yes
+
 		gene_pillars_add_xp_effect = { amount = 2 }
 		random_list = {
 			1 = {
@@ -16207,7 +16211,9 @@ country_event = {
 
 	option = { # That was painful
 		name = gene_pillars.936.g
-		
+
+		gene_pillars_dragon_kobold_suppression_damage = yes
+
 		gene_pillars_add_xp_effect = { amount = 1 }
 		random_list = {
 			1 = {
@@ -16246,7 +16252,7 @@ country_event = {
 		trigger = {
 			gene_pillars_dragon_power_core_activated_province = yes
 			gene_pillars_dragon_suppression_matrix_disabled_province = yes
-			has_country_flag = gene_pillars_dragon_book_spirits_chosen
+			gene_pillars_dragon_spirits_book_chosen = yes
 		}
 		highlight = yes
 
@@ -16267,7 +16273,7 @@ country_event = {
 		trigger = {
 			gene_pillars_dragon_power_core_activated_province = yes
 			gene_pillars_dragon_suppression_matrix_disabled_province = yes
-			NOT = { has_country_flag = gene_pillars_dragon_book_spirits_chosen }
+			hidden_trigger = { gene_pillars_dragon_spirits_book_chosen = no }
 		}
 		highlight = yes
 
@@ -16281,14 +16287,16 @@ country_event = {
 		name = gene_pillars.937.c
 		trigger = {
 			gene_pillars_dragon_power_core_activated_province = yes
-			gene_pillars_dragon_suppression_matrix_disabled_province = no
-			has_country_flag = gene_pillars_dragon_book_spirits_chosen
+			hidden_trigger = { gene_pillars_dragon_suppression_matrix_disabled_province = no }
+			gene_pillars_dragon_spirits_book_chosen = yes
 		}
 		highlight = yes
 
-		add_province_modifier = {
-			name = gene_pillars_dragon_government
-			duration = -1
+		6386 = {
+			add_province_modifier = {
+				name = gene_pillars_dragon_government
+				duration = -1
+			}
 		}
 	}
 
@@ -16296,8 +16304,10 @@ country_event = {
 		name = gene_pillars.937.d
 		trigger = {
 			gene_pillars_dragon_power_core_activated_province = yes
-			gene_pillars_dragon_suppression_matrix_disabled_province = no
-			NOT = { has_country_flag = gene_pillars_dragon_book_spirits_chosen }
+			hidden_trigger = {
+				gene_pillars_dragon_suppression_matrix_disabled_province = no
+				gene_pillars_dragon_spirits_book_chosen = no
+			}
 		}
 		highlight = yes
 
@@ -16309,9 +16319,9 @@ country_event = {
 	option = { # Suppress matrix and book
 		name = gene_pillars.937.e
 		trigger = {
-			gene_pillars_dragon_power_core_activated_province = no
+			hidden_trigger = { gene_pillars_dragon_power_core_activated_province = no }
 			gene_pillars_dragon_suppression_matrix_disabled_province = yes
-			has_country_flag = gene_pillars_dragon_book_spirits_chosen
+			gene_pillars_dragon_spirits_book_chosen = yes
 		}
 		highlight = yes
 
@@ -16323,9 +16333,11 @@ country_event = {
 	option = { # Primary elves
 		name = gene_pillars.937.f
 		trigger = {
-			gene_pillars_dragon_power_core_activated_province = no
+			hidden_trigger = {
+				gene_pillars_dragon_power_core_activated_province = no
+				gene_pillars_dragon_spirits_book_chosen = no
+			}
 			gene_pillars_dragon_suppression_matrix_disabled_province = yes
-			NOT = { has_country_flag = gene_pillars_dragon_book_spirits_chosen }
 			culture_is_elven = yes
 		}
 		highlight = yes
@@ -16343,9 +16355,11 @@ country_event = {
 	option = { # Matrix disabled only
 		name = gene_pillars.937.g
 		trigger = {
-			gene_pillars_dragon_power_core_activated_province = no
+			hidden_trigger = {
+				gene_pillars_dragon_power_core_activated_province = no
+				gene_pillars_dragon_spirits_book_chosen = no
+			}
 			gene_pillars_dragon_suppression_matrix_disabled_province = yes
-			NOT = { has_country_flag = gene_pillars_dragon_book_spirits_chosen }
 		}
 		highlight = yes
 
@@ -16366,9 +16380,11 @@ country_event = {
 	option = { # Book chosen only
 		name = gene_pillars.937.h
 		trigger = {
-			gene_pillars_dragon_power_core_activated_province = no
-			gene_pillars_dragon_suppression_matrix_disabled_province = no
-			has_country_flag = gene_pillars_dragon_book_spirits_chosen
+			hidden_trigger = {
+				gene_pillars_dragon_power_core_activated_province = no
+				gene_pillars_dragon_suppression_matrix_disabled_province = no
+			}
+			gene_pillars_dragon_spirits_book_chosen = yes
 		}
 		highlight = yes
 
@@ -16572,9 +16588,7 @@ country_event = {
 				NOT = { aPUI_check_variable = { name = gene_pillar_health value = 1 } }
 			}
 		}
-		reduce_stability_or_adm_power = yes
-		set_country_flag = gene_pillars_got_killed
-		gene_pillar_abandon_expedition_effect = { province_notification_event = yes }
+		gene_pillar_fail_expedition = yes
 	}
 }
 
@@ -18515,7 +18529,7 @@ country_event = {
 		gene_pillars_add_loot_effect = { amount = 25 }
 	}
 
-	option = { # Don’t touch the toxic animals
+	option = { # Don't touch the toxic animals
 		name = gene_pillars.1022.c
 	}
 

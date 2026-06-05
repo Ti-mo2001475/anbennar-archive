@@ -72,7 +72,10 @@ country_decisions = {
 		}
 		effect = {
 			change_tag = R70
-			hidden_effect = { restore_country_name = yes }
+			hidden_effect = {
+				restore_country_name = yes
+				set_country_flag = formed_end_game_tag_flag
+			}
 			hidden_effect = {
 				every_owned_province = {
 					limit = {
@@ -184,7 +187,10 @@ country_decisions = {
 		}
 		effect = {
 			change_tag = R71
-			hidden_effect = { restore_country_name = yes }
+			hidden_effect = {
+				restore_country_name = yes
+				set_country_flag = formed_end_game_tag_flag
+			}
 			hidden_effect = {
 				every_owned_province = {
 					limit = {
@@ -599,6 +605,11 @@ country_decisions = {
 			was_never_end_game_tag_trigger = yes
 			NOT = { has_country_flag = R54_only_harimraj } # Parusahan Saya
 			NOT = { has_country_flag = formed_sardhasi_flag }
+			OR = { #Avoid endhuvi mt bug
+				NOT = { tag = R49 }
+				ai = no
+				NOT = { alliance_with = R36 }
+			}
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -866,10 +877,7 @@ country_decisions = {
 			if = {
 				limit = { ai = no }
 				has_estate_privilege = estate_adventurers_heroes_in_the_army
-				OR = {
-					caste_fluidity_is_fluid = yes
-					caste_fluidity_is_neutral = yes
-				}
+				caste_fluidity_is_fluid_or_neutral = yes
 			}
 		}
 		effect = {
