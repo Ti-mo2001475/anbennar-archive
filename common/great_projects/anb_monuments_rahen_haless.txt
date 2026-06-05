@@ -2497,7 +2497,7 @@ godswall_tunnel = {
 	start = 4533
 
 	# date built in real life (so anything built during game time will be there if you start a game after that date)
-	date = 1860.06.20
+	date = 1855.06.20
 
 	#time to build
 	time = { months = 180 }
@@ -2526,7 +2526,13 @@ godswall_tunnel = {
 			}
 		}
 		else = {
-			rending_has_happened = yes
+			OR = {
+				has_great_project = {
+					type = godswall
+					tier = 3
+				}
+				rending_has_happened = yes
+			}
 		}
 	}
 
@@ -2538,15 +2544,15 @@ godswall_tunnel = {
 
 	#what to do when it's destroyed
 	on_destroyed = {
+		remove_canal = godswall_tunnel
+		clr_global_flag = godswall_tunnel_opened
 	}
 
 	#can our country use it?
 	can_use_modifiers_trigger = {}
 
 	#can our country upgrade it?
-	can_upgrade_trigger = {
-		
-	}
+	can_upgrade_trigger = { always = yes }
 
 	#can our country keep it or is it destroyed when we get hold of it?
 	keep_trigger = {
@@ -2572,6 +2578,8 @@ godswall_tunnel = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			owner = { accretive_path_gain_chi = { aspect = the_second_ascension category = adm amount = 100 } }
+			owner = { if = { limit = { has_reform = tsukqiao_throne_of_lies_reform } add_legitimacy = 10 } }
 		}
 	}
 
@@ -2580,13 +2588,7 @@ godswall_tunnel = {
 		upgrade_time = { months = 120 }
 
 		#cost to upgrade to this level (0 for tier 0)
-		cost_to_upgrade = {
-			factor = 1000
-			modifier = {
-				factor = 4
-				NOT = { has_global_flag = godswall_tunnel_opened }
-			}
-		}
+		cost_to_upgrade = { factor = 1000 }
 
 		#what modifiers are added to the province when we have this project here on this tier
 		province_modifiers = {}
