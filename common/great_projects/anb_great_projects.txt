@@ -43,9 +43,7 @@ marrhold_dwarovar_tunnel = {
 			owns_or_vassal_of = 4097
 			is_subject = no
 			adm_tech = 16
-			NOT = { capital_scope = { continent = serpentspine } }
 		}
-		NOT = { 4065 = { has_great_project = { type = dwarovar_marrhold_tunnel } has_construction = dwarovar_marrhold_tunnel } }
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
@@ -77,7 +75,13 @@ marrhold_dwarovar_tunnel = {
 		upgrade_time = { months = 120 }
 
 		#cost to upgrade to this level (0 for tier 0)
-		cost_to_upgrade = { factor = 1000 }
+		cost_to_upgrade = {
+			factor = 1000
+			modifier = {
+				factor = 4
+				NOT = { has_global_flag = marrhold_tunnel_opened }
+			}
+		}
 
 		#what modifiers are added to the province when we have this project here on this tier
 		province_modifiers = { 
@@ -94,6 +98,7 @@ marrhold_dwarovar_tunnel = {
 		on_upgraded = {
 			if = {
 				limit = { NOT = { has_global_flag = marrhold_tunnel_opened } }
+				custom_tooltip = dwarovar_marrhold_tunnel_trade_tt
 				set_global_flag = marrhold_tunnel_opened
 				add_canal = marrhold_dwarovar_tunnel
 				owner = { country_event = { id = diggy.401 } }
@@ -155,7 +160,7 @@ dwarovar_marrhold_tunnel = {
 	start = 4065
 
 	# date built in real life (so anything built during game time will be there if you start a game after that date)
-	date = 1855.06.20
+	date = 1000.06.20
 
 	#time to build
 	time = { months = 180 }
@@ -193,7 +198,6 @@ dwarovar_marrhold_tunnel = {
 			owns_or_vassal_of = 4065
 			is_subject = no
 			adm_tech = 12
-			capital_scope = { continent = serpentspine }
 		}
 	}
 
@@ -219,7 +223,6 @@ dwarovar_marrhold_tunnel = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
-			custom_tooltip = dwarovar_marrhold_tunnel_trade_tt
 		}
 	}
 
@@ -228,7 +231,13 @@ dwarovar_marrhold_tunnel = {
 		upgrade_time = { months = 120 }
 
 		#cost to upgrade to this level (0 for tier 0)
-		cost_to_upgrade = { factor = 1000 }
+		cost_to_upgrade = {
+			factor = 1000
+			modifier = {
+				factor = 4
+				NOT = { has_global_flag = marrhold_tunnel_opened }
+			}
+		}
 
 		#what modifiers are added to the province when we have this project here on this tier
 		province_modifiers = { 
@@ -245,6 +254,7 @@ dwarovar_marrhold_tunnel = {
 		on_upgraded = {
 			if = {
 				limit = { NOT = { has_global_flag = marrhold_tunnel_opened } }
+				custom_tooltip = dwarovar_marrhold_tunnel_trade_tt
 				add_canal = dwarovar_marrhold_tunnel
 				set_global_flag = marrhold_tunnel_opened
 				set_global_flag = marrhold_tunnel_1
