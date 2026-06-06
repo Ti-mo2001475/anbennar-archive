@@ -588,6 +588,13 @@ hytiranyalen_2 = {
 					duration = -1
 				}
 			}
+			custom_tooltip = hyti_bulwar_claim_tt
+			hidden_effect = {
+				bulwar_proper_region = {
+					limit = { area_for_scope_province = { is_neighbor_of = ROOT } }
+					add_claim = ROOT
+				}
+			}
 		} 
 	}
 
@@ -902,7 +909,7 @@ hytiranyalen_3 = {
 	}
 
 	F81_wipeout = {
-		icon = qng_ten_grand_campaigns
+		icon = mission_harpy_fusilier
 		position = 2
 		required_missions = { F81_reignite_the_rivalry } 
 		provinces_to_highlight = {
@@ -1106,6 +1113,7 @@ hytiranyalen_3 = {
 
 		trigger = {
 			2942 = {
+				owned_by = ROOT
 				has_trade_building_trigger = yes
 				has_manufactory_trigger = yes
 				any_neighbor_province = {
@@ -1266,6 +1274,10 @@ hytiranyalen_3 = {
 				}
 			}
 			custom_tooltip = hyti_base_trains_tt
+			if = {
+				limit = { NOT = { adm_tech = 12 } }
+				custom_tooltip = hyti_base_trains_notech_tt
+			}
 		} 
 	}
 
@@ -1669,8 +1681,15 @@ hytiranyalen_5 = {
 
 		trigger = {
 			OR = {
-				receives_military_access_from = F26
 				controls = 655
+				655 = {
+					owner = {
+						OR = {
+							gives_military_access_to = ROOT
+							is_subject_of = ROOT
+						}
+					}
+				}
 			}
 			has_estate_privilege = estate_mages_seek_magical_advice
 		} 

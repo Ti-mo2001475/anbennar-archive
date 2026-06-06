@@ -71,6 +71,8 @@ aPUI_gene_pillar_setup_country_classes = {
 aPUI_gene_pillar_reset_province = {
 	hidden_effect = {
 		set_province_flag = aPUI_gene_pillar_interaction_setup_done_province
+
+		remove_province_modifier = gene_pillar_currently_explored_pillar
 	
 		set_aPUI_var = { name = gene_pillar_health value = 3 }
 		set_aPUI_cap = { name = gene_pillar_health amount = 10 }
@@ -97,14 +99,14 @@ aPUI_gene_pillar_reset_province = {
 		
 		# set_aPUI_var = { name = gene_pillars_party_level which = owner }
 		[[new_owner]
+			gene_pillars_setup_clr_province_class_flags_rogue = yes
+			gene_pillars_setup_clr_province_class_flags_ranger = yes
+			gene_pillars_setup_clr_province_class_flags_fighter = yes
+			gene_pillars_setup_clr_province_class_flags_cleric = yes
+			gene_pillars_setup_clr_province_class_flags_mage = yes
+			gene_pillars_setup_clr_province_class_flags_artificer = yes
 			gene_pillar_UI_setup_party_slots = yes
 		]
-		gene_pillars_setup_clr_province_class_flags_rogue = yes
-		gene_pillars_setup_clr_province_class_flags_ranger = yes
-		gene_pillars_setup_clr_province_class_flags_fighter = yes
-		gene_pillars_setup_clr_province_class_flags_cleric = yes
-		gene_pillars_setup_clr_province_class_flags_mage = yes
-		gene_pillars_setup_clr_province_class_flags_artificer = yes
 		aPUI_gene_pillars_setup_update_UI = yes
 	}
 }
@@ -136,43 +138,43 @@ aPUI_gene_pillar_update_all_gene_pillar_progress_bars = {
 gene_pillar_UI_setup_party_slots = {
 	if = {
 		limit = { owner = { is_variable_equal = { which = aPUI_gene_pillars_party_level_var value = 1 } } }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_1 value = 1 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_2 value = 2 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_3 value = 2 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_4 value = 2 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_5 value = 2 }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_1 value = @empty }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_2 value = @locked }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_3 value = @locked }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_4 value = @locked }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_5 value = @locked }
 	}
 	else_if = {
 		limit = { owner = { is_variable_equal = { which = aPUI_gene_pillars_party_level_var value = 2 } } }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_1 value = 1 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_2 value = 1 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_3 value = 2 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_4 value = 2 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_5 value = 2 }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_1 value = @empty }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_2 value = @empty }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_3 value = @locked }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_4 value = @locked }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_5 value = @locked }
 	}
 	else_if = {
 		limit = { owner = { is_variable_equal = { which = aPUI_gene_pillars_party_level_var value = 3 } } }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_1 value = 1 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_2 value = 1 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_3 value = 1 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_4 value = 2 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_5 value = 2 }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_1 value = @empty }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_2 value = @empty }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_3 value = @empty }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_4 value = @locked }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_5 value = @locked }
 	}
 	else_if = {
 		limit = { owner = { is_variable_equal = { which = aPUI_gene_pillars_party_level_var value = 4 } } }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_1 value = 1 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_2 value = 1 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_3 value = 1 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_4 value = 1 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_5 value = 2 }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_1 value = @empty }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_2 value = @empty }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_3 value = @empty }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_4 value = @empty }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_5 value = @locked }
 	}
 	else_if = {
 		limit = { owner = { is_variable_equal = { which = aPUI_gene_pillars_party_level_var value = 5 } } }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_1 value = 1 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_2 value = 1 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_3 value = 1 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_4 value = 1 }
-		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_5 value = 1 }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_1 value = @empty }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_2 value = @empty }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_3 value = @empty }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_4 value = @empty }
+		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_5 value = @empty }
 	}
 
 }
@@ -236,7 +238,6 @@ aPUI_clear_all_country_exploration_flags = {
 	clr_country_flag = gene_pillars_loot_precursor_relics
 	clr_country_flag = gene_pillars_loot_damestear
 	clr_country_flag = gene_pillars_loot_power_cash
-
 }
 aPUI_clear_all_country_exploration_modifiers = {
 	remove_country_modifier = gene_pillars_generic_artifice_cap_1_minus
@@ -273,7 +274,8 @@ gene_pillar_abandon_expedition_effect = {
 	}
 }
 gene_pillar_abandon_expedition_effect_helper = {
-	gene_pillar_injure_party_members_effect = yes
+	gene_pillars_expedition_finished_roll_final_injuries_effect = yes
+	gene_pillars_injury_clear_UI_slots_and_province_flags = yes
 
 	hidden_effect = {
 		gene_pillar_clear_all_class_country_flags = yes
@@ -311,7 +313,8 @@ gene_pillar_end_expedition_effect = {
 
 #Ends the expedition (successful)
 gene_pillar_successful_end_expedition_effect = {
-	gene_pillar_injure_party_members_effect = yes
+	gene_pillars_expedition_finished_roll_final_injuries_effect = yes
+	gene_pillars_injury_clear_UI_slots_and_province_flags = yes
 
 	# These are rewards/penalties giving out during specific gene pillars
 	remove_country_modifier = gene_pillars_generic_artifice_cap_1_minus
@@ -328,7 +331,7 @@ gene_pillar_successful_end_expedition_effect = {
 	}
 	if = {
 		limit = {
-			has_country_flag = gene_pillars_draconic_suppress_deactivated
+			has_country_flag = gene_pillars_suppression_matrix_reward
 		}
 		event_target:gene_pillar_exploration_province = {
 			# +1 goods produced
@@ -337,7 +340,7 @@ gene_pillar_successful_end_expedition_effect = {
 				duration = -1
 			}
 		}
-		clr_country_flag = gene_pillars_draconic_suppress_deactivated
+		clr_country_flag = gene_pillars_suppression_matrix_reward
 	}
 
 	if = {
@@ -392,6 +395,13 @@ gene_pillar_successful_end_expedition_effect = {
 	}
 }
 
+# Reduces stability/adm, set party killed modifier, and abandons the expedition
+gene_pillar_fail_expedition = {
+	reduce_stability_or_adm_power = yes
+	add_country_modifier = { name = gene_pillars_got_killed duration = 3650 } # 10 years
+	gene_pillar_abandon_expedition_effect = { province_notification_event = yes }
+}
+
 #Begins the expedition
 gene_pillar_start_exploration_of_level = {
 	# c	ustom_tooltip = gene_pillar_start_exploration_of_level_$level$_tt
@@ -406,6 +416,11 @@ gene_pillar_start_exploration_of_level = {
 		if = { limit = { province_id = 3551 } gene_pillar_start_expedition_effect = { province = 3551 } }
 		if = { limit = { province_id = 6386 } gene_pillar_start_expedition_effect = { province = 6386 } }
 		owner = { set_country_flag = gene_pillar_is_exploring_level_$level$_pillar }
+		add_province_modifier = {
+			name = gene_pillar_currently_explored_pillar
+			duration = -1
+			hidden = yes
+		}
 	}
 	if = {
 		limit = { NOT = { gene_pillars_has_any_support_class_province = yes } }
@@ -476,153 +491,178 @@ gene_pillar_generic_then_specific_event = {
 					aPUI_check_variable = { name = gene_pillar_health value = 1 }
 				}
 			}
+			# calculate speed
+			set_variable = { GenePillarsSpeed = 12 } # base speed of 12 months
 
-			# This does not take into account every single combinatio of speed factors, but it handles
-			# each flag in combination with the two increased speed estate privileges
-			# We need to be careful though, since we can't fire an event from an else or else_if
-			if = { # Double speed
-				limit = {
-					has_country_flag = gene_pillars_exploration_events_double_speed
-				}
-				if = { # Increased speed privilege
-					limit = {
-						OR = {
-							has_estate_privilege = artifice_invention_pillar_scouts
-							has_estate_privilege = artifice_invention_mech_pillar_scouts
-						}
-					}
-					country_event = { id = gene_pillars.1000 days = 68 } #Generic event handler
-					country_event = { id = gene_pillars.$specific_event$ days = 136 } #Next event in chain
-				}
-				if = {
-					limit = {
-						NOT = {
-							has_estate_privilege = artifice_invention_pillar_scouts
-							has_estate_privilege = artifice_invention_mech_pillar_scouts
-						}
-					}
-					country_event = { id = gene_pillars.1000 days = 91 } #Generic event handler
-					country_event = { id = gene_pillars.$specific_event$ days = 182 } #Next event in chain
-				}
-			}
-			if = {
-				limit = {
-					NOT = { has_country_flag = gene_pillars_exploration_events_double_speed }
-				}
-				if = { # 90-180 day delay
-					limit = {
-						has_country_flag = gene_pillars_exploration_next_event_small_delay
-					}
-					if = { # Increased speed privilege
-						limit = {
-							OR = {
-								has_estate_privilege = artifice_invention_pillar_scouts
-								has_estate_privilege = artifice_invention_mech_pillar_scouts
-							}
-						}
-						country_event = { id = gene_pillars.1000 days = 204 random = 67 } #Generic event handler
-						country_event = { id = gene_pillars.$specific_event$ days = 341 random = 67 } #Next event in chain
-					}
-					if = {
-						limit = {
-							NOT = {
-								has_estate_privilege = artifice_invention_pillar_scouts
-								has_estate_privilege = artifice_invention_mech_pillar_scouts
-							}
-						}
-						country_event = { id = gene_pillars.1000 days = 272 random = 90 } #Generic event handler
-						country_event = { id = gene_pillars.$specific_event$ days = 455 random = 90 } #Next event in chain
-					}
-				}
-				if = {
-					limit = {
-						NOT = { has_country_flag = gene_pillars_exploration_next_event_small_delay }
-					}
-					if = { # 180-270 day delay
-						limit = {
-							has_country_flag = gene_pillars_exploration_next_event_medium_delay
-						}
-						if = { # Increased speed privilege
-							limit = {
-								OR = {
-									has_estate_privilege = artifice_invention_pillar_scouts
-									has_estate_privilege = artifice_invention_mech_pillar_scouts
-								}
-							}
-							country_event = { id = gene_pillars.1000 days = 271 random = 67 } #Generic event handler
-							country_event = { id = gene_pillars.$specific_event$ days = 409 random = 67 } #Next event in chain
-						}
-						if = {
-							limit = {
-								NOT = {
-									has_estate_privilege = artifice_invention_pillar_scouts
-									has_estate_privilege = artifice_invention_mech_pillar_scouts
-								}
-							}
-							country_event = { id = gene_pillars.1000 days = 362 random = 90 } #Generic event handler
-							country_event = { id = gene_pillars.$specific_event$ days = 545 random = 90 } #Next event in chain
-						}
-					}
-					if = {
-						limit = {
-							NOT = { has_country_flag = gene_pillars_exploration_next_event_medium_delay }
-						}
-						if = { # 270-360 day delay
-							limit = {
-								has_country_flag = gene_pillars_exploration_next_event_large_delay
-							}
-							if = { # Increased speed privilege
-								limit = {
-									OR = {
-										has_estate_privilege = artifice_invention_pillar_scouts
-										has_estate_privilege = artifice_invention_mech_pillar_scouts
-									}
-								}
-								country_event = { id = gene_pillars.1000 days = 339 random = 67 } #Generic event handler
-								country_event = { id = gene_pillars.$specific_event$ days = 476 random = 67 } #Next event in chain
-							}
-							if = {
-								limit = {
-									NOT = {
-										has_estate_privilege = artifice_invention_pillar_scouts
-										has_estate_privilege = artifice_invention_mech_pillar_scouts
-									}
-								}
-								country_event = { id = gene_pillars.1000 days = 452 random = 90 } #Generic event handler
-								country_event = { id = gene_pillars.$specific_event$ days = 635 random = 90 } #Next event in chain
-							}
-						}
-						if = {
-							limit = {
-								NOT = { has_country_flag = gene_pillars_exploration_next_event_large_delay }
-							}
-							if = { # Increased speed privilege
-								limit = {
-									OR = {
-										has_estate_privilege = artifice_invention_pillar_scouts
-										has_estate_privilege = artifice_invention_mech_pillar_scouts
-									}
-								}
-								country_event = { id = gene_pillars.1000 days = 135 } #Generic event handler
-								country_event = { id = gene_pillars.$specific_event$ days = 270 } #Next event in chain
-							}
-							if = {
-								limit = {
-									NOT = {
-										has_estate_privilege = artifice_invention_pillar_scouts
-										has_estate_privilege = artifice_invention_mech_pillar_scouts
-									}
-								}
-								country_event = { id = gene_pillars.1000 days = 182 } #Generic event handler
-								country_event = { id = gene_pillars.$specific_event$ days = 365 } #Next event in chain
-							}
-						}
-						clr_country_flag = gene_pillars_exploration_next_event_large_delay
-					}
-					clr_country_flag = gene_pillars_exploration_next_event_medium_delay
+			if = { # delay 90-180 days
+				limit = { has_country_flag = gene_pillars_exploration_next_event_small_delay }
+				random_list = {
+					1 = { change_variable = { GenePillarsSpeed = 3 } }
+					1 = { change_variable = { GenePillarsSpeed = 4 } }
+					1 = { change_variable = { GenePillarsSpeed = 5 } }
+					1 = { change_variable = { GenePillarsSpeed = 6 } }
 				}
 				clr_country_flag = gene_pillars_exploration_next_event_small_delay
 			}
+			else_if = { # delay 180-270 days
+				limit = { has_country_flag = gene_pillars_exploration_next_event_medium_delay }
+				random_list = {
+					1 = { change_variable = { GenePillarsSpeed = 6 } }
+					1 = { change_variable = { GenePillarsSpeed = 7 } }
+					1 = { change_variable = { GenePillarsSpeed = 8 } }
+					1 = { change_variable = { GenePillarsSpeed = 9 } }
+				}
+				clr_country_flag = gene_pillars_exploration_next_event_medium_delay
+			}
+			else_if = { # delay 270-360 days
+				limit = { has_country_flag = gene_pillars_exploration_next_event_large_delay }
+				random_list = {
+					1 = { change_variable = { GenePillarsSpeed = 9 } }
+					1 = { change_variable = { GenePillarsSpeed = 10 } }
+					1 = { change_variable = { GenePillarsSpeed = 11 } }
+					1 = { change_variable = { GenePillarsSpeed = 12 } }
+				}
+				clr_country_flag = gene_pillars_exploration_next_event_large_delay
+			}
+
+			### Add Speed modifiers below here ###
+
+			if = { # 25% increased speed privilege
+				limit = {
+					OR = {
+						has_estate_privilege = artifice_invention_pillar_scouts
+						has_estate_privilege = artifice_invention_mech_pillar_scouts
+					}
+				}
+				multiply_variable = { GenePillarsSpeed = 0.75 }
+			}
+			if = { # double speed
+				limit = { has_country_flag = gene_pillars_exploration_events_double_speed }
+				multiply_variable = { GenePillarsSpeed = 0.5 }
+			}
+
+			### Add Speed modifiers above here ###
+
+			round_variable = { which = GenePillarsSpeed value = 0 }
+			if = { # clamp speed at minimum of 6 months
+				limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 6 } } }
+				set_variable = { GenePillarsSpeed = 6 }
+			}
+			else_if = { # clamp speed at maximum of 24 months
+				limit = { check_variable = { which = GenePillarsSpeed value = 24 } }
+				set_variable = { GenePillarsSpeed = 24 }
+			}
+
+			if = { # base speed x = 12
+				limit = { is_variable_equal = { which = GenePillarsSpeed value = 12 } }
+				country_event = { id = gene_pillars.1000 days = 182 } #Generic event handler
+				country_event = { id = gene_pillars.$specific_event$ days = 365 } #Next event in chain
+			}
+			if = { # binary tree start at 15, skip 12 (min:6 max:24)
+				limit = { NOT = { is_variable_equal = { which = GenePillarsSpeed value = 12 } } }
+				if = { limit = { check_variable = { which = GenePillarsSpeed value = 15 } }
+					if = { limit = { check_variable = { which = GenePillarsSpeed value = 20 } }
+						if = { limit = { check_variable = { which = GenePillarsSpeed value = 22 } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 22 } }
+								country_event = { id = gene_pillars.1000 days = 335 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 680 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 23 } }
+								country_event = { id = gene_pillars.1000 days = 350 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 700 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 24 } }
+								# a little quicker to avoid overlapping with abandoning expedition cooldown
+								country_event = { id = gene_pillars.1000 days = 362 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 725 } #Next event in chain
+							}
+						}
+						if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 22 } } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 20 } }
+								country_event = { id = gene_pillars.1000 days = 304 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 608 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 21 } }
+								country_event = { id = gene_pillars.1000 days = 319 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 638 } #Next event in chain
+							}
+						}
+					}
+					if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 20 } } }
+						if = { limit = { check_variable = { which = GenePillarsSpeed value = 18 } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 18 } }
+								country_event = { id = gene_pillars.1000 days = 274 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 548 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 19 } }
+								country_event = { id = gene_pillars.1000 days = 289 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 578 } #Next event in chain
+							}
+						}
+						if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 18 } } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 15 } }
+								country_event = { id = gene_pillars.1000 days = 228 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 456 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 16 } }
+								country_event = { id = gene_pillars.1000 days = 243 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 487 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 17 } }
+								country_event = { id = gene_pillars.1000 days = 258 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 517 } #Next event in chain
+							}
+						}
+					}
+				}
+				if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 15 } } }
+					if = { limit = { check_variable = { which = GenePillarsSpeed value = 10 } }
+						if = { limit = { check_variable = { which = GenePillarsSpeed value = 13 } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 13 } }
+								country_event = { id = gene_pillars.1000 days = 198 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 395 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 14 } }
+								country_event = { id = gene_pillars.1000 days = 213 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 426 } #Next event in chain
+							}
+						}
+						if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 12 } } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 10 } }
+								country_event = { id = gene_pillars.1000 days = 152 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 304 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 11 } }
+								country_event = { id = gene_pillars.1000 days = 167 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 334 } #Next event in chain
+							}
+						}
+					}
+					if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 10 } } }
+						if = { limit = { check_variable = { which = GenePillarsSpeed value = 8 } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 8 } }
+								country_event = { id = gene_pillars.1000 days = 122 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 244 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 9 } }
+								country_event = { id = gene_pillars.1000 days = 137 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 274 } #Next event in chain
+							}
+						}
+						if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 8 } } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 6 } }
+								country_event = { id = gene_pillars.1000 days = 91 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 182 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 7 } }
+								country_event = { id = gene_pillars.1000 days = 107 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 214 } #Next event in chain
+							}
+						}
+					}
+				}
+			}
+
 			# This is just so the initial event doesn't advance the progress bar
 			[[advance]
 				gene_pillars_advance_progress_bar = yes
@@ -763,7 +803,7 @@ gene_pillars_level_up_check_helper = {
 					limit = { gene_pillars_is_exactly_party_level = { level = 2 } }
 					gene_pillars = {
 						limit = { owned_by = PREV } #Change visual as you unlock slot 2
-						set_variable = { which = aPUI_gene_pillar_party_slot_framevar_2 value = 1 }
+						set_variable = { which = aPUI_gene_pillar_party_slot_framevar_2 value = @empty }
 					}
 					set_aPUI_cap = { name = gene_pillar_xp amount = 100 }
 				}
@@ -771,7 +811,7 @@ gene_pillars_level_up_check_helper = {
 					limit = { gene_pillars_is_exactly_party_level = { level = 3 } }
 					gene_pillars = {
 						limit = { owned_by = PREV } #Change visual as you unlock slot 3
-						set_variable = { which = aPUI_gene_pillar_party_slot_framevar_3 value = 1 }
+						set_variable = { which = aPUI_gene_pillar_party_slot_framevar_3 value = @empty }
 					}
 					set_aPUI_cap = { name = gene_pillar_xp amount = 100 }
 	
@@ -785,7 +825,7 @@ gene_pillars_level_up_check_helper = {
 					limit = { gene_pillars_is_exactly_party_level = { level = 4 } }
 					gene_pillars = {
 						limit = { owned_by = PREV } #Change visual as you unlock slot 4
-						set_variable = { which = aPUI_gene_pillar_party_slot_framevar_4 value = 1 }
+						set_variable = { which = aPUI_gene_pillar_party_slot_framevar_4 value = @empty }
 					}
 					set_aPUI_cap = { name = gene_pillar_xp amount = 200 }
 	
@@ -798,7 +838,7 @@ gene_pillars_level_up_check_helper = {
 					limit = { gene_pillars_is_exactly_party_level = { level = 5 } }
 					gene_pillars = {
 						limit = { owned_by = PREV } #Change visual as you unlock slot 5
-						set_variable = { which = aPUI_gene_pillar_party_slot_framevar_5 value = 1 }
+						set_variable = { which = aPUI_gene_pillar_party_slot_framevar_5 value = @empty }
 					}
 					set_variable = { which = aPUI_gene_pillar_xp_var value = 200 }
 				}
@@ -828,64 +868,91 @@ gene_pillars_check_loot_threshold = {
 # If you have 100 loot points, make sure we only select each reward once
 gene_pillars_randomise_loot_event = {
 	owner = {
-		random_list = {
-			10 = {
-				trigger = {
+		if = { # guarantee damestear or precursor relics if artificer A or mage A is in the party
+			limit = {
+				OR = {
+					has_country_flag = gene_pillars_has_mage_A
+					has_country_flag = gene_pillars_has_artificer_A
+				}
+				NOT = {
+					has_country_flag = gene_pillars_loot_precursor_relics
+					has_country_flag = gene_pillars_loot_damestear
+				}
+				PREV = {
 					NOT = {
-						has_country_flag = gene_pillars_has_mage_A
-						has_country_flag = gene_pillars_has_artificer_A
-						has_country_flag = gene_pillars_loot_good_ruler
+						trade_goods = damestear
+						trade_goods = precursor_relics
 					}
 				}
-				set_country_flag = gene_pillars_loot_good_ruler
 			}
-			10 = {
-				trigger = {
-					NOT = {
-						has_country_flag = gene_pillars_has_mage_A
-						has_country_flag = gene_pillars_has_artificer_A
-						has_country_flag = gene_pillars_loot_institution
+			random_list = {
+				1 = { set_country_flag = gene_pillars_loot_damestear }
+				1 = {
+					trigger = { # mages only get guaranteed damestear
+						NOT = { has_country_flag = gene_pillars_has_mage_A }
 					}
+					set_country_flag = gene_pillars_loot_precursor_relics
 				}
-				set_country_flag = gene_pillars_loot_institution
 			}
-			10 = { # Get precursor relics
-				trigger = {
-					NOT = {
-						has_country_flag = gene_pillars_has_artificer_A
-						has_country_flag = gene_pillars_loot_precursor_relics
-						has_country_flag = gene_pillars_loot_damestear
+		}
+		else = { # otherwise just do normal loot rewards
+			random_list = {
+				10 = { # Improve ruler
+					trigger = {
+						NOT = { has_country_flag = gene_pillars_loot_good_ruler }
 					}
-					NOT = { PREV = { trade_goods = precursor_relics } }
+					set_country_flag = gene_pillars_loot_good_ruler
 				}
-				set_country_flag = gene_pillars_loot_precursor_relics
-			}
-			10 = { # Get Damestear
-				trigger = {
-					NOT = {
-						has_country_flag = gene_pillars_loot_damestear
-						has_country_flag = gene_pillars_loot_precursor_relics
+				10 = { # Get next institution
+					trigger = {
+						NOT = { has_country_flag = gene_pillars_loot_institution }
 					}
-					NOT = { PREV = { trade_goods = damestear } }
+					set_country_flag = gene_pillars_loot_institution
 				}
-				set_country_flag = gene_pillars_loot_damestear
-			}
-			10 = {
-				trigger = {
-					NOT = {
-						has_country_flag = gene_pillars_has_mage_A
-						has_country_flag = gene_pillars_has_artificer_A
-						has_country_flag = gene_pillars_loot_power_cash
+				10 = { # Get precursor relics
+					trigger = {
+						NOT = {
+							has_country_flag = gene_pillars_loot_precursor_relics
+							has_country_flag = gene_pillars_loot_damestear
+						}
+						PREV = {
+							NOT = {
+								trade_goods = precursor_relics
+								trade_goods = damestear
+							}
+						}
 					}
+					set_country_flag = gene_pillars_loot_precursor_relics
 				}
-				set_country_flag = gene_pillars_loot_power_cash
-			}
-			5 = {
-				#TODO: Add trigger to ensure an eligible invention exists
-				trigger = {
-					NOT = { has_country_flag = gene_pillars_loot_insyaa_invention }
+				10 = { # Get Damestear
+					trigger = {
+						NOT = {
+							has_country_flag = gene_pillars_loot_damestear
+							has_country_flag = gene_pillars_loot_precursor_relics
+						}
+						PREV = {
+							NOT = {
+								trade_goods = damestear
+								trade_goods = precursor_relics
+							}
+						}
+					}
+					set_country_flag = gene_pillars_loot_damestear
 				}
-				set_country_flag = gene_pillars_loot_insyaa_invention
+				10 = { # Get powerpoints/cash
+					trigger = {
+						NOT = { has_country_flag = gene_pillars_loot_power_cash }
+					}
+					set_country_flag = gene_pillars_loot_power_cash
+				}
+				5 = {
+					#TODO: Add trigger to ensure an eligible invention exists
+					trigger = {
+						NOT = { has_country_flag = gene_pillars_loot_insyaa_invention }
+					}
+					set_country_flag = gene_pillars_loot_insyaa_invention
+					gene_pillars_get_random_insyaa_invention_flag = yes
+				}
 			}
 		}
 	}
@@ -915,11 +982,7 @@ gene_pillars_gain_final_loot_event = {
 			owner = {
 				add_legitimacy_equivalent = { amount = 50 republican_tradition = 50 }
 				add_prestige = 35
-				random_list = {
-					1 = { change_adm = 1 }
-					1 = { change_dip = 1 }
-					1 = { change_mil = 1 }
-				}
+				increase_random_ruler_skill = yes
 				custom_tooltip = gene_pillar_get_loot_ae_tt
 				hidden_effect = {
 					every_known_country = {
@@ -936,11 +999,7 @@ gene_pillars_gain_final_loot_event = {
 			owner = {
 				add_legitimacy_equivalent = { amount = 25 republican_tradition = 25 }
 				add_prestige = 25
-				random_list = {
-					1 = { change_adm = 1 }
-					1 = { change_dip = 1 }
-					1 = { change_mil = 1 }
-				}
+				increase_random_ruler_skill = yes
 				custom_tooltip = gene_pillar_get_loot_ae_tt
 				hidden_effect = {
 					every_known_country = {
@@ -1101,9 +1160,7 @@ gene_pillars_lose_hp_effect = {
 			is_exploring_any_gene_pillar = yes
 			# in case you trigger this twice by e.g. having two health loss effects in one option
 		}
-		reduce_stability_or_adm_power = yes
-		set_country_flag = gene_pillars_got_killed
-		gene_pillar_abandon_expedition_effect = { province_notification_event = yes }
+		gene_pillar_fail_expedition = yes
 	}
 }
 
@@ -1175,143 +1232,22 @@ gene_pillar_clear_unlocked_party_setup_slot_for_injury = {
 		limit = {
 			check_variable = {
 				which = aPUI_gene_pillar_party_slot_framevar_$slot$
-				value = 3
+				value = @min_class_value
 			}
 		}
 		set_variable = {
 			which = aPUI_gene_pillar_party_slot_framevar_$slot$
-			value = 1
+			value = @empty
 		}
 	}
 }
 
-#Injures all party members
-gene_pillar_injure_party_members_effect = {
+#Checks injuries and updates UI slots
+gene_pillars_injury_clear_UI_slots_and_province_flags = {
 	hidden_effect = {
 		if = {
-			limit = { has_country_flag = gene_pillars_has_rogue_A }
-			gene_pillar_injure_party_member_effect = { class = rogue_A }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_rogue_B }
-			gene_pillar_injure_party_member_effect = { class = rogue_B }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_rogue_C }
-			gene_pillar_injure_party_member_effect = { class = rogue_C }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_rogue_D }
-			gene_pillar_injure_party_member_effect = { class = rogue_D }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_rogue_E }
-			gene_pillar_injure_party_member_effect = { class = rogue_E }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_ranger_A }
-			gene_pillar_injure_party_member_effect = { class = ranger_A }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_ranger_B }
-			gene_pillar_injure_party_member_effect = { class = ranger_B }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_ranger_C }
-			gene_pillar_injure_party_member_effect = { class = ranger_C }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_ranger_D }
-			gene_pillar_injure_party_member_effect = { class = ranger_D }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_ranger_E }
-			gene_pillar_injure_party_member_effect = { class = ranger_E }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_fighter_A }
-			gene_pillar_injure_party_member_effect = { class = fighter_A }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_fighter_B }
-			gene_pillar_injure_party_member_effect = { class = fighter_B }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_fighter_C }
-			gene_pillar_injure_party_member_effect = { class = fighter_C }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_fighter_D }
-			gene_pillar_injure_party_member_effect = { class = fighter_D }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_fighter_E }
-			gene_pillar_injure_party_member_effect = { class = fighter_E }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_cleric_A }
-			gene_pillar_injure_party_member_effect = { class = cleric_A }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_cleric_B }
-			gene_pillar_injure_party_member_effect = { class = cleric_B }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_cleric_C }
-			gene_pillar_injure_party_member_effect = { class = cleric_C }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_cleric_D }
-			gene_pillar_injure_party_member_effect = { class = cleric_D }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_cleric_E }
-			gene_pillar_injure_party_member_effect = { class = cleric_E }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_mage_A }
-			gene_pillar_injure_party_member_effect = { class = mage_A }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_mage_B }
-			gene_pillar_injure_party_member_effect = { class = mage_B }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_mage_C }
-			gene_pillar_injure_party_member_effect = { class = mage_C }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_mage_D }
-			gene_pillar_injure_party_member_effect = { class = mage_D }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_mage_E }
-			gene_pillar_injure_party_member_effect = { class = mage_E }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_artificer_A }
-			gene_pillar_injure_party_member_effect = { class = artificer_A }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_artificer_B }
-			gene_pillar_injure_party_member_effect = { class = artificer_B }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_artificer_C }
-			gene_pillar_injure_party_member_effect = { class = artificer_C }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_artificer_D }
-			gene_pillar_injure_party_member_effect = { class = artificer_D }
-		}
-		if = {
-			limit = { has_country_flag = gene_pillars_has_artificer_E }
-			gene_pillar_injure_party_member_effect = { class = artificer_E }
-		}
-		# Fire an event to inform the player if there are any injuries
-		if = {
 			limit = {
-				gene_pillars_is_anyone_injured = yes
+				gene_pillars_is_anyone_injured_in_party = yes
 			}
 			# Even though not everyone is necessarily injured, it's a bit too tricky to check each slot to see if the
 			# injured character is in that slot, so if anyone is injured, let's just reset the party
@@ -1321,14 +1257,145 @@ gene_pillar_injure_party_members_effect = {
 				gene_pillar_clear_unlocked_party_setup_slot_for_injury = { slot = 3 }
 				gene_pillar_clear_unlocked_party_setup_slot_for_injury = { slot = 4 }
 				gene_pillar_clear_unlocked_party_setup_slot_for_injury = { slot = 5 }
+				gene_pillars_setup_clr_province_class_flags_rogue = yes
+				gene_pillars_setup_clr_province_class_flags_ranger = yes
+				gene_pillars_setup_clr_province_class_flags_fighter = yes
+				gene_pillars_setup_clr_province_class_flags_cleric = yes
+				gene_pillars_setup_clr_province_class_flags_mage = yes
+				gene_pillars_setup_clr_province_class_flags_artificer = yes
 			}
-			# placeholder move this to end level effect. No separate event
-			# country_event = { id = gene_pillars.21 }
 		}
 	}
 }
 
-gene_pillar_injure_party_member_effect = {
+#Roll for injuries on all party members
+gene_pillars_expedition_finished_roll_final_injuries_effect = {
+	hidden_effect = {
+		if = {
+			limit = { has_country_flag = gene_pillars_has_rogue_A }
+			gene_pillars_roll_injury_class_effect = { class = rogue_A }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_rogue_B }
+			gene_pillars_roll_injury_class_effect = { class = rogue_B }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_rogue_C }
+			gene_pillars_roll_injury_class_effect = { class = rogue_C }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_rogue_D }
+			gene_pillars_roll_injury_class_effect = { class = rogue_D }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_rogue_E }
+			gene_pillars_roll_injury_class_effect = { class = rogue_E }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_ranger_A }
+			gene_pillars_roll_injury_class_effect = { class = ranger_A }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_ranger_B }
+			gene_pillars_roll_injury_class_effect = { class = ranger_B }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_ranger_C }
+			gene_pillars_roll_injury_class_effect = { class = ranger_C }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_ranger_D }
+			gene_pillars_roll_injury_class_effect = { class = ranger_D }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_ranger_E }
+			gene_pillars_roll_injury_class_effect = { class = ranger_E }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_fighter_A }
+			gene_pillars_roll_injury_class_effect = { class = fighter_A }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_fighter_B }
+			gene_pillars_roll_injury_class_effect = { class = fighter_B }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_fighter_C }
+			gene_pillars_roll_injury_class_effect = { class = fighter_C }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_fighter_D }
+			gene_pillars_roll_injury_class_effect = { class = fighter_D }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_fighter_E }
+			gene_pillars_roll_injury_class_effect = { class = fighter_E }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_cleric_A }
+			gene_pillars_roll_injury_class_effect = { class = cleric_A }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_cleric_B }
+			gene_pillars_roll_injury_class_effect = { class = cleric_B }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_cleric_C }
+			gene_pillars_roll_injury_class_effect = { class = cleric_C }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_cleric_D }
+			gene_pillars_roll_injury_class_effect = { class = cleric_D }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_cleric_E }
+			gene_pillars_roll_injury_class_effect = { class = cleric_E }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_mage_A }
+			gene_pillars_roll_injury_class_effect = { class = mage_A }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_mage_B }
+			gene_pillars_roll_injury_class_effect = { class = mage_B }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_mage_C }
+			gene_pillars_roll_injury_class_effect = { class = mage_C }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_mage_D }
+			gene_pillars_roll_injury_class_effect = { class = mage_D }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_mage_E }
+			gene_pillars_roll_injury_class_effect = { class = mage_E }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_artificer_A }
+			gene_pillars_roll_injury_class_effect = { class = artificer_A }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_artificer_B }
+			gene_pillars_roll_injury_class_effect = { class = artificer_B }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_artificer_C }
+			gene_pillars_roll_injury_class_effect = { class = artificer_C }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_artificer_D }
+			gene_pillars_roll_injury_class_effect = { class = artificer_D }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_artificer_E }
+			gene_pillars_roll_injury_class_effect = { class = artificer_E }
+		}
+	}
+}
+
+#Roll for injury on a specific class
+gene_pillars_roll_injury_class_effect = {
 	event_target:gene_pillar_exploration_province = {
 		if = {
 			limit = {
@@ -1413,7 +1480,7 @@ gene_pillar_injure_party_member_effect = {
 						factor = 0.75
 						owner = { has_country_flag = gene_pillars_has_cleric_B }
 					}
-					owner = { add_country_modifier = { name = gene_pillars_injured_$class$ duration = 9125 } } # 25 years
+					owner = { gene_pillars_injure_class_effect = { class = $class$ } }
 				}
 				1 = {
 					modifier = {
@@ -1485,135 +1552,269 @@ gene_pillar_injure_party_member_effect = {
 	}
 }
 
+#Injure a specific class
+gene_pillars_injure_class_effect = {
+	add_country_modifier = { name = gene_pillars_injured_$class$ duration = 9125 } # 25 years
+}
+
+#Injure a random class in the party
 gene_pillar_injure_random_party_member_effect = {
 	custom_tooltip = gene_pillar_injure_random_party_member_tt
 	hidden_effect = {
 		random_list = {
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_rogue_A }
-				gene_pillar_injure_party_member_effect = { class = rogue_A }
+				gene_pillars_injure_class_effect = { class = rogue_A }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_rogue_B }
-				gene_pillar_injure_party_member_effect = { class = rogue_B }
+				gene_pillars_injure_class_effect = { class = rogue_B }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_rogue_C }
-				gene_pillar_injure_party_member_effect = { class = rogue_C }
+				gene_pillars_injure_class_effect = { class = rogue_C }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_rogue_D }
-				gene_pillar_injure_party_member_effect = { class = rogue_D }
+				gene_pillars_injure_class_effect = { class = rogue_D }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_rogue_E }
-				gene_pillar_injure_party_member_effect = { class = rogue_E }
+				gene_pillars_injure_class_effect = { class = rogue_E }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_ranger_A }
-				gene_pillar_injure_party_member_effect = { class = ranger_A }
+				gene_pillars_injure_class_effect = { class = ranger_A }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_ranger_B }
-				gene_pillar_injure_party_member_effect = { class = ranger_B }
+				gene_pillars_injure_class_effect = { class = ranger_B }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_ranger_C }
-				gene_pillar_injure_party_member_effect = { class = ranger_C }
+				gene_pillars_injure_class_effect = { class = ranger_C }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_ranger_D }
-				gene_pillar_injure_party_member_effect = { class = ranger_D }
+				gene_pillars_injure_class_effect = { class = ranger_D }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_ranger_E }
-				gene_pillar_injure_party_member_effect = { class = ranger_E }
+				gene_pillars_injure_class_effect = { class = ranger_E }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_fighter_A }
-				gene_pillar_injure_party_member_effect = { class = fighter_A }
+				gene_pillars_injure_class_effect = { class = fighter_A }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_fighter_B }
-				gene_pillar_injure_party_member_effect = { class = fighter_B }
+				gene_pillars_injure_class_effect = { class = fighter_B }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_fighter_C }
-				gene_pillar_injure_party_member_effect = { class = fighter_C }
+				gene_pillars_injure_class_effect = { class = fighter_C }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_fighter_D }
-				gene_pillar_injure_party_member_effect = { class = fighter_D }
+				gene_pillars_injure_class_effect = { class = fighter_D }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_fighter_E }
-				gene_pillar_injure_party_member_effect = { class = fighter_E }
+				gene_pillars_injure_class_effect = { class = fighter_E }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_cleric_A }
-				gene_pillar_injure_party_member_effect = { class = cleric_A }
+				gene_pillars_injure_class_effect = { class = cleric_A }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_cleric_B }
-				gene_pillar_injure_party_member_effect = { class = cleric_B }
+				gene_pillars_injure_class_effect = { class = cleric_B }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_cleric_C }
-				gene_pillar_injure_party_member_effect = { class = cleric_C }
+				gene_pillars_injure_class_effect = { class = cleric_C }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_cleric_D }
-				gene_pillar_injure_party_member_effect = { class = cleric_D }
+				gene_pillars_injure_class_effect = { class = cleric_D }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_cleric_E }
-				gene_pillar_injure_party_member_effect = { class = cleric_E }
+				gene_pillars_injure_class_effect = { class = cleric_E }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_mage_A }
-				gene_pillar_injure_party_member_effect = { class = mage_A }
+				gene_pillars_injure_class_effect = { class = mage_A }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_mage_B }
-				gene_pillar_injure_party_member_effect = { class = mage_B }
+				gene_pillars_injure_class_effect = { class = mage_B }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_mage_C }
-				gene_pillar_injure_party_member_effect = { class = mage_C }
+				gene_pillars_injure_class_effect = { class = mage_C }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_mage_D }
-				gene_pillar_injure_party_member_effect = { class = mage_D }
+				gene_pillars_injure_class_effect = { class = mage_D }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_mage_E }
-				gene_pillar_injure_party_member_effect = { class = mage_E }
+				gene_pillars_injure_class_effect = { class = mage_E }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_artificer_A }
-				gene_pillar_injure_party_member_effect = { class = artificer_A }
+				gene_pillars_injure_class_effect = { class = artificer_A }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_artificer_B }
-				gene_pillar_injure_party_member_effect = { class = artificer_B }
+				gene_pillars_injure_class_effect = { class = artificer_B }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_artificer_C }
-				gene_pillar_injure_party_member_effect = { class = artificer_C }
+				gene_pillars_injure_class_effect = { class = artificer_C }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_artificer_D }
-				gene_pillar_injure_party_member_effect = { class = artificer_D }
+				gene_pillars_injure_class_effect = { class = artificer_D }
 			}
 			1 = {
 				trigger = { has_country_flag = gene_pillars_has_artificer_E }
-				gene_pillar_injure_party_member_effect = { class = artificer_E }
+				gene_pillars_injure_class_effect = { class = artificer_E }
 			}
 		}
 	}
 }
 
+#Injure the entire party
+gene_pillars_injure_entire_party_effect = {
+	custom_tooltip = gene_pillars_injure_entire_party_tt
+	hidden_effect = {
+		if = {
+			limit = { has_country_flag = gene_pillars_has_rogue_A }
+			gene_pillars_injure_class_effect = { class = rogue_A }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_rogue_B }
+			gene_pillars_injure_class_effect = { class = rogue_B }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_rogue_C }
+			gene_pillars_injure_class_effect = { class = rogue_C }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_rogue_D }
+			gene_pillars_injure_class_effect = { class = rogue_D }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_rogue_E }
+			gene_pillars_injure_class_effect = { class = rogue_E }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_ranger_A }
+			gene_pillars_injure_class_effect = { class = ranger_A }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_ranger_B }
+			gene_pillars_injure_class_effect = { class = ranger_B }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_ranger_C }
+			gene_pillars_injure_class_effect = { class = ranger_C }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_ranger_D }
+			gene_pillars_injure_class_effect = { class = ranger_D }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_ranger_E }
+			gene_pillars_injure_class_effect = { class = ranger_E }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_fighter_A }
+			gene_pillars_injure_class_effect = { class = fighter_A }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_fighter_B }
+			gene_pillars_injure_class_effect = { class = fighter_B }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_fighter_C }
+			gene_pillars_injure_class_effect = { class = fighter_C }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_fighter_D }
+			gene_pillars_injure_class_effect = { class = fighter_D }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_fighter_E }
+			gene_pillars_injure_class_effect = { class = fighter_E }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_cleric_A }
+			gene_pillars_injure_class_effect = { class = cleric_A }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_cleric_B }
+			gene_pillars_injure_class_effect = { class = cleric_B }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_cleric_C }
+			gene_pillars_injure_class_effect = { class = cleric_C }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_cleric_D }
+			gene_pillars_injure_class_effect = { class = cleric_D }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_cleric_E }
+			gene_pillars_injure_class_effect = { class = cleric_E }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_mage_A }
+			gene_pillars_injure_class_effect = { class = mage_A }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_mage_B }
+			gene_pillars_injure_class_effect = { class = mage_B }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_mage_C }
+			gene_pillars_injure_class_effect = { class = mage_C }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_mage_D }
+			gene_pillars_injure_class_effect = { class = mage_D }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_mage_E }
+			gene_pillars_injure_class_effect = { class = mage_E }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_artificer_A }
+			gene_pillars_injure_class_effect = { class = artificer_A }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_artificer_B }
+			gene_pillars_injure_class_effect = { class = artificer_B }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_artificer_C }
+			gene_pillars_injure_class_effect = { class = artificer_C }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_artificer_D }
+			gene_pillars_injure_class_effect = { class = artificer_D }
+		}
+		if = {
+			limit = { has_country_flag = gene_pillars_has_artificer_E }
+			gene_pillars_injure_class_effect = { class = artificer_E }
+		}
+	}
+}
+
 gene_pillars_injury_check_tooltips = {
+	if = { limit = { owner = { gene_pillars_is_anyone_injured = yes } } custom_tooltip = gene_pillars_current_injuries_tt }
 	if = { limit = { owner = { has_country_modifier = gene_pillars_injured_rogue_A } } custom_tooltip = gene_pillars_class_injure_effect_rogue_A }
 	if = { limit = { owner = { has_country_modifier = gene_pillars_injured_rogue_B } } custom_tooltip = gene_pillars_class_injure_effect_rogue_B }
 	if = { limit = { owner = { has_country_modifier = gene_pillars_injured_rogue_C } } custom_tooltip = gene_pillars_class_injure_effect_rogue_C }
@@ -1683,11 +1884,11 @@ gene_pillars_setup_clr_archetype_flags = {
 		set_variable = { which = aPUI_gene_pillar_party_slot_framevar_5 value = @empty }
 	}
 
-	gene_pillars_setup_clr_archetype_flags_$archetype$ = yes
+	gene_pillars_clr_non_party_member_province_flags_$archetype$ = yes
 }
 
 #Must be hardcoded here to use the @values
-gene_pillars_setup_clr_archetype_flags_rogue = {
+gene_pillars_clr_non_party_member_province_flags_rogue = {
 	if = {
 		limit = { NOT = { gene_pillars_setup_check_framevars_for_class_trigger = { class = @rogue_A } } }
 		clr_province_flag = gene_pillars_has_rogue_A
@@ -1709,7 +1910,7 @@ gene_pillars_setup_clr_archetype_flags_rogue = {
 		clr_province_flag = gene_pillars_has_rogue_E
 	}
 }
-gene_pillars_setup_clr_archetype_flags_ranger = {
+gene_pillars_clr_non_party_member_province_flags_ranger = {
 	if = {
 		limit = { NOT = { gene_pillars_setup_check_framevars_for_class_trigger = { class = @ranger_A } } }
 		clr_province_flag = gene_pillars_has_ranger_A
@@ -1731,7 +1932,7 @@ gene_pillars_setup_clr_archetype_flags_ranger = {
 		clr_province_flag = gene_pillars_has_ranger_E
 	}
 }
-gene_pillars_setup_clr_archetype_flags_fighter = {
+gene_pillars_clr_non_party_member_province_flags_fighter = {
 	if = {
 		limit = { NOT = { gene_pillars_setup_check_framevars_for_class_trigger = { class = @fighter_A } } }
 		clr_province_flag = gene_pillars_has_fighter_A
@@ -1753,7 +1954,7 @@ gene_pillars_setup_clr_archetype_flags_fighter = {
 		clr_province_flag = gene_pillars_has_fighter_E
 	}
 }
-gene_pillars_setup_clr_archetype_flags_cleric = {
+gene_pillars_clr_non_party_member_province_flags_cleric = {
 	if = {
 		limit = { NOT = { gene_pillars_setup_check_framevars_for_class_trigger = { class = @cleric_A } } }
 		clr_province_flag = gene_pillars_has_cleric_A
@@ -1775,7 +1976,7 @@ gene_pillars_setup_clr_archetype_flags_cleric = {
 		clr_province_flag = gene_pillars_has_cleric_E
 	}
 }
-gene_pillars_setup_clr_archetype_flags_mage = {
+gene_pillars_clr_non_party_member_province_flags_mage = {
 	if = {
 		limit = { NOT = { gene_pillars_setup_check_framevars_for_class_trigger = { class = @mage_A } } }
 		clr_province_flag = gene_pillars_has_mage_A
@@ -1797,7 +1998,7 @@ gene_pillars_setup_clr_archetype_flags_mage = {
 		clr_province_flag = gene_pillars_has_mage_E
 	}
 }
-gene_pillars_setup_clr_archetype_flags_artificer = {
+gene_pillars_clr_non_party_member_province_flags_artificer = {
 	if = {
 		limit = { NOT = { gene_pillars_setup_check_framevars_for_class_trigger = { class = @artificer_A } } }
 		clr_province_flag = gene_pillars_has_artificer_A
@@ -1862,7 +2063,6 @@ gene_pillars_setup_clr_province_class_flags_artificer = {
 	clr_province_flag = gene_pillars_has_artificer_D
 	clr_province_flag = gene_pillars_has_artificer_E
 }
-
 
 #class = <class number, set by @$class$>
 #class_2 <class string>
@@ -2069,7 +2269,6 @@ gene_pillars_T4_invention_unlock = {
 gene_pillars_random_insyaa_invention_unlock = {
 	if = {
 		limit = { NOT = { has_country_modifier = mechanim_administration } }
-		custom_tooltip = gene_pillars_random_insyaa_invention_unlock_tt
 		#if = {
 		#	limit = { ai = no }
 		#	get_partial_artificery_for_gene_pillar_exploration = yes
@@ -2077,262 +2276,608 @@ gene_pillars_random_insyaa_invention_unlock = {
 			# TODO: very experimental and likely temporary, revisit this asap as there are a host of caveats with this, gameplay and code-wise
 		#}
 		if = {
-			limit = { NOT = { has_country_flag = artificery_unlocked has_country_flag = artificery_choice } }
+			limit = { NOT = { has_country_flag = artificery_unlocked } }
 			custom_tooltip = gene_pillars_insyaa_invention_available_later_tt
 			# sorry..
 		}
-		hidden_effect = {
-			random_list = {
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_reverse_mechanim } }
-					unlock_insyaa_invention = { invention = artifice_invention_reverse_mechanim }
+		#Insyaa
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_reverse_mechanim
+				NOT = { has_country_flag = researching_artifice_invention_reverse_mechanim } #I would rather not give invention currently being reaserched
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_reverse_mechanim }
+			clr_country_flag = reward_artifice_invention_reverse_mechanim
+			country_event = {
+				id = insyaa_flavour.100
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_industrial_automatories
+				NOT = { has_country_flag = researching_artifice_invention_industrial_automatories }
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_reverse_mechanim }
+			clr_country_flag = reward_artifice_invention_industrial_automatories
+			country_event = {
+				id = insyaa_flavour.101
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_crop_enlarge
+				NOT = { has_country_flag = researching_artifice_invention_crop_enlarge }
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_crop_enlarge }
+			clr_country_flag = reward_artifice_invention_crop_enlarge
+			country_event = {
+				id = insyaa_flavour.110
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_assisted_growth
+				NOT = { has_country_flag = researching_artifice_invention_assisted_growth }
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_assisted_growth }
+			clr_country_flag = reward_artifice_invention_assisted_growth
+			country_event = {
+				id = insyaa_flavour.111
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_titano_thorns
+				NOT = { has_country_flag = researching_artifice_invention_titano_thorns }
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_titano_thorns }
+			clr_country_flag = reward_artifice_invention_titano_thorns
+			country_event = {
+				id = insyaa_flavour.113
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_sonic_amplifiers
+				NOT = { has_country_flag = researching_artifice_invention_sonic_amplifiers }
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_sonic_amplifiers }
+			clr_country_flag = reward_artifice_invention_sonic_amplifiers
+			country_event = {
+				id = insyaa_flavour.120
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_sonic_weaponary
+				NOT = { has_country_flag = researching_artifice_invention_sonic_weaponary }
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_sonic_weaponary }
+			clr_country_flag = reward_artifice_invention_sonic_weaponary
+			country_event = {
+				id = insyaa_flavour.121
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_flak_cannons
+				NOT = { has_country_flag = researching_artifice_invention_flak_cannons }
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_flak_cannons }
+			clr_country_flag = reward_artifice_invention_flak_cannons
+			country_event = {
+				id = insyaa_flavour.122
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_terrain_shaper
+				NOT = { has_country_flag = researching_artifice_invention_terrain_shaper }
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_terrain_shaper }
+			clr_country_flag = reward_artifice_invention_terrain_shaper
+			country_event = {
+				id = insyaa_flavour.123
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_country_flag = researching_artifice_invention_steel_tracking }
+				has_country_flag = reward_artifice_invention_steel_tracking
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_steel_tracking }
+			clr_country_flag = reward_artifice_invention_steel_tracking
+			country_event = {
+				id = insyaa_flavour.124
+			}
+		}
+		if = { #Insyaans
+			limit = {
+				capital_scope = { continent = oceania }
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_memory_module
+					NOT = { has_country_flag = researching_artifice_invention_memory_module }
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_industrial_automatories } }
-					unlock_insyaa_invention = { invention = artifice_invention_industrial_automatories }
+				unlock_insyaa_invention = { invention = artifice_invention_memory_module }
+				clr_country_flag = reward_artifice_invention_memory_module
+				country_event = {
+					id = insyaa_flavour.102
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_memory_module } }
-					unlock_insyaa_invention = { invention = artifice_invention_memory_module }
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_fireproof_plating
+					NOT = { has_country_flag = researching_artifice_invention_fireproof_plating }
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_fireproof_plating } }
-					unlock_insyaa_invention = { invention = artifice_invention_fireproof_plating }
+				unlock_insyaa_invention = { invention = artifice_invention_fireproof_plating }
+				clr_country_flag = reward_artifice_invention_fireproof_plating
+				country_event = {
+					id = insyaa_flavour.103
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_okalu_scanners } }
-					unlock_insyaa_invention = { invention = artifice_invention_okalu_scanners }
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_okalu_scanners
+					NOT = { has_country_flag = researching_artifice_invention_okalu_scanners }
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_pillar_scouts } }
-					unlock_insyaa_invention = { invention = artifice_invention_pillar_scouts }
+				unlock_insyaa_invention = { invention = artifice_invention_okalu_scanners }
+				clr_country_flag = reward_artifice_invention_okalu_scanners
+				country_event = {
+					id = insyaa_flavour.104
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_behavioral_chip } }
-					unlock_insyaa_invention = { invention = artifice_invention_behavioral_chip }
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_pillar_scouts
+					NOT = { has_country_flag = researching_artifice_invention_pillar_scouts }
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_construction_bots } }
-					unlock_insyaa_invention = { invention = artifice_invention_construction_bots }
+				unlock_insyaa_invention = { invention = artifice_invention_pillar_scouts }
+				clr_country_flag = reward_artifice_invention_pillar_scouts
+				country_event = {
+					id = insyaa_flavour.105
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mechanim_regiments } }
-					unlock_insyaa_invention = { invention = artifice_invention_mechanim_regiments }
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_titano_weed
+					NOT = { has_country_flag = researching_artifice_invention_titano_weed }
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_auto_scribes } }
-					unlock_insyaa_invention = { invention = artifice_invention_auto_scribes }
+				unlock_insyaa_invention = { invention = artifice_invention_titano_weed }
+				clr_country_flag = reward_artifice_invention_titano_weed
+				country_event = {
+					id = insyaa_flavour.114
 				}
-				#Gene Magic
-				100 = {
-					trigger = {
-						NOT = { has_country_flag = unlocked_artifice_invention_crop_enlarge }
-						has_country_flag = magic_artificery_artificery_only
-					}
-					unlock_insyaa_invention = { invention = artifice_invention_crop_enlarge }
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_seed_siege
+					NOT = { has_country_flag = researching_artifice_invention_seed_siege }
 				}
-				100 = {
-					trigger = {
-						NOT = { has_country_flag = unlocked_artifice_invention_assisted_growth }
-						has_country_flag = magic_artificery_mixed
-					}
-					unlock_insyaa_invention = { invention = artifice_invention_assisted_growth }
+				unlock_insyaa_invention = { invention = artifice_invention_seed_siege }
+				clr_country_flag = reward_artifice_invention_seed_siege
+				country_event = {
+					id = insyaa_flavour.115
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_animal_gene } }
-					unlock_insyaa_invention = { invention = artifice_invention_animal_gene }
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_animal_gene
+					NOT = { has_country_flag = researching_artifice_invention_animal_gene }
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_titano_thorns } }
-					unlock_insyaa_invention = { invention = artifice_invention_titano_thorns }
+				unlock_insyaa_invention = { invention = artifice_invention_animal_gene }
+				clr_country_flag = reward_artifice_invention_animal_gene
+				country_event = {
+					id = insyaa_flavour.112
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_titano_weed } }
-					unlock_insyaa_invention = { invention = artifice_invention_titano_weed }
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_memory_storage
+					NOT = { has_country_flag = researching_artifice_invention_memory_storage }
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_seed_siege } }
-					unlock_insyaa_invention = { invention = artifice_invention_seed_siege }
+				unlock_insyaa_invention = { invention = artifice_invention_memory_storage }
+				clr_country_flag = reward_artifice_invention_memory_storage
+				country_event = {
+					id = insyaa_flavour.125
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_tgs_farmland } }
-					unlock_insyaa_invention = { invention = artifice_invention_tgs_farmland }
+			}
+		}
+		if = { #Colonizer
+			limit = {
+				NOT = { capital_scope = { continent = oceania } }
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_behavioral_chip
+					NOT = { has_country_flag = researching_artifice_invention_behavioral_chip }
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_tgs_livestock } }
-					unlock_insyaa_invention = { invention = artifice_invention_tgs_livestock }
+				unlock_insyaa_invention = { invention = artifice_invention_behavioral_chip }
+				clr_country_flag = reward_artifice_invention_behavioral_chip
+				country_event = {
+					id = insyaa_flavour.106
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_titano_artif } }
-					unlock_insyaa_invention = { invention = artifice_invention_titano_artif }
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_construction_bots
+					NOT = { has_country_flag = researching_artifice_invention_construction_bots }
 				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_titano_cav } }
-					unlock_insyaa_invention = { invention = artifice_invention_titano_cav }
+				unlock_insyaa_invention = { invention = artifice_invention_construction_bots }
+				clr_country_flag = reward_artifice_invention_construction_bots
+				country_event = {
+					id = insyaa_flavour.107
 				}
-				#Precursor Tech
-				100 = { 
-					trigger = {
-						NOT = { has_country_flag = unlocked_artifice_invention_sonic_amplifiers
-						has_country_flag = magic_artificery_mixed }
-					}
-					unlock_insyaa_invention = { invention = artifice_invention_sonic_amplifiers }
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_mechanim_regiments
+					NOT = { has_country_flag = researching_artifice_invention_mechanim_regiments }
 				}
-				100 = { 
-					trigger = {
-						NOT = { has_country_flag = unlocked_artifice_invention_sonic_weaponary
-						has_country_flag = magic_artificery_artificery_only }
-					}
-					unlock_insyaa_invention = { invention = artifice_invention_sonic_weaponary }
+				unlock_insyaa_invention = { invention = artifice_invention_mechanim_regiments }
+				clr_country_flag = reward_artifice_invention_mechanim_regiments
+				country_event = {
+					id = insyaa_flavour.108
 				}
-				100 = { 
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_flak_cannons } }
-					unlock_insyaa_invention = { invention = artifice_invention_flak_cannons }
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_auto_scribes
+					NOT = { has_country_flag = researching_artifice_invention_auto_scribes }
 				}
-				100 = { 
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_terrain_shaper } }
-					unlock_insyaa_invention = { invention = artifice_invention_terrain_shaper }
+				unlock_insyaa_invention = { invention = artifice_invention_auto_scribes }
+				clr_country_flag = reward_artifice_invention_auto_scribes
+				country_event = {
+					id = insyaa_flavour.109
 				}
-				100 = { 
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_steel_tracking } }
-					unlock_insyaa_invention = { invention = artifice_invention_steel_tracking }
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_tgs_farmland
+					NOT = { has_country_flag = researching_artifice_invention_tgs_farmland }
 				}
-				100 = { 
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_memory_storage } }
-					unlock_insyaa_invention = { invention = artifice_invention_memory_storage }
+				unlock_insyaa_invention = { invention = artifice_invention_tgs_farmland }
+				clr_country_flag = reward_artifice_invention_tgs_farmland
+				country_event = {
+					id = insyaa_flavour.116
 				}
-				100 = { 
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mechanim_deconstructor } }
-					unlock_insyaa_invention = { invention = artifice_invention_mechanim_deconstructor }
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_tgs_livestock
+					NOT = { has_country_flag = researching_artifice_invention_tgs_livestock }
+				}
+				unlock_insyaa_invention = { invention = artifice_invention_tgs_livestock }
+				clr_country_flag = reward_artifice_invention_tgs_livestock
+				country_event = {
+					id = insyaa_flavour.117
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_titano_artif
+					NOT = { has_country_flag = researching_artifice_invention_titano_artif }
+				}
+				unlock_insyaa_invention = { invention = artifice_invention_titano_artif }
+				clr_country_flag = reward_artifice_invention_titano_artif
+				country_event = {
+					id = insyaa_flavour.118
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_titano_cav
+					NOT = { has_country_flag = researching_artifice_invention_titano_cav }
+				}
+				unlock_insyaa_invention = { invention = artifice_invention_titano_cav }
+				clr_country_flag = reward_artifice_invention_titano_cav
+				country_event = {
+					id = insyaa_flavour.119
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = reward_artifice_invention_mechanim_deconstructor
+					NOT = { has_country_flag = researching_artifice_invention_mechanim_deconstructor }
+				}
+				unlock_insyaa_invention = { invention = artifice_invention_mechanim_deconstructor }
+				clr_country_flag = reward_artifice_invention_mechanim_deconstructor
+				country_event = {
+					id = insyaa_flavour.126
 				}
 			}
 		}
 	}
 	if = {
 		limit = { has_country_modifier = mechanim_administration }
-		custom_tooltip = gene_pillars_random_mechanim_body_part_unlock_tt
-		hidden_effect = {
-			random_list = {
-				#Cultural
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_steel_detector } }
-					unlock_insyaa_invention = { invention = artifice_invention_mech_steel_detector }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_reawakening_prosedure } }
-					unlock_insyaa_invention = { invention = artifice_invention_mech_reawakening_prosedure }
-				}
-				#Religious
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_building_plates } }
-					unlock_insyaa_invention = { invention = artifice_invention_mech_building_plates }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_terrain_specialization } }
-					unlock_insyaa_invention = { invention = artifice_invention_mech_terrain_specialization }
-				}
-				#Military
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_lava_cell } }
-					unlock_insyaa_invention = { invention = artifice_invention_mech_lava_cell }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_fireproof_plating } }
-					unlock_insyaa_invention = { invention = artifice_invention_mech_fireproof_plating }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_pillar_scouts } }
-					unlock_insyaa_invention = { invention = artifice_invention_mech_pillar_scouts }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_amphibious_attachements } }
-					unlock_insyaa_invention = { invention = artifice_invention_mech_amphibious_attachements }
-				}
-				#Head
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_head_long_range } }
-					unlock_insyaa_invention = { invention = artifice_invention_head_long_range }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_head_war_craved } }
-					unlock_insyaa_invention = { invention = artifice_invention_head_war_craved }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_head_human_like } }
-					unlock_insyaa_invention = { invention = artifice_invention_head_human_like }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_head_adm_oversight } }
-					unlock_insyaa_invention = { invention = artifice_invention_head_adm_oversight }
-				}
-				#Torso
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_torso_self_repair } }
-					unlock_insyaa_invention = { invention = artifice_invention_torso_self_repair }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_torso_war_craved } }
-					unlock_insyaa_invention = { invention = artifice_invention_torso_war_craved }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_torso_container_part } }
-					unlock_insyaa_invention = { invention = artifice_invention_torso_container_part }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_torso_war_machine } }
-					unlock_insyaa_invention = { invention = artifice_invention_torso_war_machine }
-				}
-				#Chassis
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_chassis_heavy } }
-					unlock_insyaa_invention = { invention = artifice_invention_chassis_heavy }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_chassis_light } }
-					unlock_insyaa_invention = { invention = artifice_invention_chassis_light }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_chassis_waterproof } }
-					unlock_insyaa_invention = { invention = artifice_invention_chassis_waterproof }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_chassis_soarer_struts } }
-					unlock_insyaa_invention = { invention = artifice_invention_chassis_soarer_struts }
-				}
-				#Arms
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_arms_dual_pair } }
-					unlock_insyaa_invention = { invention = artifice_invention_arms_dual_pair }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_arms_stabilizer } }
-					unlock_insyaa_invention = { invention = artifice_invention_arms_stabilizer }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_arms_construction } }
-					unlock_insyaa_invention = { invention = artifice_invention_arms_construction }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_arms_sonic_firearm } }
-					unlock_insyaa_invention = { invention = artifice_invention_arms_sonic_firearm }
-				}
-				#Legs
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_legs_quadripedal } }
-					unlock_insyaa_invention = { invention = artifice_invention_legs_quadripedal }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_legs_bipedal } }
-					unlock_insyaa_invention = { invention = artifice_invention_legs_bipedal }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_legs_octipedal } }
-					unlock_insyaa_invention = { invention = artifice_invention_legs_octipedal }
-				}
-				100 = {
-					trigger = { NOT = { has_country_flag = unlocked_artifice_invention_legs_trailblazer } }
-					unlock_insyaa_invention = { invention = artifice_invention_legs_trailblazer }
-				}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_mech_steel_detector
+				NOT = { has_country_flag = researching_artifice_invention_mech_steel_detector }
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_mech_steel_detector }
+			clr_country_flag = reward_artifice_invention_mech_steel_detector
+			country_event = {
+				id = insyaa_flavour.127
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_mech_reawakening_procedure
+				NOT = { has_country_flag = researching_artifice_invention_mech_reawakening_procedure }
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_mech_reawakening_procedure }
+			clr_country_flag = reward_artifice_invention_mech_reawakening_procedure
+			country_event = {
+				id = insyaa_flavour.128
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_mech_building_plates
+				NOT = { has_country_flag = researching_artifice_invention_mech_building_plates }
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_mech_building_plates }
+			clr_country_flag = reward_artifice_invention_mech_building_plates
+			country_event = {
+				id = insyaa_flavour.129
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_mech_terrain_specialization
+				NOT = { has_country_flag = researching_artifice_invention_mech_terrain_specialization }
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_mech_terrain_specialization }
+			clr_country_flag = reward_artifice_invention_mech_terrain_specialization
+			country_event = {
+				id = insyaa_flavour.130
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_mech_lava_cell
+				NOT = { has_country_flag = researching_artifice_invention_mech_lava_cell }
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_mech_lava_cell }
+			clr_country_flag = reward_artifice_invention_mech_lava_cell
+			country_event = {
+				id = insyaa_flavour.131
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_mech_fireproof_plating
+				NOT = { has_country_flag = researching_artifice_invention_mech_fireproof_plating }
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_mech_fireproof_plating }
+			clr_country_flag = reward_artifice_invention_mech_fireproof_plating
+			country_event = {
+				id = insyaa_flavour.132
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_mech_pillar_scouts
+				NOT = { has_country_flag = researching_artifice_invention_mech_pillar_scouts }
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_mech_pillar_scouts }
+			clr_country_flag = reward_artifice_invention_mech_pillar_scouts
+			country_event = {
+				id = insyaa_flavour.133
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_mech_amphibious_attachements
+				NOT = { has_country_flag = researching_artifice_invention_mech_amphibious_attachements }
+			}
+			unlock_insyaa_invention = { invention = artifice_invention_mech_amphibious_attachements }
+			clr_country_flag = reward_artifice_invention_mech_amphibious_attachements
+			country_event = {
+				id = insyaa_flavour.154
+			}
+		}
+		#Mechanim Parts
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_head_long_range
+			}
+			set_country_flag = unlocked_artifice_invention_head_long_range
+			clr_country_flag = reward_artifice_invention_head_long_range
+			country_event = {
+				id = insyaa_flavour.134
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_head_war_craved
+			}
+			set_country_flag = unlocked_artifice_invention_head_war_craved
+			clr_country_flag = reward_artifice_invention_head_war_craved
+			country_event = {
+				id = insyaa_flavour.135
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_head_human_like
+			}
+			set_country_flag = unlocked_artifice_invention_head_human_like
+			clr_country_flag = reward_artifice_invention_head_human_like
+			country_event = {
+				id = insyaa_flavour.136
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_head_adm_oversight
+			}
+			set_country_flag = unlocked_artifice_invention_head_adm_oversight
+			clr_country_flag = reward_artifice_invention_head_adm_oversight
+			country_event = {
+				id = insyaa_flavour.137
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_torso_self_repair
+			}
+			set_country_flag = unlocked_artifice_invention_torso_self_repair
+			clr_country_flag = reward_artifice_invention_torso_self_repair
+			country_event = {
+				id = insyaa_flavour.138
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_torso_war_craved
+			}
+			set_country_flag = unlocked_artifice_invention_torso_war_craved
+			clr_country_flag = reward_artifice_invention_torso_war_craved
+			country_event = {
+				id = insyaa_flavour.139
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_torso_container_part
+			}
+			set_country_flag = unlocked_artifice_invention_torso_container_part
+			clr_country_flag = reward_artifice_invention_torso_container_part
+			country_event = {
+				id = insyaa_flavour.140
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_torso_war_machine
+			}
+			set_country_flag = unlocked_artifice_invention_torso_war_machine
+			clr_country_flag = reward_artifice_invention_torso_war_machine
+			country_event = {
+				id = insyaa_flavour.141
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_chassis_heavy
+			}
+			set_country_flag = unlocked_artifice_invention_chassis_heavy
+			clr_country_flag = reward_artifice_invention_chassis_heavy
+			country_event = {
+				id = insyaa_flavour.142
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_chassis_light
+			}
+			set_country_flag = unlocked_artifice_invention_chassis_light
+			clr_country_flag = reward_artifice_invention_chassis_light
+			country_event = {
+				id = insyaa_flavour.143
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_chassis_waterproof
+			}
+			set_country_flag = unlocked_artifice_invention_chassis_waterproof
+			clr_country_flag = reward_artifice_invention_chassis_waterproof
+			country_event = {
+				id = insyaa_flavour.144
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_chassis_soarer_struts
+			}
+			set_country_flag = unlocked_artifice_invention_chassis_soarer_struts
+			clr_country_flag = reward_artifice_invention_chassis_soarer_struts
+			country_event = {
+				id = insyaa_flavour.145
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_arms_dual_pair
+			}
+			set_country_flag = unlocked_artifice_invention_arms_dual_pair
+			clr_country_flag = reward_artifice_invention_arms_dual_pair
+			country_event = {
+				id = insyaa_flavour.146
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_arms_stabilizer
+			}
+			set_country_flag = unlocked_artifice_invention_arms_stabilizer
+			clr_country_flag = reward_artifice_invention_arms_stabilizer
+			country_event = {
+				id = insyaa_flavour.147
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_arms_construction
+			}
+			set_country_flag = unlocked_artifice_invention_arms_construction
+			clr_country_flag = reward_artifice_invention_arms_construction
+			country_event = {
+				id = insyaa_flavour.148
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_arms_sonic_firearm
+			}
+			set_country_flag = unlocked_artifice_invention_arms_sonic_firearm
+			clr_country_flag = reward_artifice_invention_arms_sonic_firearm
+			country_event = {
+				id = insyaa_flavour.149
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_legs_quadripedal
+			}
+			set_country_flag = unlocked_artifice_invention_legs_quadripedal
+			clr_country_flag = reward_artifice_invention_legs_quadripedal
+			country_event = {
+				id = insyaa_flavour.150
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_legs_bipedal
+			}
+			set_country_flag = unlocked_artifice_invention_legs_bipedal
+			clr_country_flag = reward_artifice_invention_legs_bipedal
+			country_event = {
+				id = insyaa_flavour.151
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_legs_octipedal
+			}
+			set_country_flag = unlocked_artifice_invention_legs_octipedal
+			clr_country_flag = reward_artifice_invention_legs_octipedal
+			country_event = {
+				id = insyaa_flavour.152
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = reward_artifice_invention_legs_trailblazer
+			}
+			set_country_flag = unlocked_artifice_invention_legs_trailblazer
+			clr_country_flag = reward_artifice_invention_legs_trailblazer
+			country_event = {
+				id = insyaa_flavour.153
 			}
 		}
 	}
@@ -2361,3 +2906,408 @@ gene_pillar_sandworm_pillar_next_event = {
 		}
 	}
 }
+
+gene_pillars_dragon_suppression_matrix_damage = {
+	if = {
+		limit = {
+			gene_pillars_dragon_power_core_activated_province = yes
+			gene_pillars_dragon_suppression_matrix_disabled_province = no
+		}
+		if = {
+			limit = {
+				culture_is_kobold = yes
+			}
+			custom_tooltip = gene_pillars_dragon_suppression_matrix_damage_tt
+			gene_pillars_lose_hp_effect = { amount = 2 }
+			set_country_flag = gene_pillar_dragon_kobold_suppression # 50% -1 HP on subsequent encounters
+		}
+		if = {
+			limit = {
+				culture_is_kobold = no
+				OR = {
+					high_tolerance_kobold_race_trigger = yes
+					medium_tolerance_kobold_race_trigger = yes
+				}
+			}
+			custom_tooltip = gene_pillars_dragon_suppression_matrix_damage_tt
+			gene_pillars_lose_hp_effect = { amount = 1 }
+			set_country_flag = gene_pillar_dragon_kobold_suppression # 50% -1 HP on subsequent encounters
+		}
+		gene_pillars_add_xp_effect = { amount = 2 }
+	}
+}
+
+gene_pillars_dragon_suppression_matrix_reward_hint = {
+	if = {
+		limit = {
+			gene_pillars_dragon_power_core_activated_province = yes
+		}
+		set_country_flag = gene_pillars_suppression_matrix_reward
+		custom_tooltip = gene_pillars_dragon_suppress_reward_hint_tt
+	}
+}
+
+gene_pillars_dragon_disable_matrix = {
+	hidden_effect = {
+		event_target:gene_pillar_exploration_province = {
+			set_province_flag = gene_pillars_dragon_suppression_disabled
+		}
+	}
+	custom_tooltip = gene_pillars_dragon_disable_suppression_tt
+}
+
+gene_pillars_dragon_kobold_suppression_damage = {
+	if = {
+		limit = {
+			has_country_flag = gene_pillar_dragon_kobold_suppression
+		}
+		custom_tooltip = gene_pillars_dragon_kobold_suppression_damage_tt
+		random = {
+			chance = 50
+			gene_pillars_lose_hp_effect = { amount = 1 }
+		}
+	}
+}
+
+gene_pillars_dragon_library_unwind_damage = {
+	custom_tooltip = gene_pillars_dragon_library_unwind_damage_tt
+	random_list = {
+		1 = {
+			gene_pillars_lose_hp_effect = { amount = 1 }
+		}
+		1 = {
+			if = {
+				limit = {
+					NOT = {
+						AND = {
+							gene_pillars_has_artificer_in_party = yes
+							tier_3_artificer_estate = yes
+						}
+						AND = {
+							gene_pillars_has_mage_in_party = yes
+							is_estate_enchantment_level_3 = yes
+						}
+					}
+				}
+				gene_pillars_lose_hp_effect = { amount = 2 }
+			}
+		}
+	}
+	gene_pillars_dragon_kobold_suppression_damage = yes
+}
+gene_pillars_get_random_insyaa_invention_flag = { 
+	#General - For Biological, both Insyaans and Colonizers
+	#Inventions for Biological Insyaans
+	if = {
+		limit = { capital_scope = { continent = oceania } } #For Insyaans
+		random_list = {
+			#Mechanim
+			100 = { #General 1
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_reverse_mechanim } }
+				set_country_flag = reward_artifice_invention_reverse_mechanim
+			}
+			100 = { #General 2
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_industrial_automatories } }
+				set_country_flag = reward_artifice_invention_industrial_automatories
+			}
+			100 = { #Insyaan 3
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_memory_module } }
+				set_country_flag = reward_artifice_invention_memory_module
+			}
+			100 = { #Insyaan 4
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_fireproof_plating } }
+				set_country_flag = reward_artifice_invention_fireproof_plating
+			}
+			100 = { #Insyaan 5
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_okalu_scanners } }
+				set_country_flag = reward_artifice_invention_okalu_scanners
+			}
+			100 = { #Insyaan 6
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_pillar_scouts } }
+				set_country_flag = reward_artifice_invention_pillar_scouts
+			}
+			#Gene Magic
+			100 = { #General 1
+				trigger = {
+					NOT = { has_country_flag = unlocked_artifice_invention_crop_enlarge }
+					has_country_flag = magic_artificery_artificery_only
+				}
+				set_country_flag = reward_artifice_invention_crop_enlarge
+			}
+			100 = { #General 2
+				trigger = {
+					NOT = { has_country_flag = unlocked_artifice_invention_assisted_growth }
+					has_country_flag = magic_artificery_mixed
+				}
+				set_country_flag = reward_artifice_invention_assisted_growth
+			}
+			100 = { #General 3
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_titano_thorns } }
+				set_country_flag = reward_artifice_invention_titano_thorns
+			}
+			100 = { #Insyaan 4
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_animal_gene } }
+				set_country_flag = reward_artifice_invention_animal_gene
+			}
+			100 = { #Insyaan 5
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_titano_weed } }
+				set_country_flag = reward_artifice_invention_titano_weed
+			}
+			100 = { #Insyaan 6
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_seed_siege } }
+				set_country_flag = reward_artifice_invention_seed_siege
+			}
+			#Precursor Tech
+			100 = { #General 1
+				trigger = {
+					NOT = { has_country_flag = unlocked_artifice_invention_sonic_amplifiers
+					has_country_flag = magic_artificery_mixed }
+				}
+				set_country_flag = reward_artifice_invention_sonic_amplifiers
+			}
+			100 = { #General 2
+				trigger = {
+					NOT = { has_country_flag = unlocked_artifice_invention_sonic_weaponary
+					has_country_flag = magic_artificery_artificery_only }
+				}
+				set_country_flag = reward_artifice_invention_sonic_weaponary
+			}
+			100 = { #General 3
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_flak_cannons } }
+				set_country_flag = reward_artifice_invention_flak_cannons
+			}
+			100 = { #General 4
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_terrain_shaper } }
+				set_country_flag = reward_artifice_invention_terrain_shaper
+			}
+			100 = { #General 5
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_steel_tracking } }
+				set_country_flag = reward_artifice_invention_steel_tracking
+			}
+			100 = { #Insyaan 6
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_memory_storage } }
+				set_country_flag = reward_artifice_invention_memory_storage
+			}
+		}
+	}
+	else_if = {
+		limit = { NOT = { has_country_modifier = mechanim_administration } } #For Colonizers
+		random_list = {
+			#Mechanim
+			100 = { #General 1
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_reverse_mechanim } }
+				set_country_flag = reward_artifice_invention_reverse_mechanim
+			}
+			100 = { #General 2
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_industrial_automatories } }
+				set_country_flag = reward_artifice_invention_industrial_automatories
+			}
+			100 = { #Colonizer 3
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_behavioral_chip } }
+				set_country_flag = reward_artifice_invention_behavioral_chip
+			}
+			100 = { #Colonizer 4
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_construction_bots } }
+				set_country_flag = reward_artifice_invention_construction_bots
+			}
+			100 = { #Colonizer 5
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mechanim_regiments } }
+				set_country_flag = reward_artifice_invention_mechanim_regiments
+			}
+			100 = { #Colonizer 6
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_auto_scribes } }
+				set_country_flag = reward_artifice_invention_auto_scribes
+			}
+			#Gene Magic
+			100 = { #General 1
+				trigger = {
+					NOT = { has_country_flag = unlocked_artifice_invention_crop_enlarge }
+					has_country_flag = magic_artificery_artificery_only
+				}
+				set_country_flag = reward_artifice_invention_crop_enlarge
+			}
+			100 = { #General 1
+				trigger = {
+					NOT = { has_country_flag = unlocked_artifice_invention_assisted_growth }
+					has_country_flag = magic_artificery_mixed
+				}
+				set_country_flag = reward_artifice_invention_assisted_growth
+			}
+			100 = { #General 2
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_titano_thorns } }
+				set_country_flag = reward_artifice_invention_titano_thorns
+			}
+			100 = { #Colonizer 3
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_tgs_farmland } }
+				set_country_flag = reward_artifice_invention_tgs_farmland
+			}
+			100 = { #Colonizer 4
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_tgs_livestock } }
+				set_country_flag = reward_artifice_invention_tgs_livestock
+			}
+			100 = { #Colonizer 5
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_titano_artif } }
+				set_country_flag = reward_artifice_invention_titano_artif
+			}
+			100 = { #Colonizer 6
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_titano_cav } }
+				set_country_flag = reward_artifice_invention_titano_cav
+			}
+			#Precursor Tech
+			100 = { #General 1
+				trigger = {
+					NOT = { has_country_flag = unlocked_artifice_invention_sonic_amplifiers
+					has_country_flag = magic_artificery_mixed }
+				}
+				set_country_flag = reward_artifice_invention_sonic_amplifiers
+			}
+			100 = { #General 1
+				trigger = {
+					NOT = { has_country_flag = unlocked_artifice_invention_sonic_weaponary
+					has_country_flag = magic_artificery_artificery_only }
+				}
+				set_country_flag = reward_artifice_invention_sonic_weaponary
+			}
+			100 = { #General 2
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_flak_cannons } }
+				set_country_flag = reward_artifice_invention_flak_cannons
+			}
+			100 = { #General 3
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_terrain_shaper } }
+				set_country_flag = reward_artifice_invention_terrain_shaper
+			}
+			100 = { #General 4
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_steel_tracking } }
+				set_country_flag = reward_artifice_invention_steel_tracking
+			}
+			100 = { #Colonizer 5
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mechanim_deconstructor } }
+				set_country_flag = reward_artifice_invention_mechanim_deconstructor
+			}
+		}
+	}
+	else = { #Sorry but looks like you are a machine
+		random_list = {
+			#Cultural
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_steel_detector } }
+				set_country_flag = reward_artifice_invention_mech_steel_detector
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_reawakening_prosedure } }
+				set_country_flag = reward_artifice_invention_mech_reawakening_prosedure
+			}
+			#Religious
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_building_plates } }
+				set_country_flag = reward_artifice_invention_mech_building_plates
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_terrain_specialization } }
+				set_country_flag = reward_artifice_invention_mech_terrain_specialization
+			}
+			#Military
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_lava_cell } }
+				set_country_flag = reward_artifice_invention_mech_lava_cell
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_fireproof_plating } }
+				set_country_flag = reward_artifice_invention_mech_fireproof_plating
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_pillar_scouts } }
+				set_country_flag = reward_artifice_invention_mech_pillar_scouts
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_amphibious_attachements } }
+				set_country_flag = reward_artifice_invention_mech_amphibious_attachements
+			}
+			#Head
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_head_long_range } }
+				set_country_flag = reward_artifice_invention_head_long_range
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_head_war_craved } }
+				set_country_flag = reward_artifice_invention_head_war_craved
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_head_human_like } }
+				set_country_flag = reward_artifice_invention_head_human_like
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_head_adm_oversight } }
+				set_country_flag = reward_artifice_invention_head_adm_oversight
+			}
+			#Torso
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_torso_self_repair } }
+				set_country_flag = reward_artifice_invention_torso_self_repair
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_torso_war_craved } }
+				set_country_flag = reward_artifice_invention_torso_war_craved
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_torso_container_part } }
+				set_country_flag = reward_artifice_invention_torso_container_part
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_torso_war_machine } }
+				set_country_flag = reward_artifice_invention_torso_war_machine
+			}
+			#Chassis
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_chassis_heavy } }
+				set_country_flag = reward_artifice_invention_chassis_heavy
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_chassis_light } }
+				set_country_flag = reward_artifice_invention_chassis_light
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_chassis_waterproof } }
+				set_country_flag = reward_artifice_invention_chassis_waterproof
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_chassis_soarer_struts } }
+				set_country_flag = reward_artifice_invention_chassis_soarer_struts
+			}
+			#Arms
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_arms_dual_pair } }
+				set_country_flag = reward_artifice_invention_arms_dual_pair
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_arms_stabilizer } }
+				set_country_flag = reward_artifice_invention_arms_stabilizer
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_arms_construction } }
+				set_country_flag = reward_artifice_invention_arms_construction
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_arms_sonic_firearm } }
+				set_country_flag = reward_artifice_invention_arms_sonic_firearm
+			}
+			#Legs
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_legs_quadripedal } }
+				set_country_flag = reward_artifice_invention_legs_quadripedal
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_legs_bipedal } }
+				set_country_flag = reward_artifice_invention_legs_bipedal
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_legs_octipedal } }
+				set_country_flag = reward_artifice_invention_legs_octipedal
+			}
+			100 = {
+				trigger = { NOT = { has_country_flag = unlocked_artifice_invention_legs_trailblazer } }
+				set_country_flag = reward_artifice_invention_legs_trailblazer
+			}
+		}
+	}
+} 

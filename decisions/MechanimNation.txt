@@ -44,29 +44,32 @@ country_decisions = {
 					}
 				}
 			}
-			if = {
+			if = { #Must be in the mushroom forest to form I-Numbe
 				limit = { has_country_flag = golodh_rules }
 				capital_scope = { region = insyaan_mushroom_forest_region }
 			}
 			else = {
 				capital_scope = {
-					OR = {
-						province_group = gene_pillars
-						area = west_insyaan_lowlands_5_area
-						area = west_insyaan_lowlands_9_area
-						area = west_insyaan_lowlands_4_area
-						region = titanoflora_valley_region
-						region = malogadin_coast_region
-						region = tagaala_mangroves_region
-						region = horn_of_insyaa_region
-						superregion = kanolowele_superregion
+					AND = {
+						OR = {
+							province_group = gene_pillars
+							area = west_insyaan_lowlands_5_area
+							area = west_insyaan_lowlands_9_area
+							area = west_insyaan_lowlands_4_area
+							region = titanoflora_valley_region
+							region = malogadin_coast_region
+							region = tagaala_mangroves_region
+							region = horn_of_insyaa_region
+							superregion = kanolowele_superregion
+						}
+						NOT = { region = insyaan_mushroom_forest_region }
 					}
 				}
 				NOT = { capital = 3173 } #Remove when M25 gets idea loc
 			}
 			# Make sure we're not trying to form a tag that exists
 			if = {
-				limit = { OR = { has_country_flag = golodh_rules capital_scope = { region = insyaan_mushroom_forest_region } } }
+				limit = {has_country_flag = golodh_rules}
 				NOT = { M30 = { exists = yes } }
 			}
 			else_if = {
@@ -125,12 +128,7 @@ country_decisions = {
 
 		effect = {
 			if = {
-				limit = {
-					OR = {
-						has_country_flag = golodh_rules # always forms I-numbe if accepting golodh
-						capital_scope = { region = insyaan_mushroom_forest_region }
-					}
-				}
+				limit = { has_country_flag = golodh_rules } # always forms I-numbe if accepting golodh
 				change_tag = M30
 				hidden_effect = { restore_country_name = yes }
 				swap_non_generic_missions = yes
@@ -144,7 +142,7 @@ country_decisions = {
 				}
 				change_tag = M35
 				
-				change_primary_culture = stargrasper_mechanim
+				primary_and_ruler_culture_change = { race = mechanim new_culture = stargrasper_mechanim }
 				change_religion = kuriatema
 				capital_scope = { 
 					change_culture = stargrasper_mechanim 
@@ -161,7 +159,7 @@ country_decisions = {
 				}
 				change_tag = M33
 
-				change_primary_culture = flameweaver_mechanim
+				primary_and_ruler_culture_change = { race = mechanim new_culture = flameweaver_mechanim }
 				change_religion = kuriatema
 				capital_scope = { 
 					change_culture = flameweaver_mechanim 
@@ -177,7 +175,7 @@ country_decisions = {
 					capital_scope = { province_id = 3415 }
 				}
 				change_tag = M23
-				change_primary_culture = wildcolor_mechanim
+				primary_and_ruler_culture_change = { race = mechanim new_culture = wildcolor_mechanim }
 				change_religion = kuriatema
 				capital_scope = { 
 					change_culture = wildcolor_mechanim 
@@ -193,7 +191,7 @@ country_decisions = {
 					capital_scope = { province_id = 3376 }
 				}
 				change_tag = M22
-				change_primary_culture = reeflight_mechanim
+				primary_and_ruler_culture_change = { race = mechanim new_culture = reeflight_mechanim }
 				change_religion = endless_ocean
 				capital_scope = { 
 					change_culture = reeflight_mechanim 
@@ -209,7 +207,7 @@ country_decisions = {
 					capital_scope = { OR = { area = west_insyaan_lowlands_4_area area = west_insyaan_lowlands_5_area area = west_insyaan_lowlands_9_area province_id = 6976 province_id = 6993 province_id = 6386 } }
 				}
 				change_tag = M34
-				change_primary_culture = stargrasper_mechanim
+				primary_and_ruler_culture_change = { race = mechanim new_culture = stargrasper_mechanim }
 				change_religion = mumambarra
 				capital_scope = { 
 					change_culture = stargrasper_mechanim 
@@ -224,7 +222,7 @@ country_decisions = {
 					capital_scope = { region = horn_of_insyaa_region }
 				}
 				change_tag = M31
-				change_primary_culture = flameweaver_mechanim
+				primary_and_ruler_culture_change = { race = mechanim new_culture = flameweaver_mechanim }
 				change_religion = mumambarra
 				capital_scope = { 
 					change_culture = flameweaver_mechanim 
@@ -239,7 +237,7 @@ country_decisions = {
 					capital_scope = { province_id = 3329 }
 				}
 				change_tag = M24
-				change_primary_culture = wildcolor_mechanim
+				primary_and_ruler_culture_change = { race = mechanim new_culture = wildcolor_mechanim }
 				change_religion = infinite_self
 				capital_scope = { 
 					change_culture = wildcolor_mechanim 
@@ -255,7 +253,7 @@ country_decisions = {
 					capital_scope = { province_id = 3173 }
 				}
 				change_tag = M25
-				change_primary_culture = wildcolor_mechanim
+				primary_and_ruler_culture_change = { race = mechanim new_culture = wildcolor_mechanim }
 				change_religion = kuriatema
 				capital_scope = { 
 					change_culture = wildcolor_mechanim 
@@ -271,7 +269,7 @@ country_decisions = {
 					capital_scope = { region = great_plateau_region }
 				}
 				change_tag = M29
-				change_primary_culture = soulcycle_mechanim
+				primary_and_ruler_culture_change = { race = mechanim new_culture = soulcycle_mechanim }
 				change_religion = infinite_self
 				capital_scope = { 
 					change_culture = soulcycle_mechanim 
@@ -286,7 +284,7 @@ country_decisions = {
 					capital_scope = { region = tagaala_mangroves_region }
 				}
 				change_tag = M32
-				change_primary_culture = mangalclimber_mechanim
+				primary_and_ruler_culture_change = { race = mechanim new_culture = mangalclimber_mechanim }
 				change_religion = kuriatema
 				capital_scope = { 
 					change_culture = mangalclimber_mechanim 
@@ -301,7 +299,7 @@ country_decisions = {
 					capital_scope = { OR = { region = yanacotlele_region region = cotlkae_region } }
 				}
 				change_tag = M28
-				change_primary_culture = ashfall_mechanim
+				primary_and_ruler_culture_change = { race = mechanim new_culture = ashfall_mechanim }
 				change_religion = volcanic_truth
 				capital_scope = { 
 					change_culture = ashfall_mechanim 
@@ -316,7 +314,7 @@ country_decisions = {
 					capital_scope = { OR = { region = anakuele_region region = anakae_region } }
 				}
 				change_tag = M27
-				change_primary_culture = reeflight_mechanim
+				primary_and_ruler_culture_change = { race = mechanim new_culture = reeflight_mechanim }
 				change_religion = speaking_memory
 				capital_scope = { 
 					change_culture = reeflight_mechanim 
@@ -331,7 +329,7 @@ country_decisions = {
 					capital_scope = { province_id = 3153 }
 				}
 				change_tag = M26
-				change_primary_culture = wildcolor_mechanim
+				primary_and_ruler_culture_change = { race = mechanim new_culture = wildcolor_mechanim }
 				change_religion = speaking_memory
 				capital_scope = { 
 					change_culture = wildcolor_mechanim 
