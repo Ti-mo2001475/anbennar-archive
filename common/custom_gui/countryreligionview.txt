@@ -3313,14 +3313,20 @@ custom_button = {
 	name = eordand_objective_3_autumn
 	potential = { religion = autumn_court }
 	trigger = {
-		NOT = {
-			any_known_country = { religion = winter_court }
+		custom_trigger_tooltip = {
+			tooltip = string_winter_court_not_exist
+			NOT = {
+				any_known_country = { religion = winter_court }
+			}
 		}
 		OR = {
-			eordand_superregion = {
-				OR = {
-					is_city = no
-					NOT = { religion = winter_court }
+			custom_trigger_tooltip = {
+				tooltip = string_winter_court_converted
+				NOT = {
+					eordand_superregion = {
+						is_city = yes
+						religion = winter_court
+					}
 				}
 			}
 			tolerance_of_heretics = { amount = 2 }
@@ -3358,12 +3364,15 @@ custom_button = {
 	name = eordand_objective_4_autumn
 	potential = { religion = autumn_court }
 	trigger = {
-		any_known_country = {
-			capital_scope = { continent = europe }
-			ROOT = {
-				has_won_war_against = {
-					who = PREV
-					max_years_since = 20
+		custom_trigger_tooltip = {
+			tooltip = eordellon.4.autumn.two.tt
+			any_known_country = {
+				capital_scope = { continent = europe }
+				ROOT = {
+					has_won_war_against = {
+						who = PREV
+						max_years_since = 20
+					}
 				}
 			}
 		}
@@ -3388,14 +3397,20 @@ custom_button = {
 	name = eordand_objective_3_winter
 	potential = { religion = winter_court }
 	trigger = {
-		NOT = {
-			any_known_country = { religion = autumn_court }
+		custom_trigger_tooltip = {
+			tooltip = string_autumn_court_not_exist
+			NOT = {
+				any_known_country = { religion = autumn_court }
+			}
 		}
 		OR = {
-			eordand_superregion = {
-				OR = {
-					is_city = no
-					NOT = { religion = autumn_court }
+			custom_trigger_tooltip = {
+				tooltip = string_autumn_court_converted
+				NOT = {
+					eordand_superregion = {
+						is_city = yes
+						religion = autumn_court
+					}
 				}
 			}
 			tolerance_of_heretics = { amount = 2 }
@@ -3453,7 +3468,7 @@ custom_icon = {
 		number = 59
 		trigger = {}
 	}
-	tooltip = eordellon.4.eordellon.unlock
+	tooltip = eordellon_boon_unlocked
 }
 custom_button = {
 	name = eordand_objective_5_eordellon
@@ -3462,22 +3477,7 @@ custom_button = {
 		trigger = {}
 	}
 	trigger = {
-		NOT = {
-			any_known_country = { religion = eordellon }
-		}
-		OR = {
-			NOT = {
-				eordand_superregion = {
-					is_city = yes
-					religion = eordellon
-					NOT = { has_province_modifier = estate_church_spring_tolerance_mod }
-					NOT = { has_province_modifier = estate_church_summer_tolerance_mod }
-					NOT = { has_province_modifier = estate_church_autumn_tolerance_mod }
-					NOT = { has_province_modifier = estate_church_winter_tolerance_mod }
-				}
-			}
-			tolerance_of_heretics = { amount = 2 }
-		}
+		eordand_unlock_season_boon_trigger = { season = eordellon }		
 	}
 	effect = {
 		set_country_flag = eordellon_boon_unlocked
@@ -3493,7 +3493,7 @@ custom_icon = {
 		number = 55
 		trigger = {}
 	}
-	tooltip = eordellon.4.spring.unlock
+	tooltip = spring_boon_unlocked
 }
 custom_button = {
 	name = eordand_objective_5_spring
@@ -3502,22 +3502,7 @@ custom_button = {
 		trigger = {}
 	}
 	trigger = {
-		NOT = {
-			any_known_country = { religion = spring_court }
-		}
-		OR = {
-			NOT = {
-				eordand_superregion = {
-					is_city = yes
-					religion = spring_court
-					NOT = { has_province_modifier = estate_church_spring_tolerance_mod }
-					NOT = { has_province_modifier = estate_church_summer_tolerance_mod }
-					NOT = { has_province_modifier = estate_church_autumn_tolerance_mod }
-					NOT = { has_province_modifier = estate_church_winter_tolerance_mod }
-				}
-			}
-			tolerance_of_heretics = { amount = 2 }
-		}
+		eordand_unlock_season_boon_trigger = { season = spring_court }
 	}
 	effect = {
 		set_country_flag = spring_boon_unlocked
@@ -3533,7 +3518,7 @@ custom_icon = {
 		number = 56
 		trigger = {}
 	}
-	tooltip = eordellon.4.summer.unlock
+	tooltip = summer_boon_unlocked
 }
 custom_button = {
 	name = eordand_objective_5_summer
@@ -3542,22 +3527,7 @@ custom_button = {
 		trigger = {}
 	}
 	trigger = {
-		NOT = {
-			any_known_country = { religion = summer_court }
-		}
-		OR = {
-			NOT = {
-				eordand_superregion = {
-					is_city = yes
-					religion = summer_court
-					NOT = { has_province_modifier = estate_church_spring_tolerance_mod }
-					NOT = { has_province_modifier = estate_church_summer_tolerance_mod }
-					NOT = { has_province_modifier = estate_church_autumn_tolerance_mod }
-					NOT = { has_province_modifier = estate_church_winter_tolerance_mod }
-				}
-			}
-			tolerance_of_heretics = { amount = 2 }
-		}
+		eordand_unlock_season_boon_trigger = { season = summer_court }
 	}
 	effect = {
 		set_country_flag = summer_boon_unlocked
@@ -3573,7 +3543,7 @@ custom_icon = {
 		number = 57
 		trigger = {}
 	}
-	tooltip = eordellon.4.autumn.unlock
+	tooltip = autumn_boon_unlocked
 }
 custom_button = {
 	name = eordand_objective_5_autumn
@@ -3582,27 +3552,18 @@ custom_button = {
 		trigger = {}
 	}
 	trigger = {
-		NOT = {
-			any_known_country = { religion = autumn_court }
-		}
 		if = {
 			limit = { religion = winter_court }
+			custom_trigger_tooltip = {
+				tooltip = string_autumn_court_not_exist
+				NOT = {
+					any_known_country = { religion = autumn_court }
+				}
+			}
 			tolerance_of_heretics = { amount = 2 }
 		}
 		else = {
-			OR = {
-				NOT = {
-					eordand_superregion = {
-						is_city = yes
-						religion = autumn_court
-						NOT = { has_province_modifier = estate_church_spring_tolerance_mod }
-						NOT = { has_province_modifier = estate_church_summer_tolerance_mod }
-						NOT = { has_province_modifier = estate_church_autumn_tolerance_mod }
-						NOT = { has_province_modifier = estate_church_winter_tolerance_mod }
-					}
-				}
-				tolerance_of_heretics = { amount = 2 }
-			}
+			eordand_unlock_season_boon_trigger = { season = autumn_court }
 		}
 	}
 	effect = {
@@ -3619,7 +3580,7 @@ custom_icon = {
 		number = 58
 		trigger = {}
 	}
-	tooltip = eordellon.4.winter.unlock
+	tooltip = winter_boon_unlocked
 }
 custom_button = {
 	name = eordand_objective_5_winter
@@ -3628,27 +3589,18 @@ custom_button = {
 		trigger = {}
 	}
 	trigger = {
-		NOT = {
-			any_known_country = { religion = winter_court }
-		}
 		if = {
 			limit = { religion = autumn_court }
+			custom_trigger_tooltip = {
+				tooltip = string_autumn_court_not_exist
+				NOT = {
+					any_known_country = { religion = autumn_court }
+				}
+			}
 			tolerance_of_heretics = { amount = 2 }
 		}
 		else = {
-			OR = {
-				NOT = {
-					eordand_superregion = {
-						is_city = yes
-						religion = winter_court
-						NOT = { has_province_modifier = estate_church_spring_tolerance_mod }
-						NOT = { has_province_modifier = estate_church_summer_tolerance_mod }
-						NOT = { has_province_modifier = estate_church_autumn_tolerance_mod }
-						NOT = { has_province_modifier = estate_church_winter_tolerance_mod }
-					}
-				}
-				tolerance_of_heretics = { amount = 2 }
-			}
+			eordand_unlock_season_boon_trigger = { season = winter_court }
 		}
 	}
 	effect = {
