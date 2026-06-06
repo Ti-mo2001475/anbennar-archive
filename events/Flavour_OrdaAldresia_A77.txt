@@ -15,6 +15,7 @@ country_event = {
 	trigger = {
 		tag = A77
 		is_religion_enabled = ravelian
+		NOT = { has_country_flag = A45_bad_ravelians }
 	}
 	
 	mean_time_to_happen = {
@@ -39,7 +40,7 @@ country_event = {
 		}
 
 		add_prestige = 100
-		add_stability = 1
+		add_stability_or_adm_power = yes
 		add_devotion = 100
 
 		add_historical_friend = Z97
@@ -259,22 +260,25 @@ country_event = { #Orda is Collapsing Start Event
 		ai_chance = {
 			factor = 1
 		}
-		set_variable = {
+		hidden_effect = {
+			set_variable = {
 			which = orda_war_wins
 			value = 0
+			}
+			set_variable = {
+				which = orda_conversion_war
+				value = 0
+			}
+			set_variable = {
+				which = orda_emperor_war
+				value = 0
+			}
+			set_variable = {
+				which = orda_siege_assault
+				value = 0
+			}
 		}
-		set_variable = {
-			which = orda_conversion_war
-			value = 0
-		}
-		set_variable = {
-			which = orda_emperor_war
-			value = 0
-		}
-		set_variable = {
-			which = orda_siege_assault
-			value = 0
-		}
+		
 		define_ruler = {
 			name = "Aldresian Senior Council"
 			regency = {
@@ -828,7 +832,7 @@ country_event = { #Aldresia's Rotating Castle
 		add_casus_belli = {
 			target = A85
 			type = cb_conquest
-			months = 120
+			months = 600
 		}
 	}
 }
@@ -1599,6 +1603,7 @@ country_event = { #The Holy Coup
 		}
 		inherit = Z97
 		change_tag = Z97
+		hidden_effect = { set_country_flag = formed_end_game_tag_flag }
 		swap_non_generic_missions = yes
 	}
 }
@@ -1729,6 +1734,10 @@ country_event = { # Hear me roar!
 		ai_chance = {
 			factor = 1
 		}
+		add_country_modifier = {
+			name = A77_second_sons_coup
+			duration = -1
+		}
 		if = {
 			limit = {
 				estate_influence = {
@@ -1831,12 +1840,16 @@ country_event = { # Knight to Bishop, Checkmate
 		define_powerful_mage = { type = ruler }
 		
 		hidden_effect = {
-			A85 = { set_ruler_flag = in_magic_duel }
+			A85 = { 
+				set_ruler_flag = in_magic_duel 
+				save_event_target_as = defender
+				set_country_flag = duel_@ROOT
+			}
 			set_ruler_flag = in_magic_duel
+			save_event_target_as = attacker
 			
-			A85 = { set_country_flag = duel_@ROOT }
-			country_event = { id = magic_duel.0 }
 		}
+		country_event = { id = magic_duel.0 }
 	}
 }
 
@@ -1864,6 +1877,7 @@ country_event = { # Fall of Wex
 			destroy_great_project = {
 				type = bal_hyl
 			}
+			set_province_flag = bal_hyl_destroyed_flag
 		}
 	}
 }
@@ -1879,6 +1893,7 @@ country_event = { # Swords of God
 	option = {
 		name = flavor_orda_aldresia.42.a
 		A77 = {
+			white_peace = Z97
 			vassalize = Z97
 		}
 		random_owned_province = {
@@ -1888,6 +1903,9 @@ country_event = { # Swords of God
 		random_owned_province = {
 			limit = { has_cardinal = no }
 			add_cardinal = yes
+		}
+		8 = { 
+			add_claim = A77
 		}
 	}
 }
@@ -2030,12 +2048,16 @@ country_event = { # Hero or Villian
 		}
 
 		hidden_effect = {
-			A38 = { set_ruler_flag = in_magic_duel }
+			A38 = { 
+				set_ruler_flag = in_magic_duel 
+				save_event_target_as = defender
+				set_country_flag = duel_@ROOT
+			}
 			set_ruler_flag = in_magic_duel
+			save_event_target_as = attacker
 			
-			A38 = { set_country_flag = duel_@ROOT }
-			country_event = { id = magic_duel.0 }
 		}
+		country_event = { id = magic_duel.0 }
 	}
 }
 
@@ -2101,14 +2123,17 @@ country_event = { # .46 SPIRIT LOSES DUEL Event
 	option = {
 		name = flavor_orda_aldresia.46.a
 		change_tag = Z01
+		hidden_effect = { set_country_flag = formed_end_game_tag_flag }
 		swap_non_generic_missions = yes
 
-		every_known_country = {
-			limit = { is_part_of_hre = yes }
-			kill_ruler = yes
-			kill_heir = {}
-		}
+		custom_tooltip = second_sons_usurp_tt
+
 		hidden_effect = {
+			every_known_country = {
+				limit = { is_part_of_hre = yes }
+				kill_ruler = yes
+				kill_heir = {}
+			}
 			europe = {
 				limit = { is_part_of_hre = yes }
 				add_permanent_claim = A77
@@ -2134,6 +2159,7 @@ country_event = { # hidden event to eat Anbenncost
 			limit = { has_country_flag = A77_ravelian_option }
 			inherit = Z97
 			change_tag = Z97
+			hidden_effect = { set_country_flag = formed_end_game_tag_flag }
 			swap_non_generic_missions = yes
 			change_government = theocracy
 			add_government_reform = papacy_reform

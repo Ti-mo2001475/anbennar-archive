@@ -929,6 +929,7 @@ country_event = {
 		clr_country_flag = harem_entrepreneurial_heir
 		clr_country_flag = harem_generous_heir
 		clr_country_flag = harem_fairest_heir
+		harpylen_new_heir = yes
 	}
 }
 
@@ -1151,6 +1152,7 @@ country_event = {
 	trigger = {
 		has_dlc = "Rights of Man"
 		has_heir_flag = harpy_heir_governor
+		heir_is_not_homunculus = yes #Annoying
 	}
 	
 	immediate = {
@@ -1193,6 +1195,7 @@ country_event = {
 			female = yes
 		}
 		hyti_new_heir_effect = yes
+		harpylen_new_heir = yes
 	}
 }
 
@@ -1363,17 +1366,14 @@ country_event = {
 	option = {
 		name = harpy_events.109.a
 		
-		if = {
-			limit = { heir_is_powerful_mage = yes }
-			define_heir_to_war_wizard = yes
-			if = { limit = { heir_mil = 6 } convert_heir_to_general = 70 }
-			else_if = { limit = { heir_mil = 5 } convert_heir_to_general = 50 }
-			else_if = { limit = { heir_mil = 4 } convert_heir_to_general = 40 }
-			else_if = { limit = { heir_mil = 3 } convert_heir_to_general = 30 }
-			else_if = { limit = { heir_mil = 2 } convert_heir_to_general = 20 }
-			else_if = { limit = { heir_mil = 1 } convert_heir_to_general = 10 }
-			else = { convert_heir_to_general = 0 }
-		}
+		if = { limit = { heir_is_powerful_mage = yes } define_heir_to_war_wizard = yes }
+		else_if = { limit = { heir_mil = 6 } convert_heir_to_general = 70 }
+		else_if = { limit = { heir_mil = 5 } convert_heir_to_general = 50 }
+		else_if = { limit = { heir_mil = 4 } convert_heir_to_general = 40 }
+		else_if = { limit = { heir_mil = 3 } convert_heir_to_general = 30 }
+		else_if = { limit = { heir_mil = 2 } convert_heir_to_general = 20 }
+		else_if = { limit = { heir_mil = 1 } convert_heir_to_general = 10 }
+		else = { convert_heir_to_general = 0 }
 		
 		if = { limit = { NOT = { heir_claim = 100 } }
 			add_heir_claim = 5
@@ -1553,6 +1553,7 @@ country_event = {
 			dynasty = original_dynasty
 		}
 		hyti_new_heir_effect = yes
+		harpylen_new_heir = yes
 	}
 }
 
@@ -1628,6 +1629,7 @@ country_event = {
 				age = 15
 			}
 			hyti_new_heir_effect = yes
+			harpylen_new_heir = yes
 		}
 	}
 }
@@ -1698,6 +1700,7 @@ country_event = {
 			claim = 65
 		}
 		hyti_new_heir_effect = yes
+		harpylen_new_heir = yes
 		event_target:target_province = {
 			add_base_manpower = 1
 		}
@@ -1900,6 +1903,7 @@ country_event = {
 				claim = 45
 			}
 			hyti_new_heir_effect = yes
+			harpylen_new_heir = yes
 		}
 	}
 	
@@ -2139,11 +2143,14 @@ country_event = {
 	
 	is_triggered_only = yes
 	
-	trigger = { }
+	trigger = { owns = 660 }
 	
 	option = {
 		name = harpy_events.123.a
-		add_legitimacy_or_monarch_power = { VAL = 5 } 
+		if = {
+			limit = { is_emperor_of_china = no }
+			add_legitimacy_or_monarch_power = { VAL = 5 }
+		}
 		add_prestige_excess_to_splendour_effect = { VAL = 10 }
 	}
 
@@ -2154,6 +2161,51 @@ country_event = {
 			add_base_tax = 2
 			add_base_production = 2
 			add_base_manpower = 2
+		}
+	}
+
+	option = {
+		name = harpy_events.123.c
+		trigger = {
+			OR = {
+				was_tag = F81
+				was_tag = F80
+			}
+		}
+		set_capital = 660
+		660 = {
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 2
+		}
+		if = {
+			limit = { was_tag = F81 }
+			change_country_color = { country = F81 }
+		}
+		else = {
+			change_country_color = { country = F80 }
+		}
+	}
+
+	option = {
+		name = harpy_events.123.dd
+		trigger = {
+			OR = {
+				was_tag = F81
+				was_tag = F80
+			}
+		}
+		if = {
+			limit = { is_emperor_of_china = no }
+			add_legitimacy_or_monarch_power = { VAL = 5 }
+		}
+		add_prestige_excess_to_splendour_effect = { VAL = 10 }
+		if = {
+			limit = { was_tag = F81 }
+			change_country_color = { country = F81 }
+		}
+		else = {
+			change_country_color = { country = F80 }
 		}
 	}
 }
@@ -2918,23 +2970,19 @@ country_event = {
 		for = {
 			amount = 40
 			effect = "
-			random_subject_country = {
-				random_owned_province = {
-					limit = {
-						base_tax = 2
-						base_production = 2
-						base_manpower = 2
-					}
-					add_random_development = -1
-					ROOT = {
-						change_variable = {
-							which = HAR_dev_transfer
-							value = 1
-						}
-					}
-				}
-			}
+				harpy_queendom_transfer_random_dev = yes
 			"
+		}
+		divide_variable = { HAR_dev_transfer = 2 }
+		round_variable = { which = HAR_dev_transfer value = 0 }
+		if = {
+			limit = {
+				tag = F98 # Harpylen
+			}
+			change_variable = { # This count is used for the mission Beyond Bulwar
+				which = F98_render_unto_total_dev_transferred
+				which = HAR_dev_transfer
+			}
 		}
 		while = {
 			limit = {
@@ -2944,11 +2992,32 @@ country_event = {
 				}
 			}
 			random_owned_province = {
-				add_random_development = 1
+				province_event = { id = harpy_events.204 } # add random dev
 			}
 			change_variable = {
 				which = HAR_dev_transfer
 				value = -1
+			}
+		}
+		if = { # placeholder custom tooltip?
+			limit = {
+				tag = F98 # Harpylen
+				mission_completed = F98_cultivate_sanarenni
+			}
+			if = {
+				limit = { num_of_subjects = 10 }
+				change_mana = { amount = 100 }
+				every_subject_country = {
+					change_mana = { amount = -10 }
+				}
+			}
+			else = {
+				every_subject_country = {
+					change_mana = { amount = -10 }
+					ROOT = {
+						change_mana = { amount = 10 }
+					}
+				}
 			}
 		}
 	}
@@ -2968,7 +3037,7 @@ country_event = { #button three - get vassalisation
 		every_neighbor_country = {
 			export_to_variable = {
 				which = HARtotalDev
-				value = trigger_value:development
+				value = trigger_value:total_development
 			}
 			divide_variable = {
 				which = HARtotalDev
@@ -2990,6 +3059,63 @@ country_event = { #button three - get vassalisation
 				}
 			}
 		}
+		if = {
+			limit = { mission_completed = F98_announce_intent }
+			every_province = {
+				limit = { fast_has_pop_of_race = { race = harpy } }
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+# RNG remove random dev
+province_event = {
+	id = harpy_events.203
+	title = none
+	desc = none
+	picture = none
+	is_triggered_only = yes
+	hidden = yes
+	option = {
+		name = none
+		trigger = { base_tax = 2 }
+		add_base_tax = -1
+	}
+	option = {
+		name = none
+		trigger = { base_production = 2 }
+		add_base_production = -1
+	}
+	option = {
+		name = none
+		trigger = { base_manpower = 2 }
+		add_base_manpower = -1
+	}
+	after = {
+		clr_province_flag = HAR_dev_transfer_selected
+	}
+}
+
+# RNG add random dev
+province_event = {
+	id = harpy_events.204
+	title = none
+	desc = none
+	picture = none
+	is_triggered_only = yes
+	hidden = yes
+	option = {
+		name = none
+		add_base_tax = 1
+	}
+	option = {
+		name = none
+		add_base_production = 1
+	}
+	option = {
+		name = none
+		add_base_manpower = 1
 	}
 }
 
@@ -3019,6 +3145,7 @@ country_event = {
 				female = yes
 			}
 			hyti_new_heir_effect = yes
+			harpylen_new_heir = yes
 		}
 		else_if = {
 			limit = { 
@@ -3029,6 +3156,16 @@ country_event = {
 				culture = nzeri_harpy
 				female = yes
 			}
+		}
+		else_if = {
+            limit = { 
+                fast_ruler_is_harpy = yes
+            }
+            define_heir = {
+                dynasty = original_dynasty
+                culture = new_variable:ruler_culture
+                female = yes
+            }
 		}
 		else = {
 			define_heir = {

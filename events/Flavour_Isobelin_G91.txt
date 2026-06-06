@@ -245,6 +245,7 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
+		is_or_was_tag = { tag = G91 }
 		emperor = {
 			is_in_war = {
 				casus_belli = cb_religious_league
@@ -257,15 +258,17 @@ country_event = {
 	}
 
 	immediate = {
-		emperor = {
-			save_event_target_as = isobelin_emperor
-		}
-		random_known_country = {
-			limit = {
-				is_league_leader = yes
-				is_emperor = no
+		hidden_effect = {
+			emperor = {
+				save_event_target_as = isobelin_emperor
 			}
-			save_event_target_as = isobelin_opposition
+			random_known_country = {
+				limit = {
+					is_league_leader = yes
+					is_emperor = no
+				}
+				save_event_target_as = isobelin_opposition
+			}
 		}
 	}
 
@@ -365,13 +368,16 @@ country_event = { #the islanders - jayek interaction
 				exists = G41 #jayek
 			}
 		}
-		trollsbay_region = { #add permaclaims on jayek cores if it doesn't exist 
-			limit = {
-				is_core = G41
-				NOT = { is_core = ROOT }
-				NOT = { owned_by = ROOT }
+		custom_tooltip = flavor_isobelin_100_tt
+		hidden_effect = {
+			trollsbay_region = { #add permaclaims on jayek cores if it doesn't exist 
+				limit = {
+					is_core = G41
+					NOT = { is_core = ROOT }
+					NOT = { owned_by = ROOT }
+				}
+				add_permanent_claim = ROOT
 			}
-			add_permanent_claim = ROOT
 		}
 		largest_increase_of_ruinborn_tolerance_effect = yes
 	}
