@@ -5014,6 +5014,11 @@ on_battle_won_country_effect = {
 			country_event = { id = dragon_turtles.121 }
 		}
 	}
+
+	if = {
+		limit = { has_government_mechanic = brorc_slave_mechanic }
+		add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 4 }
+	}
 }
 
 on_battle_lost_country_effect = {
@@ -12156,6 +12161,36 @@ on_capital_moved_effect = {
         }
         FROM = { remove_province_modifier = U09_gnollkind_fort }
     }
+	if = {
+		limit = { owner = { has_government_attribute = move_development_with_capital } }
+		while = {
+			limit = { FROM = { check_variable = { tax_increased_by_owner = 1 } } }
+			FROM = { add_base_tax = -1 subtract_variable = { tax_increased_by_owner = 1 } }
+			add_base_tax = 1 change_variable = { tax_increased_by_owner = 1 }
+		}
+		while = {
+			limit = { FROM = { check_variable = { production_increased_by_owner = 1 } } }
+			FROM = { add_base_production = -1 subtract_variable = { production_increased_by_owner = 1 } }
+			add_base_production = 1 change_variable = { production_increased_by_owner = 1 }
+		}
+		while = {
+			limit = { FROM = { check_variable = { manpower_increased_by_owner = 1 } } }
+			FROM = { add_base_manpower = -1 subtract_variable = { manpower_increased_by_owner = 1 } }
+			add_base_manpower = 1 change_variable = { manpower_increased_by_owner = 1 }
+		}
+	}
+	if = {
+		limit = { owner = { has_government_attribute = move_institutions_with_capital } }
+		export_to_variable = { which = institution_var value = trigger_value:current_institution who = FROM }
+		export_to_variable = { which = institution_var_subtract value = trigger_value:current_institution }
+		subtract_variable = { which = institution_var which = institution_var_subtract } #Find the difference, if any, between past and current capitals
+		
+		while = { #add institution embracement equal to the difference
+			limit = { check_variable = { institution_var = 1 } }
+			subtract_variable = { institution_var = 1 }
+			add_next_institution_embracement = 1
+		}
+	}
 }
 
 on_government_change_effect = {

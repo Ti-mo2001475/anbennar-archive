@@ -4615,6 +4615,20 @@ on_siege_won_country = {
 			value = 25
 		}
 	}
+
+	if = {
+		limit = { has_government_mechanic = brorc_slave_mechanic }
+		if = { limit = { FROM = { num_of_units_in_province = { who = ROOT amount = 10 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 5 } }
+		else_if = { limit = { FROM = { num_of_units_in_province = { who = ROOT amount = 9 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 4.5 } }
+		else_if = { limit = { FROM = { num_of_units_in_province = { who = ROOT amount = 8 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 4 } }
+		else_if = { limit = { FROM = { num_of_units_in_province = { who = ROOT amount = 7 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 3.5 } }
+		else_if = { limit = { FROM = { num_of_units_in_province = { who = ROOT amount = 6 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 3 } }
+		else_if = { limit = { FROM = { num_of_units_in_province = { who = ROOT amount = 5 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 2.5 } }
+		else_if = { limit = { FROM = { num_of_units_in_province = { who = ROOT amount = 4 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 2 } }
+		else_if = { limit = { FROM = { num_of_units_in_province = { who = ROOT amount = 3 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 1.5 } }
+		else_if = { limit = { FROM = { num_of_units_in_province = { who = ROOT amount = 2 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 1 } }
+		else = { add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 0.5 } }
+	}
 }
 
 # country
@@ -30707,6 +30721,21 @@ on_core = { #ROOT - Province, #FROM - Country that gets the core
 		else_if = {
 			limit = { superregion = taneyas_superregion }
 			owner = { anzara_add_gov_power = { amount = 0.5 } }
+		}
+	}
+
+	if = {
+		limit = { has_government_mechanic = brorc_slave_mechanic }
+		export_to_variable = { variable_name = temp_dev_check value = development }
+		while = {
+			limit = { check_variable = { temp_dev_check = 5 } }
+			subtract_variable = { temp_dev_check = 5 }
+			add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 5 }
+		}
+		while = {
+			limit = { check_variable = { temp_dev_check = 1 } }
+			subtract_variable = { temp_dev_check = 1 }
+			add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 1 }
 		}
 	}
 }

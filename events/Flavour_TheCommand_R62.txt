@@ -8382,6 +8382,11 @@ country_event = { #They Call it Lesser Love
 	}
 }
 
+
+##################
+### BROWN ORCS ###
+##################
+
 country_event = { #Orc Notification
 	id = the_command.131
 	title = the_command.131.t
@@ -8396,6 +8401,72 @@ country_event = { #Orc Notification
 		ai_chance = { factor = 1 }
 
 		custom_tooltip = command_must_win_tt
+	}
+}
+
+country_event = { #Command Exacts Punishment
+	id = the_command.132
+	title = the_command.132.t
+	desc = the_command.132.desc
+	picture = AULIC_COUNCIL_eventPicture
+
+	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			random_list = {
+				1 = { set_country_flag = brorc_punishment_a }
+				1 = {
+					trigger = { has_leaders = { value = 2 include_monarch = no } }
+					set_country_flag = brorc_punishment_b
+				}
+				1 = {
+					trigger = {
+						calc_true_if = {
+							amount = 2
+							employed_advisor = { category = ADM }
+							employed_advisor = { category = DIP }
+							employed_advisor = { category = MIL }
+						}
+					}
+					set_country_flag = brorc_punishment_c
+				}
+				1 = { set_country_flag = brorc_punishment_d }
+				1 = { set_country_flag = brorc_punishment_e }
+			}
+		}
+	}
+	
+	option = {
+		name = the_command.132.a
+		trigger = { has_country_flag = brorc_punishment_a }
+		kill_ruler = yes
+		clr_country_flag = brorc_punishment_a
+	}
+	option = {
+		name = the_command.132.b
+		trigger = { has_country_flag = brorc_punishment_b }
+		kill_leader = { type = random }
+		kill_leader = { type = random }
+		clr_country_flag = brorc_punishment_b
+	}
+	option = {
+		name = the_command.132.c
+		trigger = { has_country_flag = brorc_punishment_c }
+		kill_advisor = random
+		kill_advisor = random
+		clr_country_flag = brorc_punishment_c
+	}
+	option = {
+		name = the_command.132.d
+		trigger = { has_country_flag = brorc_punishment_d }
+		add_years_of_income = -1
+		clr_country_flag = brorc_punishment_d
+	}
+	option = {
+		name = the_command.132.e
+		trigger = { has_country_flag = brorc_punishment_e }
+		add_yearly_manpower = -2
+		clr_country_flag = brorc_punishment_e
 	}
 }
 
