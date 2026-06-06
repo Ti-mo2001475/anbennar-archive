@@ -22,7 +22,15 @@ country_event = {
 		add_country_modifier = {
 			name = F60_new_republic
 			duration = 9125 # 25 years
-		}		
+		}
+		add_country_modifier = {
+			name = F60_father_of_the_republic
+			duration = -1 # It's kind of a ruler modifier, removed when Maracout dies, but since
+			# you are a republic, I don't want it removed when someone else is elected
+		}
+		hidden_effect = {
+			set_country_flag = maracout_alive
+		}
 	}
 
 	immediate = {
@@ -203,8 +211,13 @@ country_event = {
 			custom_tooltip = "F60_slave_agitators_event_tt.2"
 			rebel_type = "slave"
 		}
-
-		5483 = { add_permanent_claim = ROOT } # Muhaqaar
+		# To encourage the player to annex them Muhaqaar
+		leta_muhaqaar_area = {
+			add_permanent_claim = ROOT
+		}
+		shena_muhaqaar_area = {
+			add_permanent_claim = ROOT
+		}
 		5489 = { add_permanent_claim = ROOT } # Mattabo
 		6022 = { add_permanent_claim = ROOT } # Duwarkani
 		5870 = { add_permanent_claim = ROOT } # Aramoole
@@ -523,9 +536,6 @@ country_event = {
 			}
 		}
 		custom_tooltip = flavour_samsumbat.10.a.tt.2
-		hidden_effect = {
-			set_country_flag = F60_improved_mine_safety
-		}
 	}
 }
 
@@ -548,6 +558,7 @@ country_event = {
 					trade_goods = slaves
 				}
 				change_trade_goods = unknown
+				clr_province_flag = had_slaves # In case they used Tearfall
 			}
 		}
 		475 = { # Kheterat
@@ -676,7 +687,7 @@ country_event = {
 		break_alliance = FROM
 		reverse_add_casus_belli = {
 			target = FROM # Samsumbat
-			type = cb_force_satrapy
+			type = cb_force_satrapy_samsumbat
 			months = 60 # 5 years
 		}
 	}
@@ -706,6 +717,7 @@ country_event = {
 						trade_goods = slaves
 					}
 					change_trade_goods = unknown
+					clr_province_flag = had_slaves # In case they used Tearfall
 				}
 			}
 		}
@@ -877,6 +889,13 @@ country_event = {
 		name = flavour_samsumbat.19.a
 
 		add_government_reform = citizens_khet_steward_united
+		# Give subjects the new reform, too
+		every_subject_country = {
+			limit = {
+				government = republic
+			}
+			add_government_reform = citizens_khet_steward_united
+		}
 	}
 }
 
@@ -914,7 +933,7 @@ country_event = {
 					government = monarchy
 				}
 				reverse_add_casus_belli = {
-					type = cb_samsumbat_liberation_of_oppressed_people
+					type = cb_force_satrapy_samsumbat
 					target = ROOT
 					months = 2400 # 200 years
 				}
@@ -942,6 +961,7 @@ country_event = {
 			custom_tooltip = removes_slaves_province_tt
 			hidden_effect = {
 				change_trade_goods = unknown
+				clr_province_flag = had_slaves # In case they used Tearfall
 			}
 		}
 		add_manpower = 10
@@ -1019,7 +1039,7 @@ country_event = {
 					}
 				}
 				reverse_add_casus_belli = {
-					type = cb_samsumbat_liberation_of_oppressed_people
+					type = cb_force_satrapy_samsumbat
 					target = ROOT
 					months = 2400 # 200 years
 				}
@@ -1047,17 +1067,24 @@ country_event = {
 			subject_type = medasi_subject
 			subject = A38
 		}
-		A38 = {
-			override_country_name = REV_DAMERIA_STRING # Damerian Republic
-			add_government_reform = republic_of_free_peoples
-			add_country_modifier = { # To keep them loyal desptite being massive
-				name = F60_republic_of_dameria_loyalty
-				duration = -1
-			}
-			# If they already existed, they will probably have heaps of AE. Get rid of it
-			remove_opinion = {
-				who = ROOT
-				modifier = aggressive_expansion
+		add_country_modifier = {
+			name = F60_old_republic
+			duration = -1
+		}
+		# The player doesn't really need to see this
+		hidden_effect = {
+			A38 = {
+				override_country_name = REV_DAMERIA_STRING # Damerian Republic
+				add_government_reform = republic_of_free_peoples
+				add_country_modifier = { # To keep them loyal despite being massive
+					name = F60_republic_of_dameria_loyalty
+					duration = -1
+				}
+				# If they already existed, they will probably have heaps of AE. Get rid of it
+				remove_opinion = {
+					who = ROOT
+					modifier = aggressive_expansion
+				}
 			}
 		}
 		if = { # Add lots of global unrest to a unified EoA if it exists
@@ -1091,7 +1118,7 @@ province_event = {
 	id = flavour_samsumbat.24
 	title = flavour_samsumbat.24.title
 	desc = flavour_samsumbat.24.desc
-	picture = DINATOLDIR_ANIMATED_eventPicture #maybe. event box needs to be the right size
+	picture = DINATOLDIR_ANIMATED_eventPicture
 
 	is_triggered_only = yes
 	fire_only_once = yes
@@ -1120,5 +1147,167 @@ province_event = {
 			name = F60_spear_of_elikhet_wielded
 			duration = -1
 		}
+	}
+}
+
+# The Death of Maracout (triggered by ruler death)
+country_event = {
+	id = flavour_samsumbat.25
+	title = flavour_samsumbat.25.title
+	desc = flavour_samsumbat.25.desc
+	picture = DINATOLDIR_ANIMATED_eventPicture # placeholder
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	trigger = {
+		tag = F60
+		has_ruler = "Maracout"
+		has_country_flag = maracout_alive
+	}
+
+	immediate = {
+		clr_country_flag = maracout_alive
+	}
+
+	# Very sad
+	option = {
+		name = flavour_samsumbat.25.a
+
+		remove_country_modifier = F60_father_of_the_republic
+	}
+}
+
+# The Death of Maracout
+# Purposely has the same loc keys as the previous event. They are the same, but I couldn't
+# think of a way to have them work as a single event with one trigger so it wouldn't trigger
+# on another ruler elected then dying too early
+country_event = {
+	id = flavour_samsumbat.26
+	title = flavour_samsumbat.25.title
+	desc = flavour_samsumbat.25.desc
+	picture = DINATOLDIR_ANIMATED_eventPicture # placeholder
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	immediate = {
+		clr_country_flag = maracout_alive
+	}
+
+	# Very sad
+	option = {
+		name = flavour_samsumbat.25.a
+
+		remove_country_modifier = F60_father_of_the_republic
+		# If he is still the leader, kill him
+		if = {
+			limit = {
+				has_ruler = "Maracout"
+			}
+			kill_ruler = yes
+		}
+	}
+}
+
+# 
+country_event = {
+	id = flavour_samsumbat.27
+	title = flavour_samsumbat.27.title
+	desc = flavour_samsumbat.27.desc
+	picture = REFORM_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		overlord = {
+			is_or_was_tag = { tag = F60 }
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			overlord = {
+				save_event_target_as = F60_decentralised_overlord
+			}
+		}
+	}
+
+	# Decentralise the country
+	option = {
+		name = flavour_samsumbat.27.a
+
+		# custom_tooltip = "something about releasing countries that all become satrapies"
+		hidden_effect = {
+			every_owned_province = {
+				set_province_flag = F60_just_decentralised_province
+			}
+		}
+
+		release_all_possible_countries = yes
+
+		hidden_effect = {
+			every_known_country = {
+				limit = {
+					capital_scope = {
+						has_province_flag = F60_just_decentralised_province
+					}
+				}
+				event_target:F60_decentralised_overlord = {
+					if = {
+						limit = {
+							is_emperor_of_china = yes
+						}
+						create_subject = {
+							subject_type = tributary_state
+							subject = PREV
+						}
+					}
+					else = {
+						create_subject = {
+							subject_type = tributary_state_anb
+							who = PREV
+						}
+					}
+				}
+				every_owned_province = {
+					clr_province_flag = F60_just_decentralised_province
+				}
+			}
+			event_target:F60_decentralised_overlord = {
+				country_event = {
+					id = flavour_samsumbat.28
+				}
+			}
+			every_owned_province = {
+				clr_province_flag = F60_just_decentralised_province
+			}
+		}
+	}
+}
+
+# 
+country_event = {
+	id = flavour_samsumbat.28
+	title = flavour_samsumbat.28.title
+	desc = flavour_samsumbat.28.desc
+	picture = REFORM_eventPicture
+
+	is_triggered_only = yes
+	goto = decentralised_subject_capital
+
+	immediate = {
+		hidden_effect = {
+			FROM = {
+				capital_scope = {
+					save_event_target_as = decentralised_subject_capital
+				}
+			}
+		}
+	}
+
+	# Subject decentralised
+	option = {
+		name = flavour_samsumbat.28.a
 	}
 }

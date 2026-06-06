@@ -6555,6 +6555,7 @@ on_death_election = {
 		flavour_karach.14 #Karach Election Event
 		orenvalyam_events.100 #Orenvalyam Election Event
 		orenvalyam_events.102 #Increase Yodhan's Sickness 
+		flavour_samsumbat.25 # F60 Samsumbat Maracout Death
 	}
 }
 
@@ -9911,6 +9912,31 @@ on_yearly_pulse_2 = {
 
 		9900 = 0
 	}
+
+	# Death of Maracout, Father of the Republic
+	if = {
+		limit = {
+			tag = F60 # Samsumbat
+			# This even should happen 30-40 years after the start date
+			NOT = { is_year = 1485 }
+			has_country_flag = maracout_alive
+			is_year = 1474 
+		}
+		random_list = {
+			22 = { # With a base of 22% per year, it should have about a 90% chance to have happened by 1483
+				country_event = {
+					id = flavour_samsumbat.26
+				}
+			}
+			78 = {
+				modifier = { # I want it basically guaranteed in 1484
+					factor = 0
+					is_year = 1484
+				}
+			}
+		}
+	}
+			
 
 }
 on_yearly_pulse_3 = {
@@ -26203,18 +26229,6 @@ on_country_released = {
 		limit = { religion = kheionism }
 		initialize_kheionism_variables = yes
 		country_event = { id = kheionism.3 } #Set your deity
-	}
-
-	# Samsumbat
-	# If the country was released from the target of our special liberation CB, give them the special gov reform
-	if = {
-		limit = {
-			FROM = {
-				is_or_was_tag = { tag = F60 }
-				has_country_flag = F60_custom_liberation_cb_target_country # This flag is set in the requestpeace pre_effect
-			}
-		}
-		add_government_reform = republic_of_free_peoples
 	}
 
 	if = { #Shuvuush/Kuuldaar tags become horde and gets the privilege

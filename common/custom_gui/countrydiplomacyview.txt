@@ -3668,3 +3668,94 @@ custom_button = {
 		}
 	}
 }
+# F60 Samsumbat
+# Remember, FROM is me (Samsumbat) and ROOT is the target country
+custom_window = {
+	name = custom_diplomacy_F60
+	potential = {
+		FROM = {
+			custdip_unique_F60_potential = yes
+		}
+	}
+}
+custom_button = {
+	name = F60_samsumbat_satrapy_decentralise_subject_action
+	tooltip = F60_samsumbat_satrapy_decentralise_subject_action_tt
+	potential = { }
+	trigger = {
+		ROOT = { # For a more explicit tooltip
+			can_create_vassals = yes
+			is_subject_of_type_with_overlord_fixed_tooltip = {
+				who = FROM
+				type = tributary_state
+			}
+		}
+		FROM = {
+			NOT = { has_country_modifier = F60_decentralising_subject }
+		}
+	}
+	effect = {
+		FROM = {
+			add_country_modifier = {
+				name = F60_decentralising_subject # placeholder
+				duration = 1825 # 5 years
+			}
+		}
+		country_event = {
+			id = flavour_samsumbat.27
+			days = 1825 # 5 years
+		}
+	}
+}
+custom_button = {
+	name = F60_support_slave_or_republic_agitators_action
+	tooltip = F60_support_slave_or_republic_agitators_action_tt
+	potential = { }
+	trigger = {
+		FROM = { mission_completed = F60_topple_the_phoenix_kings }
+		ROOT = { # For a more explicit tooltip
+			NOT = {
+				is_subject_of = FROM
+			}
+			OR = {
+				slaves = 1
+				NOT = { government = republic }
+			}
+			has_spy_network_from = {
+				who = FROM
+				value = 30
+			}
+			if = {
+				limit = {
+					slaves = 1
+				}
+				NOT = { capital_scope = { has_province_modifier = F60_slave_agitators_capital } }
+			}
+			else = {
+				NOT = { capital_scope = { has_province_modifier = F60_republic_agitators_capital } }
+			}
+		}
+	}
+	effect = {
+		FROM = { add_mil_power = -25 }
+		if = {
+			limit = {
+				slaves = 1
+			}
+			capital_scope = {
+				add_province_modifier = {
+					name = F60_slave_agitators_capital
+					duration = 3650
+				}
+			}
+		}
+		else = {
+			capital_scope = {
+				add_province_modifier = {
+					name = F60_republic_agitators_capital
+					duration = 3650
+				}
+			}
+		}
+	}
+}

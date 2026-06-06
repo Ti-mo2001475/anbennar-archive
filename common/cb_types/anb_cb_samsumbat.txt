@@ -1,17 +1,21 @@
-# Samsumbat MT triggered CB - Liberate the Oppressed
-cb_samsumbat_liberation_of_oppressed_people = { 
-	valid_for_subject = no 
-	
+# Just used in Samsumbat's MT so I can give out Force Satrapy without being neighbours
+cb_force_satrapy_samsumbat = {
+	valid_for_subject = no
 	is_triggered_only = yes
 
 	prerequisites_self = {
 		is_or_was_tag = { tag = F60 }
 	}
 
-	attacker_disabled_po = {
-		po_demand_provinces
-		po_return_cores
+	prerequisites = {
+		# I want this so we don't double up on what is effectively the same CB
+		NOT = {
+			has_casus_belli = {
+				type = cb_force_satrapy
+				target = FROM
+			}
+		}
 	}
-
-	war_goal = samsumbat_release_nations 
+	
+	war_goal = take_capital_force_tributary
 }
