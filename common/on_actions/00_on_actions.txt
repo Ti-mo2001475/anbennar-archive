@@ -30728,17 +30728,17 @@ on_core = { #ROOT - Province, #FROM - Country that gets the core
 	}
 
 	if = {
-		limit = { has_government_mechanic = brorc_slave_mechanic }
+		limit = { FROM = { has_government_mechanic = brorc_slave_mechanic } }
 		export_to_variable = { variable_name = temp_dev_check value = development }
 		while = {
 			limit = { check_variable = { temp_dev_check = 5 } }
 			subtract_variable = { temp_dev_check = 5 }
-			add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 5 }
+			FROM = { add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 5 } }
 		}
 		while = {
 			limit = { check_variable = { temp_dev_check = 1 } }
 			subtract_variable = { temp_dev_check = 1 }
-			add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 1 }
+			FROM = { add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 1 } }
 		}
 	}
 }
