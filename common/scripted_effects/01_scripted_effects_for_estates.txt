@@ -8103,6 +8103,14 @@ on_completed_agenda_effect = {
 	# clr_auto_complete_flag = yes
 	
 	if = {
+		limit = { has_country_flag = count_estate_agendas_completed }
+		change_variable = {
+			which = total_compleated_agendas
+			value = 1
+		}
+	}
+
+	if = { #Vic Estates - Blue Reachman
 		limit = {
 			OR = {
 				has_government_attribute = expand_the_league_1_attribute
@@ -8127,7 +8135,8 @@ on_completed_agenda_effect = {
 			}
 		}
 	}
-	if = { 
+
+	if = { #Bazuneizar Clockwork Republic
 		limit = { has_reform = bazuneizar_clockwork_republic }
 		change_variable = {
 			which = bazuneizar_completed_agendas
@@ -8150,6 +8159,16 @@ on_completed_agenda_effect = {
 			limit = { has_ruler_flag = bazuneizar_incompleted_agenda }
 			clr_ruler_flag = bazuneizar_incompleted_agenda
 			set_ruler_flag = bazuneizar_has_done_agenda
+		}
+	}
+
+	if = { #Binwarji
+		limit = {
+			has_country_flag = L22_PP_from_agendas
+		}
+		add_power_projection = {
+			type = L22_estate_agenda_power_projection
+			amount = 10
 		}
 	}
 }

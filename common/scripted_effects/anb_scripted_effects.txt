@@ -13797,3 +13797,100 @@ shirgrii_province_update_scripted_effect = {
 		}
 	}
 }
+
+L22_court_of_fangaula_helped_locals_effect = {
+	custom_tooltip = L22_court_of_fangaula_helped_TT
+	hidden_effect = {
+		owner = {
+			change_variable = {
+				which = L22_court_request_completed
+				value = 1
+			}
+			L22_fangaula_court_removes_negative_trait_scripted_effect = yes
+		}
+	}
+}
+
+L22_fangaula_court_removes_negative_trait_scripted_effect = {
+	if = {
+		limit = {
+			check_variable = {
+				which = L22_fangaula_court_ruler_trait_counter
+				value = 3
+			}
+			NOT = { has_ruler_flag = L22_fangaula_court_trait_removed }
+			ruler_has_bad_personality = yes
+		}
+		remove_random_bad_ruler_personality = yes
+	}
+}
+
+L22_court_moved_effect = {
+	hidden_effect = {
+		every_owned_or_subject_province = {
+			remove_province_modifier = L22_court_is_here
+		}
+		remove_country_modifier = L22_court_in_sigilan
+		remove_country_modifier = L22_court_in_zitan_tomo
+		remove_country_modifier = L22_court_in_woloso
+		remove_country_modifier = L22_court_in_jiridese_so
+		remove_country_modifier = L22_court_in_sinjetaso
+		remove_country_modifier = L22_court_in_izini
+		remove_country_modifier = L22_court_in_kunolo
+		remove_country_modifier = L22_court_in_jagab_faru
+	}
+}
+
+L22_court_of_fangaula_events_fire = {
+	random_list = {
+		1 = {
+			$province$ = {
+				province_event = { id = binwarji.102 }
+			}
+		}
+		1 = {
+			trigger = {
+				has_advisor = yes
+			}
+			$province$ = {
+				province_event = { id = binwarji.103 }
+			}
+		}
+		1 = {
+			$province$ = {
+				province_event = { id = binwarji.104 }
+			}
+		}
+		1 = {
+			trigger = {
+				any_owned_or_subject_province = {
+					trade_goods = gems
+				}
+			}
+			$province$ = {
+				province_event = { id = binwarji.105 }
+			}
+		}
+		1 = {
+			$province$ = {
+				province_event = { id = binwarji.106 }
+			}
+		}
+		1 = {
+			trigger = {
+				calc_true_if = {
+					amount = 2
+					any_owned_or_subject_province = {
+						OR = {
+							trade_goods = livestock
+							trade_goods = grain
+						}
+					}
+				}
+			}
+			$province$ = {
+				province_event = { id = binwarji.107 }
+			}
+		}
+	}
+}
