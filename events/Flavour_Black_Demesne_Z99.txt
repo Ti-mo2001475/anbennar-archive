@@ -1809,7 +1809,7 @@ country_event = {
 	}
 }
 
-#Sack of Gablainé
+#Sack of Gablaine
 country_event = {
 	id = black_demesne.22
 	title = black_demesne.22.t
@@ -4876,6 +4876,80 @@ country_event = {
 	}
 }
 
+country_event = {
+	id = black_demesne.105
+	title = black_demesne.105.t
+	desc = black_demesne.105.d
+	picture = FAR_AND_WIDE_eventPicture
+
+	is_triggered_only = yes
+	trigger = {	}
+	
+	option = {
+		name = black_demesne.105.a
+
+		country_event = { id = black_demesne.106 days = 20 }
+	}
+}
 
 
+country_event = {
+	id = black_demesne.106
+	title = black_demesne.106.t
+	desc = black_demesne.106.d
+	picture = MAGE_MOON_ALTER_eventPicture
 
+	is_triggered_only = yes
+	trigger = {	}
+	
+	option = {
+		name = black_demesne.106.a
+
+		if = {
+			limit = {
+				is_emperor_of_china = yes
+			}
+			dismantle_empire_of_china = yes
+		}
+		else = {
+			random_known_country = {
+				limit = {
+					is_emperor_of_china = yes
+				}
+				dismantle_empire_of_china = yes
+			}
+		}
+		custom_tooltip = black_demesne_drinks_the_sorrow_TT
+		hidden_effect = {
+			set_global_flag = khet_dead
+			set_global_flag = empire_of_china_dismantled
+			change_adm = 2
+			change_dip = 2
+			change_mil = 2
+			add_prestige = 100
+			add_adm_power = 100
+			add_dip_power = 100
+			add_mil_power = 100
+			increase_magic_experience = { amount = 1000 }
+			every_subject_country = {
+				limit = { is_subject_of_type = acolyte_dominion }
+				change_adm = 2
+				change_dip = 2
+				change_mil = 2
+				add_prestige = 100
+				add_adm_power = 100
+				add_dip_power = 100
+				add_mil_power = 100
+				increase_magic_experience = { amount = 1000 }
+			}
+			mothers_sorrow_group = {
+				add_base_tax = -99
+				add_base_production = -99
+				add_base_manpower = -99
+				change_culture = ROOT
+				change_religion = ROOT
+				add_devastation = 100
+			}
+		}
+	}
+}
