@@ -24048,6 +24048,41 @@ on_dependency_gained = {
 		limit = { tag = F98 FROM = { owns = 3020 } }
 		country_event = { id = flavour_harpylen.15 }
 	}
+
+	#Binwarji Hollow Prince
+	if = {
+		limit = {
+			ROOT = {
+				has_country_flag = L22_enable_hollow_princes_flag
+			}
+			FROM = {
+				culture_group = west_sarhaly
+			}
+		}
+		ROOT = {
+			create_subject = {
+				subject_type = hollow_prince
+				subject = PREV
+			}
+		}
+		PREV = {
+			change_government = monarchy
+			remove_heir = {}
+			remove_consort = yes
+			define_ruler = {
+				culture = ROOT
+				religion = ROOT
+			}
+			remove_opinion = {
+				modifier = aggressive_expansion
+				who = ROOT
+			}
+			remove_opinion = {
+				modifier = declared_war_on_us
+				who = ROOT
+			}
+		}
+	}
 }
 
 # ROOT = Overlord, FROM = Minor

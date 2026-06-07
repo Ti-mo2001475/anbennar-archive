@@ -82,7 +82,7 @@ binwarji_branch_1 = {
 				change_trade_goods = silk
 				add_province_modifier = {
 					name = L22_city_of_a_new_age
-					duration = -1
+					duration = 9125
 				}
 			}
 			if = {
@@ -96,7 +96,7 @@ binwarji_branch_1 = {
 				add_splendor = 100
 			}
 			else = {
-				custom_tooltip = L22_if_renaissance_present_TT
+				custom_tooltip = L22_province_has_renaissance_TT
 			}
 		}
 	}
@@ -407,7 +407,8 @@ binwarji_branch_2 = {
 		}
 
 		effect = {
-			remove_all_bad_ruler_personalities = yes
+			custom_tooltip = L22_remove_bad_traits
+			hidden_effect = { remove_all_bad_ruler_personalities = yes }
 			force_add_ruler_personality = { personality = patron_of_arts_personality }
 			custom_tooltip = L22_fangaula_court_removes_negative_trait_TT
 			set_country_flag = L22_fangaula_court_removes_negative_trait
@@ -559,11 +560,255 @@ binwarji_branch_3 = {
 		icon = mission_desert_pilgrim
 		position = 4
 		required_missions = { L22_hear_all_evils } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				AND = {
+					owner = {
+						OR = {
+							medium_tolerance_harpy_race_trigger = yes
+							high_tolerance_harpy_race_trigger = yes
+						}
+					}
+					OR = {
+						AND = {
+							has_ogre_minority_trigger = yes
+							owner = {
+								NOT = {
+									any_owned_province = {
+										culture = dunesole_ogre
+									}
+								}
+							}
+							NOT = { num_of_times_improved_by_owner = 2 }
+						}
+						AND = {
+							culture = dunesole_ogre
+							NOT = { num_of_times_improved_by_owner = 3 }
+						}
+					}
+				}
+				AND = {
+					province_id = 5785 #Makan
+					NOT = {
+						AND = {
+							has_fort_building_trigger = yes
+							num_of_units_in_province = {
+								who = ROOT
+								amount = 10
+								type = infantry
+							}
+						}
+					}
+				}
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {
+			OR = {
+				AND = { #Tolerance
+					OR = {
+						medium_tolerance_harpy_race_trigger = yes
+						high_tolerance_harpy_race_trigger = yes
+					}
+					if = {
+						limit = {
+							any_owned_province = {
+								culture = dunesole_ogre
+							}
+						}
+						num_of_owned_provinces_with = {
+							value = 2
+							culture = dunesole_ogre
+							num_of_times_improved_by_owner = 3
+						}
+					}
+					else = {
+						has_country_modifier = racial_focus_ogre
+						num_of_owned_provinces_with = {
+							value = 2
+							region = janama_region
+							has_ogre_minority_trigger = yes
+							num_of_times_improved_by_owner = 2
+						}
+					}
+				}
+				AND = { #Racism
+					has_adm_advisor_2 = yes
+					5785 = { #Makan
+						owned_by = ROOT
+						has_fort_building_trigger = yes
+						num_of_units_in_province = {
+							who = ROOT
+							amount = 10
+							type = infantry
+						}
+					}
+				}
+			}
+		} 
 
-		effect = {  } 
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						medium_tolerance_ogre_race_trigger = yes
+						high_tolerance_ogre_race_trigger = yes
+					}
+					if = {
+						limit = {
+							any_owned_province = {
+								culture = dunesole_ogre
+							}
+						}
+						calc_true_if = {
+							amount = 2
+							any_owned_province = {
+								culture = dunesole_ogre
+								num_of_times_improved_by_owner = 3
+							}
+						}
+					}
+					else = {
+						has_country_modifier = racial_focus_ogre
+						calc_true_if = {
+							amount = 2
+							janama_region = {
+								type = ALL
+								has_ogre_minority_trigger = yes
+								num_of_times_improved_by_owner = 2
+							}
+						}
+					}
+				}
+				medium_increase_of_ogre_tolerance_effect = yes
+				if = {
+					limit = {
+						NOT = {
+							any_owned_province = {
+								culture = dunesole_ogre
+							}
+						}
+					}
+					custom_tooltip = L22_ogres_settle_TT
+					6312 = { change_culture = dunesole_ogre } #Je Calabash
+					5785 = { change_culture = dunesole_ogre } #Makan
+					6302 = { change_culture = dunesole_ogre } #Ganforo
+				}
+				custom_tooltip = L22_ogre_embrace_TT
+				hidden_effect = {
+					every_owned_or_subject_province = {
+						limit = {
+							OR = {
+								culture = dunesole_ogre
+								has_ogre_minority_trigger = yes
+							}
+						}
+						add_province_modifier = {
+							name = L22_embracing_crown
+							duration = 10950
+						}
+					}
+				}
+				add_estate_loyalty = {
+					estate = estate_nobles
+					loyalty = -10
+				}
+			}
+			else_if = {
+				limit = {
+					has_adm_advisor_2 = yes
+					5785 = { #Makan
+						owned_by = ROOT
+						has_fort_building_trigger = yes
+						num_of_units_in_province = {
+							who = ROOT
+							amount = 10
+							type = infantry
+						}
+					}
+				}
+				if = {
+					limit = {
+						any_owned_province = {
+							culture = dunesole_ogre
+						}
+					}
+					change_trade_goods = slaves
+				}
+				else = {
+					custom_tooltip = L22_janama_ogre_purge_TT
+					hidden_effect = {
+						janama_region = {
+							remove_ogre_minority_size_effect = yes
+							remove_ogre_minority_size_effect = yes
+						}
+					}
+					5785 = { #Makan
+						change_culture = dunesole_ogre
+						change_trade_goods = slaves
+						add_base_production = 2
+					}
+				}
+				add_estate_loyalty = {
+					estate = estate_nobles
+					loyalty = 10
+				}
+			}
+			else = {
+				custom_tooltip = L22_if_ogre_tolerant_TT
+				tooltip = {
+					medium_increase_of_ogre_tolerance_effect = yes
+					if = {
+						limit = {
+							NOT = {
+								any_owned_province = {
+									culture = dunesole_ogre
+								}
+							}
+						}
+						custom_tooltip = L22_ogres_settle_TT
+						6312 = { change_culture = dunesole_ogre } #Je Calabash
+						5785 = { change_culture = dunesole_ogre } #Makan
+						6302 = { change_culture = dunesole_ogre } #Ganforo
+					}
+					custom_tooltip = L22_ogre_embrace_TT
+					add_estate_loyalty = {
+						estate = estate_nobles
+						loyalty = -10
+					}
+				}
+				custom_tooltip = L22_if_ogre_racist_TT
+				tooltip = {
+					if = {
+						limit = {
+							any_owned_province = {
+								culture = dunesole_ogre
+							}
+						}
+						change_trade_goods = slaves
+					}
+					else = {
+						custom_tooltip = L22_janama_ogre_purge_TT
+						hidden_effect = {
+							janama_region = {
+								remove_ogre_minority_size_effect = yes
+								remove_ogre_minority_size_effect = yes
+							}
+						}
+						5785 = { #Makan
+							change_culture = dunesole_ogre
+							change_trade_goods = slaves
+							add_base_production = 2
+						}
+					}
+					add_estate_loyalty = {
+						estate = estate_nobles
+						loyalty = 10
+					}
+				}
+			}
+		}
 	}
 
 	L22_her_lost_tribe = {
@@ -573,11 +818,75 @@ binwarji_branch_3 = {
 			L22_sons_of_the_sands
 			L22_heirs_to_the_chains
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					region = janama_region
+					NOT = {
+						AND = {
+							owned_by = ROOT
+							religion = ROOT
+						}
+					}
+				}
+				AND = {
+					province_id = 5794 #Zoborr
+					NOT = {
+						AND = {
+							has_trade_building_trigger = yes
+							province_has_center_of_trade_of_level = 2
+							OR = {
+								culture_is_human = yes
+								medium_tolerance_gnollish_race_trigger = yes
+								high_tolerance_gnollish_race_trigger = yes
+							}
+						}
+					}
+				}
+				AND = {
+					province_id = 5804 #Atunkat
+					NOT = {
+						AND = {
+							num_of_times_improved_by_owner = 3
+							has_tax_building_trigger = yes
+						}
+					}
+				}
+			}
+		}
 
-		trigger = {  } 
+		trigger = {
+			janama_region = {
+				type = ALL
+				owned_by = ROOT
+				religion = ROOT
+			}
+			5804 = { #Atunkat
+				num_of_times_improved_by_owner = 3
+				has_tax_building_trigger = yes
+			}
+			if = {
+				limit = {
+					low_tolerance_gnollish_race_trigger = yes
+				}
+				5794 = { #Zoborr
+					has_trade_building_trigger = yes
+					province_has_center_of_trade_of_level = 2
+					culture_is_human = yes
+				}
+			}
+			else = {
+				5794 = { #Zoborr
+					has_trade_building_trigger = yes
+					province_has_center_of_trade_of_level = 2
+				}
+				has_gnollish_advisor = yes
+			}
+		} 
 
-		effect = {  } 
+		effect = {
+			country_event = { id = binwarji.2 }
+		} 
 	}
 
 	L22_fit_for_an_empire = {
@@ -586,9 +895,75 @@ binwarji_branch_3 = {
 		required_missions = { L22_her_lost_tribe } 
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = {
+			stability = 1
+			legitimacy = 90
+			treasury = 500
+			any_owned_province = {
+				trade_goods = gem
+				base_production = 8
+				has_production_building_trigger = yes
+			}
+			janama_region = {
+				type = ALL
+				NOT = { devastation = 1 }
+			}
+			num_of_owned_provinces_with = {
+				value = 3
+				has_province_modifier = ironwood_trees
+				base_production = 8
+				has_production_building_trigger = yes
+			}
+		} 
 
-		effect = {  } 
+		effect = {
+			country_event = { id = binwarji.3 }
+			if = {
+				limit = {
+					OR = {
+						high_tolerance_gnollish_race_trigger
+						medium_tolerance_gnollish_race_trigger
+					}
+				}
+				anb_add_accepted_culture_or_dip_power = { culture = windhowler_gnoll free = yes }
+				custom_tooltip = L22_every_gnoll_province_TT
+				hidden_effect = {
+					every_owned_or_subject_province = {
+						limit = { culture = windhowler_gnoll }
+						random_list = {
+							50 = { add_base_manpower = 1 }
+							50 = { }
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = L22_if_we_had_been_tolerant_gnolls_TT
+				tooltip = { anb_add_accepted_culture_or_dip_power = { culture = windhowler_gnoll free = yes } }
+				custom_tooltip = L22_every_ogre_province_TT
+			}
+			if = {
+				limit = {
+					OR = {
+						high_tolerance_ogre_race_trigger
+						medium_tolerance_ogre_race_trigger
+					}
+				}
+				anb_add_accepted_culture_or_dip_power = { culture = dunesole_ogre free = yes }
+				custom_tooltip = L22_every_ogre_province_TT
+				hidden_effect = {
+					every_owned_or_subject_province = {
+						limit = { culture = dunesole_ogre }
+						add_base_production = 1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = L22_if_we_had_been_tolerant_ogre_TT
+				tooltip = { anb_add_accepted_culture_or_dip_power = { culture = windhowler_gnoll free = yes } }
+				custom_tooltip = L22_every_ogre_province_TT
+			}
+		} 
 	}
 
 	L22_my_will_be_done = {
@@ -599,13 +974,32 @@ binwarji_branch_3 = {
 			L22_biakatas_might
 			L22_fit_for_an_empire
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			province_id = 5816
+			NOT = {
+				AND = {
+					has_tax_building_trigger = yes
+					has_ruler_leader_from = ROOT
+				}
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {
+			check_variable = { which = L22_court_request_completed value = 8 }
+			check_variable = { which = fangaulan_pantheon_aro_worship value = 1 }
+			check_variable = { which = fangaulan_pantheon_biakata_worship value = 1 }
+			5816 = { #Tannifila Oka
+				has_tax_building_trigger = yes
+				has_ruler_leader_from = ROOT
+			}
+		} 
 
-		effect = {  } 
+		effect = {
+			country_event = { id = binwarji.4 }
+		} 
 	}
 }
+
 binwarji_branch_4 = {
 	slot = 4
 	generic = no
@@ -617,33 +1011,224 @@ binwarji_branch_4 = {
 		icon = mission_son_military_expertise
 		position = 2
 		required_missions = { L22_end_of_the_struggle } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			is_core_of = ROOT
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		} 
 
-		trigger = {  } 
+		trigger = { 
+			all_core_province = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			army_size_percentage = 0.9
+			num_of_estate_privileges = {
+				estate = estate_brahmins
+				value = 5
+			}
+			num_of_estate_agendas_completed = {
+				estate = estate_nobility
+				value = 1
+			}
+		} 
 
-		effect = {  } 
+		effect = {
+			add_manpower = 5
+			hidden_effect = { unlock_estate_privilege = { estate_privilege = L22_estate_nobles_landless_nobility } }
+			set_estate_privilege = L22_estate_nobles_landless_nobility
+		} 
 	}
 
 	L22_secure_the_homeland = {
 		icon = mission_african_soldier
 		position = 3
 		required_missions = { L22_prince_of_no_land } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			OR = {
+				owned_by = F65
+				AND = {
+					region = janama_region
+					NOT = {
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				AND = {
+					province_id = 5787 #Zitarr
+					devastation = 1
+					NOT = { has_tax_building_trigger = yes }
+				}
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {
+			janama_region = {
+				type = ALL
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			F65 = { exists = no }
+			5787 = { #Zitarr
+				NOT = { devastation = 1 }
+				has_tax_building_trigger = yes
+			}
+		} 
 
-		effect = {  } 
+		effect = {
+			custom_tooltip = L22_heartland_secured_TT
+			hidden_effect = {
+				janama_region = {
+					add_devastation = -20
+					add_province_modifier = {
+						name = L22_heartland_under_control
+						duration = 9125
+					}
+				}
+			}
+			custom_tooltip = L22_remove_bad_traits
+			hidden_effect = { remove_all_bad_ruler_personalities = yes }
+			change_mil = 2
+			define_advisor = {
+				type = inquisitor
+				skill = 2
+				discount = yes
+			}
+		}
 	}
 
 	L22_heirs_to_the_chains = {
 		icon = mission_steppe_warriors
 		position = 4
-		required_missions = { L22_hear_all_evils } 
-		provinces_to_highlight = {  } 
+		required_missions = { L22_hear_all_evils L22_secure_the_homeland } 
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					owner = {
+						OR = {
+							high_tolerance_gnollish_race_trigger = yes
+							medium_tolerance_gnollish_race_trigger = yes
+						}
+					}
+					country_or_non_sovereign_subject_holds = ROOT
+					culture = windhowler_gnoll
+					NOT = {
+						AND = {
+							religion = ROOT
+							num_of_times_improved_by_owner = 3
+						}
+					}
+				}
+				AND = {
+					owner = {
+						NOT = {
+							high_tolerance_gnollish_race_trigger = yes
+							medium_tolerance_gnollish_race_trigger = yes
+						}
+					}
+					province_id = 5794#Zoborr
+					NOT = { has_fort_building_trigger = yes }
+				}
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {
+			OR = {
+				AND = {
+					OR = {
+						high_tolerance_gnollish_race_trigger = yes
+						medium_tolerance_gnollish_race_trigger = yes
+					}
+					num_of_owned_provinces_with = {
+						value = 3
+						culture = windhowler_gnoll
+						religion = ROOT
+						num_of_times_improved_by_owner = 3
+					}
+				}
+				AND = {
+					has_country_modifier = racial_pop_gnollish_purge
+					has_dip_advisor_2 = yes
+					5794 = { #Zoborr
+						has_fort_building_trigger = yes
+					}
+				}
+			}
+		} 
 
-		effect = {  } 
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						high_tolerance_gnollish_race_trigger = yes
+						medium_tolerance_gnollish_race_trigger = yes
+					}
+					num_of_owned_provinces_with = {
+						value = 3
+						culture = windhowler_gnoll
+						religion = ROOT
+						num_of_times_improved_by_owner = 3
+					}
+				}
+				medium_increase_of_gnollish_tolerance_effect = yes
+				custom_tooltip = L22_gnoll_embracing_crown_TT
+				hidden_effect = {
+					every_owned_or_subject_province = {
+						limit = {
+							culture = windhowler_gnoll
+						}
+						add_province_modifier = {
+							name = L22_embracing_crown
+							duration = 10950
+						}
+					}
+				}
+				add_estate_loyalty = {
+					estate = estate_nobles
+					loyalty = -10
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = racial_pop_gnollish_purge
+					has_dip_advisor_2 = yes
+					5794 = { #Zoborr
+						has_fort_building_trigger = yes
+					}
+				}
+				custom_tooltip = L22_gnollish_purge_TT
+				hidden_effect = {
+					generic_start_purge = { race = gnollish }
+					increase_free_state_action = { action = genocide }
+					every_subject_country = {
+						limit = {
+							culture_group = gnollish
+						}
+						generic_start_purge = { race = gnollish }
+						increase_free_state_action = { action = genocide }
+					}
+				}
+				add_estate_loyalty = {
+					estate = estate_nobles
+					loyalty = 10
+				}
+			}
+			else = {
+				custom_tooltip = L22_if_gnoll_tolerant_TT
+				tooltip = {
+					medium_increase_of_gnollish_tolerance_effect = yes
+					custom_tooltip = L22_gnoll_embracing_crown_TT
+					add_estate_loyalty = {
+						estate = estate_nobles
+						loyalty = -10
+					}
+				}
+				custom_tooltip = L22_if_gnoll_racist_TT
+				tooltip = {
+					custom_tooltip = L22_gnollish_purge_TT
+					add_estate_loyalty = {
+						estate = estate_nobles
+						loyalty = 10
+					}
+				}
+			}
+		} 
 	}
 
 	L22_wind_breakers = {
@@ -653,11 +1238,115 @@ binwarji_branch_4 = {
 			L22_heirs_to_the_chains
 			L22_a_claim_to_stake
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			OR = {
+				owned_by = F69
+				AND = {
+					region = kubaci_region
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+					OR = {
+						high_tolerance_gnollish_race_trigger = yes
+						medium_tolerance_gnollish_race_trigger = yes
+						num_of_units_in_province = {
+							who = ROOT
+							amount = 20
+							type = infantry
+						}
+					}
+				}
+				AND = {
+					province_id = 5734
+					NOT = { has_tax_building_trigger = yes }
+				}
+				AND = {
+					province_id = 5719
+					NOT = { has_fort_building_trigger = yes }
+				}
+				AND = {
+					province_id = 5745
+					NOT = { has_province_modifier = L22_court_helped_city }
+				}
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {
+			calc_true_if = {
+				amount = 30
+				kubaci_region = {
+					type = ALL
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+			F69 = { exists = no }
+			5734 = { #Bogorr
+				country_or_non_sovereign_subject_holds = ROOT
+				has_tax_building_trigger = yes
+			}
+			5719 = { #Bazughu
+				country_or_non_sovereign_subject_holds = ROOT
+				has_fort_building_trigger = yes
+			}
+			5745 = {
+				has_province_modifier = L22_court_helped_city
+			}
+			if = {
+				limit = {
+					NOT = {
+						high_tolerance_gnollish_race_trigger = yes
+						medium_tolerance_gnollish_race_trigger = yes	
+					}
+				}
+				kubaci_region = {
+					num_of_units_in_province = {
+						who = ROOT
+						amount = 20
+						type = infantry
+					}
+				}
+			}
+		} 
 
-		effect = {  } 
+		effect = {
+			add_army_tradition = 10
+			define_random_mil_advisor_effect = {
+				discount = yes
+				skill = 3
+				religion = ROOT
+				culture = ndurubu
+			}
+			remove_country_modifier = L22_court_recently_migrated
+			if = {
+				limit = {
+					NOT = {
+						high_tolerance_gnollish_race_trigger = yes
+						medium_tolerance_gnollish_race_trigger = yes
+					}
+				}
+				every_owned_or_subject_province = {
+					limit = {
+						region = kubaci_region
+						culture_group = gnollish
+					}
+					change_culture = ndurubu
+					change_religio = ROOT
+					add_devastation = 20
+				}
+				random_owned_or_subject_province = {
+					limit = {
+						region = kubaci_region
+						culture_group = gnollish
+					}
+					spawn_rebels = {
+						type = nationalist_rebels
+						size = 4
+						separatists_target = F69
+					}
+				}
+			}
+			else = {
+				custom_tooltip = L22_if_racist_purge_TT
+			}
+		} 
 	}
 
 	L22_biakatas_might = {
@@ -667,13 +1356,39 @@ binwarji_branch_4 = {
 			L22_wind_breakers
 			L22_across_the_jungle
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			superregion = fangaula_superregion
+			NOT = {
+				owned_by = ROOT
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 60
+				superregion = fangaula_superregion
+			}
+			army_tradition = 60
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				army_professionalism = 0.2
+			}
+			else = {
+				has_mil_advisor_3 = yes
+			}
+		}
 
-		effect = {  } 
+		effect = {
+			custom_tooltip = L22_restored_high_princes_TT
+			set_country_flag = L22_restored_high_princes
+			add_country_modifier = {
+				name = L22_leader_of_a_new_era
+				duration = -1
+			}
+		} 
 	}
 }
+
 binwarji_branch_5 = {
 	slot = 5
 	generic = no
@@ -685,11 +1400,67 @@ binwarji_branch_5 = {
 		icon = mission_control_the_ganges_delta
 		position = 4
 		required_missions = { L22_secure_the_homeland } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { has_manpower_building_trigger = yes }
+		} 
 
-		trigger = {  } 
+		trigger = {
+			stability = 1
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				army_professionalism = 0.1
+			}
+			else = {
+				army_tradition = 50
+			}
+			has_mil_advisor_2 = yes
+			num_of_owned_provinces_with = {
+				value = 3
+				has_manpower_building_trigger = yes
+			}
+		} 
 
-		effect = {  } 
+		effect = {
+			custom_tooltip = L22_hollow_provinces_system_TT
+			set_country_flag = L22_enable_hollow_princes_flag
+			hidden_effect = {
+				every_subject_country = {
+					limit = {
+						culture_group = west_sarhaly
+					}
+					create_subject = {
+						subject_type = hollow_prince
+						subject = PREV
+					}
+					change_government = monarchy
+					remove_heir = {}
+					remove_consort = yes
+					define_ruler = {
+						culture = ROOT
+						religion = ROOT
+					}
+					remove_opinion = {
+						modifier = aggressive_expansion
+						who = ROOT
+					}
+					remove_opinion = {
+						modifier = declared_war_on_us
+						who = ROOT
+					}
+				}
+				fangaula_superregion = {
+					limit = {
+						NOT = {
+							owner = {
+								culture_group = west_sarhaly
+							}
+						}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		} 
 	}
 
 	L22_across_the_jungle = {
@@ -698,8 +1469,44 @@ binwarji_branch_5 = {
 		required_missions = { L22_a_claim_to_stake } 
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = {
+			calc_true_if = {
+				amount = 25
+				dao_nako_region = {
+					type = ALL
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+			num_of_owned_provinces_with = {
+				value = 5
+				culture = kaino
+				has_manpower_building_trigger = yes
+			}
+			5710 = {
+				country_or_non_sovereign_subject_holds = ROOT
+				has_tax_building_trigger = yes
+				has_trade_building_trigger = yes
+				province_has_center_of_trade_of_level = 2
+				num_of_times_improved_by_owner = 3
+			}
+			any_owned_or_subject_province = {
+				region = dao_nako_region
+				has_province_modifier = L22_court_helped_city
+			}
+		} 
 
-		effect = {  } 
+		effect = {
+			cede_province = 5710
+			add_country_modifier = {
+				name = L22_recruit_jungle_walkers
+				duration = 9125
+			}
+			5710 = {
+				remove_building = marketplace
+				add_building = trade_depot
+			}
+			add_mercantilism = 5
+			remove_country_modifier = L22_court_recently_migrated
+		} 
 	}
 }

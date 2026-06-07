@@ -16,7 +16,7 @@ country_event = { #The Traveling Court
 		set_country_flag = L22_enable_court_of_fangaula
 		hidden_effect = {
 			trigger_switch = {
-				trigger = owns_or_subject_of
+				on_trigger = province_id
 				5813 = { add_province_modifier = { name = L22_court_city_sigilan duration = -1 } }
 				5802 = { add_province_modifier = { name = L22_court_city_zitan_tomo duration = -1 } }
 				5741 = { add_province_modifier = { name = L22_court_city_woloso duration = -1 } }
@@ -30,11 +30,141 @@ country_event = { #The Traveling Court
 	}
 }
 
+country_event = { #Biakatas Own
+	id = binwarji.2
+	title = binwarji.2.t
+	desc = binwarji.2.d
+	picture = NEGUSA_NAGAST_eventPicture
 
+	is_triggered_only = yes
 
+	option = {
+		name = binwarji.2.a
 
+		custom_tooltip = L22_the_return_of_the_mukarron_TT
+		custom_tooltip = L22_biakata_worship_early_TT
+		set_country_flag = can_worship_biakata_earlier_flag
+		anb_add_accepted_culture_or_dip_power = { culture = mukarron free = yes }
+		add_core = 6098 #Rostgrax
+		hidden_effect = {
+			keneya_pipi_area = { 
+				change_culture = mukarron
+				random_list = {
+					33 = { add_base_tax = 1 }
+					33 = { add_base_production = 1 }
+					33 = { add_base_manpower = 1 }
+				}
+			}
+			5786 = { 
+				change_culture = mukarron
+				random_list = {
+					33 = { add_base_tax = 1 }
+					33 = { add_base_production = 1 }
+					33 = { add_base_manpower = 1 }
+				}
+			}
+			5798 = { 
+				change_culture = mukarron
+				random_list = {
+					33 = { add_base_tax = 1 }
+					33 = { add_base_production = 1 }
+					33 = { add_base_manpower = 1 }
+				}
+			}
+			5800 = { 
+				change_culture = mukarron
+				random_list = {
+					33 = { add_base_tax = 1 }
+					33 = { add_base_production = 1 }
+					33 = { add_base_manpower = 1 }
+				}
+			}
+			5796 = { 
+				change_culture = mukarron
+				random_list = {
+					33 = { add_base_tax = 1 }
+					33 = { add_base_production = 1 }
+					33 = { add_base_manpower = 1 }
+				}
+			}
+			if = {
+				limit = {
+					low_tolerance_gnollish_race_trigger
+				}
+				mokatanga_area = {
+					change_culture = mukarron
+					add_devastation = 10
+				}
+				arrakan_ghaman_area = {
+					change_culture = mukarron
+					add_devastation = 10
+				}
+				xoruku_xugu_area = {
+					change_culture = mukarron
+					add_devastation = 10
+				}
+			}
+			janama_region = {
+				limit = {
+					culture = mukarron
+				}
+				add_province_modifier = {
+					name = L22_the_return_of_the_mukarron_modifier
+					duration = -1
+				}
+			}
+		}
+	}
+}
 
+country_event = { #To Forge a Worthy Crown
+	id = binwarji.3
+	title = binwarji.3.t
+	desc = binwarji.3.d
+	picture = NEGUSA_NAGAST_eventPicture
 
+	is_triggered_only = yes
+
+	option = {
+		name = binwarji.3.a
+
+		add_treasury = -500
+		add_country_modifier = {
+			name = L22_the_crownless_king
+			duration = -1
+		}
+		random_owned_province = {
+			limit = {
+				trade_goods = gem
+				base_production = 8
+				has_production_building_trigger = yes
+			}
+			add_province_modifier = {
+				name = L22_the_highest_honor
+				duration = 7300
+			}
+		}
+	}
+}
+
+country_event = { #Meeting of the Twelve Spears
+	id = binwarji.4
+	title = binwarji.4.t
+	desc = binwarji.4.d
+	picture = NEGUSA_NAGAST_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = binwarji.4.a
+
+		remove_country_modifier = L22_the_crownless_king
+		add_country_modifier = {
+			name = L22_crown_of_fangaula
+			duration = -1
+		}
+	}
+}
 
 
 

@@ -13809,6 +13809,21 @@ L22_court_of_fangaula_helped_locals_effect = {
 			L22_fangaula_court_removes_negative_trait_scripted_effect = yes
 		}
 	}
+	if = {
+		limit = {
+			has_country_flag = L22_restored_high_princes
+		}
+		custom_tooltip = L22_fairest_king_effect_TT
+		hidden_effect = {
+			every_subject_country = {
+				remove_country_modifier = L22_fairest_among_all_kings
+				add_country_modifier = {
+					name = L22_fairest_among_all_kings
+					duration = 3650
+				}
+			}
+		}
+	}
 }
 
 L22_fangaula_court_removes_negative_trait_scripted_effect = {
@@ -13906,21 +13921,16 @@ L22_court_of_fangaula_on_province_owner_change = { #Binwarji Court of Fangaula
 				}
 			}
 		}
-		if = {
-			limit = {
-				province_group = binwarji_court_cities
-			}
-			trigger_switch = {
-				trigger = province_id
-				5813 = { add_province_modifier = { name = L22_court_city_sigilan duration = -1 } }
-				5802 = { add_province_modifier = { name = L22_court_city_zitan_tomo duration = -1 } }
-				5741 = { add_province_modifier = { name = L22_court_city_woloso duration = -1 } }
-				5779 = { add_province_modifier = { name = L22_court_city_jiridese duration = -1 } }
-				5745 = { add_province_modifier = { name = L22_court_city_sinjetaso duration = -1 } }
-				5724 = { add_province_modifier = { name = L22_court_city_izini duration = -1 } }
-				5710 = { add_province_modifier = { name = L22_court_city_kunolo duration = -1 } }
-				5680 = { add_province_modifier = { name = L22_court_city_jagab_faru duration = -1 } }
-			}
+		trigger_switch = {
+			on_trigger = province_id
+			5813 = { add_province_modifier = { name = L22_court_city_sigilan duration = -1 } }
+			5802 = { add_province_modifier = { name = L22_court_city_zitan_tomo duration = -1 } }
+			5741 = { add_province_modifier = { name = L22_court_city_woloso duration = -1 } }
+			5779 = { add_province_modifier = { name = L22_court_city_jiridese duration = -1 } }
+			5745 = { add_province_modifier = { name = L22_court_city_sinjetaso duration = -1 } }
+			5724 = { add_province_modifier = { name = L22_court_city_izini duration = -1 } }
+			5710 = { add_province_modifier = { name = L22_court_city_kunolo duration = -1 } }
+			5680 = { add_province_modifier = { name = L22_court_city_jagab_faru duration = -1 } }
 		}
 		if = {
 			limit = {
@@ -14015,55 +14025,21 @@ L22_court_of_fangaula_on_province_owner_change = { #Binwarji Court of Fangaula
 	}
 	if = {
 		limit = {
-			province_group = binwarji_court_cities
+			superregion = fangaula_superregion
 			PREV = {
 				has_country_flag = L22_enable_court_of_fangaula
 			}
 		}
-		if = {
-			limit = {
-				province_id = 5813
-			}
-			PREV = { remove_country_modifier = L22_court_in_sigilan remove_country_modifier = L22_court_recently_migrated biakata_area = { remove_province_modifier = L22_court_is_here } }
-		}
-		else_if = {
-			limit = {
-				province_id = 5802
-			}
-			PREV = { remove_country_modifier = L22_court_in_zitan_tomo remove_country_modifier = L22_court_recently_migrated mokatanga_area = { remove_province_modifier = L22_court_is_here } }
-		}
-		else_if = {
-			limit = {
-				province_id = 5741
-			}
-			PREV = { remove_country_modifier = L22_court_in_woloso remove_country_modifier = L22_court_recently_migrated cikela_jigin_area = { remove_province_modifier = L22_court_is_here } }
-		}
-		else_if = {
-			limit = {
-				province_id = 5779
-			}
-			PREV = { remove_country_modifier = L22_court_in_jiridese_so remove_country_modifier = L22_court_recently_migrated janfanciso_area = { remove_province_modifier = L22_court_is_here } }
-		}
-		else_if = {
-			limit = {
-				province_id = 5745
-			}
-			PREV = { remove_country_modifier = L22_court_in_sinjetaso remove_country_modifier = L22_court_recently_migrated kaino_binni_area = { remove_province_modifier = L22_court_is_here } }
-		}
-		else_if = {
-			limit = {
-				province_id = 5724
-			}
-			PREV = { remove_country_modifier = L22_court_in_izini remove_country_modifier = L22_court_recently_migrated negetu_area = { remove_province_modifier = L22_court_is_here } }
-		}
-		else_if = {
-			limit = {
-				province_id = 5710
-			}
-			PREV = { remove_country_modifier = L22_court_in_kunolo remove_country_modifier = L22_court_recently_migrated kunolo_area = { remove_province_modifier = L22_court_is_here } }
-		}
-		else = {
-			PREV = { remove_country_modifier = L22_court_in_jagab_faru remove_country_modifier = L22_court_recently_migrated jagab_faru_area = { remove_province_modifier = L22_court_is_here } }
+		trigger_switch = {
+			on_trigger = province_id
+			5813 = { PREV = { remove_country_modifier = L22_court_in_sigilan remove_country_modifier = L22_court_recently_migrated biakata_area = { remove_province_modifier = L22_court_is_here } } }
+			5802 = { PREV = { remove_country_modifier = L22_court_in_zitan_tomo remove_country_modifier = L22_court_recently_migrated mokatanga_area = { remove_province_modifier = L22_court_is_here } } }
+			5741 = { PREV = { remove_country_modifier = L22_court_in_woloso remove_country_modifier = L22_court_recently_migrated cikela_jigin_area = { remove_province_modifier = L22_court_is_here } } }
+			5779 = { PREV = { remove_country_modifier = L22_court_in_jiridese_so remove_country_modifier = L22_court_recently_migrated janfanciso_area = { remove_province_modifier = L22_court_is_here } } }
+			5745 = { PREV = { remove_country_modifier = L22_court_in_sinjetaso remove_country_modifier = L22_court_recently_migrated kaino_binni_area = { remove_province_modifier = L22_court_is_here } } }
+			5724 = { PREV = { remove_country_modifier = L22_court_in_izini remove_country_modifier = L22_court_recently_migrated negetu_area = { remove_province_modifier = L22_court_is_here } } }
+			5710 = { PREV = { remove_country_modifier = L22_court_in_kunolo remove_country_modifier = L22_court_recently_migrated kunolo_area = { remove_province_modifier = L22_court_is_here } } }
+			5680 = { PREV = { remove_country_modifier = L22_court_in_jagab_faru remove_country_modifier = L22_court_recently_migrated jagab_faru_area = { remove_province_modifier = L22_court_is_here } } }
 		}
 	}
 }
