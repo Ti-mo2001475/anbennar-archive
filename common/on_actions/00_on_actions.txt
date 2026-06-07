@@ -4617,7 +4617,10 @@ on_siege_won_country = {
 	}
 
 	if = {
-		limit = { has_government_mechanic = brorc_slave_mechanic }
+		limit = {
+			has_government_mechanic = brorc_slave_mechanic
+			FROM = { fort_level = 1 }
+		}
 		if = { limit = { FROM = { num_of_units_in_province = { who = ROOT amount = 10 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 5 } }
 		else_if = { limit = { FROM = { num_of_units_in_province = { who = ROOT amount = 9 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 4.5 } }
 		else_if = { limit = { FROM = { num_of_units_in_province = { who = ROOT amount = 8 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 4 } }
