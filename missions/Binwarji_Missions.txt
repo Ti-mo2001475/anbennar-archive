@@ -893,7 +893,33 @@ binwarji_branch_3 = {
 		icon = mission_smith
 		position = 6
 		required_missions = { L22_her_lost_tribe } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				AND = {
+					region = janama_region
+					devastation = 1
+				}
+				AND = {
+					trade_goods = gem
+					NOT = {
+						AND = {
+							base_production = 8
+							has_production_building_trigger = yes
+						}
+					}
+				}
+				AND = {
+					has_province_modifier = ironwood_trees
+					NOT = {
+						AND = {
+							base_production = 8
+							has_production_building_trigger = yes
+						}
+					}
+				}
+			}
+		} 
 
 		trigger = {
 			stability = 1
@@ -921,8 +947,8 @@ binwarji_branch_3 = {
 			if = {
 				limit = {
 					OR = {
-						high_tolerance_gnollish_race_trigger
-						medium_tolerance_gnollish_race_trigger
+						high_tolerance_gnollish_race_trigger = yes
+						medium_tolerance_gnollish_race_trigger = yes
 					}
 				}
 				anb_add_accepted_culture_or_dip_power = { culture = windhowler_gnoll free = yes }
@@ -945,8 +971,8 @@ binwarji_branch_3 = {
 			if = {
 				limit = {
 					OR = {
-						high_tolerance_ogre_race_trigger
-						medium_tolerance_ogre_race_trigger
+						high_tolerance_ogre_race_trigger = yes
+						medium_tolerance_ogre_race_trigger = yes
 					}
 				}
 				anb_add_accepted_culture_or_dip_power = { culture = dunesole_ogre free = yes }
