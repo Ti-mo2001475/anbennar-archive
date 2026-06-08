@@ -339,6 +339,7 @@ binwarji_branch_2 = {
 			hidden_effect = {
 				set_country_flag = L22_attoners_will_flag
 				change_variable = { which = planetouched_agenda_good_var value = 1 }
+				set_country_flag = recently_done_planetouched_agenda
 			}
 			set_estate_privilege = estate_planetouched_L22_attoners_will
 		} 
@@ -564,12 +565,6 @@ binwarji_branch_3 = {
 			owned_by = ROOT
 			OR = {
 				AND = {
-					owner = {
-						OR = {
-							medium_tolerance_ogre_race_trigger = yes
-							high_tolerance_ogre_race_trigger = yes
-						}
-					}
 					OR = {
 						AND = {
 							has_ogre_minority_trigger = yes
@@ -1465,25 +1460,7 @@ binwarji_branch_5 = {
 					limit = {
 						culture_group = west_sarhaly
 					}
-					create_subject = {
-						subject_type = hollow_prince
-						subject = PREV
-					}
-					change_government = monarchy
-					remove_heir = {}
-					remove_consort = yes
-					define_ruler = {
-						culture = ROOT
-						religion = ROOT
-					}
-					remove_opinion = {
-						modifier = aggressive_expansion
-						who = ROOT
-					}
-					remove_opinion = {
-						modifier = declared_war_on_us
-						who = ROOT
-					}
+					country_event = { id = binwarji.50 }
 				}
 				fangaula_superregion = {
 					limit = {

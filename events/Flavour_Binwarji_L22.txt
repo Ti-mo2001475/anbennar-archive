@@ -16,15 +16,15 @@ country_event = { #The Traveling Court
 		set_country_flag = L22_enable_court_of_fangaula
 		hidden_effect = {
 			trigger_switch = {
-				on_trigger = province_id
-				5813 = { add_province_modifier = { name = L22_court_city_sigilan duration = -1 } }
-				5802 = { add_province_modifier = { name = L22_court_city_zitan_tomo duration = -1 } }
-				5741 = { add_province_modifier = { name = L22_court_city_woloso duration = -1 } }
-				5779 = { add_province_modifier = { name = L22_court_city_jiridese duration = -1 } }
-				5745 = { add_province_modifier = { name = L22_court_city_sinjetaso duration = -1 } }
-				5724 = { add_province_modifier = { name = L22_court_city_izini duration = -1 } }
-				5710 = { add_province_modifier = { name = L22_court_city_kunolo duration = -1 } }
-				5680 = { add_province_modifier = { name = L22_court_city_jagab_faru duration = -1 } }
+				on_trigger = owns_or_subject_of
+				5813 = { 5813 = { add_province_modifier = { name = L22_court_city_sigilan duration = -1 } } }
+				5802 = { 5802 = { add_province_modifier = { name = L22_court_city_zitan_tomo duration = -1 } } }
+				5741 = { 5741 = { add_province_modifier = { name = L22_court_city_woloso duration = -1 } } }
+				5779 = { 5779 = { add_province_modifier = { name = L22_court_city_jiridese duration = -1 } } }
+				5745 = { 5745 = { add_province_modifier = { name = L22_court_city_sinjetaso duration = -1 } } }
+				5724 = { 5724 = { add_province_modifier = { name = L22_court_city_izini duration = -1 } } }
+				5710 = { 5710 = { add_province_modifier = { name = L22_court_city_kunolo duration = -1 } } }
+				5680 = { 5680 = { add_province_modifier = { name = L22_court_city_jagab_faru duration = -1 } } }
 			}
 		}
 	}
@@ -167,7 +167,133 @@ country_event = { #Meeting of the Twelve Spears
 }
 
 
+country_event = { #Turn vassal into hollow prince
+	id = binwarji.50
+	title = binwarji.50.t
+	desc = binwarji.50.d
+	picture = NEGUSA_NAGAST_eventPicture
 
+	is_triggered_only = yes
+	hidden = yes
+	trigger = {
+		NOT = {
+			is_subject_of_type = hollow_prince
+		}
+	}
+
+	option = {
+		name = binwarji.50.a
+
+		overlord = {
+			create_subject = {
+				subject_type = hollow_prince
+				subject = ROOT
+			}
+		}
+		change_government = monarchy
+		remove_heir = {}
+		remove_consort = yes
+		define_ruler = {
+			culture = binwarji
+			religion = ROOT
+		}
+		remove_opinion = {
+			modifier = aggressive_expansion
+			who = ROOT
+		}
+		remove_opinion = {
+			modifier = declared_war_on_us
+			who = ROOT
+		}
+	}
+}
+
+country_event = { #Gain Subjugation CB
+	id = binwarji.60
+	title = binwarji.60.t
+	desc = binwarji.60.d
+	picture = NEGUSA_NAGAST_eventPicture
+
+	is_triggered_only = yes
+	hidden = yes
+
+	option = {
+		name = binwarji.60.a
+
+		if = {
+			limit = {
+				any_neighbor_country = {
+					NOT = {
+						is_subject_of = ROOT
+						ROOT = { 
+							has_casus_belli = {
+								type = cb_vassalize_mission
+								target = PREV
+							}
+						}
+					}
+					culture_group = west_sarhaly
+				}
+			}
+			random_neighbor_country = {
+				limit = {
+					NOT = {
+						is_subject_of = ROOT
+						ROOT = { 
+							has_casus_belli = {
+								type = cb_vassalize_mission
+								target = PREV
+							}
+						}
+					}
+					culture_group = west_sarhaly
+				}
+				reverse_add_casus_belli = {
+					target = ROOT
+					type = cb_vassalize_mission
+					months = 4800
+				}
+			}
+		}
+		else = {
+			random_subject_country = {
+				limit = {
+					any_neighbor_country = {
+						NOT = {
+							is_subject_of = ROOT
+							ROOT = { 
+								has_casus_belli = {
+									type = cb_vassalize_mission
+									target = PREV
+								}
+							}
+						}
+						culture_group = west_sarhaly
+					}
+				}
+				random_neighbor_country = {
+					limit = {
+						NOT = {
+							is_subject_of = ROOT
+							ROOT = { 
+								has_casus_belli = {
+									type = cb_vassalize_mission
+									target = PREV
+								}
+							}
+						}
+						culture_group = west_sarhaly
+					}
+					reverse_add_casus_belli = {
+						target = ROOT
+						type = cb_vassalize_mission
+						months = 4800
+					}
+				}
+			}
+		}
+	}
+}
 
 
 #Court of Fangaula Events
@@ -431,7 +557,7 @@ country_event = {
 	option = { #Woloso
 		name = binwarji.101.a
 		trigger = { has_country_modifier = L22_court_in_woloso }
-		L22_court_of_fangaula_events_fire = { province = 5802 }
+		L22_court_of_fangaula_events_fire = { province = 5741 }
 	}
 
 	option = { #Jiridese So
@@ -496,7 +622,7 @@ province_event = { #Province Ask for Investment
 		add_prosperity = 25
 		area = {
 			limit = {
-				country_or_non_sovereign_subject_holds = ROOT
+				owner = { owns_or_subject_of = ROOT }
 			}
 			add_province_modifier = {
 				name = L22_court_helped_city
@@ -532,7 +658,7 @@ province_event = { #Advisor Insults Province
 		}
 		area = {
 			limit = {
-				country_or_non_sovereign_subject_holds = ROOT
+				owner = { owns_or_subject_of = ROOT }
 			}
 			add_province_modifier = {
 				name = L22_court_helped_city
@@ -581,7 +707,7 @@ province_event = { #Priest Wanst Investment
 
 		area = {
 			limit = {
-				country_or_non_sovereign_subject_holds = ROOT
+				owner = { owns_or_subject_of = ROOT }
 			}
 			random_owned_or_subject_province = {
 				if = {
@@ -626,7 +752,7 @@ province_event = { #Priest Wanst Investment
 		}
 		area = {
 			limit = {
-				country_or_non_sovereign_subject_holds = ROOT
+				owner = { owns_or_subject_of = ROOT }
 			}
 			add_province_modifier = {
 				name = L22_court_helped_city
@@ -668,7 +794,7 @@ province_event = { #Rich Want Gems
 		}
 		area = {
 			limit = {
-				country_or_non_sovereign_subject_holds = ROOT
+				owner = { owns_or_subject_of = ROOT }
 			}
 			add_province_modifier = {
 				name = L22_court_helped_city
@@ -719,7 +845,7 @@ province_event = {
 		remove_province_modifier = L22_insuficient_manpower
 		area = {
 			limit = {
-				country_or_non_sovereign_subject_holds = ROOT
+				owner = { owns_or_subject_of = ROOT }
 			}
 			add_province_modifier = {
 				name = L22_court_helped_city
@@ -749,7 +875,7 @@ province_event = {
 		remove_province_modifier = L22_insuficient_manpower
 		area = {
 			limit = {
-				country_or_non_sovereign_subject_holds = ROOT
+				owner = { owns_or_subject_of = ROOT }
 			}
 			add_province_modifier = {
 				name = L22_court_helped_city
@@ -800,7 +926,7 @@ province_event = {
 		}
 		area = {
 			limit = {
-				country_or_non_sovereign_subject_holds = ROOT
+				owner = { owns_or_subject_of = ROOT }
 			}
 			add_province_modifier = {
 				name = L22_court_helped_city
@@ -822,7 +948,7 @@ province_event = {
 		}
 		area = {
 			limit = {
-				country_or_non_sovereign_subject_holds = ROOT
+				owner = { owns_or_subject_of = ROOT }
 			}
 			add_province_modifier = {
 				name = L22_court_helped_city

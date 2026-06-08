@@ -24019,6 +24019,24 @@ on_dependency_gained = {
 		country_event = { id = hyti.14 }
 	}
 
+	#Binwarji Hollow Princes
+	if = {
+		limit = {
+			has_country_flag = L22_enable_hollow_princes_flag
+			FROM = { culture_group = west_sarhaly }
+		}
+		FROM = { country_event = { id = binwarji.50 } }
+	}
+
+	if = {
+		limit = { mission_completed = F98_good_measure }
+		FROM = { add_country_modifier = { name = F98_song_and_steel duration = -1 } }
+	}
+	if = {
+		limit = { tag = F98 FROM = { owns = 3020 } }
+		country_event = { id = flavour_harpylen.15 }
+	}
+
 	#PUT NEW EFFECT ABOVE THIS
 	FROM = { #Disable election for republic pu
 		if = { 
@@ -24037,49 +24055,6 @@ on_dependency_gained = {
 			else_if = {
 				limit = { is_subject_of_type = twin_empire }
 				set_country_flag = was_republic_twin_empire
-			}
-		}
-	}
-	if = {
-		limit = { mission_completed = F98_good_measure }
-		FROM = { add_country_modifier = { name = F98_song_and_steel duration = -1 } }
-	}
-	if = {
-		limit = { tag = F98 FROM = { owns = 3020 } }
-		country_event = { id = flavour_harpylen.15 }
-	}
-
-	#Binwarji Hollow Prince
-	if = {
-		limit = {
-			ROOT = {
-				has_country_flag = L22_enable_hollow_princes_flag
-			}
-			FROM = {
-				culture_group = west_sarhaly
-			}
-		}
-		ROOT = {
-			create_subject = {
-				subject_type = hollow_prince
-				subject = PREV
-			}
-		}
-		PREV = {
-			change_government = monarchy
-			remove_heir = {}
-			remove_consort = yes
-			define_ruler = {
-				culture = ROOT
-				religion = ROOT
-			}
-			remove_opinion = {
-				modifier = aggressive_expansion
-				who = ROOT
-			}
-			remove_opinion = {
-				modifier = declared_war_on_us
-				who = ROOT
 			}
 		}
 	}
