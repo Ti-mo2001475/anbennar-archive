@@ -9,12 +9,12 @@ country_event = {
 	desc = flavor_ryalan_temple.1.d
 	picture = ROYAL_COUPLE_FUTURE_eventPicture
 	
-	fire_only_once = yes
 	major = yes
 
 	trigger = {
 		tag = A43
 		religion = ravelian
+		NOT = { has_country_flag = ravelian_monastery }
 	}
 	
 	mean_time_to_happen = {
@@ -30,11 +30,15 @@ country_event = {
 			add_government_reform = monastic_order_reform
 		}
 
+		add_prestige = 25
 		add_stability_or_adm_power = yes
-		add_devotion = 50
+		add_innovativeness_big_effect = yes
 
 		add_historical_friend = Z97
 		Z97 = { add_historical_friend = A43 }
+
+		clr_country_flag = lawful_temple
+		set_country_flag = ravelian_monastery
 
 		override_country_name = HEAVENLY_MATRIMONY
 	}
@@ -43,6 +47,56 @@ country_event = {
 		name = flavor_ryalan_temple.1.b
 		ai_chance = { factor = 0 }
 
+		add_stability_or_adm_power = yes
+		set_country_flag = lawful_temple
+		set_country_flag = ravelian_monastery
+
+	}
+}
+country_event = {
+	id = flavor_ryalan_temple.2
+	title = flavor_ryalan_temple.2.t
+	desc = flavor_ryalan_temple.2.d
+	picture = ROYAL_COUPLE_FUTURE_eventPicture
+	
+	major = yes
+
+	trigger = {
+		tag = A43
+		OR = {
+			religion = regent_court
+			religion = corinite
+		}
+		has_country_flag = ravelian_monastery
+		NOT = { has_country_flag = lawful_temple }
+	}
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+	
+	option = {		
+		name = flavor_ryalan_temple.2.a
+		ai_chance = { factor = 100 }
+		
+		if = {
+			limit = { has_reform = secular_order_reform }
+			add_government_reform = monastic_order_reform
+		}
+
+		remove_historical_friend = Z97
+		Z97 = { remove_historical_friend = A43 }
+
+		restore_country_name = yes
+		clr_country_flag = ravelian_monastery
+		set_country_flag = lawful_temple
+	}
+	
+	option = {		
+		name = flavor_ryalan_temple.2.b
+		ai_chance = { factor = 0 }
+
+		set_country_flag = lawful_temple
 		add_stability_or_adm_power = yes
 	}
 }
