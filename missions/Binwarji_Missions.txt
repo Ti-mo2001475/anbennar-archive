@@ -1334,11 +1334,14 @@ binwarji_branch_4 = {
 
 		effect = {
 			add_army_tradition = 10
-			define_random_mil_advisor_effect = {
-				discount = yes
-				skill = 3
-				religion = ROOT
-				culture = ndurubu
+			custom_tooltip = L22_random_ndurubu_advisor_TT
+			hidden_effect = {
+				define_random_mil_advisor_effect = {
+					discount = yes
+					skill = 3
+					religion = ROOT
+					culture = ndurubu
+				}
 			}
 			remove_country_modifier = L22_court_recently_migrated
 			if = {
@@ -1348,14 +1351,17 @@ binwarji_branch_4 = {
 						medium_tolerance_gnollish_race_trigger = yes
 					}
 				}
-				every_owned_or_subject_province = {
-					limit = {
-						region = kubaci_region
-						culture_group = gnollish
+				custom_tooltip = L22_kubaci_purge_TT
+				hidden_effect = {
+					every_owned_or_subject_province = {
+						limit = {
+							region = kubaci_region
+							culture_group = gnollish
+						}
+						change_culture = ndurubu
+						change_religion = ROOT
+						add_devastation = 20
 					}
-					change_culture = ndurubu
-					change_religion = ROOT
-					add_devastation = 20
 				}
 				random_owned_or_subject_province = {
 					limit = {
