@@ -49,6 +49,8 @@ province_event = {
 	is_triggered_only = yes
 	hidden = yes
 
+	trigger = { has_global_flag = enable_deathwinds_handler_flag }
+
 	immediate = { }
 
 	option = {
@@ -61,7 +63,7 @@ province_event = {
 				alecand_region = { owner = { country_event = { id = kheionai.3 } } }
 
 				#Prep the deathwinds start event
-				province_event = { id = kheionai.2 days = 180 } #6 months
+				province_event = { id = kheionai.2 days = 179 } #6 months
 				clr_province_flag = deathwinds_warning_event
 				set_province_flag = deathwinds_start_event
 			}
@@ -70,7 +72,7 @@ province_event = {
 				alecand_region = { owner = { country_event = { id = kheionai.4 } } }
 
 				#Prep the deathwinds destruction event
-				province_event = { id = kheionai.2 days = 365 } #1 year
+				province_event = { id = kheionai.2 days = 364 } #1 year
 				clr_province_flag = deathwinds_start_event
 				set_province_flag = deathwinds_destruction_event
 			}
@@ -79,7 +81,7 @@ province_event = {
 				alecand_region = { owner = { country_event = { id = kheionai.5 } } }
 
 				#Prep the deathwinds ends event
-				province_event = { id = kheionai.2 days = 365 } #1 year
+				province_event = { id = kheionai.2 days = 364 } #1 year
 				clr_province_flag = deathwinds_destruction_event
 				set_province_flag = deathwinds_end_event
 			}
@@ -88,11 +90,12 @@ province_event = {
 				alecand_region = { owner = { country_event = { id = kheionai.6 } } }
 
 				#Prep the deathwinds warning event
-				province_event = { id = kheionai.2 days = 2370 } #6.5 years
+				province_event = { id = kheionai.2 days = 2369 } #6.5 years
 				clr_province_flag = deathwinds_end_event
 				set_province_flag = deathwinds_warning_event
 			}
 		}
+		clr_global_flag = enable_deathwinds_handler_flag
 	}
 }
 
@@ -108,51 +111,42 @@ province_event = {
 
 	option = {
 		name = none
+		set_global_flag = enable_deathwinds_handler_flag
 	}
 }
 
-# #generate warding on mage towers
-# province_event = {
-# 	id = kheionai.3
-# 	title = kheionai.3.t
-# 	desc = kheionai.3.d
-# 	picture = WOUNDED_SOLDIERS_eventPicture
+#generate warding on mage towers
+country_event = {
+	id = kheionai.3
+	title = kheionai.3.t
+	desc = kheionai.3.d
+	picture = WOUNDED_SOLDIERS_eventPicture
 
-# 	is_triggered_only = yes
-# 	hidden = yes
-	
-# 	trigger = {
-# 		region = alecand_region
-# 	}
+	is_triggered_only = yes
 
-# 	option = {
-# 		name = kheionai.3.a
+	option = {
+		name = kheionai.3.a
 # 		create_deathwind_ward_level_from_mage_tower = yes
 # 		every_neighbor_province = {
 # 			create_deathwind_ward_level_from_mage_tower = yes
 # 		}
-# 	}
-# }
+	}
+}
 
-# #generate warding from development
-# province_event = {
-# 	id = kheionai.4
-# 	title = kheionai.4.t
-# 	desc = kheionai.4.d
-# 	picture = WOUNDED_SOLDIERS_eventPicture
+#generate warding from development
+country_event = {
+	id = kheionai.4
+	title = kheionai.4.t
+	desc = kheionai.4.d
+	picture = WOUNDED_SOLDIERS_eventPicture
 	
-# 	is_triggered_only = yes
-# 	hidden = yes
+	is_triggered_only = yes
 
-# 	trigger = {
-# 		region = alecand_region
-# 	}
-
-# 	option = {
-# 		name = kheionai.4.a
-# 		create_deathwind_ward_level_from_development = yes
-# 	}
-# }
+	option = {
+		name = kheionai.4.a
+		# create_deathwind_ward_level_from_development = yes
+	}
+}
 
 # #random flavour events
 # # enemy damages warding
