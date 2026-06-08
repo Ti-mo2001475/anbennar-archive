@@ -5014,11 +5014,6 @@ on_battle_won_country_effect = {
 			country_event = { id = dragon_turtles.121 }
 		}
 	}
-
-	if = {
-		limit = { has_government_mechanic = brorc_slave_mechanic }
-		add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 4 }
-	}
 }
 
 on_battle_lost_country_effect = {
@@ -5748,6 +5743,15 @@ on_battle_lost_province_effect = {
 				which = land_units_killed
 			}
 		}
+	}
+
+
+	if = {
+		limit = {
+			FROM = { has_government_mechanic = brorc_slave_mechanic }
+			num_of_units_in_province = { who = FROM amount = 5 }
+		}
+		add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 4 }
 	}
 }
 
