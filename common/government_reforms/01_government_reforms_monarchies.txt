@@ -8888,6 +8888,48 @@ vampires_enthrall_nobility_reform = {
 
 #Bureaucracy:
 
+
+#Arystannn taychendi
+kalavendy_gos_ref = {
+	icon = "royal_court"
+	allow_normal_conversion = yes
+	potential = {
+		# OR = {
+		# 	is_revolutionary = no
+		# 	NOT = { has_dlc = "Emperor" }
+		# }
+		# NOT = { culture_group = goblin }
+	}
+	modifiers = {
+		manpower_recovery_speed = 0.1
+		global_prosperity_growth = 0.02
+	}
+	effect = {
+		custom_tooltip = producing_wine_winelord
+		hidden_effect = {
+			every_owned_province = {
+				if = {
+					limit = { trade_goods = wine }
+					add_province_modifier = {
+						name = wine_lord_wine
+						duration = -1
+						hidden = yes
+					}
+				}
+			}
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = { has_province_modifier = wine_lord_wine }
+				remove_province_modifier = wine_lord_wine
+			}
+		}
+	}
+}
+
+
 centralize_reform = {
 	icon = "paper_with_seal_3"
 	allow_normal_conversion = yes
