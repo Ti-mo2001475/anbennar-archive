@@ -1,0 +1,77 @@
+
+#hereditary_vs_nobility
+lesser_heroes_state = { 
+	icon = "castle"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			has_reform = lesser_heroes_state
+			have_had_reform = lesser_heroes_state
+			culture_group = taychendi_ruinborn_elf
+		}
+	}
+	trigger = {
+		OR = {
+			has_reform = lesser_heroes_state
+			have_had_reform = lesser_heroes_state
+			culture_group = taychendi_ruinborn_elf
+		}
+	}
+	modifiers = {
+		free_leader_pool = 2
+		vassal_forcelimit_bonus = 0.15
+		vassal_income = 0.2
+        governing_capacity = -100
+	}
+	ai = {
+		factor = 12
+	}
+}
+
+#Bureaucracy:
+kalavendy_gos_ref = {  #Идея в том что калавендские лоры
+	icon = "royal_court"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			have_had_reform = kalavendy_gos_ref
+			culture_group = kalavendhi
+		}
+	}
+	trigger = {
+		OR = {
+			have_had_reform = kalavendy_gos_ref
+			culture_group = kalavendhi
+			capital_scope = {
+				region = kalavend_region
+			}
+		}
+	}
+	modifiers = {
+		manpower_recovery_speed = 0.1
+		global_prosperity_growth = 0.02
+	}
+	effect = {
+		custom_tooltip = kalavendy_gos_ref_tt
+		hidden_effect = {
+			every_owned_province = {
+				if = {
+					limit = { province_with_arable_goods = yes }
+					add_province_modifier = {
+						name = kalavendy_water_lords
+						duration = -1
+						hidden = yes
+					}
+				}
+			}
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = { has_province_modifier = kalavendy_water_lords }
+				remove_province_modifier = kalavendy_water_lords
+			}
+		}
+	}
+}
