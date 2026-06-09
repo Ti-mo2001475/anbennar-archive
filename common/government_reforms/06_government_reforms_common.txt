@@ -126,7 +126,7 @@ parliamentary_reform = {
 		}	
 		NOT = { has_reform = elective_monarchy }
 		# NOT = { has_reform = polish_great_sejm }
-		NOT = { has_reform = polish_elective_monarchy }
+		# NOT = { has_reform = polish_elective_monarchy }
 		if = {
 			limit = { NOT = { has_dlc = "Mandate of Heaven" } }
 			NOT = { is_emperor_of_china = yes }
@@ -1453,7 +1453,7 @@ rectors_in_the_bureau_reform = {
 # 	conditional = {
 # 		allow = { has_dlc = "Cradle of Civilization" }
 # 		custom_attributes = {
-# 			allow_piety_switch_decision = yes	#Enables a decision which gives 1 stabhit, but turns your piety 180°
+# 			allow_piety_switch_decision = yes	#Enables a decision which gives 1 stabhit, but turns your piety 180deg
 # 		}
 # 	}
 	
@@ -5800,7 +5800,7 @@ free_trade_reform = {
 			limit = {
 				mission_completed = z22_prosperitys_champion
 			}
-			custom_tooltip = z22_increased_mana_from_institution_embrace
+			custom_tooltip = z22_increased_mana_from_institution_embrace_tt
 		}
 	}
 	ai = {
@@ -7456,6 +7456,29 @@ patronise_the_corinite_orders_reform = {
 	}
 	custom_attributes = {
 		patronise_the_corinite_orders = yes
+	}
+}
+
+seafaring_preachers_reform = {
+	icon = "sailors"
+	allow_normal_conversion = yes
+	potential = {
+		religion = uelos_cult
+	}
+	trigger = {
+		religion = uelos_cult
+	}
+	modifiers = {
+		global_missionary_strength = 0.01
+		global_sailors_modifier = 0.1
+		church_influence_modifier = 0.1
+	}
+	custom_attributes = {
+		can_propagate_trade_gov_attribute = yes
+		gain_church_power_from_propagate_trade = yes
+	}
+	ai = {
+		factor = 10
 	}
 }
 

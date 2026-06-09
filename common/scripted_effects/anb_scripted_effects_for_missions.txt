@@ -38,7 +38,10 @@ form_crimson_caehnate = {
 	change_tag = I89
 	custom_tooltip = centaur_unlock_cb_tooltip
 	hidden_effect = { set_country_flag = centaur_special_cb }
-	hidden_effect = { restore_country_name = yes }
+	hidden_effect = {
+		restore_country_name = yes
+		set_country_flag = formed_end_game_tag_flag
+	}
 	swap_non_generic_missions = yes
 	remove_non_electors_emperors_from_empire_effect = yes
 	change_government = tribal
@@ -21181,6 +21184,12 @@ deranne_upgrade_dam_scripted_effect = {
 					type = $dam_name$
 					tier = 2
 				}
+				NOT = {
+					has_great_project = {
+						type = $dam_name$
+						tier = 3
+					}
+				}
 			}
 			add_great_project_tier = {
 				type = $dam_name$
@@ -21189,11 +21198,17 @@ deranne_upgrade_dam_scripted_effect = {
 			clr_province_flag = deranne_dam_construction_flag
 			set_province_flag = deranne_dam_tier_3_flag
 		}
-		else_if = {
+		if = {
 			limit = {
 				has_great_project = {
 					type = $dam_name$
 					tier = 1
+				}
+				NOT = {
+					has_great_project = {
+						type = $dam_name$
+						tier = 2
+					}
 				}
 			}
 			add_great_project_tier = {
@@ -21203,11 +21218,19 @@ deranne_upgrade_dam_scripted_effect = {
 			clr_province_flag = deranne_dam_construction_flag
 			set_province_flag = deranne_dam_tier_2_flag
 		}	
-		else_if = {
+		if = {
 			limit = {
 				has_great_project = {
 					type = $dam_name$
 					tier = 0
+				}
+				NOT = {
+					OR = {
+						has_great_project = {
+							type = $dam_name$
+							tier = 1
+						}
+					}
 				}
 			}
 			add_great_project_tier = {
