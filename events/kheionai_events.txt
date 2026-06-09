@@ -179,8 +179,172 @@ country_event = {
 	
 	is_triggered_only = yes
 
+	immediate = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = { has_deathwind_modifier = yes }
+				#Every affected provicne gains 5 devastation per deathwind level in the provicne
+				for_variable_amount = {
+					variable = deathwinds_warded_var
+					effect = "add_devastation = 5"
+				}
+				#Set variable for tooltip
+				set_variable = {
+					which = deathwinds_devastation_var
+					which = deathwinds_warded_var
+				}
+				multiply_variable = {
+					which = deathwinds_devastation_var
+					value = 5
+				}
+				
+				#If the deathwinds are at level 7+, destroy a random tax, manpower, forcelimit, dock, shipyard, or production building
+				if = {
+					limit = {
+						OR = {
+							has_province_modifier = deathwind_level_7
+							has_province_modifier = deathwind_level_8
+							has_province_modifier = deathwind_level_9
+							has_province_modifier = deathwind_level_10
+						}
+					}
+					random_list = {
+						1 = {
+							trigger = { has_tax_building_trigger = yes }
+							remove_building = temple
+							remove_building = cathedral
+						}
+						1 = {
+							trigger = { has_manpower_building_trigger = yes }
+							remove_building = barracks
+							remove_building = training_fields
+						}
+						1 = {
+							trigger = { has_forcelimit_building_trigger = yes }
+							remove_building = regimental_camp
+							remove_building = conscription_center
+						}
+						1 = {
+							trigger = { has_dock_building_trigger = yes }
+							remove_building = dock
+							remove_building = drydock
+						}
+						1 = {
+							trigger = { has_shipyard_building_trigger = yes }
+							remove_building = shipyard
+							remove_building = grand_shipyard
+						}
+						1 = {
+							trigger = { has_production_building_trigger = yes }
+							remove_building = workshop
+							remove_building = counting_house
+						}
+					}
+				}
+			}
+			#If deathwinds are 7+ in any province destroy 10 units in Alecand
+			if = {
+				limit = {
+					any_owned_province = {
+						OR = {
+							has_province_modifier = deathwind_level_7
+							has_province_modifier = deathwind_level_8
+							has_province_modifier = deathwind_level_9
+							has_province_modifier = deathwind_level_10
+						}
+					}
+				}
+				for = {
+					amount = 10
+					effect = "
+						random_owned_province = {
+							limit = {
+								has_deathwind_modifier = yes
+								land_units_in_province = { effect = ROOT }
+							}
+							kill_land_units = { who = ROOT amount = 1 }
+						}
+					"
+				}
+			}
+			else_if = { #Otherwise if they're 4-6 in any province destroy 5 units in Alecand
+				limit = {
+					any_owned_province = {
+						OR = {
+							has_province_modifier = deathwind_level_4
+							has_province_modifier = deathwind_level_5
+							has_province_modifier = deathwind_level_6
+						}
+					}
+				}
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								has_deathwind_modifier = yes
+								land_units_in_province = { effect = ROOT }
+							}
+							kill_land_units = { who = ROOT amount = 1 }
+						}
+					"
+				}
+			}
+		}
+	}
+
 	option = {
 		name = kheionai.5.a
+		trigger = { any_owned_province = { has_deathwind_modifier = yes } }
+
+		custom_tooltip = deathwinds_devastation_tt
+
+		if = {
+			limit = {
+				any_owned_province = {
+					OR = {
+						has_province_modifier = deathwind_level_7
+						has_province_modifier = deathwind_level_8
+						has_province_modifier = deathwind_level_9
+						has_province_modifier = deathwind_level_10
+					}
+				}
+			}
+			custom_tooltip = deathwinds_building_yes_tt
+			custom_tooltip = deathwinds_units_yes_tt
+			custom_tooltip = deathwinds_units_small_no_tt
+		}
+		else_if = {
+			limit = {
+				any_owned_province = {
+					OR = {
+						has_province_modifier = deathwind_level_4
+						has_province_modifier = deathwind_level_5
+						has_province_modifier = deathwind_level_6
+					}
+				}
+			}
+			custom_tooltip = deathwinds_building_no_tt
+			custom_tooltip = deathwinds_units_no_tt
+			custom_tooltip = deathwinds_units_small_yes_tt
+		}
+		else = {
+			custom_tooltip = deathwinds_building_no_tt
+			custom_tooltip = deathwinds_units_no_tt
+			custom_tooltip = deathwinds_units_small_no_tt
+		}
+	}
+
+	option = {
+		name = kheionai.5.b
+		highlight = yes
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = no_deathwinds_tt
+				NOT = { any_owned_province = { has_deathwind_modifier = yes } }
+			}
+		}
+		add_splendor = 10
 	}
 }
 
