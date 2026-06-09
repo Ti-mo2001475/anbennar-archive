@@ -5753,6 +5753,23 @@ on_battle_lost_province_effect = {
 		}
 		FROM = { add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 4 } }
 	}
+	else_if = { #so FROM is only the enemy army *leader*. This catches most edge cases
+		limit = {
+			FROM = {
+				tag = R62 #The Command
+				any_subject_country = {
+					has_government_mechanic = brorc_slave_mechanic
+					ROOT = { num_of_units_in_province = { who = PREV amount = 5 } }
+				}
+			}
+		}
+		FROM = {
+			every_subject_country = {
+				limit = { ROOT = { num_of_units_in_province = { who = PREV amount = 5 } } }
+				add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 4 }
+			}
+		}
+	}
 }
 
 #1.35
