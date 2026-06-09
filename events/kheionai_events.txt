@@ -31,8 +31,8 @@ country_event = {
 			2728 = { #Arpedifer
 				set_province_flag = deathwinds_warning_event
 				province_event = {
-					id = kheionai.1 #Warning event happens 6 months before
-					days = 231 #June 1st 1444
+					id = kheionai.2 #Warning event happens 6 months before
+					days = 225 #June 1st 1444 (minus 6 days)
 				}
 			}
 		}
@@ -40,6 +40,12 @@ country_event = {
 }
 
 #Deathwinds Handler Event
+
+#Deathwinds start > Notif event happens, add deathwind modifiers based on province group and windward level
+# > 1 year later destruction event happens
+# > 1 year later deathwinds end notif event happens (modifiers go away on their own)
+# > 6.5 years later deathwinds warning event
+# > 0.5 years later deathwinds start again
 province_event = {
 	id = kheionai.1
 	title = none
@@ -49,7 +55,10 @@ province_event = {
 	is_triggered_only = yes
 	hidden = yes
 
-	trigger = { has_global_flag = enable_deathwinds_handler_flag }
+	trigger = {
+		has_global_flag = enable_deathwinds_handler_flag
+		NOT = { has_global_flag = permanently_ended_deathwinds }
+	}
 
 	immediate = { }
 
@@ -69,6 +78,7 @@ province_event = {
 			}
 			deathwinds_start_event = {
 				#Every country with a province in Alecand gets the deathwinds start event
+				setup_deathwinds = yes
 				alecand_region = { owner = { country_event = { id = kheionai.4 } } }
 
 				#Prep the deathwinds destruction event
@@ -87,6 +97,7 @@ province_event = {
 			}
 			deathwinds_end_event = {
 				#Every country with a province in Alecand gets the deathwinds ends event
+				end_deathwinds = yes
 				alecand_region = { owner = { country_event = { id = kheionai.6 } } }
 
 				#Prep the deathwinds warning event
@@ -108,6 +119,7 @@ province_event = {
 	
 	is_triggered_only = yes
 	hidden = yes
+	trigger = { NOT = { has_global_flag = permanently_ended_deathwinds } }
 
 	option = {
 		name = none
@@ -115,29 +127,135 @@ province_event = {
 	}
 }
 
+#Deathwinds 6 Months earlier warning Event
 country_event = {
 	id = kheionai.3
 	title = kheionai.3.t
-	desc = kheionai.3.d
+	desc = kheionai.3.desc
 	picture = WOUNDED_SOLDIERS_eventPicture
 
 	is_triggered_only = yes
+	trigger = { NOT = { has_country_flag = deathwinds_disable_warning_flag } }
 
 	option = {
 		name = kheionai.3.a
 	}
+
+	option = {
+		name = kheionai.3.b
+		custom_tooltip = deathwinds_disable_warning_tt
+		set_country_flag = deathwinds_disable_warning_flag
+	}
 }
 
+#Deathwinds start event
 country_event = {
 	id = kheionai.4
 	title = kheionai.4.t
-	desc = kheionai.4.d
+	desc = kheionai.4.desc
+	picture = WOUNDED_SOLDIERS_eventPicture
+	
+	is_triggered_only = yes
+	major = yes
+	major_trigger = {
+		any_owned_province = {
+			superregion = kheionai_superregion
+		}
+	}
+
+	option = {
+		name = kheionai.4.a
+	}
+}
+
+#Deathwinds destruction event
+country_event = {
+	id = kheionai.5
+	title = kheionai.5.t
+	desc = kheionai.5.desc
 	picture = WOUNDED_SOLDIERS_eventPicture
 	
 	is_triggered_only = yes
 
 	option = {
-		name = kheionai.4.a
+		name = kheionai.5.a
+	}
+}
+
+#Deathwinds end event
+country_event = {
+	id = kheionai.6
+	title = kheionai.6.t
+	desc = kheionai.6.desc
+	picture = WOUNDED_SOLDIERS_eventPicture
+	
+	is_triggered_only = yes
+	major = yes
+	major_trigger = {
+		any_owned_province = {
+			superregion = kheionai_superregion
+		}
+	}
+
+	option = {
+		name = kheionai.6.a
+	}
+}
+
+#1444 Deathwinds intro event
+country_event = {
+	id = kheionai.7
+	title = kheionai.7.t
+	picture = WOUNDED_SOLDIERS_eventPicture
+
+	desc = {
+		desc = kheionai.7.descKheionai
+		trigger = { is_a_kheion = yes }
+	}
+	desc = {
+		desc = kheionai.7.descEltikan
+		trigger = { tag = G60 } #Eltikan
+	}
+
+	is_triggered_only = yes
+	trigger = {
+		capital_scope = { region = alecand_region }
+		NOT = { has_country_flag = had_deathwinds_intro_event }
+	}
+	immediate = { set_country_flag = had_deathwinds_intro_event }
+
+	option = { #Kheionai
+		name = kheionai.7.k
+		trigger = { NOT = { tag = G60 } }
+		custom_tooltip = deathwinds_intro_tt
+		custom_tooltip = deathwinds_1444_intro_tt
+	}
+
+	option = { #Eltikan
+		name = kheionai.7.e
+		trigger = { tag = G60 }
+		custom_tooltip = deathwinds_intro_tt
+		custom_tooltip = deathwinds_1444_intro_tt
+	}
+}
+
+#Invading Deathwinds intro event
+province_event = {
+	id = kheionai.8
+	title = kheionai.8.t
+	desc = kheionai.8.desc
+	picture = WOUNDED_SOLDIERS_eventPicture
+	
+	is_triggered_only = yes
+	trigger = {
+		region = alecand_region
+		owner = { NOT = { has_country_flag = had_deathwinds_intro_event } }
+	}
+	immediate = { owner = { set_country_flag = had_deathwinds_intro_event } }
+
+	option = {
+		name = kheionai.8.a
+		custom_tooltip = deathwinds_intro_tt
 	}
 }
 
@@ -198,493 +316,493 @@ country_event = {
 # }
 
 # Culture ties weakened - Kheionai
-country_event = {
-	id = kheionai.6
-	title = kheionai.6.t
-	desc = kheionai.6.d
-	picture = EUROPEAN_REFUGEES_eventPicture
+# country_event = {
+# 	id = kheionai.6
+# 	title = kheionai.6.t
+# 	desc = kheionai.6.d
+# 	picture = EUROPEAN_REFUGEES_eventPicture
 	
-	trigger = {
-		culture_group = kheionai_ruinborn_elf
-		NOT = { tag = G52 } #Ameion
-		NOT = { tag = G00 } #Ameion Civil War
-		capital_scope = {
-			NOT = { region = alecand_region }
-		}
-		NOT = { has_country_flag = new_kheionai_culture }
-		NOT = { has_country_flag = no_formable_culture_shift }
-		if = {
-			limit = { 
-				tag = G56 #Deyeion
-				ai = no
-			}
-			has_country_flag = G56_independence_flag
-		}
+# 	trigger = {
+# 		culture_group = kheionai_ruinborn_elf
+# 		NOT = { tag = G52 } #Ameion
+# 		NOT = { tag = G00 } #Ameion Civil War
+# 		capital_scope = {
+# 			NOT = { region = alecand_region }
+# 		}
+# 		NOT = { has_country_flag = new_kheionai_culture }
+# 		NOT = { has_country_flag = no_formable_culture_shift }
+# 		if = {
+# 			limit = { 
+# 				tag = G56 #Deyeion
+# 				ai = no
+# 			}
+# 			has_country_flag = G56_independence_flag
+# 		}
 		
-		is_at_war = no
-		OR = {
-			is_subject = no
-			has_country_flag = G56_independence_flag
-		}
+# 		is_at_war = no
+# 		OR = {
+# 			is_subject = no
+# 			has_country_flag = G56_independence_flag
+# 		}
 		
-	}
+# 	}
 	
-	mean_time_to_happen = {
-		months = 200
-		modifier = {
-			factor = 0.7
-			stability = 1
-		}
-		modifier = {
-			factor = 0.25
-			num_of_cities = 10
-		}
-		modifier = {
-			factor = 0.1
-			in_golden_age = yes
-		}
-	}
+# 	mean_time_to_happen = {
+# 		months = 200
+# 		modifier = {
+# 			factor = 0.7
+# 			stability = 1
+# 		}
+# 		modifier = {
+# 			factor = 0.25
+# 			num_of_cities = 10
+# 		}
+# 		modifier = {
+# 			factor = 0.1
+# 			in_golden_age = yes
+# 		}
+# 	}
 	
-	option = { # Empkeios
-		name = kheionai.6.a
-		trigger = {
-			OR = {
-				tag = G53
-				was_tag = G53
-			}
-		}
+# 	option = { # Empkeios
+# 		name = kheionai.6.a
+# 		trigger = {
+# 			OR = {
+# 				tag = G53
+# 				was_tag = G53
+# 			}
+# 		}
 		
-		ai_chance = {
-			factor = 1000
-		}
+# 		ai_chance = {
+# 			factor = 1000
+# 		}
 		
-		hidden_effect = {
-			every_core_province = { 
-				limit = {
-					culture_group = ROOT
-					OR = {
-						region = devand_region
-						region = mteibas_valley_region
-						region = andic_reach_region
-					}
-				}
-				change_culture = empkhebhen
-			}
-		}
+# 		hidden_effect = {
+# 			every_core_province = { 
+# 				limit = {
+# 					culture_group = ROOT
+# 					OR = {
+# 						region = devand_region
+# 						region = mteibas_valley_region
+# 						region = andic_reach_region
+# 					}
+# 				}
+# 				change_culture = empkhebhen
+# 			}
+# 		}
 		
-		primary_and_ruler_culture_change = { race = ruinborn new_culture = empkhebhen }
+# 		primary_and_ruler_culture_change = { race = ruinborn new_culture = empkhebhen }
 		
-		set_country_flag = new_kheionai_culture
+# 		set_country_flag = new_kheionai_culture
 		
-		add_country_modifier = {
-			name = birth_of_a_new_people 
-			duration = 3650
-		}
-		custom_tooltip = birth_of_a_new_people_prov_mod_tt
-		hidden_effect = {
-			every_owned_province = {
-				limit = {
-					OR = {
-						region = devand_region
-						region = mteibas_valley_region
-						region = andic_reach_region
-					}
-				}
-				add_permanent_province_modifier = {
-					name = birth_of_a_new_people_prov_mod
-					duration = 3650
-				}
-			}
-		}
-	}
+# 		add_country_modifier = {
+# 			name = birth_of_a_new_people 
+# 			duration = 3650
+# 		}
+# 		custom_tooltip = birth_of_a_new_people_prov_mod_tt
+# 		hidden_effect = {
+# 			every_owned_province = {
+# 				limit = {
+# 					OR = {
+# 						region = devand_region
+# 						region = mteibas_valley_region
+# 						region = andic_reach_region
+# 					}
+# 				}
+# 				add_permanent_province_modifier = {
+# 					name = birth_of_a_new_people_prov_mod
+# 					duration = 3650
+# 				}
+# 			}
+# 		}
+# 	}
 	
-	option = { # Besolaki
-		name = kheionai.6.a
-		trigger = {
-			OR = {
-				tag = G54
-				was_tag = G54
-			}
-		}
+# 	option = { # Besolaki
+# 		name = kheionai.6.a
+# 		trigger = {
+# 			OR = {
+# 				tag = G54
+# 				was_tag = G54
+# 			}
+# 		}
 		
-		ai_chance = {
-			factor = 1000
-		}
+# 		ai_chance = {
+# 			factor = 1000
+# 		}
 		
-		hidden_effect = {
-			every_core_province = { 
-				limit = {
-					culture_group = ROOT
-					OR = {
-						region = devand_region
-						region = mteibas_valley_region
-						region = andic_reach_region
-					}
-				}
-				change_culture = besolabhen
-			}
-		}
+# 		hidden_effect = {
+# 			every_core_province = { 
+# 				limit = {
+# 					culture_group = ROOT
+# 					OR = {
+# 						region = devand_region
+# 						region = mteibas_valley_region
+# 						region = andic_reach_region
+# 					}
+# 				}
+# 				change_culture = besolabhen
+# 			}
+# 		}
 		
-		primary_and_ruler_culture_change = { race = ruinborn new_culture = besolabhen }
+# 		primary_and_ruler_culture_change = { race = ruinborn new_culture = besolabhen }
 		
-		set_country_flag = new_kheionai_culture
+# 		set_country_flag = new_kheionai_culture
 		
-		add_country_modifier = {
-			name = birth_of_a_new_people 
-			duration = 3650
-		}
-		custom_tooltip = birth_of_a_new_people_prov_mod_tt
-		hidden_effect = {
-			every_owned_province = {
-				limit = {
-					OR = {
-						region = devand_region
-						region = mteibas_valley_region
-						region = andic_reach_region
-					}
-				}
-				add_permanent_province_modifier = {
-					name = birth_of_a_new_people_prov_mod
-					duration = 3650
-				}
-			}
-		}
-	}
+# 		add_country_modifier = {
+# 			name = birth_of_a_new_people 
+# 			duration = 3650
+# 		}
+# 		custom_tooltip = birth_of_a_new_people_prov_mod_tt
+# 		hidden_effect = {
+# 			every_owned_province = {
+# 				limit = {
+# 					OR = {
+# 						region = devand_region
+# 						region = mteibas_valley_region
+# 						region = andic_reach_region
+# 					}
+# 				}
+# 				add_permanent_province_modifier = {
+# 					name = birth_of_a_new_people_prov_mod
+# 					duration = 3650
+# 				}
+# 			}
+# 		}
+# 	}
 	
-	option = { # Eneion
-		name = kheionai.6.a
-		trigger = {
-			OR = {
-				tag = G55
-				was_tag = G55
-			}
-		}
+# 	option = { # Eneion
+# 		name = kheionai.6.a
+# 		trigger = {
+# 			OR = {
+# 				tag = G55
+# 				was_tag = G55
+# 			}
+# 		}
 		
-		ai_chance = {
-			factor = 1000
-		}
+# 		ai_chance = {
+# 			factor = 1000
+# 		}
 		
-		hidden_effect = {
-			every_core_province = { 
-				limit = {
-					culture_group = ROOT
-					OR = {
-						region = devand_region
-						region = mteibas_valley_region
-						region = andic_reach_region
-					}
-				}
-				change_culture = enebhen
-			}
-		}
+# 		hidden_effect = {
+# 			every_core_province = { 
+# 				limit = {
+# 					culture_group = ROOT
+# 					OR = {
+# 						region = devand_region
+# 						region = mteibas_valley_region
+# 						region = andic_reach_region
+# 					}
+# 				}
+# 				change_culture = enebhen
+# 			}
+# 		}
 		
-		primary_and_ruler_culture_change = { race = ruinborn new_culture = enebhen }
+# 		primary_and_ruler_culture_change = { race = ruinborn new_culture = enebhen }
 		
-		set_country_flag = new_kheionai_culture
+# 		set_country_flag = new_kheionai_culture
 		
-		add_country_modifier = {
-			name = birth_of_a_new_people 
-			duration = 3650
-		}
-		custom_tooltip = birth_of_a_new_people_prov_mod_tt
-		hidden_effect = {
-			every_owned_province = {
-				limit = {
-					OR = {
-						region = devand_region
-						region = mteibas_valley_region
-						region = andic_reach_region
-					}
-				}
-				add_permanent_province_modifier = {
-					name = birth_of_a_new_people_prov_mod
-					duration = 3650
-				}
-			}
-		}
-	}
+# 		add_country_modifier = {
+# 			name = birth_of_a_new_people 
+# 			duration = 3650
+# 		}
+# 		custom_tooltip = birth_of_a_new_people_prov_mod_tt
+# 		hidden_effect = {
+# 			every_owned_province = {
+# 				limit = {
+# 					OR = {
+# 						region = devand_region
+# 						region = mteibas_valley_region
+# 						region = andic_reach_region
+# 					}
+# 				}
+# 				add_permanent_province_modifier = {
+# 					name = birth_of_a_new_people_prov_mod
+# 					duration = 3650
+# 				}
+# 			}
+# 		}
+# 	}
 
-	option = { # Deyeion
-		name = kheionai.6.a
-		trigger = {
-			OR = {
-				tag = G56
-				was_tag = G56
-			}
-		}
+# 	option = { # Deyeion
+# 		name = kheionai.6.a
+# 		trigger = {
+# 			OR = {
+# 				tag = G56
+# 				was_tag = G56
+# 			}
+# 		}
 		
-		ai_chance = {
-			factor = 1000
-		}
+# 		ai_chance = {
+# 			factor = 1000
+# 		}
 		
-		hidden_effect = {
-			every_core_province = { 
-				limit = {
-					culture_group = ROOT
-					OR = {
-						region = devand_region
-						region = mteibas_valley_region
-						region = andic_reach_region
-					}
-				}
-				change_culture = deyebhen
-			}
-		}
+# 		hidden_effect = {
+# 			every_core_province = { 
+# 				limit = {
+# 					culture_group = ROOT
+# 					OR = {
+# 						region = devand_region
+# 						region = mteibas_valley_region
+# 						region = andic_reach_region
+# 					}
+# 				}
+# 				change_culture = deyebhen
+# 			}
+# 		}
 		
-		primary_and_ruler_culture_change = { race = ruinborn new_culture = deyebhen }
+# 		primary_and_ruler_culture_change = { race = ruinborn new_culture = deyebhen }
 		
-		set_country_flag = new_kheionai_culture
+# 		set_country_flag = new_kheionai_culture
 		
-		add_country_modifier = {
-			name = birth_of_a_new_people 
-			duration = 3650
-		}
-		custom_tooltip = birth_of_a_new_people_prov_mod_tt
-		hidden_effect = {
-			every_owned_province = {
-				limit = {
-					OR = {
-						region = devand_region
-						region = mteibas_valley_region
-						region = andic_reach_region
-					}
-				}
-				add_permanent_province_modifier = {
-					name = birth_of_a_new_people_prov_mod
-					duration = 3650
-				}
-			}
-		}
-	}
+# 		add_country_modifier = {
+# 			name = birth_of_a_new_people 
+# 			duration = 3650
+# 		}
+# 		custom_tooltip = birth_of_a_new_people_prov_mod_tt
+# 		hidden_effect = {
+# 			every_owned_province = {
+# 				limit = {
+# 					OR = {
+# 						region = devand_region
+# 						region = mteibas_valley_region
+# 						region = andic_reach_region
+# 					}
+# 				}
+# 				add_permanent_province_modifier = {
+# 					name = birth_of_a_new_people_prov_mod
+# 					duration = 3650
+# 				}
+# 			}
+# 		}
+# 	}
 	
-	option = { # Apikhoxi
-		name = kheionai.6.a
-		trigger = {
-			OR = {
-				tag = G57
-				was_tag = G57
-			}
-		}
+# 	option = { # Apikhoxi
+# 		name = kheionai.6.a
+# 		trigger = {
+# 			OR = {
+# 				tag = G57
+# 				was_tag = G57
+# 			}
+# 		}
 		
-		ai_chance = {
-			factor = 1000
-		}
+# 		ai_chance = {
+# 			factor = 1000
+# 		}
 		
-		hidden_effect = {
-			every_core_province = { 
-				limit = {
-					culture_group = ROOT
-					OR = {
-						region = devand_region
-						region = mteibas_valley_region
-						region = andic_reach_region
-					}
-				}
-				change_culture = apikhobhen
-			}
-		}
+# 		hidden_effect = {
+# 			every_core_province = { 
+# 				limit = {
+# 					culture_group = ROOT
+# 					OR = {
+# 						region = devand_region
+# 						region = mteibas_valley_region
+# 						region = andic_reach_region
+# 					}
+# 				}
+# 				change_culture = apikhobhen
+# 			}
+# 		}
 		
-		primary_and_ruler_culture_change = { race = ruinborn new_culture = apikhobhen }
+# 		primary_and_ruler_culture_change = { race = ruinborn new_culture = apikhobhen }
 		
-		set_country_flag = new_kheionai_culture
+# 		set_country_flag = new_kheionai_culture
 		
-		add_country_modifier = {
-			name = birth_of_a_new_people 
-			duration = 3650
-		}
-		custom_tooltip = birth_of_a_new_people_prov_mod_tt
-		hidden_effect = {
-			every_owned_province = {
-				limit = {
-					OR = {
-						region = devand_region
-						region = mteibas_valley_region
-						region = andic_reach_region
-					}
-				}
-				add_permanent_province_modifier = {
-					name = birth_of_a_new_people_prov_mod
-					duration = 3650
-				}
-			}
-		}
-	}
+# 		add_country_modifier = {
+# 			name = birth_of_a_new_people 
+# 			duration = 3650
+# 		}
+# 		custom_tooltip = birth_of_a_new_people_prov_mod_tt
+# 		hidden_effect = {
+# 			every_owned_province = {
+# 				limit = {
+# 					OR = {
+# 						region = devand_region
+# 						region = mteibas_valley_region
+# 						region = andic_reach_region
+# 					}
+# 				}
+# 				add_permanent_province_modifier = {
+# 					name = birth_of_a_new_people_prov_mod
+# 					duration = 3650
+# 				}
+# 			}
+# 		}
+# 	}
 	
-	option = { # Keyolion
-		name = kheionai.6.a
-		trigger = {
-			OR = {
-				tag = G58
-				was_tag = G58
-			}
-		}
+# 	option = { # Keyolion
+# 		name = kheionai.6.a
+# 		trigger = {
+# 			OR = {
+# 				tag = G58
+# 				was_tag = G58
+# 			}
+# 		}
 		
-		ai_chance = {
-			factor = 1000
-		}
+# 		ai_chance = {
+# 			factor = 1000
+# 		}
 		
-		hidden_effect = {
-			every_core_province = { 
-				limit = {
-					culture_group = ROOT
-					OR = {
-						region = devand_region
-						region = mteibas_valley_region
-						region = andic_reach_region
-					}
-				}
-				change_culture = keyobhen
-			}
-		}
+# 		hidden_effect = {
+# 			every_core_province = { 
+# 				limit = {
+# 					culture_group = ROOT
+# 					OR = {
+# 						region = devand_region
+# 						region = mteibas_valley_region
+# 						region = andic_reach_region
+# 					}
+# 				}
+# 				change_culture = keyobhen
+# 			}
+# 		}
 		
-		primary_and_ruler_culture_change = { race = ruinborn new_culture = keyobhen }
+# 		primary_and_ruler_culture_change = { race = ruinborn new_culture = keyobhen }
 		
-		set_country_flag = new_kheionai_culture
+# 		set_country_flag = new_kheionai_culture
 		
-		add_country_modifier = {
-			name = birth_of_a_new_people 
-			duration = 3650
-		}
-		custom_tooltip = birth_of_a_new_people_prov_mod_tt
-		hidden_effect = {
-			every_owned_province = {
-				limit = {
-					OR = {
-						region = devand_region
-						region = mteibas_valley_region
-						region = andic_reach_region
-					}
-				}
-				add_permanent_province_modifier = {
-					name = birth_of_a_new_people_prov_mod
-					duration = 3650
-				}
-			}
-		}
-	}
+# 		add_country_modifier = {
+# 			name = birth_of_a_new_people 
+# 			duration = 3650
+# 		}
+# 		custom_tooltip = birth_of_a_new_people_prov_mod_tt
+# 		hidden_effect = {
+# 			every_owned_province = {
+# 				limit = {
+# 					OR = {
+# 						region = devand_region
+# 						region = mteibas_valley_region
+# 						region = andic_reach_region
+# 					}
+# 				}
+# 				add_permanent_province_modifier = {
+# 					name = birth_of_a_new_people_prov_mod
+# 					duration = 3650
+# 				}
+# 			}
+# 		}
+# 	}
 	
-	option = { # Anisikheion
-		name = kheionai.6.a
-		trigger = {
-			OR = {
-				tag = G59
-				was_tag = G59
-			}
-		}
+# 	option = { # Anisikheion
+# 		name = kheionai.6.a
+# 		trigger = {
+# 			OR = {
+# 				tag = G59
+# 				was_tag = G59
+# 			}
+# 		}
 		
-		ai_chance = {
-			factor = 1000
-		}
+# 		ai_chance = {
+# 			factor = 1000
+# 		}
 		
-		hidden_effect = {
-			every_core_province = { 
-				limit = {
-					culture_group = ROOT
-					OR = {
-						region = devand_region
-						region = mteibas_valley_region
-						region = andic_reach_region
-					}
-				}
-				change_culture = anisibhen
-			}
-		}
+# 		hidden_effect = {
+# 			every_core_province = { 
+# 				limit = {
+# 					culture_group = ROOT
+# 					OR = {
+# 						region = devand_region
+# 						region = mteibas_valley_region
+# 						region = andic_reach_region
+# 					}
+# 				}
+# 				change_culture = anisibhen
+# 			}
+# 		}
 		
-		primary_and_ruler_culture_change = { race = ruinborn new_culture = anisibhen }
+# 		primary_and_ruler_culture_change = { race = ruinborn new_culture = anisibhen }
 		
-		set_country_flag = new_kheionai_culture
+# 		set_country_flag = new_kheionai_culture
 		
-		add_country_modifier = {
-			name = birth_of_a_new_people 
-			duration = 3650
-		}
-		custom_tooltip = birth_of_a_new_people_prov_mod_tt
-		hidden_effect = {
-			every_owned_province = {
-				limit = {
-					OR = {
-						region = devand_region
-						region = mteibas_valley_region
-						region = andic_reach_region
-					}
-				}
-				add_permanent_province_modifier = {
-					name = birth_of_a_new_people_prov_mod
-					duration = 3650
-				}
-			}
-		}
-	}
+# 		add_country_modifier = {
+# 			name = birth_of_a_new_people 
+# 			duration = 3650
+# 		}
+# 		custom_tooltip = birth_of_a_new_people_prov_mod_tt
+# 		hidden_effect = {
+# 			every_owned_province = {
+# 				limit = {
+# 					OR = {
+# 						region = devand_region
+# 						region = mteibas_valley_region
+# 						region = andic_reach_region
+# 					}
+# 				}
+# 				add_permanent_province_modifier = {
+# 					name = birth_of_a_new_people_prov_mod
+# 					duration = 3650
+# 				}
+# 			}
+# 		}
+# 	}
 	
-	option = { # Amgremos
-		name = kheionai.6.a
-		trigger = {
-			OR = {
-				tag = G62
-				was_tag = G62
-			}
-		}
+# 	option = { # Amgremos
+# 		name = kheionai.6.a
+# 		trigger = {
+# 			OR = {
+# 				tag = G62
+# 				was_tag = G62
+# 			}
+# 		}
 		
-		ai_chance = {
-			factor = 1000
-		}
+# 		ai_chance = {
+# 			factor = 1000
+# 		}
 		
-		hidden_effect = {
-			every_core_province = { 
-				limit = {
-					culture_group = ROOT
-					OR = {
-						region = devand_region
-						region = mteibas_valley_region
-						region = andic_reach_region
-					}
-				}
-				change_culture = amgrebhen
-			}
-		}
+# 		hidden_effect = {
+# 			every_core_province = { 
+# 				limit = {
+# 					culture_group = ROOT
+# 					OR = {
+# 						region = devand_region
+# 						region = mteibas_valley_region
+# 						region = andic_reach_region
+# 					}
+# 				}
+# 				change_culture = amgrebhen
+# 			}
+# 		}
 		
-		primary_and_ruler_culture_change = { race = ruinborn new_culture = amgrebhen }
+# 		primary_and_ruler_culture_change = { race = ruinborn new_culture = amgrebhen }
 		
-		set_country_flag = new_kheionai_culture
+# 		set_country_flag = new_kheionai_culture
 		
-		add_country_modifier = {
-			name = birth_of_a_new_people 
-			duration = 3650
-		}
-		custom_tooltip = birth_of_a_new_people_prov_mod_tt
-		hidden_effect = {
-			every_owned_province = {
-				limit = {
-					OR = {
-						region = devand_region
-						region = mteibas_valley_region
-						region = andic_reach_region
-					}
-				}
-				add_permanent_province_modifier = {
-					name = birth_of_a_new_people_prov_mod
-					duration = 3650
-				}
-			}
-		}
-	}
+# 		add_country_modifier = {
+# 			name = birth_of_a_new_people 
+# 			duration = 3650
+# 		}
+# 		custom_tooltip = birth_of_a_new_people_prov_mod_tt
+# 		hidden_effect = {
+# 			every_owned_province = {
+# 				limit = {
+# 					OR = {
+# 						region = devand_region
+# 						region = mteibas_valley_region
+# 						region = andic_reach_region
+# 					}
+# 				}
+# 				add_permanent_province_modifier = {
+# 					name = birth_of_a_new_people_prov_mod
+# 					duration = 3650
+# 				}
+# 			}
+# 		}
+# 	}
 	
-	option = { # Resist cultural change
-		name = kheionai.6.b
+# 	option = { # Resist cultural change
+# 		name = kheionai.6.b
 		
-		trigger = {
-			NOT = { has_country_flag = G56_independence_flag } 
-		}
+# 		trigger = {
+# 			NOT = { has_country_flag = G56_independence_flag } 
+# 		}
 
-		ai_chance = {
-			factor = 1
-		}
+# 		ai_chance = {
+# 			factor = 1
+# 		}
 		
-		add_prestige = -10
+# 		add_prestige = -10
 		
-		set_country_flag = no_formable_culture_shift
-	}
-}
+# 		set_country_flag = no_formable_culture_shift
+# 	}
+# }
 	
 #More deathwinds events
 # province_event = {
