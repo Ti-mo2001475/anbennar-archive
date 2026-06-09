@@ -492,7 +492,12 @@ col_2 = {
 			A29_southern_sight
 			A29_land_and_sea
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			region = dao_nako_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		} 
 
 		trigger = {  
 			dao_nako_region = {
@@ -526,9 +531,54 @@ col_2 = {
 		required_missions = { A29_ironwood_enrichment } 
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = {  
+			num_of_owned_provinces_with = {
+				value = 15
+				region = fahvanosy_region
+			}
+			6632 = {
+				country_or_non_sovereign_subject_holds = ROOT
+				has_great_project = {
+					type = lizardfolk_port
+					tier = 1
+				}
+				is_owned_by_trade_company = yes
+			}
+			trading_policy_in_node = {
+				node = 3082
+				policy = hostile_trading
+			}
+			trading_policy_in_node = {
+				node = 3084
+				policy = hostile_trading
+			}
+			#todo ananoma
+		} 
 
-		effect = {  } 
+		effect = {
+			6632 = {
+				add_trade_company_investment = {
+					investor = ROOT
+        			investment = governor_general_mansion
+				}
+			}
+			3082 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 50
+					key = STRONG_MERCHANTS 
+				}
+			}
+			3084 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 50
+					key = STRONG_MERCHANTS 
+				}
+			}
+		} 
 	}
 
 	A29_precursor_knowledge = {
@@ -538,11 +588,34 @@ col_2 = {
 			A29_place_in_the_sun
 			A29_sponsoring_the_society
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			province_id = 5763
+			NOT = {
+				has_great_project = {
+					type = kazakesh
+					tier = 3
+				}
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {  
+			num_of_owned_provinces_with = {
+				value = 3
+				trade_goods = precursor_relics
+			}
+			5763 = {
+				has_great_project = {
+					type = kazakesh
+					tier = 3
+				}
+			}
+		} 
 
-		effect = {  } 
+		effect = {  #secrets of the ancients 
+			country_event = {
+				id = busilar.3
+			}
+		} 
 	}
 
 	A29_the_truth = {
@@ -553,11 +626,41 @@ col_2 = {
 			A29_precursor_knowledge
 			A29_due_of_two_crowns
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			is_capital_of = Z97
+		} 
 
-		trigger = {  } 
+		trigger = {  
+			religion = ravelian
+			Z97 = {
+				OR = {
+					AND = {
+						alliance_with = ROOT
+						has_opinion = {
+							who = ROOT
+							value = 150
+						}
+						trust = {
+							who = ROOT
+							value = 60
+						}
+					}
+					AND = {
+						is_rival = ROOT
+						has_spy_network_from = {
+							who = ROOT
+							value = 35
+						}
+					}
+				}
+			}
+		} 
 
-		effect = {  } 
+		effect = {  
+			country_event = {
+				id = busilar.4
+			}
+		} 
 	}
 
 	A29_spread_the_word = {
