@@ -1274,7 +1274,7 @@ feiten_missions_2_world = {
 	}
 	has_country_shield = yes
 	
-	feiten_breaching_stormgates = {
+	feiten_securing_stormwall = {
 		icon = mission_stormy_seas
 		position = 13
 		required_missions = {
@@ -1284,19 +1284,44 @@ feiten_missions_2_world = {
 		provinces_to_highlight = { }
 		
 		trigger = {
-			# TODO once Insyaa is in
+			has_global_flag = stormwall_open
+			num_of_owned_provinces_with = {
+				value = 10
+				region = yanacotlele_region
+			}
+			6859 = {
+				light_ships_in_province = 50
+			}
 		}
 		
 		effect = {
-			# TODO once Insyaa is in
+			define_explorer = {
+				shock = 2
+				fire = 3
+				manuever = 6
+				siege = 0
+			}
+			add_country_modifier = {
+				name = feiten_pioneering_spirit_0
+				duration = 18250
+			}
+			if = {
+				limit = {
+					num_of_colonists = 0
+				}
+				add_country_modifier = {
+					name = feiten_insyaan_expansion
+					duration = 9125
+				}
+			}
 		}
 	}
 	
-	feiten_insyaa_interior = {
+	feiten_the_gene_pillars = {
 		icon = mission_alone_in_the_forest
 		position = 14
 		required_missions = {
-			feiten_breaching_stormgates
+			feiten_securing_stormwall
 		}
 		
 		provinces_to_highlight = { }
@@ -1314,7 +1339,7 @@ feiten_missions_2_world = {
 		icon = mission_gain_mana
 		position = 16
 		required_missions = {
-			feiten_insyaa_interior
+			feiten_the_gene_pillars
 		}
 		
 		provinces_to_highlight = { }
