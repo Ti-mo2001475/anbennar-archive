@@ -19,6 +19,9 @@ country_event = { #election event
 	}
 	option = { #push for re-election
 		name = flavour_endralliande.1.c
+		trigger = {
+			NOT = { has_country_flag = end_election_on_death }
+		}
 		add_republican_tradition = -20
 		end_add_favor_to_current = yes
 		if = {
@@ -80,12 +83,15 @@ country_event = { #election event
 					mil = 0
 					regency = yes
 				}
-				random = { #check for gov power later
-					chance = 50
-					add_mercantilism = -3
-					reduce_estate_burghers_loyalty_effect = yes
-					change_adm = 2
-					change_mil = 2
+				custom_tooltip = end_assembly_of_the_elite_manuevering
+				hidden_effect = {
+					random = { #check for gov power later
+						chance = 50
+						add_mercantilism = -3
+						reduce_estate_burghers_loyalty_effect = yes
+						change_adm = 2
+						change_mil = 2
+					}
 				}
 			}
 			25 = {
@@ -148,6 +154,7 @@ country_event = { #election event
 		}
 	}
 	after = {
+		clr_country_flag = end_election_on_death
 		random_list = {
 			1 = {
 				country_event = {
@@ -665,31 +672,55 @@ country_event = { #votes counted
 				}
 			}
 			#choose a culture and religion for some of the rulers
-			lencenor_region = {
-				random_province = { 
-					limit = { culture_group = lencori }
-					save_event_target_as = end_noble_culture_religion_determine 
-				}
-			}
-			random_owned_province = {
-				limit = { culture_group = elven }
-				save_event_target_as = end_elven_culture_religion_determine
-			}
-			random_owned_province = {
+			if = {
 				limit = {
-					OR = {
-						culture_group = lencori
-						culture_group = trollsbayer
-						culture = half_orc
-						culture_group = orcish
-					}
-					OR = {
-						has_building = plantations
-						has_building = farm_estate
-						has_building = textile
+					is_variable_equal = {
+						which = end_winner_id
+						value = 2
 					}
 				}
-				save_event_target_as = end_agrarian_culture_religion_determine
+				lencenor_region = {
+					random_province = { 
+						limit = { culture_group = lencori }
+						save_event_target_as = end_noble_culture_religion_determine 
+					}
+				}
+			}
+			if = {
+				limit = {
+					is_variable_equal = {
+						which = end_winner_id
+						value = 3
+					}
+				}
+				random_owned_province = {
+					limit = { culture_group = elven }
+					save_event_target_as = end_elven_culture_religion_determine
+				}
+			}
+			if = {
+				limit = {
+					is_variable_equal = {
+						which = end_winner_id
+						value = 6
+					}
+				}
+				random_owned_province = {
+					limit = {
+						OR = {
+							culture_group = lencori
+							culture_group = trollsbayer
+							culture = half_orc
+							culture_group = orcish
+						}
+						OR = {
+							has_building = plantations
+							has_building = farm_estate
+							has_building = textile
+						}
+					}
+					save_event_target_as = end_agrarian_culture_religion_determine
+				}
 			}
 		}
 	}
@@ -697,7 +728,7 @@ country_event = { #votes counted
 		name = flavour_endralliande.10.a
 		if = {
 			limit = {
-				check_variable = {
+				is_variable_equal = {
 					which = end_winner_id
 					value = 1
 				}
@@ -1338,7 +1369,7 @@ country_event = { #make a coalition
 		change_dip = 1
 		change_variable = {
 			which = end_winner_vote_count
-			which = end_noble_candidate_favor
+			which = end_local_candidate_favor
 		}
 		end_increase_factionalism = yes
 	}
@@ -1369,9 +1400,9 @@ country_event = { #make a coalition
 		}
 		set_ruler_flag = end_mistmancer_candidate_in_coalition
 		random_list = {
-			16 = {}
-			66 = { change_dip = 1 }
-			16 = { change_dip = 2 }
+			1 = {}
+			6 = { change_dip = 1 }
+			1 = { change_dip = 2 }
 		}
 		add_estate_mages_loyalty_effect = yes
 		change_variable = {
@@ -1518,7 +1549,7 @@ country_event = { #backing our favorite candidate
 		}
 		add_years_of_income = -0.5
 		add_corruption = 1
-		add_republican_tradition = -8
+		add_republican_tradition = -10
 		if = {
 			limit = {
 				estate_loyalty = {
