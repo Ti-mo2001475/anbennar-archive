@@ -3233,6 +3233,7 @@ clr_centaur_spell_lists = {
 		limit = { has_any_custom_spell_list_in_group = { group = centaur } }
 		clr_custom_spell_list = { group = centaur subgroup = default }
 		clr_custom_spell_list = { group = centaur subgroup = black_herd }
+		clr_custom_spell_list = { group = centaur subgroup = thunderborn }
 	}
 }
 
@@ -4280,5 +4281,66 @@ evocation_3_xhazobkult_default_3_effect = {
 		add_ruler_modifier = { name = evocation_spell_half duration = 3650 hidden = yes }
 		add_ruler_modifier = { name = conjuration_spell_half duration = 3650 hidden = yes }
 		country_event = { id = magic_spell.807 days = 3650 }
+	}
+}
+
+evocation_1_centaur_thunderborn_5_effect = { #this lags the game a lot and i dont know why
+	custom_tooltip = centaur_thunderborn_spell_conduit_removal_tooltip
+	hidden_effect = {
+		every_owned_province = {
+			remove_province_modifier = I49_conduit_1
+			remove_province_modifier = I49_conduit_2
+		}
+	}
+	custom_tooltip = centaur_thunderborn_spell_devastation_army_tradition_tooltip
+	while = {
+		limit = {
+			capital_scope = {
+				any_neighbor_province = {
+					NOT = {
+						AND = {
+							country_or_subject_holds = ROOT
+							has_province_flag = I49_conduct_lightning_devastation
+						}
+					}
+				}
+			}
+		}
+		capital_scope = {
+			random_neighbor_province = {
+				if = {
+					limit = {
+						NOT = {
+							AND = {
+								country_or_subject_holds = ROOT
+								has_province_flag = I49_conduct_lightning_devastation
+							}
+						}
+					}
+					add_devastation = 50
+					set_province_flag = I49_conduct_lightning_devastation
+					add_army_tradition_or_mil_power = {
+						amount = 3
+					}
+					owner = {
+						add_country_modifier = {
+							name = I49_gathering_storms
+							duration = 1825
+						}
+					}
+				}
+			}
+		}
+	}
+	capital_scope = {
+		every_neighbor_province = {
+			clr_province_flag = I49_conduct_lightning_devastation
+		}
+	}
+	hidden_effect = {
+		change_variable = {
+			which = I49_NumTimesCastConductLightning
+			value = 1
+		}
 	}
 }

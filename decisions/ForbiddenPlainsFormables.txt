@@ -158,6 +158,7 @@ country_decisions = {
 					}
 					NOT = { tag = I69 } #Star Rider
 					NOT = { tag = I80 } #Great Storm
+					NOT = { tag = I49 } #Thunderborn
 				}
 			}
 		}
@@ -254,6 +255,7 @@ country_decisions = {
 					NOT = { tag = I57 } #Golden Tremor
 					NOT = { tag = I69 } #Star Rider
 					NOT = { tag = I80 } #Great Storm
+					NOT = { tag = I49 } #Thunderborn
 				}
 			}
 		}
@@ -392,6 +394,7 @@ country_decisions = {
 					NOT = { tag = I57 } #Golden Tremor
 					NOT = { tag = I69 } #Star Rider
 					NOT = { tag = I80 } #Great Storm
+					NOT = { tag = I49 } #Thunderborn
 				}
 			}
 		}
@@ -544,6 +547,18 @@ country_decisions = {
 					always = no
 				}
 			}
+			else_if = {
+				limit = { #Thunderborn
+					tag = I49 
+					has_country_flag = I49_edeyne_alive
+				} 
+				custom_trigger_tooltip = {
+					tooltip = I49_no_forming_taryean_tooltip
+					NOT = {
+						has_country_flag = I49_no_forming_taryean
+					}
+				}
+			}
 			else = {
 				is_year = 1500
 				mission_completed = CENTAUR_valorous_caehnate
@@ -598,7 +613,15 @@ country_decisions = {
 				duration = 7300
 			}
 			country_event = { id = ideagroups.1 } #Swap Ideas
-		
+			hidden_effect = {
+				if = {
+					limit = { has_country_flag = I49_zaya_injured }
+					country_event = {
+						id = flavour_thunderborn.13
+						days = 1825
+					}
+				}
+			}
 		}
 		ai_will_do = {
 			factor = 400

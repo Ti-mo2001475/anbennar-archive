@@ -1,0 +1,491 @@
+namespace = flavour_thunderborn
+
+
+#Template
+country_event = { #Title
+	id = flavour_thunderborn.0
+	title = flavour_thunderborn.0.t
+	desc = flavour_thunderborn.0.d
+	picture = COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.0.a
+	}
+}
+
+country_event = { #At the Edge of Everything
+	id = flavour_thunderborn.1
+	title = flavour_thunderborn.1.t
+	desc = flavour_thunderborn.1.d
+	picture = COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+	fire_only_once = yes
+
+	trigger = { tag = I49 } #Thunderborn
+
+	immediate = {
+		set_country_flag = I49_no_forming_taryean
+		add_ruler_modifier = {
+			name = exceptional_willpower_75
+		}
+		add_ruler_modifier = {
+			name = I49_edeynes_insecurity_1
+		}
+		set_ruler_flag = is_gay
+		hidden_effect = {
+			set_variable = {
+				which = I49_NumTimesCastConductLightning
+				value = 0
+			}
+			set_variable = {
+				which = I49_to_be_conduit_while_variable
+				value = 0
+			}
+		}
+	}
+
+	option = { 
+		name = flavour_thunderborn.1.a
+		add_stability = -1
+		define_consort = {
+			name = "Zaya"
+			country_of_origin = ROOT
+			religion = ROOT
+			culture = ROOT
+			dynasty = "Hollowseeker"
+			adm = 4
+			dip = 3
+			mil = 4
+			female = yes
+			age = 16
+		}
+		set_consort_flag = is_gay
+		add_queen_personality = mage_personality
+		set_country_flag = I49_zaya_alive
+		custom_tooltip = I49_edeyne_alive_tooltip
+	}
+}
+
+country_event = { #The First to Kneel
+	id = flavour_thunderborn.2
+	title = flavour_thunderborn.2.t
+	desc = flavour_thunderborn.2.d
+	picture = COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.2.a
+		remove_estate_privilege = estate_monstrous_tribes_free_clans
+		add_manpower = 5
+		thunderborn_upgrade_edeynes_insecurity_effect = yes
+	}
+}
+
+country_event = { #The Grandest Celebration
+	id = flavour_thunderborn.3
+	title = flavour_thunderborn.3.t
+	desc = flavour_thunderborn.3.d
+	picture = COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.3.a
+		add_church_power = -100
+		custom_tooltip = I49_non_malukhuga_celebration_tooltip
+		set_country_flag = I49_non_malukhuga_celebration
+		set_country_flag = irdaeos_celebration
+		if = {
+			limit = { has_filustkhuga_religious_practice = yes }
+			country_event = {
+				id = irdaeos_worship.101
+			}
+		}
+		else_if = {
+			limit = { has_irduhuga_religious_practice = yes }
+			country_event = {
+				id = irdaeos_worship.102
+			}
+		}
+		else_if = {
+			limit = { has_maslekhuga_religious_practice = yes }
+			country_event = {
+				id = irdaeos_worship.103
+			}
+		}
+		hidden_effect = {
+			add_country_modifier = {
+				name = irdaeos_celebration_cooldown
+				duration = 3650
+			}
+			add_innovativeness_or_monarch_power_anb = { amount = 2 }
+			every_subject_country = {
+				add_liberty_desire = -10
+			}
+		}
+	}
+}
+
+country_event = { #It's Dark Outside
+	id = flavour_thunderborn.4
+	title = flavour_thunderborn.4.t
+	desc = flavour_thunderborn.4.d
+	picture = COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.4.a
+		add_country_modifier = {
+			name = I49_just_two_of_us
+			duration = 3650
+		}
+		thunderborn_upgrade_edeynes_insecurity_effect = yes
+	}
+}
+
+country_event = { #hidden event for Eye of the Storm
+	id = flavour_thunderborn.5
+	title = flavour_thunderborn.5.t
+	desc = flavour_thunderborn.5.d
+	picture = COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		random_subject_country = {
+			limit = {
+				OR = {
+					religious_school = {
+						group = centaur_religion
+						school = filustkhuga_school
+					}
+					religious_school = {
+						group = centaur_religion
+						school = irdukhuga_school
+					}
+					religious_school = {
+						group = centaur_religion
+						school = maslekhuga_school
+					}
+				}
+			}
+			save_event_target_as = event_target:I49_highest_dev_vassal
+		}
+		every_subject_country = { 
+			limit = {
+				OR = {
+					religious_school = {
+						group = centaur_religion
+						school = filustkhuga_school
+					}
+					religious_school = {
+						group = centaur_religion
+						school = irdukhuga_school
+					}
+					religious_school = {
+						group = centaur_religion
+						school = maslekhuga_school
+					}
+				}
+			}
+			save_event_target_as = event_target:I49_highest_dev_vassal
+		}
+	}
+
+	option = {
+		name = flavour_thunderborn.5.a
+		event_target:event_target:I49_highest_dev_vassal = {
+			if = {
+				limit = {
+					religious_school = {
+						group = centaur_religion
+						school = filustkhuga_school
+					}
+				}
+				overlord = {
+					add_manpower = 15
+					add_church_power = 100
+					home_trade_node_effect_scope = {
+						add_trade_node_income = 12
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					religious_school = {
+						group = centaur_religion
+						school = irdukhuga_school
+					}
+				}
+				overlord = {
+					add_manpower = 10
+					add_church_power = 100
+					home_trade_node_effect_scope = {
+						add_trade_node_income = 18
+					}
+				}
+			}
+			else = {
+				overlord = {
+					add_manpower = 10
+					add_church_power = 150
+					home_trade_node_effect_scope = {
+						add_trade_node_income = 12
+					}
+				}
+			}
+		}
+	}
+}
+
+country_event = { #The Third Darkening
+	id = flavour_thunderborn.6
+	title = flavour_thunderborn.6.t
+	desc = flavour_thunderborn.6.d
+	picture = COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.6.a
+		add_ruler_modifier = {
+			name = I49_edeynes_insecurity_1
+		}
+		country_event = {
+			id = flavour_thunderborn.7
+			days = 33
+		}
+	}
+}
+
+country_event = { #At the Edge of Everything, Once More
+	id = flavour_thunderborn.7
+	title = flavour_thunderborn.7.t
+	desc = flavour_thunderborn.7.d
+	picture = COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+
+	immediate = {
+		remove_country_modifier = exceptional_willpower_75
+		add_ruler_modifier = {
+			name = exceptional_willpower_100
+		}
+	}
+
+	option = { 
+		name = flavour_thunderborn.7.a
+		remove_country_modifier = I49_edeynes_insecurity_1
+		clr_country_flag = I49_no_forming_taryean
+		add_ruler_modifier = {
+			name = I49_the_storm_queen
+		}
+		increase_ruler_adm_effect = yes
+		increase_ruler_dip_effect = yes
+		increase_ruler_mil_effect = yes
+		custom_tooltip = I49_edge_everything_once_more_willpower_tooltip
+	}
+}
+
+country_event = { #She Was Born of the Storm
+	id = flavour_thunderborn.8
+	title = flavour_thunderborn.8.t
+	desc = flavour_thunderborn.8.d
+	picture = COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.8.a
+		set_country_flag = I49_conduits_level_1
+		custom_tooltip = I49_conduits_unlock_tooltip
+	}
+}
+
+country_event = { #hidden event for To Be the Conduit
+	id = flavour_thunderborn.9
+	title = flavour_thunderborn.9.t
+	desc = flavour_thunderborn.9.d
+	picture = COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		export_to_variable = {
+			which = I49_to_be_conduit_army_tradition_variable
+			value = army_tradition
+			who = ROOT
+		}
+		set_variable = {
+			which = I49_to_be_conduit_while_variable
+			value = 10
+		}
+	}
+
+	option = { 
+		name = flavour_thunderborn.9.a
+		while = {
+			limit = {
+				NOT = {
+					check_variable = {
+						which = I49_to_be_conduit_while_variable
+						which = I49_to_be_conduit_army_tradition_variable
+					}
+				}
+			}
+			change_variable = {
+				which = I49_to_be_conduit_while_variable
+				value = 10
+			}
+			change_mana = { amount = 10 }
+			increase_magic_experience = { unmodified_amount = 10 }
+		}
+	}
+}
+
+country_event = { #Cerulean
+	id = flavour_thunderborn.10
+	title = flavour_thunderborn.10.t
+	desc = flavour_thunderborn.10.d
+	picture = COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.10.a
+		thunderborn_upgrade_edeynes_insecurity_effect = yes
+		force_add_normal_ruler_personality = { personality = wind_planetouched_personality }
+		set_custom_spell_list = {
+			group = centaur
+			subgroup = thunderborn
+		}
+	}
+}
+
+country_event = { #Deciphered Wreckage
+	id = flavour_thunderborn.11
+	title = flavour_thunderborn.11.t
+	desc = flavour_thunderborn.11.d
+	picture = COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.11.a
+		add_country_modifier = {
+			name = I49_new_ideas
+			duration = 3650
+		}
+		custom_tooltip = I49_deciphered_wreckage_institution_tooltip
+		hidden_effect = {
+			if = {
+				limit = {
+					has_institution = feudalism
+				}
+				add_adm_power = 100
+				add_dip_power = 100
+				add_mil_power = 100
+			}
+			else = {
+				capital_scope = {
+					add_institution_embracement = {
+						which = feudalism
+						value = 100
+					}
+				}
+			}
+		}
+	}
+}
+
+country_event = { #A Stumble, a Fall
+	id = flavour_thunderborn.12
+	title = flavour_thunderborn.12.t
+	desc = flavour_thunderborn.12.d
+	picture = COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.12.a
+		set_country_flag = I49_zaya_injured
+	}
+}
+
+country_event = { #Cloud Cover
+	id = flavour_thunderborn.13
+	title = flavour_thunderborn.13.t
+	desc = flavour_thunderborn.13.d
+	picture = COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.13.a
+		clr_country_flag = I49_zaya_alive
+		clr_country_flag = I49_zaya_injured
+		add_prestige = 10
+		add_splendor = 100
+	}
+}
+
+country_event = { #The Final Darkening
+	id = flavour_thunderborn.14
+	title = flavour_thunderborn.14.t
+	desc = flavour_thunderborn.14.d
+	picture = COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+	fire_only_once = yes
+
+	trigger = {
+		is_or_was_tag = {
+			tag = I49
+		}
+		has_country_flag = I49_edeyne_alive
+	}
+
+	option = { 
+		name = flavour_thunderborn.14.a
+		clr_country_flag = I49_edeyne_alive
+		add_prestige = 10
+		add_splendor = 100
+		if = {
+			limit = {
+				tag = I49
+			}
+			set_country_flag = I49_edeyne_dead_early
+			swap_non_generic_missions = yes
+		}
+		else = {
+			country_event = {
+				id = flavour_thunderborn.15
+				days = 36500
+			}
+		}
+	}
+}
+
+country_event = { #Sunbreak
+	id = flavour_thunderborn.15
+	title = flavour_thunderborn.15.t
+	desc = flavour_thunderborn.15.d
+	picture = COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.13.a
+		add_country_modifier = {
+			name = I49_blessings_of_the_storm
+			duration = -1
+		}
+	}
+}

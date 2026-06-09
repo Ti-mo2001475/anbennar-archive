@@ -7749,6 +7749,89 @@ on_war_declaration_effect = {
 		}
 		country_event = { id = dragon_turtles.16 }
 	}
+	#Thunderborn
+	if = {
+		limit = {
+			tag = I49
+			mission_completed = I49_edge_of_the_endless_plain
+			OR = {
+				has_country_flag = thunderborn_attacking_filustkhuga
+				has_country_flag = thunderborn_attacking_irdukhuga
+				has_country_flag = thunderborn_attacking_maslekhuga
+			}
+		}
+		if = {
+			limit = {
+				is_in_war = {
+					casus_belli = cb_vassalize_mission
+				}
+				has_country_flag = thunderborn_attacking_filustkhuga
+			}
+			every_known_country = {
+				limit = {
+					religious_school = {
+						group = centaur_religion
+						school = filustkhuga_school
+					}
+				}
+				ROOT = {
+					remove_casus_belli = {
+						target = PREV
+						type = cb_vassalize_mission
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				is_in_war = {
+					casus_belli = cb_vassalize_mission
+				}
+				has_country_flag = thunderborn_attacking_irdukhuga
+			}
+			every_known_country = {
+				limit = {
+					religious_school = {
+						group = centaur_religion
+						school = irdukhuga_school
+					}
+				}
+				ROOT = {
+					remove_casus_belli = {
+						target = PREV
+						type = cb_vassalize_mission
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				is_in_war = {
+					casus_belli = cb_vassalize_mission
+				}
+				has_country_flag = thunderborn_attacking_maslekhuga
+			}
+			every_known_country = {
+				limit = {
+					religious_school = {
+						group = centaur_religion
+						school = maslekhuga_school
+					}
+				}
+				ROOT = {
+					remove_casus_belli = {
+						target = PREV
+						type = cb_vassalize_mission
+					}
+				}
+			}
+		}
+		else = {
+			clr_country_flag = thunderborn_attacking_filustkhuga
+			clr_country_flag = thunderborn_attacking_irdukhuga
+			clr_country_flag = thunderborn_attacking_maslekhuga
+		}
+	}
 }
 
 remove_all_age_of_discovery_modifiers = {
@@ -7798,6 +7881,11 @@ remove_all_age_of_discovery_modifiers = {
 		if = {
 			limit = { has_country_modifier = I55_vanishing_migration }
 			remove_country_modifier = I55_vanishing_migration
+		}
+		#Thunderborn
+		if = {
+			limit = { has_country_flag = I49_non_malukhuga_celebration }
+			clr_country_flag = I49_non_malukhuga_celebration
 		}
 	}
 	if = {
@@ -11978,6 +12066,19 @@ on_capital_moved_effect = {
         }
         FROM = { remove_province_modifier = U09_gnollkind_fort }
     }
+	if = {
+		limit = { 
+			tag = I49
+			mission_completed = I49_to_wander_with_purpose
+			current_age = age_of_discovery
+		}
+		add_adm_power = 25
+		add_dip_power = 25
+		add_mil_power = 25
+		capital_scope = {
+			add_random_development = 1
+		}
+	}
 }
 
 on_government_change_effect = {
@@ -19442,5 +19543,19 @@ on_consort_death_effects = {
 			has_country_flag = harpy_tolerance_harpy_wife_happy_life
 		}
 		clr_country_flag = harpy_tolerance_harpy_wife_happy_life
+	}
+	if = { #Thunderborn
+		limit = { has_country_flag = I49_zaya_alive }
+		if = {
+			limit = { NOT = { tag = J56 } }
+			country_event = {
+				id = flavour_thunderborn.12
+			}
+		}
+		else = {
+			country_event = {
+				id = flavour_thunderborn.13
+			}
+		}
 	}
 }
