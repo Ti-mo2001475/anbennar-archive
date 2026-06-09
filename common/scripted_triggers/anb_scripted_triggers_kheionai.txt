@@ -426,3 +426,80 @@ has_windward_modifier = { #Checks if there's a windward in the province
 		has_province_modifier = windward_level_1
 	}
 }
+
+windward_upgrade_triggers = {
+	if = {
+		limit = { has_province_modifier = windward_level_10 }
+		custom_trigger_tooltip = {
+			tooltip = upgrade_windward_10_tt
+			always = no
+		}
+	}
+	if = {
+		limit = { has_province_modifier = windward_level_9 }
+	}
+	if = {
+		limit = { has_province_modifier = windward_level_8 }
+	}
+	if = {
+		limit = { has_province_modifier = windward_level_7 }
+		
+	}
+	if = {
+		limit = { has_province_modifier = windward_level_6 }
+		owner = {
+			treasury = 1500
+			OR = {
+				manpower = 20
+				has_mana = { amount = 200 }
+			}
+		}
+	}
+	if = {
+		limit = { has_province_modifier = windward_level_5 }
+		owner = {
+			treasury = 1000
+			OR = {
+				manpower = 15
+				has_mana = { amount = 150 }
+			}
+		}
+	}
+	if = {
+		limit = { has_province_modifier = windward_level_4 }
+		owner = { manpower = 10 }
+		OR = {
+			if = {
+				limit = { has_dlc = Leviathan }
+				num_of_times_expanded_infrastructure = 1
+			}
+			else = {
+				development = 15
+				owner = { adm_power = 50 }
+			}
+			owner = { has_mana = { amount = 100 } }
+		}
+	}
+	if = {
+		limit = { has_province_modifier = windward_level_3 }
+		OR = {
+			has_building = ramparts
+			base_manpower = 6
+		}
+	}
+	if = {
+		limit = { has_province_modifier = windward_level_2 }
+		OR = {
+			has_fort_16th_building_trigger = yes
+			has_building = mage_tower
+		}
+	}
+	if = {
+		limit = { has_province_modifier = windward_level_1 }
+		has_fort_building_trigger = yes
+	}
+	if = {
+		limit = { has_windward_modifier = no }
+		owner = { adm_power = 50 }
+	}
+}
