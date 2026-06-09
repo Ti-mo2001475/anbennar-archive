@@ -8205,7 +8205,11 @@ on_monthly_pulse = {
 
 	update_all_achievements = yes
 
-	2728 = { province_event = { id = kheionai.1 } } #Deathwinds Handler Event
+	#Deathwinds Handler Event
+	if = {
+		limit = { owns = 2728 } #Arpedifer
+		2728 = { province_event = { id = kheionai.1 } } #Deathwinds Handler Event}
+	}
 
 	if = {
 		limit = {
@@ -9669,7 +9673,10 @@ on_monthly_pulse = {
 	}
 
 	#Deathwinds, increment deathwinds progress by 1 month
-	alecand_region = { change_aPUI_var_provincial = { name = deathwinds amount = 1 } }
+	if = {
+		limit = { owns = 2728 } #Arpedifer
+		alecand_region = { change_aPUI_var_provincial = { name = deathwinds amount = 1 } }
+	}
 }
 
 on_yearly_pulse = {

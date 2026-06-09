@@ -73,6 +73,19 @@ change_aPUI_var_provincial = {
 		}
 	}
 }
+set_aPUI_var_provincial = {
+	# To change the 'currency' use  'change_aPUI_var = { name = <name> amount = 10 }' to increase it by 10.
+	# You can also specify the name of a variable if you wish to calculate the quantity instead of using a static value
+	[[amount] set_variable = { aPUI_$name$_var = $amount$ } ]
+	[[var_amount] set_variable = { which = aPUI_$name$_var which = $var_amount$ } ]
+	hidden_effect = {
+		cap_aPUI_var = { name = $name$ }
+		if = {
+			limit = { FROM = { ai = no } }
+			update_aPUI_var_bar = { name = $name$ }
+		}
+	}
+}
 set_aPUI_cap = {
 	[[amount] set_variable = { which = aPUI_$name$_capacity value = $amount$ } ]
 	[[which] set_variable = { which = aPUI_$name$_capacity which = $which$ } ]

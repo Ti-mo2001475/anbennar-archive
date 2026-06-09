@@ -25,6 +25,11 @@ country_event = {
 		alecand_region = {
 			set_province_flag = aPUI_deathwinds_flag
 			set_aPUI_cap = { name = deathwinds amount = 108 } #9 years in months (9*12=108)
+			change_aPUI_var_provincial = { name = deathwinds amount = 95 } #Next deathwind is 13 months away (108-13=95)
+			
+			set_variable = { deathwinds_warded_var = -1 }
+			set_variable = { deathwinds_var = -1 }
+			set_variable = { deathwinds_rand_var = -1 }
 		}
 		hidden_effect = {
 			#Do the first storm on Jan 1st 1445
@@ -59,8 +64,6 @@ province_event = {
 		has_global_flag = enable_deathwinds_handler_flag
 		NOT = { has_global_flag = permanently_ended_deathwinds }
 	}
-
-	immediate = { }
 
 	option = {
 		name = none
@@ -158,9 +161,8 @@ country_event = {
 	is_triggered_only = yes
 	major = yes
 	major_trigger = {
-		any_owned_province = {
-			superregion = kheionai_superregion
-		}
+		any_owned_province = { superregion = kheionai_superregion }
+		NOT = { any_owned_province = { region = alecand_region } }
 	}
 
 	option = {
@@ -192,9 +194,8 @@ country_event = {
 	is_triggered_only = yes
 	major = yes
 	major_trigger = {
-		any_owned_province = {
-			superregion = kheionai_superregion
-		}
+		any_owned_province = { superregion = kheionai_superregion }
+		NOT = { any_owned_province = { region = alecand_region } }
 	}
 
 	option = {
