@@ -4,27 +4,19 @@ lesser_heroes_state = {
 	icon = "castle"
 	allow_normal_conversion = yes
 	potential = {
-		OR = {
-			has_reform = lesser_heroes_state
-			have_had_reform = lesser_heroes_state
-			culture_group = taychendi_ruinborn_elf
-		}
+		culture_group = taychendi_ruinborn_elf
 	}
 	trigger = {
-		OR = {
-			has_reform = lesser_heroes_state
-			have_had_reform = lesser_heroes_state
-			culture_group = taychendi_ruinborn_elf
-		}
+		culture_group = taychendi_ruinborn_elf
 	}
 	modifiers = {
-		free_leader_pool = 2
-		vassal_forcelimit_bonus = 0.15
-		vassal_income = 0.2
-        governing_capacity = -100
+		vassal_forcelimit_bonus = 0.2
+		vassal_income = 0.225
+        governing_capacity = -75
+		liberty_desire_from_subject_development = +0.2
 	}
-	ai = {
-		factor = 12
+	effect = {
+		custom_tooltip = yearly_glory_tt #add glory every year trough on_action and event
 	}
 }
 
@@ -33,19 +25,10 @@ kalavendy_gos_ref = {  #Идея в том что калавендские ло�
 	icon = "royal_court"
 	allow_normal_conversion = yes
 	potential = {
-		OR = {
-			have_had_reform = kalavendy_gos_ref
-			culture_group = kalavendhi
-		}
+		culture = kalavendhi
 	}
 	trigger = {
-		OR = {
-			have_had_reform = kalavendy_gos_ref
-			culture_group = kalavendhi
-			capital_scope = {
-				region = kalavend_region
-			}
-		}
+		culture = kalavendhi
 	}
 	modifiers = {
 		manpower_recovery_speed = 0.1
@@ -56,9 +39,9 @@ kalavendy_gos_ref = {  #Идея в том что калавендские ло�
 		hidden_effect = {
 			every_owned_province = {
 				if = {
-					limit = { province_with_arable_goods = yes }
+					limit = { province_with_arable_goods = yes region = kalavend_region }
 					add_province_modifier = {
-						name = kalavendy_water_lords
+						name = kalavendy_population #+15 local manpower and 20% trade value modifier
 						duration = -1
 						hidden = yes
 					}
@@ -69,9 +52,10 @@ kalavendy_gos_ref = {  #Идея в том что калавендские ло�
 	removed_effect = {
 		hidden_effect = {
 			every_owned_province = {
-				limit = { has_province_modifier = kalavendy_water_lords }
-				remove_province_modifier = kalavendy_water_lords
+				limit = { has_province_modifier = kalavendy_population }
+				remove_province_modifier = kalavendy_population
 			}
 		}
 	}
 }
+
