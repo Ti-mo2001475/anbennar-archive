@@ -503,3 +503,31 @@ windward_upgrade_triggers = {
 		owner = { adm_power = 50 }
 	}
 }
+
+windwards_reinforce_with_manpower_trigger = {
+	#Requires manpower equal to 5 + (2 * Maximum Potential Deathwind Level) 
+	owner = {
+		if = {
+			limit = { is_year = 1520 } #Level 10 Max
+			manpower = 25
+		}
+		else_if = {
+			limit = { is_year = 1480 } #Level 8 Max
+			manpower = 21
+		}
+		else_if = {
+			limit = { is_year = 1450 } #Level 4 Max
+			manpower = 13
+		}
+		else = { #Level 1 Max
+			manpower = 6
+		}
+	}
+}
+
+windwards_reinforce_with_mana_trigger = {
+	owner = {
+		is_overall_abjuration_level_1_minimum = yes
+		has_mana = { amount = 15 }
+	}
+}

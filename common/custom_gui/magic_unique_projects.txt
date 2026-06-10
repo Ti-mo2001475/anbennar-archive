@@ -1688,3 +1688,75 @@ custom_icon = {
 		trigger = { always = yes }
 	}
 }
+
+########################
+# Deathwinds Project
+custom_window = {
+	name = kheionai_projects_window
+	potential = {
+		has_full_deathwinds_system = yes
+	}
+}
+# Button 1
+custom_text_box = { name = deathwinds_kheion_and_kaydhano potential = { always = no } tooltip = deathwinds_kheion_and_kaydhano.desc }
+custom_button = {
+	name = deathwinds_kheion_and_kaydhano
+	trigger = { 
+		can_upgrade_project = { project = deathwinds_kheion_and_kaydhano }
+		if = {
+			limit = { exactly_magic_project_level = { project = kanolowele_volcanic_armoury level = 2 } }
+			
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = kanolowele_volcanic_armoury level = 1 } }
+			
+		}
+		else = {
+			
+		}
+	}
+	effect = {
+		start_magic_project = {
+			project = deathwinds_kheion_and_kaydhano
+			event_1 = kheionai.20
+			event_2 = kheionai.30
+			event_3 = kheionai.40
+		}
+	}
+	tooltip = deathwinds_kheion_and_kaydhano.desc
+}
+# Progressbar 1
+custom_text_box = { name = deathwinds_kheion_and_kaydhano_progress potential = { always = no } }
+custom_button = { name = deathwinds_kheion_and_kaydhano_progress potential = { always = no } }
+custom_icon = {
+	name = deathwinds_kheion_and_kaydhano_progress
+	frame = {
+		number = 100
+		trigger = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 3 } }
+	}
+	frame = {
+		number = 66
+		trigger = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 2 } }
+	}
+	frame = {
+		number = 33
+		trigger = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } }
+	}
+	frame = {
+		number = 0
+		trigger = { always = yes }
+	}
+}
+# Textbox 1
+custom_button = { name = deathwinds_kheion_and_kaydhano_textbox potential = { always = no } }
+custom_text_box = {
+	name = deathwinds_kheion_and_kaydhano_textbox
+	# potential = { }
+}
+# Magic school icon
+custom_text_box = { name = deathwinds_kheion_and_kaydhano_school_icon potential = { always = no } }
+custom_button = { name = deathwinds_kheion_and_kaydhano_school_icon potential = { always = no } }
+custom_icon = {
+	name = deathwinds_kheion_and_kaydhano_school_icon
+	frame = { number = 1 } # Adjuration
+}
