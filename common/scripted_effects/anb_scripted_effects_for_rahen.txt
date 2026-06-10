@@ -2241,9 +2241,31 @@ command_move_orc_slave_state = { #tag = R63 OR R64   target = command_move_targe
 	}
 	hidden_effect = {
 		$tag$ = {
-			every_owned_province = {
+			random_owned_province = { #Go to new capital immediately to prevent weirdness around institution preservation
+				limit = { has_province_flag = command_move_target_flag }
+				hidden_effect = {
+					export_to_variable = {
+						variable_name = previousCulture
+						value = culture
+					}
+					export_to_variable = {
+						variable_name = previousReligion
+						value = religion
+					}
+				}
+				add_core = PREV
+				change_culture = PREV
+				change_religion = PREV
+				add_base_manpower = 2
+				$tag$ = {
+					set_capital = PREV
+				}
+				
+				set_province_flag = command_converted_province_flag
+			}
+			every_owned_province = { #Hand old provinces back to Command
 				limit = { NOT = { has_province_flag = command_move_target_flag } }
-				if = {
+				if = { #convert back old capital
 					limit = { has_province_flag = command_converted_province_flag }
 					add_base_manpower = -2
 					change_culture = variable:previousCulture
@@ -2295,27 +2317,6 @@ command_move_orc_slave_state = { #tag = R63 OR R64   target = command_move_targe
 					add_core = R62
 				}
 			}
-			random_owned_province = {
-				hidden_effect = {
-					export_to_variable = {
-						variable_name = previousCulture
-						value = culture
-					}
-					export_to_variable = {
-						variable_name = previousReligion
-						value = religion
-					}
-				}
-				add_core = PREV
-				change_culture = PREV
-				change_religion = PREV
-				add_base_manpower = 2
-				$tag$ = {
-					set_capital = PREV
-				}
-				
-				set_province_flag = command_converted_province_flag
-			}
 			every_owned_province = { clr_province_flag = command_move_target_flag }
 			
 			change_variable = {
@@ -2366,6 +2367,19 @@ command_slave_state_cede_surrounding = {
 	}
 	#NOTE: this is done like this because ceding the province directly in every_neighbor_province can cause a crash
 	#perhaps because e.g. the list of border provinces is decreased in size by adding a new province to the tag
+}
+
+command_brorc_gain_hubris_per_unit_in_province = { #FROM is the province scope, this is for use in on_siege_won_country
+	if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 10 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 10 } }
+	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 9 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 9 } }
+	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 8 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 8 } }
+	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 7 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 7 } }
+	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 6 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 6 } }
+	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 5 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 5 } }
+	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 4 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 4 } }
+	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 3 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 3 } }
+	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 2 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 2 } }
+	else = { add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 1 } }
 }
 
 command_migration_randomization_effect = {
