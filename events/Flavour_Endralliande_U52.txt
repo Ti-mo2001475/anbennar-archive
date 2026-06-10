@@ -593,7 +593,7 @@ country_event = { #votes counted
 					value = 2
 				}
 			}
-			else_if = {
+			if = {
 				limit = {
 					check_variable = {
 						which = end_elven_candidate_favor
@@ -609,7 +609,7 @@ country_event = { #votes counted
 					value = 3
 				}
 			}
-			else_if = {
+			if = {
 				limit = {
 					check_variable = {
 						which = end_mistmancer_candidate_favor
@@ -625,7 +625,7 @@ country_event = { #votes counted
 					value = 4
 				}
 			}
-			else_if = {
+			if = {
 				limit = { 
 					check_variable = {
 						which = end_agrarian_candidate_favor
@@ -641,7 +641,7 @@ country_event = { #votes counted
 					value = 5
 				}
 			}
-			else_if = {
+			if = {
 				limit = { 
 					check_variable = {
 						which = end_industrialist_candidate_favor
@@ -657,7 +657,7 @@ country_event = { #votes counted
 					value = 6
 				}
 			}
-			else_if = {
+			if = {
 				limit = {
 					check_variable = {
 						which = end_imperialist_candidate_favor
@@ -903,7 +903,7 @@ country_event = { #votes counted
 				estate = estate_adventurers
 				loyalty = 5
 			}
-			capital_scope = { add_random_development = -1 }
+			capital_scope = { remove_random_development = yes }
 			random_owned_province = {
 				limit = {
 					OR = {
@@ -963,7 +963,12 @@ country_event = { #votes counted
 				}
 			}
 			random_owned_province = {
-				limit = { NOT = { has_production_building_trigger = yes } }
+				limit = { 
+					NOT = { 
+						has_production_building_trigger = yes 
+						has_any_ongoing_construction = yes
+					}
+				}
 				add_building_construction = { building = workshop }
 			}
 			#end_change_regional_rivalry = yes
@@ -1022,9 +1027,83 @@ country_event = { #votes counted
 						has_country_flag = end_imperialist_reelect
 					}
 				}
-				change_adm = 1
-				change_dip = 1
-				change_mil = 1
+				if = {
+					limit = { 
+						AND = {
+							has_ruler_flag = end_noble_candidate_ruler
+							has_country_flag = end_noble_reelect
+						}	
+					}
+					change_adm = 1
+					change_dip = 1
+					change_mil = 1
+				}
+				if = {
+					limit = { 
+						AND = {
+							has_ruler_flag = end_local_candidate_ruler
+							has_country_flag = end_local_reelect
+						}	
+					}
+					change_adm = 1
+					change_dip = 1
+					change_mil = 1
+				}
+				if = {
+					limit = { 
+						AND = {
+							has_ruler_flag = end_elven_candidate_ruler
+							has_country_flag = end_elven_reelect
+						}	
+					}
+					change_adm = 1
+					change_dip = 1
+					change_mil = 1
+				}
+				if = {
+					limit = { 
+						AND = {
+							has_ruler_flag = end_mistmancer_candidate_ruler
+							has_country_flag = end_mistmancer_reelect
+						}	
+					}
+					change_adm = 1
+					change_dip = 1
+					change_mil = 1
+				}
+				if = {
+					limit = { 
+						AND = {
+							has_ruler_flag = end_agrarian_candidate_ruler
+							has_country_flag = end_agrarian_reelect
+						}	
+					}
+					change_adm = 1
+					change_dip = 1
+					change_mil = 1
+				}
+				if = {
+					limit = { 
+						AND = {
+							has_ruler_flag = end_industrialist_candidate_ruler
+							has_country_flag = end_industrialist_reelect
+						}	
+					}
+					change_adm = 1
+					change_dip = 1
+					change_mil = 1
+				}
+				if = {
+					limit = { 
+						AND = {
+							has_ruler_flag = end_imperialist_candidate_ruler
+							has_country_flag = end_imperialist_reelect
+						}	
+					}
+					change_adm = 1
+					change_dip = 1
+					change_mil = 1
+				}
 				clr_country_flag = end_noble_reelect
 				clr_country_flag = end_local_reelect
 				clr_country_flag = end_elven_reelect
