@@ -1,5 +1,5 @@
 
-#hereditary_vs_nobility
+#hereditary_vs_nobility t2
 lesser_heroes_state = { 
 	icon = "castle"
 	allow_normal_conversion = yes
@@ -20,7 +20,7 @@ lesser_heroes_state = {
 	}
 }
 
-#Bureaucracy:
+#Bureaucracy t3
 kalavendy_gos_ref = {  #Идея в том что калавендские лоры
 	icon = "royal_court"
 	allow_normal_conversion = yes
@@ -59,3 +59,86 @@ kalavendy_gos_ref = {  #Идея в том что калавендские ло�
 	}
 }
 
+#state_and_religion t4
+Age_of_glory = {
+    icon = "politician"
+	allow_normal_conversion = yes
+    potential = {
+        culture_group = taychendi_ruinborn_elf
+    }
+	trigger = {
+		culture_group = taychendi_ruinborn_elf
+	}
+    modifiers = {
+        monthly_splendor = 1
+        prestige = 0.75
+    }
+    
+    conditional = {
+        allow = {
+            has_dlc = "Mandate of Heaven"
+        }
+        custom_attributes = {
+            GER_taking_age_rewards_gives_stability = yes #Переделать дома
+        }
+    }
+    
+    conditional = {
+        allow = {
+            NOT = { has_dlc = "Mandate of Heaven" }
+        }
+        custom_attributes = {
+            diet_increases_not_influence = yes
+        }
+    }
+} 
+
+#growth_of_administration t7
+relic_lords_of_taychend = {
+    icon = "royal_court"
+    allow_normal_conversion = yes
+    potential = {
+        culture_group = taychendi_ruinborn_elf
+    }
+    trigger = {
+        culture_group = taychendi_ruinborn_elf
+    }
+    modifiers = {
+		max_absolutism = 10
+        global_autonomy = -0.015
+    }
+    conditional_modifier = {
+        trigger = {
+            trading_part = { trade_goods = precursor_relics value = 0.05 }
+        }
+        modifier = { max_absolutism_effect = 0.05 }
+    }
+	conditional_modifier = {
+        trigger = {
+			NOT = { trading_part = { trade_goods = precursor_relics value = 0.05 } }
+            trading_part = { trade_goods = precursor_relics value = 0.10 }
+        }
+        modifier = { max_absolutism_effect = 0.1 }
+    }
+    conditional_modifier = {
+        trigger = {
+			NOT = { trading_part = { trade_goods = precursor_relics value = 0.10 } }
+            trading_part = { trade_goods = precursor_relics value = 0.20 }
+        }
+        modifier = { max_absolutism_effect = 0.15 }
+    }
+    conditional_modifier = {
+        trigger = {
+			NOT = { trading_part = { trade_goods = precursor_relics value = 0.20 } }
+            trading_part = { trade_goods = precursor_relics value = 0.30 }
+        }
+        modifier = { max_absolutism_effect = 0.2 }
+    }
+    conditional_modifier = {
+        trigger = {
+			NOT = { trading_part = { trade_goods = precursor_relics value = 0.30 } }
+            trading_part = { trade_goods = precursor_relics value = 0.40 }
+        }
+        modifier = { max_absolutism_effect = 0.25 }
+    }
+}
