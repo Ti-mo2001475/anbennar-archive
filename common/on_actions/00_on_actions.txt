@@ -4616,28 +4616,28 @@ on_siege_won_country = {
 		}
 	}
 
-	if = { #Turns out ROOT is the siege leader so this doesn't work if you attach
+	if = { #Turns out ROOT is the siege leader so this wasn't working if you attached. This catches like 90% of edge cases.
 		limit = {
-			has_government_mechanic = brorc_slave_mechanic
 			FROM = { fort_level = 1 }
-		}
-		command_brorc_gain_hubris_per_unit_in_province = yes
-	}
-	else_if = { #This catches like 90% of edge cases
-		limit = {
-			tag = R62
-			FROM = { fort_level = 1 }
-			any_subject_country = {
-				has_government_mechanic = brorc_slave_mechanic
-				FROM = { units_in_province = PREV }
+			OR = {
+				tag = R62
+				is_subject_of = R62
+			}
+			R62 = {
+				any_subject_country = {
+					has_government_mechanic = brorc_slave_mechanic
+					FROM = { units_in_province = PREV }
+				}
 			}
 		}
-		every_subject_country = {
-			limit = {
-				has_government_mechanic = brorc_slave_mechanic
-				FROM = { units_in_province = PREV }
+		R62 = { #Because this only fires for siege leader, it only fires once per siege
+			every_subject_country = {
+				limit = {
+					has_government_mechanic = brorc_slave_mechanic
+					FROM = { units_in_province = PREV }
+				}
+				command_brorc_gain_hubris_per_unit_in_province = yes
 			}
-			command_brorc_gain_hubris_per_unit_in_province = yes
 		}
 	}
 }

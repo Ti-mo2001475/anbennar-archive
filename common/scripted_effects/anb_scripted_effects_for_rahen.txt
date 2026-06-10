@@ -2369,7 +2369,7 @@ command_slave_state_cede_surrounding = {
 	#perhaps because e.g. the list of border provinces is decreased in size by adding a new province to the tag
 }
 
-command_brorc_gain_hubris_per_unit_in_province = { #FROM is the province scope, this is for use in on_siege_won_country
+command_brorc_gain_hubris_per_unit_in_province = { #FROM is the province scope, this is for use in on_siege_won_country without clogging up the code
 	if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 10 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 10 } }
 	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 9 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 9 } }
 	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 8 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 8 } }

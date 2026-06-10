@@ -5745,25 +5745,20 @@ on_battle_lost_province_effect = {
 		}
 	}
 
-
-	if = {
+	if = { #so FROM is only the enemy army *leader*. This catches most edge cases for Brorcs
 		limit = {
-			FROM = { has_government_mechanic = brorc_slave_mechanic }
-			num_of_units_in_province = { who = FROM amount = 5 }
-		}
-		FROM = { add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 4 } }
-	}
-	else_if = { #so FROM is only the enemy army *leader*. This catches most edge cases
-		limit = {
-			FROM = {
-				tag = R62 #The Command
+			OR = {
+				FROM = { tag = R62 }
+				FROM = { is_subject_of = R62 }
+			}
+			R62 = {
 				any_subject_country = {
 					has_government_mechanic = brorc_slave_mechanic
 					ROOT = { num_of_units_in_province = { who = PREV amount = 5 } }
 				}
 			}
 		}
-		FROM = {
+		R62 = {
 			every_subject_country = {
 				limit = { ROOT = { num_of_units_in_province = { who = PREV amount = 5 } } }
 				add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 4 }
