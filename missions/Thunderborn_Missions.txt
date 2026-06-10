@@ -51,21 +51,15 @@ thunderborn_1 = {
 		position = 3
 		required_missions = { I49_to_wander_with_purpose } 
 		provinces_to_highlight = {  
-			if = {
-				limit = {
-					NOT = {
-						ROOT = {
-							num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-								value = 5
-								region = east_forbidden_plains_region
-							}
-						}
+			NOT = {
+				ROOT = {
+					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+						value = 5
+						region = east_forbidden_plains_region
 					}
 				}
-				region = east_forbidden_plains_region
-				NOT = { country_or_non_sovereign_subject_holds = ROOT }
 			}
-			else = { }
+			region = east_forbidden_plains_region
 		}
 
 		trigger = { 
@@ -119,11 +113,9 @@ thunderborn_1 = {
 		position = 4
 		required_missions = { I49_edge_of_the_endless_plain } 
 		provinces_to_highlight = {  
-			if = {
-				limit = {
-					has_dlc = "Mandate of Heaven"
-				}
+			AND = {
 				is_in_capital_area = yes
+				owned_by = ROOT
 				NOT = {
 					has_state_edict = edict_centralization_effort
 				}
@@ -242,21 +234,16 @@ thunderborn_2 = {
 			I49_step_by_step
 		}
 		provinces_to_highlight = {  
-			if = {
-				limit = {
-					NOT = {
-						ROOT = {
-							num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-								value = 75
-								superregion = forbidden_lands_superregion
-							}
-						}
+			NOT = {
+				ROOT = {
+					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+						value = 5
+						superregion = forbidden_lands_superregion
 					}
 				}
-				superregion = forbidden_lands_superregion
-				NOT = { country_or_non_sovereign_subject_holds = ROOT }
 			}
-		} 
+			superregion = forbidden_lands_superregion
+		}
 
 		trigger = {
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
@@ -314,19 +301,20 @@ thunderborn_3 = {
 			I49_approach_the_shamans
 		}
 		provinces_to_highlight = {  
-			if = {
-				limit = {
+			OR = {
+				AND = {
+					province_id = 5195
 					NOT = {
 						exists = I80
 					}
 				}
-				province_id = 5195
-			}
-			else = {
-				is_capital_of = I80
-				NOT = {
-					I80 = {
-						has_been_insulted_by_root = yes
+				AND = {
+					exists = I80
+					is_capital_of = I80
+					NOT = {
+						I80 = {
+							has_been_insulted_by_root = yes
+						}
 					}
 				}
 			}
@@ -605,115 +593,104 @@ thunderborn_3 = {
 		}
 		provinces_to_highlight = {  
 			OR = {
-				if = {
-					limit = {
-						5195 = {
-							OR = {
+				AND = {
+					province_id = 5195
+					5195 = {
+						OR = {
+							NOT = {
+								owned_by = ROOT
+							}
+							AND = {
+								owned_by = ROOT
 								NOT = {
-									owned_by = ROOT
-								}
-								AND = {
-									owned_by = ROOT
-									NOT = {
-										has_building = temple
-									}
+									has_building = temple
 								}
 							}
 						}
-						province_id = 5195
 					}
 				}
-				if = {
-					limit = {
-						5184 = {
-							OR = {
+				AND = {
+					province_id = 5184
+					5184 = {
+						OR = {
+							NOT = {
+								owned_by = ROOT
+							}
+							AND = {
+								owned_by = ROOT
 								NOT = {
-									owned_by = ROOT
-								}
-								AND = {
-									owned_by = ROOT
-									NOT = {
-										has_building = temple
-									}
+									has_building = temple
 								}
 							}
 						}
-						province_id = 5184
 					}
-				} 
-				if = {
-					limit = {
-						5179 = {
-							OR = {
+				}
+				AND = {
+					province_id = 5179
+					5179 = {
+						OR = {
+							NOT = {
+								owned_by = ROOT
+							}
+							AND = {
+								owned_by = ROOT
 								NOT = {
-									owned_by = ROOT
-								}
-								AND = {
-									owned_by = ROOT
-									NOT = {
-										has_building = temple
-									}
+									has_building = temple
 								}
 							}
 						}
-						province_id = 5179
 					}
-				} 
-				if = {
-					limit = {
-						5161 = {
-							OR = {
+				}
+				AND = {
+					province_id = 5161
+					5161 = {
+						OR = {
+							NOT = {
+								owned_by = ROOT
+							}
+							AND = {
+								owned_by = ROOT
 								NOT = {
-									owned_by = ROOT
-								}
-								AND = {
-									owned_by = ROOT
-									NOT = {
-										has_building = temple
-									}
+									has_building = temple
 								}
 							}
 						}
-						province_id = 5161
 					}
-				} 
-				if = {
-					limit = {
-						5081 = {
-							OR = {
+				}
+				AND = {
+					province_id = 5081
+					5081 = {
+						OR = {
+							NOT = {
+								owned_by = ROOT
+							}
+							AND = {
+								owned_by = ROOT
 								NOT = {
-									owned_by = ROOT
-								}
-								AND = {
-									owned_by = ROOT
-									NOT = {
-										has_building = temple
-									}
+									has_building = temple
 								}
 							}
 						}
-						province_id = 5081
 					}
-				} 
-				if = {
-					limit = {
-						5152 = {
-							OR = {
+				}
+				AND = {
+					province_id = 5152
+					5152 = {
+						OR = {
+							NOT = {
+								owned_by = ROOT
+							}
+							AND = {
+								owned_by = ROOT
 								NOT = {
-									owned_by = ROOT
-								}
-								AND = {
-									owned_by = ROOT
-									NOT = {
-										has_building = temple
-									}
+									has_building = temple
 								}
 							}
 						}
-						province_id = 5152
 					}
-				} 
+				}
 			}
+			
 		}
 
 		trigger = {  
@@ -783,8 +760,7 @@ thunderborn_4 = {
 	I49_approach_the_shamans = {
 		icon = mission_forest_pilgrim
 		position = 1
-		provinces_to_highlight = {  
-		} 
+		provinces_to_highlight = {  } 
 
 		trigger = {  
 			num_of_estate_privileges = {
@@ -812,17 +788,12 @@ thunderborn_4 = {
 		position = 4
 		required_missions = { I49_edge_of_the_endless_sea } 
 		provinces_to_highlight = {  
-			if = {
-				limit = {
-					is_capital_of = ROOT
-					NOT = {
-						num_of_units_in_province = {
-							amount = 10
-							who = ROOT
-						}
-					}
+			is_capital_of = ROOT
+			NOT = {
+				num_of_units_in_province = {
+					amount = 10
+					who = ROOT
 				}
-				is_capital_of = ROOT
 			}
 		} 
 
@@ -929,11 +900,10 @@ thunderborn_5 = {
 		required_missions = { I49_approach_the_shamans } 
 		provinces_to_highlight = {  
 			OR = {
-				if = {
-					limit = {
-						has_dlc = "Mandate of Heaven"
-					}
+				AND = {
+					has_dlc = "Mandate of Heaven"
 					area = zarmiklon_area
+					owned_by = ROOT
 					NOT = {
 						has_state_edict = edict_advancement_effort
 					}
@@ -1020,22 +990,18 @@ thunderborn_5 = {
 		position = 4
 		required_missions = { I49_edge_of_the_endless_sea } 
 		provinces_to_highlight = {  
-			if = {
-				limit = {
-					NOT = {
-						ROOT = {
-							capital = 5188
-						}
-						5188 = {
-							num_of_units_in_province = {
-								amount = 10
-								who = ROOT
-							}
-						}
+			NOT = {
+				ROOT = {
+					capital = 5188
+				}
+				5188 = {
+					num_of_units_in_province = {
+						amount = 10
+						who = ROOT
 					}
 				}
-				province_id = 5188
 			}
+			province_id = 5188
 		} 
 
 		trigger = {  
