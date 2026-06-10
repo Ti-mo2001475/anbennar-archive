@@ -32437,3 +32437,30 @@ on_overrun = { #ROOT - winner, FROM - loser, on stackwipe
 		}
 	}
 }
+
+on_age_ability_taken = {
+	on_age_ability_taken_$age$ = yes
+	
+	if = {
+		limit = {
+			AND = {
+				has_government_attribute = taych_taking_age_rewards_gives_glory
+				religion = gods_of_the_taychend
+			}
+			gain_taychend_glory_effect = { amount = 100 }
+		}
+	}	
+	if = {
+		limit = {
+			AND = {
+				has_government_attribute = taych_taking_age_rewards_gives_glory
+				religion = gods_of_the_taychend_reformed
+			}
+			add_government_power = {
+				mechanic_type = taychend_vainglory_mechanic
+				power_type = taychend_vainglory_power
+				value = 25
+			}
+		}
+	}
+}
