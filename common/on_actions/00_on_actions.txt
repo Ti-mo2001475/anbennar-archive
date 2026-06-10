@@ -9117,6 +9117,12 @@ on_monthly_pulse = {
 	else = {
 		remove_country_modifier = defense_of_the_empire_modifier
 	}
+
+	#Taychend
+	if = {
+		limit = { has_reform = lesser_heroes_state }
+		country_event = { id = taychendi_gov_reform.2 }	#modif 
+	}
 	
 	#counter revolution triggered mod replacement
 	if = {
@@ -32440,27 +32446,28 @@ on_overrun = { #ROOT - winner, FROM - loser, on stackwipe
 
 on_age_ability_taken = {
 	on_age_ability_taken_$age$ = yes
-	
 	if = {
 		limit = {
-			AND = {
+			OR = {
+				has_country_flag = Age_of_glory_flg
 				has_government_attribute = taych_taking_age_rewards_gives_glory
-				religion = gods_of_the_taychend
 			}
-			gain_taychend_glory_effect = { amount = 100 }
+			religion = gods_of_the_taychend
 		}
+		gain_taychend_glory_effect = { amount = 100 }
 	}	
 	if = {
 		limit = {
-			AND = {
+			OR = {
+				has_country_flag = Age_of_glory_flg
 				has_government_attribute = taych_taking_age_rewards_gives_glory
-				religion = gods_of_the_taychend_reformed
 			}
-			add_government_power = {
-				mechanic_type = taychend_vainglory_mechanic
-				power_type = taychend_vainglory_power
-				value = 25
-			}
+			religion = gods_of_the_taychend_reformed
+		}
+		add_government_power = {
+			mechanic_type = taychend_vainglory_mechanic
+			power_type = taychend_vainglory_power
+			value = 25
 		}
 	}
 }

@@ -22,7 +22,7 @@ lesser_heroes_state = {
 
 #Bureaucracy t3
 kalavendy_gos_ref = {  #Идея в том что калавендские лоры
-	icon = "kalavendy_gos_ref_icon"
+	icon = "kalavendy_gos_ref"
 	allow_normal_conversion = yes
 	potential = {
 		culture = kalavendhi
@@ -61,7 +61,7 @@ kalavendy_gos_ref = {  #Идея в том что калавендские ло�
 
 #state_and_religion t4
 Age_of_glory = {
-    icon = "Age_of_glory_icon"
+    icon = "Age_of_glory"
 	allow_normal_conversion = yes
     potential = {
         culture_group = taychendi_ruinborn_elf
@@ -82,6 +82,10 @@ Age_of_glory = {
             taych_taking_age_rewards_gives_glory = yes #Переделать дома
         }
     }
+
+	effect = {
+		set_country_flag = Age_of_glory_flg
+	}
     
     conditional = {
         allow = {
@@ -107,38 +111,11 @@ relic_lords_of_taychend = {
 		max_absolutism = 10
         global_autonomy = -0.015
     }
-    conditional_modifier = {
-        trigger = {
-            trading_part = { trade_goods = precursor_relics value = 0.05 }
-        }
-        modifier = { max_absolutism_effect = 0.05 }
-    }
-	conditional_modifier = {
-        trigger = {
-			NOT = { trading_part = { trade_goods = precursor_relics value = 0.05 } }
-            trading_part = { trade_goods = precursor_relics value = 0.10 }
-        }
-        modifier = { max_absolutism_effect = 0.1 }
-    }
-    conditional_modifier = {
-        trigger = {
-			NOT = { trading_part = { trade_goods = precursor_relics value = 0.10 } }
-            trading_part = { trade_goods = precursor_relics value = 0.20 }
-        }
-        modifier = { max_absolutism_effect = 0.15 }
-    }
-    conditional_modifier = {
-        trigger = {
-			NOT = { trading_part = { trade_goods = precursor_relics value = 0.20 } }
-            trading_part = { trade_goods = precursor_relics value = 0.30 }
-        }
-        modifier = { max_absolutism_effect = 0.2 }
-    }
-    conditional_modifier = {
-        trigger = {
-			NOT = { trading_part = { trade_goods = precursor_relics value = 0.30 } }
-            trading_part = { trade_goods = precursor_relics value = 0.40 }
-        }
-        modifier = { max_absolutism_effect = 0.25 }
+    removed_effect = {
+        remove_country_modifier = relic_lords_absolutism_1
+        remove_country_modifier = relic_lords_absolutism_2
+        remove_country_modifier = relic_lords_absolutism_3
+        remove_country_modifier = relic_lords_absolutism_4
+        remove_country_modifier = relic_lords_absolutism_5
     }
 }
