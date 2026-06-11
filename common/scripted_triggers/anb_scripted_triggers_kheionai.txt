@@ -398,76 +398,250 @@ has_full_deathwinds_system = {
 }
 
 has_deathwind_modifier = { #Checks if there's deathwinds currently happening in the province
-	OR = {
-		has_province_modifier = deathwind_level_10
-		has_province_modifier = deathwind_level_9
-		has_province_modifier = deathwind_level_8
-		has_province_modifier = deathwind_level_7
-		has_province_modifier = deathwind_level_6
-		has_province_modifier = deathwind_level_5
-		has_province_modifier = deathwind_level_4
-		has_province_modifier = deathwind_level_3
-		has_province_modifier = deathwind_level_2
-		has_province_modifier = deathwind_level_1
+	custom_trigger_tooltip = {
+		tooltip = has_deathwind_modifier_tt
+		OR = {
+			has_province_modifier = deathwind_level_10
+			has_province_modifier = deathwind_level_9
+			has_province_modifier = deathwind_level_8
+			has_province_modifier = deathwind_level_7
+			has_province_modifier = deathwind_level_6
+			has_province_modifier = deathwind_level_5
+			has_province_modifier = deathwind_level_4
+			has_province_modifier = deathwind_level_3
+			has_province_modifier = deathwind_level_2
+			has_province_modifier = deathwind_level_1
+		}
 	}
 }
 
 has_windward_modifier = { #Checks if there's a windward in the province
-	OR = {
-		has_province_modifier = windward_level_10
-		has_province_modifier = windward_level_9
-		has_province_modifier = windward_level_8
-		has_province_modifier = windward_level_7
-		has_province_modifier = windward_level_6
-		has_province_modifier = windward_level_5
-		has_province_modifier = windward_level_4
-		has_province_modifier = windward_level_3
-		has_province_modifier = windward_level_2
-		has_province_modifier = windward_level_1
-	}
+	custom_trigger_tooltip = {
+		tooltip = has_windward_modifier_tt
+		OR = {
+			has_province_modifier = windward_level_10
+			has_province_modifier = windward_level_9
+			has_province_modifier = windward_level_8
+			has_province_modifier = windward_level_7
+			has_province_modifier = windward_level_6
+			has_province_modifier = windward_level_5
+			has_province_modifier = windward_level_4
+			has_province_modifier = windward_level_3
+			has_province_modifier = windward_level_2
+			has_province_modifier = windward_level_1
+		}
+}
 }
 
+#Scripted effect for the requirements to upgrade the Windwards based on what level you have
+ #Why is basically every trigger inside a custom tooltip? Because otherwise it's shown as "Province Owner: \n	<trigger>" which looks bad, isn't necessary or helpful, and I don't want it
 windward_upgrade_triggers = {
-	if = {
+	if = { #Can't upgrade further if the province has a level 10 Windward
 		limit = { has_province_modifier = windward_level_10 }
 		custom_trigger_tooltip = {
 			tooltip = upgrade_windward_10_tt
 			always = no
 		}
 	}
-	if = {
+	#-------------------------------------------------------------------------------------------------------------
+	if = { #Level 9 > 10. Not possible atm, Kheios MT content
 		limit = { has_province_modifier = windward_level_9 }
+		tag = H22 #Kheios
+		always = no
 	}
-	if = {
+	#-------------------------------------------------------------------------------------------------------------
+	if = { #Level 8 > 9
 		limit = { has_province_modifier = windward_level_8 }
-	}
-	if = {
-		limit = { has_province_modifier = windward_level_7 }
 		
+		if = { #If you have the magical project, show it's level trigger
+			limit = { has_full_deathwinds_system = yes }
+			custom_trigger_tooltip = {
+				tooltip = owner_has_magic_project_level_2_tt
+				owner = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 2 } }
+			}
+		}
+		else = { #Otherwise show a custom tooltip telling them they can't upgrade further
+			custom_trigger_tooltip = {
+				tooltip = deathwinds_requires_magical_project_tt
+				always = no
+			}
+		}
+
+		if = { #Show the discounted triggers if the correct magical project level is completed
+			limit = { owner = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 3 } } }
+			custom_trigger_tooltip = {
+				tooltip = owner_has_treasury_1000_tt
+				owner = { treasury = 1000 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = owner_has_mana_50_tt
+				owner = { has_mana = { amount = 50 } }
+			}
+		}
+		else = {
+			custom_trigger_tooltip = {
+				tooltip = owner_has_treasury_2500_tt
+				owner = { treasury = 2500 }
+			}
+
+			if = { #If they have access to the magical project, show a tooltip that tells them about the discounted triggers
+				limit = { has_full_deathwinds_system = yes }
+				custom_trigger_tooltip = {
+					tooltip = owner_has_mana_100_hint_tt
+					owner = { has_mana = { amount = 100 } }
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = owner_has_mana_100_tt
+					owner = { has_mana = { amount = 100 } }
+				}
+			}
+
+		}
 	}
-	if = {
+	#-------------------------------------------------------------------------------------------------------------
+	if = { #Level 7 > 8
+		limit = { has_province_modifier = windward_level_7 }
+
+		if = { #If you have the magical project, show it's level trigger
+			limit = { has_full_deathwinds_system = yes }
+			custom_trigger_tooltip = {
+				tooltip = owner_has_magic_project_level_1_tt
+				owner = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } }
+			}
+		}
+		else = { #Otherwise show a custom tooltip telling them they can't upgrade further
+			custom_trigger_tooltip = {
+				tooltip = deathwinds_requires_magical_project_tt
+				always = no
+			}
+		}
+
+		if = { #Show the discounted triggers if the correct magical project level is completed
+			limit = { owner = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 3 } } }
+			custom_trigger_tooltip = {
+				tooltip = owner_has_treasury_750_tt
+				owner = { treasury = 750 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = owner_has_mana_30_tt
+				owner = { has_mana = { amount = 30 } }
+			}
+		}
+		else = {
+			custom_trigger_tooltip = {
+				tooltip = owner_has_treasury_2000_tt
+				owner = { treasury = 2000 }
+			}
+
+			if = { #If they have access to the magical project, show a tooltip that tells them about the discounted triggers
+				limit = { has_full_deathwinds_system = yes }
+				custom_trigger_tooltip = {
+					tooltip = owner_has_mana_100_hint_tt
+					owner = { has_mana = { amount = 100 } }
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = owner_has_mana_100_tt
+					owner = { has_mana = { amount = 100 } }
+				}
+			}
+
+		}
+	}
+	#-------------------------------------------------------------------------------------------------------------
+	if = {  #Level 6 > 7
 		limit = { has_province_modifier = windward_level_6 }
-		owner = {
-			treasury = 1500
+		if = { #Show the discounted triggers if the correct magical project level is completed
+			limit = { owner = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } } }
+			custom_trigger_tooltip = {
+				tooltip = owner_has_treasury_500_tt
+				owner = { treasury = 500 }
+			}
 			OR = {
-				manpower = 20
-				has_mana = { amount = 200 }
+				custom_trigger_tooltip = {
+					tooltip = owner_has_manpower_20_tt
+					owner = { manpower = 20 }
+				}
+				custom_trigger_tooltip = {
+					tooltip = owner_has_mana_20_tt
+					owner = { has_mana = { amount = 20 } }
+				}
+			}
+		}
+		else = {
+			custom_trigger_tooltip = {
+				tooltip = owner_has_treasury_1500_tt
+				owner = { treasury = 1500 }
+			}
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = owner_has_manpower_20_tt
+					owner = { manpower = 20 }
+				}
+				custom_trigger_tooltip = {
+					tooltip = owner_has_mana_200_tt
+					owner = { has_mana = { amount = 200 } }
+				}
+				if = { #If they have access to the magical project, show a tooltip that tells them about the discounted triggers
+					limit = { has_full_deathwinds_system = yes }
+					custom_trigger_tooltip = {
+						tooltip = deathwinds_tease_magical_project_tt
+						always = no
+					}
+				}
 			}
 		}
 	}
-	if = {
+	#-------------------------------------------------------------------------------------------------------------
+	if = { #Level 5 > 6
 		limit = { has_province_modifier = windward_level_5 }
-		owner = {
-			treasury = 1000
+		if = { #Show the discounted triggers if the correct magical project level is completed
+			limit = { owner = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } } }
+			custom_trigger_tooltip = {
+				tooltip = owner_has_treasury_250_tt
+				owner = { treasury = 250 }
+			}
 			OR = {
-				manpower = 15
-				has_mana = { amount = 150 }
+				custom_trigger_tooltip = {
+					tooltip = owner_has_manpower_15_tt
+					owner = { manpower = 15 }
+				}
+				custom_trigger_tooltip = {
+					tooltip = owner_has_mana_10_tt
+					owner = { has_mana = { amount = 10 } }
+				}
+			}
+		}
+		else = {
+			custom_trigger_tooltip = {
+				tooltip = owner_has_treasury_1000_tt
+				owner = { treasury = 1000 }
+			}
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = owner_has_manpower_15_tt
+					owner = { manpower = 15 }
+				}
+				custom_trigger_tooltip = {
+					tooltip = owner_has_mana_150_tt
+					owner = { has_mana = { amount = 150 } }
+				}
+				if = { #If they have access to the magical project, show a tooltip that tells them about the discounted triggers
+					limit = { has_full_deathwinds_system = yes }
+					custom_trigger_tooltip = {
+						tooltip = deathwinds_tease_magical_project_tt
+						always = no
+					}
+				}
 			}
 		}
 	}
-	if = {
+	#-------------------------------------------------------------------------------------------------------------
+	if = { #Level 4 > 5
 		limit = { has_province_modifier = windward_level_4 }
-		owner = { manpower = 10 }
 		OR = {
 			if = {
 				limit = { has_dlc = Leviathan }
@@ -475,59 +649,128 @@ windward_upgrade_triggers = {
 			}
 			else = {
 				development = 15
-				owner = { adm_power = 50 }
+				custom_trigger_tooltip = {
+					tooltip = owner_has_adm_power_50_tt
+					owner = { adm_power = 50 }
+				}
 			}
-			owner = { has_mana = { amount = 100 } }
+			custom_trigger_tooltip = {
+				tooltip = owner_has_mana_100_tt
+				owner = { has_mana = { amount = 100 } }
+			}
+		}
+		if = { #Show the discounted triggers if the correct magical project level is completed
+			limit = { owner = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } } }
+			custom_trigger_tooltip = {
+				tooltip = owner_has_manpower_2_5_tt
+				owner = { manpower = 2.5 }
+			}
+		}
+		else = {
+			if = { #If they have access to the magical project, show a tooltip that tells them about the discounted triggers
+				limit = { has_full_deathwinds_system = yes }
+				custom_trigger_tooltip = {
+					tooltip = owner_has_manpower_10_hint_tt
+					owner = { manpower = 10 }
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = owner_has_manpower_10_tt
+					owner = { manpower = 10 }
+				}
+			}
 		}
 	}
-	if = {
+	#-------------------------------------------------------------------------------------------------------------
+	if = { #Level 3 > 4
 		limit = { has_province_modifier = windward_level_3 }
 		OR = {
 			has_building = ramparts
 			base_manpower = 6
 		}
 	}
-	if = {
+	#-------------------------------------------------------------------------------------------------------------
+	if = { #Level 2 > 3
 		limit = { has_province_modifier = windward_level_2 }
 		OR = {
 			has_fort_16th_building_trigger = yes
 			has_building = mage_tower
 		}
 	}
-	if = {
+	#-------------------------------------------------------------------------------------------------------------
+	if = { #Level 1 > 2
 		limit = { has_province_modifier = windward_level_1 }
 		has_fort_building_trigger = yes
 	}
-	if = {
+	#-------------------------------------------------------------------------------------------------------------
+	if = { #Level 0 > 1
 		limit = { has_windward_modifier = no }
-		owner = { adm_power = 50 }
+		custom_trigger_tooltip = {
+			tooltip = owner_has_adm_power_50_tt
+			owner = { adm_power = 50 }
+		}
 	}
 }
 
 windwards_reinforce_with_manpower_trigger = {
 	#Requires manpower equal to 5 + (2 * Maximum Potential Deathwind Level) 
-	owner = {
-		if = {
-			limit = { is_year = 1520 } #Level 10 Max
-			manpower = 25
+	if = {
+		limit = { is_year = 1520 } #Level 10 Max
+		custom_trigger_tooltip = {
+			tooltip = owner_has_manpower_25_tt
+			owner = { manpower = 25 }
 		}
-		else_if = {
-			limit = { is_year = 1480 } #Level 8 Max
-			manpower = 21
+	}
+	else_if = {
+		limit = { is_year = 1480 } #Level 8 Max
+		custom_trigger_tooltip = {
+			tooltip = owner_has_manpower_21_tt
+			owner = { manpower = 21 }
 		}
-		else_if = {
-			limit = { is_year = 1450 } #Level 4 Max
-			manpower = 13
+	}
+	else_if = {
+		limit = { is_year = 1450 } #Level 4 Max
+		custom_trigger_tooltip = {
+			tooltip = owner_has_manpower_13_tt
+			owner = { manpower = 13 }
 		}
-		else = { #Level 1 Max
-			manpower = 6
+	}
+	else = { #Level 1 Max
+		custom_trigger_tooltip = {
+			tooltip = owner_has_manpower_7_tt
+			owner = { manpower = 7 }
 		}
+	}
+	custom_trigger_tooltip = {
+		tooltip = windwards_reinforce_with_manpower_trigger_tt
+		NOT = { has_province_flag = windwards_reinforce_with_manpower_flag }
 	}
 }
 
 windwards_reinforce_with_mana_trigger = {
-	owner = {
-		is_overall_abjuration_level_1_minimum = yes
-		has_mana = { amount = 15 }
+	has_deathwind_modifier = yes
+	custom_trigger_tooltip = {
+		tooltip = owner_is_overall_abjuration_level_1_minimum_tt
+		owner = { is_overall_abjuration_level_1_minimum = yes }
+	}
+	custom_trigger_tooltip = {
+		tooltip = owner_has_mana_15_tt
+		owner = { has_mana = { amount = 15 } }
+	}
+}
+
+reduce_windward_triggers = {
+	has_windward_modifier = yes
+	NOT = { province_group = alecandi_capital_provinces }
+	if = {
+		limit = { has_province_flag = reduced_windward_flag }
+		custom_trigger_tooltip = {
+			tooltip = destroy_windward_cooldown_tt
+			had_province_flag = {
+				flag = reduced_windward_flag
+				days = 9125 #25 years
+			}
+		}
 	}
 }

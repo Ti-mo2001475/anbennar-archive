@@ -742,7 +742,13 @@ custom_button = {
 	name = aPUI_deathwinds_button
     potential = { has_eligible_aPUI_deathwinds_in_province = yes }
 	trigger = { }
-	effect = { hidden_effect = { open_aPUI_in_province = { name = deathwinds } } }
+	effect = {
+		hidden_effect = {
+			open_aPUI_in_province = { name = deathwinds }
+			#Set variable to 0 so thecustom tooltip doesn't look wrong
+			FROM = { set_variable = { deathwinds_kheion_and_kaydhano_level = 0 } }
+		}
+		}
 	tooltip = aPUI_deathwinds_button_tt
 }
 custom_button = { #Deathwinds dummy
@@ -832,15 +838,26 @@ custom_button = {
 custom_button = {
 	name = aPUI_deathwinds_upgrades_button_4
 	tooltip = aPUI_deathwinds_upgrades_button_4
+	trigger = { reduce_windward_triggers = yes }
 	effect = {
-
+		custom_tooltip = reduce_windward_level_tt
+		reduce_windward_level = yes
 	}
 }
 custom_button = {
 	name = aPUI_deathwinds_upgrades_area_button_4
 	tooltip = aPUI_deathwinds_upgrades_area_button_4
+	trigger = {
+		area_for_scope_province = {
+			reduce_windward_triggers = yes
+		}
+	}
 	effect = {
-		
+		custom_tooltip = reduce_windward_level_area_tt
+		area = {
+			limit = { reduce_windward_triggers = yes }
+			reduce_windward_level = yes
+		}
 	}
 }
 
