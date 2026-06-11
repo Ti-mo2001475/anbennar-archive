@@ -19586,3 +19586,141 @@ on_consort_death_effects = {
 		clr_country_flag = harpy_tolerance_harpy_wife_happy_life
 	}
 }
+
+#Ensures that faction influence can't go below 1
+#Checks for has_faction instead of has_reform when factions are enabled by multiple reforms to reduce checks. Requires the factions are only ever enabled together tho
+ensure_positive_faction_influence = {
+	if = {
+		limit = {
+			ai = no
+			has_factions = yes
+		}
+		
+		#############
+		# Base Game #
+		#############
+		if = { #Merchant Factions
+			limit = { has_faction = mr_aristocrats }
+			faction_influence_update_subeffect = { faction = mr_aristocrats }
+			faction_influence_update_subeffect = { faction = mr_traders }
+			faction_influence_update_subeffect = { faction = mr_guilds }
+		}
+		if = { #Revolutionary Republics
+			limit = { has_faction = rr_jacobins }
+			faction_influence_update_subeffect = { faction = rr_jacobins }
+			faction_influence_update_subeffect = { faction = rr_royalists }
+			faction_influence_update_subeffect = { faction = rr_girondists }
+		}
+		if = { #Pirate Republics
+			limit = { has_faction = pr_buccaneers }
+			faction_influence_update_subeffect = { faction = pr_buccaneers }
+			faction_influence_update_subeffect = { faction = pr_smugglers }
+			faction_influence_update_subeffect = { faction = pr_captains }
+		}
+
+		############
+		# Anbennar #
+		############
+		#Mykx
+		faction_influence_update_subeffect = { faction = mykx_xhazobkult }
+		if = { #Adventurers
+			limit = { has_faction = adv_marchers }
+			faction_influence_update_subeffect = { faction = adv_marchers }
+			faction_influence_update_subeffect = { faction = adv_pioneers }
+			faction_influence_update_subeffect = { faction = adv_fortune_seekers }
+		}
+		if = { #Technocracy
+			limit = { has_faction = tec_brilliance }
+			faction_influence_update_subeffect = { faction = tec_brilliance }
+			faction_influence_update_subeffect = { faction = tec_technomancy }
+			faction_influence_update_subeffect = { faction = tec_mechanists }
+		}
+		if = { #Aelnar
+			limit = { has_reform = enlightened_empire_reform }
+			faction_influence_update_subeffect = { faction = aelnar_blaiddtar }
+			faction_influence_update_subeffect = { faction = aelnar_cymscal }
+			faction_influence_update_subeffect = { faction = aelnar_suir }
+		}
+		if = { #Khuraen Ulaeg - Factions are enabled seperately from a reform and from each other so a tag trigger is best
+			limit = { tag = I89 }
+			faction_influence_update_subeffect = { faction = burning_spear }
+			faction_influence_update_subeffect = { faction = verdant_bliss }
+			faction_influence_update_subeffect = { faction = tiger_bane }
+			faction_influence_update_subeffect = { faction = raging_blizzard }
+			faction_influence_update_subeffect = { faction = vine_tearer }
+			faction_influence_update_subeffect = { faction = rosen_rider }
+		}
+		if = { #Marlliande
+			limit = { has_reform = ar_callein_reform }
+			faction_influence_update_subeffect = { faction = vilaechi }
+			faction_influence_update_subeffect = { faction = rosrholych }
+			faction_influence_update_subeffect = { faction = drominar }
+		}
+		if = { #Northern League
+			limit = { has_reform = northern_league_magnates }
+			faction_influence_update_subeffect = { faction = nl_cooperatists }
+			faction_influence_update_subeffect = { faction = nl_trade_barons }
+			faction_influence_update_subeffect = { faction = nl_old_guard }
+		}
+		# if = { #Moredhal
+		# 	limit = { has_reform = infernal_autocracy }
+		# 	faction_influence_update_subeffect = { faction = inf_ildran_hedine }
+		# 	faction_influence_update_subeffect = { faction = inf_triad }
+		# 	faction_influence_update_subeffect = { faction = inf_kaz_mesner }
+		# }
+		if = { #New Hevoral
+			limit = { has_reform = new_havoral_bandit_kingdom_reform }
+			faction_influence_update_subeffect = { faction = bandit_kingdom_havoric_homesteaders }
+			faction_influence_update_subeffect = { faction = bandit_kingdom_falah_poachers }
+			faction_influence_update_subeffect = { faction = bandit_kingdom_bandit_captains }
+			faction_influence_update_subeffect = { faction = bandit_kingdom_ynnic_loyalists }
+		}
+		if = { #All-Clan
+			limit = { has_reform = pentapandemonium_reform }
+			faction_influence_update_subeffect = { faction = pen_discombobulatorium }
+			faction_influence_update_subeffect = { faction = pen_erectors }
+			faction_influence_update_subeffect = { faction = pen_harmaceuticals }
+			faction_influence_update_subeffect = { faction = pen_cloak_and_swagger }
+			faction_influence_update_subeffect = { faction = pen_clodhoppers }
+		}
+		if = { #Royakottar
+			limit = { has_reform = royakottar_four_families }
+			faction_influence_update_subeffect = { faction = four_families_kattyva }
+			faction_influence_update_subeffect = { faction = four_families_nymkorai }
+			faction_influence_update_subeffect = { faction = four_families_ursibadur }
+			faction_influence_update_subeffect = { faction = four_families_vustarin }
+		}
+		if = { #Besolaki - Factions are enabled before the reform by effect (but all at the same time still)
+			limit = { has_faction = beso_caribhen }
+			faction_influence_update_subeffect = { faction = beso_caribhen }
+			faction_influence_update_subeffect = { faction = beso_kheinbhen }
+			faction_influence_update_subeffect = { faction = beso_nautabhen }
+			faction_influence_update_subeffect = { faction = beso_skighubhen }
+			faction_influence_update_subeffect = { faction = beso_dhorbhen }
+		}
+		if = { #Celmaldor
+			limit = { has_faction = whitespear_clan }
+			faction_influence_update_subeffect = { faction = whitespear_clan }
+			faction_influence_update_subeffect = { faction = icewind_clan }
+			faction_influence_update_subeffect = { faction = frozentide_clan }
+		}
+	}
+}
+
+faction_influence_update_subeffect = {
+	if = {
+		limit = {
+			has_faction = $faction$
+			NOT = {
+				faction_influence = {
+					faction = $faction$
+					influence = 1
+				}
+			}
+		}
+		add_faction_influence = {
+			faction = $faction$
+			influence = 1
+		}
+	}
+}
