@@ -11,12 +11,6 @@ country_event = { #election event
 		#has_government_mechanic = end_overseas_governorate
 		has_reform = overseas_governorate
 	}
-	immediate = {
-		if = {
-			limit = { ruler_has_personality = mage_personality }
-			set_country_flag = end_prev_ruler_mage
-		}
-	}
 	option = { #push for re-election
 		name = flavour_endralliande.1.c
 		trigger = {
@@ -137,6 +131,10 @@ country_event = { #election event
 	option = { #lets back our fave guy
 		name = flavour_endralliande.1.b
 		add_republican_tradition = -15
+		if = {
+			limit = { ruler_has_personality = mage_personality }
+			set_country_flag = end_prev_ruler_mage
+		}
 		define_ruler = { #flavour (doesnt have to taste good!)
 			name = "Corrupt Election Council"
 			adm = 0
@@ -496,8 +494,8 @@ country_event = { #news from abroad
 
 	option = {
 		name = flavour_endralliande.6.a
-		end_current_coalition_random_favor = yes
-		end_opposition_random_favor = yes
+		end_current_coalition_random_favor = { amount = 1 }
+		end_opposition_random_favor = { amount = 1 }
 	}
 }
 
@@ -537,7 +535,7 @@ country_event = { #public demonstrations
 
 	option = {
 		name = flavour_endralliande.8.a
-		end_opposition_random_favor = yes
+		end_opposition_random_favor = { amount = 2 }
 	}
 }
 
@@ -680,12 +678,13 @@ country_event = { #votes counted
 						which = end_winner_id
 						value = 1
 					}
+					lencenor_region = { culture_group = lencori }
 				}
 				lencenor_region = {
-					random_province = { 
-						limit = { culture_group = lencori }
-						save_event_target_as = end_noble_culture_religion_determine 
-					}
+					limit = { culture_group = lencori }
+					type = random
+					amount = 1
+					save_event_target_as = end_noble_culture_religion_determine 
 				}
 			}
 			if = {
@@ -694,6 +693,7 @@ country_event = { #votes counted
 						which = end_winner_id
 						value = 3
 					}
+					any_owned_province = { culture_group = elven }
 				}
 				random_owned_province = {
 					limit = { culture_group = elven }
@@ -705,6 +705,19 @@ country_event = { #votes counted
 					is_variable_equal = {
 						which = end_winner_id
 						value = 5
+					}
+					any_owned_province = {
+						OR = {
+							culture_group = lencori
+							culture_group = trollsbayer
+							culture = half_orc
+							culture_group = orcish
+						}
+						OR = {
+							has_building = plantations
+							has_building = farm_estate
+							has_building = textile
+						}
 					}
 				}
 				random_owned_province = {
@@ -736,13 +749,27 @@ country_event = { #votes counted
 				}
 			}
 			if = {
-				limit = { NOT = { has_country_flag = end_noble_reelect } }
-				define_ruler = {
-					culture = event_target:end_noble_culture_religion_determine
-					religion = event_target:end_noble_culture_religion_determine
-					adm = 1
-					dip = 4
-					mil = 1
+				limit = { 
+					NOT = { has_country_flag = end_noble_reelect }
+				}
+				if = {
+					limit = { lencenor_region = { has_saved_event_target = event_target:end_noble_culture_religion_determine } }
+					define_ruler = {
+						culture = event_target:end_noble_culture_religion_determine
+						religion = event_target:end_noble_culture_religion_determine
+						adm = 1
+						dip = 4
+						mil = 1
+					}
+				}
+				else = { 
+					define_ruler = {
+						culture = high_lorentish
+						religion = ROOT
+						adm = 1
+						dip = 4
+						mil = 1
+					}
 				}
 			}
 			set_ruler_flag = end_noble_candidate_ruler
@@ -809,13 +836,48 @@ country_event = { #votes counted
 			}
 			if = {
 				limit = { NOT = { has_country_flag = end_elven_reelect } }
-				define_ruler = {
-					culture = event_target:end_elven_culture_religion_determine
-					religion = event_target:end_elven_culture_religion_determine
-					adm = 1
-					dip = 1
-					mil = 4
+				if = {
+					limit = {  any_owned_province = { has_saved_event_target = event_target:end_elven_culture_religion_determine } }
+					define_ruler = {
+						culture = event_target:end_elven_culture_religion_determine
+						religion = event_target:end_elven_culture_religion_determine
+						adm = 1
+						dip = 1
+						mil = 4
+					}
 				}
+				else = {
+					random_list = {
+						33 = {
+							define_ruler = {
+								culture = star_elf
+								religion = ROOT
+								adm = 1
+								dip = 1
+								mil = 4
+							}
+						}
+						33 = {
+							define_ruler = {
+								culture = sunset_elf
+								religion = ROOT
+								adm = 1
+								dip = 1
+								mil = 4
+							}
+						}
+						34 = {
+							define_ruler = {
+								culture = moon_elf
+								religion = ROOT
+								adm = 1
+								dip = 1
+								mil = 4
+							}
+						}
+					}
+				}
+				
 				if = {
 					limit = { has_country_flag = end_improved_elven_candidate }
 					change_adm = 1
@@ -887,12 +949,24 @@ country_event = { #votes counted
 			}
 			if = {
 				limit = { NOT = { has_country_flag = end_agrarian_reelect } }
-				define_ruler = {
-					culture = event_target:end_agrarian_culture_religion_determine
-					religion = event_target:end_agrarian_culture_religion_determine
-					adm = 4
-					dip = 1
-					mil = 1
+				if = {
+					limit = { any_owned_province = { has_saved_event_target = event_target:end_agrarian_culture_religion_determine } }
+					define_ruler = {
+						culture = event_target:end_agrarian_culture_religion_determine
+						religion = event_target:end_agrarian_culture_religion_determine
+						adm = 4
+						dip = 1
+						mil = 1
+					}
+				}
+				else = {
+					define_ruler = {
+						culture = ROOT
+						religion = ROOT
+						adm = 4
+						dip = 1
+						mil = 1
+					}
 				}
 			}
 			add_estate_loyalty = {
@@ -964,9 +1038,10 @@ country_event = { #votes counted
 			}
 			random_owned_province = {
 				limit = { 
-					NOT = { 
+					NOT = {
 						has_production_building_trigger = yes 
 						has_any_ongoing_construction = yes
+						trade_goods = gold
 					}
 				}
 				add_building_construction = { building = workshop }
@@ -1169,7 +1244,12 @@ country_event = { #prompt to form a coalition or not
 	is_triggered_only = yes
 	option = { #lets
 		name = flavour_endralliande.11.a
-		trigger = {	has_country_flag = end_can_form_coalition }
+		trigger = {	
+			custom_trigger_tooltip = {
+				tooltip = end_can_form_coalition_tt
+				has_country_flag = end_can_form_coalition 
+			}
+		}
 		custom_tooltip = end_flavour_11_shownumber_tt #show total count anyway
 		country_event = {
 			id = flavour_endralliande.12
@@ -1180,7 +1260,10 @@ country_event = { #prompt to form a coalition or not
 		name = flavour_endralliande.11.b
 		highlight = yes
 		trigger = { #determine if you can even get a majority with opposition
-			has_country_flag = end_can_form_coalition
+			custom_trigger_tooltip = {
+				tooltip = end_can_form_coalition_tt
+				has_country_flag = end_can_form_coalition 
+			}
 			variable_arithmetic_trigger = {
 				custom_tooltip = end_flavour_11_coalitionpossible_tt
 				divide_variable = {
