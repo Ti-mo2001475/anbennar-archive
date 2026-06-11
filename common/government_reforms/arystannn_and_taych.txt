@@ -21,7 +21,7 @@ lesser_heroes_state = {
 }
 
 #Bureaucracy t3
-kalavendy_gos_ref = {  #Идея в том что калавендские лоры
+kalavendy_gos_ref = {  #Калавендцы
 	icon = "kalavendy_gos_ref"
 	allow_normal_conversion = yes
 	potential = {
@@ -32,7 +32,7 @@ kalavendy_gos_ref = {  #Идея в том что калавендские ло�
 	}
 	modifiers = {
 		manpower_recovery_speed = 0.1
-		global_prosperity_growth = 0.02
+		global_prosperity_growth = 0.2
 	}
 	effect = {
 		custom_tooltip = kalavendy_gos_ref_tt
@@ -54,6 +54,125 @@ kalavendy_gos_ref = {  #Идея в том что калавендские ло�
 			every_owned_province = {
 				limit = { has_province_modifier = kalavendy_population }
 				remove_province_modifier = kalavendy_population
+			}
+		}
+	}
+}
+
+larankarha_gos_ref = {  #Ларанкарцы
+	icon = "larankarha_gos_ref"
+	allow_normal_conversion = yes
+	potential = {
+		culture = larankarha
+	}
+	trigger = {
+		culture = larankarha
+	}
+	modifiers = {
+		build_time = -0.15
+		global_monthly_devastation = -0.05
+	}
+	effect = {
+		custom_tooltip = larankarha_gos_ref_tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					region = larankarha_highlands_region
+					has_terrain = mountain
+				}
+				add_province_modifier = {							
+					name = larankarha_mountain_expansion_mountains
+					duration = -1
+					hidden = yes
+				}
+			}
+			every_owned_province = {
+				limit = {
+					region = larankarha_highlands_region
+					has_terrain = highlands
+				}
+				add_province_modifier = {
+					name = larankarha_mountain_expansion_highlands
+					duration = -1
+					hidden = yes
+				}
+			}
+			every_owned_province = {
+				limit = {
+					region = larankarha_highlands_region
+					has_terrain = hills
+				}
+				add_province_modifier = {
+					name = larankarha_mountain_expansion_hills
+					duration = -1	
+					hidden = yes
+				}
+			}
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = { has_province_modifier = larankarha_mountain_expansion_hills }
+				remove_province_modifier = larankarha_mountain_expansion_hills
+			}
+			every_owned_province = {
+				limit = { has_province_modifier = larankarha_mountain_expansion_highlands }
+				remove_province_modifier = larankarha_mountain_expansion_highlands
+			}
+			every_owned_province = {
+				limit = { has_province_modifier = larankarha_mountain_expansion_mountains }
+				remove_province_modifier = larankarha_mountain_expansion_mountains
+			}
+		}
+	}
+}
+
+yodhanpir_gos_ref = {  #Ларанкарцы
+	icon = "yodhanpir_gos_ref"
+	allow_normal_conversion = yes
+	potential = {
+		culture = yodhanpir
+	}
+	trigger = {
+		culture = yodhanpir
+	}
+	modifiers = {
+		global_regiment_cost = -0.15
+		global_autonomy = -0.05
+	}
+	effect = {
+		custom_tooltip = yodhanpir_gos_ref_tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					culture = ROOT
+				}
+				add_province_modifier = {
+					name = yodhanpir_gos_regiment
+					duration = -1
+				}
+			}
+			every_owned_province = {
+				limit = {
+					NOT = { culture = ROOT }
+				}
+				add_province_modifier = {
+					name = yodhanpir_gos_tax
+					duration = -1
+				}
+			}
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = { has_province_modifier = yodhanpir_gos_regiment }
+				remove_province_modifier = yodhanpir_gos_regiment
+			}
+			every_owned_province = {
+				limit = { has_province_modifier = yodhanpir_gos_tax }
+				remove_province_modifier = yodhanpir_gos_tax
 			}
 		}
 	}
