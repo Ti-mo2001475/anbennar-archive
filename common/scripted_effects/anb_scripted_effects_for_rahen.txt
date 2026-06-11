@@ -2381,6 +2381,28 @@ command_brorc_gain_hubris_per_unit_in_province = { #FROM is the province scope, 
 	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 2 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 2 } }
 	else = { add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 1 } }
 }
+command_brorc_gain_hubris_from_battle = {
+	if = { #so FROM is only the enemy army *leader*. This catches most edge cases for Brorcs
+		limit = {
+			OR = {
+				FROM = { tag = R62 }
+				FROM = { is_subject_of = R62 }
+			}
+			R62 = {
+				any_subject_country = {
+					has_government_mechanic = brorc_slave_mechanic
+					ROOT = { num_of_units_in_province = { who = PREV amount = 5 } }
+				}
+			}
+		}
+		R62 = {
+			every_subject_country = {
+				limit = { ROOT = { num_of_units_in_province = { who = PREV amount = 5 } } }
+				add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 4 }
+			}
+		}
+	}
+}
 
 command_migration_randomization_effect = {
 	random_list = {
