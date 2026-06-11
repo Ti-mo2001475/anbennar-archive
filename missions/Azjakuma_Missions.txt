@@ -234,39 +234,20 @@ azjakuma_missiontree_2_pt_1 = {
 		}
 	}
 
-	Y01_restoring_khelorvalshi = {
-		icon = public_works
-		position = 5
-		required_missions = { Y01_cursed_souls_khelorvalshi }
-		provinces_to_highlight = {
-			province_id = 4848
-		}
-		
-		trigger = {
-			owns_core_province = 4848
-			4848 = {
-				development = 12
-			}
-		}
-		effect = {
-			4848 = {
-				remove_province_modifier = azjakuma_shirgrii_ruined_khelorvalshi
-				add_permanent_province_modifier = {
-					name = azjakuma_shirgrii_khelorvalshi
-					duration = -1
-				}
-			}
-		}
-	}
-
 	Y01_khelorvalshi_libraries = {
 		icon = found_the_vatican_library
 		position = 6
-		required_missions = { Y01_expand_record_keeping Y01_restoring_khelorvalshi }
-		provinces_to_highlight = { }
+		required_missions = { Y01_expand_record_keeping Y01_cursed_souls_khelorvalshi }
+		provinces_to_highlight = {
+			province_id = 4848
+			NOT = { has_province_modifier = shirgrii_khelorvalshi }
+		}
 
 		trigger = {
-			owns_core_province = 4848
+			4848 = {
+				owned_by = ROOT
+				has_province_modifier = shirgrii_khelorvalshi
+			}
 			adm_power = 85
 			dip_power = 85
 			mil_power = 85
