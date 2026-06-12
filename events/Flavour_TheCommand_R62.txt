@@ -8413,25 +8413,50 @@ country_event = { #Command Exacts Punishment
 	is_triggered_only = yes
 	immediate = {
 		hidden_effect = {
-			random_list = {
-				1 = { set_country_flag = brorc_punishment_a }
-				1 = {
-					trigger = { has_leaders = { value = 2 include_monarch = no } }
-					set_country_flag = brorc_punishment_b
-				}
-				1 = {
-					trigger = {
-						calc_true_if = {
-							amount = 2
-							employed_advisor = { category = ADM }
-							employed_advisor = { category = DIP }
-							employed_advisor = { category = MIL }
-						}
+			while = {
+				limit = { check_variable = { current_punishment_num = 1 } }
+				subtract_variable = { current_punishment_num = 1 }
+
+				random_list = {
+					1 = {
+						trigger = { NOT = { has_country_flag = brorc_punishment_a } }
+						set_country_flag = brorc_punishment_a
 					}
-					set_country_flag = brorc_punishment_c
+					1 = {
+						trigger = { has_leaders = { value = 2 include_monarch = no } NOT = { has_country_flag = brorc_punishment_b } }
+						set_country_flag = brorc_punishment_b
+					}
+					1 = {
+						trigger = {
+							calc_true_if = {
+								amount = 2
+								employed_advisor = { category = ADM }
+								employed_advisor = { category = DIP }
+								employed_advisor = { category = MIL }
+							}
+							NOT = { has_country_flag = brorc_punishment_c }
+						}
+						set_country_flag = brorc_punishment_c
+					}
+					1 = { trigger = { NOT = { has_country_flag = brorc_punishment_d } } set_country_flag = brorc_punishment_d }
+					1 = { trigger = { NOT = { has_country_flag = brorc_punishment_e } } set_country_flag = brorc_punishment_e }
 				}
-				1 = { set_country_flag = brorc_punishment_d }
-				1 = { set_country_flag = brorc_punishment_e }
+			}
+		}
+	}
+	after = { #bounceback
+		hidden_effect = {
+			if = {
+				limit = {
+					OR = {
+						has_country_flag = brorc_punishment_a
+						has_country_flag = brorc_punishment_b
+						has_country_flag = brorc_punishment_c
+						has_country_flag = brorc_punishment_d
+						has_country_flag = brorc_punishment_e
+					}
+				}
+				country_event = { id = the_command.133 }
 			}
 		}
 	}
@@ -8465,10 +8490,27 @@ country_event = { #Command Exacts Punishment
 	option = {
 		name = the_command.132.e
 		trigger = { has_country_flag = brorc_punishment_e }
-		add_yearly_manpower = -2
+		reduce_stability_or_adm_power = yes
+		add_corruption = 4
 		clr_country_flag = brorc_punishment_e
 	}
 }
+
+country_event = { #Command Exacts Punishment Bounceback
+	id = the_command.133
+	title = the_command.133.t
+	desc = the_command.133.desc
+	picture = LAND_MILITARY_eventPicture
+
+	is_triggered_only = yes
+	hidden = yes
+
+	option = {
+		name = the_command.133.a
+		country_event = { id = the_command.132 }
+	}
+}
+
 
 ###################
 #KORASHI + SHAMANS#

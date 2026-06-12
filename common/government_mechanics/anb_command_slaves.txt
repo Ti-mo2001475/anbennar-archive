@@ -45,6 +45,14 @@ brorc_slave_mechanic = {
 				}
 			}
 			on_min_reached = {
+				hidden_effect = { #You get one more punishment each time, up to six
+					change_variable = { num_of_command_punishments = 1 }
+					if = {
+						limit = { check_variable = { num_of_command_punishments = 6 } }
+						set_variable = { num_of_command_punishments = 6 }
+					}
+					set_variable = { which = current_punishment_num which = num_of_command_punishments }
+				}
 				country_event = { id = the_command.132 }
 				add_government_power = {
 					mechanic_type = brorc_slave_mechanic
