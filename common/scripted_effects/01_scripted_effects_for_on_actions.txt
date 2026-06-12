@@ -12176,6 +12176,12 @@ on_capital_moved_effect = {
 			add_base_manpower = 1 change_variable = { manpower_increased_by_owner = 1 }
 		}
 	}
+	
+	#Something in here is buggy.
+	#If you are lacking institutions but have at least one institution fully present in your capital,
+	#you can develop another province such that it has like 1% progress towards the next institution,
+	#then you move your capital to that province and it instantly makes that next institution wholly present.
+	#I would shift this over to using the feudalism = X triggers, but those don't seem to work as exportable trigger values.
 	if = {
 		limit = { owner = { has_government_attribute = move_institutions_with_capital } }
 		export_to_variable = { which = institution_var value = trigger_value:current_institution who = FROM }
