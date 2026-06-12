@@ -3243,12 +3243,10 @@ on_province_religion_changed_effect = { #Randomizer has fixed outcomes on this o
 					cost = 0.75
 				}
 			}
-			if = {
-				limit = {
-					owner = { has_church_aspect = foundationism_shepherds }
-				}
-				set_province_flag = foundationism_shepherds_flag_for_ptm
-				owner = {
+			owner = {
+				if = {
+					limit = { has_church_aspect = foundationism_shepherds }
+					change_variable = { FoundationismShepherdsDev = 1 }
 					capital_scope = {
 						remove_province_triggered_modifier = ptm_foundationism_shepherds
 						add_province_triggered_modifier = ptm_foundationism_shepherds
@@ -5599,8 +5597,14 @@ on_battle_won_province_effect = {
 				rebel_is_holohana = yes
 			}
 		}
-		FROM = {
-			holohana_injury_trigger_switch = yes
+		if = {
+			limit = { has_province_flag = holohana_is_here_flag }
+			FROM = {
+				holohana_injury_trigger_switch = yes
+			}
+		}
+		else = {
+			set_province_flag = holohana_migrated_from_fight
 		}
 	}
 
@@ -5734,6 +5738,15 @@ on_battle_lost_province_effect = {
 	if = {
 		limit = { has_province_flag = holohana_give_credit }
 		holohana_give_credit_for_kill = yes
+	}
+	if = {
+		limit = { has_province_flag = holohana_migrated_from_fight }
+		clr_province_flag = holohana_migrated_from_fight
+		FROM = {
+			country_event = {
+				id = holohana_events.300
+			}
+		}
 	}
 
 	if = {
@@ -11533,6 +11546,22 @@ on_built_tax_building_effect = {
 			duration = -1
 		}
 	}
+
+	#Shirgriis
+	if = {
+		limit = {
+			province_id = 4848
+			owner = { religion = devouring_path }
+			development = 12
+			NOT = { has_province_flag = shirgrii_khelorvalshi_repaired }
+		}
+		set_province_flag = shirgrii_khelorvalshi_repaired
+		remove_province_modifier = shirgrii_ruined_khelorvalshi
+		add_province_modifier = {
+			name = shirgrii_khelorvalshi
+			duration = -1
+		}
+	}
 }
 
 on_tax_building_destroyed_effect = {
@@ -11666,14 +11695,131 @@ on_built_any_fort_building_effect = {	# THIS = Province,  FROM = Builder (not ne
 		}
 	}
 	FROM = { dragon_turtle_change_friendship = { dragon_turtle = monzaketzya amount = 3 } } #Dragon Turtle
+	if = {	#windward stuff
+		limit = { region = alecand_region }
+		hidden_effect = {
+			province_event = { id = kheionai.2 }
+		}
+	}
+	if = { #1.35
+		limit = {
+			owner = { has_estate_privilege = estate_nobles_development_of_castles }
+		}
+		if = {
+			limit = { owner = { has_country_flag = karach_improved_fortifications } }
+			add_province_modifier = {
+				name = karach_improved_fortifications_mod
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = estate_nobles_development_of_castles_mod
+				duration = -1
+			}
+		}
+	}
+	if = {
+		limit = { FROM = { has_estate_privilege = estate_elephant_command_war_room_rights } }
+		FROM = { add_legitimacy = 1 }
+	}
+	if = {
+		limit = { FROM = { has_government_attribute = command_elephant_elevation_modifier } }
+		add_province_modifier = {
+			name = command_elephant_fort_buff
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			FROM = { religion = winter_court }
+		}
+		FROM = { add_church_power = 10 }
+	}
+	owner = { accretive_path_gain_chi = { aspect = serenity_in_rock_and_stone category = mil amount = 20 } }
+	spirit_fort_awakening_effect = yes
+	if = {	#Brrtekuh
+		limit = {
+			has_building = mage_tower
+			owner = {
+				OR = {
+					has_estate_privilege = estate_church_U10_purification_posts_along_the_sorrow
+					has_country_modifier = U10_exorcist_combine
+				}
+			}
+		}
+		add_province_modifier = {
+			name = U10_containment_array
+			duration = -1
+		}
+	}
+	if = {
+		limit = { owner = { has_country_modifier = organized_aid } }
+		add_devastation = -5
+		every_neighbor_province = { 
+			limit = { owned_by = FROM }
+			add_devastation = -5
+		}	
+	}
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					has_government_attribute = expand_the_league_1_attribute
+					has_government_attribute = expand_the_league_2_attribute
+					has_government_attribute = expand_the_league_3_attribute
+				}
+				is_subject = no
+			}
+			owner = {
+				OR = {
+					tag = FROM
+					is_subject_of_type = vic_league_member
+				}
+			}
+		}
+		FROM = {
+			add_government_power = {
+				mechanic_type = vic_league_mechanic
+				power_type = vic_league_mil_power
+				value = 10
+			}
+		}
+	}	
+	FROM = {	#Molten Eternity
+		if = {
+			limit = {
+				religion = molten_eternity
+				has_personal_deity = volcanic_truth_persistence
+			}
+			change_variable = {
+				which = moltenEternityObligationVar
+				value = 100
+			}
+		}
+	}
+	if = {	# Huugeta Mercenary Chapters
+		limit = {
+			owner = { has_country_flag = S45_mercenary_chapters }
+			S45_mercenary_chapter_requirements = yes
+		}
+		add_province_modifier = {
+			name = S45_mercenary_chapter
+			duration = -1
+		}
+	}
 }
 
 on_any_fort_destroyed_effect = { # THIS = Province, FROM = Destroyer, Will not be called on buildings made obsolete!
 	remove_province_modifier = H14_secured_fringes #Eighard
 	remove_province_modifier = harpylen_fort_roost
+	remove_province_modifier = U10_containment_array
+	remove_province_modifier = estate_nobles_development_of_castles_mod
+	remove_province_modifier = karach_improved_fortifications_mod
+	remove_province_modifier = spiked_log_spiky_traps
+	remove_province_modifier = command_elephant_fort_buff
 	FROM = { dragon_turtle_change_friendship = { dragon_turtle = monzaketzya amount = -3 } } #Dragon Turtle
-	#Charkuchin Kobold Supply Facility - needs a fort and production building, but I'll only care about you
-	#deleting the fort
+	#Charkuchin Kobold Supply Facility - needs a fort and production building, but I'll only care about you deleting the fort
 	if = {
 		limit = { has_province_modifier = charkuchin_kobold_supply_facility }
 		remove_province_modifier = charkuchin_kobold_supply_facility
@@ -11688,6 +11834,31 @@ on_any_fort_destroyed_effect = { # THIS = Province, FROM = Destroyer, Will not b
 			}
 		}
 		kobold_citadel_supplies_add_supply_cost_based_on_region = yes
+	}
+	if = {	#windward stuff
+		limit = { region = alecand_region }
+		hidden_effect = {
+			province_event = { id = kheionai.2 }
+		}
+	}
+	if = {	#Bibyobi
+		limit = { has_province_modifier = S98_jungle_fortress }
+		remove_province_modifier = S98_jungle_fortress
+		every_neighbor_province = {
+			limit = {
+				NOT = {
+					any_neighbor_province = {
+						owned_by = FROM
+						has_fort_building_trigger = yes
+					}
+				}
+			}
+			remove_province_modifier = S98_jungle_fortress
+		}
+	}
+	if = { # Anbennar Kobold Traps
+		limit = { has_province_flag = has_kobold_traps }
+		province_event = { id = kobold_traps.8 }
 	}
 }
 on_any_fort_obsolete_effect = { # THIS = Province, FROM = Destroyer, Will not be called on buildings destroyed!
@@ -11748,6 +11919,92 @@ on_trade_building_destroyed_effect = {
 		area = { remove_province_modifier = U10_affluent_reclaimation }
 	}
 }
+
+on_built_coast_defense_building_effect = {
+	if = {	#karassk
+		limit = {
+			owner = { has_country_flag = L68_sailors_on_defense }
+		}
+		add_province_modifier = {
+			name = L68_coastal_defense_sailors
+			duration = -1
+		}
+	}
+	if = {	#Izmeri the Black Stone City
+		limit = {
+			5631 = {
+				owned_by = FROM
+				has_great_project = {
+					type = izmeri_the_black_stone_city
+					tier = 2
+				}
+				owner = { can_use_izmeri_the_black_stone_city = yes }
+			}
+			NOT = { has_province_modifier = izmeri_expand_the_buildings }
+		}
+		add_province_modifier = {
+			name = izmeri_expand_the_buildings
+			duration = -1
+		}
+	}
+	FROM = { dragon_turtle_change_friendship = { dragon_turtle = monzaketzya amount = 3 } }
+}
+on_coast_defense_building_destroyed_effect = {
+	remove_province_modifier = L68_coastal_defense_sailors
+	remove_province_modifier = izmeri_expand_the_buildings
+	FROM = { dragon_turtle_change_friendship = { dragon_turtle = monzaketzya amount = -3 } }
+}
+
+on_built_sailor_building_effect = {
+	if = {
+		limit = {
+			FROM = { has_estate_privilege = estate_nobility_lizardfolk_imperial_fisheries }
+			OR = {
+				province_id = 5896 
+				province_id = 5898
+				province_id = 5834
+				province_id = 3259
+				province_id = 3258
+			}
+		}
+		add_province_modifier = {
+			name = lizardfolk_imperial_fisheries
+			duration = -1
+		}
+	}
+}
+on_sailor_building_destroyed_effect = {
+	remove_province_modifier = lizardfolk_imperial_fisheries
+}
+
+on_built_forcelimit_building_effect = {
+	if = {
+		limit = { FROM = { has_estate_privilege = estate_boar_command_war_room_rights } }
+		FROM = { add_legitimacy = 0.5 }
+	}
+	if = {	# Huugeta Mercenary Enterprise
+		limit = {
+			FROM = { has_country_flag = S45_mercenary_enterprise }
+		}
+		FROM = { S45_add_momentum = { value = 1 action = building } }
+	}
+}
+on_forcelimit_building_destroyed_effect = {}
+
+on_built_courthouse_building_effect = {
+	if = {
+		limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
+		FROM = { change_government_reform_progress = 4 }
+	}
+	if = {
+		limit = { FROM = { has_estate_privilege = estate_wolf_command_war_room_rights } }
+		FROM = { add_legitimacy = 0.5 }
+	}
+}
+on_courthouse_building_destroyed_effect = {}
+
+on_built_shipyard_building_effect = {}
+on_shipyard_building_destroyed_effect = {}
 
 on_built_manufactory_effect = {
 
@@ -12720,12 +12977,12 @@ startup_1444_effects = {
 				duration = 18250 #50 years
 			}
 			country_event = {
-				id = kheionai.200
+				id = kheionai.112
 			}
 		}
 		if = { #Ameion doesn't need help colonizing so they just get the event
 			limit = { tag = G52 } #Ameion
-			country_event = { id = kheionai.200 }
+			country_event = { id = kheionai.112 }
 		}
 		
 		# Dwarovar cheap colonies modifier and event to make them start colonizing
@@ -12935,7 +13192,7 @@ startup_1444_effects = {
 				ai = no
 			}
 			country_event = {
-				id = kheionai.30
+				id = kheionai.200
 				days = 730
 			}
 		}
@@ -19333,5 +19590,143 @@ on_consort_death_effects = {
 			has_country_flag = harpy_tolerance_harpy_wife_happy_life
 		}
 		clr_country_flag = harpy_tolerance_harpy_wife_happy_life
+	}
+}
+
+#Ensures that faction influence can't go below 1
+#Checks for has_faction instead of has_reform when factions are enabled by multiple reforms to reduce checks. Requires the factions are only ever enabled together tho
+ensure_positive_faction_influence = {
+	if = {
+		limit = {
+			ai = no
+			has_factions = yes
+		}
+		
+		#############
+		# Base Game #
+		#############
+		if = { #Merchant Factions
+			limit = { has_faction = mr_aristocrats }
+			faction_influence_update_subeffect = { faction = mr_aristocrats }
+			faction_influence_update_subeffect = { faction = mr_traders }
+			faction_influence_update_subeffect = { faction = mr_guilds }
+		}
+		if = { #Revolutionary Republics
+			limit = { has_faction = rr_jacobins }
+			faction_influence_update_subeffect = { faction = rr_jacobins }
+			faction_influence_update_subeffect = { faction = rr_royalists }
+			faction_influence_update_subeffect = { faction = rr_girondists }
+		}
+		if = { #Pirate Republics
+			limit = { has_faction = pr_buccaneers }
+			faction_influence_update_subeffect = { faction = pr_buccaneers }
+			faction_influence_update_subeffect = { faction = pr_smugglers }
+			faction_influence_update_subeffect = { faction = pr_captains }
+		}
+
+		############
+		# Anbennar #
+		############
+		#Mykx
+		faction_influence_update_subeffect = { faction = mykx_xhazobkult }
+		if = { #Adventurers
+			limit = { has_faction = adv_marchers }
+			faction_influence_update_subeffect = { faction = adv_marchers }
+			faction_influence_update_subeffect = { faction = adv_pioneers }
+			faction_influence_update_subeffect = { faction = adv_fortune_seekers }
+		}
+		if = { #Technocracy
+			limit = { has_faction = tec_brilliance }
+			faction_influence_update_subeffect = { faction = tec_brilliance }
+			faction_influence_update_subeffect = { faction = tec_technomancy }
+			faction_influence_update_subeffect = { faction = tec_mechanists }
+		}
+		if = { #Aelnar
+			limit = { has_reform = enlightened_empire_reform }
+			faction_influence_update_subeffect = { faction = aelnar_blaiddtar }
+			faction_influence_update_subeffect = { faction = aelnar_cymscal }
+			faction_influence_update_subeffect = { faction = aelnar_suir }
+		}
+		if = { #Khuraen Ulaeg - Factions are enabled seperately from a reform and from each other so a tag trigger is best
+			limit = { tag = I89 }
+			faction_influence_update_subeffect = { faction = burning_spear }
+			faction_influence_update_subeffect = { faction = verdant_bliss }
+			faction_influence_update_subeffect = { faction = tiger_bane }
+			faction_influence_update_subeffect = { faction = raging_blizzard }
+			faction_influence_update_subeffect = { faction = vine_tearer }
+			faction_influence_update_subeffect = { faction = rosen_rider }
+		}
+		if = { #Marlliande
+			limit = { has_reform = ar_callein_reform }
+			faction_influence_update_subeffect = { faction = vilaechi }
+			faction_influence_update_subeffect = { faction = rosrholych }
+			faction_influence_update_subeffect = { faction = drominar }
+		}
+		if = { #Northern League
+			limit = { has_reform = northern_league_magnates }
+			faction_influence_update_subeffect = { faction = nl_cooperatists }
+			faction_influence_update_subeffect = { faction = nl_trade_barons }
+			faction_influence_update_subeffect = { faction = nl_old_guard }
+		}
+		# if = { #Moredhal
+		# 	limit = { has_reform = infernal_autocracy }
+		# 	faction_influence_update_subeffect = { faction = inf_ildran_hedine }
+		# 	faction_influence_update_subeffect = { faction = inf_triad }
+		# 	faction_influence_update_subeffect = { faction = inf_kaz_mesner }
+		# }
+		if = { #New Hevoral
+			limit = { has_reform = new_havoral_bandit_kingdom_reform }
+			faction_influence_update_subeffect = { faction = bandit_kingdom_havoric_homesteaders }
+			faction_influence_update_subeffect = { faction = bandit_kingdom_falah_poachers }
+			faction_influence_update_subeffect = { faction = bandit_kingdom_bandit_captains }
+			faction_influence_update_subeffect = { faction = bandit_kingdom_ynnic_loyalists }
+		}
+		if = { #All-Clan
+			limit = { has_reform = pentapandemonium_reform }
+			faction_influence_update_subeffect = { faction = pen_discombobulatorium }
+			faction_influence_update_subeffect = { faction = pen_erectors }
+			faction_influence_update_subeffect = { faction = pen_harmaceuticals }
+			faction_influence_update_subeffect = { faction = pen_cloak_and_swagger }
+			faction_influence_update_subeffect = { faction = pen_clodhoppers }
+		}
+		if = { #Royakottar
+			limit = { has_reform = royakottar_four_families }
+			faction_influence_update_subeffect = { faction = four_families_kattyva }
+			faction_influence_update_subeffect = { faction = four_families_nymkorai }
+			faction_influence_update_subeffect = { faction = four_families_ursibadur }
+			faction_influence_update_subeffect = { faction = four_families_vustarin }
+		}
+		if = { #Besolaki - Factions are enabled before the reform by effect (but all at the same time still)
+			limit = { has_faction = beso_caribhen }
+			faction_influence_update_subeffect = { faction = beso_caribhen }
+			faction_influence_update_subeffect = { faction = beso_kheinbhen }
+			faction_influence_update_subeffect = { faction = beso_nautabhen }
+			faction_influence_update_subeffect = { faction = beso_skighubhen }
+			faction_influence_update_subeffect = { faction = beso_dhorbhen }
+		}
+		if = { #Celmaldor
+			limit = { has_faction = whitespear_clan }
+			faction_influence_update_subeffect = { faction = whitespear_clan }
+			faction_influence_update_subeffect = { faction = icewind_clan }
+			faction_influence_update_subeffect = { faction = frozentide_clan }
+		}
+	}
+}
+
+faction_influence_update_subeffect = {
+	if = {
+		limit = {
+			has_faction = $faction$
+			NOT = {
+				faction_influence = {
+					faction = $faction$
+					influence = 1
+				}
+			}
+		}
+		add_faction_influence = {
+			faction = $faction$
+			influence = 1
+		}
 	}
 }
