@@ -337,7 +337,7 @@ mangrove_donate = {
 
 mangrove_on_adm_dev_effect = {
 	if = {
-		limit = { mangrove_check_capstone_effect_in_province = yes }
+		limit = { mangrove_deving_unlocked_in_province = yes }
 		trigger_switch = {
 			on_trigger = has_province_flag
 			mangrove_bio_infra_dip_chosen = {
@@ -353,7 +353,7 @@ mangrove_on_adm_dev_effect = {
 }
 mangrove_on_dip_dev_effect = {
 	if = {
-		limit = { mangrove_check_capstone_effect_in_province = yes }
+		limit = { mangrove_deving_unlocked_in_province = yes }
 		trigger_switch = {
 			on_trigger = has_province_flag
 			mangrove_bio_infra_adm_chosen = {
@@ -369,7 +369,7 @@ mangrove_on_dip_dev_effect = {
 }
 mangrove_on_mil_dev_effect = {
 	if = {
-		limit = { mangrove_check_capstone_effect_in_province = yes }
+		limit = { mangrove_deving_unlocked_in_province = yes }
 		trigger_switch = {
 			on_trigger = has_province_flag
 			mangrove_bio_infra_adm_chosen = {
@@ -650,21 +650,22 @@ mangrove_bio_infra_final_upgrade = {
 	if = {
 		limit = { NOT = { has_province_flag = mangrove_bio_infra_finished } }
 		mangrove_bio_infra_add_auxiliary_effect = yes
-		if = {
-			limit = { FROM = { has_country_flag = mangrove_capstone_unlocked } }
-			remove_province_modifier = mangrove_bio_infra_decay
-		}
 		clr_province_flag = mangrove_bio_infra_stage_4
 		set_province_flag = mangrove_bio_infra_finished
+		if = {
+			limit = { is_capital = yes }
+			mangrove_unlock_capstone = yes
+			FROM = { mangrove_unlock_deving = yes }
+		}
+		if = {
+			limit = { FROM = { has_country_flag = mangrove_deving_unlocked } }
+			remove_province_modifier = mangrove_bio_infra_decay
+		}
 		mangrove_bio_infra_final_cost = yes
 		FROM = {
 			hidden_effect = {
 				change_variable = { mangrove_bio_infra_finished_count = 1 }
 			}
-		}
-		if = {
-			limit = { is_capital = yes }
-			FROM = { mangrove_unlock_capstone = yes }
 		}
 	}
 	else = {
@@ -674,8 +675,72 @@ mangrove_bio_infra_final_upgrade = {
 	}
 }
 
+# you can regain the province mod after being conquered
+# but you can't get the magic school level again
 mangrove_unlock_capstone = {
-	set_country_flag = mangrove_capstone_unlocked
+	mangrove_unlock_capstone_sub_effect = { tag = P21 }
+	mangrove_unlock_capstone_sub_effect = { tag = P22 level_divination = yes }
+	mangrove_unlock_capstone_sub_effect = { tag = P23 }
+	mangrove_unlock_capstone_sub_effect = { tag = P24 }
+	mangrove_unlock_capstone_sub_effect = { tag = P25 }
+	mangrove_unlock_capstone_sub_effect = { tag = P26 level_enchantment = yes }
+}
+
+mangrove_unlock_capstone_sub_effect = {
+	if = {
+		limit = {
+			FROM = {
+				is_or_was_tag = { tag = $tag$ }
+				NOT = {
+					any_owned_province = {
+						region = tagaala_mangroves_region
+						has_province_modifier = mangrove_capstone_$tag$
+					}
+				}
+			}
+		}
+		add_province_modifier = { name = mangrove_capstone_$tag$ duration = -1 }
+		[[level_divination]
+		if = {
+			limit = { FROM = { NOT = { has_country_flag = mangrove_magic_level_unlocked } } }
+			custom_tooltip = mangrove_level_up_divination_tt # need custom tt since ROOT is the province not the tag
+			hidden_effect = {
+				FROM = {
+					if = {
+						limit = { is_estate_divination_level_3 = no }
+						country_event = { id = mangrove.6 } # change ROOT to country to avoid error log
+					}
+					else = {
+						add_country_modifier = { name = mangrove_magic_xp_20 duration = 9125 } # 25 years
+					}
+					set_country_flag = mangrove_magic_level_unlocked
+				}
+			}
+		}
+		]
+		[[level_enchantment]
+		if = {
+			limit = { FROM = { NOT = { has_country_flag = mangrove_magic_level_unlocked } } }
+			custom_tooltip = mangrove_level_up_enchantment_tt # need custom tt since ROOT is the province not the tag
+			hidden_effect = {
+				FROM = {
+					if = {
+						limit = { is_estate_enchantment_level_3 = no }
+						country_event = { id = mangrove.7 } # change ROOT to country to avoid error log
+					}
+					else = {
+						add_country_modifier = { name = mangrove_magic_xp_20 duration = 9125 } # 25 years
+					}
+					set_country_flag = mangrove_magic_level_unlocked
+				}
+			}
+		}
+		]
+	}
+}
+
+mangrove_unlock_deving = {
+	set_country_flag = mangrove_deving_unlocked
 	every_owned_province = {
 		limit = {
 			region = tagaala_mangroves_region
