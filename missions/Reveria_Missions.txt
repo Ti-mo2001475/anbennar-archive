@@ -96,8 +96,26 @@ reveria_1 = {
 					add_prosperity = 50
 				}
 			}
-			176 = { change_trade_goods = cloth } #Zorrexa
-			178 = { change_trade_goods = glass } #Erripontu
+			if = {
+				limit = { 176 = { has_production_manufactory_or_gold_trigger = yes } }
+				176 = {
+					change_trade_goods = cloth
+					add_manufactory = yes
+				}
+			}
+			else = {
+				176 = { change_trade_goods = cloth } #Zorrexa
+			}
+			if = {
+				limit = { 178 = { has_production_manufactory_or_gold_trigger = yes } }
+				178 = {
+					change_trade_goods = glass
+					add_manufactory = yes
+				}
+			}
+			else = {
+				178 = { change_trade_goods = glass } #Erripontu
+			}
 			custom_tooltip = reveria_dragon_coast_trade_goods.tt
 			hidden_effect = {
 				dragon_coast_region = {
@@ -111,9 +129,42 @@ reveria_1 = {
 						}
 					}
 					random_list = {
-						35 = { change_trade_goods = iron }
-						35 = { change_trade_goods = cloth }
-						30 = { change_trade_goods = copper }
+						35 = {
+							if = {
+								limit = {
+									has_production_manufactory_or_gold_trigger = yes
+								}
+								change_trade_goods = iron
+								add_manufactory = yes
+							}
+							else = {
+								change_trade_goods = iron
+							}
+						}
+						35 = {
+							if = {
+								limit = {
+									has_production_manufactory_or_gold_trigger = yes
+								}
+								change_trade_goods = cloth
+								add_manufactory = yes
+							}
+							else = {
+								change_trade_goods = cloth
+							}
+						}
+						30 = {
+							if = {
+								limit = {
+									has_production_manufactory_or_gold_trigger = yes
+								}
+								change_trade_goods = copper
+								add_manufactory = yes
+							}
+							else = {
+								change_trade_goods = copper
+							}
+						}
 					}
 				}
 			}
@@ -144,7 +195,14 @@ reveria_1 = {
 		}
 
 		trigger = {
-			production_leader = { trade_goods = damestear } 
+			OR = {
+				production_leader = { trade_goods = damestear }
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 3
+					trade_goods = damestear
+					base_production = 10
+				}
+			}
 			owns_core_province = 146
 			146 = {
 				base_production = 12
@@ -1684,9 +1742,19 @@ reveria_3 = {
 					cost = 0
 				}
 			}
-			129 = { #Eldergreen
-				change_culture = creek_gnome
-				change_trade_goods = paper
+			if = {
+				limit = { 129 = { has_production_manufactory_or_gold_trigger = yes } } #Eldergreen
+				129 = {
+					change_culture = creek_gnome
+					change_trade_goods = paper
+					add_manufactory = yes
+				}
+			}
+			else = {
+				129 = {
+					change_culture = creek_gnome
+					change_trade_goods = paper
+				}
 			}
 			mission_reward_artifice_points_5 = yes
 		}
@@ -1742,13 +1810,41 @@ reveria_3 = {
 			}
 			if = {
 				limit = { owns = 197 } #Iskalbaia
-				197 = {
-					change_trade_goods = precursor_relics
-					set_province_flag = permanent_precursor_relics
+				if = {
+					limit = { 197 = { has_production_manufactory_or_gold_trigger = yes } }
+					197 = {
+						add_manufactory = yes
+						change_trade_goods = precursor_relics
+						set_province_flag = permanent_precursor_relics
+					}
+				}
+				else = {
+					197 = {
+						change_trade_goods = precursor_relics
+						set_province_flag = permanent_precursor_relics
+					}
 				}
 			}
 			else = {
-				random_owned_province = { limit = { region = dragon_coast_region OR = { trade_goods = wool trade_goods = fish } } change_trade_goods = precursor_relics set_province_flag = permanent_precursor_relics }
+				random_owned_province = { 
+					limit = { 
+						region = dragon_coast_region 
+						OR = { 
+							trade_goods = wool 
+							trade_goods = fish 
+						} 
+					} 
+					if = {
+						limit = { has_production_manufactory_or_gold_trigger = yes } }
+						add_manufactory = yes
+						change_trade_goods = precursor_relics
+						set_province_flag = permanent_precursor_relics
+					}
+					else = {
+						change_trade_goods = precursor_relics
+						set_province_flag = permanent_precursor_relics
+					}
+				}
 			}
 			add_estate_loyalty = {
 				estate = estate_mages
@@ -3169,7 +3265,14 @@ reveria_4 = {
 						trade_goods = fish
 					}
 				}
-				change_trade_goods = silk
+				if = {
+					limit = { has_production_manufactory_or_gold_trigger = yes }
+					change_trade_goods = silk
+					add_manufactory = yes
+				}
+				else = {
+					change_trade_goods = silk
+				}
 			}
 			A47 = {
 				change_primary_culture = tefskr
@@ -3274,7 +3377,16 @@ reveria_5 = {
 				name = reveria_ruin_sea_privateering
 				duration = 9125
 			}
-			122 = { change_trade_goods = sugar } #Baynoms
+			if = {
+				limit = { 122 = { has_production_manufactory_or_gold_trigger = yes } }
+				122 = {
+					change_trade_goods = sugar
+					add_manufactory = yes
+				}
+			}
+			else = {
+				122 = { change_trade_goods = sugar } #Baynoms
+			}
 			random_owned_or_subject_province = { limit = { colonial_region = colonial_isles province_has_center_of_trade_of_level = 2 development = 15 has_dock_building_trigger = yes has_shipyard_building_trigger = yes NOT = { has_province_modifier = reveria_new_reaver_harbours } } add_province_modifier = { name = reveria_new_reaver_harbours duration = -1 } }
 			random_owned_or_subject_province = { limit = { colonial_region = colonial_isles province_has_center_of_trade_of_level = 2 development = 15 has_dock_building_trigger = yes has_shipyard_building_trigger = yes NOT = { has_province_modifier = reveria_new_reaver_harbours } } add_province_modifier = { name = reveria_new_reaver_harbours duration = -1 } }
 		}
