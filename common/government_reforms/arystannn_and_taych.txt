@@ -158,6 +158,7 @@ yodhanpir_gos_ref = {  #Ларанкарцы
 				add_province_modifier = {
 					name = yodhanpir_gos_regiment
 					duration = -1
+					hidden = yes
 				}
 			}
 			every_owned_province = {
@@ -168,6 +169,7 @@ yodhanpir_gos_ref = {  #Ларанкарцы
 				add_province_modifier = {
 					name = yodhanpir_gos_tax
 					duration = -1
+					hidden = yes
 				}
 			}
 		}
@@ -201,16 +203,73 @@ thekvrystana_gos_ref = {  #Тхеквристана
 	}
 	effect = {
 		custom_tooltip = thekvrystana_gos_ref_tt
-		hidden_effect = {
-
+    	hidden_effect = {
+			every_owned_province = {
+				limit = {
+					superregion = taychend_superregion
+					has_port = yes
+					province_has_center_of_trade_of_level = 1
+					has_river_estuary_trigger = yes
+				}
+				add_province_modifier = {
+					name = thekvrystana_coastal_trade_modifier
+					duration = -1
+					hidden = yes
+				}
+			}
 		}
 	}
 	removed_effect = {
 		hidden_effect = {
-
+			every_owned_province = {
+				limit = { has_province_modifier = thekvrystana_coastal_trade_modifier }
+				remove_province_modifier = thekvrystana_coastal_trade_modifier
+			}
 		}
 	}
 }
+
+sarihaddhi_gos_ref = {  #Тхеквристана
+	icon = "sarihaddhi_gos_ref"
+	allow_normal_conversion = yes
+	potential = {
+		culture = thekvrystana
+	}
+	trigger = {
+		culture = thekvrystana
+	}
+	modifiers = {
+		placed_merchant_power = 12.5
+		prestige_decay = -0.005
+	}
+	effect = {
+		custom_tooltip = thekvrystana_gos_ref_tt
+    	hidden_effect = {
+			every_owned_province = {
+				limit = {
+					superregion = taychend_superregion
+					has_port = yes
+					province_has_center_of_trade_of_level = 1
+					has_river_estuary_trigger = yes
+				}
+				add_province_modifier = {
+					name = thekvrystana_coastal_trade_modifier
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = { has_province_modifier = thekvrystana_coastal_trade_modifier }
+				remove_province_modifier = thekvrystana_coastal_trade_modifier
+			}
+		}
+	}
+}
+
 
 #state_and_religion t4
 Age_of_glory = {
