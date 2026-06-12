@@ -1683,7 +1683,9 @@ bd_3_1 = {
 		}
 	}
 	
-	Z99_claiming_the_mandate	= {
+	#Mission by TheForsaken
+	#Writing by Carpe Verpa
+	Z99_the_mothers_tear = {
 		icon = mission_vedic_education
 
 		position = 17
@@ -1691,13 +1693,27 @@ bd_3_1 = {
 		required_missions = {
 			Z99_stabilizing_our_grip
 		}
-		
+
+		provinces_to_highlight = {
+			province_group = mothers_sorrow_group
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			NOT = { has_building = mage_tower }
+		}
+	
 		trigger = {
-			always = yes
+			mothers_sorrow_group = {
+				type = ALL
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				province_group = mothers_sorrow_group
+				has_building = mage_tower
+			}
 		}
 		
 		effect = {
-			custom_tooltip = will_come_with_sarhal_expansion_tooltip
+			country_event = { id = black_demesne.105 }
 		}
 	}
 	
