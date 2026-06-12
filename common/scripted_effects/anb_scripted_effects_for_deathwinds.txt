@@ -213,6 +213,8 @@ remove_all_windward_modifiers = {
 	remove_province_modifier = windward_level_1
 }
 
+#Startup effect that assigns every province a unique flag and event target
+ #to be referenced later in the button area effects (deathwind_button_effect, windwards_area_trigger)
 assign_deathwind_targets = {
 	alecand_region = {
 		type = random
@@ -247,24 +249,74 @@ assign_deathwind_targets = {
 	}
 }
 
+#Button effect to show the effect based on what flag it has.
+ #This is to have the provinces show up individually on the effect instead of showing "All provinces in the X area:\n	<effect>"
+ #Because each province can have a different effect and the <effect> shown is a random one of the different province effects
+ #ex. If three provinces are upgrading from 0 > 1 and one province is upgrading from 1 > 2 it would show 
+ #"All provinces in the X area:\n	<0 > 1 effect>" and not tell you about the 1 > 2 effect
 deathwind_button_effect = {
-	deathwind_button_subeffect = { trigger = $trigger$ effect = $effect$ num = 1 }
-	deathwind_button_subeffect = { trigger = $trigger$ effect = $effect$ num = 2 }
-	deathwind_button_subeffect = { trigger = $trigger$ effect = $effect$ num = 3 }
-	deathwind_button_subeffect = { trigger = $trigger$ effect = $effect$ num = 4 }
-	deathwind_button_subeffect = { trigger = $trigger$ effect = $effect$ num = 5 }
+	deathwind_button_subeffect = { effect = $effect$ num = 1 }
+	deathwind_button_subeffect = { effect = $effect$ num = 2 }
+	deathwind_button_subeffect = { effect = $effect$ num = 3 }
+	deathwind_button_subeffect = { effect = $effect$ num = 4 }
+	deathwind_button_subeffect = { effect = $effect$ num = 5 }
 }
 
 deathwind_button_subeffect = {
 	random_area_province = {
 		limit = { has_province_flag = alecand_area_prov_$num$ }
 		custom_tooltip = pop_military_separator_tt
-		if = {
-			limit = { $trigger$ = yes }
-			$effect$ = yes
-		}
-		else = { custom_tooltip = deathwinds_cant_use_button_tt }
+		$effect$_tt_effect = yes
 	}
+}
+
+#In-between effects to add different tooltips depending on the effect and which triggers are fulfilled
+upgrade_windwards_tt_effect = {
+	if = {
+		limit = { windward_upgrade_triggers = yes }
+		upgrade_windwards = yes
+	}
+	else_if = {
+		limit = { has_province_modifier = windward_level_10 }
+		custom_tooltip = grey_upgrade_windward_10_tt
+	}
+	else = { custom_tooltip = deathwinds_cant_use_button_tt }
+}
+
+windwards_reinforce_with_manpower_effect_tt_effect = {
+	if = {
+		limit = { windwards_reinforce_with_manpower_trigger = yes }
+		windwards_reinforce_with_manpower_effect = yes
+	}
+	else_if = {
+		limit = { has_province_flag = windwards_reinforce_with_manpower_flag }
+		custom_tooltip = grey_windwards_protected_from_devastation_tt
+	}
+	else = { custom_tooltip = deathwinds_cant_use_button_tt }
+}
+
+windwards_reinforce_with_mana_effect_tt_effect = {
+	if = {
+		limit = { windwards_reinforce_with_mana_trigger = yes }
+		windwards_reinforce_with_mana_effect = yes
+	}
+	else_if = {
+		limit = { has_deathwind_modifier = no }
+		custom_tooltip = grey_no_prov_deathwinds_tt
+	}
+	else = { custom_tooltip = deathwinds_cant_use_button_tt }
+}
+
+reduce_windward_level_tt_effect = {
+	if = {
+		limit = { reduce_windward_triggers = yes }
+		reduce_windward_level = yes
+	}
+	else_if = {
+		limit = { province_group = alecandi_capital_provinces }
+		custom_tooltip = grey_destroy_windward_kheion_tt
+	}
+	else = { custom_tooltip = deathwinds_cant_use_button_tt }
 }
 
 #Scripted effect to increase the windward level while removing the costs based on what level it is
@@ -455,30 +507,32 @@ upgrade_windwards = {
 
 windwards_reinforce_with_manpower_effect = {
 	#Set flag that prevents devastation during the event
+	custom_tooltip = windwards_reinforce_with_manpower_tt
 	set_province_flag = windwards_reinforce_with_manpower_flag
 
 	#Reduce manpower equal to 5 + (2 * Maximum Potential Deathwind Level) 
 	owner = {
 		if = {
-			limit = { is_year = 1520 } #Level 10 Max
+			limit = { is_year = 1520 } #Level 10 Max = 5+20=25
 			add_manpower = -25
 		}
 		else_if = {
-			limit = { is_year = 1480 } #Level 8 Max
+			limit = { is_year = 1480 } #Level 8 Max = 5+16=21
 			add_manpower = -21
 		}
 		else_if = {
-			limit = { is_year = 1450 } #Level 4 Max
+			limit = { is_year = 1450 } #Level 4 Max = 5+8=13
 			add_manpower = -13
 		}
-		else = { #Level 1 Max
-			add_manpower = -6
+		else = { #Level 1 Max = 5+2=7
+			add_manpower = -7
 		}
 	}
 }
 
 #Effect to decrease deathwind level based on adjuration level at the cost of mana
 windwards_reinforce_with_mana_effect = {
+	custom_tooltip = windwards_reinforce_with_mana_tt
 	owner = { change_mana = { amount = -15 } }
 	
 	hidden_effect = {
@@ -503,10 +557,11 @@ windwards_reinforce_with_mana_effect = {
 
 #Scripted effect to decrease the windward level and gain the rewards based on what level it is
 reduce_windward_level = {
-	if = { #Can't downgrade the windward if it isn't there
-		limit = { has_windward_modifier = no }
-		#Do Nothing
-	}
+	custom_tooltip = reduce_windward_level_tt
+	# if = { #Can't downgrade the windward if it isn't there
+	# 	limit = { has_windward_modifier = no }
+	# 	#Do Nothing
+	# }
 	#-------------------------------------------------------------------------------------------------------------
 	if = { #Special tooltip if it's a Kheion
 		limit = { province_group = alecandi_capital_provinces }
@@ -523,88 +578,88 @@ reduce_windward_level = {
 	#-------------------------------------------------------------------------------------------------------------
 	if = { #Level 2 > 1
 		limit = { has_province_modifier = windward_level_2 }
+		remove_province_modifier = windward_level_2
 		add_permanent_province_modifier = {
 			name = windward_level_1
 			duration = -1
 		}
-		hidden_effect = { remove_province_modifier = windward_level_2 }
 
 		destroy_windward_reward = { cash = 100 }
 	}
 	#-------------------------------------------------------------------------------------------------------------
 	if = { #Level 3 > 2
 		limit = { has_province_modifier = windward_level_3 }
+		remove_province_modifier = windward_level_3
 		add_permanent_province_modifier = {
 			name = windward_level_2
 			duration = -1
 		}
-		hidden_effect = { remove_province_modifier = windward_level_3 }
 
 		destroy_windward_reward = { cash = 130 }
 	}
 	#-------------------------------------------------------------------------------------------------------------
 	if = { #Level 4 > 3
 		limit = { has_province_modifier = windward_level_4 }
+		remove_province_modifier = windward_level_4
 		add_permanent_province_modifier = {
 			name = windward_level_3
 			duration = -1
 		}
-		hidden_effect = { remove_province_modifier = windward_level_4 }
 
 		destroy_windward_reward = { cash = 160 }
 	}
 	#-------------------------------------------------------------------------------------------------------------
 	if = { #Level 5 > 4
 		limit = { has_province_modifier = windward_level_5 }
+		remove_province_modifier = windward_level_5
 		add_permanent_province_modifier = {
 			name = windward_level_4
 			duration = -1
 		}
-		hidden_effect = { remove_province_modifier = windward_level_5 }
 
 		destroy_windward_reward = { cash = 190 }
 	}
 	#-------------------------------------------------------------------------------------------------------------
 	if = { #Level 6 > 5
 		limit = { has_province_modifier = windward_level_6 }
+		remove_province_modifier = windward_level_6
 		add_permanent_province_modifier = {
 			name = windward_level_5
 			duration = -1
 		}
-		hidden_effect = { remove_province_modifier = windward_level_6 }
 		
 		destroy_windward_reward = { cash = 220 }
 	}
 	#-------------------------------------------------------------------------------------------------------------
 	if = { #Level 7 > 6
 		limit = { has_province_modifier = windward_level_7 }
+		remove_province_modifier = windward_level_7
 		add_permanent_province_modifier = {
 			name = windward_level_6
 			duration = -1
 		}
-		hidden_effect = { remove_province_modifier = windward_level_7 }
 
 		destroy_windward_reward = { cash = 250 }
 	}
 	#-------------------------------------------------------------------------------------------------------------
 	if = { #Level 8 > 7
 		limit = { has_province_modifier = windward_level_8 }
+		remove_province_modifier = windward_level_8
 		add_permanent_province_modifier = {
 			name = windward_level_7
 			duration = -1
 		}
-		hidden_effect = { remove_province_modifier = windward_level_8 }
 
 		destroy_windward_reward = { cash = 280 }
 	}
 	#-------------------------------------------------------------------------------------------------------------
 	if = { #Level 9 > 8
 		limit = { has_province_modifier = windward_level_9 }
+		remove_province_modifier = windward_level_9
 		add_permanent_province_modifier = {
 			name = windward_level_8
 			duration = -1
 		}
-		hidden_effect = { remove_province_modifier = windward_level_9 }
 
 		destroy_windward_reward = { cash = 310 }
 	}
@@ -614,11 +669,11 @@ reduce_windward_level = {
 			has_province_modifier = windward_level_10
 			NOT = { province_group = alecandi_capital_provinces } #Exclude the Kheions. They can't be destroyed
 		}
+		remove_province_modifier = windward_level_10
 		add_permanent_province_modifier = {
 			name = windward_level_9
 			duration = -1
 		}
-		hidden_effect = { remove_province_modifier = windward_level_10 }
 
 		destroy_windward_reward = { cash = 340 }
 	}
@@ -634,7 +689,7 @@ reduce_windward_level = {
 	}
 }
 
-#Rewards you get fo reducing a windward level. Flat powerpoint reward, scaling cash reward
+#Rewards you get for reducing a windward level. Flat powerpoint reward, scaling cash reward
 destroy_windward_reward = {
 	owner = {
 		add_adm_power = 5

@@ -224,12 +224,12 @@ is_a_kheion = {
 	custom_trigger_tooltip = {
 		tooltip = is_a_kheion_tt
 		OR = {
-			tag = G49
-			tag = G48
-			tag = G50 
-			tag = G46
-			tag = G47
-			tag = G51
+			tag = G49 #Lokemeion
+			tag = G48 #Kherka
+			tag = G50 #Ormam
+			tag = G46 #Degakheion
+			tag = G47 #Oktikheion
+			tag = G51 #Arpedier
 			tag = G61 #Kimanis
 		}
 	}
@@ -385,7 +385,11 @@ can_use_degalistea = {
 	religion = kheionism
 }
 
-#Deathwinds
+##############
+# Deathwinds #
+##############
+
+#Determines if you get the magical project, monument, and easy-mode decisions
 has_full_deathwinds_system = {
 	OR = {
 		is_a_kheion = yes
@@ -433,6 +437,7 @@ has_windward_modifier = { #Checks if there's a windward in the province
 	}
 }
 
+#Used in assign_deathwind_targets trigger
 not_has_alecand_area_flags = {
 	NOT = {
 		has_province_flag = alecand_area_prov_1
@@ -443,6 +448,11 @@ not_has_alecand_area_flags = {
 	}
 }
 
+#Button trigger to show the trigger based on what event target it has.
+ #This is to have the provinces show up individually on the trigger instead of showing "All provinces in the X area:\n	<trigger>"
+ #Because each province can have a different trigger and the <trigger> shown is a random one of the different province triggers
+ #ex. If three provinces are upgrading from 0 > 1 and one province is upgrading from 1 > 2 it would show 
+ #"All provinces in the X area:\n	<0 > 1 trigger>" and not tell you about the 1 > 2 trigger
 windwards_area_trigger = {
 	windwards_area_subtrigger = { area = 1 trigger = $trigger$ }
 	windwards_area_subtrigger = { area = 2 trigger = $trigger$ }
@@ -462,17 +472,19 @@ windwards_area_trigger = {
 windwards_area_subtrigger = {
 	if = {
 		limit = { has_province_flag = alecand_area_$area$ }
-		#The scripted effect works as a trigger too
-		if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_1 } event_target:alecand_area_$area$_prov_1 = { $trigger$ = yes } }
-		if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_2 } event_target:alecand_area_$area$_prov_2 = { $trigger$ = yes } }
-		if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_3 } event_target:alecand_area_$area$_prov_3 = { $trigger$ = yes } }
-		if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_4 } event_target:alecand_area_$area$_prov_4 = { $trigger$ = yes } }
-		if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_5 } event_target:alecand_area_$area$_prov_5 = { $trigger$ = yes } }
+		OR = {
+			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_1 } event_target:alecand_area_$area$_prov_1 = { $trigger$ = yes } }
+			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_2 } event_target:alecand_area_$area$_prov_2 = { $trigger$ = yes } }
+			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_3 } event_target:alecand_area_$area$_prov_3 = { $trigger$ = yes } }
+			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_4 } event_target:alecand_area_$area$_prov_4 = { $trigger$ = yes } }
+			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_5 } event_target:alecand_area_$area$_prov_5 = { $trigger$ = yes } }
+		}
 	}
 }
 
 #Scripted effect for the requirements to upgrade the Windwards based on what level you have
- #Why is basically every trigger inside a custom tooltip? Because otherwise it's shown as "Province Owner: \n	<trigger>" which looks bad, isn't necessary or helpful, and I don't want it
+ #Why is basically every trigger inside a custom tooltip? 
+ #Because otherwise it's shown as "Province Owner: \n	<trigger>" which looks bad, isn't necessary or helpful, and I don't want it
 windward_upgrade_triggers = {
 	if = { #Can't upgrade further if the province has a level 10 Windward
 		limit = { has_province_modifier = windward_level_10 }
@@ -754,27 +766,28 @@ windward_upgrade_triggers = {
 windwards_reinforce_with_manpower_trigger = {
 	#Requires manpower equal to 5 + (2 * Maximum Potential Deathwind Level) 
 	if = {
-		limit = { is_year = 1520 } #Level 10 Max
+		limit = { is_year = 1520 } #Level 10 Max = 5+20=25
 		custom_trigger_tooltip = {
 			tooltip = owner_has_manpower_25_tt
 			owner = { manpower = 25 }
 		}
 	}
-	else_if = {
-		limit = { is_year = 1480 } #Level 8 Max
+	if = {
+		limit = { is_year = 1480 NOT = { is_year = 1520 } } #Level 8 Max = 5+16=21
 		custom_trigger_tooltip = {
 			tooltip = owner_has_manpower_21_tt
 			owner = { manpower = 21 }
 		}
 	}
-	else_if = {
-		limit = { is_year = 1450 } #Level 4 Max
+	if = {
+		limit = { is_year = 1450 NOT = { is_year = 1480 } } #Level 4 Max = 5+8=13
 		custom_trigger_tooltip = {
 			tooltip = owner_has_manpower_13_tt
 			owner = { manpower = 13 }
 		}
 	}
-	else = { #Level 1 Max
+	if = { #Level 1 Max
+		limit = { NOT = { is_year = 1450 } } #Level 4 Max = 5+2=7
 		custom_trigger_tooltip = {
 			tooltip = owner_has_manpower_7_tt
 			owner = { manpower = 7 }
