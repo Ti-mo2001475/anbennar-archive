@@ -443,6 +443,34 @@ not_has_alecand_area_flags = {
 	}
 }
 
+windwards_area_trigger = {
+	windwards_area_subtrigger = { area = 1 trigger = $trigger$ }
+	windwards_area_subtrigger = { area = 2 trigger = $trigger$ }
+	windwards_area_subtrigger = { area = 3 trigger = $trigger$ }
+	windwards_area_subtrigger = { area = 4 trigger = $trigger$ }
+	windwards_area_subtrigger = { area = 5 trigger = $trigger$ }
+	windwards_area_subtrigger = { area = 6 trigger = $trigger$ }
+	windwards_area_subtrigger = { area = 7 trigger = $trigger$ }
+	windwards_area_subtrigger = { area = 8 trigger = $trigger$ }
+	windwards_area_subtrigger = { area = 9 trigger = $trigger$ }
+	windwards_area_subtrigger = { area = 10 trigger = $trigger$ }
+	windwards_area_subtrigger = { area = 11 trigger = $trigger$ }
+	windwards_area_subtrigger = { area = 12 trigger = $trigger$ }
+	windwards_area_subtrigger = { area = 13 trigger = $trigger$ } #Alecand has 13 areas in it
+}
+
+windwards_area_subtrigger = {
+	if = {
+		limit = { has_province_flag = alecand_area_$area$ }
+		#The scripted effect works as a trigger too
+		if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_1 } event_target:alecand_area_$area$_prov_1 = { $trigger$ = yes } }
+		if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_2 } event_target:alecand_area_$area$_prov_2 = { $trigger$ = yes } }
+		if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_3 } event_target:alecand_area_$area$_prov_3 = { $trigger$ = yes } }
+		if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_4 } event_target:alecand_area_$area$_prov_4 = { $trigger$ = yes } }
+		if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_5 } event_target:alecand_area_$area$_prov_5 = { $trigger$ = yes } }
+	}
+}
+
 #Scripted effect for the requirements to upgrade the Windwards based on what level you have
  #Why is basically every trigger inside a custom tooltip? Because otherwise it's shown as "Province Owner: \n	<trigger>" which looks bad, isn't necessary or helpful, and I don't want it
 windward_upgrade_triggers = {

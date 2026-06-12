@@ -213,6 +213,40 @@ remove_all_windward_modifiers = {
 	remove_province_modifier = windward_level_1
 }
 
+assign_deathwind_targets = {
+	alecand_region = {
+		type = random
+		limit = { not_has_alecand_area_flags = yes }
+		set_province_flag = alecand_area_$area$
+		save_global_event_target_as = alecand_area_$area$_prov_1
+		set_province_flag = alecand_area_prov_1
+		random_area_province = {
+			limit = { not_has_alecand_area_flags = yes }
+			set_province_flag = alecand_area_$area$
+			set_province_flag = alecand_area_prov_2
+			save_global_event_target_as = alecand_area_$area$_prov_2
+		}
+		random_area_province = {
+			limit = { not_has_alecand_area_flags = yes }
+			set_province_flag = alecand_area_$area$
+			set_province_flag = alecand_area_prov_3
+			save_global_event_target_as = alecand_area_$area$_prov_3
+		}
+		random_area_province = {
+			limit = { not_has_alecand_area_flags = yes }
+			set_province_flag = alecand_area_$area$
+			set_province_flag = alecand_area_prov_4
+			save_global_event_target_as = alecand_area_$area$_prov_4
+		}
+		random_area_province = {
+			limit = { not_has_alecand_area_flags = yes }
+			set_province_flag = alecand_area_$area$
+			set_province_flag = alecand_area_prov_5
+			save_global_event_target_as = alecand_area_$area$_prov_5
+		}
+	}
+}
+
 deathwind_button_effect = {
 	deathwind_button_subeffect = { trigger = $trigger$ effect = $effect$ num = 1 }
 	deathwind_button_subeffect = { trigger = $trigger$ effect = $effect$ num = 2 }
@@ -222,9 +256,9 @@ deathwind_button_effect = {
 }
 
 deathwind_button_subeffect = {
-	custom_tooltip = pop_military_separator_tt
 	random_area_province = {
 		limit = { has_province_flag = alecand_area_prov_$num$ }
+		custom_tooltip = pop_military_separator_tt
 		if = {
 			limit = { $trigger$ = yes }
 			$effect$ = yes
