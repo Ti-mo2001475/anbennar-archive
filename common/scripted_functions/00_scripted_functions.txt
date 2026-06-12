@@ -337,6 +337,26 @@ can_move_capital = {
 			always = no
 		}
 	}
+	condition = {
+		tooltip = "NO_CAPITAL_MOVE_MANGROVE"
+		potential = {
+			FROM = {
+				has_government_attribute = mangrove_republic
+			}
+		}
+		allow = {
+			always = no
+		}
+	}
+	condition = {
+		tooltip = "NO_CAPITAL_MOVE_GASHA"
+		potential = {
+			FROM = { has_country_flag = L76_bloody_jungle_flag }
+		}
+		allow = {
+			always = no
+		}
+	}
 }
 
 can_move_trade_port = {
@@ -637,24 +657,9 @@ can_colonize_province = {
 	condition = { # Keep charkuchin kobolds in their region. !!!May be changed later based on testing!!!
 		potential = {
 			FROM = {
-				culture_group = kobold
-				OR = {
-					tag = P30
-					tag = P31
-					tag = P32
-					tag = P33
-					tag = P34
-					tag = P35
-					tag = P36
-				}
-				ai = yes
+				has_country_modifier = charkuchin_expansion_ai
 			}
-			NOT = {
-				region = west_charkuchar_region
-				region = central_charkuchar_region
-				region = south_charkuchar_region
-				region = east_charkuchar_region
-			}
+			NOT = { superregion = charkuchar_superregion }
 		}
 		allow = {
 			always = no

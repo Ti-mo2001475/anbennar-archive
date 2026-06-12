@@ -142,7 +142,7 @@ venomtooth_1_missions = {
 					}
 					ROOT = {
 						change_government_reform_progress = 10
-						add_innovativeness_or_monarch_power_anb = { amount = 0.5 }
+						change_innovativeness = 0.5
 					}
 				}
 			}
@@ -1215,30 +1215,44 @@ venomtooth_5_missions = {
 
 		trigger = {
 			OR = {
-				any_tribal_land = {
-					OR = {
-						is_core = B23
-						is_core = B27
+				custom_trigger_tooltip = {
+					any_tribal_land = {
+						OR = {
+							is_core = B23
+							is_core = B27
+						}
+						culture_group = orcish
+						num_of_units_in_province = {
+							amount = 15
+							who = ROOT
+						}
 					}
-					culture_group = orcish
-					num_of_units_in_province = {
-						amount = 15
-						who = ROOT
-					}
+					tooltip = vt_green_slave_trade_tooltip
 				}
-				any_owned_province = {
-					OR = {
-						is_core = B23
-						is_core = B27
+				custom_trigger_tooltip = {
+					any_owned_province = {
+						OR = {
+							is_core = B23
+							is_core = B27
+						}
+						culture_group = orcish
+						num_of_units_in_province = {
+							amount = 15
+							who = ROOT
+						}
 					}
-					culture_group = orcish
-					num_of_units_in_province = {
-						amount = 15
-						who = ROOT
-					}
+					tooltip = vt_green_slave_trade_owned_tt
+				}
+				
+			}
+			OR = {
+				native_storehouse = 5
+				num_of_owned_provinces_with = {
+					value = 5
+					has_production_building_trigger = yes
 				}
 			}
-			native_storehouse = 5
+			
 		}
 
 		effect = {
