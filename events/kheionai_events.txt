@@ -27,9 +27,12 @@ country_event = {
 			set_aPUI_cap = { name = deathwinds amount = 108 } #9 years in months (9*12=108)
 			change_aPUI_var_provincial = { name = deathwinds amount = 95 } #Next deathwind is 13 months away (108-13=95)
 			
+			#Define variables to -1 for UI tooltips
 			set_variable = { deathwinds_warded_var = -1 }
 			set_variable = { deathwinds_var = -1 }
 			set_variable = { deathwinds_rand_var = -1 }
+
+
 		}
 		hidden_effect = {
 			#Do the first storm on Jan 1st 1445
@@ -38,6 +41,33 @@ country_event = {
 				province_event = {
 					id = kheionai.2 #Warning event happens 6 months before
 					days = 225 #June 1st 1444 (minus 6 days)
+				}
+			}
+		}
+
+		#Assigns every province in Alecand a flag that's different from the other ones
+		 #in the area so you can scope to every area province seperately in the buttons
+		while = {
+			limit = { alecand_region = { not_has_alecand_area_flags = yes } }
+			alecand_region = {
+				type = random
+				limit = { not_has_alecand_area_flags = yes }
+				set_province_flag = alecand_area_prov_1
+				random_area_province = {
+					limit = { not_has_alecand_area_flags = yes }
+					set_province_flag = alecand_area_prov_2
+				}
+				random_area_province = {
+					limit = { not_has_alecand_area_flags = yes }
+					set_province_flag = alecand_area_prov_3
+				}
+				random_area_province = {
+					limit = { not_has_alecand_area_flags = yes }
+					set_province_flag = alecand_area_prov_4
+				}
+				random_area_province = {
+					limit = { not_has_alecand_area_flags = yes }
+					set_province_flag = alecand_area_prov_5
 				}
 			}
 		}

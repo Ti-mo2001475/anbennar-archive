@@ -761,6 +761,7 @@ custom_text_box = { name = aPUI_deathwinds_windward_value tooltip = aPUI_deathwi
 custom_text_box = { name = aPUI_deathwinds_deathwinds_value tooltip = aPUI_deathwinds_deathwinds_desc }
 custom_text_box = { name = aPUI_deathwinds_info_title }
 
+#Upgrade Windwards Buttons
 custom_button = {
 	name = aPUI_deathwinds_upgrades_button_1
 	tooltip = aPUI_deathwinds_upgrades_button_1
@@ -771,18 +772,48 @@ custom_button = {
 	name = aPUI_deathwinds_upgrades_area_button_1
 	tooltip = aPUI_deathwinds_upgrades_area_button_1
 	trigger = {
-		area_for_scope_province = {
-			windward_upgrade_triggers = yes
+		OR = {
+			if = {
+				limit = { area_for_scope_province = { has_province_flag = alecand_area_prov_1 } }
+				area_for_scope_province = {
+					if = {
+						limit = { has_province_flag = alecand_area_prov_1 }
+						windward_upgrade_triggers = yes
+					}
+					else = { always = no }
+				}
+			}
+			if = {
+				limit = { area_for_scope_province = { has_province_flag = alecand_area_prov_2 } }
+				area_for_scope_province = {
+					if = {
+						limit = { has_province_flag = alecand_area_prov_2 }
+						windward_upgrade_triggers = yes
+					}
+					else = { always = no }
+				}
+			}
+			if = {
+				limit = { area_for_scope_province = { has_province_flag = alecand_area_prov_3 } }
+				area_for_scope_province = {
+					if = {
+						limit = { has_province_flag = alecand_area_prov_3 }
+						windward_upgrade_triggers = yes
+					}
+					else = { always = no }
+				}
+			}
 		}
 	}
 	effect = {
-		area = {
-			limit = { windward_upgrade_triggers = yes }
-			upgrade_windwards = yes
+		deathwind_button_effect = {
+			trigger = windward_upgrade_triggers
+			effect = upgrade_windwards
 		}
 	}
 }
 
+#Reinforce with Manpower Buttons
 custom_button = {
 	name = aPUI_deathwinds_upgrades_button_2
 	tooltip = aPUI_deathwinds_upgrades_button_2
@@ -802,13 +833,18 @@ custom_button = {
 	}
 	effect = {
 		custom_tooltip = windwards_reinforce_with_manpower_area_tt
-		area = {
-			limit = { windwards_reinforce_with_manpower_trigger = yes }
-			windwards_reinforce_with_manpower_effect = yes
+		deathwind_button_effect = {
+			trigger = windwards_reinforce_with_manpower_trigger
+			effect = windwards_reinforce_with_manpower_effect
 		}
+		# area = {
+		# 	limit = { windwards_reinforce_with_manpower_trigger = yes }
+		# 	windwards_reinforce_with_manpower_effect = yes
+		# }
 	}
 }
 
+#Reinforce with Mana Button
 custom_button = {
 	name = aPUI_deathwinds_upgrades_button_3
 	tooltip = aPUI_deathwinds_upgrades_button_3
@@ -828,13 +864,18 @@ custom_button = {
 	}
 	effect = {
 		custom_tooltip = windwards_reinforce_with_mana_area_tt
-		area = {
-			limit = { windwards_reinforce_with_mana_trigger = yes }
-			windwards_reinforce_with_mana_effect = yes
+		deathwind_button_effect = {
+			trigger = windwards_reinforce_with_mana_trigger
+			effect = windwards_reinforce_with_mana_effect
 		}
+		# area = {
+		# 	limit = { windwards_reinforce_with_mana_trigger = yes }
+		# 	windwards_reinforce_with_mana_effect = yes
+		# }
 	}
 }
 
+#Destroy Windwards Button
 custom_button = {
 	name = aPUI_deathwinds_upgrades_button_4
 	tooltip = aPUI_deathwinds_upgrades_button_4
@@ -854,10 +895,14 @@ custom_button = {
 	}
 	effect = {
 		custom_tooltip = reduce_windward_level_area_tt
-		area = {
-			limit = { reduce_windward_triggers = yes }
-			reduce_windward_level = yes
+		deathwind_button_effect = {
+			trigger = reduce_windward_triggers
+			effect = reduce_windward_level
 		}
+		# area = {
+		# 	limit = { reduce_windward_triggers = yes }
+		# 	reduce_windward_level = yes
+		# }
 	}
 }
 

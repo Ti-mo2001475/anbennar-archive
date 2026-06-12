@@ -213,6 +213,26 @@ remove_all_windward_modifiers = {
 	remove_province_modifier = windward_level_1
 }
 
+deathwind_button_effect = {
+	deathwind_button_subeffect = { trigger = $trigger$ effect = $effect$ num = 1 }
+	deathwind_button_subeffect = { trigger = $trigger$ effect = $effect$ num = 2 }
+	deathwind_button_subeffect = { trigger = $trigger$ effect = $effect$ num = 3 }
+	deathwind_button_subeffect = { trigger = $trigger$ effect = $effect$ num = 4 }
+	deathwind_button_subeffect = { trigger = $trigger$ effect = $effect$ num = 5 }
+}
+
+deathwind_button_subeffect = {
+	custom_tooltip = pop_military_separator_tt
+	random_area_province = {
+		limit = { has_province_flag = alecand_area_prov_$num$ }
+		if = {
+			limit = { $trigger$ = yes }
+			$effect$ = yes
+		}
+		else = { custom_tooltip = deathwinds_cant_use_button_tt }
+	}
+}
+
 #Scripted effect to increase the windward level while removing the costs based on what level it is
 upgrade_windwards = {
 	  #Can't upgrade further if the province has a level 10 Windward
