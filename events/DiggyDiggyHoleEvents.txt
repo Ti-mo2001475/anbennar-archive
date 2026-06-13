@@ -13518,7 +13518,11 @@ country_event = { #Imported Labor
 	}
 	
 	trigger = {
-		has_country_flag = is_digging
+		any_owned_province = {
+				continent = serpentspine
+				has_terrain = dwarven_hold
+				
+		}
 		NOT = { has_country_flag = dig_imported }
 		capital_scope = {
 			OR = {
@@ -13532,7 +13536,7 @@ country_event = { #Imported Labor
         }
         culture_group = dwarven
         any_owned_province = {
-			is_city = yes
+			is_city = yes	
 			continent = serpentspine
 			OR = {
 				has_goblin_minority_trigger = yes
@@ -13570,7 +13574,7 @@ country_event = { #Imported Labor
 			add_estate_loyalty = { estate = estate_burghers loyalty = +10 }
             add_estate_influence_modifier = {
 				estate = estate_burghers
-				desc = EST_VAL_BURGHER_DECLINE
+				desc = diggy_diggy_rejected_labor_plan
 				influence = +10
 				duration = 3650
 			}
@@ -13582,18 +13586,28 @@ country_event = { #Imported Labor
 					has_goblin_minority_trigger = yes
 				} 
     		}	
-			ROOT = { small_decrease_of_goblin_tolerance_effect = yes }
+			small_decrease_of_goblin_tolerance_effect = yes
 		}
-		else = { ROOT = { small_decrease_of_kobold_tolerance_effect = yes } }
-	clr_province_flag = diggy_minorities_imported
+		else = { small_decrease_of_kobold_tolerance_effect = yes }
+	
+	hidden_effect = {
+			random_owned_province = {
+				limit = {
+					has_construction = digging_deeper
+					continent = serpentspine
+					has_province_flag = diggy_minorities_imported
+				}
+				clr_province_flag = diggy_minorities_imported
+			}
+		}
 	}
 	
 	option = {
 		name = diggy.900.b
 		ai_chance = { factor = 100 }
         add_years_of_income = -0.083
-        hidden_effect = { capital_scope { change_variable = { cons_prog = 0.025 } } }
-        tooltip = { capital_scope { change_variable = { cons_prog = 0.0125 } } }	
+        hidden_effect = { capital_scope = { change_variable = { cons_prog = 0.025 } } }
+        tooltip = { capital_scope = { change_variable = { cons_prog = 0.0125 } } }	
         if = {
             limit = {
                 any_owned_province = {
@@ -13664,22 +13678,29 @@ country_event = { #Imported Labor Race War
 	        event_target:event_province = { remove_goblin_minority_size_effect = yes }
         }
         else = { event_target:event_province = { remove_kobold_minority_size_effect = yes } }
-	hidden_effect = { capital_scope { change_variable = { cons_prog = -0.1 } } }
-    tooltip = { capital_scope { change_variable = { cons_prog = -0.050 } } }
+	hidden_effect = { capital_scope = { change_variable = { cons_prog = -0.1 } } }
+    tooltip = { capital_scope = { change_variable = { cons_prog = -0.050 } } }
 	clr_country_flag = diggy_allowed_to_import
-	clr_province_flag = diggy_minorities_imported
+	hidden_effect = {
+			random_owned_province = {
+				limit = {
+					has_construction = digging_deeper
+					continent = serpentspine
+					has_province_flag = diggy_minorities_imported
+				}
+				clr_province_flag = diggy_minorities_imported
+			}
+		}
 	}
 
 	option = {
 		name = diggy.901.b
 		ai_chance = { factor = 100 }
     	custom_tooltip = diggy_diggy_veins_run_red_tooltip
-		hidden_effect { 
-			capital_scope = {
-				random = {
-					chance = 30
-					set_country_flag = diggy_veins_run_red
-				}
+		hidden_effect = { 
+			random = {
+				chance = 30
+				set_country_flag = diggy_veins_run_red
 			}
 		}
 	}
@@ -13699,7 +13720,16 @@ country_event = { #Imported Labor Race War
 		}
 		else = { ROOT = { small_increase_of_kobold_tolerance_effect = yes } }
 		clr_country_flag = diggy_allowed_to_import
-		clr_province_flag = diggy_minorities_imported
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					has_construction = digging_deeper
+					continent = serpentspine
+					has_province_flag = diggy_minorities_imported
+				}
+				clr_province_flag = diggy_minorities_imported
+			}
+		}
 	}
 
 	option = {
@@ -13707,8 +13737,8 @@ country_event = { #Imported Labor Race War
 		ai_chance = { factor = 10000 }
 		trigger = { ruler_has_personality = silver_tongue_personality }
 		add_yearly_income = -0.083
-		hidden_effect = { capital_scope { change_variable = { cons_prog = 0.025 } } }
-        tooltip = { capital_scope { change_variable = { cons_prog = 0.0125 } } }
+		hidden_effect = { capital_scope = { change_variable = { cons_prog = 0.025 } } }
+        tooltip = { capital_scope ={ change_variable = { cons_prog = 0.0125 } } }
 		if = {
     		limit = {
     			any_owned_province = {
@@ -13720,7 +13750,16 @@ country_event = { #Imported Labor Race War
 		}
 		else = { ROOT = { Large_increase_of_kobold_tolerance_effect = yes } }
 		clr_country_flag = diggy_allowed_to_import
-		clr_province_flag = diggy_minorities_imported
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					has_construction = digging_deeper
+					continent = serpentspine
+					has_province_flag = diggy_minorities_imported
+				}
+				clr_province_flag = diggy_minorities_imported
+			}
+		}
 	}
 }
 
@@ -13736,8 +13775,8 @@ country_event = { #Diggy Diggy Veins Run Red
 	option = {
 		name = diggy.902.a
 		ai_chance = { factor = 100 }
-		hidden_effect = { capital_scope { change_variable = { cons_prog = -0.20 } } }
-		tooltip = { capital_scope { change_variable = { cons_prog = -0.10 } } }
+		hidden_effect = { capital_scope = { change_variable = { cons_prog = -0.20 } } }
+		tooltip = { capital_scope = { change_variable = { cons_prog = -0.10 } } }
 		if = {
     		limit = {
     			any_owned_province = {
@@ -13748,12 +13787,28 @@ country_event = { #Diggy Diggy Veins Run Red
 			event_target:event_province = { remove_goblin_minority_size_effect = yes }
 		}
 		else = { event_target:event_province = { remove_kobold_minority_size_effect = yes } }
-		spawn_rebels = {
-			type = leadered_peasant_rebels
-			size = 3
+		random_owned_province = {
+				limit = {
+					has_construction = digging_deeper
+					continent = serpentspine
+					has_province_flag = diggy_minorities_imported
+				}
+				spawn_rebels = {
+					type = leadered_peasant_rebels
+					size = 2
+				}
 		}
 		clr_country_flag = diggy_veins_run_red
-		clr_province_flag = diggy_minorities_imported
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					has_construction = digging_deeper
+					continent = serpentspine
+					has_province_flag = diggy_minorities_imported
+				}
+				clr_province_flag = diggy_minorities_imported
+			}
+		}
 		clr_country_flag = diggy_allowed_to_import
 	}
 }
