@@ -168,7 +168,7 @@ country_event = {
 
 	is_triggered_only = yes
 	trigger = { 
-		NOT = { has_country_flag = deathwinds_disable_warning_flag }
+		NOT = { has_country_flag = deathwinds_disable_events_flag }
 		NOT = { has_country_flag = deathwinds_warn_event_flag }
 	}
 
@@ -182,8 +182,8 @@ country_event = {
 
 	option = {
 		name = kheionai.3.b
-		custom_tooltip = deathwinds_disable_warning_tt
-		set_country_flag = deathwinds_disable_warning_flag
+		trigger = { has_not_full_deathwinds_system = yes }
+		disable_deathwind_events = yes
 	}
 }
 
@@ -202,12 +202,18 @@ country_event = {
 	}
 	
 	#Flags so the event only fires once and not once per province in Alecand
-	trigger = { NOT = { has_country_flag = deathwinds_start_event_flag } }
+	trigger = { NOT = { has_country_flag = deathwinds_disable_events_flag } NOT = { has_country_flag = deathwinds_start_event_flag } }
 	after = { clr_country_flag = deathwinds_start_event_flag }
 	immediate = { hidden_effect = { set_country_flag = deathwinds_start_event_flag } }
 
 	option = {
 		name = kheionai.4.a
+	}
+
+	option = {
+		name = kheionai.3.b
+		trigger = { has_not_full_deathwinds_system = yes }
+		disable_deathwind_events = yes
 	}
 }
 
@@ -221,7 +227,7 @@ country_event = {
 	is_triggered_only = yes
 	
 	#Flags so the event only fires once and not once per province in Alecand
-	trigger = { NOT = { has_country_flag = deathwinds_devastation_event_flag } }
+	trigger = { NOT = { has_country_flag = deathwinds_disable_events_flag } NOT = { has_country_flag = deathwinds_devastation_event_flag } }
 	after = { clr_country_flag = deathwinds_devastation_event_flag }
 
 	immediate = {
@@ -387,6 +393,12 @@ country_event = {
 		}
 		add_splendor = 10
 	}
+
+	option = {
+		name = kheionai.3.b
+		trigger = { has_not_full_deathwinds_system = yes }
+		disable_deathwind_events = yes
+	}
 }
 
 #Deathwinds end event
@@ -404,12 +416,18 @@ country_event = {
 	}
 
 	#Flags so the event only fires once and not once per province in Alecand
-	trigger = { NOT = { has_country_flag = deathwinds_end_event_flag } }
+	trigger = { NOT = { has_country_flag = deathwinds_disable_events_flag } NOT = { has_country_flag = deathwinds_end_event_flag } }
 	after = { clr_country_flag = deathwinds_end_event_flag }
 	immediate = { hidden_effect = { set_country_flag = deathwinds_end_event_flag } }
 
 	option = {
 		name = kheionai.6.a
+	}
+
+	option = {
+		name = kheionai.3.b
+		trigger = { has_not_full_deathwinds_system = yes }
+		disable_deathwind_events = yes
 	}
 }
 
@@ -467,6 +485,12 @@ province_event = {
 	option = {
 		name = kheionai.8.a
 		custom_tooltip = deathwinds_intro_tt
+	}
+
+	option = {
+		name = kheionai.3.b
+		trigger = { has_not_full_deathwinds_system = yes }
+		disable_deathwind_events = yes
 	}
 }
 

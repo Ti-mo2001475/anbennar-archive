@@ -550,4 +550,95 @@ country_decisions = {
 			}
 		}
 	}
+
+	mass_upgrade_windwards = {
+
+		potential = {
+			any_owned_province = { region = alecand_region }
+			# has_not_full_deathwinds_system = yes
+		}
+
+		provinces_to_highlight = {
+			region = alecand_region
+			owned_by = ROOT
+			windward_upgrade_triggers = yes
+		}
+
+		allow = {
+			hidden_trigger = {
+				any_owned_province = { region = alecand_region }
+				# has_not_full_deathwinds_system = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = alecand_upgrade_windwards_tt
+				alecand_region = { windward_upgrade_triggers = yes }
+			}
+		}
+
+		effect = {
+			custom_tooltip = alecand_upgrade_add_windwards_tt
+			hidden_effect = {
+				alecand_region = {
+					limit = { windward_upgrade_triggers = yes }
+					upgrade_windwards = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				#TODO
+			}
+		}
+	}
+
+	desolate_alecand = {
+
+		potential = {
+			any_owned_province = { region = alecand_region }
+			# has_not_full_deathwinds_system = yes
+		}
+
+		allow = {
+			# hidden_trigger = { has_not_full_deathwinds_system = yes }
+			any_owned_province = { region = alecand_region }
+		}
+
+		effect = {
+			if = {
+				limit = { has_country_flag = desolating_alecand_flag }
+				custom_tooltip = undesolate_alecand_tt
+				hidden_effect = {
+					every_owned_province = {
+						limit = { region = alecand_region }
+						remove_province_modifier = desolate_alecand_mod
+					}
+					clr_country_flag = desolating_alecand_flag
+				}
+			}
+			else = {
+				custom_tooltip = desolate_alecand_tt
+				hidden_effect = {
+					every_owned_province = {
+						limit = { region = alecand_region }
+						add_province_modifier = {
+							name = desolate_alecand_mod
+							duration = -1
+						}
+					}
+					set_country_flag = desolating_alecand_flag
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				#TODO
+			}
+		}
+	}
 }

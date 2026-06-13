@@ -414,6 +414,13 @@ has_full_deathwinds_system = {
 	}
 }
 
+has_not_full_deathwinds_system = {
+	custom_trigger_tooltip = {
+		tooltip = has_not_full_deathwinds_system_tt
+		has_full_deathwinds_system = no
+	}
+}
+
 has_deathwind_modifier = { #Checks if there's deathwinds currently happening in the province
 	custom_trigger_tooltip = {
 		tooltip = has_deathwind_modifier_tt
@@ -446,6 +453,16 @@ has_windward_modifier = { #Checks if there's a windward in the province
 			has_province_modifier = windward_level_3
 			has_province_modifier = windward_level_2
 			has_province_modifier = windward_level_1
+		}
+	}
+}
+
+has_full_deathwinds_system_button = {
+	if = {
+		limit = { has_not_full_deathwinds_system = yes }
+		custom_trigger_tooltip = {
+			tooltip = has_full_deathwinds_system_tt
+			always = no
 		}
 	}
 }
@@ -777,6 +794,7 @@ windward_upgrade_triggers = {
 }
 
 windwards_reinforce_with_manpower_trigger = {
+	has_full_deathwinds_system_button = yes
 	#Requires manpower equal to 5 + (2 * Maximum Potential Deathwind Level) 
 	if = {
 		limit = { is_year = 1520 } #Level 10 Max = 5+20=25
@@ -813,6 +831,7 @@ windwards_reinforce_with_manpower_trigger = {
 }
 
 windwards_reinforce_with_mana_trigger = {
+	has_full_deathwinds_system_button = yes
 	has_deathwind_modifier = yes
 	custom_trigger_tooltip = {
 		tooltip = owner_is_overall_abjuration_level_1_minimum_tt
@@ -825,6 +844,7 @@ windwards_reinforce_with_mana_trigger = {
 }
 
 reduce_windward_triggers = {
+	has_full_deathwinds_system_button = yes
 	has_windward_modifier = yes
 	NOT = { province_group = alecandi_capital_provinces }
 	if = {
