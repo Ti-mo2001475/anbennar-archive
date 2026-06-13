@@ -103,7 +103,7 @@ celliande_1_missions = {
 		effect = {
 			451 = {
 				change_province_name = "Serondorunizam"
-				add_permanent_province_modifier = {
+				add_province_modifier = {
 					name = celliande_seron_gov_modifier
 					duration = -1
 				}
@@ -213,7 +213,7 @@ celliande_2_missions = {
 					id = celliande.2
 				}
 			}
-			complex_dynamic_effect = {
+			simple_dynamic_effect_without_alternative = {
 				first_custom_tooltip = celliande_future_borders_unrest
 				first_limit = "
 					A48 = {
@@ -223,13 +223,11 @@ celliande_2_missions = {
 				first_effect = "
 					custom_tooltip = celliande_future_borders_unrest2
 				"
-			}
-			complex_dynamic_effect = {
-				first_custom_tooltip = celliande_future_borders_bisan
-				first_limit = "
+				second_custom_tooltip = celliande_future_borders_bisan
+				second_limit = "
 					alliance_with = A34
 				"
-				first_effect = "
+				second_effect = "
 					custom_tooltip = celliande_future_borders_bisan2
 				"
 			}
@@ -655,7 +653,7 @@ celliande_3_missions = {
 				add_permanent_claim = ROOT
 			}
 			
-			complex_dynamic_effect = {
+			simple_dynamic_effect_without_alternative = {
 				first_custom_tooltip = celliande_the_thorns.tt1
 				first_limit = "
 					A57 = {
@@ -673,13 +671,11 @@ celliande_3_missions = {
 						}
 					}
 				"
-			}
-			complex_dynamic_effect = {
-				first_custom_tooltip = celliande_the_thorns.tt2
-				first_limit = "
+				second_custom_tooltip = celliande_the_thorns.tt2
+				second_limit = "
 					has_mil_advisor = yes
 				"
-				first_effect = "
+				second_effect = "
 					add_country_modifier = {
 						name = celliande_patriotic_duty
 						duration = 1825
@@ -791,10 +787,6 @@ celliande_3_missions = {
 		}
 
 		trigger = {
-			custom_trigger_tooltip = {
-				tooltip = celliande_stewards_history.tt1
-				has_country_flag = celliande_convert_wexara
-			}
 			919 = {
 				has_building = mage_tower
 			}
@@ -804,10 +796,7 @@ celliande_3_missions = {
 			419 = {
 				has_building = mage_tower
 			}
-			OR = {
-				is_ruler_necromancy_level_1_minimum = yes
-				is_estate_necromancy_level_1_minimum = yes
-			}
+			is_overall_necromancy_level_1_minimum = yes
 		}
 
 		effect = {
@@ -1301,22 +1290,10 @@ celliande_4_missions = {
 					}
 				}
 			}
-			
 			num_of_light_ship = 5
 		}
 
 		effect = {
-			random_ally = {
-				limit = {
-					capital_scope = {
-						superregion = bulwar_superregion
-					}
-				}
-				add_trust = {
-					who = ROOT
-					value = 15
-				}
-			}
 			412 = {
 				change_trade_goods = silk
 			}
@@ -1325,6 +1302,34 @@ celliande_4_missions = {
 			}
 			country_event = {
 				id = celliande.14
+			}
+
+			complex_dynamic_effect = {
+				first_custom_tooltip = celliande_bulwari_textile_fct
+				first_limit = "
+					any_known_country = {
+						capital_scope = {
+							superregion = bulwar_superregion
+						}
+						alliance_with = ROOT
+					}
+				"
+				first_effect = "
+					custom_tooltip = celliande_bulwari_textile_fe
+				"
+			}
+			hidden_effect = {
+				random_ally = {
+					limit = {
+						capital_scope = {
+							superregion = bulwar_superregion
+						}
+					}
+					add_trust = {
+						who = ROOT
+						value = 15
+					}
+				}
 			}
 		}
 	}
@@ -1565,7 +1570,16 @@ celliande_5_missions = {
 			country_event = {
 				id = celliande.10
 			}
-			custom_tooltip = celliande_from_grave_tt
+			if = {
+				limit = { religion = regent_court }
+				custom_tooltip = celliande_from_grave_tt
+				hidden_effect = {
+					add_country_modifier = {
+						name = one_faith_one_culture_no_absolutism_cost_religion_modifier
+						duration = -1
+					}
+				}
+			}
 			every_known_country = {
 				limit = {
 					OR = {
@@ -1591,15 +1605,6 @@ celliande_5_missions = {
 					add_adm_power = 25
 					add_dip_power = 25
 					add_mil_power = 25
-				}
-			}
-			hidden_effect = {
-				if = {
-					limit = { religion = regent_court }
-					add_country_modifier = {
-						name = one_faith_one_culture_no_absolutism_cost_religion_modifier
-						duration = -1
-					}
 				}
 			}
 		}

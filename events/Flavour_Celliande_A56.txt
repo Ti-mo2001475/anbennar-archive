@@ -252,7 +252,7 @@ country_event = { #Rising a Hero
 		}
 	}
 	option = {
-		name = celliande.7.d
+		name = celliande.7.exit
 		
 	}
 	after = {
@@ -294,12 +294,8 @@ country_event = { #On trail of Hero 4
 				limit = { has_building = cathedral }
 				add_base_tax = 2
 			}
-			else_if = {
-				limit = { has_building = temple }
-				add_building = cathedral
-			}
 			else = {
-				add_building = temple
+				add_or_upgrade_tax_building = yes
 			}
 		}
 	}
@@ -369,6 +365,9 @@ country_event = { #From beyond the Grave
 		set_heir_culture = milcori
 		set_consort_culture = milcori
 		highcliff_area = {
+			limit = {
+				owned_by = ROOT
+			}
 			change_culture = milcori
 		}
 		custom_tooltip = celliande.10.tt
@@ -503,22 +502,7 @@ country_event = { #Final
 		the_borders_region = {
 			add_permanent_claim = ROOT
 		}
-		add_country_modifier = {
-			name = A75_true_heirs_of_milcorissia
-			duration = -1
-		}
-		change_tag = B94
-		hidden_effect = { restore_country_name = yes }
-		add_country_modifier = {
-			name = "centralization_modifier"
-			duration = 7300
-		}
-		if = {
-			limit = {
-				has_custom_ideas = no
-			}
-			country_event = { id = ideagroups.1 } #Swap Ideas
-		}
+		form_milcorissia = yes
 	}
 }
 country_event = { #Hero Brasan
@@ -679,22 +663,18 @@ country_event = { #Start level 1
 	
 	option = {
 		name = celliande.100.a
-		custom_tooltip = celliande.100.att
-		hidden_effect = {
-			add_country_modifier = {
-				name = celliande_nameless_lead
-				duration = -1
-			}
+		add_country_modifier = {
+			name = celliande_nameless_lead
+			duration = -1
+			desc = until_end_of_exploration
 		}
 	}
 	option = {
 		name = celliande.100.b
-		custom_tooltip = celliande.100.btt
-		hidden_effect = {
-			add_country_modifier = {
-				name = celliande_estate_lead
-				duration = -1
-			}
+		add_country_modifier = {
+			name = celliande_estate_lead
+			duration = -1
+			desc = until_end_of_exploration
 		}
 	}
 }
@@ -710,12 +690,10 @@ country_event = { #Trek deeper level 1
 		name = celliande.101.a
 		remove_country_modifier = celliande_nameless_lead
 		remove_country_modifier = celliande_estate_lead
-		custom_tooltip = celliande.101.att
-		hidden_effect = {
-			add_country_modifier = {
-				name = celliande_hunger
-				duration = -1
-			}
+		add_country_modifier = {
+			name = celliande_hunger
+			duration = -1
+			desc = until_end_of_exploration
 		}
 	}
 	option = {
@@ -723,6 +701,7 @@ country_event = { #Trek deeper level 1
 		trigger = {
 			is_overall_conjuration_level_1_minimum = yes
 		}
+		highlight = yes
 		change_mana = { amount = -50 }
 		add_estate_influence_modifier = {
 			influence = 10
@@ -736,6 +715,7 @@ country_event = { #Trek deeper level 1
 		trigger = {
 			is_overall_transmutation_level_1_minimum = yes
 		}
+		highlight = yes
 		change_mana = { amount = -25 }
 		add_estate_influence_modifier = {
 			influence = 10
@@ -787,12 +767,12 @@ country_event = { #Start level 2
 			name = celliande_shrine_rhin
 			duration = 365
 		}
-		hidden_effect = {
-			add_country_modifier = {
-				name = celliande_shrine_rhin2
-				duration = -1
-			}
+		add_country_modifier = {
+			name = celliande_shrine_rhin2
+			duration = -1
+			desc = until_end_of_exploration
 		}
+		
 	}
 	option = {
 		name = celliande.103.b
@@ -808,11 +788,10 @@ country_event = { #Start level 2
 			duration = 730
 		}
 		increase_magic_experience = { amount = 50 }
-		hidden_effect = {
-			add_country_modifier = {
-				name = celliande_archives_search2
-				duration = -1
-			}
+		add_country_modifier = {
+			name = celliande_archives_search2
+			duration = -1
+			desc = until_end_of_exploration
 		}
 	}
 }
@@ -1056,7 +1035,6 @@ country_event = { #Sacrifice level 2
 	desc = celliande.105.d
 	picture = CASTLE_eventPicture
 	
-	fire_only_once = yes
 	is_triggered_only = yes
 	
 	option = {
@@ -1073,7 +1051,6 @@ country_event = { #END level 2
 	desc = celliande.106.d
 	picture = GENERALS_DISCUSSING_eventPicture
 	
-	fire_only_once = yes
 	is_triggered_only = yes
 	
 	option = {
@@ -1099,22 +1076,18 @@ country_event = { #Start level 3
 	
 	option = {
 		name = celliande.107.a
-		custom_tooltip = celliande.107.att
-		hidden_effect = {
-			add_country_modifier = {
-				name = celliande_ruler_speach
-				duration = -1
-			}
+		add_country_modifier = {
+			name = celliande_ruler_speach
+			duration = -1
+			desc = until_end_of_exploration
 		}
 	}
 	option = {
 		name = celliande.107.b
-		custom_tooltip = celliande.107.btt
-		hidden_effect = {
-			add_country_modifier = {
-				name = celliande_will_die
-				duration = -1
-			}
+		add_country_modifier = {
+			name = celliande_will_die
+			duration = -1
+			desc = until_end_of_exploration
 		}
 	}
 }
@@ -1124,27 +1097,22 @@ country_event = { #Hallowed halls level 3
 	desc = celliande.108.d
 	picture = DARK_FOREST_eventPicture
 	
-	fire_only_once = yes
 	is_triggered_only = yes
 	
 	option = {
 		name = celliande.108.a
-		custom_tooltip = celliande.108.att
-		hidden_effect = {
-			add_country_modifier = {
-				name = celliande_darkness_light
-				duration = -1
-			}
+		add_country_modifier = {
+			name = celliande_darkness_light
+			duration = -1
+			desc = until_end_of_exploration
 		}
 	}
 	option = {
 		name = celliande.108.b
-		custom_tooltip = celliande.108.btt
-		hidden_effect = {
-			add_country_modifier = {
-				name = celliande_cling_light
-				duration = -1
-			}
+		add_country_modifier = {
+			name = celliande_cling_light
+			duration = -1
+			desc = until_end_of_exploration
 		}
 	}
 }
@@ -1154,7 +1122,6 @@ country_event = { #Sanctum level 3
 	desc = celliande.109.d
 	picture = BAD_WITH_MONARCH_eventPicture
 	
-	fire_only_once = yes
 	is_triggered_only = yes
 	
 	option = {
@@ -1180,7 +1147,6 @@ country_event = { #END level 3
 	desc = celliande.110.d
 	picture = LOOMING_DEATH_eventPicture
 	
-	fire_only_once = yes
 	is_triggered_only = yes
 	
 	option = {
