@@ -6853,7 +6853,7 @@ genie_palace_of_jinnakah = {
 	date = 1000.1.1
 	build_cost = 1000
 	can_be_moved = no
-	starting_tier =0
+	starting_tier = 0
 	type = monument
 	
 	build_trigger = {
@@ -6866,15 +6866,38 @@ genie_palace_of_jinnakah = {
 		
     }
     can_use_modifiers_trigger = {
-		OR = {
-			owner = { religion = genie_cult }
-			owner = { tag = S91 }
+		owner = {
+			OR = {
+				primary_culture = guryadagga
+				accepted_culture = guryadagga
+				primary_culture = ardimyan
+				accepted_culture = ardimyan
+			}
+			OR = {
+				religion = genie_cult
+				tag = S91
+			}
 		}
     }
     can_upgrade_trigger = {
-		OR = {
-			owner = { religion = genie_cult }
-			owner = { tag = S91 }
+		owner = {
+			OR = {
+				primary_culture = guryadagga
+				accepted_culture = guryadagga
+				primary_culture = ardimyan
+				accepted_culture = ardimyan
+			}
+			OR = {
+				religion = genie_cult
+				tag = S91
+			}
+		}
+		if = {
+			limit = {
+				6063 = { has_great_project = { type = genie_palace_of_jinnakah tier = 2 } }
+				owner = { tag = S91 }
+			}
+			religion = ravelian
 		}
     }
 	keep_trigger = { }
@@ -6941,7 +6964,18 @@ genie_palace_of_jinnakah = {
 			horde_unity = 0.5
 			republican_tradition = 0.15
 		}
-		on_upgraded = { on_sarhal_monument_upgraded = yes }
+		on_upgraded = {
+			on_sarhal_monument_upgraded = yes
+			if = {
+				limit = { owner = { religion = genie_cult } }
+				owner = { country_event = { id = ardimya.100 } }
+			}
+			else_if = {
+				limit = { owner = { tag = S91 } }
+				owner = { country_event = { id = ardimya.102 } }
+				6063 = { add_cardinal = yes }
+			}
+		}
 		conditional_modifier = {
 			trigger = { owner = { tag = S91 } }
 			modifier = { all_estate_loyalty_equilibrium = 0.05 }
@@ -6973,6 +7007,42 @@ genie_palace_of_jinnakah = {
 		}
 		on_upgraded = {
 			on_sarhal_monument_upgraded = yes
+			if = {
+				limit = { owner = { tag = S91 } }
+				custom_tooltip = S91_ardimyan_rite_religious_centre_explain_tt
+			}
+			else_if = {
+				limit = { owner = { religion = genie_cult } }
+				custom_tooltip = S91_genie_cult_absolutism_tt
+			}
+			hidden_effect = {
+				if = {
+					limit = { owner = { tag = S91 } 6063 = { has_cardinal = no } }
+					6063 = {
+						add_cardinal = yes
+						add_province_modifier = {
+							name = ardimyan_rite_religious_centre_0
+							duration = -1
+						}
+					}
+				}
+				else_if = {
+					limit = { owner = { tag = S91 } 6063 = { has_cardinal = yes } }
+					6063 = {
+						add_province_modifier = {
+							name = ardimyan_rite_religious_centre_0
+							duration = -1
+						}
+					}
+					owner = {
+						random_owned_province = {
+							limit = { religion = ravelian }
+							add_cardinal = yes
+						}
+					}
+				}
+			}
+
 		}
 		conditional_modifier = {
 			trigger = { owner = { tag = S91 } }

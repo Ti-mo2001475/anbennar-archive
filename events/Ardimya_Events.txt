@@ -911,15 +911,39 @@ country_event = { #Counteract half of Planetouched drawback
 }
 
 country_event = { #Aquamarine House vs Ruby Monument. Unity smt event
-    id = ardimya.103
-    title = ardimya.103.t
-	desc = ardimya.103.d
+    id = ardimya.102
+    title = ardimya.102.t
+	desc = ardimya.102.d
 	picture = ARTWORK_eventPicture
 
     is_triggered_only = yes
 
     option = {
-        name = ardimya.103.a
-		
+        name = ardimya.102.a
+		6063 = {
+			add_province_modifier = {
+				name = ardimya_aquamarine_house
+				duration = -1
+			}
+			move_capital_effect = yes
+		}
+		add_years_of_income = -1
+		every_owned_province = {
+			limit = { culture = guryadagga }
+			add_unrest = 20
+		}
+    }
+	option = {
+        name = ardimya.102.b
+		6063 = {
+			add_province_modifier = {
+				name = ardimya_ruby_monument
+				duration = -1
+			}
+		}
+    }
+	option = {
+        name = ardimya.102.c
+		add_prestige = -20
     }
 }
