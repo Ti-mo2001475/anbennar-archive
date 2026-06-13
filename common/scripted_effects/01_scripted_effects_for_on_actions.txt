@@ -11496,8 +11496,12 @@ on_built_tax_building_effect = {
 		}
 	}
 	if = {
-		limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
+		limit = {
+			FROM = { has_government_attribute = learning_by_doing_reform_effect }
+			NOT = { has_province_modifier = learning_by_doing_temple }
+		}
 		FROM = { change_government_reform_progress = 4 }
+		add_province_modifier = { name = learning_by_doing_temple duration = -1 hidden = yes }
 	}
 	if = {
 		limit = { FROM = { has_estate_privilege = estate_tiger_command_war_room_rights } }
@@ -11861,8 +11865,12 @@ on_any_fort_construction_started_effect = { #Fires when you start the constructi
 
 on_built_trade_building_effect = {
 	if = {
-		limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
+		limit = {
+			FROM = { has_government_attribute = learning_by_doing_reform_effect }
+			NOT = { has_province_modifier = learning_by_doing_marketplace }
+		}
 		FROM = { change_government_reform_progress = 4 }
+		add_province_modifier = { name = learning_by_doing_marketplace duration = -1 hidden = yes }
 	}
 	if = { #Zulbur
 		limit = {
@@ -12003,8 +12011,12 @@ on_forcelimit_building_destroyed_effect = {}
 
 on_built_courthouse_building_effect = {
 	if = {
-		limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
+		limit = {
+			FROM = { has_government_attribute = learning_by_doing_reform_effect }
+			NOT = { has_province_modifier = learning_by_doing_courthouse }
+		}
 		FROM = { change_government_reform_progress = 4 }
+		add_province_modifier = { name = learning_by_doing_courthouse duration = -1 hidden = yes }
 	}
 	if = {
 		limit = { FROM = { has_estate_privilege = estate_wolf_command_war_room_rights } }
