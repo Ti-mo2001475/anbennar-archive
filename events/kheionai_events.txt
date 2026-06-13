@@ -494,6 +494,58 @@ province_event = {
 	}
 }
 
+#Yearly ai event that upgrade the Windwards in their provinces
+country_event = {
+	id = kheionai.9
+	title = none
+	desc = none
+	picture = none
+	
+	is_triggered_only = yes
+	trigger = {
+		has_full_deathwinds_system = yes
+		any_owned_province = { region = alecand_region }
+		NOT = { num_of_loans = 1 }
+		ai = yes
+	}
+
+	option = {
+		name = none
+		if = {
+			limit = {
+				is_year = 1600
+				treasury = 10000
+			}
+			add_treasury = -2500
+			random = { chance = 50 upgrade_windward_ai = yes }
+			random = { chance = 50 upgrade_windward_ai = yes }
+			random = { chance = 50 upgrade_windward_ai = yes }
+			random = { chance = 50 upgrade_windward_ai = yes }
+			random = { chance = 50 upgrade_windward_ai = yes }
+			random = { chance = 50 upgrade_windward_ai = yes }
+			random = { chance = 50 upgrade_windward_ai = yes }
+			random = { chance = 50 upgrade_windward_ai = yes }
+		}
+		else_if = {
+			limit = {
+				is_year = 1500
+				treasury = 2500
+			}
+			add_treasury = -1000
+			upgrade_windward_ai = yes
+			upgrade_windward_ai = yes
+			random = { chance = 50 upgrade_windward_ai = yes }
+			random = { chance = 50 upgrade_windward_ai = yes }
+			random = { chance = 50 upgrade_windward_ai = yes }
+		}
+		else_if = {
+			limit = { treasury = 500 }
+			add_treasury = -100
+			random = { chance = 25 upgrade_windward_ai = yes }
+		}
+	}
+}
+
 #######################################
 # Kheion and Kaydhano Magical Project
 

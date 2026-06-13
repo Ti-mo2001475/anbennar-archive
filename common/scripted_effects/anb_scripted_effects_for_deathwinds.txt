@@ -787,3 +787,85 @@ upgrade_highest_level_windward = {
 		}
 	}
 }
+
+#Scripted effect to increase the windward level while removing the costs based on what level it is
+upgrade_windward_ai = {
+	if = {
+		limit = { any_owned_province = { has_windward_modifier = no } }
+		random_owned_province = {
+			limit = { region = alecand_region }
+			add_permanent_province_modifier = { name = windward_level_1 duration = -1 }
+		}
+	}
+	else_if = {
+		limit = { any_owned_province = { has_province_modifier = windward_level_1 } }
+		random_owned_province = {
+			limit = { has_province_modifier = windward_level_1 }
+			add_permanent_province_modifier = { name = windward_level_2 duration = -1 }
+			hidden_effect = { remove_province_modifier = windward_level_1 }
+		}
+	}
+	else_if = {
+		limit = { any_owned_province = { has_province_modifier = windward_level_2 } }
+		random_owned_province = {
+			limit = { has_province_modifier = windward_level_2 }
+			add_permanent_province_modifier = { name = windward_level_3 duration = -1 }
+			hidden_effect = { remove_province_modifier = windward_level_2 }
+		}
+	}
+	else_if = {
+		limit = { any_owned_province = { has_province_modifier = windward_level_3 } }
+		random_owned_province = {
+			limit = { has_province_modifier = windward_level_3 }
+			add_permanent_province_modifier = { name = windward_level_4 duration = -1 }
+			hidden_effect = { remove_province_modifier = windward_level_3 }
+		}
+	}
+	else_if = {
+		limit = { any_owned_province = { has_province_modifier = windward_level_4 } }
+		random_owned_province = {
+			limit = { has_province_modifier = windward_level_4 }
+			add_permanent_province_modifier = { name = windward_level_5 duration = -1 }
+			hidden_effect = { remove_province_modifier = windward_level_4 }
+		}
+	}
+	else_if = {
+		limit = { any_owned_province = { has_province_modifier = windward_level_5 } }
+		random_owned_province = {
+			limit = { has_province_modifier = windward_level_5 }
+			add_permanent_province_modifier = { name = windward_level_6 duration = -1 }
+			hidden_effect = { remove_province_modifier = windward_level_5 }
+		}
+	}
+	else_if = {
+		limit = { any_owned_province = { has_province_modifier = windward_level_6 } }
+		random_owned_province = {
+			limit = { has_province_modifier = windward_level_6 }
+			add_permanent_province_modifier = { name = windward_level_7 duration = -1 }
+			hidden_effect = { remove_province_modifier = windward_level_6 }
+		}
+	}
+	else_if = {
+		limit = { any_owned_province = { has_province_modifier = windward_level_7 } }
+		random_owned_province = {
+			limit = { has_province_modifier = windward_level_7 }
+			add_permanent_province_modifier = { name = windward_level_8 duration = -1 }
+			hidden_effect = { remove_province_modifier = windward_level_7 }
+		}
+	}
+	else_if = {
+		limit = { any_owned_province = { has_province_modifier = windward_level_8 } }
+		random_owned_province = {
+			limit = { has_province_modifier = windward_level_8 }
+			add_permanent_province_modifier = { name = windward_level_9 duration = -1 }
+			hidden_effect = { remove_province_modifier = windward_level_8 }
+		}
+	}
+	else = {
+		random_owned_province = {
+			limit = { has_province_modifier = windward_level_9 }
+			add_permanent_province_modifier = { name = windward_level_10 duration = -1 }
+			hidden_effect = { remove_province_modifier = windward_level_9 }
+		}
+	}
+}
