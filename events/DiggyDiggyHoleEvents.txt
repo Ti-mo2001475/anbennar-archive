@@ -13601,9 +13601,9 @@ country_event = { #Imported Labor
 			    	has_goblin_minority_trigger = yes
 				} 
             }
-	        event_target:import_destination = { add_goblin_minority_size_effect = yes }
+	        event_target:event_province = { add_goblin_minority_size_effect = yes }
         }
-        else = { event_target:import_destination = { add_kobold_minority_size_effect = yes } }
+        else = { event_target:event_province = { add_kobold_minority_size_effect = yes } }
         if = {
 			limit = { has_estate = estate_burghers }
 			add_estate_loyalty = { estate = estate_burghers loyalty = -10}
@@ -13625,9 +13625,9 @@ country_event = { #Imported Labor
 			    	has_goblin_minority_trigger = yes
             	} 
             }
-	        event_target:import_destination = { add_goblin_minority_size_effect = yes }
+	        event_target:event_province = { add_goblin_minority_size_effect = yes }
         }
-        else = { event_target:import_destination = { add_kobold_minority_size_effect = yes } }
+        else = { event_target:event_province = { add_kobold_minority_size_effect = yes } }
         if = { 
 			limit = { has_estate = estate_burghers }
 			add_estate_loyalty = { estate = estate_burghers loyalty = -20 }
@@ -13661,9 +13661,9 @@ country_event = { #Imported Labor Race War
 			    	has_goblin_minority_trigger = yes
 				} 
             }
-	        event_target:import_destination = { remove_goblin_minority_size_effect = yes }
+	        event_target:event_province = { remove_goblin_minority_size_effect = yes }
         }
-        else = { event_target:import_destination = { remove_kobold_minority_size_effect = yes } }
+        else = { event_target:event_province = { remove_kobold_minority_size_effect = yes } }
 	hidden_effect = { capital_scope { change_variable = { cons_prog = -0.1 } } }
     tooltip = { capital_scope { change_variable = { cons_prog = -0.050 } } }
 	clr_country_flag = diggy_allowed_to_import
@@ -13745,15 +13745,12 @@ country_event = { #Diggy Diggy Veins Run Red
             		has_goblin_minority_trigger = yes
 				} 
     		}	
-			event_target:import_destination = { remove_goblin_minority_size_effect = yes }
+			event_target:event_province = { remove_goblin_minority_size_effect = yes }
 		}
-		else = { event_target:import_destination = { remove_kobold_minority_size_effect = yes } }
-		spawn_peasant_revolt = {
-			size = 2
-			leader_trait = rebellious_leader_trait
-			leader_personality = aggressive_personality
-			leader_name = diggy.902.rebel_leader
-			regiment_template = rebel_infantry_template
+		else = { event_target:event_province = { remove_kobold_minority_size_effect = yes } }
+		spawn_rebels = {
+			type = leadered_peasant_rebels
+			size = 3
 		}
 		clr_country_flag = diggy_veins_run_red
 		clr_province_flag = diggy_minorities_imported
