@@ -32,6 +32,10 @@ country_event = { #Moon Elves seek path to Citizenship
 
         development_in_provinces = { value = 100 }
         any_owned_province = { 
+            OR = {
+                continent = north_america
+                continent = south_america                    
+            }
             has_port = yes
             not = { # less than
                 development = 15  
@@ -48,19 +52,21 @@ country_event = { #Moon Elves seek path to Citizenship
                         continent = south_america
                     }
                     has_port = yes
-                    development <= 15
+                    not = {
+                        development = 15
+                    }
 				}
-				save_event_target_as = little_moonhaven_province
+				save_global_event_target_as = little_moonhaven_province #province needed for later events
 			}
 		}
     }
 
-    goto = little_moonhaven_province
+    goto = event_target:little_moonhaven_province
 
     option = {# Option 1: Found  Little Moonhaven
         name = aelantir_immigration.0.1
 
-        #TODO: add little moonhaven province modifier
+        ai_chance = { factor = 100 }
 
 		event_target:little_moonhaven_province = { 
 			#adds Little Moonhaven Province Modifier	
@@ -82,7 +88,10 @@ country_event = { #Moon Elves seek path to Citizenship
 				}
 			} 
 		}
-		small_increase_of_elf_tolerance_effect = yes
+		generic_increase_of_racial_tolerance_effect = {
+            race = elven
+            small = yes
+        }
 
         hidden_effect = { #triggers the events
             country_event = {
@@ -98,17 +107,22 @@ country_event = { #Moon Elves seek path to Citizenship
 
     option = { # Tell the elves to bugger off
         name = aelantir_immigration.0.2
+        ai_chance = { factor = 50 }
 
         add_country_modifier = {
             name = aelantir_immigration_2
             duration = 1095 # 3 years
         }
         
-        large_decrease_of_elven_tolerance_effect = yes
+        generic_decrease_of_racial_tolerance_effect = {
+            race = elven
+            large = yes
+        }
     }
 
     option = { #Found Little Moonhaven, but scrape some off the top.
         name = aelantir_immigration.0.3
+        ai_chance = { factor = 1000 }
 
         trigger = {
             OR = {
@@ -159,6 +173,7 @@ country_event = { #Moon Elves seek path to Citizenship
 
     option = { # [Consort] rallies the court in favour of the proposal
         name = aelantir_immigration.0.4
+        ai_chance = { factor = 1000 }
 
         trigger = { #checks the consort is an elf or wescanni half elf
             or = {
@@ -203,7 +218,10 @@ country_event = { #Moon Elves seek path to Citizenship
 			} 
 		}
 
-		small_increase_of_elf_tolerance_effect = yes
+		generic_increase_of_racial_tolerance_effect = {
+            race = elven
+            small = yes
+        }
 
         hidden_effect = { #triggers the events
             country_event = {
@@ -219,6 +237,7 @@ country_event = { #Moon Elves seek path to Citizenship
 
     option = { # Found Little Moonhaven, and empower them to succeed
         name = aelantir_immigration.0.5
+        ai_chance = { factor = 100 }
 
         trigger = {
             OR = {
@@ -250,7 +269,10 @@ country_event = { #Moon Elves seek path to Citizenship
 			} 
 		}
 
-        medium_increase_of_elf_tolerance_effect = yes
+        generic_increase_of_racial_tolerance_effect = {
+            race = elven
+            medium = yes
+        }
 
         hidden_effect = { #triggers the events
             country_event = {
@@ -267,8 +289,12 @@ country_event = { #Moon Elves seek path to Citizenship
 
 country_event = { # Enclaves foster ties with Cannorian Elves			
     id = aelantir_immigration.1
+    title = aelantir_immigration.1.t
+    desc = aelantir_immigration.1.d
 
     is_triggered_only = yes
+
+    goto = event_target:little_moonhaven_province
 
     trigger = {
         or = {
@@ -310,6 +336,10 @@ country_event = { # Enclaves foster ties with Cannorian Elves
             name = aelantir_immigration_6
             duration = 3650 #ten years
         }
+
+        hidden_effect = {
+            clear_global_event_target = little_moonhaven_province
+        }
     }
 
     option = { # silver tongue
@@ -342,11 +372,17 @@ country_event = { # Enclaves foster ties with Cannorian Elves
             name = aelantir_immigration_6
             duration = 5840 #sixteen years
         }
+
+        hidden_effect = {
+            clear_global_event_target = little_moonhaven_province
+        }
     }
 }
 
 country_event = { # Promises Broken to the Enclaves		
     id = aelantir_immigration.2
+    title = aelantir_immigration.2.t
+    desc = aelantir_immigration.2.d
 
     is_triggered_only = yes
 
@@ -380,7 +416,7 @@ country_event = { # Promises Broken to the Enclaves
     }
 
     option = {
-        name = aelantir_immigration.0.2
+        name = aelantir_immigration.2.2
 
         trigger = {
             or = {
