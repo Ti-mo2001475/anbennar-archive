@@ -11325,7 +11325,18 @@ on_thri_yearly_pulse = {
 		infinite_self.4 #Infinite Self Colonizer Check
 		tsukqiao.200 #Tsukqiao High Philosophy Opinion
 		iochand.30 #Iochand Free Paradise event handler
+		gerudia.108 #Frontier Spirit cleanup
 	}
+
+	2953 = { #Icereach
+		province_event = {
+			id = gerudia.100 #Gerudian Frontier settlement wave 1
+		}
+		province_event = {
+			id = gerudia.101 #Gerudian Frontier settlement wave 2
+		}
+	}
+
 }
 
 on_thri_yearly_pulse_2 = {
@@ -11682,6 +11693,14 @@ on_thri_yearly_pulse_2 = {
 		}
 	}
 
+	971 = { #Grymskali
+			province_event = {
+				id = gerudia.102 #Gerudian Frontier settlement wave 1
+			}
+			province_event = {
+				id = gerudia.103 #Gerudian Frontier settlement wave 2
+			}
+		}
 }
 
 on_thri_yearly_pulse_3 = {
@@ -11980,6 +11999,16 @@ on_thri_yearly_pulse_3 = {
 			id = flavor_parusahan_saya.1003
 		}
 	}	
+
+	6271 = { #Vaengheim
+		province_event = {
+			id = gerudia.104 #Gerudian Frontier settlement wave 1
+		}
+		province_event = {
+			id = gerudia.105 #Gerudian Frontier settlement wave 2
+		}
+	}
+
 }
 
 on_thri_yearly_pulse_4 = {
@@ -12103,6 +12132,15 @@ on_thri_yearly_pulse_4 = {
 		mystic_accord_events.14
 		mystic_accord_events.15
 		goblinic_shamanism_flavor.2 #Goblinic shamanism spread from overlord/subject
+	}
+
+	986 = { #Esvjall
+		province_event = {
+			id = gerudia.106 #Gerudian Frontier settlement wave 1
+		}
+		province_event = {
+			id = gerudia.107 #Gerudian Frontier settlement wave 2
+		}
 	}
 	
 	# Zokka
@@ -15163,40 +15201,6 @@ on_five_year_pulse_3 = {
 				set_country_flag = deepest_5_year_pulse_passed
 			}
 		}
-	}
-
-	#gerudian frontier settlement 15 year pulse jank
-	if = { 
-		limit = {
-			has_country_flag = frontier_timer_10
-		}
-		clr_country_flag = frontier_timer_10
-		country_event = { id = gerudian_settlement.0 }
-	}
-	else_if = {
-		limit = {
-			has_country_flag = frontier_timer_5
-		}
-		clr_country_flag = frontier_timer_5
-		set_country_flag = frontier_timer_10
-	}	
-	else_if = {
-		limit = { #hopefully better for performance to put the conditions here, to avoid needless flag cycling
-			NOT = { 
-				is_year = 1550
-			} 
-			capital_scope = {
-				OR = {
-					region = dalr_region
-					region = olavlund_region
-					region = gerudian_frontier_region
-				}
-			}
-			NOT = {
-				tag = Z89 #Digoveda
-			}
-		}	
-		set_country_flag = frontier_timer_5
 	}
 }
 
