@@ -24,13 +24,18 @@ country_event = { #Moon Elves seek path to Citizenship
             # need the post colonial
         }
 
-        medium_tolerance_elven_race_trigger = yes # i think this is coexistence
+        or = {
+            medium_tolerance_elven_race_trigger = yes # i think this is coexistence
+            high_tolerance_elven_race_trigger = yes
+        }
         NOT = { culture_group = elven }
 
         development_in_provinces = { value = 100 }
         any_owned_province = { 
             has_port = yes
-            development <= 15  
+            not = { # less than
+                development = 15  
+            }
         }
     }
 
@@ -266,7 +271,10 @@ country_event = { # Enclaves foster ties with Cannorian Elves
     is_triggered_only = yes
 
     trigger = {
-        medium_tolerance_elven_race_trigger = yes #at least moderate
+        or = {
+            medium_tolerance_elven_race_trigger = yes # i think this is coexistence
+            high_tolerance_elven_race_trigger = yes
+        }        
         event_target:little_moonhaven_province = {
             or = {
                 has_province_modifier = aelantir_immigration_1
