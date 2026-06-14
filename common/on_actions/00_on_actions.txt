@@ -9388,17 +9388,17 @@ on_monthly_pulse = {
 		}
 	}
 
-	if = {
-		limit = { has_estate_privilege = estate_nobles_tribes_tame_the_frontier_privilege }
-		if = {
-			limit = { NOT = { num_of_colonists = 1 } }
-			add_temporary_colonist = { duration = -1 }
-		}
-		else_if = {
-			limit = { num_of_colonists = 2 }
-			remove_temporary_colonist = yes
-		}
-	}
+	#if = {
+	#	limit = { has_estate_privilege = estate_nobles_tribes_tame_the_frontier_privilege }
+	#	if = {
+	#		limit = { NOT = { num_of_colonists = 1 } }
+	#		add_temporary_colonist = { duration = -1 }
+	#	}
+	#	else_if = {
+	#		limit = { num_of_colonists = 2 }
+	#		remove_temporary_colonist = yes
+	#	}
+	#}
 
 	#Raithtall Superb Harvest
 	if = {
@@ -15973,7 +15973,43 @@ on_five_year_pulse_3 = {
 			}
 		}
 	}
-}	
+
+	#gerudian frontier settlement 15 year pulse jank
+	if = { 
+		limit = {
+			has_country_flag = frontier_timer_10
+		}
+		clr_country_flag = frontier_timer_10
+		country_event = { id = gerudian_settlement.0 }
+	}
+	else_if = {
+		limit = {
+			has_country_flag = frontier_timer_5
+		}
+		clr_country_flag = frontier_timer_5
+		set_country_flag = frontier_timer_10
+	}	
+	else_if = {
+		limit = { #hopefully better for performance to put the conditions here, to avoid needless flag cycling
+			NOT = { 
+				is_year = 1550
+			} 
+			capital_scope = {
+				OR = {
+					region = dalr_region
+					region = olavlund_region
+					region = gerudian_frontier_region
+				}
+			}
+			NOT = {
+				tag = Z89 #Digoveda
+			}
+		}	
+		set_country_flag = frontier_timer_5
+	}
+}
+
+	
 on_five_year_pulse_4 = {
 	# if = { #fail-safe for flavor_pap.7, making religious leagues happen at some point if there is no PAP
 		# limit = {
@@ -27979,18 +28015,6 @@ on_colony_established = {
 	#		duration = -1
 	#	}
 	#}
-	if = {
-		limit = {
-			province_group = frontier_hq_provinces
-			NOT = {
-				has_province_modifier = frontier_hq
-			}
-		}
-		add_province_modifier = {
-			name = frontier_hq
-			duration = -1
-		}
-	}
 	if = {
 		limit = {
 			owner = { has_country_modifier = vyzemby_colonial_fervour }

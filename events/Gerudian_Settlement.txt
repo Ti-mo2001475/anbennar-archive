@@ -1,0 +1,30 @@
+namespace = gerudian_settlement
+
+country_event = { #Call of the Frontier!
+	id = "gerudian_settlement.0"
+	title = "gerudian_settlement.0.t"
+	desc = "gerudian_settlement.0.d"
+	picture = PEASANTS_ON_STEPPES_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			is_year = 1480
+			AND = { #everyone but vaengheim gets a head start
+				is_year = 1465
+				NOT = {
+					tag = Z88 #Vaengheim
+				}
+			}
+		}
+	}
+
+	option = {
+		name = "gerudian_settlement.0"
+		add_country_modifier = {
+			name = gerudian_settlement_frontiers
+			duration = 365
+		}
+	}
+}
