@@ -17425,6 +17425,117 @@ on_province_owner_change = {
 	# This maintenance for the hinuilands secrets is here, so that anything that engages with it in this on_action
 	# Can still rely on the assumption that this flag is present in provinces with hinuiland secrets
 	# (additional hinuilands secret code is in on_province_owner_change_monuments)
+
+	#Taychen gov reforms
+	# Ларанкарха
+    if = {
+        limit = {
+            owner = { has_reform = larankarha_gos_ref }
+            has_terrain = mountain
+            region = larankarha_highlands_region
+        }
+        add_province_modifier = { name = larankarha_mountain_expansion_mountains duration = -1 hidden = yes }
+    }
+    if = {
+        limit = {
+            owner = { has_reform = larankarha_gos_ref }
+            has_terrain = highlands
+            region = larankarha_highlands_region
+        }
+        add_province_modifier = { name = larankarha_mountain_expansion_highlands duration = -1 hidden = yes }
+    }
+    if = {
+        limit = {
+            owner = { has_reform = larankarha_gos_ref }
+            has_terrain = hills
+            region = larankarha_highlands_region
+        }
+        add_province_modifier = { name = larankarha_mountain_expansion_hills duration = -1 hidden = yes }
+    }
+    if = {
+        limit = {
+            NOT = { owner = { has_reform = larankarha_gos_ref } }
+        }
+        remove_province_modifier = larankarha_mountain_expansion_mountains
+        remove_province_modifier = larankarha_mountain_expansion_highlands
+        remove_province_modifier = larankarha_mountain_expansion_hills
+    }
+
+    # Калавенд
+    if = {
+        limit = {
+            owner = { has_reform = kalavendy_gos_ref }
+            province_with_arable_goods = yes
+            region = kalavend_region
+        }
+        add_province_modifier = { name = kalavendy_population duration = -1 hidden = yes }
+    }
+    if = {
+        limit = {
+            NOT = { owner = { has_reform = kalavendy_gos_ref } }
+        }
+        remove_province_modifier = kalavendy_population
+    }
+
+    # Йоднахпур
+    if = {
+        limit = {
+            owner = { has_reform = yodhanpir_gos_ref }
+            superregion = taychend_superregion
+            owner = { culture_group = taychendi_ruinborn_elf }
+        }
+        add_province_modifier = { name = yodhanpir_gos_regiment duration = -1 hidden = yes }
+    }
+    if = {
+        limit = {
+            owner = { has_reform = yodhanpir_gos_ref }
+            superregion = taychend_superregion
+            NOT = { owner = { culture_group = taychendi_ruinborn_elf } }
+        }
+        add_province_modifier = { name = yodhanpir_gos_tax duration = -1 hidden = yes }
+    }
+    if = {
+        limit = {
+            NOT = { owner = { has_reform = yodhanpir_gos_ref } }
+        }
+        remove_province_modifier = yodhanpir_gos_regiment
+        remove_province_modifier = yodhanpir_gos_tax
+    }
+
+    # Тхекврыстана
+    if = {
+        limit = {
+            owner = { has_reform = thekvrystana_gos_ref }
+            superregion = taychend_superregion
+            has_port = yes
+            province_has_center_of_trade_of_level = 1
+            has_river_estuary_trigger = yes
+        }
+        add_province_modifier = { name = thekvrystana_coastal_trade_modifier duration = -1 hidden = yes }
+    }
+    if = {
+        limit = {
+            NOT = { owner = { has_reform = thekvrystana_gos_ref } }
+        }
+        remove_province_modifier = thekvrystana_coastal_trade_modifier
+    }
+
+    # Сарихаддхи
+    if = {
+        limit = {
+            owner = { has_reform = sarihaddhi_gos_ref }
+            superregion = taychend_superregion
+            trade_goods = livestock
+        }
+        add_province_modifier = { name = sarihaddhi_lives_mod duration = -1 hidden = yes }
+    }
+    if = {
+        limit = {
+            NOT = { owner = { has_reform = sarihaddhi_gos_ref } }
+        }
+        remove_province_modifier = sarihaddhi_lives_mod
+    }
+
 	if = {
 		limit = {	# re-add the flag, a hinuiland secret province was decolonised
 			is_empty = yes

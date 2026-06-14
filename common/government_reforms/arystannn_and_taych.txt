@@ -229,31 +229,29 @@ thekvrystana_gos_ref = {  #Тхеквристана
 	}
 }
 
-sarihaddhi_gos_ref = {  #Тхеквристана
+sarihaddhi_gos_ref = {  #Сарихадхи
 	icon = "sarihaddhi_gos_ref"
 	allow_normal_conversion = yes
 	potential = {
-		culture = thekvrystana
+		culture = sarihaddi
 	}
 	trigger = {
-		culture = thekvrystana
+		culture = sarihaddi
 	}
 	modifiers = {
-		placed_merchant_power = 12.5
-		prestige_decay = -0.005
+		trade_steering = 0.15
+		loot_amount = 0.5
 	}
 	effect = {
-		custom_tooltip = thekvrystana_gos_ref_tt
+		custom_tooltip = sarihaddhi_gos_ref_tt
     	hidden_effect = {
 			every_owned_province = {
 				limit = {
 					superregion = taychend_superregion
-					has_port = yes
-					province_has_center_of_trade_of_level = 1
-					has_river_estuary_trigger = yes
+					trade_goods = livestock
 				}
 				add_province_modifier = {
-					name = thekvrystana_coastal_trade_modifier
+					name = sarihaddhi_lives_mod #Gives -2% cav cost
 					duration = -1
 					hidden = yes
 				}
@@ -263,8 +261,8 @@ sarihaddhi_gos_ref = {  #Тхеквристана
 	removed_effect = {
 		hidden_effect = {
 			every_owned_province = {
-				limit = { has_province_modifier = thekvrystana_coastal_trade_modifier }
-				remove_province_modifier = thekvrystana_coastal_trade_modifier
+				limit = { has_province_modifier = sarihaddhi_lives_mod }
+				remove_province_modifier = sarihaddhi_lives_mod
 			}
 		}
 	}
