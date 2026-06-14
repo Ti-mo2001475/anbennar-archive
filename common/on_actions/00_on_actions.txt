@@ -30583,11 +30583,18 @@ on_colony_finished = { #ROOT - Province
 	if = {
 		limit = {
 			region = ardimya_region
+			S91 = { exist = yes }
+			owner = {
+				owner = {
+					S91 = { 
+						is_colonial_nation_of = PREV
+					}
+					NOT = { has_country_flag = ardimya_war_of_independence_colonial_power }
+				}
+			}
 		}
-		country_event = {
-			id = ardimya.15
-			days = 1
-		}
+		cede_province = S91
+		add_core = S91
 	}
 }
 
