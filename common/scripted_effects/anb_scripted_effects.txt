@@ -13810,3 +13810,16 @@ anb_change_trade_goods_scripted_effect = {
 		change_trade_goods = $tradegoods$
 	}
 }
+
+anb_change_trade_goods_province_id_scripted_effect = {
+	if = {
+		limit = { $province_id$ = { has_production_manufactory_or_gold_trigger = yes } }
+		$province_id$ = {
+			change_trade_goods = $tradegoods$
+			add_manufactory = yes
+		}
+	}
+	else = {
+		$province_id$ = { change_trade_goods = $tradegoods$ }
+	}
+}
