@@ -21,15 +21,17 @@ country_event = { #Moon Elves seek path to Citizenship
             is_colonial_nation = yes
             is_former_colonial_nation = yes
             is_adventurer = yes 
-            # need the post colonial check
+            # need the post colonial
         }
 
         medium_tolerance_elven_race_trigger = yes # i think this is coexistence
-
         NOT = { culture_group = elven }
+
         development_in_provinces = { value = 100 }
-        any_owned_province = { has_port = yes }
-        any_owned_province = { development <= 15 }
+        any_owned_province = { 
+            has_port = yes
+            development <= 15  
+        }
     }
 
     immediate = {
@@ -40,6 +42,7 @@ country_event = { #Moon Elves seek path to Citizenship
                         continent = north_america
                         continent = south_america
                     }
+                    has_port = yes
                     development <= 15
 				}
 				save_event_target_as = little_moonhaven_province
@@ -50,7 +53,7 @@ country_event = { #Moon Elves seek path to Citizenship
     goto = little_moonhaven_province
 
     option = {# Option 1: Found  Little Moonhaven
-        name = "" 
+        name = aelantir_immigration.0.1
 
         #TODO: add little moonhaven province modifier
 
@@ -75,30 +78,33 @@ country_event = { #Moon Elves seek path to Citizenship
 			} 
 		}
 		small_increase_of_elf_tolerance_effect = yes
+
         hidden_effect = { #triggers the events
             country_event = {
                 id = aelantir_immigration.1
-                days = 300
+                days = 9125
                 }
             country_event = {
                 id = aelantir_immigration.2
-                days = 350
+                days = 9175
             }
         }
     }
 
     option = { # Tell the elves to bugger off
+        name = aelantir_immigration.0.2
+
         add_country_modifier = {
             name = aelantir_immigration_2
             duration = 1095 # 3 years
         }
         
         large_decrease_of_elven_tolerance_effect = yes
-
-        name = "" 
     }
 
     option = { #Found Little Moonhaven, but scrape some off the top.
+        name = aelantir_immigration.0.3
+
         trigger = {
             OR = {
                 ruler_has_personality = embezzler_personality 
@@ -129,21 +135,26 @@ country_event = { #Moon Elves seek path to Citizenship
 			} 
         }
 
-        # TODO: add money
+        prepare_months_of_trade_income = { value = 0.5 }
+        add_prepared_months_of_trade_income = yes #not sure about this one, was getting an error on the default = {} intellisense was suggesting
+        remove_prepared_months_of_trade_income = yes # clean up 
+
 
         hidden_effect = { #triggers the events
             country_event = {
                 id = aelantir_immigration.1
-                days = 300
+                days = 9125
                 }
             country_event = {
                 id = aelantir_immigration.2
-                days = 350
+                days = 9175
             }
         }
     }
 
     option = { # [Consort] rallies the court in favour of the proposal
+        name = aelantir_immigration.0.4
+
         trigger = { #checks the consort is an elf or wescanni half elf
             or = {
                 consort_is_elven = yes
@@ -163,7 +174,7 @@ country_event = { #Moon Elves seek path to Citizenship
 
         add_country_modifier = {
             name = aelantir_immigration_4
-            duration = 1825
+            duration = 1825 #5 years
         }
 
 		event_target:little_moonhaven_province = { 
@@ -192,16 +203,18 @@ country_event = { #Moon Elves seek path to Citizenship
         hidden_effect = { #triggers the events
             country_event = {
                 id = aelantir_immigration.1
-                days = 300
+                days = 9125
                 }
             country_event = {
                 id = aelantir_immigration.2
-                days = 350
+                days = 9175
             }
         }
     }
 
     option = { # Found Little Moonhaven, and empower them to succeed
+        name = aelantir_immigration.0.5
+
         trigger = {
             OR = {
                 ruler_has_personality = just_personality 
@@ -237,11 +250,11 @@ country_event = { #Moon Elves seek path to Citizenship
         hidden_effect = { #triggers the events
             country_event = {
                 id = aelantir_immigration.1
-                days = 300
+                days = 9125
             }
             country_event = {
                 id = aelantir_immigration.2
-                days = 350
+                days = 9175
             }
         }
     }
@@ -253,7 +266,14 @@ country_event = { # Enclaves foster ties with Cannorian Elves
     is_triggered_only = yes
 
     trigger = {
-
+        medium_tolerance_elven_race_trigger = yes #at least moderate
+        event_target:little_moonhaven_province = {
+            or = {
+                has_province_modifier = aelantir_immigration_1
+                has_province_modifier = aelantir_immigration_3
+                has_province_modifier = aelantir_immigration_5
+            }
+        }
     }
 
     immediate = {
@@ -261,6 +281,8 @@ country_event = { # Enclaves foster ties with Cannorian Elves
     }
 
     option = { # standard option
+        name = aelantir_immigration.1.1
+
         every_country = {
             limit = {
                 capital_scope = { superregion = western_cannor_superregion }
@@ -283,6 +305,8 @@ country_event = { # Enclaves foster ties with Cannorian Elves
     }
 
     option = { # silver tongue
+        name = aelantir_immigration.1.2
+
         trigger = {
             or = {
                 ruler_has_personality = silver_tongue_personality
@@ -322,7 +346,9 @@ country_event = { # Promises Broken to the Enclaves
         NOT = { has_country_flag = had_aelantir_immigration.1 }
     }
 
-    option = {
+    option = { 
+        name = aelantir_immigration.2.1
+
         every_country = {
             limit = {
                 capital_scope = { superregion = western_cannor_superregion }
@@ -346,6 +372,8 @@ country_event = { # Promises Broken to the Enclaves
     }
 
     option = {
+        name = aelantir_immigration.0.2
+
         trigger = {
             or = {
                 ruler_has_personality = silver_tongue_personality
