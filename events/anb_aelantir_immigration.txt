@@ -60,6 +60,8 @@ country_event = { #Moon Elves seek path to Citizenship
 				}
 				save_event_target_as = little_moonhaven_province #province needed for later events
 			}
+
+			prepare_months_of_trade_income = { value = 6 }
 		}
 	}
 
@@ -99,10 +101,6 @@ country_event = { #Moon Elves seek path to Citizenship
 			country_event = {
 				id = aelantir_immigration.1
 				days = 9125
-				}
-			country_event = {
-				id = aelantir_immigration.2
-				days = 9175
 			}
 		}
 	}
@@ -156,17 +154,12 @@ country_event = { #Moon Elves seek path to Citizenship
 			}
 		}
 
-		prepare_months_of_trade_income = { value = 0.5 }
 		add_prepared_months_of_trade_income = yes #not sure about this one, was getting an error on the default = {} intellisense was suggesting
 
 		hidden_effect = { #triggers the events
 			country_event = {
 				id = aelantir_immigration.1
 				days = 9125
-				}
-			country_event = {
-				id = aelantir_immigration.2
-				days = 9175
 			}
 		}
 	}
@@ -179,14 +172,7 @@ country_event = { #Moon Elves seek path to Citizenship
 			OR = {
 				consort_is_elven = yes
 				and = {
-					consort_is_half_elven = yes
-					NOT = { # excluding non wescanni half elves
-						consort_culture = bom_half_elf
-						consort_culture = bulwari_half_elf
-						consort_culture = farrani_half_elf
-						consort_culture = kai_half_elf
-						consort_culture = jahe_half_elf
-					}
+					consort_is_cannorian_half_elven = yes #didnt want farrani orginially but i can live with that
 				}
 			}
 		}
@@ -227,10 +213,6 @@ country_event = { #Moon Elves seek path to Citizenship
 			country_event = {
 				id = aelantir_immigration.1
 				days = 9125
-				}
-			country_event = {
-				id = aelantir_immigration.2
-				days = 9175
 			}
 		}
 	}
@@ -279,54 +261,54 @@ country_event = { #Moon Elves seek path to Citizenship
 				id = aelantir_immigration.1
 				days = 9125
 			}
+		}
+	}
+}
+
+country_event = { # determine next event
+	id = aelantir_immigration.1
+	hidden = yes
+
+	option = {
+		ai_chance = { factor = 100 }
+		if = {
+			limit = {
+				OR = {
+					medium_tolerance_elven_race_trigger = yes # i think this is coexistence
+					high_tolerance_elven_race_trigger = yes
+				}
+				event_target:little_moonhaven_province =  {
+					OR = {
+						has_province_modifier = aelantir_immigration_little_moonhaven
+						has_province_modifier = aelantir_immigration_little_moonhaven_greedy
+						has_province_modifier = aelantir_immigration_little_moonhaven_empowered
+					}
+				}
+			}
 			country_event = {
 				id = aelantir_immigration.2
-				days = 9175
+			}
+		}
+		else = {
+			country_event = {
+				id = aelantir_immigration.3
 			}
 		}
 	}
 }
 
 country_event = { # Enclaves foster ties with Cannorian Elves
-	id = aelantir_immigration.1
-	title = aelantir_immigration.1.t
-	desc = aelantir_immigration.1.d
+	id = aelantir_immigration.2
+	title = aelantir_immigration.2.t
+	desc = aelantir_immigration.2.d
 	picture = CITY_DEVELOPMENT_eventPicture
 
 	is_triggered_only = yes
 
-	trigger = {
-		OR = {
-			medium_tolerance_elven_race_trigger = yes # i think this is coexistence
-			high_tolerance_elven_race_trigger = yes
-		}
-		any_owned_province = {
-			OR = {
-				has_province_modifier = aelantir_immigration_little_moonhaven
-				has_province_modifier = aelantir_immigration_little_moonhaven_greedy
-				has_province_modifier = aelantir_immigration_little_moonhaven_empowered
-			}
-		}
-	}
-
-	immediate = {
-		set_country_flag = had_aelantir_immigration.1
-		random_owned_province = { #should be selecting from a list of 1, was getting a warning with any_owned
-			limit = {
-				OR = {
-					has_province_modifier = aelantir_immigration_little_moonhaven
-					has_province_modifier = aelantir_immigration_little_moonhaven_greedy
-					has_province_modifier = aelantir_immigration_little_moonhaven_empowered
-				}
-			}
-			save_event_target_as = little_moonhaven_province  #blame pdx im 90% sure this is the way round the goto error
-		}
-	}
-
 	goto = little_moonhaven_province
 
 	option = { # standard option
-		name = aelantir_immigration.1.1
+		name = aelantir_immigration.2.1
 
 		every_country = {
 			limit = {
@@ -350,7 +332,7 @@ country_event = { # Enclaves foster ties with Cannorian Elves
 	}
 
 	option = { # silver tongue
-		name = aelantir_immigration.1.2
+		name = aelantir_immigration.2.2
 
 		trigger = {
 			OR = {
@@ -383,34 +365,17 @@ country_event = { # Enclaves foster ties with Cannorian Elves
 }
 
 country_event = { # Promises Broken to the Enclaves
-	id = aelantir_immigration.2
-	title = aelantir_immigration.2.t
-	desc = aelantir_immigration.2.d
+	id = aelantir_immigration.3
+	title = aelantir_immigration.3.t
+	desc = aelantir_immigration.3.d
 	picture = OVEREXTENSION_eventPicture
 
 	is_triggered_only = yes
 
-	trigger = {
-		NOT = { has_country_flag = had_aelantir_immigration.1 }
-	}
-
-	immediate = {
-		random_owned_province = { #should be selecting from a list of 1, was getting a warning with any_owned
-			limit = {
-				OR = {
-					has_province_modifier = aelantir_immigration_little_moonhaven
-					has_province_modifier = aelantir_immigration_little_moonhaven_greedy
-					has_province_modifier = aelantir_immigration_little_moonhaven_empowered
-				}
-			}
-			save_event_target_as = little_moonhaven_province  #blame pdx im 90% sure this is the way round the goto error
-		}
-	}
-
 	goto = little_moonhaven_province
 
 	option = {
-		name = aelantir_immigration.2.1
+		name = aelantir_immigration.3.1
 
 		every_country = {
 			limit = {
@@ -435,7 +400,7 @@ country_event = { # Promises Broken to the Enclaves
 	}
 
 	option = {
-		name = aelantir_immigration.2.2
+		name = aelantir_immigration.3.2
 
 		trigger = {
 			OR = {
