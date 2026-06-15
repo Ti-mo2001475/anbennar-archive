@@ -17460,7 +17460,6 @@ on_province_owner_change = {
         remove_province_modifier = larankarha_mountain_expansion_highlands
         remove_province_modifier = larankarha_mountain_expansion_hills
     }
-
     # Калавенд
     if = {
         limit = {
@@ -17476,13 +17475,12 @@ on_province_owner_change = {
         }
         remove_province_modifier = kalavendy_population
     }
-
     # Йоднахпур
     if = {
         limit = {
             owner = { has_reform = yodhanpir_gos_ref }
             superregion = taychend_superregion
-            owner = { culture_group = taychendi_ruinborn_elf }
+            culture = yodhanpir
         }
         add_province_modifier = { name = yodhanpir_gos_regiment duration = -1 hidden = yes }
     }
@@ -17490,7 +17488,7 @@ on_province_owner_change = {
         limit = {
             owner = { has_reform = yodhanpir_gos_ref }
             superregion = taychend_superregion
-            NOT = { owner = { culture_group = taychendi_ruinborn_elf } }
+            NOT = { culture = yodhanpir }
         }
         add_province_modifier = { name = yodhanpir_gos_tax duration = -1 hidden = yes }
     }
@@ -17501,15 +17499,16 @@ on_province_owner_change = {
         remove_province_modifier = yodhanpir_gos_regiment
         remove_province_modifier = yodhanpir_gos_tax
     }
-
     # Тхекврыстана
     if = {
         limit = {
             owner = { has_reform = thekvrystana_gos_ref }
             superregion = taychend_superregion
-            has_port = yes
-            province_has_center_of_trade_of_level = 1
-            has_river_estuary_trigger = yes
+			has_port = yes
+			OR = {
+				has_river_estuary_trigger = yes
+				province_has_center_of_trade_of_level = 1
+			}
         }
         add_province_modifier = { name = thekvrystana_coastal_trade_modifier duration = -1 hidden = yes }
     }
@@ -17519,7 +17518,6 @@ on_province_owner_change = {
         }
         remove_province_modifier = thekvrystana_coastal_trade_modifier
     }
-
     # Сарихаддхи
     if = {
         limit = {
@@ -17535,6 +17533,8 @@ on_province_owner_change = {
         }
         remove_province_modifier = sarihaddhi_lives_mod
     }
+
+
 
 	if = {
 		limit = {	# re-add the flag, a hinuiland secret province was decolonised
