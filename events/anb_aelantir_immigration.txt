@@ -56,7 +56,7 @@ country_event = { #Moon Elves seek path to Citizenship
                         development = 15
                     }
 				}
-				save_global_event_target_as = little_moonhaven_province #province needed for later events
+				save_event_target_as = little_moonhaven_province #province needed for later events
 			}
 		}
     }
@@ -294,14 +294,12 @@ country_event = { # Enclaves foster ties with Cannorian Elves
 
     is_triggered_only = yes
 
-    goto = little_moonhaven_province
-
     trigger = {
         or = {
             medium_tolerance_elven_race_trigger = yes # i think this is coexistence
             high_tolerance_elven_race_trigger = yes
         }        
-        event_target:little_moonhaven_province = {
+        any_owned_province = {
             or = {
                 has_province_modifier = aelantir_immigration_1
                 has_province_modifier = aelantir_immigration_3
@@ -312,7 +310,19 @@ country_event = { # Enclaves foster ties with Cannorian Elves
 
     immediate = {
         set_country_flag = had_aelantir_immigration.1
+        random_owned_province = { #should be selecting from a list of 1, was getting a warning with any_owned
+            limit = {
+                or = {
+                    has_province_modifier = aelantir_immigration_1
+                    has_province_modifier = aelantir_immigration_3
+                    has_province_modifier = aelantir_immigration_5
+                }
+            }
+            save_event_target_as = little_moonhaven_province  #blame pdx im 90% sure this is the way round the goto error
+        }
     }
+
+    goto = little_moonhaven_province
 
     option = { # standard option
         name = aelantir_immigration.1.1
@@ -335,10 +345,6 @@ country_event = { # Enclaves foster ties with Cannorian Elves
         add_country_modifier = {
             name = aelantir_immigration_6
             duration = 3650 #ten years
-        }
-
-        hidden_effect = {
-            clear_global_event_target = little_moonhaven_province
         }
     }
 
@@ -372,10 +378,6 @@ country_event = { # Enclaves foster ties with Cannorian Elves
             name = aelantir_immigration_6
             duration = 5840 #sixteen years
         }
-
-        hidden_effect = {
-            clear_global_event_target = little_moonhaven_province
-        }
     }
 }
 
@@ -389,6 +391,21 @@ country_event = { # Promises Broken to the Enclaves
     trigger = {
         NOT = { has_country_flag = had_aelantir_immigration.1 }
     }
+
+    immediate = {
+        random_owned_province = { #should be selecting from a list of 1, was getting a warning with any_owned
+            limit = {
+                or = {
+                    has_province_modifier = aelantir_immigration_1
+                    has_province_modifier = aelantir_immigration_3
+                    has_province_modifier = aelantir_immigration_5
+                }
+            }
+            save_event_target_as = little_moonhaven_province  #blame pdx im 90% sure this is the way round the goto error
+        }
+    }
+
+    goto = little_moonhaven_province
 
     option = { 
         name = aelantir_immigration.2.1
