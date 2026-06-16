@@ -24,7 +24,7 @@ estate_planetouched_organization_empowered = {
 		}
 		estate_influence = {
 			estate = estate_planetouched
-			influence = 80
+			influence = 60
 		}
 		estate_territory = {
 			estate = estate_planetouched
@@ -78,7 +78,7 @@ estate_planetouched_organization_state = {
 		}
 		estate_influence = {
 			estate = estate_planetouched
-			influence = 80
+			influence = 60
 		}
 	}
 	can_revoke = {
@@ -773,7 +773,7 @@ estate_planetouched_scattered_guilds = {
 				OR = {
 					AND = {
 						has_estate_privilege = estate_adventurers_heroes_in_the_army
-						has_estate_privilege = estate_adventurers_generous_quest_rewards
+						has_estate_privilege = estate_adventurer_designated_guild_hall
 					}
 				}
 			}
@@ -1107,28 +1107,32 @@ estate_planetouched_empowered_sanctuaries = {
 	loyalty = 0.05
 	influence = 0.1
 	is_valid = { has_estate_privilege = estate_planetouched_organization_empowered has_dlc = "Domination" }
-	on_granted = { custom_tooltip = estate_planetouched_empowered_sanctuaries_tt }
+	on_granted = { 
+		custom_tooltip = estate_planetouched_empowered_sanctuaries_tt 
+		if = {
+			limit = { has_estate_privilege = estate_church_development_of_temples }
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							owner_has_active_triplets_tier_2 = yes
+							has_owner_religion = yes
+							has_owner_harmonized_religion = yes
+							has_owner_secondary_religion = yes
+						}
+						has_tax_building_trigger = yes
+					}
+					add_province_modifier = {
+						name = estate_church_development_of_temples_mod_planetouched_1
+						duration = -1
+					}
+				}
+			}
+		}
+	}
 	
 	ai_will_do = {
 		factor = 5
-	}
-	on_granted_province = {
-		if = {
-			limit = {
-				ROOT = { has_estate_privilege = estate_church_development_of_temples }
-				OR = {
-					owner_has_active_triplets_tier_2 = yes
-					has_owner_religion = yes
-					has_owner_harmonized_religion = yes
-					has_owner_secondary_religion = yes
-				}
-				has_tax_building_trigger = yes
-			}	
-			add_province_modifier = {
-				name = estate_church_development_of_temples_mod_planetouched_1
-				duration = -1
-			}
-		}
 	}
 }
 
@@ -1524,31 +1528,35 @@ estate_planetouched_state_shapers = {
 	icon = privilege_build_jain_temple
 	loyalty = -0.05
 	is_valid = { has_estate_privilege = estate_planetouched_organization_state has_dlc = "Domination" }
-	on_granted = { custom_tooltip = estate_planetouched_state_shapers_tt }
+	on_granted = { 
+		custom_tooltip = estate_planetouched_state_shapers_tt 
+		if = {
+			limit = { has_estate_privilege = estate_church_development_of_temples }
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							owner_has_active_triplets_tier_2 = yes
+							has_owner_religion = yes
+							has_owner_harmonized_religion = yes
+							has_owner_secondary_religion = yes
+						}
+						has_tax_building_trigger = yes
+					}
+					add_province_modifier = {
+						name = estate_church_development_of_temples_mod_planetouched_2
+						duration = -1
+					}
+				}
+			}
+		}
+	}
 	conditional_modifier = {
 		trigger = {
 			has_estate_privilege = estate_church_development_of_temples
 		}
 		modifier = {
 			build_cost = -0.05
-		}
-	}
-	on_granted_province = {
-		if = {
-			limit = {
-				ROOT = { has_estate_privilege = estate_church_development_of_temples }
-				OR = {
-					owner_has_active_triplets_tier_2 = yes
-					has_owner_religion = yes
-					has_owner_harmonized_religion = yes
-					has_owner_secondary_religion = yes
-				}
-				has_tax_building_trigger = yes
-			}	
-			add_province_modifier = {
-				name = estate_church_development_of_temples_mod_planetouched_2
-				duration = -1
-			}
 		}
 	}
 	ai_will_do = {

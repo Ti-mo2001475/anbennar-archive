@@ -2057,7 +2057,7 @@ has_mana_to_cast_spell = {
 
 	# Alternatively, we could've put everything into a big OR = { AND = { OR = {} } } custom trigger tooltip
 	# And then that tooltip would have linked to has_mana_to_cast_$id$_spell
-	# And has_mana_to_cast_$id$_spell would look like ï¿½MCurrent Manaï¿½! (ï¿½Y[Root.currentMana.GetValue]ï¿½!) is at least ï¿½Y[GetGuidanceDiscount]ï¿½!
+	# And has_mana_to_cast_$id$_spell would look like "§MCurrent Mana§! (§Y[Root.currentMana.GetValue]§!) is at least §Y[GetGuidanceDiscount]§!"
 	# The problem, of course, being that we would have to create custom loca for every single spell
 	# It would be slightly more performant but also a lot more work, and either way the AI doesn't check mana costs
 	# So we went with this solution because it was slightly easier
@@ -2309,6 +2309,9 @@ has_cast_war_magic = {
 			has_cast_heartstring_thoughtweave = yes
 			has_cast_evocation_war_magic = yes
 
+			#Artificer
+			has_country_modifier = mechanim_sonic_amplifiers_modifier_country
+
 			#Verkal Ozovar
 			has_country_modifier = Y63_minor_rune_argzana
 			has_country_modifier = Y63_minor_rune_jolkin_kanzad
@@ -2330,11 +2333,13 @@ has_not_cast_war_magic = {
 	}
 }
 
-# checks if at least "count" spells of "school" have been cast
+# Checks if at least "amount" spells of "school" have been cast
 # also accepts all for an overall count
-# requires prior use of start_count_spells_effect
+# and can track specific spells if given their "id" and "level"
+# This trigger requires prior use of start_count_spells_effect
+# or start_count_specific_spell_effect to count for a specific spell
 # Every base spell is localised, but to track a magical tradition spell you just have to name the variable somewhere
-has_cast_amount_spell = { # school/all, count
+has_cast_amount_spell = { # school/all, amount, (id,level)
 	check_variable = {
 		which = $school$_[[id]$level$_$id$_]spell_count
 		value = $amount$
@@ -2466,7 +2471,7 @@ abjuration_3_field_of_forbiddance_trigger = { # Field of Forbiddance
 			}
 		}
 		level_requirement_lowered = { cause = azmeras_wezinmesig }
-		is_overall_abjuration_level_2 = yes
+		is_overall_abjuration_level_2_minimum = yes
 	}
 	else = { is_overall_abjuration_level_3 = yes }
 	[[player] has_mana_to_cast_spell = { school = abjuration level = 3 id = field_of_forbiddance } ]
@@ -2802,9 +2807,11 @@ has_summoned_conjuration_mercenaries = {
 		any_hired_mercenary_company = {
 			OR = {
 				template = merc_feral_animals
+				template = merc_elemental_animals
 
 				template = merc_leashed_elementals
 				template = merc_greater_leashed_elementals
+				template = merc_spiritfire_elementals
 
 				template = merc_angels_base
 				template = merc_angels_defense
@@ -4440,6 +4447,13 @@ is_advancing_infrastructure = {
 	}
 }
 
+is_not_advancing_infrastructure = {
+	custom_trigger_tooltip = {
+		tooltip = is_not_advancing_infrastructure
+		NOT = { has_country_flag = magical_infrastructure }
+	}
+}
+
 at_least_magical_infrastructure_level_4 = {
 	custom_trigger_tooltip = {
 		tooltip = at_least_magical_infrastructure_level_4
@@ -5362,6 +5376,7 @@ abjuration_1_eordand_eighard_5_trigger = {
 		}
 	]
 	is_at_war = yes
+	NOT = { has_country_modifier = H14_icewardery_magic }
 }
 
 ### STOP.

@@ -40,7 +40,7 @@ country_event = {
 		}
 
 		add_prestige = 100
-		add_stability = 1
+		add_stability_or_adm_power = yes
 		add_devotion = 100
 
 		add_historical_friend = Z97
@@ -1074,7 +1074,9 @@ country_event = { #Legacy of Aldresia
 		wexhills_area = {
             add_claim = A77
         }
-		set_country_flag = call_of_god
+		unlock_merc_company = {
+			merc_company = merc_rectorates_finest
+		}
 		add_reform_desire = 1
 		override_country_name = KINGDOM_OF_BASTARDS
 		hidden_effect = {
@@ -1603,6 +1605,7 @@ country_event = { #The Holy Coup
 		}
 		inherit = Z97
 		change_tag = Z97
+		hidden_effect = { set_country_flag = formed_end_game_tag_flag }
 		swap_non_generic_missions = yes
 	}
 }
@@ -1876,6 +1879,7 @@ country_event = { # Fall of Wex
 			destroy_great_project = {
 				type = bal_hyl
 			}
+			set_province_flag = bal_hyl_destroyed_flag
 		}
 	}
 }
@@ -1891,6 +1895,7 @@ country_event = { # Swords of God
 	option = {
 		name = flavor_orda_aldresia.42.a
 		A77 = {
+			white_peace = Z97
 			vassalize = Z97
 		}
 		random_owned_province = {
@@ -1928,7 +1933,14 @@ country_event = { # Legacy of Aldresia
 		}
 		hidden_effect = {
 			every_known_country = {
-				limit = { is_part_of_hre = yes }
+				limit = {
+					AND = {
+						is_part_of_hre = yes
+						NOT = {
+							is_subject_of = ROOT
+						}
+					}
+				}
 				capital_scope = {
 					spawn_rebels = {
 						size = 2
@@ -2120,6 +2132,7 @@ country_event = { # .46 SPIRIT LOSES DUEL Event
 	option = {
 		name = flavor_orda_aldresia.46.a
 		change_tag = Z01
+		hidden_effect = { set_country_flag = formed_end_game_tag_flag }
 		swap_non_generic_missions = yes
 
 		custom_tooltip = second_sons_usurp_tt
@@ -2155,6 +2168,7 @@ country_event = { # hidden event to eat Anbenncost
 			limit = { has_country_flag = A77_ravelian_option }
 			inherit = Z97
 			change_tag = Z97
+			hidden_effect = { set_country_flag = formed_end_game_tag_flag }
 			swap_non_generic_missions = yes
 			change_government = theocracy
 			add_government_reform = papacy_reform
@@ -2162,8 +2176,3 @@ country_event = { # hidden event to eat Anbenncost
 		}
 	}
 }
-
-
-
-
-

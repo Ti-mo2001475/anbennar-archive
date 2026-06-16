@@ -182,6 +182,7 @@ country_decisions = {
 			quahopilo_area = { add_permanent_claim = ROOT }
 			muatlaqua_area = { add_permanent_claim = ROOT }
 			set_country_flag = formed_satriaalam_flag
+			set_country_flag = formed_end_game_tag_flag
 		}
 		ai_will_do = {
 			factor = 1
@@ -253,6 +254,7 @@ country_decisions = {
 			yanacotlele_region = { add_permanent_claim = ROOT }
 			cotlkae_region = { add_permanent_claim = ROOT }
 			set_country_flag = formed_comezkahuaina_flag
+			set_country_flag = formed_end_game_tag_flag
 		}
 		ai_will_do = {
 			factor = 1
@@ -324,10 +326,10 @@ country_decisions = {
 				name = "centralization_modifier"
 				duration = 7300
 			}
-			if = {
-				limit = { has_custom_ideas = no }
-				country_event = { id = ideagroups.1 } #Swap Ideas
-			}
+			# if = {
+			# 	limit = { has_custom_ideas = no }
+			# 	country_event = { id = ideagroups.1 } #Swap Ideas
+			# }
 			increase_government_rank_scripted_effect = { rank = 3 }
 			yanacotlele_region = { add_permanent_claim = ROOT }
 			pahu_o_mano_area = { add_permanent_claim = ROOT }
@@ -335,6 +337,7 @@ country_decisions = {
 				add_permanent_claim = ROOT
 			}
 			set_country_flag = formed_kangyarang_flag
+			set_country_flag = formed_end_game_tag_flag
 		}
 		ai_will_do = {
 			factor = 1
@@ -403,6 +406,7 @@ country_decisions = {
 			anakuele_region = { add_permanent_claim = ROOT }
 			anakae_region = { add_permanent_claim = ROOT }
 			set_country_flag = formed_huio_pamokai_flag
+			set_country_flag = formed_end_game_tag_flag
 		}
 		ai_will_do = {
 			factor = 1
@@ -473,7 +477,8 @@ country_decisions = {
 		
 		effect = {
 			change_tag = P18
-			change_government = monarchy
+			hidden_effect = { change_government = monarchy }
+			custom_tooltip = government_type_change_monarchy_tt
 			add_government_reform = yenbenmirra_federation
 			add_country_modifier = {
 				name = "centralization_modifier"
@@ -486,6 +491,7 @@ country_decisions = {
 				country_event = { id = ideagroups.1 } #Swap Ideas
 			}
 			set_country_flag = formed_bomowoka_flag
+			set_country_flag = formed_end_game_tag_flag
 			custom_tooltip = cof_awaken_tt
 			hidden_effect = {
 				every_owned_province = { 
@@ -613,17 +619,20 @@ country_decisions = {
 			owns = 6394
 			owns = 6380
 			num_of_owned_provinces_with = {
-				value = 2
-				OR = {
-					province_id = 6345
-					province_id = 6425
-					province_id = 6455
-					province_id = 6474
+				value = 7
+				custom_trigger_tooltip = {
+					tooltip = citadel_is_at_level_3_tt
+					OR = {
+						has_province_flag = kobold_citadel_level_3
+						has_province_flag = kobold_citadel_level_4
+						has_province_flag = kobold_citadel_level_5
+					}
 				}
 			}
 		}
 		effect = {
 			change_tag = P37
+			set_government_rank_scripted_effect = { rank = 3 }
 			add_country_modifier = {
 				name = "centralization_modifier"
 				duration = 7300
@@ -638,6 +647,7 @@ country_decisions = {
 			}
 			country_event = { id = charkuchin_kobold.1 } #Name
 			set_country_flag = formed_charkuchin_empire_flag
+			set_country_flag = formed_end_game_tag_flag
 			charkuchar_superregion = { add_permanent_claim = ROOT }
 		}
 		ai_will_do = { factor = 400 }

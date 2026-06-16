@@ -1692,7 +1692,7 @@ pilgrimage_success_decrease = {
 	}
 }
 
-np_pilgrimmage_setup = {
+np_pilgrimage_setup = {
 	add_ruler_modifier = { 
 		name = np_on_pilgrimage_mod
 		duration = -1  
@@ -2999,7 +2999,10 @@ ashhana_agony_of_expression_disaster_revolt_spawn = {
 }
 form_jadd_empire_effect = {
 	change_tag = F51
-	hidden_effect = { restore_country_name = yes }
+	hidden_effect = {
+		restore_country_name = yes
+		set_country_flag = formed_end_game_tag_flag
+	}
 	set_government_rank_scripted_effect = { rank = 3 }
 	add_prestige = 50
 	if = {
@@ -3602,6 +3605,10 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 				culture = guryadagga
 				free = yes
 			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = ardimyan
+				free = yes
+			}
 		}
 	]
 	[[halfling]
@@ -3627,6 +3634,10 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 				culture = amezatany
 				free = yes
 			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = vyoronsi
+				free = yes
+			}
 		}
 	]
 	[[irsukuba]
@@ -3648,6 +3659,14 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 				culture = echenka
 				free = yes
 			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = zovanwe
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = kuivendi
+				free = yes
+			}
 		}
 	]
 	[[vurebindu]
@@ -3659,6 +3678,18 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 			}
 			anb_add_accepted_culture_or_dip_power = {
 				culture = kuivanhi
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = kudenta
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = gomzumu
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = egilshibi
 				free = yes
 			}
 		}
@@ -3688,6 +3719,10 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 			}
 			anb_add_accepted_culture_or_dip_power = {
 				culture = korosheshi
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = asbaiwix
 				free = yes
 			}
 		}
@@ -3748,6 +3783,18 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 				culture = seascourge_gnoll
 				free = yes
 			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = sorrowmane_gnoll
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = suncrown_gnoll
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = khetfeaster_gnoll
+				free = yes
+			}
 		}
 	]
 	[[bulwari]
@@ -3787,6 +3834,18 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 			}
 			anb_add_accepted_culture_or_dip_power = {
 				culture = kuzarami
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = bulwari_half_elf
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = itrahuresi
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = abtazari
 				free = yes
 			}
 		}
@@ -3842,6 +3901,10 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 			}
 			anb_add_accepted_culture_or_dip_power = {
 				culture = far_akasi
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = enigrax
 				free = yes
 			}
 		}
@@ -3951,7 +4014,10 @@ form_adzalan_effect = {
 		change_government = theocracy
 		add_government_reform = ashhana_realm_of_art
 	}
-	hidden_effect = { restore_country_name = yes }
+	hidden_effect = {
+		restore_country_name = yes
+		set_country_flag = formed_end_game_tag_flag
+	}
 	increase_government_rank_scripted_effect = { rank = 2 }
 	if = {
 		limit = { has_custom_ideas = no }
@@ -4109,7 +4175,10 @@ clear_triplets_temple_bonus = {
 
 form_umbral_covenant = {
 	change_tag = S90
-	hidden_effect = { restore_country_name = yes }
+	hidden_effect = {
+		restore_country_name = yes
+		set_country_flag = formed_end_game_tag_flag
+	}
 	increase_government_rank_scripted_effect = { rank = 3 }
 	swap_non_generic_missions = yes
 	if = {
@@ -4125,6 +4194,11 @@ form_umbral_covenant = {
 		set_country_flag = umbral_covenant_formed
 		set_global_flag = umbral_covenant_formed
 		add_government_reform = the_vile_one_reform_initial
+	}
+	if = {
+		limit = { is_or_was_tag = { tag = L76 } }
+		custom_tooltip = L76_pain_into_weapons_removal_tt
+		hidden_effect = { remove_country_modifier = L76_pain_into_weapons_1 }
 	}
 }
 #Karach only for Workshop events basically
@@ -4703,7 +4777,10 @@ form_konolkhatep_effect = {
 		change_variable = { konol_meritocracy = -50	}
 	}
 	change_tag = F66
-	hidden_effect = { restore_country_name = yes }
+	hidden_effect = {
+		restore_country_name = yes
+		set_country_flag = formed_end_game_tag_flag
+	}
 	add_prestige = 50
 	if = {
 		limit = { has_custom_ideas = no }
