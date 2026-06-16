@@ -323,33 +323,6 @@ clear_federation_global_flag = {
 	}
 }
 
-centaur_colonization = {
-	# custom_tooltip = centaur_colonization_tooltip
-	hidden_effect = {
-		random_owned_province = {
-			limit = { has_empty_adjacent_province = yes is_city = yes superregion = forbidden_lands_superregion }
-			random_empty_neighbor_province = {
-				limit = { is_city = no superregion = forbidden_lands_superregion NOT = { has_province_modifier = cant_colonize } }
-				create_colony = 1000
-				random_list = {
-					50 = {
-						add_base_tax = 1
-						add_base_manpower = 1
-					}
-					50 = {
-						add_base_manpower = 2
-					}
-					50 = {
-						add_base_production = 1
-						add_base_manpower = 1
-					}
-				}
-				add_core = ROOT
-			}
-		}
-	}
-}
-
 centaur_battle_count_win = {
 	if = {
 		limit = { has_country_modifier = centaur_administration }
@@ -2760,11 +2733,13 @@ building_zeal_dock_effect = {
 						religion = kalyin_worshippers 
 						has_harmonized_with = yukel_followers 
 					} 
-				} 
+				}
+				num_of_ports = 1
 			}
 			random_owned_province = { 
-				limit = { 
-					has_dock_building_trigger = no 
+				limit = {
+					has_port = yes 
+					has_dock_building_trigger = no
 				} 
 				add_building_construction = { 
 					building = dock 
@@ -2789,10 +2764,12 @@ building_zeal_dock_effect = {
 		random_subject_country = {
 			limit = {
 				is_subject_of_type = democratic_sphere_of_influence_subject
+				num_of_ports = 1
 			}
 
 			random_owned_province = {
 				limit = {
+					has_port = yes
 					has_dock_building_trigger = no
 				}
 				add_building_construction = {
@@ -2813,8 +2790,10 @@ building_zeal_dock_effect = {
 	else = {
 		# we are sunijalla!
 		random_subject_country = {
+			limit = { num_of_ports = 1 }
 			random_owned_province = {
 				limit = {
+					has_port = yes 
 					has_dock_building_trigger = no
 				}
 				add_building_construction = {
@@ -2837,7 +2816,10 @@ building_zeal_dock_effect = {
 
 form_lejdazamh_effects = {
 	change_tag = J55
-	hidden_effect = { restore_country_name = yes }
+	hidden_effect = {
+		restore_country_name = yes
+		set_country_flag = formed_end_game_tag_flag
+	}
 	#swap_non_generic_missions = yes
 	remove_non_electors_emperors_from_empire_effect = yes
 	hidden_effect = {
@@ -2862,14 +2844,6 @@ form_lejdazamh_effects = {
 		name = "centralization_modifier"
 		duration = 7300
 	}
-	if = {
-		limit = { has_country_modifier = subjugated_horde }
-		remove_country_modifier = subjugated_horde
-	}
-	if = {
-		limit = { has_country_modifier = settled_horde }
-		remove_country_modifier = settled_horde
-	}
 	country_event = { id = ideagroups.1 } #Swap Ideas
 }
 
@@ -2888,7 +2862,7 @@ update_nomadism_capital_move_cost = {
 	}
 }
 
-I57_potential_aureate_effects = { #Golden Tremor
+I57_a_new_golden_plain_effects = { #Golden Tremor
 	change_trade_goods = gold
 	add_province_modifier = {
 		name = I57_tarnished_veins

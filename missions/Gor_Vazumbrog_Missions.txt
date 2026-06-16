@@ -53,7 +53,18 @@ gor_vazumbrog_1_1 = {
 
 			custom_tooltip = " "
 			if = {
-				limit = { 2884 = { has_supply_depot = ROOT } } #Dwarovrod[24]
+				limit = {
+					OR = {
+						AND = {
+							has_dlc = "Cradle of Civilization"
+							2884 = { has_supply_depot = ROOT }
+						}
+						AND = {
+							NOT = { has_dlc = "Cradle of Civilization" }
+							2884 = { has_forcelimit_building_trigger = yes }
+						}
+					}
+				} #Dwarovrod[24]
 				custom_tooltip = GV_TT_BOGIG_VAZUMBROG_BONUS_YES
 				hidden_effect = {
 					2884 = {
@@ -87,7 +98,13 @@ gor_vazumbrog_1_1 = {
 						AND = {
 							province_has_current_tech_fort_trigger = yes
 							has_building = ramparts
-							has_supply_depot = ROOT
+							if = {
+								limit = { has_dlc = "Cradle of Civilization" }
+								has_supply_depot = ROOT
+							}
+							else = {
+								has_forcelimit_building_trigger = yes
+							}
 						}
 					}
 				}
@@ -102,7 +119,13 @@ gor_vazumbrog_1_1 = {
 			7024 = { #Ghulapriah
 				province_has_current_tech_fort_trigger = yes
 				has_building = ramparts
-				has_supply_depot = ROOT
+				if = {
+					limit = { has_dlc = "Cradle of Civilization" }
+					has_supply_depot = ROOT
+				}
+				else = {
+					has_forcelimit_building_trigger = yes
+				}
 			}
 		}
 
@@ -170,7 +193,13 @@ gor_vazumbrog_1_2 = {
 						AND = {
 							province_has_current_tech_fort_trigger = yes
 							is_core = ROOT
-							has_supply_depot = ROOT
+							if = {
+								limit = { has_dlc = "Cradle of Civilization" }
+								has_supply_depot = ROOT
+							}
+							else = {
+								has_forcelimit_building_trigger = yes
+							}
 						}
 					}
 				}
@@ -184,7 +213,13 @@ gor_vazumbrog_1_2 = {
 				owned_by = ROOT
 				is_core = ROOT
 				province_has_current_tech_fort_trigger = yes
-				has_supply_depot = ROOT
+				if = {
+					limit = { has_dlc = "Cradle of Civilization" }
+					has_supply_depot = ROOT
+				}
+				else = {
+					has_forcelimit_building_trigger = yes
+				}
 			}
 		}
 
@@ -263,7 +298,13 @@ gor_vazumbrog_1_2 = {
 			4119 = { #Amldihr
 				country_or_non_sovereign_subject_holds = ROOT
 			}
-			army_professionalism = 0.3
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				army_professionalism = 0.3
+			}
+			else = {
+				army_tradition = 70
+			}
 			estate_loyalty = {
 				estate = estate_nobles
 				loyalty = 60
@@ -670,7 +711,7 @@ gor_vazumbrog_1_4 = {
 				}
 			}
 			else = {
-				custom_tooltip = gor_vazumbrog_spawn_hehos_grave_expedition_tt
+				custom_tooltip = gor_vazumbrog_spawn_expedition_tt
 				hidden_effect = {
 					random_owned_province = {
 						limit = {
@@ -834,8 +875,10 @@ gor_vazumbrog_1_5 = {
 				hold_condition = { Repaired = yes }
 			}
 			OR = {
-				H78 = { #Seghdihr
-					has_spy_network_from = { who = ROOT value = 30 }
+				4124 = { #Seghdihr
+					owner = {
+						has_spy_network_from = { who = ROOT value = 30 }
+					}
 				}
 				owns_or_subject_of = 4124 #Seghdihr hold
 				H78 = { #Seghdihr
@@ -1044,7 +1087,13 @@ gor_vazumbrog_2_1 = {
 							country_or_non_sovereign_subject_holds = ROOT
 							province_has_current_tech_fort_trigger = yes
 							has_building = ramparts
-							has_supply_depot = ROOT
+							if = {
+								limit = { has_dlc = "Cradle of Civilization" }
+								has_supply_depot = ROOT
+							}
+							else = {
+								has_forcelimit_building_trigger = yes
+							}
 						}
 					}
 				}
@@ -1083,7 +1132,13 @@ gor_vazumbrog_2_1 = {
 			4242 = { #Dwarovrod[45]/Bogig Ozumbrog
 				country_or_non_sovereign_subject_holds = ROOT # subject allowed without ramparts in case you got a bit ovdal kanzad PU
 				province_has_current_tech_fort_trigger = yes
-				has_supply_depot = ROOT
+				if = {
+					limit = { has_dlc = "Cradle of Civilization" }
+					has_supply_depot = ROOT
+				}
+				else = {
+					has_forcelimit_building_trigger = yes
+				}
 				if = {
 					limit = { owned_by = ROOT }
 					has_building = ramparts
@@ -1179,7 +1234,13 @@ gor_vazumbrog_2_1 = {
 						AND = {
 							province_has_current_tech_fort_trigger = yes
 							has_building = ramparts
-							has_supply_depot = ROOT
+							if = {
+								limit = { has_dlc = "Cradle of Civilization" }
+								has_supply_depot = ROOT
+							}
+							else = {
+								has_forcelimit_building_trigger = yes
+							}
 						}
 					}
 				}
@@ -1204,7 +1265,13 @@ gor_vazumbrog_2_1 = {
 				owned_by = ROOT
 				province_has_current_tech_fort_trigger = yes
 				has_building = ramparts
-				has_supply_depot = ROOT
+				if = {
+					limit = { has_dlc = "Cradle of Civilization" }
+					has_supply_depot = ROOT
+				}
+				else = {
+					has_forcelimit_building_trigger = yes
+				}
 			}
 		}
 
@@ -1308,7 +1375,13 @@ gor_vazumbrog_2_2 = {
 		provinces_to_highlight = {
 			owned_by = ROOT
 			has_building = mage_tower
-			NOT = { has_supply_depot = ROOT }
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				NOT = { has_supply_depot = ROOT }
+			}
+			else = {
+				NOT = { has_forcelimit_building_trigger = yes }
+			}
 		}
 
 		trigger = {
@@ -1329,7 +1402,13 @@ gor_vazumbrog_2_2 = {
 			num_of_owned_provinces_with = {
 				value = 3
 				has_building = mage_tower
-			 	has_supply_depot = ROOT
+				if = {
+					limit = { has_dlc = "Cradle of Civilization" }
+					has_supply_depot = ROOT
+				}
+				else = {
+					has_forcelimit_building_trigger = yes
+				}
 			}
 		}
 
@@ -1658,7 +1737,13 @@ gor_vazumbrog_2_3 = {
 		position = 8
 
 		trigger = {
-			army_professionalism = 0.4
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				army_professionalism = 0.4
+			}
+			else = {
+				army_tradition = 80
+			}
 			has_estate_privilege = estate_nobles_officer_corp
 			has_estate_privilege = estate_adventurers_heroes_in_the_army
 
@@ -1932,7 +2017,13 @@ gor_vazumbrog_2_4 = {
 					NOT = { has_province_flag = citadel_province }
 					has_production_building_trigger = yes
 					has_building = mage_tower
-					has_supply_depot = ROOT
+					if = {
+						limit = { has_dlc = "Cradle of Civilization" }
+						has_supply_depot = ROOT
+					}
+					else = {
+						has_forcelimit_building_trigger = yes
+					}
 				}
 			}
 			custom_trigger_tooltip = {

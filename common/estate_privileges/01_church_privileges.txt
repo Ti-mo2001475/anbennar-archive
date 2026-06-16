@@ -536,6 +536,8 @@ estate_church_clerical_ministers = {
 				NOT = { religion = rune_scribes }
 				NOT = { religion = gotiriei }
 				NOT = { religion = foundationism }
+				NOT = { religion = dunborgula }
+				NOT = { religion = mumambarra }
 			}
 			if = {
 				limit = {
@@ -635,6 +637,8 @@ estate_church_clerical_ministers = {
 				religion = rune_scribes
 				religion = gotiriei
 				religion = foundationism
+				religion = dunborgula
+				religion = mumambarra
 			}
 		}
 		modifier = {
@@ -779,7 +783,7 @@ estate_church_clerical_ministers = {
 			has_country_flag = H83_upgrade_clerical_ministers
 		}
 		modifier = {
-			governing_cost = -0.1
+			governing_cost = -0.15
 		}
 	}
 	penalties = {
@@ -3702,14 +3706,14 @@ estate_church_subsidized_cult_hunters = {
 	influence = 0.05
 	is_valid = {
 		religion_group = cannorian
-		NOT = { religion = infernal_court }
+		NOT = { 
+			religion = infernal_court 
+			has_country_flag = no_cult_hunters
+		}
 	}
 	can_select = {
 		religion_group = cannorian
-		NOT = {
-			religion = infernal_court
-			has_country_flag = no_cult_hunters
-		}
+		NOT = { religion = infernal_court }
 	}
 	on_granted = {
 		custom_tooltip = less_cult_events_tt
@@ -4670,7 +4674,12 @@ estate_church_vir_awareness = {
 		has_personal_deity = vir_awareness
 	}
 	on_granted = {
-		set_country_flag = infinite_self_no_seize
+		if = {
+			limit = { 
+				NOT = { has_country_flag = infinite_self_no_seize }
+			}
+			set_country_flag = infinite_self_no_seize
+		}
 	}
 	can_revoke = {
 		had_country_flag = {
@@ -4687,6 +4696,7 @@ estate_church_vir_awareness = {
 			name = vir_awareness_mastered
 			duration = -1
 		}
+		clr_country_flag = infinite_self_no_seize
 		country_event = {
 			id = infinite_self.1
 		}
@@ -5027,7 +5037,31 @@ estate_church_local_practice_chroniclers = {
 	influence = 0.05
 	can_select = {
 		religion = endless_ocean
+		#has_unchronicled_endless_ocean_aspect = yes #Duplicated here for load order issues
 		NOT = { has_country_modifier = eo_stopped_chronicling }
+		hidden_trigger = { num_of_aspects = 1 } #restrictive trigger first
+		OR = {
+			has_church_aspect = endless_ocean_way_of_elements
+			has_church_aspect = endless_ocean_the_dance_of_life
+			has_church_aspect = endless_ocean_house_of_the_sea
+			has_church_aspect = endless_ocean_challenge_of_the_ship
+			has_church_aspect = endless_ocean_calm_mind_of_sea_and_stone
+			has_church_aspect = endless_ocean_season_to_fish
+			has_church_aspect = endless_ocean_firelit_vigil
+			has_church_aspect = endless_ocean_pilgrimage_to_the_sea
+			has_church_aspect = endless_ocean_kiamoa_worship
+			has_church_aspect = endless_ocean_great_voyages
+			has_church_aspect = endless_ocean_to_act_as_the_sea
+			has_church_aspect = endless_ocean_sight_of_mist
+			has_church_aspect = endless_ocean_veneration_of_heroes
+			has_church_aspect = endless_ocean_face_of_stone
+			has_church_aspect = endless_ocean_kraken_hunts
+			has_church_aspect = endless_ocean_a_way_back
+			has_church_aspect = endless_ocean_root_temples
+			has_church_aspect = endless_ocean_mangrove_ships
+			has_church_aspect = endless_ocean_seasteel_mechanim
+			has_church_aspect = endless_ocean_seaborn_bands
+		}
 	}
 	is_valid = {
 		religion = endless_ocean
@@ -5086,6 +5120,7 @@ estate_church_soldiers_of_freedom = {
 		custom_tooltip = estate_church_soldiers_of_freedom_effect_tt
 	}
 	on_revoked = {
+		custom_tooltip = estate_church_soldiers_of_freedom_effect_tt
 	}
 	conditional_modifier = {
 		trigger = {
@@ -5136,6 +5171,9 @@ estate_church_no_slaves_in_the_clergy = {
 	}
 	on_revoked = {
 	}
+	benefits = {
+		church_privilege_slots = 1
+	}
 	penalties = {
 		meritocracy = -1
 		missionary_maintenance_cost = 0.2
@@ -5171,7 +5209,7 @@ estate_church_primacy_of_haruspicy = {
 		else_if = {
 			limit = { has_country_flag = shadow_warriors_haruspicy_2_1 }
 			set_country_flag = shadow_pact_no_cost_reroll
-			custom_tooltip = shadow_warriors_portent_tt
+			custom_tooltip = shadow_warriors_portent_tt_1
 			add_country_modifier = {
 				name = shadow_warriors_haruspicy_2_1
 				duration = -1
@@ -5808,5 +5846,64 @@ estate_church_H83_dreamforgery_4 = {
 	}
 	benefits = {
 		church_privilege_slots = 1
+	}
+}
+
+estate_church_caretaking_of_the_shirgriis = {
+	icon = estate_church_fund_madrasas
+	land_share = 5
+	max_absolutism = 0
+	influence = 0.20
+	loyalty = 0.10
+	is_valid = {
+		religion = devouring_path
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = shirgrii_owns_any_tt
+			any_owned_province = {
+				province_group = all_starting_shirgrii
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = shirgrii_caretaking_effect_tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = { province_group = all_starting_shirgrii }
+				if = {
+					limit { has_building = mage_tower }
+					add_province_modifier = {
+						name = shirgrii_maintenance_tower
+						duration = -1
+					}
+				}
+				else = {
+					add_province_modifier = {
+						name = shirgrii_maintenance_no_tower
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	can_revoke = {
+		always = yes
+	}
+	on_invalid_province  = {
+		remove_province_modifier = shirgrii_maintenance_tower
+		remove_province_modifier = shirgrii_maintenance_no_tower
+	}
+	on_revoked_province = {
+		remove_province_modifier = shirgrii_maintenance_tower
+		remove_province_modifier = shirgrii_maintenance_no_tower
+	}
+	penalties = {
+
+	}
+	benefits = {
+		relation_with_same_religion = 10
+		reverse_relation_with_same_religion = 10
+		same_religion_advisor_cost = -0.05
 	}
 }

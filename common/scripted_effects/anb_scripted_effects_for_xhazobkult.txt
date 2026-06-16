@@ -71,7 +71,7 @@ xhazobkult_terrain_razing = {
 					limit = { ruler_has_personality = xhazobs_chosen_personality }
 					change_variable = {
 						which = demonicPowerGainedByXhazobine
-						value = 0.5
+						value = 5
 					}
 				}
 			}
@@ -92,7 +92,7 @@ xhazobkult_terrain_razing = {
 					limit = { ruler_has_personality = xhazobs_chosen_personality }
 					change_variable = {
 						which = demonicPowerGainedByXhazobine
-						value = 0.5
+						value = 3
 					}
 				}
 			}
@@ -118,7 +118,7 @@ xhazobkult_terrain_razing = {
 					limit = { ruler_has_personality = xhazobs_chosen_personality }
 					change_variable = {
 						which = demonicPowerGainedByXhazobine
-						value = 0.5
+						value = 2.5
 					}
 				}
 			}
@@ -146,7 +146,7 @@ xhazobkult_terrain_razing = {
 					limit = { ruler_has_personality = xhazobs_chosen_personality }
 					change_variable = {
 						which = demonicPowerGainedByXhazobine
-						value = 0.5
+						value = 2
 					}
 				}
 			}
@@ -164,7 +164,7 @@ xhazobkult_terrain_razing = {
 					limit = { ruler_has_personality = xhazobs_chosen_personality }
 					change_variable = {
 						which = demonicPowerGainedByXhazobine
-						value = 0.5
+						value = 1
 					}
 				}
 			}
@@ -631,25 +631,39 @@ light_the_pyres_effect = {
 			}
 		}
 
-		if = {
-			limit = { has_reform = mykx_gnollish_kultism }
-			add_country_modifier = {
-				name = mykx_pyre_extra_range
-				duration = 1825
+		if = { #Mykx Stuff
+			limit = {
+				is_or_was_tag = { tag = G93 } #Mykx
 			}
-		}
-		if = {
-			limit = { has_estate_privilege = estate_church_demons_blood_production_rights }
-			custom_tooltip = mykx_bloodfueld_productive_activated.tt
-			hidden_effect = {
-				leechdens_region = {
-					limit = {
-						has_province_modifier = mykx_demons_blood_production
-					}
-					remove_province_modifier = mykx_bloodfueld_production
-					add_province_modifier = {
-						name = mykx_bloodfueld_production
-						duration = 3650
+			if = {
+				limit = {
+					has_faction = mykx_xhazobkult
+				}
+				add_faction_influence = {
+					faction = mykx_xhazobkult
+					influence = 10
+				}
+			}
+			if = {
+				limit = { has_reform = mykx_gnollish_kultism }
+				add_country_modifier = {
+					name = mykx_pyre_extra_range
+					duration = 1825
+				}
+			}
+			if = {
+				limit = { has_estate_privilege = estate_church_demons_blood_production_rights }
+				custom_tooltip = mykx_bloodfueld_productive_activated.tt
+				hidden_effect = {
+					leechdens_region = {
+						limit = {
+							has_province_modifier = mykx_demons_blood_production
+						}
+						remove_province_modifier = mykx_bloodfueld_production
+						add_province_modifier = {
+							name = mykx_bloodfueld_production
+							duration = 3650
+						}
 					}
 				}
 			}

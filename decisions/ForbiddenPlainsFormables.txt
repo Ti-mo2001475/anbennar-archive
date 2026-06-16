@@ -65,7 +65,8 @@ country_decisions = {
 			custom_tooltip = unite_the_federation_tooltip
 			hidden_effect = {
 				change_tag = J33
-				hidden_effect = { restore_country_name = yes }
+				restore_country_name = yes
+				set_country_flag = formed_end_game_tag_flag
 				remove_country_modifier = lake_federation_member
 				random_known_country = {
 					limit = { 
@@ -167,8 +168,12 @@ country_decisions = {
 			}
 			religion = irdaeos_worship
 			is_subject = no
-			if = {
-				limit = { tag = I78 }
+			if = { #AI bypass
+				limit = { ai = yes }
+				is_year = 1500
+			}
+			else_if = {
+				limit = { tag = I78 } #Wild Hunt
 				custom_trigger_tooltip = {
 					tooltip = I78_revenge_on_humans_tt
 					NOT = { has_country_flag = I78_block_KU_flag }
@@ -181,7 +186,7 @@ country_decisions = {
 					has_country_flag = I55_enable_formables_flag
 				}
 			}
-			else = {
+			else = { 
 				is_year = 1500
 				mission_completed = CENTAUR_valorous_caehnate
 			}
@@ -268,7 +273,6 @@ country_decisions = {
 				has_country_modifier = centaur_administration
 			}
 			is_subject = no
-			#is_year = 1500
 			OR = {
 				custom_trigger_tooltip = {
 					tooltip = altorzamh_irdukhuga_requirement
@@ -285,7 +289,17 @@ country_decisions = {
 				religion = yudunyovi
 			}
 			is_at_war = no
-			mission_completed = CENTAUR_valorous_caehnate
+			if = {
+				limit = { ai = yes }
+				is_year = 1500
+			}
+			#else_if = {
+			# Unique MT requirements
+			#}
+			else = {
+				is_year = 1500
+				mission_completed = CENTAUR_valorous_caehnate
+			}
 			num_of_owned_provinces_with = {
 				value = 3
 				OR = {
@@ -300,7 +314,10 @@ country_decisions = {
 		}
 		effect = {
 			change_tag = J54
-			hidden_effect = { restore_country_name = yes }
+			hidden_effect = {
+				restore_country_name = yes
+				set_country_flag = formed_end_game_tag_flag
+			}
 			#swap_non_generic_missions = yes
 			remove_non_electors_emperors_from_empire_effect = yes
 			J54 = { decrease_monstrous_10 = yes }
@@ -332,15 +349,6 @@ country_decisions = {
 				name = "centralization_modifier"
 				duration = 7300
 			}
-			if = {
-				limit = { has_country_modifier = subjugated_horde }
-				remove_country_modifier = subjugated_horde
-			}
-			if = {
-				limit = { has_country_modifier = settled_horde }
-				remove_country_modifier = settled_horde
-			}
-			
 			country_event = { id = ideagroups.1 } #idea swap
 			
 		}
@@ -402,7 +410,6 @@ country_decisions = {
 				has_country_modifier = centaur_administration
 			}
 			is_subject = no
-			#is_year = 1500
 			OR = {
 				custom_trigger_tooltip = {
 					tooltip = lejdazamh_maslekhuga_requirement
@@ -419,7 +426,17 @@ country_decisions = {
 				religion = yudunyovi
 			}
 			is_at_war = no
-			mission_completed = CENTAUR_valorous_caehnate
+			if = {
+				limit = { ai = yes }
+				is_year = 1500
+			}
+			#else_if = {
+			# Unique MT requirements
+			#}
+			else = {
+				is_year = 1500
+				mission_completed = CENTAUR_valorous_caehnate
+			}
 			num_of_owned_provinces_with = {
 				value = 3
 				OR = {
@@ -493,7 +510,6 @@ country_decisions = {
 				has_country_modifier = centaur_administration
 			}
 			is_subject = no
-			#is_year = 1500
 			custom_trigger_tooltip = {
 				tooltip = taryeanzamh_malukhuga_requirement
 				religion = irdaeos_worship
@@ -507,6 +523,10 @@ country_decisions = {
 			}
 			is_at_war = no
 			if = {
+				limit = { ai = yes }
+				is_year = 1500
+			}
+			else_if = {
 				limit = { tag = I55 } #Black Herd
 				custom_trigger_tooltip = {
 					tooltip = I55_enable_formables_tt
@@ -524,7 +544,10 @@ country_decisions = {
 					always = no
 				}
 			}
-			else = { mission_completed = CENTAUR_valorous_caehnate }
+			else = {
+				is_year = 1500
+				mission_completed = CENTAUR_valorous_caehnate
+			}
 			num_of_owned_provinces_with = {
 				value = 4
 				OR = {
@@ -540,7 +563,10 @@ country_decisions = {
 		}
 		effect = {
 			change_tag = J56
-			hidden_effect = { restore_country_name = yes }
+			hidden_effect = {
+				restore_country_name = yes
+				set_country_flag = formed_end_game_tag_flag
+			}
 			#swap_non_generic_missions = yes
 			remove_non_electors_emperors_from_empire_effect = yes
 			khaashalg_region = {
@@ -571,15 +597,6 @@ country_decisions = {
 				name = "centralization_modifier"
 				duration = 7300
 			}
-			if = {
-				limit = { has_country_modifier = subjugated_horde }
-				remove_country_modifier = subjugated_horde
-			}
-			if = {
-				limit = { has_country_modifier = settled_horde }
-				remove_country_modifier = settled_horde
-			}
-			
 			country_event = { id = ideagroups.1 } #Swap Ideas
 		
 		}

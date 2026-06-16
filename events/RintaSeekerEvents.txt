@@ -1534,7 +1534,6 @@ country_event = {
 	
 	is_triggered_only = yes
 	fire_only_once = yes
-	hidden = yes
 
 	immediate = {
 		hidden_effect = {
@@ -1816,6 +1815,7 @@ country_event = { #Spawn of Alefisol
 		#Alefisol
 		S93 = {
 			clear_racial_military = yes
+			set_country_flag = formed_end_game_tag_flag
 			add_country_modifier = {
 				name = human_military
 				duration = -1
@@ -3439,9 +3439,20 @@ country_event = { #On Alefisol Shows
 
 	is_triggered_only = yes
 
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					has_province_modifier = rinta_infernal_resonance
+				}
+				save_event_target_as = rinta_tar1
+			}
+		}
+	}
+
 	option = {
 		name = rinta_seeker_events.263.a
-
+		goto = rinta_tar1
 		ai_chance = { factor = 1 }
 	}
 }

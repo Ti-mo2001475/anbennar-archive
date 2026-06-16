@@ -1521,6 +1521,7 @@ declarewar = {
 					tag = Y69  #Brenulan
 					tag = Y74  #Pelimkan
 					war_with = event_target:sri_baginda
+					is_subject_of = event_target:sri_baginda
 				}
 			}
 			event_target:sri_baginda = {
@@ -1799,15 +1800,6 @@ declarewar = {
 		#Tsukqiao
 		if = {
 			limit = { is_or_was_tag = { tag = Z60 } }
-			if = {
-				limit = {
-					FROM = { tag = Y02 }
-					ROOT = { has_country_flag = tsukqiao_jinqiu_war_flag }
-				}
-				Y02 = {
-					country_event = { id = tsukqiao.41 days = 10 }
-				}
-			}
 			if = { #Azjakuma War
 				limit = {
 					ROOT = { has_country_flag = tsukqiao_azjakuma_flag }
@@ -1833,9 +1825,9 @@ declarewar = {
 					white_peace = R62 #The Command
 				}
 			}
-			if = { #Doctrine of Might
+			if = { #Mask of Might
 				limit = {
-					has_doctrine_of_might_aspect = yes
+					has_mask_of_might_aspect = yes
 					church_power = 100
 				}
 				add_church_power = -100
@@ -1917,11 +1909,27 @@ declarewar = {
 				FROM = { ai = yes }
 			}
 			FROM = { 
-				save_event_target_as = S45_poison_their_hearts_target
+				save_event_target_as = s45_poison_their_hearts_target
 			}
 			country_event = {
 				id = huugeta.2
 			}
+		}
+
+		if = { #Zerat/Anzara Fort Upgrade
+			limit = {
+				has_country_flag = zerat_yezel_war
+				FROM = { tag = S70 } #Yezel Mora  
+			}
+			every_owned_province = {
+				limit = {
+					is_neighbor_of = S70
+					has_fort_building_trigger = yes
+				}
+				upgrade_fort_building = yes
+			}
+			country_event = { id = flavour_zerat.10 } #The Second Northern Expedition
+			clr_country_flag = zerat_yezel_war
 		}
 	}
 }
@@ -3961,10 +3969,7 @@ callaction = {
 					is_subject_of_type = vizier_vassal
 				}
 			}
-			NOT = {
-				has_government_attribute = is_raja_subject
-				has_reform = indep_prabhi_reform
-			}
+			NOT = { has_government_attribute = is_raja_subject }
 		}
 		allow = {
 			NOT = {
@@ -4225,12 +4230,6 @@ ask_for_march = {
 	}
 }
 
-milaccess = {
-}
-
-offermilaccess = {
-}
-
 insultaction = {
 	condition = {}
 	effect = {
@@ -4423,6 +4422,20 @@ insultaction = {
 			}
 			add_country_modifier = { name = U09_art_of_the_gremrabo duration = 1825 }
 		}
+		#Dragon Turtle
+		if = {
+			limit = { FROM = { has_opinion_modifier = { who = ROOT modifier = scornfully_insulted } } }
+			dragon_turtle_change_friendship = { dragon_turtle = kealakys_ever_hungry amount = -5 }
+		}
+		else = { dragon_turtle_change_friendship = { dragon_turtle = kealakys_ever_hungry amount = -3 } }
+	}
+}
+
+threaten_war = {
+	condition = {
+		tooltip = mangrove_disabled_threaten_war_tt
+		potential = { has_country_modifier = mangrove_peace }
+		allow = { always = no }
 	}
 }
 
@@ -5003,6 +5016,16 @@ giftaction = {
 			ashhana_blood_curse_add_control_by_source = {
 				canvas_strength = 0.75
 			}
+		}
+		#Dragon Turtle
+		if = {
+			limit = {
+				FROM = {
+					marriage_with = ROOT 
+					has_25_opinion_sent_gift = { target = ROOT }
+				}
+			}
+			dragon_turtle_change_friendship = { dragon_turtle = makaoioi amount = -5 }
 		}
 	}
 }

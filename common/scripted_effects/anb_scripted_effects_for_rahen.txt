@@ -362,13 +362,123 @@ clear_oracle_prophecy_flag = {
 ### Caste Fluidity ###
 ######################
 
+ #Effects for when caste fluidity changes, happens AFTER fluidity changes
+on_caste_fluidity_change = { #Hidden effect
+	country_event = { id = estate_castes_events.3 } #Event to remove fluidity privileges if desired
+}
+
+on_fluid_caste_fluidity = { #Hidden effect
+	on_caste_fluidity_change = yes
+	if = {
+		limit = { has_estate_privilege = estate_middlecastes_excluse_trade_rights }
+		every_owned_province = {
+			limit = { has_province_modifier = estate_burghers_exclusive_trade_rights_mod }
+			add_province_modifier = {
+				name = estate_burghers_exclusive_trade_rights_negate_mod
+				duration = -1
+			}
+		}
+	}
+}
+
+on_neutral_caste_fluidity = { #Hidden effect
+	on_caste_fluidity_change = yes
+	if = {
+		limit = { has_estate_privilege = estate_middlecastes_excluse_trade_rights }
+		every_owned_province = { remove_province_modifier = estate_burghers_exclusive_trade_rights_negate_mod }
+	}
+}
+
+on_rigid_caste_fluidity = { #Hidden effect
+	on_caste_fluidity_change = yes
+	if = {
+		limit = { has_estate_privilege = estate_middlecastes_excluse_trade_rights }
+		every_owned_province = {
+			limit = { has_province_modifier = estate_burghers_exclusive_trade_rights_mod }
+			add_province_modifier = {
+				name = estate_burghers_exclusive_trade_rights_negate_mod
+				duration = -1
+			}
+		}
+	}
+}
+
+ #Effects for when caste fluidity changes, happens BEFORE fluidity changes
+# on_pre_caste_fluidity_change = { } #Hidden effect
+
+on_pre_fluid_caste_fluidity = {
+	custom_tooltip = caste_fluidity_changes_to_fluid_tt
+	hidden_effect = {
+		# on_pre_caste_fluidity_change = yes
+	}
+}
+
+on_pre_neutral_caste_fluidity = {
+	custom_tooltip = caste_fluidity_changes_to_neutral_tt
+	hidden_effect = {
+		# on_pre_caste_fluidity_change = yes
+	}
+}
+
+on_pre_rigid_caste_fluidity = {
+	custom_tooltip = caste_fluidity_changes_to_rigid_tt
+	hidden_effect = {
+		# on_pre_caste_fluidity_change = yes
+	}
+}
+
+#Checks if caste fluidity has changed from neutral > fluid or rigid > neutral
+check_fluidity_increase = {
+	if = {
+		limit = { #Checks for rigid > neutral change
+			check_variable = { casteFluidityVar = $min_value1$ }
+			NOT = { check_variable = { casteFluidityVar = $max_value1$ } }
+		}
+		on_[[pre]pre_]neutral_caste_fluidity = yes
+	}
+	else_if = {
+		limit = { #Checks for neutral > fluid change
+			check_variable = { casteFluidityVar = $min_value2$ }
+			NOT = { check_variable = { casteFluidityVar = $max_value2$ } }
+		}
+		on_[[pre]pre_]fluid_caste_fluidity = yes
+	}
+}
+
+#Checks if caste fluidity has changed from fluid > neutral or neutral > rigid
+check_fluidity_decrease = {
+	if = {
+		limit = { #Checks for neutral > rigid change
+			check_variable = { casteFluidityVar = $min_value1$ }
+			NOT = { check_variable = { casteFluidityVar = $max_value1$ } }
+		}
+		on_[[pre]pre_]rigid_caste_fluidity = yes
+	}
+	else_if = {
+		limit = { #Checks for fluid > neutral change
+			check_variable = { casteFluidityVar = $min_value2$ }
+			NOT = { check_variable = { casteFluidityVar = $max_value2$ } }
+		}
+		on_[[pre]pre_]neutral_caste_fluidity = yes
+	}
+}
+
 caste_fluidity_increase_minute = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_increase_minute_tt
+		check_fluidity_increase = { #For effects that need to happen before fluidity changes
+			min_value1 = 30 max_value1 = 32
+			min_value2 = 63 max_value2 = 65
+			pre = yes
+		}
 		hidden_effect = {
 			change_variable = { which = casteFluidityVar value = 3 }
 			if = { limit = { check_variable = { casteFluidityVar = 100 } }
 				set_variable = { which = casteFluidityVar value = 100 }
+			}
+			check_fluidity_increase = { #For effects that happen after fluidity changes
+				min_value1 = 33 max_value1 = 35
+				min_value2 = 66 max_value2 = 68
 			}
 		}
 	}
@@ -381,10 +491,19 @@ caste_fluidity_increase_minute = {
 caste_fluidity_increase_small = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_increase_small_tt
+		check_fluidity_increase = { #For effects that need to happen before fluidity changes
+			min_value1 = 28 max_value1 = 32
+			min_value2 = 61 max_value2 = 65
+			pre = yes
+		}
 		hidden_effect = {
 			change_variable = { which = casteFluidityVar value = 5 }
 			if = { limit = { check_variable = { casteFluidityVar = 100 } }
 				set_variable = { which = casteFluidityVar value = 100 }
+			}
+			check_fluidity_increase = { #For effects that happen after fluidity changes
+				min_value1 = 33 max_value1 = 37
+				min_value2 = 66 max_value2 = 70
 			}
 		}
 	}
@@ -397,10 +516,19 @@ caste_fluidity_increase_small = {
 caste_fluidity_increase_medium = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_increase_medium_tt
+		check_fluidity_increase = { #For effects that need to happen before fluidity changes
+			min_value1 = 23 max_value1 = 32
+			min_value2 = 56 max_value2 = 65
+			pre = yes
+		}
 		hidden_effect = {
 			change_variable = { which = casteFluidityVar value = 10 }
 			if = { limit = { check_variable = { casteFluidityVar = 100 } }
 				set_variable = { which = casteFluidityVar value = 100 }
+			}
+			check_fluidity_increase = { #For effects that happen after fluidity changes
+				min_value1 = 33 max_value1 = 42
+				min_value2 = 66 max_value2 = 75
 			}
 		}
 	}
@@ -413,10 +541,19 @@ caste_fluidity_increase_medium = {
 caste_fluidity_increase_large = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_increase_large_tt
+		check_fluidity_increase = { #For effects that need to happen before fluidity changes
+			min_value1 = 18 max_value1 = 32
+			min_value2 = 51 max_value2 = 65
+			pre = yes
+		}
 		hidden_effect = {
 			change_variable = { which = casteFluidityVar value = 15 }
 			if = { limit = { check_variable = { casteFluidityVar = 100 } }
 				set_variable = { which = casteFluidityVar value = 100 }
+			}
+			check_fluidity_increase = { #For effects that happen after fluidity changes
+				min_value1 = 33 max_value1 = 47
+				min_value2 = 66 max_value2 = 80
 			}
 		}
 	}
@@ -429,10 +566,19 @@ caste_fluidity_increase_large = {
 caste_fluidity_increase_huge = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_increase_huge_tt
+		check_fluidity_increase = { #For effects that need to happen before fluidity changes
+			min_value1 = 13 max_value1 = 32
+			min_value2 = 46 max_value2 = 65
+			pre = yes
+		}
 		hidden_effect = {
 			change_variable = { which = casteFluidityVar value = 20 }
 			if = { limit = { check_variable = { casteFluidityVar = 100 } }
 				set_variable = { which = casteFluidityVar value = 100 }
+			}
+			check_fluidity_increase = { #For effects that happen after fluidity changes
+				min_value1 = 33 max_value1 = 52
+				min_value2 = 66 max_value2 = 85
 			}
 		}
 	}
@@ -445,10 +591,19 @@ caste_fluidity_increase_huge = {
 caste_fluidity_increase_gargantuan = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_increase_gargantuan_tt
+		check_fluidity_increase = { #For effects that need to happen before fluidity changes
+			min_value1 = 8 max_value1 = 32
+			min_value2 = 41 max_value2 = 65
+			pre = yes
+		}
 		hidden_effect = {
 			change_variable = { which = casteFluidityVar value = 25 }
 			if = { limit = { check_variable = { casteFluidityVar = 100 } }
 				set_variable = { which = casteFluidityVar value = 100 }
+			}
+			check_fluidity_increase = { #For effects that happen after fluidity changes
+				min_value1 = 33 max_value1 = 57
+				min_value2 = 66 max_value2 = 90
 			}
 		}
 	}
@@ -461,10 +616,19 @@ caste_fluidity_increase_gargantuan = {
 caste_fluidity_decrease_minute = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_decrease_minute_tt
+		check_fluidity_decrease = { #For effects that need to happen before fluidity changes
+			min_value1 = 33 max_value1 = 35
+			min_value2 = 66 max_value2 = 68
+			pre = yes
+		}
 		hidden_effect = {
 			subtract_variable = { which = casteFluidityVar value = 3 }
 			if = { limit = { NOT = { check_variable = { casteFluidityVar = 0 } } }
 				set_variable = { which = casteFluidityVar value = 0 }
+			}
+			check_fluidity_decrease = { #For effects that happen after fluidity changes
+				min_value1 = 30 max_value1 = 32
+				min_value2 = 63 max_value2 = 65
 			}
 		}
 	}
@@ -477,10 +641,19 @@ caste_fluidity_decrease_minute = {
 caste_fluidity_decrease_small = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_decrease_small_tt
+		check_fluidity_decrease = { #For effects that need to happen before fluidity changes
+			min_value1 = 33 max_value1 = 37
+			min_value2 = 66 max_value2 = 70
+			pre = yes
+		}
 		hidden_effect = {
 			subtract_variable = { which = casteFluidityVar value = 5 }
 			if = { limit = { NOT = { check_variable = { casteFluidityVar = 0 } } }
 				set_variable = { which = casteFluidityVar value = 0 }
+			}
+			check_fluidity_decrease = { #For effects that happen after fluidity changes
+				min_value1 = 28 max_value1 = 32
+				min_value2 = 61 max_value2 = 65
 			}
 		}
 	}
@@ -493,10 +666,19 @@ caste_fluidity_decrease_small = {
 caste_fluidity_decrease_medium = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_decrease_medium_tt
+		check_fluidity_decrease = { #For effects that need to happen before fluidity changes
+			min_value1 = 33 max_value1 = 42
+			min_value2 = 66 max_value2 = 75
+			pre = yes
+		}
 		hidden_effect = {
 			subtract_variable = { which = casteFluidityVar value = 10 }
 			if = { limit = { NOT = { check_variable = { casteFluidityVar = 0 } } }
 				set_variable = { which = casteFluidityVar value = 0 }
+			}
+			check_fluidity_decrease = { #For effects that happen after fluidity changes
+				min_value1 = 23 max_value1 = 32
+				min_value2 = 56 max_value2 = 65
 			}
 		}
 	}
@@ -509,10 +691,19 @@ caste_fluidity_decrease_medium = {
 caste_fluidity_decrease_large = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_decrease_large_tt
+		check_fluidity_decrease = { #For effects that need to happen before fluidity changes
+			min_value1 = 33 max_value1 = 47
+			min_value2 = 66 max_value2 = 80
+			pre = yes
+		}
 		hidden_effect = {
 			subtract_variable = { which = casteFluidityVar value = 15 }
 			if = { limit = { NOT = { check_variable = { casteFluidityVar = 0 } } }
 				set_variable = { which = casteFluidityVar value = 0 }
+			}
+			check_fluidity_decrease = { #For effects that happen after fluidity changes
+				min_value1 = 18 max_value1 = 32
+				min_value2 = 51 max_value2 = 65
 			}
 		}
 	}
@@ -525,10 +716,19 @@ caste_fluidity_decrease_large = {
 caste_fluidity_decrease_huge = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_decrease_huge_tt
+		check_fluidity_decrease = { #For effects that need to happen before fluidity changes
+			min_value1 = 33 max_value1 = 52
+			min_value2 = 66 max_value2 = 85
+			pre = yes
+		}
 		hidden_effect = {
 			subtract_variable = { which = casteFluidityVar value = 20 }
 			if = { limit = { NOT = { check_variable = { casteFluidityVar = 0 } } }
 				set_variable = { which = casteFluidityVar value = 0 }
+			}
+			check_fluidity_decrease = { #For effects that happen after fluidity changes
+				min_value1 = 13 max_value1 = 32
+				min_value2 = 46 max_value2 = 65
 			}
 		}
 	}
@@ -541,16 +741,94 @@ caste_fluidity_decrease_huge = {
 caste_fluidity_decrease_gargantuan = {
 	if = { limit = { NOT = { has_country_flag = has_caste_estates_reformed } } 
 		custom_tooltip = caste_fluidity_decrease_gargantuan_tt
+		check_fluidity_decrease = { #For effects that need to happen before fluidity changes
+			min_value1 = 33 max_value1 = 57
+			min_value2 = 66 max_value2 = 90
+			pre = yes
+		}
 		hidden_effect = {
 			subtract_variable = { which = casteFluidityVar value = 25 }
 			if = { limit = { NOT = { check_variable = { casteFluidityVar = 0 } } }
 				set_variable = { which = casteFluidityVar value = 0 }
+			}
+			check_fluidity_decrease = { #For effects that happen after fluidity changes
+				min_value1 = 8 max_value1 = 32
+				min_value2 = 41 max_value2 = 65
 			}
 		}
 	}
 	else = {
 		# no effect
 		custom_tooltip = caste_fluidity_neutral_reformed_tt
+	}
+}
+
+ #Effects for removing fluidity-dependent privileges when changing caste fluidity level
+remove_fluid_caste_privileges = {
+	remove_estate_privilege = estate_lowercastes_promote_schooling
+	remove_estate_privilege = estate_lowercastes_freedom_of_religion
+	remove_estate_privilege = estate_lowercastes_expand_recruitment
+	remove_estate_privilege = estate_lowercastes_right_to_bear_arms
+
+	remove_estate_privilege = estate_middlecastes_sell_promotions
+
+	remove_estate_privilege = estate_uppercastes_articles_of_war
+	remove_estate_privilege = estate_uppercastes_intercaste_marriages
+	remove_estate_privilege = estate_uppercastes_freedom_of_profession
+}
+
+remove_neutral_caste_privileges = {
+	remove_estate_privilege = estate_lowercastes_supporting_philosophers
+	remove_estate_privilege = estate_lowercastes_weapon_regulations
+}
+
+remove_rigid_caste_privileges = {
+	remove_estate_privilege = estate_lowercastes_prohibited_education
+
+	remove_estate_privilege = estate_uppercastes_admiralty
+	if = {
+		limit = { NOT = { mission_completed = R36_a_true_guardian_of_the_river } }
+		remove_estate_privilege = estate_uppercastes_military_achievements
+	}
+}
+
+remove_fluid_or_neutral_caste_privileges = {
+	remove_estate_privilege = estate_lowercastes_mediators
+	remove_estate_privilege = estate_lowercastes_weapon_ban
+
+	remove_estate_privilege = estate_middlecastes_admirals
+	remove_estate_privilege = estate_middlecastes_enforced_interfaith_dialogue
+	remove_estate_privilege = estate_middlecastes_control_over_monetary_policy
+}
+
+remove_neutral_or_rigid_caste_privileges = {
+	remove_estate_privilege = estate_lowercastes_maintained_infrastructure
+	remove_estate_privilege = estate_lowercastes_resticted_imports
+
+	remove_estate_privilege = estate_middlecastes_excluse_trade_rights
+
+	remove_estate_privilege = estate_uppercastes_nobility_primacy
+	remove_estate_privilege = estate_uppercastes_advisors
+	remove_estate_privilege = estate_uppercastes_officer_corp
+}
+
+remove_fluid_or_rigid_caste_privileges = {
+	remove_estate_privilege = estate_middlecastes_land_of_commerce
+}
+
+estate_fluidity_privilege_tt = { #Shows a tooltip for each fluidity privileges saying its effects if they aren't being shown
+	if = {
+		limit = {
+			NOT = { #For privileges that allow multiple fluidity levels
+				[[fluid] caste_fluidity_is_fluid = yes ]
+				[[neutral] caste_fluidity_is_neutral = yes ]
+				[[rigid] caste_fluidity_is_rigid = yes ]
+			}
+		}
+		custom_tooltip = $privilege$_fluidity_tt
+	}
+	else = {
+		custom_tooltip = [[fluid]fluid_][[neutral]neutral_][[rigid]rigid_]privilege_active_tt
 	}
 }
 
@@ -1807,12 +2085,10 @@ command_generate_move_target_canditates = {
 					}
 				}
 				NOT = { is_core = R62 }
+				NOT = { has_province_flag = command_move_target_flag }
 			}
-			area = {
-				limit = { owned_by = R62 }
-				save_event_target_as = command_move_target_candidate_1
-				set_province_flag = command_move_target_candidate_1
-			}
+			save_event_target_as = command_move_target_candidate_$index$
+			set_province_flag = command_move_target_flag
 		}
 	}
 	else_if = {
@@ -1837,6 +2113,7 @@ command_generate_move_target_canditates = {
 					}
 				}
 				NOT = { is_core = ROOT }
+				NOT = { has_province_flag = command_move_target_flag }
 			}
 		}
 		random_owned_area = {
@@ -1860,9 +2137,10 @@ command_generate_move_target_canditates = {
 					}
 				}
 				NOT = { is_core = ROOT }
+				NOT = { has_province_flag = command_move_target_flag }
 			}
-			save_event_target_as = command_move_target_candidate_1
-			set_province_flag = command_move_target_candidate_1
+			save_event_target_as = command_move_target_candidate_$index$
+			set_province_flag = command_move_target_flag
 		}
 	}
 	else = {
@@ -1886,182 +2164,10 @@ command_generate_move_target_canditates = {
 						}
 					}
 				}
+				NOT = { has_province_flag = command_move_target_flag }
 			}
-			save_event_target_as = command_move_target_candidate_1
-			set_province_flag = command_move_target_candidate_1
-		}
-	}
-	if = {
-		limit = {
-			any_owned_province = {
-				continent = asia
-				area_for_scope_province = {
-					type = all
-					owned_by = ROOT
-					is_capital = no
-				}
-				area_for_scope_province = {
-					NOT = { culture_group = hobgoblin }
-				}
-				NOT = {
-					has_province_flag = command_move_target_candidate_1
-				}
-				any_neighbor_province = {
-					owner = {
-						NOT = {
-							tag = R62
-							is_subject_of = R62
-							alliance_with = R62
-						}
-					}
-				}
-				NOT = { is_core = ROOT }
-			}
-		}
-		random_owned_area = {
-			limit = {
-				continent = asia
-				area_for_scope_province = {
-					type = all
-					owned_by = ROOT
-					is_capital = no
-				}
-				area_for_scope_province = {
-					NOT = { culture_group = hobgoblin }
-				}
-				NOT = {
-					has_province_flag = command_move_target_candidate_1
-				}
-				any_neighbor_province = {
-					owner = {
-						NOT = {
-							tag = R62
-							is_subject_of = R62
-							alliance_with = R62
-						}
-					}
-				}
-				NOT = { is_core = ROOT }
-			}
-			save_event_target_as = command_move_target_candidate_2
-			set_province_flag = command_move_target_candidate_2
-		}
-	}
-	else = {
-		random_owned_area = {
-			limit = {
-				continent = asia
-				area_for_scope_province = {
-					type = all
-					owned_by = ROOT
-					is_capital = no
-				}
-				area_for_scope_province = {
-					NOT = { culture_group = hobgoblin }
-				}
-				NOT = {
-					has_province_flag = command_move_target_candidate_1
-				}
-				any_neighbor_province = {
-					owner = {
-						NOT = {
-							tag = R62
-							is_subject_of = R62
-							alliance_with = R62
-						}
-					}
-				}
-			}
-			save_event_target_as = command_move_target_candidate_2
-			set_province_flag = command_move_target_candidate_2
-		}
-	}
-	if = {
-		limit = {
-			any_owned_province = {
-				continent = asia
-				area_for_scope_province = {
-					type = all
-					owned_by = ROOT
-					is_capital = no
-				}
-				area_for_scope_province = {
-					NOT = { culture_group = hobgoblin }
-				}
-				NOT = {
-					has_province_flag = command_move_target_candidate_1
-					has_province_flag = command_move_target_candidate_2
-				}
-				any_neighbor_province = {
-					owner = {
-						NOT = {
-							tag = R62
-							is_subject_of = R62
-							alliance_with = R62
-						}
-					}
-				}
-				NOT = { is_core = ROOT }
-			}
-		}
-		random_owned_area = {
-			limit = {
-				continent = asia
-				area_for_scope_province = {
-					type = all
-					owned_by = ROOT
-					is_capital = no
-				}
-				area_for_scope_province = {
-					NOT = { culture_group = hobgoblin }
-				}
-				NOT = {
-					has_province_flag = command_move_target_candidate_1
-					has_province_flag = command_move_target_candidate_2
-				}
-				any_neighbor_province = {
-					owner = {
-						NOT = {
-							tag = R62
-							is_subject_of = R62
-							alliance_with = R62
-						}
-					}
-				}
-				NOT = { is_core = ROOT }
-			}
-			save_event_target_as = command_move_target_candidate_3
-			set_province_flag = command_move_target_candidate_3
-		}
-	}
-	else = {
-		random_owned_area = {
-			limit = {
-				continent = asia
-				area_for_scope_province = {
-					type = all
-					owned_by = ROOT
-					is_capital = no
-				}
-				area_for_scope_province = {
-					NOT = { culture_group = hobgoblin }
-				}
-				NOT = {
-					has_province_flag = command_move_target_candidate_1
-					has_province_flag = command_move_target_candidate_2
-				}
-				any_neighbor_province = {
-					owner = {
-						NOT = {
-							tag = R62
-							is_subject_of = R62
-							alliance_with = R62
-						}
-					}
-				}
-			}
-			save_event_target_as = command_move_target_candidate_3
-			set_province_flag = command_move_target_candidate_3
+			save_event_target_as = command_move_target_candidate_$index$
+			set_province_flag = command_move_target_flag
 		}
 	}
 }
@@ -2110,6 +2216,21 @@ command_move_orc_slave_state = { #tag = R63 OR R64   target = command_move_targe
 	event_target:$target$ = {
 		area = {
 			limit = { owned_by = R62 }
+			if = { #Command is using "grant subject core/claim" interaction
+				limit = { is_permanent_claim = R62 }
+				remove_claim = R62
+				add_permanent_claim = $tag$
+			}
+			if = {
+				limit = { is_claim = R62 }
+				remove_claim = R62
+				add_claim = $tag$
+			}
+			if = {
+				limit = { is_territorial_core = R62 }
+				remove_core = R62
+				add_territorial_core = $tag$
+			}
 			cede_province = $tag$
 			if = {
 				limit = { is_core = R62 }
@@ -2121,9 +2242,7 @@ command_move_orc_slave_state = { #tag = R63 OR R64   target = command_move_targe
 	hidden_effect = {
 		$tag$ = {
 			every_owned_province = {
-				limit = {
-					NOT = { has_province_flag = $target$ }
-				}
+				limit = { NOT = { has_province_flag = command_move_target_flag } }
 				if = {
 					limit = { has_province_flag = command_converted_province_flag }
 					add_base_manpower = -2
@@ -2164,6 +2283,11 @@ command_move_orc_slave_state = { #tag = R63 OR R64   target = command_move_targe
 					}
 					clr_province_flag = command_converted_province_flag
 				}
+				if = {
+					limit = { is_territorial_core = $tag$ }
+					remove_core = $tag$
+					add_territorial_core = R62
+				}
 				cede_province = R62
 				if = {
 					limit = { is_core = $tag$ }
@@ -2192,11 +2316,7 @@ command_move_orc_slave_state = { #tag = R63 OR R64   target = command_move_targe
 				
 				set_province_flag = command_converted_province_flag
 			}
-			every_owned_province = {
-				clr_province_flag = command_move_target_candidate_1
-				clr_province_flag = command_move_target_candidate_2
-				clr_province_flag = command_move_target_candidate_3
-			}
+			every_owned_province = { clr_province_flag = command_move_target_flag }
 			
 			change_variable = {
 				which = number_of_times_moved
@@ -3091,7 +3211,7 @@ temple_area_joins_shaman_revolt = {
 					}
 				}
 				save_event_target_as = command_move_target_candidate_1
-				set_province_flag = command_move_target_candidate_1
+				set_province_flag = command_move_target_flag
 			}
 		}
 		command_move_orc_slave_state = {
@@ -3112,7 +3232,7 @@ temple_area_joins_shaman_revolt = {
 					}
 				}
 				save_event_target_as = command_move_target_candidate_1
-				set_province_flag = command_move_target_candidate_1
+				set_province_flag = command_move_target_flag
 			}
 		}
 		command_move_orc_slave_state = {
@@ -3365,7 +3485,7 @@ rahen_raj_calc_cohesion = {	# Note: Use only inside Raja country scope!
 				has_saved_global_event_target = raj_vizier_global_target # If no vizier is present, it stays at 0
 				NOT = { has_province_flag = pause_vizier_influence_calc } 
 			}
-			export_to_variable = 	{ which = raj_var_vizier_ld value = trigger_value:liberty_desire who = event_target:raj_vizier_global_target}
+			export_to_variable = 	{ which = raj_var_vizier_ld value = trigger_value:liberty_desire who = event_target:raj_vizier_global_target }
 
 			subtract_variable = 	{ which = raj_var_vizier_ld value = 25 } # - Only values above 25% modify cohesion
 			if = { limit = { NOT = { check_variable = { raj_var_vizier_ld = 0 } } } 
@@ -3558,7 +3678,7 @@ rahen_raj_calc_cohesion = {	# Note: Use only inside Raja country scope!
 		set_variable = 		{ which = raj_var_cohesion_impact_ministries which = PREV }
 		change_variable = 	{ which = raj_var_cohesion which = raj_var_cohesion_impact_ministries }
 		round_variable = 	{ which = raj_var_cohesion_impact_ministries value = 0 }
-		
+
 		# Cohesion - Temporary Bonuses & Maluses
 		export_to_variable = { # Permanent modifiers to cohesion belong to 4411, temporary modifiers belong to raja
 			which = raj_var_cohesion_bonus_raja
@@ -3733,8 +3853,11 @@ rahen_raj_mandate_apply_modifier_raja = {
 }
 rahen_raj_mandate_apply_modifier_vizier = {
 	custom_tooltip = $raj_mandate_tooltip$
-	event_target:raj_vizier_global_target = {
-		add_country_modifier = { name = $modifier$ duration = $mod_duration$ }
+	if = {
+		limit = { NOT = { 4411 = { has_province_flag = disabled_vizier_flag } } }
+		event_target:raj_vizier_global_target = {
+			add_country_modifier = { name = $modifier$ duration = $mod_duration$ }
+		}
 	}	
 }
 rahen_raj_mandate_apply_modifier_senapti = {
@@ -4300,6 +4423,12 @@ raj_grant_independence = {
 					NOT = { overlord = { has_disaster = rahen_dissolution_of_the_raj } }
 				}
 				overlord = { country_event = { id = rahenraj.2100 days = 1 } }
+			}
+			if = {
+				limit = {
+					has_country_modifier = raj_pledge_support_mod
+				}
+				remove_country_modifier = raj_pledge_support_mod
 			}
 		}
 		grant_independence = yes

@@ -532,8 +532,14 @@ H14_missions_slot_3 = {
 					add_permanent_claim = ROOT
 				}
 			}
-			country_event = { #An Offer Most Frigid
+			if = {
+				limit = { exists = H16 }
+				country_event = { #An Offer Most Frigid
 				id = flavour_eighard.3
+				}
+			}
+			else = {
+				change_mana = { amount = 50 }
 			}
 		}
 	}
@@ -894,6 +900,7 @@ H14_missions_slot_4 = {
 				num_of_units_in_province = {
 					amount = 5
 					who = ROOT
+					type = infantry
 				}
 				religion = autumn_court
 				OR = {
@@ -910,13 +917,31 @@ H14_missions_slot_4 = {
 				kill_units = {
 					who = ROOT
 					amount = 5
+					type = infantry
 				}
-				create_flagship_with_modifications = {
-					name = "Eigleisd"
-					type = heavy_ship
-					mass_load_cannons = yes
-					hull_sheating = yes
-					standardized_signal_book = yes
+				if = { #Gotta do this otherwise if your subject owns Marathmas it gives it to them 
+					limit = { owned_by = ROOT }
+					create_flagship_with_modifications = {
+						name = "Eigleisd"
+						type = heavy_ship
+						mass_load_cannons = yes
+						hull_sheating = yes
+						standardized_signal_book = yes
+					}
+				}
+				else = {
+					ROOT = {
+						random_owned_province = {
+							limit = { has_port = yes }
+							create_flagship_with_modifications = {
+								name = "Eigleisd"
+								type = heavy_ship
+								mass_load_cannons = yes
+								hull_sheating = yes
+								standardized_signal_book = yes
+							}
+						}
+					}
 				}
 			}
 		}
@@ -1350,9 +1375,35 @@ H14_missions_accepted_1 = {
 						}
 					}
 				}
-				province_id = 1770 #Aerin
-				has_great_project = {
-					type = gathgob_lighthouse
+				AND = {
+					province_id = 1770 #Aerin
+					NOT = {
+						country_or_non_sovereign_subject_holds = ROOT
+						has_dock_building_trigger = yes
+						has_shipyard_building_trigger = yes
+						if = {
+							limit = {
+								ROOT = {
+									has_dlc = "Dharma"
+								}
+							}
+							province_has_center_of_trade_of_level = 2
+						}
+						else = {
+							development = 10
+						}
+					}
+				}
+				AND = {
+					has_great_project = {
+						type = gathgob_lighthouse
+					}
+					NOT = {
+						has_great_project = {
+							type = gathgob_lighthouse
+							tier = 2
+						}
+					}
 				}
 			}
 		}
@@ -1629,6 +1680,7 @@ H14_missions_accepted_2 = {
 		trigger = {
 			eord_peitar_stronghold_group = {
 				type = all
+				NOT = { has_any_ongoing_construction = yes }
 				num_of_units_in_province = {
 					amount = 5
 					who = ROOT
@@ -1642,9 +1694,9 @@ H14_missions_accepted_2 = {
 		}
 		effect = {
 			domandrod_region = {
-				change_native_size = 5
-				change_native_hostileness = 5
-				change_native_ferocity = 5		
+				change_native_size = 50
+				change_native_hostileness = 15
+				change_native_ferocity = 15		
 			}
 			country_event = { #First Engagement
 				id = flavour_eighard.13
@@ -1863,6 +1915,7 @@ H14_missions_accepted_2 = {
 				AND = {
 					region = dalaire_region
 					NOT = {
+						area = stalwart_outpost_area
 						AND = {
 							culture_is_not_ruinborn = yes
 							has_tax_building_trigger = yes
@@ -1910,6 +1963,7 @@ H14_missions_accepted_2 = {
 				dalaire_region = {
 					type = all
 					OR = {
+						area = stalwart_outpost_area
 						culture_is_ruinborn = yes
 						AND = {
 							culture_is_not_ruinborn = yes
@@ -2081,11 +2135,23 @@ H14_missions_accepted_3 = {
 				}
 			}
 			army_size = 40
-			OR = {
-				army_professionalism = 0.2
-				AND = {
-					army_professionalism = 0.1
-					mil_power = 100
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				OR = {
+					army_professionalism = 0.2
+					AND = {
+						army_professionalism = 0.1
+						mil_power = 100
+					}
+				}
+			}
+			else = {
+				OR = {
+					army_tradition = 60
+					AND = {
+						army_tradition = 50
+						mil_power = 100
+					}
 				}
 			}
 			eord_peitar_stronghold_group = {
@@ -2095,12 +2161,17 @@ H14_missions_accepted_3 = {
 		}
 		effect = {
 			if = {
-				limit = {
-					NOT = {
-						army_professionalism = 0.2
-					}
+				limit = { has_dlc = "Cradle of Civilization" }
+				if = {
+					limit = { NOT = { army_professionalism = 0.2 } }
+					add_mil_power = -100
 				}
-				add_mil_power = -100
+			}
+			else = {
+				if = {
+					limit = { NOT = { army_tradition = 60 } }
+					add_mil_power = -100
+				}
 			}
 			country_event = { #Iaochri
 				id = flavour_eighard.15
@@ -2259,6 +2330,7 @@ H14_missions_accepted_3 = {
 						OR = {
 							has_any_winter_trigger = yes
 							province_id = 1142 #Stanyrhrada
+							province_id = 2810 #Horpanas - In the Arverynn state but not winter, so you need it later for warmth rites							
 						}
 					}
 					add_permanent_claim = ROOT
@@ -2286,6 +2358,9 @@ H14_missions_accepted_3 = {
 				province_id = 1191 #Svemel
 				province_id = 1139 #Arverynn
 				province_id = 1171 #Vareynn
+			}
+			NOT = {
+				H14_breathing_in_trigger = yes
 			}
 		}
 		position = 14
@@ -2562,7 +2637,7 @@ H14_missions_accepted_4 = {
 			1969 = { #Darblath
 				add_base_production = 4
 				add_or_upgrade_trade_building = yes
-				add_permanent_province_modifier = { #+10% Prod Efficieny, +2 Local Goods Produced
+				add_permanent_province_modifier = { #+10% Prod Efficiency, +2 Local Goods Produced
 					name = H14_dye_monopoly
 					duration = -1
 				}
@@ -2582,6 +2657,7 @@ H14_missions_accepted_4 = {
 					superregion = eordand_superregion
 					NOT = {
 						is_empty = yes
+						is_island = yes
 						country_or_non_sovereign_subject_holds = ROOT
 					}
 				}
@@ -2619,6 +2695,7 @@ H14_missions_accepted_4 = {
 				type = all
 				OR = {
 					is_empty = yes
+					is_island = yes
 					country_or_non_sovereign_subject_holds = ROOT
 				}
 				OR = {
@@ -3062,7 +3139,20 @@ H14_missions_accepted_5 = {
 						country_or_non_sovereign_subject_holds = ROOT
 					}
 				}
-				province_id = 2007 #Arakeprun
+				AND = {
+					province_id = 2007 #Arakeprun
+					NOT = { 
+						AND = {
+							religion = autumn_court
+							num_of_units_in_province = {
+								amount = 5
+								who = ROOT
+							}
+							has_tax_building_trigger = yes
+							has_fort_building_trigger = yes
+						}
+					}
+				}
 			}
 		}
 		trigger = {
@@ -3287,10 +3377,6 @@ H14_final_mission = {
 		}
 		trigger = {
 			at_least_magic_project_level = { project = eighard_project_1 level = 3 }
-			custom_trigger_tooltip = {
-				tooltip = H14_ended_deepwoods_war_tt
-				has_country_flag = H14_ended_deepwoods_war
-			}
 			NOT = {
 				num_of_rebel_armies = 1
 			}
@@ -3298,24 +3384,48 @@ H14_final_mission = {
 				is_at_war = yes
 			}
 			at_least_magic_project_level = { project = magical_fortress level = 3 }
-			all_states = {
-				OR = {
-					AND = {
-						has_state_edict = warmth_rites_edict
-						is_prosperous = yes
-					}
-					AND = {
+			calc_true_if = {
+				amount = 12
+				all_states = {
+					has_state_edict = warmth_rites_edict
+				}
+			}
+			OR = {
+				all_states = {
+					OR = {
+						AND = {
+							has_state_edict = warmth_rites_edict
+							is_prosperous = yes
+						}
 						NOT = {
 							has_state_edict = warmth_rites_edict
 						}
-						ROOT = {
-							has_mana = { amount = 25 }
-						}
 					}
+				}
+				ROOT = {
+					has_mana = { amount = 200 }
 				}
 			}
 		}
 		effect = {
+			if = {
+				limit = { 
+					NOT = {
+						all_states = {
+							OR = {
+								AND = {
+									has_state_edict = warmth_rites_edict
+									is_prosperous = yes
+								}
+								NOT = {
+									has_state_edict = warmth_rites_edict
+								}
+							}
+						}
+					}
+				}
+				change_mana = { amount = -200 }
+			}
 			country_event = { #Somni
 				id = flavour_eighard.22
 			}

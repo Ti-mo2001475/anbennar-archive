@@ -2303,8 +2303,14 @@ country_event = { # Crovis Arrives
 					set_country_flag = crovis_responded_Z26
 				}
 			}
-			event_target:frozenmaw_second_rebel = {
-				remove_country_modifier = frozenmaw_rebel_sidekick
+			if = {
+				limit = {
+					has_saved_event_target = frozenmaw_second_rebel
+					exists = event_target:frozenmaw_second_rebel
+				}
+				event_target:frozenmaw_second_rebel = {
+					remove_country_modifier = frozenmaw_rebel_sidekick
+				}
 			}
 			every_known_country = {
 				limit = { 
@@ -2787,12 +2793,22 @@ country_event = { # Restoration of the Vrorenmarch
 	option = {
 		name = flavor_frozenmaw.55.a
 		change_tag = Z45
-		swap_non_generic_missions = yes
+		# add this back when Z45 Vrorenmarch gets missions
+		# swap_non_generic_missions = yes
+		hidden_effect = {
+			set_country_flag = formed_end_game_tag_flag
+		}
 		increase_government_rank_scripted_effect = { rank = 2 }
 		every_subject_country = {
 			country_event = {
 				id = flavor_frozenmaw.59
 			}
+		}
+		if = {
+			limit = {
+				has_custom_ideas = no
+			}
+			country_event = { id = ideagroups.1 } #Swap Ideas
 		}
 	}
 }
@@ -2831,11 +2847,14 @@ country_event = { # Crovis Falls
 		name = flavor_frozenmaw.56.b 
 		if = {
 			limit = { has_country_flag = crovis_rebel_Z23 }
-			create_vassal_with_religion_and_culture = { tag = Z23 religion = regent_court culture = white_reachman } 
+			create_vassal_with_religion_and_culture = { tag = Z23 religion = regent_court culture = white_reachman }
 			Z23 = {
 				add_country_modifier = {
 					name = crovis_cowed
 					duration = -1
+				}
+				every_owned_province = {
+					remove_province_modifier = frozenmaw_sore_loser
 				}
 				define_ruler = {
 					culture = half_orc
@@ -2850,11 +2869,14 @@ country_event = { # Crovis Falls
 		}
 		if = { 
 			limit = { has_country_flag = crovis_rebel_Z27 }
-			create_vassal_with_religion_and_culture = { tag = Z27 religion = regent_court culture = white_reachman } 
+			create_vassal_with_religion_and_culture = { tag = Z27 religion = regent_court culture = white_reachman }
 			Z27 = {
 				add_country_modifier = {
 					name = crovis_cowed
 					duration = -1
+				}
+				every_owned_province = {
+					remove_province_modifier = frozenmaw_sore_loser
 				}
 				change_government_to_monarchy = yes
 				define_ruler = {
@@ -2876,6 +2898,9 @@ country_event = { # Crovis Falls
 					name = crovis_cowed
 					duration = -1
 				}
+				every_owned_province = {
+					remove_province_modifier = frozenmaw_sore_loser
+				}
 				define_ruler = {
 					culture = half_orc
 					religion = regent_court
@@ -2890,11 +2915,14 @@ country_event = { # Crovis Falls
 		}
 		if = { 
 			limit = { has_country_flag = crovis_rebel_Z49 }
-			create_vassal_with_religion_and_culture = { tag = Z49 religion = regent_court culture = white_reachman } 
+			create_vassal_with_religion_and_culture = { tag = Z49 religion = regent_court culture = white_reachman }
 			Z49 = {
 				add_country_modifier = {
 					name = crovis_cowed
 					duration = -1
+				}
+				every_owned_province = {
+					remove_province_modifier = frozenmaw_sore_loser
 				}
 				define_ruler = {
 					culture = half_orc
