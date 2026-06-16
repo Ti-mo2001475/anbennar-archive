@@ -13798,6 +13798,32 @@ shirgrii_province_update_scripted_effect = {
 	}
 }
 
+anb_change_trade_goods_readd_manufactory = {
+	if = {
+		limit = {
+			has_production_manufactory_or_gold_trigger = yes
+		}
+		change_trade_goods = $tradegoods$
+		add_manufactory = yes
+	}
+	else = {
+		change_trade_goods = $tradegoods$
+	}
+}
+
+anb_change_trade_goods_readd_manufactory_province_id = {
+	if = {
+		limit = { $province_id$ = { has_production_manufactory_or_gold_trigger = yes } }
+		$province_id$ = {
+			change_trade_goods = $tradegoods$
+			add_manufactory = yes
+		}
+	}
+	else = {
+		$province_id$ = { change_trade_goods = $tradegoods$ }
+	}
+}
+
 L22_court_of_fangaula_helped_locals_effect = {
 	custom_tooltip = L22_court_of_fangaula_helped_TT
 	hidden_effect = {
