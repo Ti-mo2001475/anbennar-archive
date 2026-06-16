@@ -3764,6 +3764,39 @@ on_battle_won_country = {
 			set_country_flag = L76_rip_and_tear_mana_refund
 		}
 	}
+
+	#Beikling Mask Enchantment
+	if = {
+		limit = {
+			has_country_flag = mask_enchanment_effect_flag
+			NOT = { FROM = { tag = REB } }
+		}
+		if = {
+			limit = {
+				tag = V23
+			}
+			add_army_tradition = 5
+			every_war_enemy_country = {
+				limit = {
+					OR = {
+						is_in_war = {
+							attacker_leader = FROM
+						}
+						is_in_war = {
+							defender_leader = FROM
+						}
+					}
+				}
+				country_event = { id = flavor_beiklings.501 }
+			}
+		}
+		else = {
+			FROM = {
+				country_event = { id = flavor_beiklings.501 }
+			}
+		}
+		clr_country_flag = mask_enchanment_effect_flag
+	}
 	
 	dragon_turtles_casualty_friendship_effect = yes
 }
