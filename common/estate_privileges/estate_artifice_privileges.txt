@@ -17279,6 +17279,13 @@ artifice_invention_industrial_automatories = {
 
 	on_granted = {
 		custom_tooltip = artifice_invention_industrial_automatories.tt
+		if = {
+			limit = { NOT = { has_country_flag = mechanim_automatory_building_allowed } }
+			custom_tooltip = gain_access_to_automatory
+			hidden_effect = {
+				set_country_flag = mechanim_automatory_building_allowed
+			}
+		}
 		hidden_effect = {
 			artifice_inventions_currently_used_increase = yes
 			set_variable = {
@@ -19460,7 +19467,7 @@ artifice_invention_head_adm_oversight = {
 	
 	benefits = {
 		artificers_privilege_slots = 1
-		governing_capacity = 0.15
+		governing_capacity_modifier = 0.15
 	}
 
 	ai_will_do = {

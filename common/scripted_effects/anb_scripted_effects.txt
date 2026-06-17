@@ -2464,6 +2464,8 @@ finish_demonsterization_effect = {
 		clr_country_flag = removing_monstrous
 		clr_country_flag = semi_monstrous
 		clear_monstrous_opinion_effect = yes
+		# So we know to set the decaying modifiers, we use this temporary flag here
+		set_country_flag = just_demonsterised
 		country_event = { id = monstrous.1 } #opinion setup
 		country_event = { id = estate_organization.4 days = 35 } # Adventurers setup
 		every_subject_country = {
@@ -2473,6 +2475,8 @@ finish_demonsterization_effect = {
 			clr_country_flag = semi_monstrous
 			remove_country_modifier = monstrous_nation
 			clear_monstrous_opinion_effect = yes
+			# So we know to set the decaying modifiers, we use this temporary flag here
+			set_country_flag = just_demonsterised
 			country_event = { id = monstrous.1 } #opinion setup
 			country_event = { id = estate_organization.4 days = 35 } # Adventurers setup
 		}
@@ -5197,6 +5201,22 @@ anb_on_development_effect = {
 		random = {
 			chance = 5
 			add_base_$development$ = 1
+		}
+	}
+
+	if = {
+		limit = {
+			province_id = 4848
+			owner = { religion = devouring_path }
+			NOT = { has_province_flag = shirgrii_khelorvalshi_repaired }
+			development = 12
+			has_tax_building_trigger = yes
+		}
+		set_province_flag = shirgrii_khelorvalshi_repaired
+		remove_province_modifier = shirgrii_ruined_khelorvalshi
+		add_province_modifier = {
+			name = shirgrii_khelorvalshi
+			duration = -1
 		}
 	}
 }
@@ -12056,7 +12076,10 @@ add_production_manufactory_building = {
 
 kobildzan_form_nation_effect = {
 	change_tag = Z38
-	hidden_effect = { restore_country_name = yes }
+	hidden_effect = {
+		restore_country_name = yes
+		set_country_flag = formed_end_game_tag_flag
+	}
 	swap_non_generic_missions = yes
 	custom_tooltip = tooltip_missions_extended
 	189 = {
@@ -12331,12 +12354,12 @@ form_adenica_scripted_effect = {
 }
 
 destroy_shirgrii_effect = {
-	remove_province_modifier = azjakuma_shirgrii_shinukhorchi
-	remove_province_modifier = azjakuma_shirgrii_chumijemoya
-	remove_province_modifier = azjakuma_shirgrii_ajgriijarul
-	remove_province_modifier = azjakuma_shirgrii_kabiurgarko
-	remove_province_modifier = azjakuma_shirgrii_ruined_khelorvalshi
-	remove_province_modifier = azjakuma_shirgrii_khelorvalshi
+	remove_province_modifier = shirgrii_shinukhorchi
+	remove_province_modifier = shirgrii_chumijemoya
+	remove_province_modifier = shirgrii_ajgriijarul
+	remove_province_modifier = shirgrii_kabiurgarko
+	remove_province_modifier = shirgrii_ruined_khelorvalshi
+	remove_province_modifier = shirgrii_khelorvalshi
 }
 
 clear_conq_personalities = {
@@ -13553,5 +13576,250 @@ add_years_of_separatism_in_owned_provinces = { #Goes from 1-10, accepts - values
 		every_owned_province = {
 			add_nationalism = $years$
 		}
+	}
+}
+
+ban_orcish_slavery_scripted_effect = {
+	remove_country_modifier = orcish_slaves_in_colonies
+	every_subject_country = {
+		limit = { is_colonial_nation = yes }
+		remove_country_modifier = orcish_slaves_in_colonies
+	}
+	custom_tooltip = tooltip_no_orcish_slaves_in_colonies
+	add_country_modifier = {
+		name = orcish_slaves_in_colonies_cooldown
+		duration = 3650
+		hidden = yes
+	}
+}
+
+shirgrii_province_update_scripted_effect = {
+	if = {
+		limit = {
+			province_group = all_starting_shirgrii
+		}
+		if = {
+			limit = {
+				owner = { religion = devouring_path }
+			}
+			trigger_switch = {
+				on_trigger = province_id
+				4831 = {
+					add_province_modifier = {
+						name = shirgrii_chumijemoya
+						duration = -1
+					}
+					if = {
+						limit = {
+							owner = {
+								has_estate_privilege = estate_church_caretaking_of_the_shirgriis
+							}
+						}
+						if = {
+							limit = {
+								has_building = mage_tower
+							}
+							add_province_modifier = {
+								name = shirgrii_maintenance_tower
+								duration = -1
+							}
+						}
+						else = {
+							add_province_modifier = {
+								name = shirgrii_maintenance_no_tower duration = -1
+							}
+						}
+					}
+				}
+				5430 = {
+					add_province_modifier = {
+						name = shirgrii_shinukhorchi
+						duration = -1
+					} 
+					if = {
+						limit = {
+							owner = {
+								has_estate_privilege = estate_church_caretaking_of_the_shirgriis
+							}
+						}
+						if = {
+							limit = {
+								has_building = mage_tower
+							} 
+							add_province_modifier = {
+								name = shirgrii_maintenance_tower
+								duration = -1
+							}
+						}
+						else = {
+							add_province_modifier = {
+								name = shirgrii_maintenance_no_tower duration = -1
+							}
+						}
+					}
+				}
+				4828 = {
+					add_province_modifier = {
+						name = shirgrii_kabiurgarko
+						duration = -1
+					}
+					if = {
+						limit = {
+							owner = {
+								has_estate_privilege = estate_church_caretaking_of_the_shirgriis
+							} 
+						} 
+						if = {
+							limit = {
+								has_building = mage_tower
+							} 
+							add_province_modifier = { 
+								name = shirgrii_maintenance_tower 
+								duration = -1
+							}
+						}
+						else = {
+							add_province_modifier = {
+								name = shirgrii_maintenance_no_tower
+								duration = -1
+							}
+						}
+					}
+				}
+				4829 = {
+					add_province_modifier = {
+						name = shirgrii_ajgriijarul 
+						duration = -1
+					}
+					if = {
+						limit = {
+							owner = {
+								has_estate_privilege = estate_church_caretaking_of_the_shirgriis
+							}
+						} 
+						if = {
+							limit = {
+								has_building = mage_tower
+							} 
+							add_province_modifier = {
+								name = shirgrii_maintenance_tower
+								duration = -1
+							}
+						} 
+						else = {
+							add_province_modifier = {
+								name = shirgrii_maintenance_no_tower
+								duration = -1
+							}
+						}
+					}
+				}
+				4848 = {
+					if = {
+						limit = {
+							OR = {
+								AND = {
+									development = 12
+									has_tax_building_trigger = yes
+								}
+								has_province_flag = shirgrii_khelorvalshi_repaired
+							}
+						} 
+						add_province_modifier = {
+							name = shirgrii_khelorvalshi
+							duration = -1
+						} 
+						if = {
+							limit = {
+								NOT = {
+									has_province_flag = shirgrii_khelorvalshi_repaired
+								} 
+							}
+							set_province_flag = shirgrii_khelorvalshi_repaired
+						}
+					} 
+					else = {
+						add_province_modifier = {
+							name = shirgrii_ruined_khelorvalshi
+							duration = -1
+						}
+					}
+					if = {
+						limit = {
+							owner = {
+								has_estate_privilege = estate_church_caretaking_of_the_shirgriis 
+							}
+						}
+						if = {
+							limit = {
+								has_building = mage_tower
+							}
+							add_province_modifier = {
+								name = shirgrii_maintenance_tower
+								duration = -1
+							}
+						}
+						else = {
+							add_province_modifier = {
+								name = shirgrii_maintenance_no_tower
+								duration = -1
+							}
+						}
+					}
+				}
+			}
+		}
+		else = {
+			trigger_switch = {
+				on_trigger = province_id
+				4831 = { add_province_modifier = { name = shirgrii_chumijemoya_disabled duration = -1 } }
+				5430 = { add_province_modifier = { name = shirgrii_shinukhorchi_disabled duration = -1 } }
+				4828 = { add_province_modifier = { name = shirgrii_kabiurgarko_disabled duration = -1 } }
+				4829 = { add_province_modifier = { name = shirgrii_ajgriijarul_disabled duration = -1 } }
+				4848 = {
+					if = {
+						limit = {
+							has_province_flag = shirgrii_khelorvalshi_repaired
+						}
+						add_province_modifier = {
+							name = shirgrii_khelorvalshi_disabled
+							duration = -1
+						}
+					}
+					else = {
+						add_province_modifier = {
+							name = shirgrii_ruined_khelorvalshi_disabled
+							duration = -1
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+anb_change_trade_goods_readd_manufactory = {
+	if = {
+		limit = {
+			has_production_manufactory_or_gold_trigger = yes
+		}
+		change_trade_goods = $tradegoods$
+		add_manufactory = yes
+	}
+	else = {
+		change_trade_goods = $tradegoods$
+	}
+}
+
+anb_change_trade_goods_readd_manufactory_province_id = {
+	if = {
+		limit = { $province_id$ = { has_production_manufactory_or_gold_trigger = yes } }
+		$province_id$ = {
+			change_trade_goods = $tradegoods$
+			add_manufactory = yes
+		}
+	}
+	else = {
+		$province_id$ = { change_trade_goods = $tradegoods$ }
 	}
 }

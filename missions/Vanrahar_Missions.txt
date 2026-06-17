@@ -11,7 +11,7 @@ vanrahar_1_pre_formation = {
 	generic = yes
 	ai = yes
 	
-	potential = { culture = primal_harimari }
+	potential = { culture = primal_harimari NOT = { tag = Y37 }  }
 
 	vanrahar_1_faith_forefathers = {
 		icon = mission_pray_light
@@ -1562,7 +1562,10 @@ vanrahar_4_post_formation = {
 		}
 		
 		trigger = {
-			army_professionalism = 0.4
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				army_professionalism = 0.4
+			}
 			army_tradition = 65
 			custom_trigger_tooltip = {
 				tooltip = hired_mil_advisor_of_level_3_tt

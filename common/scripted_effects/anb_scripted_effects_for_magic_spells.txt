@@ -1797,7 +1797,12 @@ enchantment_3_dominate_to_surrender_effect = { # Dominate to Surrender
 			custom_tooltip = magic_booster_by_witch_king_tt
 			hidden_effect = {
 				PREV = { save_event_target_as = spell_caster }
-				area = { add_territorial_core = event_target:spell_caster }
+				area = {
+					if = { #apparently this overrides non-territorial cores
+						limit = { NOT = { is_core = event_target:spell_caster } }
+						add_territorial_core = event_target:spell_caster
+					}
+				}
 			}
 		}
 
@@ -2499,7 +2504,7 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 					OR = {
 						NOT = { adm = 5 }
 						AND = {
-							ruler_is_lich = yes
+							ruler_is_immortal = yes
 							NOT = { adm = 6 }
 						}
 					}
@@ -2511,7 +2516,7 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 					OR = {
 						NOT = { dip = 5 }
 						AND = {
-							ruler_is_lich = yes
+							ruler_is_immortal = yes
 							NOT = { dip = 6 }
 						}
 					}
@@ -2523,7 +2528,7 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 					OR = {
 						NOT = { mil = 5 }
 						AND = {
-							ruler_is_lich = yes
+							ruler_is_immortal = yes
 							NOT = { mil = 6 }
 						}
 					}
