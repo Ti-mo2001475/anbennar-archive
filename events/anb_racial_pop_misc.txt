@@ -1173,11 +1173,13 @@ country_event = {
 					add_half_orcish_minority_size_effect = yes
 				}
 			}
-			if = {
+			if = { # PRIORITET 1: HUMAN						
 				limit = {
 					event_target:racial_pop_province_target = {
-						culture_group = orcish
-						has_human_minority_trigger = yes
+						AND = {
+							culture_group = orcish
+							has_human_minority_trigger = yes
+						}
 					}
 				}
 				event_target:racial_pop_province_target = {
@@ -1185,11 +1187,15 @@ country_event = {
 					add_half_orcish_minority_size_effect = yes
 				}
 			}
-			else_if = {
+
+			else_if = { # PRIORITET 2: Ruinborn	
 				limit = {
 					event_target:racial_pop_province_target = {
-						culture_group = orcish
-						has_ruinborn_minority_trigger = yes
+						AND = {
+							culture_group = orcish
+							has_ruinborn_minority_trigger = yes
+							NOT = { has_human_minority_trigger = yes }
+						}
 					}
 				}
 				event_target:racial_pop_province_target = {
@@ -1197,11 +1203,15 @@ country_event = {
 					add_half_orcish_minority_size_effect = yes
 				}
 			}
-			else_if = {
+			else_if = { # PRIORITET 3: Elf
 				limit = {
 					event_target:racial_pop_province_target = {
-						culture_group = orcish
-						has_elven_minority_trigger = yes
+						AND = {
+							culture_group = orcish
+							has_elven_minority_trigger = yes
+							NOT = { has_human_minority_trigger = yes }
+							NOT = { has_ruinborn_minority_trigger = yes }
+						}
 					}
 				}
 				event_target:racial_pop_province_target = {
@@ -1233,23 +1243,29 @@ country_event = {
 					add_half_orcish_minority_size_effect = yes
 				}
 			}
-			if = {
+			if = { # PRIORITET 1: HUMAN			
 				limit = {
 					event_target:racial_pop_province_target = {
-						culture_group = orcish
-						has_human_minority_trigger = yes
+						AND = {
+							culture_group = orcish
+							has_human_minority_trigger = yes
+						}
 					}
 				}
 				event_target:racial_pop_province_target = {
 					remove_human_minority_size_effect = yes
 					add_half_orcish_minority_size_effect = yes
 				}
-			}			
-			else_if = {
+			}
+
+			else_if = { # PRIORITET 2: Ruinborn	
 				limit = {
 					event_target:racial_pop_province_target = {
-						culture_group = orcish
-						has_ruinborn_minority_trigger = yes
+						AND = {
+							culture_group = orcish
+							has_ruinborn_minority_trigger = yes
+							NOT = { has_human_minority_trigger = yes }
+						}
 					}
 				}
 				event_target:racial_pop_province_target = {
@@ -1257,11 +1273,15 @@ country_event = {
 					add_half_orcish_minority_size_effect = yes
 				}
 			}
-			else_if = {
+			else_if = { # PRIORITET 3: Elf	
 				limit = {
 					event_target:racial_pop_province_target = {
-						culture_group = orcish
-						has_elven_minority_trigger = yes
+						AND = {
+							culture_group = orcish
+							has_elven_minority_trigger = yes
+							NOT = { has_human_minority_trigger = yes }
+							NOT = { has_ruinborn_minority_trigger = yes }
+						}
 					}
 				}
 				event_target:racial_pop_province_target = {
@@ -1821,28 +1841,28 @@ country_event = {
 				}
 			}
 			
-			if = {
+			if = { # PRIORITET 1: HUMAN			
 				limit = {
 					event_target:racial_pop_province_target = {
 						AND = {
-							has_human_minority_trigger = yes
 							culture_group = orcish
+							has_human_minority_trigger = yes
 						}
 					}
 				}
 				event_target:racial_pop_province_target = {
 					remove_human_minority_size_effect = yes
 					add_half_orcish_minority_size_effect = yes
-
 				}
 			}
 
-			else_if = {
+			else_if = { # PRIORITET 2: Ruinborn	
 				limit = {
 					event_target:racial_pop_province_target = {
 						AND = {
-							has_ruinborn_minority_trigger = yes
 							culture_group = orcish
+							has_ruinborn_minority_trigger = yes
+							NOT = { has_human_minority_trigger = yes }
 						}
 					}
 				}
@@ -1851,13 +1871,14 @@ country_event = {
 					add_half_orcish_minority_size_effect = yes
 				}
 			}
-
-			else_if = {
+			else_if = { # PRIORITET 3: Elf	
 				limit = {
 					event_target:racial_pop_province_target = {
 						AND = {
-							has_elven_minority_trigger = yes
 							culture_group = orcish
+							has_elven_minority_trigger = yes
+							NOT = { has_human_minority_trigger = yes }
+							NOT = { has_ruinborn_minority_trigger = yes }
 						}
 					}
 				}
@@ -1871,7 +1892,6 @@ country_event = {
 	#Make em
 	option = {		
 		name = racial_pop_misc.2.a
-
 		if = { 
 			trigger = {	NOT = { has_country_flag = hide_half_orc_creation }	}
 			hidden_effect = {
@@ -1897,8 +1917,7 @@ country_event = {
 				}
 			}
 			
-			if = { # PRIORITET 1: HUMAN
-			
+			if = { # PRIORITET 1: HUMAN			
 				limit = {
 					event_target:racial_pop_province_target = {
 						AND = {
@@ -1913,13 +1932,13 @@ country_event = {
 				}
 			}
 
-			else_if = { # PRIORITET 2: Ruinborn
-	
+			else_if = { # PRIORITET 2: Ruinborn	
 				limit = {
 					event_target:racial_pop_province_target = {
 						AND = {
 							culture_group = orcish
 							has_ruinborn_minority_trigger = yes
+							NOT = { has_human_minority_trigger = yes }
 						}
 					}
 				}
@@ -1928,13 +1947,14 @@ country_event = {
 					add_half_orcish_minority_size_effect = yes
 				}
 			}
-			else_if = { # PRIORITET 3: Elf
-	
+			else_if = { # PRIORITET 3: Elf	
 				limit = {
 					event_target:racial_pop_province_target = {
 						AND = {
 							culture_group = orcish
 							has_elven_minority_trigger = yes
+							NOT = { has_human_minority_trigger = yes }
+							NOT = { has_ruinborn_minority_trigger = yes }
 						}
 					}
 				}
