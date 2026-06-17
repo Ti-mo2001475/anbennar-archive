@@ -145,7 +145,10 @@ F98_col_1 = {
 					owned_by = ROOT
 					NOT = {
 						AND = {
-							has_province_flag = anb_has_been_exploited_flag
+							if = {
+								limit = { has_dlc = "Cradle of Civilization" }
+								has_province_flag = anb_has_been_exploited_flag
+							}
 							num_of_units_in_province = {
 								amount = 1
 								type = infantry
@@ -535,13 +538,7 @@ F98_col_2 = {
 						AND = {
 							has_production_building_trigger = yes
 							has_manufactory_trigger = yes
-							OR = {
-								num_of_times_expanded_infrastructure = 1
-								AND = {
-									NOT = { has_dlc = "Leviathan" owned_by = ROOT }
-									development = 15	
-								}
-							}
+							development = 15
 						}
 					}
 				}
@@ -556,13 +553,7 @@ F98_col_2 = {
 						AND = {
 							has_production_or_gold_building_trigger = yes
 							has_production_manufactory_or_gold_trigger = yes
-							OR = {
-								num_of_times_expanded_infrastructure = 1
-								AND = {
-									NOT = { has_dlc = "Leviathan" owned_by = ROOT }
-									development = 15	
-								}
-							}
+							development = 15	
 						}
 					}
 				}
@@ -577,16 +568,7 @@ F98_col_2 = {
 					AND = {
 						has_production_building_trigger = yes
 						has_manufactory_trigger = yes
-						if = {
-							limit = {
-								has_dlc = "Leviathan"
-								owned_by = ROOT
-							}
-							num_of_times_expanded_infrastructure = 1
-						}
-						else = {
-							development = 15	
-						}
+						development = 15
 					}
 				}
 			}
@@ -601,16 +583,7 @@ F98_col_2 = {
 					AND = {
 						has_production_or_gold_building_trigger = yes
 						has_production_manufactory_or_gold_trigger = yes
-						if = {
-							limit = {
-								has_dlc = "Leviathan"
-								owned_by = ROOT
-							}
-							num_of_times_expanded_infrastructure = 1
-						}
-						else = {
-							development = 15	
-						}
+						development = 15
 					}
 				}
 			}
@@ -1507,7 +1480,8 @@ F98_col_3 = {
 			F98_godking_dragon
 		}
 		provinces_to_highlight = {
-			is_capital = yes 
+			is_capital = yes
+			has_discovered = ROOT
 			owner = {
 				OR = {
 					NOT = {
