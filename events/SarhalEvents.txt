@@ -2106,6 +2106,216 @@ country_event = {
     }
 }
 
+country_event = {
+    id = sarhalevents.501 #Sarhal Troll Refugee Event Chain Start
+    title = sarhalevents.501.t
+    desc = sarhalevents.501.d
+    picture = REFUGEES_ESCAPING_eventPicture
+    
+    is_triggered_only = yes
+    trigger = {
+        any_owned_province = {
+            OR = { 
+                area = grixzakr_area
+                area = garpix_rakkaz_area
+                area = kogzalla_area
+                area = pyazada_area
+                area = kvangraak_area
+                area = gizan_area
+                area = kvathagis_area
+                area = tsudhagis_area
+                area = yezelshaff_area
+                area = rindukubunza_area
+                area = muukombi_area
+                area = adgur_area
+                area = rakshas_area
+                area = mattabo_area
+            }
+        }
+        S70 = { exists = yes }
+        low_tolerance_troll_race_trigger = yes
+    }
+    
+    option = {
+        name = sarhalevents.501.a
+        ai_chance = { factor = 100 }
+
+        small_decrease_of_troll_tolerance_effect = yes
+        custom_tooltip = troll_refugees_doubts_tooltip
+    }
+
+    option = {
+        name = sarhalevents.501.b
+        ai_chance = { factor = 100 }
+
+        small_increase_of_troll_tolerance_effect = yes
+        add_manpower = -1
+        country_event = { id = sarhalevents.502 days = 365 }
+    }
+
+    option = {
+        name = sarhalevents.501.c
+        ai_chance = { factor = 1000 }
+        trigger = {
+            OR = {
+                culture_group = mengi
+                ruler_has_personality = cruel_personality
+            } 
+        }
+        highlight = yes
+
+        large_decrease_of_troll_tolerance_effect = yes
+        add_country_modifier = {
+            name = troll_refugees_killed
+            duration = 1825
+        }
+        
+    }
+}
+
+country_event = { #Hunting 'Accident'
+    id = sarhalevents.502
+    title = sarhalevents.502.t
+    desc = sarhalevents.502.d
+    picture = COURT_eventPicture
+    is_triggered_only = yes
+
+    option = {
+        name = sarhalevents.502.a
+        ai_chance = { factor = 100 }
+
+        small_decrease_of_troll_tolerance_effect = yes
+        custom_tooltip = troll_refugees_doubts_tooltip
+    }
+
+    option = {
+        name = sarhalevents.502.b
+        ai_chance = { factor = 100 }
+
+        small_increase_of_troll_tolerance_effect = yes
+        random_owned_province = {
+            add_province_modifier = {
+                name = troll_refugees_protected1
+                duration = 1825
+            }
+        }
+        country_event = { id = sarhalevents.503 days = 730 }
+    }
+
+    option = {
+        name = sarhalevents.502.c
+        ai_chance = { factor = 100}
+
+        large_increase_of_troll_tolerance_effect = yes
+        random_owned_province = {
+            add_province_modifier = {
+                name = troll_refugees_protected2
+                duration = 1825
+            }
+        }
+        country_event = { id = sarhalevents.503 days = 365 }
+    }
+}
+
+country_event = { #Beacon of Freedom
+    id = sarhalevents.503
+    title = sarhalevents.503.t
+    desc = sarhalevents.503.d
+    picture = REFUGEES_ESCAPING_eventPicture   
+    is_triggered_only = yes
+
+    trigger = {
+        any_owned_province = {
+            OR = { 
+                area = grixzakr_area
+                area = garpix_rakkaz_area
+                area = kogzalla_area
+                area = pyazada_area
+                area = kvangraak_area
+                area = gizan_area
+                area = kvathagis_area
+                area = tsudhagis_area
+                area = yezelshaff_area
+                area = rindukubunza_area
+                area = muukombi_area
+                area = adgur_area
+                area = rakshas_area
+                area = mattabo_area
+            }
+        }
+        S70 = { exists = yes }
+    }
+
+    option = {
+        name = sarhalevents.503.a
+        ai_chance = { factor = 100 }
+
+        add_manpower = 3
+        small_increase_of_troll_tolerance_effect = yes
+        random_owned_province = {
+            add_province_modifier = {
+                name = troll_refugees_protected1
+                duration = 1825
+            }
+            add_troll_minority_size_effect = yes
+        }
+    }
+
+    option = {
+        name = sarhalevents.503.b
+        ai_chance = { factor = 100 }
+
+        small_decrease_of_troll_tolerance_effect = yes
+        add_country_modifier = {
+            name = troll_refugees_turned_away
+            duration = 3650
+        }
+    }
+
+    option = {
+        name = sarhalevents.503.c
+        ai_chance = { factor = 100 }
+        trigger = {
+            NOT = { 
+                OR = { 
+                    ruler_has_personality = careful_personality
+                    ruler_has_personality = craven_personality 
+                    culture_group = mengi
+                }
+            }
+        }
+
+        add_country_modifier = {
+            name = witches_spurned
+            duration = 3650
+        }
+        large_increase_of_troll_tolerance_effect = yes
+        random_owned_province = {
+            add_province_modifier = {
+                name = troll_refugees_protected1
+                duration = 1825
+            }
+            add_troll_minority_size_effect = yes
+        }
+        random_owned_province = {
+            add_province_modifier = {
+                name = troll_refugees_protected1
+                duration = 1825
+            }
+            add_troll_minority_size_effect = yes
+        }
+        S70 = { 
+            add_casus_belli = {
+                type = cb_insult
+                target = ROOT
+                months = 120
+            }
+        }
+
+    }
+}
+
+
 
 #1000+ events Sarhal broadcasts 
 country_event = {
