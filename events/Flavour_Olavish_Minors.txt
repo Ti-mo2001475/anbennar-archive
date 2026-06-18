@@ -1,0 +1,195 @@
+namespace = olavish_minor
+
+# Olavish Dominance Upgrade
+country_event = {
+	id = olavish_minor.1
+	title = olavish_minor.1.t
+	desc = olavish_minor.1.d
+	picture = CARIBBEAN_PIRATE_FORT_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		always = yes
+	}
+
+	option = {
+		name = olavish_minor.1.a
+		ai_chance = {
+			factor = 100
+		}
+		if = {
+			limit = {
+				has_country_modifier = olavish_minor_olavish_dominance_1
+			}
+			remove_country_modifier = olavish_minor_olavish_dominance_1
+			add_country_modifier = {
+				name = olavish_minor_olavish_dominance_2
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_modifier = olavish_minor_olavish_dominance_2
+			}
+			remove_country_modifier = olavish_minor_olavish_dominance_2
+			add_country_modifier = {
+				name = olavish_minor_olavish_dominance_3
+				duration = -1
+			}
+		}
+	}
+}
+
+# Crowning of The Olavish King
+country_event = {
+	id = olavish_minor.2
+	title = olavish_minor.2.t
+	desc = olavish_minor.1.d
+	picture = FEUDALISM_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		always = yes
+	}
+
+	option = {
+		name = olavish_minor.2.a
+		ai_chance = {
+			factor = 100
+		}
+		olavslund_area = {
+			type = all
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		nyrford_area = {
+			type = all
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		naugsvol_area = {
+			type = all
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		drekkiskali_area = {
+			type = all
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		esfjall_area = {
+			type = all
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		6271 = { #vaengheim
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		6270 = { #Smidafjall
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		6269 = { #Djupfyri
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		if = {
+			limit = {
+				has_country_modifier = olavish_minor_olavish_dominance_1
+			}
+			remove_country_modifier = olavish_minor_olavish_dominance_1
+			add_country_modifier = {
+				name = olavish_minor_reaver_king_1
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				has_country_modifier = olavish_minor_olavish_dominance_2
+			}
+			remove_country_modifier = olavish_minor_olavish_dominance_2
+			add_country_modifier = {
+				name = olavish_minor_reaver_king_2
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				has_country_modifier = olavish_minor_olavish_dominance_3
+			}
+			remove_country_modifier = olavish_minor_olavish_dominance_3
+			add_country_modifier = {
+				name = olavish_minor_reaver_king_3
+				duration = -1
+			}
+		}
+		add_prestige = 10
+		if = {
+			limit = {
+				NOT = {
+					government_rank = 2
+				}
+
+			}
+			set_government_rank = 2
+		}
+		set_country_flag = olavlund_formable_tech_bypass
+		custom_tooltip = olavish_minor_can_form_olavlund
+	}
+}
+
+# Ultimatum From Redgarhavn
+country_event = {
+	id = redgarhavn.1
+	title = redgarhavn.1.t
+	desc = redgarhavn.1.d
+	picture = DUTCH_SHIPS_PLUNDERING_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		always = yes
+	}
+
+	# We fight
+	option = {
+		name = redgarhavn.1.a
+		ai_chance = {
+			factor = 100
+		}
+
+		Z13 = {
+			add_casus_belli = {
+				type = cb_reaver_invasion
+				target = ROOT
+			}
+		}
+	}
+
+	# Give them what they want
+	option = {
+		name = redarhavn.1.b
+		ai_chance = {
+			factor = 0
+		}
+		ROOT = {
+			add_years_of_income = -0.6
+			capital_scope = {
+				add_base_tax = -1
+				add_base_production = -1
+				add_base_manpower = -1
+			}
+		}
+		Z13 = { #Redgarhavn
+			add_years_of_income = 1
+			capital_scope = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+		}
+	}
+}

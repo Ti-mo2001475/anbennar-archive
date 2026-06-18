@@ -1,0 +1,787 @@
+
+olavish_minor_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = {
+		OR = {
+			tag = Z14 #Avnkaup
+			tag = Z13 #Redgarhavn
+			tag = Z12 #Naugsvol
+		}
+	}
+
+	olavish_minor_secure_our_grip = {
+		icon = mission_rb_conquer_the_highlands
+		position = 3
+		required_missions = { olavish_minor_olavish_dominance}
+		
+		trigger = {
+			if = { #Avnkaup's requirements are to have conquer vaengheim.
+				limit = {
+					tag = Z14 #Avnkaup
+				}
+				6271 = { #Vaengheim
+					owned_by = ROOT
+					is_core = ROOT
+				}
+				6270 = { #Smidafjall
+					owned_by = ROOT
+					is_core = ROOT
+				}
+				6269 = { #Djupfyri
+					owned_by = ROOT
+					is_core = ROOT
+				}
+			}
+			if = { #Redgarhavn's requirements are to have conquered Skaldskola.
+				limit = {
+					tag = Z13 #Redgarhavn
+				}
+				AND = {
+					olavslund_area = {
+					type = all
+					owned_by = ROOT
+					is_core = ROOT
+					}
+					drekkiskali_area = {
+						type = all
+						owned_by = ROOT
+						is_core = ROOT
+					}
+				}
+				
+			}
+			if = { #Naugsvol's requirements are to have conquer Urviksten.
+				limit = {
+					tag = Z12 #Naugsvol
+				}
+				esfjall_area = {
+					type = all
+					owned_by = ROOT
+					is_core = ROOT
+				}
+				naugsvol_area = {
+					type = all
+					owned_by = ROOT
+				}
+			}
+			if = { #Avnkaup has insulted Skaldskola, or anyone else has insulted Vaengheim.
+				limit = {
+					tag = Z14 #Avnkaup
+				}
+				if = {
+					limit = {
+						Z09 = { exists = yes }
+					}
+					Z09 = { #Skaldskola
+						has_opinion_modifier = {
+							who = ROOT
+							modifier = insulted
+						}
+					}
+				} else = {
+					976 = { #Skaldskol
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+			} else = {
+				if = {
+					limit = {
+						Z88 = { exists = yes }
+					}
+					Z88 = {
+						has_opinion_modifier = {
+							who = ROOT
+							modifier = insulted
+						}
+					}
+				} else = {
+					6271 = { #Vaengheim
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+			}
+			manpower_percentage = 0.75
+			
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 10
+			}
+			add_stability = 1
+			if = { #Avnkaup gets a CB on Skaldskola, and anyone else gets the cb on Vaengheim.
+				limit = {
+					tag = Z14 #Avnkaup
+				}
+				if = {
+					limit = {
+						Z09 = { exists = yes} #Skaldskola
+					}
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						target = Z09 #Skaldskola
+						months = 240
+					}
+				} else = {
+					drekkiskali_area = {
+						add_permanent_claim = ROOT
+					}
+					6273 = { #Sudanhagis
+						add_permanent_claim = ROOT
+					}
+					976 = { #Skaldskol
+						add_permanent_claim = ROOT
+					}
+				}
+			} else = {
+				if = {
+					limit = {
+						Z88 = { exists = yes}
+					}
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						target = Z88 #Vaengheim
+						months = 240
+					}
+				} else = {
+					6269 = { #Djupfyri
+						add_permanent_claim = ROOT
+					}
+					6270 = { #Smidafjall
+						add_permanent_claim = ROOT
+					}
+					6271 = { #Vaengheim
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+		}
+	}
+
+	olavish_minor_city_built_on_plunder = {
+		icon = mission_rb_conquer_the_highlands
+		position = 5
+		required_missions = { olavish_minor_in_search_of_new_ideas }
+		
+		trigger = {
+			has_institution = renaissance
+			capital_scope = {
+				num_of_buildings_in_province = 3
+				has_no_ongoing_construction = yes
+			}
+			treasury = 250
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = olavish_minor_olavish_renaissance
+				duration = -1
+			}
+			capital_scope = {
+				add_building_construction = {
+					building = mills
+					cost = 0.5
+					speed = 1
+				}
+			}
+			change_innovativeness = 5
+		}
+	}
+}
+olavish_minor_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = {
+		OR = {
+			tag = Z14 #Avnkaup
+			tag = Z13 #Redgarhavn
+			tag = Z12 #Naugsvol
+		}
+	}
+
+	olavish_minor_enter_the_fray = {
+		icon = mission_rb_conquer_the_highlands
+		position = 1
+		required_missions = { }
+		
+		trigger = {
+			army_size_percentage = 1
+			num_of_generals = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = olavish_minor_struggle_for_dominance
+				duration = 1825
+			}
+			if = { # Whichever country completes this gets cb on the other 2.
+				limit = {
+					OR = {
+						tag = Z14 #Avnkaup
+						tag = Z13 #Redgarhavn
+					}
+				}
+				add_casus_belli = {
+					type = cb_vassalize_mission
+					target = Z12 #Naugsvol
+					months = 600
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						tag = Z14 #Avnkaup
+						tag = Z12 #Naugsvol
+					}
+				}
+				add_casus_belli = {
+					type = cb_vassalize_mission
+					target = Z13 #Redgarhavn
+					months = 600
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						tag = Z12 #Naugsvol
+						tag = Z13 #Redgarhavn
+					}
+				}
+				add_casus_belli = {
+					type = cb_vassalize_mission
+					target = Z14 #Avnkaup
+					months = 600
+				}
+			}
+		}
+	}
+
+	olavish_minor_olavish_dominance = {
+		icon = mission_rb_conquer_the_highlands
+		position = 2
+		required_missions = { olavish_minor_enter_the_fray }
+		
+		trigger = {
+			977 = { #Olavsborg
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			975 = { #Redgarhavn
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			985 = { #Giant's Manse
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			nyrford_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			982 = { #Naugsvol
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			all_subject_country = {
+				NOT = { liberty_desire = 50 }
+			}
+			num_of_subjects = 2
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = olavish_minor_olavish_dominance_1
+				duration = -1
+			}
+			custom_tooltip = olavish_minor_dominance_can_upgrade
+			hidden_effect = {
+				set_variable = {
+					which = olavish_minor_dominance_battles_won
+					value = 0
+				}
+			}
+			if = {
+				limit = {
+					tag = Z14 #Avnkaup
+				}
+				vaengrheim_area = {
+					add_permanent_claim = ROOT
+				}
+			}
+			if = {
+				limit = {
+					tag = Z13 #Redgarhavn
+				}
+				olavslund_area = {
+					add_permanent_claim = ROOT
+				}
+				drekkiskali_area = {
+					add_permanent_claim = ROOT
+				}
+			}
+			if = {
+				limit = {
+					tag = Z12 #Naugsvol
+				}
+				esfjall_area = {
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+
+	olavish_minor_modern_olavish_city = {
+		icon = mission_rb_conquer_the_highlands
+		position = 3
+		required_missions = { olavish_minor_olavish_dominance }
+
+		trigger = {
+			if = {
+				limit = {
+					tag = Z13 #Redgarhavn
+				}
+				capital_scope = {
+					development = 20
+					has_trade_building_trigger = yes
+				}
+			} else = {
+				977 = { #Olavsborg
+					development = 15
+					country_or_subject_holds = root
+					has_trade_building_trigger = yes
+				}
+			}
+		}
+
+		effect = {
+			if = {
+				limit = {
+					tag = Z13 #Redgarhavn
+				}
+				977 = { #Olavlund
+					add_base_tax = -1
+					add_base_production = -1
+					add_base_manpower = -1
+				}
+				capital_scope = {
+					add_base_tax = 1
+					add_base_production = 1
+					add_base_manpower = 1
+					change_trade_goods = gems
+				}
+			} else = {
+				977 = { #Olavlund
+					cede_province = ROOT
+					add_core = ROOT
+					change_trade_goods = gems
+				}
+				set_capital = 977 #Olavsborg
+				add_prestige = 15
+			}
+		}
+	}
+
+	olavish_minor_in_search_of_new_ideas = {
+		icon = mission_rb_conquer_the_highlands
+		position = 4
+		required_missions = { 
+			olavish_minor_modern_olavish_city
+		 	olavish_minor_secure_our_grip
+			olavish_minor_take_to_the_sea
+		}
+
+		trigger = {
+			capital_scope = {
+				has_no_ongoing_construction = yes
+			}
+			is_institution_enabled = renaissance
+			num_of_galley = 7
+			has_flagship = yes
+		}
+
+		effect = {
+			capital_scope = {
+				add_institution_embracement = {
+					which = renaissance
+					value = 20
+				}
+				add_building_construction = {
+					building = shipyard
+					cost = 0
+					speed = 0.5
+				}
+				if = {
+					limit = {
+						NOT = {
+							province_has_center_of_trade_of_level = 1
+						}
+					}
+					center_of_trade = 1
+				}
+			}
+			set_country_flag = olavish_minor_coastal_raiding_renaissance
+			custom_tooltip = olavish_minor_renaissance_raids
+		}
+	}
+
+	olavish_minor_unite_olavlund = {
+		icon = mission_rb_conquer_the_highlands
+		position = 5
+		required_missions = { olavish_minor_in_search_of_new_ideas }
+
+		trigger = {
+			olavslund_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			drekkiskali_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			esfjall_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			naugsvol_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			nyrford_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			6271 = { #Vaengheim
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			6270 = { #Smidafjall
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			6269 = { #Djupfyri
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+
+			NOT = {
+				any_subject_country = {
+					liberty_desire = 20
+				}
+			}
+		}
+		effect = {
+			country_event = { id = olavish_minor.2 }
+		}
+	}
+}
+
+olavish_minor_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = {
+		OR = {
+			tag = Z14 #Avnkaup
+			tag = Z13 #Redgarhavn
+			tag = Z12 #Naugsvol
+		}
+	}
+	olavish_minor_take_to_the_sea = {
+		icon = mission_rb_conquer_the_highlands
+		position = 3
+		required_missions = { olavish_minor_olavish_dominance }
+
+		trigger = {
+			if = {
+				limit = {
+					tag = Z12 #Naugsvol
+				}
+				if = {
+					limit = {
+						Z09 = { exists = yes } #Skaldskola
+					}
+					navy_size = Z09 #Skaldskola
+					trade_embargoing = Z09 #Skaldskola
+				} else = {
+					976 = { #Skaldskol
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+			} else = {
+				if = {
+					limit = {
+						Z15 = { exists = yes} #Urviksten
+					}
+					navy_size = Z15 #Urviksten
+					trade_embargoing = Z15 #Urviksten
+				} else = {
+					984 = { #Urviksten
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+			}
+			navy_size_percentage = 0.9
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = olavish_minor_reaver_enthusiasm
+				duration = 3650
+			}
+			if = {
+				limit = {
+					tag = Z12 #Naugsvol
+				}
+				if = {
+					limit = {
+						Z09 = { exists = yes } #Skaldskola
+					}
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						target = Z09 #Skaldskola
+						months = 240
+					}
+				} else = {
+					drekkiskali_area = {
+						add_permanent_claim = ROOT
+					}
+					6273 = { #Sudanhagis
+						add_permanent_claim = ROOT
+					}
+					976 = { #Skaldskol
+						add_permanent_claim = ROOT
+					}
+				}
+			} else = {
+				if = {
+					limit = {
+						Z15 = { exists = yes } #Urviksten
+					}
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						target = Z15 #Urviksten
+						months = 240
+					}
+				} else = {
+					esfjall_area = {
+						add_permanent_claim = ROOT
+					}
+					981 = { #Silvrborg
+						add_permanent_claim = ROOT
+					}
+					983 = { #Baldersby
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+		}
+	}
+}
+
+naugsvol_1 = {
+	slot = 4
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = { tag = Z12 } #Naugsvol
+}
+
+naugsvol_2 = {
+	slot = 5
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = { tag = Z12 } #Naugsvol
+}
+
+redgarhavn_1 = {
+	slot = 4
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = { tag = Z13 } #Redgarhavn
+
+	redgarhavn_dealing_with_league = {
+		icon = mission_rb_conquer_the_highlands
+		position = 2
+		required_missions = {
+			redgarhavn_poke_the_bear
+		}
+
+		trigger = {
+			OR = {
+				696 = { #Celmaldor
+					has_privateer_share_in_trade_node = {
+						who = ROOT
+						share = 0.1
+					}
+				}
+				696 = { #Celmaldor
+					ROOT = {
+						trading_policy_in_node = {
+							node = PREV
+							policy = hostile_trading
+						}
+					}
+				}
+			}
+			OR = {
+				700 = { #Coldmarket
+					has_privateer_share_in_trade_node = {
+						who = ROOT
+						share = 0.1
+					}
+				}
+				700 = { #Coldmarket
+					ROOT = {
+						trading_policy_in_node = {
+							node = PREV
+							policy = hostile_trading
+						}
+					}
+				}
+			}
+			has_spy_network_in = {
+				who = Z22 #Celmaldor
+				value = 30
+			}
+			3187 = { #Drekkodr
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			has_won_war_against = {
+				who = Z08 #Bjarnrik
+			}
+		}
+
+		effect = {
+			Z22 = {
+				country_event = { id = redgarhavn.1 }
+			}
+		}
+	}
+}
+
+redgarhavn_2 = {
+	slot = 5
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = { tag = Z13 } #Redgarhavn
+
+	redgarhavn_poke_the_bear = {
+		icon = mission_rb_conquer_the_highlands
+		position = 1
+		required_missions = {}
+
+		trigger = {
+			navy_size = Z08 #Bjarnrik
+			has_spy_network_in = {
+				who = Z08 #Bjarnrik
+				value = 30
+			}
+		}
+
+		effect = {
+			Z08 = { #Bjarnrik
+				country_event = { id = redgarhavn.1 }
+			}
+		}
+	}
+
+	redgarhavn_to_bal_vroren = {
+		icon = mission_rb_conquer_the_highlands
+		position = 2
+		required_missions = {
+			redgarhavn_poke_the_bear
+		}
+
+		trigger = {
+			if = {
+				limit = {
+					Z18 = { #Frozenmaw
+						num_of_subjects = 2
+					}
+				}
+				calc_true_if = {
+					all_known_country = {
+						is_subject_of = Z18
+						has_75_opinion_improved_relation = { target = ROOT }
+					}
+					amount = 2
+				}
+				has_spy_network_in = {
+					who = Z18 #Frozenmaw
+					value = 30
+				}
+				3187 = { #Drekkodr
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				has_won_war_against = {
+					who = Z08 #Bjarnrik
+				}
+			}
+		}
+
+		effect = {
+			Z18 = { #Frozenmaw
+				country_event = { id = redgarhavn.1 }
+			}
+		}
+	}
+
+	redgarhavn_cruelheart = {
+		icon = mission_rb_conquer_the_highlands
+		position = 3
+		required_missions = {
+			redgarhavn_to_bal_vroren
+			redgarhavn_dealing_with_league
+		}
+
+		trigger = {
+			OR = {
+				has_country_modifier = olavish_minor_olavish_dominance_2
+				has_country_modifier = olavish_minor_olavish_dominance_3
+				has_country_modifier = olavish_minor_reaver_king_2
+				has_country_modifier = olavish_minor_reaver_king_3
+			}
+			prestige = 30
+			has_won_war_against = {
+				who = Z18
+			}
+			has_won_war_against = {
+				who = Z22
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = redgarhavn_born_of_the_sea
+				duration = -1
+			}
+			if = {
+				limit = { 
+					has_country_modifier = olavish_minor_olavish_dominance_3
+				}
+				add_adm_power = 50
+				add_dip_power = 50
+				add_mil_power = 50
+			}
+		}
+	}
+}
+
+avnkaup_1 = {
+	slot = 4
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = { tag = Z14 } #Avnkaup
+}
+
+avnkaup_2 = {
+	slot = 5
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = { tag = Z14 } #Avnkaup
+}
