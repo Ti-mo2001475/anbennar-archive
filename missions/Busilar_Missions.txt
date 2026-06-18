@@ -1072,55 +1072,268 @@ col_4 = {
 	A29_lion_stirs = {
 		icon = spa_tercios_system
 		position = 1
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			OR = {
+				province_id = 364 
+				province_id = 6513
+				province_id = 377
+				province_id = 375
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {
+			khenak_area = {
+				type = all 
+				OR = {
+					owned_by = ROOT
+					province_id = 376
+				}
+			}
+			364 = {
+				owned_by = ROOT
+			}
+			army_size = 18
+		}
+	
 
-		effect = {  } 
+		effect = { 
+			khenak_area = {
+				if = {
+					limit = {
+						culture = hill_gnoll
+						owned_by = ROOT
+					}
+					change_culture = busilari
+					change_religion = regent_court 
+					add_devastation = 30
+				}
+			}
+
+			364 = {
+				if = {
+					limit = {
+						culture = hill_gnoll
+						owned_by = ROOT
+					}
+					change_culture = busilari
+					change_religion = regent_court 
+					add_devastation = 30
+				}
+			}
+			random_owned_province = {
+				limit = {
+					OR = {
+						area = khenak_area 
+						province_id = 364
+					}
+					NOT = {
+						province_id = 376 
+					}
+				}
+				spawn_rebels = {
+					size = 1
+					type = nationalist_rebels
+					separatists_target = A49 
+				}
+			}
+
+			large_decrease_of_gnollish_tolerance_effect = yes
+		 } 
 	}
 
 	A29_restore_the_union = {
 		icon = hungarian_union
 		position = 3
 		required_missions = { A29_eyes_on_tef } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = { 
+			is_core = U06
+			NOT = {
+				owned_by = ROOT 
+				unrest = 0 
+			}
+		} 
 
-		trigger = {  } 
+		trigger = { 
+			if  = {
+				limit = {
+					exists = U06 
+				}
+				OR = {
+					U06 = {
+						has_95_opinion_improved_relation = {
+							target = ROOT 
+						}
+					}
+					reverse_has_opinion = {
+						who = U06 
+						value = 190
+					}
+				}
 
-		effect = {  } 
+				U06 = {
+					guaranteed_by = ROOT
+					has_25_opinion_sent_gift = {
+						target = ROOT 
+					} 
+				}
+			}
+			else = {
+				U06 = {
+					all_core_province = {
+						owned_by = ROOT 
+						unrest = 0 
+					}
+				}
+			}
+		} 
+
+		effect = { 
+			if = {
+				limit = {
+					exists = U06 
+				}
+				create_subject = {
+					subject_type = personal_union 
+					who = U06
+				}
+				akasik_region = {
+					add_permanent_claim = U06 
+				}
+			}
+			else = {
+				U06 = {
+					every_core_province = {
+						add_random_development = 1 
+					}
+				}
+				add_prestige = 25 
+			}
+		} 
 	}
 
 	A29_monsters_two = {
 		icon = mission_hill_gnoll_auxilaries
 		position = 4
 		required_missions = { A29_restore_the_union } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = { 
+			region = akasik_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT 
+			} 
 
-		trigger = {  } 
+		} 
 
-		effect = {  } 
+		trigger = {
+			akasik_region = {
+				type = all 
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			OR = {
+				accepted_culture = desha
+				accepted_culture = khasani 
+				accepted_culture = far_akasi
+				accepted_culture = enigrax
+
+				NOT = {
+					akasik_region = {
+						owned_by = ROOT
+					}
+				}
+			}
+			
+			has_country_modifier = racial_pop_gnollish_purge 
+
+			OR = {
+				has_country_modifier = racial_pop_harpy_purge
+				has_country_modifier = racial_focus_harpy 
+			}
+		} 
+
+		effect = {
+			ohitsopot_area = { add_permanent_claim = ROOT }
+			coast_of_tears_area = { add_permanent_claim = ROOT }
+			garpix_brrtekuh_area = { add_permanent_claim = ROOT } 
+			country_event = { id = busilar.8 }
+		} 
 	}
 
 	A29_whence_we_came = {
 		icon = mission_egyptian_mamluk_soldier
 		position = 6
 		required_missions = { A29_land_and_sea } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			OR = {
+				area = ohitsopot_area
+				area = coast_of_tears_area
+				area = garpix_brrtekuh_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {
+			legitimacy = 90
+			ohitsopot_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			coast_of_tears_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			garpix_brrtekuh_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
 
-		effect = {  } 
+		effect = {  
+			set_country_flag = can_claim_mandate
+			set_global_flag = A29_no_ahati_disaster 
+			mothers_sorrow_group = { add_permanent_claim = ROOT }
+			ohitsopot_area = { add_devastation = -100 }
+			coast_of_tears_area = { add_devastation = -100 }
+			garpix_brrtekuh_area = { add_devastation = -100 }
+		} 
 	}
 
 	A29_reversal_of_history = {
 		icon = mission_sun_temple
 		position = 7
 		required_missions = { A29_whence_we_came } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			province_group = mothers_sorrow_group 
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		} 
 
-		trigger = {  } 
+		trigger = { 
+			is_emperor_of_china = yes
+			mothers_sorrow_group = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			empire_of_china_reform_passed = establish_ahati_reform
+		 } 
 
-		effect = {  } 
+		effect = {
+			add_mandate = 50
+			country_event = { 
+				id = busilar.9 
+			}
+			set_country_flag = A29_cant_make_tribbies
+			hidden_effect = {
+				country_event = {
+					id = busilar.10
+					days = 1825
+				}
+			}
+		} 
 	}
 
 	A29_wealth_of_sarhal = {
@@ -1130,11 +1343,26 @@ col_4 = {
 			A29_tripartite_empire
 			A29_masters_of_the_divenhal
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			province_id = 1296
+			NOT = { trade_node_value = 80 }
+		} 
 
-		trigger = {  } 
+		trigger = {
+			monthly_trade_income = 120
+			1296 = {
+				trade_node_value = 80
+			}
+			trading_bonus = {
+				trade_goods = cloves 
+				value = yes
+			}
+		} 
 
-		effect = {  } 
+		effect = {
+			add_meritocracy = 25 
+			set_country_flag = A29_steward_reforms
+		} 
 	}
 
 	A29_investments_afield = {
@@ -1199,9 +1427,16 @@ col_4 = {
 		}
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = { 
+			has_country_flag = first_holohana_kill 
+		} 
 
-		effect = {  } 
+		effect = {
+			add_country_modifier = {
+				name = hinuifire 
+				duration = -1 
+			}
+		} 
 	}
 
 	A29_one_god = {
