@@ -7,7 +7,7 @@ po_take_everything = {
 	warscore_cost = {
 		# Which of the giver's provinces' war score costs are included and by how much. All entries default to 0. Any combination of entries can be used. Try negative values at your own risk.
 		all_provinces = 0.0 # All the giver's provinces
-		no_provinces = 0.0 # This is just a constant. Equivalent to a single province with with war score cost 1
+		no_provinces = 50.0 # This is just a constant. Equivalent to a single province with with war score cost 1
 		owner_keeps = 0.0 # The provinces that are not of any of the types below
 		conquered = 0.0 # Provinces that are selected by a Demand Province treaty
 		returned_core = 0.0 # Provinces that are selected by a Return Core treaty
@@ -33,9 +33,15 @@ po_take_everything = {
 			attacker_leader = THIS
 			defender_leader = FROM
 		}
+		FROM = {
+			capital_scope = {
+				controlled_by = ROOT
+			}
+		}
 	}
 	effect = {
 		FROM = {
+			set_country_flag = has_been_plundered
 			add_years_of_income = -0.6
 			capital_scope = {
 				add_base_tax = -1

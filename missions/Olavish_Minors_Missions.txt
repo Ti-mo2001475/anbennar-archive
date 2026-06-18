@@ -656,6 +656,10 @@ redgarhavn_1 = {
 		effect = {
 			Z22 = {
 				country_event = { id = redgarhavn.1 }
+				add_country_modifier = {
+					name = redgarhavn_navy_sabotaged
+					duration = 1825
+				}
 			}
 		}
 	}
@@ -685,6 +689,7 @@ redgarhavn_2 = {
 			Z08 = { #Bjarnrik
 				country_event = { id = redgarhavn.1 }
 			}
+			custom_tooltip = redgarhavn_konungrhavn_coup
 		}
 	}
 
@@ -702,13 +707,21 @@ redgarhavn_2 = {
 						num_of_subjects = 2
 					}
 				}
-				calc_true_if = {
-					all_known_country = {
-						is_subject_of = Z18
-						has_75_opinion_improved_relation = { target = ROOT }
+				Z18 = { #Frozenmaw
+					calc_true_if = {
+						all_subject_country = {
+							has_75_opinion_improved_relation = { target = ROOT }
+						}
+						amount = 2
 					}
-					amount = 2
 				}
+				# calc_true_if = {
+				# 	all_known_country = {
+				# 		is_subject_of = Z18 #Frozenmaw
+				# 		has_75_opinion_improved_relation = { target = ROOT }
+				# 	}
+				# 	amount = 2
+				# }
 				has_spy_network_in = {
 					who = Z18 #Frozenmaw
 					value = 30
@@ -725,6 +738,10 @@ redgarhavn_2 = {
 		effect = {
 			Z18 = { #Frozenmaw
 				country_event = { id = redgarhavn.1 }
+				add_country_modifier = {
+					name = redgarhavn_poisoned_rations
+					duration = 1825
+				}
 			}
 		}
 	}
