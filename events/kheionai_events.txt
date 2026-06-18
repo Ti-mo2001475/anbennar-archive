@@ -518,31 +518,64 @@ country_event = {
 			}
 			add_treasury = -2500
 			random = { chance = 50 upgrade_windward_ai = yes }
-			random = { chance = 50 upgrade_windward_ai = yes }
-			random = { chance = 50 upgrade_windward_ai = yes }
-			random = { chance = 50 upgrade_windward_ai = yes }
-			random = { chance = 50 upgrade_windward_ai = yes }
-			random = { chance = 50 upgrade_windward_ai = yes }
-			random = { chance = 50 upgrade_windward_ai = yes }
-			random = { chance = 50 upgrade_windward_ai = yes }
+			add_country_modifier = { #Lose 2500 cash
+				name =  ai_warding_cost_3
+				duration = 1460 #4 years
+			}
 		}
 		else_if = {
 			limit = {
 				is_year = 1500
+				NOT = { is_year = 1600 }
 				treasury = 2500
 			}
 			add_treasury = -1000
 			upgrade_windward_ai = yes
 			upgrade_windward_ai = yes
 			random = { chance = 50 upgrade_windward_ai = yes }
-			random = { chance = 50 upgrade_windward_ai = yes }
-			random = { chance = 50 upgrade_windward_ai = yes }
+			add_country_modifier = { #Lose 1000 cash
+				name =  ai_warding_cost_2
+				duration = 1460 #4 years
+			}
 		}
 		else_if = {
-			limit = { treasury = 500 }
+			limit = {
+				NOT = { is_year = 1500 }
+				treasury = 500
+			}
 			add_treasury = -100
 			random = { chance = 25 upgrade_windward_ai = yes }
+			add_country_modifier = { #Lose 100 cash
+				name =  ai_warding_cost_1
+				duration = 1460 #4 years
+			}
 		}
+	}
+}
+
+#Yearly ai event to remove the Windward cost modifier if they can't afford it
+country_event = {
+	id = kheionai.10
+	title = none
+	desc = none
+	picture = none
+	
+	is_triggered_only = yes
+	trigger = {
+		OR = {
+			has_country_modifier = ai_warding_cost_3
+			has_country_modifier = ai_warding_cost_2
+			has_country_modifier = ai_warding_cost_1
+		}
+		NOT = { treasury = 100 }
+		NOT = { monthly_income = 0 }
+	}
+
+	option = {
+		name = none
+		remove_country_modifier = ai_warding_cost_3
+		remove_country_modifier = ai_warding_cost_2
+		remove_country_modifier = ai_warding_cost_1
 	}
 }
 

@@ -457,6 +457,13 @@ has_windward_modifier = { #Checks if there's a windward in the province
 	}
 }
 
+has_not_windward_modifier = { #Checks if there's not a windward in the province
+	custom_trigger_tooltip = {
+		tooltip = has_not_windward_modifier_tt
+		has_windward_modifier = no
+	}
+}
+
 has_full_deathwinds_system_button = {
 	if = {
 		limit = { has_not_full_deathwinds_system = yes }
@@ -785,7 +792,7 @@ windward_upgrade_triggers = {
 	}
 	#-------------------------------------------------------------------------------------------------------------
 	if = { #Level 0 > 1
-		limit = { has_windward_modifier = no }
+		limit = { has_not_windward_modifier = yes }
 		custom_trigger_tooltip = {
 			tooltip = owner_has_adm_power_50_tt
 			owner = { adm_power = 50 }
@@ -859,74 +866,56 @@ reduce_windward_triggers = {
 	}
 }
 windward_mass_upgrade_triggers = {
-	if = { #Can't upgrade further if the province has a level 7 Windward
-		limit = {
-			OR = {
-				has_province_modifier = windward_level_7
-				has_province_modifier = windward_level_8
-				has_province_modifier = windward_level_9
-				has_province_modifier = windward_level_10
+	owned_by = ROOT
+	OR = {
+		AND = {
+			has_province_modifier = windward_level_6
+			owner = {
+				treasury = 1000
+				manpower = 3
 			}
 		}
-		custom_trigger_tooltip = {
-			tooltip = upgrade_windward_10_tt
-			always = no
+		AND = {
+			has_province_modifier = windward_level_5
+			owner = {
+				treasury = 800
+				manpower = 2
+			}
 		}
-	}
-	#-------------------------------------------------------------------------------------------------------------
-	if = {  #Level 6 > 7
-		limit = { has_province_modifier = windward_level_6 }
-		owner = {
-			treasury = 1000
-			manpower = 3
+		AND = {
+			has_province_modifier = windward_level_4
+			owner = {
+				treasury = 400
+				manpower = 1.5
+			}
 		}
-	}
-	#-------------------------------------------------------------------------------------------------------------
-	if = { #Level 5 > 6
-		limit = { has_province_modifier = windward_level_5 }
-		owner = {
-			treasury = 800
-			manpower = 2
+		AND = {
+			has_province_modifier = windward_level_3
+			owner = {
+				treasury = 250
+				manpower = 1.25
+			}
 		}
-	}
-	#-------------------------------------------------------------------------------------------------------------
-	if = { #Level 4 > 5
-		limit = { has_province_modifier = windward_level_4 }
-		owner = {
-			treasury = 400
-			manpower = 1.5
+		AND = {
+			has_province_modifier = windward_level_2
+			owner = {
+				treasury = 150
+				manpower = 1
+			}
 		}
-	}
-	#-------------------------------------------------------------------------------------------------------------
-	if = { #Level 3 > 4
-		limit = { has_province_modifier = windward_level_3 }
-		owner = {
-			treasury = 250
-			manpower = 1.25
+		AND = {
+			has_province_modifier = windward_level_1
+			owner = {
+				treasury = 100
+				manpower = 0.75
+			}
 		}
-	}
-	#-------------------------------------------------------------------------------------------------------------
-	if = { #Level 2 > 3
-		limit = { has_province_modifier = windward_level_2 }
-		owner = {
-			treasury = 150
-			manpower = 1
-		}
-	}
-	#-------------------------------------------------------------------------------------------------------------
-	if = { #Level 1 > 2
-		limit = { has_province_modifier = windward_level_1 }
-		owner = {
-			treasury = 100
-			manpower = 0.75
-		}
-	}
-	#-------------------------------------------------------------------------------------------------------------
-	if = { #Level 0 > 1
-		limit = { has_windward_modifier = no }
-		owner = {
-			treasury = 50
-			manpower = 0.5
+		AND = {
+			has_not_windward_modifier = yes
+			owner = {
+				treasury = 50
+				manpower = 0.5
+			}
 		}
 	}
 }
