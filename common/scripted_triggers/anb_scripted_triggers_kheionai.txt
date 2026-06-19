@@ -466,7 +466,7 @@ has_not_windward_modifier = { #Checks if there's not a windward in the province
 
 has_full_deathwinds_system_button = {
 	if = {
-		limit = { has_not_full_deathwinds_system = yes }
+		limit = { FROM = { has_not_full_deathwinds_system = yes } }
 		custom_trigger_tooltip = {
 			tooltip = has_full_deathwinds_system_tt
 			always = no
@@ -510,11 +510,11 @@ windwards_area_subtrigger = {
 	if = {
 		limit = { has_province_flag = alecand_area_$area$ }
 		OR = {
-			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_1 } event_target:alecand_area_$area$_prov_1 = { $trigger$ = yes } }
-			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_2 } event_target:alecand_area_$area$_prov_2 = { $trigger$ = yes } }
-			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_3 } event_target:alecand_area_$area$_prov_3 = { $trigger$ = yes } }
-			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_4 } event_target:alecand_area_$area$_prov_4 = { $trigger$ = yes } }
-			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_5 } event_target:alecand_area_$area$_prov_5 = { $trigger$ = yes } }
+			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_1 } event_target:alecand_area_$area$_prov_1 = { $trigger$ = yes } } else = { hidden_trigger = { always = no } }
+			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_2 } event_target:alecand_area_$area$_prov_2 = { $trigger$ = yes } } else = { hidden_trigger = { always = no } }
+			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_3 } event_target:alecand_area_$area$_prov_3 = { $trigger$ = yes } } else = { hidden_trigger = { always = no } }
+			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_4 } event_target:alecand_area_$area$_prov_4 = { $trigger$ = yes } } else = { hidden_trigger = { always = no } }
+			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_5 } event_target:alecand_area_$area$_prov_5 = { $trigger$ = yes } } else = { hidden_trigger = { always = no } }
 		}
 	}
 }
@@ -523,6 +523,7 @@ windwards_area_subtrigger = {
  #Why is basically every trigger inside a custom tooltip? 
  #Because otherwise it's shown as "Province Owner: \n	<trigger>" which looks bad, isn't necessary or helpful, and I don't want it
 windward_upgrade_triggers = {
+	hidden_trigger = { owned_by = FROM }
 	if = { #Can't upgrade further if the province has a level 10 Windward
 		limit = { has_province_modifier = windward_level_10 }
 		custom_trigger_tooltip = {
@@ -801,6 +802,7 @@ windward_upgrade_triggers = {
 }
 
 windwards_reinforce_with_manpower_trigger = {
+	hidden_trigger = { owned_by = FROM }
 	has_full_deathwinds_system_button = yes
 	#Requires manpower equal to 5 + (2 * Maximum Potential Deathwind Level) 
 	if = {
@@ -838,6 +840,7 @@ windwards_reinforce_with_manpower_trigger = {
 }
 
 windwards_reinforce_with_mana_trigger = {
+	hidden_trigger = { owned_by = FROM }
 	has_full_deathwinds_system_button = yes
 	has_deathwind_modifier = yes
 	custom_trigger_tooltip = {
@@ -851,6 +854,7 @@ windwards_reinforce_with_mana_trigger = {
 }
 
 reduce_windward_triggers = {
+	hidden_trigger = { owned_by = FROM }
 	has_full_deathwinds_system_button = yes
 	has_windward_modifier = yes
 	NOT = { province_group = alecandi_capital_provinces }

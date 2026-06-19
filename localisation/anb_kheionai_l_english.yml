@@ -3,7 +3,15 @@
  aPUI_deathwinds_button_tt: "Open the Deathwinds Menu"
  aPUI_deathwinds_button_dummy_tt: "Access the Deathwinds Menu by opening the Buildings tab"
  aPUI_deathwinds_title: "Deathwinds"
- aPUI_deathwinds_info_title: "[This.GetName]"
+ aPUI_deathwinds_bar_tt: "The §aDeathwinds§! are [This.getDeathwindsBarActivity]\n-------------------------------------------------------------------\nDeathwinds last for §Y2 years§!\n\nWhile active, Every province affected will gain increasing amounts of §YAttrition§!, §YDevelopment Cost§!, §YMonthly Devastation§!, reduced §YMovement Speed§!, and reduced §YTrade Power§!\n§Y1 year§! into the storm, every affected province will also gain §YDevastation§!, and lose §YRegiments§! and a §YBuilding§! if the level is at least §Y4§! and §Y7§! respectively\n\nThe previous §aDeathwind§! level was §Y[deathwinds_previous_var.GetValue]§! before external effects\n\nThe next §aDeathwind§! will be between levels §Y[deathwinds_low_level_var.GetValue]§! and §Y[deathwinds_high_level_var.GetValue]§!"
+ deathwinds_bar_active_timer_tt: "§YActive§! - §Y[This.deathwinds_active_months_var.GetValue] Months§! left"
+ deathwinds_bar_inactive_timer_tt: "§gInactive§! - §Y[This.deathwinds_months_var.GetValue] Months§! left"
+ aPUI_deathwinds_info_title: "[This.GetAreaName] Area Warding"
+ aPUI_deathwinds_info_prov_r1c1: "[This.GetAlecandAreaProv1] §T[This.GetAlecandAreaProvWard1]§!"
+ aPUI_deathwinds_info_prov_r1c2: "[This.GetAlecandAreaProv2] §T[This.GetAlecandAreaProvWard2]§!"
+ aPUI_deathwinds_info_prov_r1c3: "[This.GetAlecandAreaProv3] §T[This.GetAlecandAreaProvWard3]§!"
+ aPUI_deathwinds_info_prov_r2c1: "[This.GetAlecandAreaProv4] §T[This.GetAlecandAreaProvWard4]§!"
+ aPUI_deathwinds_info_prov_r2c2: "[This.GetAlecandAreaProv5] §T[This.GetAlecandAreaProvWard5]§!"
  aPUI_deathwinds_windward_value: "[Root.GetWindwardValue]"
  aPUI_deathwinds_windward_desc: "Having §TWindwards ([Root.GetWindwardValue])§! in this province gives:\n[This.GetWindwardModifiers]"
  windward_10_modifiers: "Local Development Cost: §G-25.0%§!\nLocal Defensiveness: §G+50.0%§!\nPossible Number of Buildings: §G+3§!\nMana Regeneration: §G+0.05§!"
@@ -48,7 +56,7 @@
 
  aPUI_deathwinds_upgrades_button_2: "Reinforce [This.GetName] with Manpower"
  aPUI_deathwinds_upgrades_area_button_2: "Reinforce the [This.GetAreaName] Area with Manpower"
- windwards_reinforce_with_manpower_trigger_tt: "[This.GetName] has not already been protected from §YDevastation§!"
+ windwards_reinforce_with_manpower_trigger_tt: "Has not already been protected from §YDevastation§!"
  windwards_reinforce_with_manpower_tt: "[This.GetName] won't gain §YDevastation§! during the §aDeathwinds§!"
  windwards_protected_from_devastation_tt: "[This.GetName] has already been protected from §YDevastation§!"
  grey_windwards_protected_from_devastation_tt: "§g[This.GetName] has already been protected from §YDevastation§!§!"
@@ -62,7 +70,7 @@
  aPUI_deathwinds_upgrades_area_button_4: "§RDestroy the [This.GetAreaName] Area Windwards§!"
  destroy_windward_kheion_tt: "The §TZopedan§! cannot be destroyed"
  grey_destroy_windward_kheion_tt: "§gThe §TZopedan§! in [This.GetName] cannot be destroyed§!"
- destroy_windward_cooldown_tt: "Cannot destroy §TWindwards§! again for §Y25 Years§! ([This.DestroyWindwardMonthLoc] [DestroyWindwardYearVar.GetValue])"
+ destroy_windward_cooldown_tt: "Cannot destroy §TWindwards§! again for §Y25 Years§! ([This.DestroyWindwardMonthLoc] [This.DestroyWindwardYearVar.GetValue])"
  reduce_windward_level_tt: "Reduce the §TWindward§! level in [This.GetName] by §R1§!\nThis can only be used once every §Y25 Years§!\n"
  reduce_windward_level_area_tt: "Reduce the §TWindward§! level in [This.GetAreaName] by §R1§!\nThis can only be used once every §Y25 Years§!"
 
@@ -257,7 +265,7 @@
 
  #Tooltips
  deathwinds_disable_events_tt: "§aDeathwinds§! events will happen in the background from now on\n§RThis Decision is Permanent§!"
- deathwinds_intro_tt: "§aDeathwinds§! will come every §Y9§! years and last §Y2§! years, in which they will provide provinces with varying maladies depending on their level, which range from levels §Y1-10§!. They only affect region of Alecand.\n\nProvince interactions can be viewed through the §YProvince-Level Button§! in the custom province interface. Province defenses may be temporarily increased through the use of manpower or mana. Local §TWindwards§! can also be permanently increased, albeit at a significant cost which will change for each new level reached. Alternatively, they can be downgraded for a temporary boon.\n\nThe level of the Deathwind which affects a province is subtracted from the level of the local Windwards. Certain provinces have natural defenses, which are permanent and cannot be destroyed. These include provinces which are geographically further to the §RKaydhano Sea§! and those which are shielded by mountains.\n\nThe seven great §TKheions§! are immune to Deathwinds, owing to their Zopedan."
+ deathwinds_intro_tt: "§aDeathwinds§! will come every §Y9§! years and last §Y2§! years, in which they will provide provinces with varying maladies depending on their level, which range from levels §Y1-10§!. They only affect region of Alecand.\n\nProvince interactions can be viewed through the §YProvince-Level Button§! in the custom province interface. Province defenses may be temporarily increased through the use of manpower or mana. Local §TWindwards§! can also be permanently increased, albeit at a significant cost which will change for each new level reached. Alternatively, they can be downgraded for a temporary boon.\n\nThe level of the §aDeathwind§! which affects a province is subtracted from the level of the local §TWindwards§!. Certain provinces have natural defenses, which are permanent and cannot be destroyed. These include provinces which are geographically further to the §RKaydhano Sea§! and those which are shielded by mountains.\n\nThe seven great §TKheions§! are immune to Deathwinds, owing to their Zopedan."
  deathwinds_1444_intro_tt: "\nSince Alecand have recently experienced a great Deathwind, for the next few decades only Deathwinds levels §Y1-4§! will occur. §RBut this will not last.§!"
 #  gain_1_windward_level:0 "Windwards in §Y[This.GetName]§! gain §G1§! level permanently"
 #  gain_2_windward_level:0 "Windwards in §Y[This.GetName]§! gain §G2§! levels permanently"

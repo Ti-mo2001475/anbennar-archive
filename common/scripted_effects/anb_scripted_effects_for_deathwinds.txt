@@ -100,6 +100,7 @@ setup_deathwinds = {
 		}
 	}
 	set_global_flag = deathwinds_active_flag
+	calc_next_deathwind_levels = yes
 	#Reset aPUI bar
 	alecand_region = { set_aPUI_var_provincial = { name = deathwinds amount = 0 } }
 }
@@ -171,6 +172,7 @@ end_deathwinds = {
 	alecand_region = {
 		remove_all_deathwinds_modifiers = yes
 		#The UI tooltip displays '-1' as the deathwinds not being active
+		set_variable = { which = deathwinds_previous_var which = deathwinds_var } #To display the last Deathwind level
 		set_variable = { deathwinds_warded_var = -1 }
 		set_variable = { deathwinds_var = -1 }
 		set_variable = { deathwinds_rand_var = -1 }
@@ -184,6 +186,42 @@ permanently_end_deathwinds = {
 	alecand_region = {
 		remove_all_windward_modifiers = yes
 		clr_province_flag = aPUI_deathwinds_flag
+	}
+}
+
+#Sets variables that say the possible low and high level that the next Deathwind can be. Used in aPUI_deathwinds_bar_tt
+calc_next_deathwind_levels = {
+	if = {
+		limit = { is_year = 1512 }
+		set_variable = { deathwinds_low_level_var = 3 }
+		set_variable = { deathwinds_high_level_var = 10 }
+	}
+	else_if = {
+		limit = { is_year = 1472 }
+		set_variable = { deathwinds_low_level_var = 2 }
+		set_variable = { deathwinds_high_level_var = 8 }
+	}
+	else = {
+		set_variable = { deathwinds_low_level_var = 1 }
+		set_variable = { deathwinds_high_level_var = 4 }
+	}
+}
+
+update_deathwinds_bar = {
+	alecand_region = {
+		change_aPUI_var_provincial = { name = deathwinds amount = 1 }
+
+		set_variable = { deathwinds_months_var = 108 } #Set variable to 9 years in months (total Deathwinds cycle time)
+		set_variable = { deathwinds_active_months_var = 24 } #Set variable to 2 years in months (total time Deathwinds are active)
+
+		change_variable = { #Subtract it by the current month to get the months left in total cycle
+			which = deathwinds_months_var
+			which = aPUI_deathwinds_var
+		}
+		change_variable = { #Subtract it by the current month to get the months left while deathwinds are active
+			which = deathwinds_active_months_var
+			which = aPUI_deathwinds_var
+		}
 	}
 }
 
@@ -223,6 +261,7 @@ remove_all_windward_modifiers = {
 assign_deathwind_targets = {
 	alecand_region = {
 		type = random
+		amount = 1
 		limit = { not_has_alecand_area_flags = yes }
 		set_province_flag = alecand_area_$area$
 		save_global_event_target_as = alecand_area_$area$_prov_1
@@ -269,7 +308,7 @@ deathwind_button_effect = {
 
 deathwind_button_subeffect = {
 	random_area_province = {
-		limit = { has_province_flag = alecand_area_prov_$num$ }
+		limit = { has_province_flag = alecand_area_prov_$num$ owned_by = FROM }
 		custom_tooltip = pop_military_separator_tt
 		$effect$_tt_effect = yes
 	}
