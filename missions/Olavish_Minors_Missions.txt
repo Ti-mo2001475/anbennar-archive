@@ -578,12 +578,100 @@ olavish_minor_3 = {
 	}
 }
 
+# Naugsvol Unique
 naugsvol_1 = {
 	slot = 4
 	generic = no
 	ai = yes
 	has_country_shield = yes
 	potential = { tag = Z12 } #Naugsvol
+
+	naugsvol_construct_larger_pastures = {
+		icon = mission_rb_conquer_the_highlands
+		position = 1
+		required_missions = {}
+
+		trigger = {
+			982 = { #Naugsvol
+				base_production = 5
+				has_no_ongoing_construction = yes
+			}
+			treasury = 50
+		}
+
+		effect = {
+			if = {
+				limit = { 
+					982 = { #Naugsvol
+						has_building = workshop
+					}
+				}
+				add_treasury = 50
+			} else = {
+				982 = { #Naugsvol
+					add_building_construction = {
+						building = workshop
+						cost = 0.5
+						speed = 1
+					}
+				}
+			}
+			982 = { #Naugsvol
+				change_trade_goods = livestock
+			}
+		}
+	}
+
+	naugsvol_secure_cattle_pathways = {
+		icon = mission_rb_conquer_the_highlands
+		position = 3
+		required_missions = {
+			naugsvol_construct_larger_pastures
+			naugsvol_establish_the_menskgaetr
+		}
+
+		trigger = {
+			esfjall_area = {
+				type = all
+				owned_by = ROOT
+				is_core = ROOT
+				NOT = {
+					devastation = 1
+				}
+				OR = {
+					has_province_modifier = autonomy_decreased
+					NOT = {
+						local_autonomy = 20
+					}
+				}
+			}
+			982 = { #Naugsvol
+				trade_share = {
+					country = ROOT
+					share = 45
+				}
+				has_fort_building_trigger = yes
+			}
+			3189 = { #Broddrvloi
+				has_fort_building_trigger = yes
+			}
+		}
+
+		effect = {
+			naugsvol_area = {
+				add_province_modifier = {
+					name = naugsvol_beastly_infrastructure
+					duration = -1
+				}
+			}
+			esfjall_area = {
+				add_province_modifier = {
+					name = naugsvol_beastly_infrastructure
+					duration = -1
+				}
+			}
+		}
+	}
 }
 
 naugsvol_2 = {
@@ -592,8 +680,111 @@ naugsvol_2 = {
 	ai = yes
 	has_country_shield = yes
 	potential = { tag = Z12 } #Naugsvol
+
+	naugsvol_turning_the_tide = {
+		icon = mission_rb_conquer_the_highlands
+		position = 1
+		required_missions = {}
+
+		trigger = {
+			981 = { #Silvrborg
+				country_or_non_sovereign_subject_holds = ROOT
+				infantry_in_province = 3
+			}
+			983 = { #Baldersby
+				country_or_non_sovereign_subject_holds = ROOT
+				infantry_in_province = 3
+			}
+		}
+
+		effect = {
+			981 = { #Silvrborg
+				kill_units = {
+					who = owner
+					type = infantry
+					amount = 3
+				}
+				add_province_modifier = {
+					name = naugsvol_resettlement_efforts
+					duration = 7300
+				}
+			}
+			983 = { #Baldersby
+				kill_units = {
+					who = owner
+					type = infantry
+					amount = 3
+				}
+				add_province_modifier = {
+					name = naugsvol_resettlement_efforts
+					duration = 7300
+				}
+			}
+		}
+	}
+
+	naugsvol_establish_the_menskgaetr = {
+		icon = mission_rb_conquer_the_highlands
+		position = 2
+		required_missions = {
+			naugsvol_turning_the_tide
+		}
+
+		trigger = {
+			981 = { #Silvrborg
+				has_no_ongoing_construction = yes
+				base_manpower = 5
+			}
+			983 = { #Baldersby
+				has_no_ongoing_construction = yes
+				base_manpower = 5
+			}
+			army_professionalism = 0.05
+			treasury = 100
+		}
+
+		effect = {
+			if = {
+				limit = { 
+					981 = { #Silvrborg
+						has_building = barracks
+					}
+				}
+				add_treasury = 50
+			} else = {
+				981 = { #Silvrborg
+					add_building_construction = {
+						building = barracks
+						cost = 0.5
+						speed = 1
+					}
+				}
+			}
+			if = {
+				limit = { 
+					983 = { #Baldersby
+						has_building = barracks
+					}
+				}
+				add_treasury = 50
+			} else = {
+				983 = { #Baldersby
+					add_building_construction = {
+						building = barracks
+						cost = 0.5
+						speed = 1
+					}
+				}
+			}
+			add_country_modifier = {
+				name = naugsvol_menskgaetr_recruiting
+				duration = 7300
+			}
+		}
+	}
 }
 
+# Redgarhavn Unique
 redgarhavn_1 = {
 	slot = 4
 	generic = no
