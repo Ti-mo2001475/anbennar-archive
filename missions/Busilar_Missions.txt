@@ -1372,11 +1372,33 @@ col_4 = {
 			A29_wealth_of_sarhal
 			A29_due_of_two_crowns
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			region = ardimya_region 
+		} 
 
-		trigger = {  } 
+		trigger = {
+			any_owned_province = {
+				has_province_modifier = offcoast_merfolk_allied
+			} 
+			calc_true_if = {
+					amount = 8
+					ardimya_region = {
+						type = ALL 
+						owned_by = ROOT 
+						has_building = dock 
+						has_building = shipyard 
+						base_production = 4 
+					}
+				}
+		} 
 
-		effect = {  } 
+		effect = {
+
+			ardimya_region = {
+   			 limit = { owned_by = ROOT }
+   	 		add_province_modifier = ardimyan_investments
+			}	
+		} 
 	}
 
 	A29_on_the_doorstep_of_the_gulf = {
@@ -1386,11 +1408,41 @@ col_4 = {
 			A29_the_truth
 			A29_investments_afield
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			OR = {
+				area = bedaphire_area 
+				area = irkan_eparta_area 
+				region = ringlet_isles_region  
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {
+			bedaphire_area = { country_or_non_sovereign_subject_holds = ROOT }
+			irkan_eparta_area = { country_or_non_sovereign_subject_holds = ROOT }
+			ringlet_isles_region = { country_or_non_sovereign_subject_holds = ROOT }
+			
+			1343 = {
+				ROOT = {
+					trading_policy_in_node = {
+						node = PREV 
+						policy = propagate_religion 
+					}
+				}
+			}
 
-		effect = {  } 
+			6659 = {
+				heavy_ships_in_province = 30 
+			}
+		} 
+
+		effect = {
+			country_event = {
+				id = busilar.11 
+			}
+		} 
 	}
 
 	A29_kiamoa_falls = {
@@ -1400,11 +1452,28 @@ col_4 = {
 			A29_transformation_of_the_society
 			A29_lulupan_staging_area
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			area = malogadin_coast_1_area
+			area = malogadin_coast_2_area
+			area = malogadin_coast_3_area
+		} 
 
-		trigger = {  } 
+		trigger = {
+			stormwall_is_open = yes 
 
-		effect = {  } 
+			malogadin_coast_1_area = { country_or_non_sovereign_subject_holds = ROOT }
+			malogadin_coast_2_area = { country_or_non_sovereign_subject_holds = ROOT }
+			malogadin_coast_3_area = { country_or_non_sovereign_subject_holds = ROOT }
+			3551 = {
+				infantry_in_province = 25
+			}
+		} 
+
+		effect = {
+			anb_gain_permanent_claims_on_continent = {
+				continent = oceania 
+			}
+		} 
 	}
 
 	A29_plunder_the_pillars = {
