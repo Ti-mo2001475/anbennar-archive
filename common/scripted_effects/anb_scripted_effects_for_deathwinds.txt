@@ -1,4 +1,4 @@
-# #Setup deathwinds according to the rules for the given region, calls a second scripted effect with a random list, currently only takes alecand = yes as argument, can be expanded to other regions
+#Setup the Deathwinds level in every province in Alecand at the start of each storm
 setup_deathwinds = {
 	#Break when people realize getting fucked by max level Deathwinds in 1481 with no way to know about it or defend it is bad game design and that deathwind intensity lore isn't fundamental to the setting
 	# if = {
@@ -207,6 +207,7 @@ calc_next_deathwind_levels = {
 	}
 }
 
+#Update the variables that show the bar progress in the aPUI and how many months are left before it starts or ends
 update_deathwinds_bar = {
 	alecand_region = {
 		change_aPUI_var_provincial = { name = deathwinds amount = 1 }
@@ -257,7 +258,7 @@ remove_all_windward_modifiers = {
 }
 
 #Startup effect that assigns every province a unique flag and event target
- #to be referenced later in the button area effects (deathwind_button_effect, windwards_area_trigger)
+ #to be referenced later in the button area effects (deathwind_button_effect, windwards_area_trigger, etc.)
 assign_deathwind_targets = {
 	alecand_region = {
 		type = random
@@ -743,6 +744,7 @@ destroy_windward_reward = {
 	}
 }
 
+#Upgrades a random owned province in Alecand with the highest Windward level of all your owned provinces
 upgrade_highest_level_windward = {
 	custom_tooltip = upgrade_highest_level_windward_tt
 	hidden_effect = {

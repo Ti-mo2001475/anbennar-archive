@@ -421,7 +421,8 @@ has_not_full_deathwinds_system = {
 	}
 }
 
-has_deathwind_modifier = { #Checks if there's deathwinds currently happening in the province
+#Checks if there's deathwinds currently happening in the province
+has_deathwind_modifier = {
 	custom_trigger_tooltip = {
 		tooltip = has_deathwind_modifier_tt
 		OR = {
@@ -439,7 +440,8 @@ has_deathwind_modifier = { #Checks if there's deathwinds currently happening in 
 	}
 }
 
-has_windward_modifier = { #Checks if there's a windward in the province
+#Checks if there's a windward in the province
+has_windward_modifier = {
 	custom_trigger_tooltip = {
 		tooltip = has_windward_modifier_tt
 		OR = {
@@ -457,13 +459,14 @@ has_windward_modifier = { #Checks if there's a windward in the province
 	}
 }
 
-has_not_windward_modifier = { #Checks if there's not a windward in the province
+has_not_windward_modifier = {
 	custom_trigger_tooltip = {
 		tooltip = has_not_windward_modifier_tt
 		has_windward_modifier = no
 	}
 }
 
+#Used in button triggers to tell people they can't use the system only if they actually can't
 has_full_deathwinds_system_button = {
 	if = {
 		limit = { FROM = { has_not_full_deathwinds_system = yes } }
@@ -801,6 +804,7 @@ windward_upgrade_triggers = {
 	}
 }
 
+#Trigger for the 2nd Deathwinds aPUI button
 windwards_reinforce_with_manpower_trigger = {
 	hidden_trigger = { owned_by = FROM }
 	has_full_deathwinds_system_button = yes
@@ -839,6 +843,7 @@ windwards_reinforce_with_manpower_trigger = {
 	}
 }
 
+#Trigger for the 3rd Deathwinds aPUI button
 windwards_reinforce_with_mana_trigger = {
 	hidden_trigger = { owned_by = FROM }
 	has_full_deathwinds_system_button = yes
@@ -853,6 +858,7 @@ windwards_reinforce_with_mana_trigger = {
 	}
 }
 
+#Trigger for the 4th Deathwinds aPUI button
 reduce_windward_triggers = {
 	hidden_trigger = { owned_by = FROM }
 	has_full_deathwinds_system_button = yes
@@ -869,6 +875,8 @@ reduce_windward_triggers = {
 		}
 	}
 }
+
+#Trigger for the decision to upgrade every Windward possible
 windward_mass_upgrade_triggers = {
 	owned_by = ROOT
 	OR = {
