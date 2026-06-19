@@ -114,6 +114,8 @@ calculate_deathwinds_level = {
 	random_variable = { which = deathwinds_var which = deathwinds_rand_var }
 	#Ensure it's at or above the lowest allowed value
 	change_variable = { deathwinds_var = $low_level$ }
+	#If the Deathwinds have been increased in a seperate effect, increase it by that amount
+	change_variable = { which = deathwinds_var which = deathwinds_increase_var }
 
 	alecand_region = {
 		set_variable = { which = deathwinds_var which = PREV }
@@ -205,6 +207,18 @@ calc_next_deathwind_levels = {
 		set_variable = { deathwinds_low_level_var = 1 }
 		set_variable = { deathwinds_high_level_var = 4 }
 	}
+
+	#If the Deathwinds have been increased in a seperate effect, increase it by that amount
+	change_variable = { which = deathwinds_low_level_var which = deathwinds_increase_var }
+	change_variable = { which = deathwinds_high_level_var which = deathwinds_increase_var }
+	if = { #Deathwinds can't go about 10
+		limit = { check_variable = { deathwinds_high_level_var = 11 } }
+		set_variable = { deathwinds_increase_var = 10 }
+	}
+	if = { #Deathwinds can't go below 0
+		limit = { NOT = { check_variable = { deathwinds_low_level_var = 1 } } }
+		set_variable = { deathwinds_low_level_var = 0 }
+	}
 }
 
 #Update the variables that show the bar progress in the aPUI and how many months are left before it starts or ends
@@ -222,6 +236,35 @@ update_deathwinds_bar = {
 		change_variable = { #Subtract it by the current month to get the months left while deathwinds are active
 			which = deathwinds_active_months_var
 			which = aPUI_deathwinds_var
+		}
+	}
+}
+
+#Effects to increase & decrease the level of Deathwinds as an effect seperate from the normal system
+increase_deathwinds_level = {
+	custom_tooltip = deathwinds_increase_$amount$[[tooltip]_$tooltip$]_tt
+	hidden_effect = {
+		set_variable = { deathwinds_increase_var = $amount$ }
+		#Also increase the min and max values to ensure they're accurate
+		change_variable = { deathwinds_low_level_var = $amount$ }
+		change_variable = { deathwinds_high_level_var = $amount$ }
+		if = { #Deathwinds can't go about 10
+			limit = { check_variable = { deathwinds_high_level_var = 11 } }
+			set_variable = { deathwinds_increase_var = 10 }
+		}
+	}
+}
+
+decrease_deathwinds_level = {
+	custom_tooltip = deathwinds_decrease_$amount$[[tooltip]_$tooltip$]_tt
+	hidden_effect = {
+		set_variable = { deathwinds_increase_var = -$amount$ }
+		#Also decrease the min and max values to ensure they're accurate
+		change_variable = { deathwinds_low_level_var = -$amount$ }
+		change_variable = { deathwinds_high_level_var = -$amount$ }
+		if = { #Deathwinds can't go below 0
+			limit = { NOT = { check_variable = { deathwinds_low_level_var = 1 } } }
+			set_variable = { deathwinds_low_level_var = 0 }
 		}
 	}
 }
@@ -914,11 +957,6 @@ upgrade_windward_ai = {
 #Scripted effect to increase the windward level while removing the costs based on what level it is
 mass_upgrade_windward = {
 	if = {
-		limit = { has_province_modifier = windward_level_7 }
-		add_permanent_province_modifier = { name = windward_level_8 duration = -1 }
-		hidden_effect = { remove_province_modifier = windward_level_7 }
-	}
-	if = {
 		limit = { has_province_modifier = windward_level_6 }
 		add_permanent_province_modifier = { name = windward_level_7 duration = -1 }
 		hidden_effect = { remove_province_modifier = windward_level_6 }
@@ -979,5 +1017,55 @@ mass_upgrade_windward = {
 			add_treasury = -50
 			add_manpower = -0.5
 		}
+	}
+}
+
+#Scripted effect to increase the windward level for free
+upgrade_windward_for_free = {
+	[[allow_restricted_windwards] #Have to explicity allow these since they're not normally accessable
+		if = {
+			limit = { has_province_modifier = windward_level_8 }
+			add_permanent_province_modifier = { name = windward_level_9 duration = -1 }
+			hidden_effect = { remove_province_modifier = windward_level_8 }
+		}
+		if = {
+			limit = { has_province_modifier = windward_level_7 }
+			add_permanent_province_modifier = { name = windward_level_8 duration = -1 }
+			hidden_effect = { remove_province_modifier = windward_level_7 }
+		}
+	]
+	if = {
+		limit = { has_province_modifier = windward_level_6 }
+		add_permanent_province_modifier = { name = windward_level_7 duration = -1 }
+		hidden_effect = { remove_province_modifier = windward_level_6 }
+	}
+	if = {
+		limit = { has_province_modifier = windward_level_5 }
+		add_permanent_province_modifier = { name = windward_level_6 duration = -1 }
+		hidden_effect = { remove_province_modifier = windward_level_5 }
+	}
+	if = {
+		limit = { has_province_modifier = windward_level_4 }
+		add_permanent_province_modifier = { name = windward_level_5 duration = -1 }
+		hidden_effect = { remove_province_modifier = windward_level_4 }
+	}
+	if = {
+		limit = { has_province_modifier = windward_level_3 }
+		add_permanent_province_modifier = { name = windward_level_4 duration = -1 }
+		hidden_effect = { remove_province_modifier = windward_level_3 }
+	}
+	if = {
+		limit = { has_province_modifier = windward_level_2 }
+		add_permanent_province_modifier = { name = windward_level_3 duration = -1 }
+		hidden_effect = { remove_province_modifier = windward_level_2 }
+	}
+	if = {
+		limit = { has_province_modifier = windward_level_1 }
+		add_permanent_province_modifier = { name = windward_level_2 duration = -1 }
+		hidden_effect = { remove_province_modifier = windward_level_1 }
+	}
+	if = {
+		limit = { has_not_windward_modifier = yes }
+		add_permanent_province_modifier = { name = windward_level_1 duration = -1 }
 	}
 }
