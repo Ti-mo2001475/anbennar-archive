@@ -3734,7 +3734,7 @@ country_event = { #Cultural minority demands representation
 	}
 
 	option = {
-		name = parlaments.25.a #
+		name = parlaments.25.a
 		goto = other_province
 		event_target:first_province = {
 			add_province_modifier = {
@@ -3746,6 +3746,21 @@ country_event = { #Cultural minority demands representation
 			add_province_modifier = {
 				name = "demands_representation"
 				duration = 3650
+			}
+		}
+		if = { #Endralliande flavor
+			limit = { 
+				has_reform = overseas_governorate 
+				has_country_flag = end_imperialist_unlocked
+				has_country_flag = end_elven_unlocked
+			}
+			change_variable = {
+				which = end_imperialist_happiness
+				value = 10
+			}
+			subtract_variable = {
+				which = end_elven_happiness
+				value = 10
 			}
 		}
 	}
@@ -3766,6 +3781,16 @@ country_event = { #Cultural minority demands representation
 			}
 		}
 		set_ruler_flag = minorities_denied_representation
+		if = {
+			limit = {
+				has_reform = overseas_governorate
+				has_country_flag = end_elven_unlocked
+			}
+			change_variable = {
+				which = end_elven_happiness
+				value = 10
+			}
+		}
 	}
 }
 
