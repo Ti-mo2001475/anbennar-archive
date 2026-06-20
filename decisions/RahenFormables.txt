@@ -972,6 +972,7 @@ country_decisions = {
 			NOT = {
 				has_country_flag = formed_suryavar_flag
 				has_government_attribute = is_raja
+				tag = R38 #Bhuvauri excluded
 			}
 			NOT = { has_country_flag = R54_only_harimraj } # Parusahan Saya
 		}
@@ -989,8 +990,11 @@ country_decisions = {
 			}
 		}
 		allow = {
-			religion = the_jadd
-			dominant_religion = the_jadd
+			if = {
+				limit = { ai = no }
+				religion = the_jadd
+				dominant_religion = the_jadd
+			}
 			is_at_war = no
 			is_free_or_tributary_trigger = yes
 			total_development = 200
@@ -1055,13 +1059,26 @@ country_decisions = {
 							F46 = {
 								has_opinion = {
 									who = ROOT
-									value = 0
+									value = -50
 								}
 							}
 						}
 					}
 					add_historical_friend = F46
 					F46 = { add_historical_friend = ROOT }
+				}
+				if = {
+					limit = { ai = yes }
+					change_religion = the_jadd
+					capital_scope = { change_religion = the_jadd }
+					rahen_superregion = {
+						limit = { owned_by = ROOT }
+						random = {
+							chance = 33
+							change_religion = the_jadd
+						}
+					}
+					add_prestige = 75 #offset some of the -100 from change religion
 				}
 			}
 		}
