@@ -439,3 +439,146 @@ country_event = {
 		}
 	}
 }
+#Avnkaup Specific Events
+
+namespace = avnkaup:
+
+# Troll Hunter Captain Recruited
+country_event = {
+	id = avnkaup.1
+	title = avnkaup.1.t
+	desc = avnkaup.1.d
+	picture = DUTCH_SHIPS_PLUNDERING_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		always = yes
+	}
+
+	option = {
+		name = avnkaup.1.a
+		ai_chance = {
+			factor = 100
+		}
+		create_conquistador = {
+			tradition = 50
+		}
+	}
+}
+
+country_event = {
+	id = avnkaup.2
+	title = avnkaup.2.t
+	desc = avnkaup.2.d
+	picture = DUTCH_SHIPS_PLUNDERING_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		always = yes
+	}
+
+	option = {
+		name = avnkaup.2.a
+		ai_chance = {
+			factor = 100
+		}
+		discover_province = 4182 #Sashkras
+		set_country_flag = looking_for_key
+		custom_tooltip = avnkaup_search_sashkras
+	}
+	
+}
+
+country_event = {
+	id = avnkaup.3
+	title = avnkaup.3.t
+	desc = avnkaup.3.d
+	picture = DUTCH_SHIPS_PLUNDERING_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		has_country_flag = looking_for_key
+		any_hired_mercenary_company = {
+			mercenary_company = merc_saga_troll_hunters
+			location = { province_id = 4182 } #Sashkras
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = avnkaup.3.a
+		ai_chance = {
+			factor = 100
+		}
+		clr_country_flag = looking_for_key
+		custom_tooltip = avnkaup_kill_sashkras_natives
+		set_country_flag = better_kill_those_ogres
+	}
+}
+
+country_event = {
+	id = avnkaup.4
+	title = avnkaup.4.t
+	desc = avnkaup.4.d
+	picture = DUTCH_SHIPS_PLUNDERING_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		has_country_flag = better_kill_those_ogres
+		any_hired_mercenary_company = {
+			mercenary_company = merc_saga_troll_hunters
+			location = { province_id = 4182 } #Sashkras
+		}
+		4182 = { #Sashkras
+			NOT = {
+				native_size = 1
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = avnkaup.4.a
+		ai_chance = {
+			factor = 100
+		}
+		add_prestige = 10
+		set_country_flag = has_treasure_key
+		custom_tooltip = avnkaup_treasure_key_acquired
+	}
+}
+
+country_event = {
+	id = avnkaup.5
+	title = avnkaup.5.t
+	desc = avnkaup.5.d
+	picture = DUTCH_SHIPS_PLUNDERING_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		always = yes
+	}
+
+	option = {
+		name = avnkaup.5.a
+		ai_chance = {
+			factor = 100
+		}
+		add_treasury = 200
+		add_country_modifier = {
+			name = avnkaup_adventurers_guide
+			duration = -1
+		}
+	}
+}

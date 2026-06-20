@@ -41,9 +41,9 @@ olavish_minor_1 = {
 				}
 				AND = {
 					olavslund_area = {
-					type = all
-					owned_by = ROOT
-					is_core = ROOT
+						type = all
+						owned_by = ROOT
+						is_core = ROOT
 					}
 					drekkiskali_area = {
 						type = all
@@ -287,7 +287,6 @@ olavish_minor_2 = {
 			all_subject_country = {
 				NOT = { liberty_desire = 50 }
 			}
-			num_of_subjects = 2
 		}
 		
 		effect = {
@@ -978,12 +977,71 @@ redgarhavn_2 = {
 	}
 }
 
+# Avnkaup Unique
 avnkaup_1 = {
 	slot = 4
 	generic = no
 	ai = yes
 	has_country_shield = yes
 	potential = { tag = Z14 } #Avnkaup
+
+	avnkaup_ruins_in_raudrsten = {
+		icon = mission_rb_conquer_the_highlands
+		position = 2
+		required_missions = {
+			avnkaup_find_new_recruits
+		}
+
+		trigger = {
+			Z89 = { #Digoveda
+				exists = no
+			}
+			6282 = { #Raudrsten
+				NOT = { native_size = 1 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = avnkaup_saga_troll_hunters_in_raudrsten
+				any_hired_mercenary_company = {
+					mercenary_company = merc_saga_troll_hunters
+					location = {
+						province_id = 6282 #Raudrsten
+					}
+				}
+			}
+			
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = avnkaup_adventurer_enthusiasm
+				duration = 7300
+			}
+			country_event = { id = avnkaup.2 }
+
+		}
+	}
+
+	avnkaup_a_quest_complete = {
+		icon = mission_rb_conquer_the_highlands
+		position = 3
+		required_missions = {
+			avnkaup_ruins_in_raudrsten
+			avnkaup_frontier_settlement_initiative
+		}
+
+		trigger = {
+			has_mana_to_cast_level_2_spell = yes
+			custom_trigger_tooltip = {
+				tooltip = avnkaup_treasure_needs_key
+				has_country_flag = has_treasure_key
+			}
+		}
+
+		effect = {
+			pay_mana_for_level_2_spell = yes
+			country_event = { id = avnkaup.5 }
+		}
+	}
 }
 
 avnkaup_2 = {
@@ -992,4 +1050,153 @@ avnkaup_2 = {
 	ai = yes
 	has_country_shield = yes
 	potential = { tag = Z14 } #Avnkaup
+
+	avnkaup_find_new_recruits = {
+		icon = mission_rb_conquer_the_highlands
+		position = 1
+		required_missions = {}
+
+		trigger = {
+			978 = { #Avnkaup
+				base_manpower = 5
+			}
+			has_mil_advisor = yes
+		}
+
+		effect = {
+			unlock_merc_company = {
+				merc_company = merc_saga_troll_hunters
+			}
+		}
+	}
+
+	avnkaup_frontier_settlement_initiative = {
+		icon = mission_rb_conquer_the_highlands
+		position = 2
+		required_missions = {
+			avnkaup_find_new_recruits
+		}
+
+		trigger = {
+
+			6272 = { #Kronetindur
+				if = {
+					limit = { 
+						owned_by = ROOT
+						is_city = yes
+					}
+					culture = olavish
+					religion = skaldhyrric_faith
+				} else = {
+					has_discovered = ROOT
+					NOT = {
+						native_size = 75
+					}
+				}
+			}
+			2831 = { #Hagisandr
+				if = {
+					limit = { 
+						owned_by = ROOT
+						is_city = yes
+					}
+					culture = olavish
+					religion = skaldhyrric_faith
+				} else = {
+					has_discovered = ROOT
+					NOT = {
+						native_size = 75
+					}
+				}	
+			}
+			6277 = { #Nevdyll
+				if = {
+					limit = { 
+						owned_by = ROOT
+						is_city = yes
+					}
+					culture = olavish
+					religion = skaldhyrric_faith
+				} else = {
+					has_discovered = ROOT
+					NOT = {
+						native_size = 25
+					}
+				}
+			}
+			6278 = { #Vornblot
+				if = {
+					limit = { 
+						owned_by = ROOT
+						is_city = yes
+					}
+					culture = olavish
+					religion = skaldhyrric_faith
+				} else = {
+					has_discovered = ROOT
+					NOT = {
+						native_size = 25
+					}
+				}
+			}
+			2833 = { #Grenholt
+				if = {
+					limit = { 
+						owned_by = ROOT
+						is_city = yes
+					}
+					culture = olavish
+					religion = skaldhyrric_faith
+				} else = {
+					has_discovered = ROOT
+					NOT = {
+						native_size = 50
+					}
+				}
+			}
+			treasury = 50
+			has_country_modifier = racial_pop_troll_purge
+		}
+
+		effect = {
+			add_treasury = -50
+			6272 = { #Kronetindur
+				if = {
+					limit = { owned_by = ROOT }
+					if = {
+						limit = { is_city = yes }
+						add_base_tax = 1
+						add_base_production = 1
+						add_base_manpower = 1
+					} else = {
+						add_colonysize = 200
+					}
+				} else = {
+					add_siberian_construction = 1
+				}
+				remove_troll_minority_size_effect = yes
+				change_culture = olavish
+				change_religion = skaldhyrric_faith
+			}
+			jotunsdalr_area = {
+				type = all
+				if = {
+					limit = { owned_by = ROOT }
+					if = {
+						limit = { is_city = yes }
+						add_base_tax = 1
+						add_base_production = 1
+						add_base_manpower = 1
+					} else = {
+						add_colonysize = 200
+					}
+				} else = {
+					add_siberian_construction = 1
+				}
+				remove_troll_minority_size_effect = yes
+				change_culture = olavish
+				change_religion = skaldhyrric_faith
+			}
+		}
+	}
 }
