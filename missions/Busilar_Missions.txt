@@ -289,11 +289,12 @@ col_1 = {
 		} 
 
 		effect = { #todo fix TT's
-			complex_dynamic_effect = {
-				first_custom_tooltip = pashaine_won_league_reward_tt
-				first_limit = "has_country_flag = religious_league_war_on_winning_side"
-				first_effect = "add_country_modifier = { name = A29_league_war_victory duration = -1 }"
+			 complex_dynamic_effect = { 
+			 	first_custom_tooltip = A29_win_religious_league_tt
+			 	first_limit = "has_country_flag = religious_league_war_on_winning_side"
+			 	first_effect = "add_country_modifier = { name = A29_league_war_victory duration = -1 }"
 			}
+
 			complex_dynamic_effect = {
 				first_custom_tooltip = A29_the_emperor_tt
 				first_limit = "is_emperor = yes"
@@ -1171,7 +1172,26 @@ col_3 = {
 		provinces_to_highlight = {  
 			OR = {
 				AND = {
-					
+					region = businor_region 
+					NOT = {
+						AND = {
+							has_manufactory_trigger = yes 
+							has_production_building_trigger = yes 
+
+						}
+					}
+				}
+				AND = {
+					has_weapons_trade_goods = yes
+					country_or_non_sovereign_subject_holds = ROOT 
+					NOT = {
+						AND = {
+							has_weapons_trade_goods = yes
+							has_manufactory_trigger = yes
+							has_manpower_building_trigger = yes
+							has_forcelimit_building_trigger = yes
+						}
+					}
 				}
 			}
 		} 
@@ -1654,11 +1674,9 @@ col_4 = {
 				} 
 			}		
 
-			add_permanent_claim_multi_provinces = {
-				region = ringlet_isles_region 
-				area = bedaphire_area 
-				area = irkan_eparta_area
-			}
+				ringlet_isles_region = { add_permanent_claim = ROOT } 
+				bedaphire_area = { add_permanent_claim = ROOT }
+			    irkan_eparta_area = { add_permanent_claim = ROOT }
 		} 
 	}
 
@@ -1752,6 +1770,8 @@ col_4 = {
 			anb_gain_permanent_claims_on_continent = {
 				continent = oceania 
 			}
+			set_country_flag = A29_faster_genepillar_expedition
+			custom_tooltip = A29_faster_genepillar_tt
 		} 
 	}
 
@@ -1759,11 +1779,29 @@ col_4 = {
 		icon = mission_precursor_relics
 		position = 14
 		required_missions = { A29_kiamoa_falls } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			province_group = gene_pillars 
+			NOT = {
+				owned_by = ROOT 
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {  
+			num_of_owned_provinces_with = {
+				province_group = gene_pillars 
+				value = 3 
+			}
+			num_of_level_3_gene_pillars_completed = {
+				value = 1 
+			}
+		} 
 
-		effect = {  } 
+		effect = {
+			gene_pillars_random_insyaa_invention_unlock = yes 
+			gene_pillars_random_insyaa_invention_unlock = yes 
+			gene_pillars_random_insyaa_invention_unlock = yes
+			custom_tooltip = A29_gene_pillar_hp_tt
+		} 
 	}
 
 	A29_nothing_greater = {
@@ -1795,11 +1833,35 @@ col_4 = {
 			A29_nothing_greater
 			A29_new_labour
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			NOT = {
+				is_sea = yes 
+			}
+			NOT = {
+				religion = ravelian 
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {
+			calc_true_if = {
+				all_province = {
+					type = all 
+					religion = ravelian
+				}
+				amount = 2000 
+				check_variable = { MaxArtificePoints = 100 }
+				OR = {
+					has_country_flag = unlocked_artifice_invention_kraken_galleons 
+					has_country_flag = unlocked_artifice_invention_bio_processor 
+					has_country_flag = unlocked_artifice_invention_spirit_munition 
+				}
+				is_all_concessions_in_council_taken = yes 
+			}
+		} 
 
-		effect = {  } 
+		effect = {
+			custom_tooltip = A29_refund_papal_influence_tt
+		} 
 	}
 }
 col_5 = {
@@ -1813,11 +1875,65 @@ col_5 = {
 		icon = mission_verne_flag
 		position = 2
 		required_missions = { A29_lion_stirs } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			owned_by = ROOT 
+			any_neighbor_province = {
+				owned_by = A33 
+			}
+			NOT = {
+				infantry_in_province = 5 
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {
+			if = {	
+				limit = {
+					exists = A33 
+				}
+				any_owned_province = {
+					any_neighbor_province = {
+						owned_by = A33 
+					}
+					infantry_in_province = 5
+				}
+				has_spy_network_in = {
+					who = A33 
+					value = 25
+				}
+				A33 = {
+					has_been_insulted_by_root = yes 
+				}
+			}
+			else = {
+				NOT = {
+					exists = A33 
+				}
+			}
+		} 
 
-		effect = {  } 
+		effect = {
+			if = {
+				limit = {
+					exists = A33 
+				}
+				A30 = {
+					add_rival = A33
+				}
+				A33 = {
+					add_country_modifier = {
+						name = A29_says_mean_things_bout_bread_dogs
+						duration = 3650 
+					}
+				}
+			}
+			else = {
+				A33 = {
+					every_core_province = {
+						add_permanent_claim = ROOT 
+					}
+				}
+			}
+		} 
 	}
 
 	A29_gateway_divenhal = {
@@ -1829,7 +1945,25 @@ col_5 = {
 		}
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = {
+			1259 = {
+				trade_share = {
+					country = A29
+					share = 35
+				}
+			}
+			1296 = {
+				trade_share = {
+					country = A29
+					share = 65
+				}
+			}
+			num_of_owned_provinces_with = {
+				province_has_center_of_trade_of_level = 2
+				value = 3 
+				has_trade_building_trigger = yes 
+			}
+		} 
 
 		effect = {  } 
 	}
