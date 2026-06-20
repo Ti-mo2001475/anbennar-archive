@@ -13513,20 +13513,15 @@ country_event = { #Imported Labor
 	desc = diggy.900.d
 	picture = CAVE_eventPicture
 	
-	mean_time_to_happen = {
-		years = 30
-	}
+	is_triggered_only = yes
 	
 	trigger = {
-		any_owned_province = {
-				continent = serpentspine
-				OR = {
-					has_terrain = dwarven_hold
-					has_terrain = dwarven_hold_surface
-				}
-		}
 		NOT = { has_country_flag = dig_imported }
+		any_owned_province = {
+			has_construction = digging_deeper
+		}
 		capital_scope = {
+			continent = serpentspine
 			OR = {
 				has_terrain = dwarven_hold
 				has_terrain = dwarven_hold_surface
@@ -13573,36 +13568,27 @@ country_event = { #Imported Labor
 		ai_chance = { factor = 100 }
 		if = {
 			limit = { has_estate = estate_burghers }
-			add_estate_loyalty = { estate = estate_burghers loyalty = +10 }
+			add_estate_loyalty = { estate = estate_burghers loyalty = 10 }
             add_estate_influence_modifier = {
 				estate = estate_burghers
 				desc = diggy_diggy_rejected_labor_plan
-				influence = +10
+				influence = 10
 				duration = 3650
 			}
 		}
 		if = {
     		limit = {
-    			any_owned_province = {
-					has_province_flag = diggy_minorities_imported
-					has_goblin_minority_trigger = yes
-				} 
-    		}	
+    			event_target:import_destination = { has_goblin_minority_trigger = yes }
+			} 
 			small_decrease_of_goblin_tolerance_effect = yes
 		}
 		else = { small_decrease_of_kobold_tolerance_effect = yes }
 	
-	hidden_effect = {
-			random_owned_province = {
-				limit = {
-					has_construction = digging_deeper
-					continent = serpentspine
-					has_province_flag = diggy_minorities_imported
-				}
-				clr_province_flag = diggy_minorities_imported
-			}
+		hidden_effect = {
+				event_target:import_destination = { clr_province_flag = diggy_minorities_imported }
 		}
 	}
+
 	
 	option = {
 		name = diggy.900.b
@@ -13612,10 +13598,7 @@ country_event = { #Imported Labor
         tooltip = { capital_scope = { change_variable = { cons_prog = 0.0125 } } }	
         if = {
             limit = {
-                any_owned_province = {
-			    	has_province_flag = diggy_minorities_imported
-			    	has_goblin_minority_trigger = yes
-				} 
+                event_target:import_destination = { has_goblin_minority_trigger = yes }
             }
 	        event_target:import_destination = { add_goblin_minority_size_effect = yes }
         }
@@ -13663,13 +13646,11 @@ country_event = { #Imported Labor Race War
 	option = {
 		name = diggy.901.a
 		ai_chance = { factor = 100 }
-		if = {
-            limit = {
-    			event_target:import_destination = {
-            		has_goblin_minority_trigger = yes
-        		}
-    		}	
-	        event_target:import_destination = { remove_goblin_minority_size_effect = yes }
+		event_target:import_destination = {
+            if = {
+                limit = { has_goblin_minority_trigger = yes }
+                remove_goblin_minority_size_effect = yes
+            }
         }
     	else_if = { 
 			limit = {
@@ -13681,7 +13662,7 @@ country_event = { #Imported Labor Race War
 		}
 		hidden_effect = { capital_scope = { change_variable = { cons_prog = -0.1 } } }
    		tooltip = { capital_scope = { change_variable = { cons_prog = -0.050 } } }
-		clr_country_flag = diggy_allowed_to_import
+		clr_country_flag = dig_imported
 		hidden_effect = {
 			random_owned_province = {
 				limit = {
@@ -13727,7 +13708,7 @@ country_event = { #Imported Labor Race War
     		}	
 			ROOT = { small_increase_of_kobold_tolerance_effect = yes } 
 		}
-		clr_country_flag = diggy_allowed_to_import
+		clr_country_flag = dig_imported
 		hidden_effect = {
 			random_owned_province = {
 				limit = {
@@ -13765,7 +13746,7 @@ country_event = { #Imported Labor Race War
     		}	
 			ROOT = { large_increase_of_kobold_tolerance_effect = yes } 
 		}
-		clr_country_flag = diggy_allowed_to_import
+		clr_country_flag = dig_imported
 		hidden_effect = {
 			random_owned_province = {
 				limit = {
@@ -13826,6 +13807,6 @@ country_event = { #Diggy Diggy Veins Run Red
 				clr_province_flag = diggy_minorities_imported
 			}
 		}
-		clr_country_flag = diggy_allowed_to_import
+		clr_country_flag = dig_imported
 	}
 }
