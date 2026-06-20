@@ -3303,11 +3303,24 @@ dendugma_monastery = {
 	type = monument
 
 	build_trigger = {
-		owner = {
-				religion = fangaulan_pantheon
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = dendugma_build_bypass_flag
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = great_project_mt_enabled
+				always = yes
+			}
 		}
-		culture_group = west_sarhaly
-		has_owner_accepted_culture = yes
+		else = {
+			owner = {
+				religion = fangaulan_pantheon
+			}
+			culture_group = west_sarhaly
+			has_owner_accepted_culture = yes
+		}
 	}
 
 	on_built = {
@@ -3550,7 +3563,20 @@ imperial_arena = {
 	type = monument
 
 	build_trigger = {
-		can_use_imperial_arena_scripted_trigger = yes
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = imperial_arena_build_bypass_flag
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = great_project_mt_enabled
+				always = yes
+			}
+		}
+		else = {
+			can_use_imperial_arena_scripted_trigger = yes
+		}
 	}
 
 	on_built = {
