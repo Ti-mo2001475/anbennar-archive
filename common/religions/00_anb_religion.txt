@@ -607,9 +607,18 @@ cannorian = {
 					NOT = { has_country_modifier = warrior_automata }
 				}
 				effect = {
-					add_country_modifier = {
-						name = "warrior_automata"
-						duration = 7300
+					if = {
+						limit = {
+							has_country_flag = A29_warrior_automata_buff
+						}
+						custom_tooltip = A29_warrior_automata_buff_effect_tt 
+						warrior_automata_A29 = yes
+					}
+					else = {
+						add_country_modifier = {
+							name = "warrior_automata"
+							duration = 7300
+						}
 					}
 					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 13 }
 				}
