@@ -745,13 +745,13 @@ country_event = { #Iaochari
 			kill_leader = {
 				type = "The Gloam Knight"
 			}
+		}
 		if = {
 			limit = { has_church_aspect = mil_autumn_gloamknight }
 			remove_church_aspect = mil_autumn_gloamknight
 			add_church_power = 150
 		}
 		set_country_flag = H14_gloam_knight_disabled
-		}
 	}
 }
 
@@ -1714,6 +1714,284 @@ country_event = { #GOTCHYA
 				H14_remove_winter = yes
 			}
 		}
+	}
+}
+
+country_event = { #election event for Followers of the Princess
+	id = flavour_eighard.44
+	desc = flavour_eighard.44.d
+	title = flavour_eighard.44.t
+	picture = RELIGION_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		has_reform = H14_followers_of_the_princess
+		NOT = { has_country_flag = in_theocracy_heir_selection }
+		NOT = { has_country_flag = is_selecting_stat_bonus_for_heir }
+		ruler_is_not_lich = yes
+	}
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = in_theocracy_heir_selection
+			
+			clr_country_flag = theo_local_noble_flag
+			clr_country_flag = theo_foreign_noble_flag
+			clr_country_flag = theo_merchants_son_flag
+			clr_country_flag = theo_talented_theologian_flag
+			clr_country_flag = theo_local_preacher_flag
+			clr_country_flag = theo_papal_protege_flag
+			clr_country_flag = theo_imam_khatib_flag
+			clr_country_flag = theo_influential_reformer_flag
+		}
+	}
+
+	after = {
+		anb_post_election_cleanup = yes
+	}
+
+	option = { #the option names are correct, these are meant to be slightly adjusted copies of the regular theocracy election event
+		name = theocracy.1.a		# A Local Noble
+		if = {
+			limit = {
+				has_estate = estate_nobles
+			}
+			add_estate_loyalty = {
+				estate = estate_nobles
+				loyalty = 15
+			}
+		}
+		if = {
+			limit = {
+				has_estate = estate_church
+			}
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = -15
+			}
+		}
+		set_country_flag = theo_local_noble_flag # USED IN DEVOTION.TXT
+		if = {
+			limit = { has_government_attribute = can_see_theocratic_heir_stats }
+			define_heir_random_gender = {
+				age = 35
+				culture = tuathak
+				number = 1
+			}
+		}
+		else = {
+			define_heir_random_gender = {
+				age = 35
+				hidden = yes
+				culture = tuathak
+				number = 1
+			}
+		}
+		hidden_effect = {
+			clr_country_flag = in_theocracy_heir_selection
+		}
+		if = {
+			limit = { has_government_attribute = theocracy_magical_odds_boosted }
+			random_list = {
+				10 = {
+					define_powerful_mage = { type = heir }
+				}
+				90 = {
+			
+				}
+			}
+		}
+	}
+	option = {
+		name = theocracy.1.c		# A Talanted Theologian
+		if = {
+			limit = {
+				has_estate = estate_burghers
+			}
+			add_estate_loyalty = {
+				estate = estate_burghers
+				loyalty = 15
+			}
+		}
+		if = {
+			limit = {
+				has_estate = estate_church
+			}
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = -15
+			}
+		}
+		set_country_flag = theo_merchants_son_flag # USED IN DEVOTION.TXT
+		if = {
+			limit = { has_government_attribute = can_see_theocratic_heir_stats }
+			define_heir_random_gender = {
+				age = 35
+				culture = tuathak
+				number = 1
+			}
+		}
+		else = {
+			define_heir_random_gender = {
+				age = 35
+				hidden = yes
+				culture = tuathak
+				number = 1
+			}
+		}
+		hidden_effect = {
+			clr_country_flag = in_theocracy_heir_selection
+		}
+		if = {
+			limit = { has_government_attribute = theocracy_magical_odds_boosted }
+			random_list = {
+				10 = {
+					define_powerful_mage = { type = heir }
+				}
+				90 = {
+			
+				}
+			}
+		}
+	}
+	option = {
+		name = theocracy.1.e		# A Talanted Theologian
+		if = {
+			limit = {
+				has_estate = estate_church
+			}
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = 15
+			}
+		}
+		if = {
+			limit = {
+				has_estate = estate_burghers
+			}
+			add_estate_loyalty = {
+				estate = estate_burghers
+				loyalty = -15
+			}
+		}
+		set_country_flag = theo_talented_theologian_flag # USED IN DEVOTION.TXT
+		if = {
+			limit = { has_government_attribute = can_see_theocratic_heir_stats }
+			define_heir_random_gender = {
+				age = 35
+				culture = tuathak
+				number = 1
+			}
+		}
+		else = {
+			define_heir_random_gender = {
+				age = 35
+				hidden = yes
+				culture = tuathak
+				number = 1
+			}
+		}
+		hidden_effect = {
+			clr_country_flag = in_theocracy_heir_selection
+		}
+		if = {
+			limit = { has_government_attribute = theocracy_magical_odds_boosted }
+			random_list = {
+				10 = {
+					define_powerful_mage = { type = heir }
+				}
+				90 = {
+			
+				}
+			}
+		}
+	}
+	option = {
+		name = theocracy.1.f		# A Local Preacher
+		if = {
+			limit = {
+				has_estate = estate_church
+			}
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = 15
+			}
+		}
+		if = {
+			limit = {
+				has_estate = estate_nobles
+			}
+			add_estate_loyalty = {
+				estate = estate_nobles
+				loyalty = -15
+			}
+		}
+		set_country_flag = theo_local_preacher_flag # USED IN DEVOTION.TXT
+		if = {
+			limit = { has_government_attribute = can_see_theocratic_heir_stats }
+			define_heir_random_gender = {
+				age = 35
+				culture = tuathak
+				number = 1
+			}
+		}
+		else = {
+			define_heir_random_gender = {
+				age = 35
+				hidden = yes
+				culture = tuathak
+				number = 1
+			}
+		}
+		hidden_effect = {
+			clr_country_flag = in_theocracy_heir_selection
+		}
+		if = {
+			limit = { has_government_attribute = theocracy_magical_odds_boosted }
+			random_list = {
+				10 = {
+					define_powerful_mage = { type = heir }
+				}
+				90 = {
+			
+				}
+			}
+		}
+	}
+	option = {
+		name = theocracy.1.j		# A Promising Young Mage
+		trigger = { 
+			has_government_attribute = theocracy_magical_odds_boosted
+		}
+
+		if = {
+			limit = { has_government_attribute = can_see_theocratic_heir_stats }
+			define_heir_random_gender = {
+				age = 40
+				culture = tuathak
+				max_random_adm = 3
+				max_random_dip = 3
+				max_random_mil = 3
+				number = 5
+			}
+		}
+		else = {
+			define_heir_random_gender = {
+				age = 40
+				culture = tuathak
+				hidden = yes
+				max_random_adm = 3
+				max_random_dip = 3
+				max_random_mil = 3
+				number = 5
+			}
+		}
+		add_devotion = -5
+		hidden_effect = {
+			clr_country_flag = in_theocracy_heir_selection
+		}
+		define_powerful_mage = { type = heir }
 	}
 }
 
