@@ -960,20 +960,50 @@ col_3 = {
 		icon = mission_crowning
 		position = 7
 		required_missions = { A29_ironwood_enrichment } 
-		provinces_to_highlight = {  } 
-
-		trigger = {  
-			check_variable = {
-				which = A29_barracks_value
-				value = 1
-			}
-			check_variable = {
-				which = A29_dock_value
-				value = 1
-			}
+		provinces_to_highlight = {  
+			owned_by = ROOT
+			culture_group = gnollish
 		} 
 
-		effect = {  } 
+		trigger = {  
+			NOT = {
+				has_estate_privilege =  estate_planetouched_organization_scattered
+			}
+			all_owned_province = {
+				NOT = {
+					culture_group = gnollish
+				}
+			}
+		}
+
+		effect = {  
+			custom_tooltip = A29_emperors_mantle_privilege_tt #todo make priv
+			set_country_flag = A29_emperors_mantle_privilege_unlock
+			complex_dynamic_effect = {
+				first_custom_tooltip = A29_mantle_oppressed_tt
+				first_limit = "has_estate_privilege = estate_planetouched_organization_oppressed"
+				first_effect = "set_country_flag = tree_of_tales_free_use"
+				second_custom_tooltip = A29_mantle_empowered_tt
+				second_limit = "has_estate_privilege = estate_planetouched_organization_empowered"
+				second_effect = "set_country_flag = imperial_arena_build_bypass_flag"
+				third_custom_tooltip = A29_mantle_state_tt
+				third_limit = "has_estate_privilege = estate_planetouched_organization_state"
+				third_effect = "set_country_flag = dendugma_build_bypass_flag"
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_estate_privilege =  estate_planetouched_organization_oppressed
+						}
+					}
+					change_variable = {
+						which = A29_assimilation
+						value = 1
+					}
+				}
+			}
+		} 
 	}
 
 	A29_tripartite_empire = {
@@ -983,22 +1013,124 @@ col_3 = {
 			A29_taking_biakatas_mantle
 			A29_reversal_of_history
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			OR = {
+				AND = {
+					OR = {
+						province_id = 5813
+						province_id = 475
+						province_id = 408
+					}
+					development = 35
+				}
+				AND = {
+					OR = {
+						region = businor_region
+						region = khetapera_region
+						region = janama_region
+					}
+					unrest = 0.01
+				}
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {  
+			government_rank = 3
+			any_owned_province = {
+				OR = {
+					region = businor_region
+					region = khetapera_region
+					region = janama_region
+				}
+				NOT = {
+					unrest = 0.01
+				}
+			}
+			5813 = {
+				development = 35
+			}
+			475 = {
+				development = 35
+			}
+			408 = {
+				development = 35
+			}
+			has_global_flag = ahati_rebellion_crushed 
+		}
 
-		effect = {  } 
+		effect = {
+			set_country_flag = A29_tripartite_empire_flag
+			add_government_reform = A29_tripartite_empire_reform
+			5813 = {
+				add_province_modifier = {
+					name = A29_triple_capital
+					duration = -1
+				}
+			}
+			475 = {
+				add_province_modifier = {
+					name = A29_triple_capital
+					duration = -1
+				}
+			}
+			408 = {
+				add_province_modifier = {
+					name = A29_triple_capital
+					duration = -1
+				}
+			}
+		} 
 	}
 
 	A29_due_of_two_crowns = {
 		icon = mission_crown_of_wenceslas
 		position = 9
 		required_missions = { A29_tripartite_empire } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			is_capital = yes
+			region = horashesh_region
+			owner = {
+				NOT = {
+					ROOT = {
+						has_won_war_against = {
+							who = PREV
+						}
+					}
+				}
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {  
+			calc_true_if = {
+				amount = 40
+				horashesh_region = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+			num_of_battles = {
+				amount = 75
+			}
+			all_known_country = {
+				OR = {
+					capital_scope = {
+						NOT = {
+							region = horashesh_region
+						}
+					}
+					ROOT = {
+						has_won_war_against = {
+							who = PREV
+						}
+					}
+				}
+			}
+		} 
 
-		effect = {  } 
+		effect = {  
+			add_mandate = 25
+			custom_tooltip = A29_two_crowns_reforms_tt
+			set_country_flag = A29_two_crowns
+		} 
 	}
 
 	A29_transformation_of_the_society = {
@@ -1007,18 +1139,57 @@ col_3 = {
 		required_missions = { A29_spread_the_word } 
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = {
+			check_variable = {
+				which = MaxArtificePoints
+				value = 50
+			}
+			num_artifice_inventions_discovered = { VAL = 10 }
+			num_economic_artifice_inventions_discovered = { VAL = 3 }
+			num_society_artifice_inventions_discovered = { VAL = 3 }
+			num_military_artifice_inventions_discovered = { VAL = 3 }
+			estate_loyalty = {
+				estate = estate_artificers
+				loyalty = 60
+			}
+			num_of_estate_agendas_completed = {
+				estate = estate_artificers
+				value = 3
+			}
+		} 
 
-		effect = {  } 
+		effect = {  
+			custom_tooltip = A29_boons_of_the_society_tt
+			set_country_flag = A29_boons_of_the_society_flag #priv TODO
+		} 
 	}
 
 	A29_lions_arsenal = {
 		icon = expand_the_arsenal
 		position = 13
 		required_missions = { A29_transformation_of_the_society } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			OR = {
+				AND = {
+					
+				}
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {  
+			businor_region = {
+				type = all
+				has_manufactory_trigger = yes
+				has_production_building_trigger = yes
+			}
+			num_of_owned_provinces_with = {
+				value = 15
+				has_weapons_trade_goods = yes
+				has_manufactory_trigger = yes
+				has_manpower_building_trigger = yes
+				has_forcelimit_building_trigger = yes
+			}
+		} 
 
 		effect = {  } 
 	}
