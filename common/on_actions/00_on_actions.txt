@@ -3805,6 +3805,23 @@ on_added_to_trade_company = {
 			Y15_calculate_gov_mechanic_ship_trade_power_buff = yes
 		}
 	}
+	# Busilar ^ cooler than that guy 
+	if = {
+		limit = {
+			owner = {
+				mission_completed = A29_consolidate_clove_trade
+			}
+		}
+		add_base_production = 1 
+		if ={
+			limit = {
+				province_has_center_of_trade_of_level = 1
+			}
+			ROOT = {
+				add_mercantilism = 1 
+			}
+		}
+	}
 }
 
 # province
@@ -3828,6 +3845,23 @@ on_removed_from_company = {
 				has_government_attribute = is_beikdugang_plutocracy
 			}
 			Y15_calculate_gov_mechanic_ship_trade_power_buff = yes
+		}
+	}
+	# Busilar ^ cooler than that guy 
+	if = {
+		limit = {
+			owner = {
+				mission_completed = A29_consolidate_clove_trade
+			}
+		}
+		add_base_production = -1 
+		if ={
+			limit = {
+				province_has_center_of_trade_of_level = 1
+			}
+			ROOT = {
+				add_mercantilism = -1 
+			}
 		}
 	}
 }
@@ -20860,7 +20894,7 @@ on_reform_changed = {
 	}
 }
 
-on_trade_company_investment = {
+on_trade_company_investment = { #this does nothing
 }
 
 on_center_of_trade_upgrade = {
