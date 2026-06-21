@@ -1102,6 +1102,11 @@ country_event = { #Bjarnrik Warning
 			every_subject_country = {
 				limit = { NOT = { has_country_flag = gerudia_rebellious } }
 				add_liberty_desire = -25
+				break_alliance = Z10
+				break_alliance = Z11
+				break_alliance = Z83
+				break_alliance = Z84
+				break_alliance = Z85
 			}
 		}
 		FROM = {
@@ -1164,6 +1169,11 @@ country_event = { #Bjarnrik Warning
 			every_subject_country = {
 				limit = { NOT = { has_country_flag = gerudia_rebellious } }
 				add_liberty_desire = -25
+				break_alliance = Z10
+				break_alliance = Z11
+				break_alliance = Z83
+				break_alliance = Z84
+				break_alliance = Z85
 			}
 		}
 		FROM = {
@@ -1226,6 +1236,11 @@ country_event = { #Bjarnrik Warning
 			every_subject_country = {
 				limit = { NOT = { has_country_flag = gerudia_rebellious } }
 				add_liberty_desire = -25
+				break_alliance = Z10
+				break_alliance = Z11
+				break_alliance = Z83
+				break_alliance = Z84
+				break_alliance = Z85
 			}
 		}
 		FROM = {
@@ -1288,6 +1303,11 @@ country_event = { #Bjarnrik Warning
 			every_subject_country = {
 				limit = { NOT = { has_country_flag = gerudia_rebellious } }
 				add_liberty_desire = -25
+				break_alliance = Z10
+				break_alliance = Z11
+				break_alliance = Z83
+				break_alliance = Z84
+				break_alliance = Z85
 			}
 		}
 		FROM = {
@@ -1350,6 +1370,11 @@ country_event = { #Bjarnrik Warning
 			every_subject_country = {
 				limit = { NOT = { has_country_flag = gerudia_rebellious } }
 				add_liberty_desire = -25
+				break_alliance = Z10
+				break_alliance = Z11
+				break_alliance = Z83
+				break_alliance = Z84
+				break_alliance = Z85
 			}
 		}
 		FROM = {
@@ -1412,6 +1437,11 @@ country_event = { #Bjarnrik Warning
 			every_subject_country = {
 				limit = { NOT = { has_country_flag = gerudia_rebellious } }
 				add_liberty_desire = -25
+				break_alliance = Z10
+				break_alliance = Z11
+				break_alliance = Z83
+				break_alliance = Z84
+				break_alliance = Z85
 			}
 		}
 		FROM = {
@@ -1687,6 +1717,7 @@ country_event = { #Revolt Victorious
 	picture = SIEGE_eventPicture
 	
 	fire_only_once = yes
+	is_triggered_only = yes
 	
 	trigger = {
 		has_country_flag = gerudia_ringleader_flag
@@ -1734,6 +1765,7 @@ country_event = { #Bjarnrik Victorious
 	picture = IMPALED_SOLDIERS_eventPicture
 	
 	fire_only_once = yes
+	is_triggered_only = yes
 	
 	trigger = {
 		has_global_flag = bjarnrik_revolt_flag
@@ -1741,6 +1773,11 @@ country_event = { #Bjarnrik Victorious
 		all_war_enemy_countries = {
 			OR = {
 				capital_scope = { controlled_by = Z08 }
+				capital_scope = {
+					controller = {
+						in_war_with = Z08
+					}
+				}
 				NOT = { has_country_flag = gerudia_rebellious }
 			}
 		}
@@ -2362,17 +2399,15 @@ province_event = {
 	fire_only_once = yes
 
 	trigger = {
-		is_year = 1469
-		NOT = {
-			is_year = 1472
-		}
 		has_province_modifier = gerudia_frontier_spirit
 		owner = {
 			OR = {
 				culture_group = gerudian
 				culture = jarnklo_harpy
-				culture = fjord_troll
 				culture = black_castanorian
+				culture_is_troll = yes
+				culture = gray_orc
+				culture = grombar_half_orc
 			}
 		} 	
 	}
@@ -2404,17 +2439,15 @@ province_event = {
 	fire_only_once = yes
 
 	trigger = {
-		is_year = 1487
-		NOT = {
-			is_year = 1490
-		}
 		has_province_modifier = gerudia_frontier_spirit
 		owner = {
 			OR = {
 				culture_group = gerudian
 				culture = jarnklo_harpy
-				culture = fjord_troll
 				culture = black_castanorian
+				culture_is_troll = yes
+				culture = gray_orc
+				culture = grombar_half_orc
 			}
 		} 	
 	}
@@ -2467,17 +2500,15 @@ province_event = {
 	fire_only_once = yes
 
 	trigger = {
-		is_year = 1468
-		NOT = {
-			is_year = 1471
-		}
 		has_province_modifier = gerudia_frontier_spirit
 		owner = {
 			OR = {
 				culture_group = gerudian
 				culture = jarnklo_harpy
-				culture = fjord_troll
 				culture = black_castanorian
+				culture_is_troll = yes
+				culture = gray_orc
+				culture = grombar_half_orc
 			}
 		} 	
 	}
@@ -2515,17 +2546,15 @@ province_event = {
 	fire_only_once = yes
 
 	trigger = {
-		is_year = 1480
-		NOT = {
-			is_year = 1483
-		}
 		has_province_modifier = gerudia_frontier_spirit
 		owner = {
 			OR = {
 				culture_group = gerudian
 				culture = jarnklo_harpy
-				culture = fjord_troll
 				culture = black_castanorian
+				culture_is_troll = yes
+				culture = gray_orc
+				culture = grombar_half_orc
 			}
 		} 	
 	}
@@ -2539,12 +2568,6 @@ province_event = {
 			}
 		}
 		2830 = { 
-			if = {
-				limit = { is_empty = yes }
-				add_siberian_construction = 5
-			}
-		}
-		6274 = { 
 			if = {
 				limit = { is_empty = yes }
 				add_siberian_construction = 5
@@ -2578,17 +2601,15 @@ province_event = {
 	fire_only_once = yes
 
 	trigger = {
-		is_year = 1461
-		NOT = {
-			is_year = 1464
-		}
 		has_province_modifier = gerudia_frontier_spirit
 		owner = {
 			OR = {
 				culture_group = gerudian
 				culture = jarnklo_harpy
-				culture = fjord_troll
 				culture = black_castanorian
+				culture_is_troll = yes
+				culture = gray_orc
+				culture = grombar_half_orc
 			}
 		} 	
 	}
@@ -2620,17 +2641,15 @@ province_event = {
 	fire_only_once = yes
 
 	trigger = {
-		is_year = 1484
-		NOT = {
-			is_year = 1487
-		}
 		has_province_modifier = gerudia_frontier_spirit
 		owner = {
 			OR = {
 				culture_group = gerudian
 				culture = jarnklo_harpy
-				culture = fjord_troll
 				culture = black_castanorian
+				culture_is_troll = yes
+				culture = gray_orc
+				culture = grombar_half_orc
 			}
 		} 	
 	}
@@ -2638,12 +2657,6 @@ province_event = {
 	option = {
 		name = "gerudia.100.a"
 		6272 = { 
-			if = {
-				limit = { is_empty = yes }
-				add_siberian_construction = 5
-			}
-		}
-		2831 = { 
 			if = {
 				limit = { is_empty = yes }
 				add_siberian_construction = 5
@@ -2683,17 +2696,15 @@ province_event = {
 	fire_only_once = yes
 
 	trigger = {
-		is_year = 1465
-		NOT = {
-			is_year = 1468
-		}
 		has_province_modifier = gerudia_frontier_spirit
 		owner = {
 			OR = {
 				culture_group = gerudian
 				culture = jarnklo_harpy
-				culture = fjord_troll
 				culture = black_castanorian
+				culture_is_troll = yes
+				culture = gray_orc
+				culture = grombar_half_orc
 			}
 		} 	
 	}
@@ -2731,17 +2742,15 @@ province_event = {
 	fire_only_once = yes
 
 	trigger = {
-		is_year = 1484
-		NOT = {
-			is_year = 1487
-		}
 		has_province_modifier = gerudia_frontier_spirit
 		owner = {
 			OR = {
 				culture_group = gerudian
 				culture = jarnklo_harpy
-				culture = fjord_troll
 				culture = black_castanorian
+				culture_is_troll = yes
+				culture = gray_orc
+				culture = grombar_half_orc
 			}
 		} 	
 	}
@@ -2755,12 +2764,6 @@ province_event = {
 			}
 		}
 		6278 = { 
-			if = {
-				limit = { is_empty = yes }
-				add_siberian_construction = 5
-			}
-		}
-		2833 = { 
 			if = {
 				limit = { is_empty = yes }
 				add_siberian_construction = 5
