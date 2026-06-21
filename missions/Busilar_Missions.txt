@@ -73,8 +73,24 @@ col_1 = {
 			}
 		} 
 
-		effect = {  
-			#todo new reward
+		effect = {
+			if = {
+				limit = {
+					has_dlc = Domination
+				}
+				custom_tooltip = A29_develop_castle_tt
+				set_country_flag = A29_develop_castle
+				hidden_effect = {
+					remove_estate_privilege = estate_nobles_development_of_castles
+					set_estate_privilege = estate_nobles_development_of_castles_A29
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = A29_nobility_loyalty
+					duration = -1
+				}
+			}
 		} 
 	}
 
@@ -222,6 +238,9 @@ col_1 = {
 				}
 				add_prosperity = 10
 			}
+			the_borders_region = {
+				add_permanent_claim = ROOT
+			}
 		} 
 	}
 
@@ -289,7 +308,7 @@ col_1 = {
 		} 
 
 		effect = { #todo fix TT's
-			 complex_dynamic_effect = { 
+			complex_dynamic_effect = { 
 			 	first_custom_tooltip = A29_win_religious_league_tt
 			 	first_limit = "has_country_flag = religious_league_war_on_winning_side"
 			 	first_effect = "add_country_modifier = { name = A29_league_war_victory duration = -1 }"
@@ -359,7 +378,11 @@ col_2 = {
 			A29_winning_side
 		}
 		provinces_to_highlight = {  
-
+			owned_by = ROOT
+			has_tax_building_trigger = yes
+			NOT = {
+				num_of_times_improved_by_owner = 1
+			}
 		} 
 
 		trigger = {
@@ -530,7 +553,31 @@ col_2 = {
 		icon = mission_coromandel_expansion
 		position = 7
 		required_missions = { A29_ironwood_enrichment } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			OR = {
+				province_id = 3084
+				province_id = 3082
+				AND = {
+					region = fahvanosy_region
+					NOT = {
+						owned_by = ROOT
+					}
+				}
+				AND = {
+					province_id = 6632
+					NOT = {
+						AND = {
+							country_or_non_sovereign_subject_holds = ROOT
+							has_great_project = {
+								type = lizardfolk_port
+								tier = 1
+							}
+							is_owned_by_trade_company = yes
+						}
+					}
+				}
+			}
+		} 
 
 		trigger = {  
 			num_of_owned_provinces_with = {
@@ -668,11 +715,54 @@ col_2 = {
 		icon = convert_the_holy_lands
 		position = 11
 		required_missions = { A29_the_truth } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1296
+				AND = {
+					is_capital = yes
+					owner = {
+						religion = ravelian
+						NOT = {
+							has_50_opinion_improved_relation = { target = ROOT }
+						}
+					}
+				}
+			}
+			
+		} 
 
-		trigger = {  } 
+		trigger = {  
+			tolerance_of_true_faith = { amount = 6 }
+			OR = {
+				trading_policy_in_node = {
+					node = 1296
+					policy = propagate_religion
+				}
+				trade_company_eborthil = {
+					religion = ravelian
+				}
+			}
+			calc_true_if = {
+				amount = 10
+				any_known_country = {
+					religion = ravelian
+					has_50_opinion_improved_relation = { target = ROOT }
+				}
+			}
+			OR = {
+				has_global_modifier_value = {
+					which = improve_relation_modifier 
+					value = 0.5
+				}
+				has_dip_advisor_3 = yes
+			}
+		} 
 
-		effect = {  } 
+		effect = {  
+			country_event = {
+				id = busilar.14
+			}
+		} 
 	}
 
 	A29_home_is_where_the_heart_is = {
@@ -681,9 +771,81 @@ col_2 = {
 		required_missions = { A29_spread_the_word } 
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = {
+			OR = {
+				businor_region = {
+					religion = ravelian
+					development = 15
+					has_tax_building_trigger = yes
+					has_courthouse_building_trigger = yes
+				}
+				AND = {
+					num_of_owned_provinces_with = {
+						value = 10
+						region = businor_region
+						development = 15
+						has_tax_building_trigger = yes
+						has_courthouse_building_trigger = yes
+					}
+					num_of_owned_provinces_with = {
+						value = 10
+						region = janama_region
+						development = 15
+						has_tax_building_trigger = yes
+						has_courthouse_building_trigger = yes
+					}
+					num_of_owned_provinces_with = {
+						value = 10
+						region = kheterata_region
+						development = 15
+						has_tax_building_trigger = yes
+						has_courthouse_building_trigger = yes
+					}
+				}
+			}
+		} 
 
-		effect = {  } 
+		effect = {  
+			set_country_flag = A29_temples_give_tax_dev
+			custom_tooltip = A29_temples_give_tax_dev_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_tax_building_trigger = yes
+					}
+					add_base_tax = 1
+				}
+				if = {
+					limit = {
+						num_of_owned_provinces_with = {
+							value = 10
+							region = businor_region
+							development = 15
+							has_tax_building_trigger = yes
+							has_courthouse_building_trigger = yes
+						}
+						num_of_owned_provinces_with = {
+							value = 10
+							region = janama_region
+							development = 15
+							has_tax_building_trigger = yes
+							has_courthouse_building_trigger = yes
+						}
+						num_of_owned_provinces_with = {
+							value = 10
+							region = kheterata_region
+							development = 15
+							has_tax_building_trigger = yes
+							has_courthouse_building_trigger = yes
+						}
+					}
+					change_variable = {
+						which = A29_assimilation
+						value = 1
+					}
+				}
+			}
+		} 
 	}
 
 	A29_leader_of_faith = {

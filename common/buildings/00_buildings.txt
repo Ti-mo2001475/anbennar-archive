@@ -297,6 +297,18 @@ temple = {
 			add_prosperity = 30
 			set_province_flag = R54_iron_soul_used
 		}
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = A29_temples_give_tax_dev
+				}
+				NOT = {
+					has_province_flag = A29_temple_tax_prov
+				}
+			}
+			add_base_tax = 1
+			clr_province_flag = A29_temple_tax_prov
+		}
 	}
 	on_destroyed = {
 		on_province_tax_building_destroyed_estate_privileges_effect = yes
@@ -356,6 +368,15 @@ temple = {
 			add_base_tax = -1
 		}
 		remove_province_modifier = zokka_tithe
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = A29_temples_give_tax_dev
+				}
+			}
+			add_base_tax = -1
+			clr_province_flag = A29_temple_tax_prov
+		}
 	}
 	on_obsolete = {
 		gronstunad_building_authority_effect = { value = -1 }
@@ -1237,6 +1258,18 @@ cathedral = {
 			}
 			remove_province_modifier = zokka_tithe
 		}	
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = A29_temples_give_tax_dev
+				}
+				NOT = {
+					has_province_flag = A29_temple_tax_prov
+				}
+			}
+			add_base_tax = 1
+			clr_province_flag = A29_temple_tax_prov
+		}
 	}
 	on_destroyed = {
 		on_province_tax_building_destroyed_estate_privileges_effect = yes
@@ -1274,6 +1307,15 @@ cathedral = {
 		}
 		remove_province_modifier = commmand_tiger_temple_buff
 		remove_province_modifier = zokka_tithe_better
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = A29_temples_give_tax_dev
+				}
+			}
+			add_base_tax = -1
+			clr_province_flag = A29_temple_tax_prov
+		}
 	}
 	on_obsolete = {
 	}
