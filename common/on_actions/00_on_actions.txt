@@ -15215,6 +15215,11 @@ on_five_year_pulse_3 = {
 			}
 		}
 	}
+
+	#Aelantir Immigration Events
+	random_events = { #TO be massively expanded ideally, potentially becoming a handler instead.
+		500 = aelantir_immigration.0
+	}
 }
 
 on_five_year_pulse_4 = {
@@ -16568,6 +16573,21 @@ on_province_culture_changed = {
 			NOT = { culture = guryadagga }
 		}
 		remove_province_modifier = qeyikul_guryadaggan_autonomy
+	}
+
+	#littlemoon haven, remove modifier if culture not elven
+	if = {
+		limit = {
+			or = {
+				has_province_modifier = aelantir_immigration_little_moonhaven
+				has_province_modifier = aelantir_immigration_little_moonhaven_greedy
+				has_province_modifier = aelantir_immigration_little_moonhaven_empowered
+			}
+			NOT = { culture_is_elven = yes }
+		}
+		remove_province_modifier = aelantir_immigration_little_moonhaven
+		remove_province_modifier = aelantir_immigration_little_moonhaven_greedy
+		remove_province_modifier = aelantir_immigration_little_moonhaven_empowered
 	}
 }
 
