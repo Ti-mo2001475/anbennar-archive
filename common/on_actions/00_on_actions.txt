@@ -3776,18 +3776,33 @@ on_battle_won_country = {
 				tag = V23
 			}
 			add_army_tradition = 5
-			every_war_enemy_country = {
-				limit = {
-					OR = {
-						is_in_war = {
-							attacker_leader = FROM
-						}
-						is_in_war = {
-							defender_leader = FROM
+			FROM = {
+				every_ally = {
+					limit = {
+						OR = {
+							is_in_war = {
+								attacker_leader = FROM
+							}
+							is_in_war = {
+								defender_leader = FROM
+							}
 						}
 					}
+					country_event = { id = flavor_beiklings.501 }
 				}
-				country_event = { id = flavor_beiklings.501 }
+				every_subject_country = {
+					limit = {
+						OR = {
+							is_in_war = {
+								attacker_leader = FROM
+							}
+							is_in_war = {
+								defender_leader = FROM
+							}
+						}
+					}
+					country_event = { id = flavor_beiklings.501 }
+				}
 			}
 		}
 		else = {
