@@ -42,7 +42,7 @@ col_1 = {
 		effect = {  
 			add_country_modifier = {
 				name = A29_to_the_victor_the_spoils
-				duration = 600
+				duration = 18250
 			}
 		} 
 	}
@@ -116,7 +116,7 @@ col_1 = {
 		effect = {  
 			add_country_modifier = {
 				name = A29_aelantir_rush
-				duration = 300
+				duration = 9125
 			}
 			dry_coast_region = {
 				add_permanent_claim = ROOT 
@@ -285,7 +285,10 @@ col_1 = {
 		} 
 
 		trigger = {
-			has_global_flag = league_war_complete
+			custom_trigger_tooltip = {
+				tooltip = A29_league_war_complete
+				has_global_flag = league_war_complete
+			}
 			highcliff_area = {
 				country_or_non_sovereign_subject_holds = ROOT
 			}
@@ -322,14 +325,56 @@ col_1 = {
 			 	first_limit = "has_country_flag = religious_league_war_on_winning_side"
 			 	first_effect = "add_country_modifier = { name = A29_league_war_victory duration = -1 }"
 			}
-
-			complex_dynamic_effect = {
-				first_custom_tooltip = A29_the_emperor_tt
-				first_limit = "is_emperor = yes"
-				first_effect = "while = { limit = { the_borders_region = { type = any is_part_of_hre = yes } } random_province = { limit = { region = the_borders_region } set_in_empire = no A29 = { add_adm_power = 10 add_dip_power = 10 add_mil_power = 10 } } }"
-				second_custom_tooltip = A29_not_the_emperor_tt
-				second_limit = "is_emperor = no"
-				second_effect = "while = { limit = { the_borders_region = { type = any is_part_of_hre = yes NOT = { has_province_flag = A29_IA_gain } } } random_province = { limit = { region = the_borders_region NOT = { has_province_flag = A29_IA_gain } } set_province_flag = A29_IA_gain A29 = { add_imperial_influence = 1 } } }"
+			if = {
+				limit = {
+					is_emperor = yes
+				}
+				custom_tooltip = A29_the_emperor_tt
+				while = { 
+					limit = { 
+						the_borders_region = { 
+							type = any 
+							is_part_of_hre = yes 
+						} 
+					} 
+					random_province = { 
+						limit = { 
+							region = the_borders_region 
+						} 
+						set_in_empire = no 
+						A29 = { 
+							add_adm_power = 10 
+							add_dip_power = 10 
+							add_mil_power = 10 
+						} 
+					} 
+				}
+			}
+			else = {
+				custom_tooltip = A29_not_the_emperor_tt
+				while = { 
+					limit = { 
+						the_borders_region = { 
+							type = any 
+							is_part_of_hre = yes 
+							NOT = { 
+								has_province_flag = A29_IA_gain 
+							} 
+						} 
+					} 
+					random_province = { 
+						limit = { 
+							region = the_borders_region 
+							NOT = { 
+								has_province_flag = A29_IA_gain 
+							} 
+						} 
+						set_province_flag = A29_IA_gain 
+						A29 = { 
+							add_imperial_influence = 1 
+						} 
+					} 
+				}
 			}
 		} 
 	}
@@ -416,8 +461,7 @@ col_1 = {
 				}
 				join_all_offensive_wars_of = ROOT 
 			}
-
-
+			#todo after war effects
 		} 
 	}
 }
@@ -455,14 +499,17 @@ col_2 = {
 			}
 		}
 
-		effect = {  
-			every_owned_province = {
-				limit = {
-					has_tax_building_trigger = yes
-					num_of_times_improved_by_owner = 1
+		effect = {
+			custom_tooltip = A29_nurture_people_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_tax_building_trigger = yes
+						num_of_times_improved_by_owner = 1
+					}
+					add_prosperity = 25
+					add_base_manpower = 2
 				}
-				add_prosperity = 25
-				add_base_manpower = 2
 			}
 		} 
 	}
@@ -601,7 +648,8 @@ col_2 = {
 			}
 		} 
 
-		effect = {  
+		effect = {
+			custom_tooltip = A29_owned_ironwood_tt
 			add_years_of_owned_provinces_production_income = {
 				trigger = {
 					has_province_modifier = ironwood_trees
@@ -2115,7 +2163,15 @@ col_4 = {
 			A29_due_of_two_crowns
 		}
 		provinces_to_highlight = {
-			region = ardimya_region 
+			region = ardimya_region
+			owned_by = ROOT
+			NOT = {
+				AND = {
+					has_building = dock 
+					has_building = shipyard 
+					base_production = 4 
+				}
+			}
 		} 
 
 		trigger = {
@@ -2137,15 +2193,14 @@ col_4 = {
 		effect = {
 			ardimya_region = {
    			limit = { owned_by = ROOT }
-   	 		add_province_modifier = {
+   	 		add_permanent_province_modifier = {
 				name = A29_ardimyan_investments
 				duration = -1 
 				} 
-			}		
-
-				ringlet_isles_region = { add_permanent_claim = ROOT } 
-				bedaphire_area = { add_permanent_claim = ROOT }
-			    irkan_eparta_area = { add_permanent_claim = ROOT }
+			}
+			ringlet_isles_region = { add_permanent_claim = ROOT } 
+			bedaphire_area = { add_permanent_claim = ROOT }
+			irkan_eparta_area = { add_permanent_claim = ROOT }
 		} 
 	}
 
@@ -2158,13 +2213,22 @@ col_4 = {
 		}
 		provinces_to_highlight = {
 			OR = {
-				area = bedaphire_area 
-				area = irkan_eparta_area 
-				region = ringlet_isles_region  
+				AND = {
+					OR = {
+						area = bedaphire_area 
+						area = irkan_eparta_area 
+						region = ringlet_isles_region  
+					}
+					NOT = {
+						country_or_non_sovereign_subject_holds = ROOT 
+					}
+				}
+				AND = {
+					province_id = 1343
+				}
 			}
-			NOT = {
-				country_or_non_sovereign_subject_holds = ROOT 
-			}
+			
+
 		} 
 
 		trigger = {
