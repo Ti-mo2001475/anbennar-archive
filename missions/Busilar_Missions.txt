@@ -368,7 +368,56 @@ col_1 = {
 		} 
 
 		effect = { 
-			#todo rav war - cba rn
+			if = {
+				limit = {
+					ROOT = {
+						is_emperor = yes 
+					}
+				}
+				random_country = {
+					limit = {
+						is_part_of_hre = yes 
+						NOT = { religion = ravelian }
+						NOT = {
+							any_country = {
+								is_part_of_hre = yes 
+								NOT = { religion = ravelian }
+								NOT = { total_development = PREV }
+							}
+						}
+					}
+					save_event_target_as = league_war_defender
+				}
+			}
+
+			else = {
+				emperor = {
+					save_event_target_as = league_war_defender
+				}
+			}
+
+			declare_war_with_cb = {
+				casus_belli = cb_usurp_emperorship
+				who = event_target:league_war_defender
+			}
+
+			every_country = {
+				limit = {
+					is_part_of_hre = yes
+					NOT = { religion = ravelian }
+				}
+				join_all_defensive_wars_of = event_target:league_war_defender
+			}
+
+			every_country = {
+				limit = {
+					is_part_of_hre = yes
+					religion = ravelian 
+				}
+				join_all_offensive_wars_of = ROOT 
+			}
+
+
 		} 
 	}
 }
