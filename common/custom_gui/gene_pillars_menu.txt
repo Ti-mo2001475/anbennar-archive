@@ -452,33 +452,6 @@ custom_window = {
 	}
 }
 
-	#Recall the expedition
-	custom_button = {
-		name = aPUI_gene_pillar_interaction_exploration_close_button
-		trigger = {
-			custom_trigger_tooltip = {
-				tooltip = gene_pillars_does_not_have_pending_event_tt
-				owner = { NOT = { has_country_flag = gene_pillars_has_pending_event } }
-			}
-			hidden_trigger = { #To let Player see that it worked after first click, they still need to wait for ptm tho
-				NOT = {
-					has_province_modifier = gene_pillar_abandon_randomness_ptm
-				}
-			}
-		}
-		tooltip = gene_pillars_abandon_expedition_tt
-		effect = {
-			hidden_effect = {
-				add_province_triggered_modifier = gene_pillar_abandon_randomness_ptm
-			}
-			owner = {
-				tooltip = {
-					add_country_modifier = { name = gene_pillars_party_preparing duration = 730 } # 2 years
-				}
-			}
-		}
-	}
-
 	#This window has all the bars.
 	custom_window = {
 		name = aPUI_gene_pillar_interaction_progress_window_bars
