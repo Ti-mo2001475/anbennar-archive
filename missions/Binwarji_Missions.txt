@@ -121,12 +121,16 @@ binwarji_branch_1 = {
 						}
 					}
 				}
-				NOT = {
-					AND = {
-						development = 30
-						OR = {
-							province_has_center_of_trade_of_level = 3
-							owner = { treasury = 500 }
+				AND = {
+					NOT = {
+						AND = {
+							has_dlc = "Leviathan"
+							development = 30
+							has_building = mage_tower
+							OR = {
+								province_has_center_of_trade_of_level = 3
+								owner = { treasury = 500 }
+							}
 						}
 					}
 				}
@@ -221,32 +225,12 @@ binwarji_branch_2 = {
 					is_subject_of = ROOT
 				}
 			}
-			every_estates_loyalty_influence = { loyalty/influence = loyalty amount = 30 }
+			every_estates_loyalty_influence = { which = loyalty amount = 30 }
 		}
 
 		effect = {
 			add_estate_loyalty = {
-				estate = estate_nobles
-				loyalty = 10
-			}
-			add_estate_loyalty = {
-				estate = estate_church
-				loyalty = 10
-			}
-			add_estate_loyalty = {
-				estate = estate_burghers
-				loyalty = 10
-			}
-			add_estate_loyalty = {
-				estate = estate_adventurers
-				loyalty = 10
-			}
-			add_estate_loyalty = {
-				estate = estate_mages
-				loyalty = 10
-			}
-			add_estate_loyalty = {
-				estate = estate_planetouched
+				estate = all
 				loyalty = 10
 			}
 			add_country_modifier = {
@@ -303,7 +287,7 @@ binwarji_branch_2 = {
 		} 
 	}
 
-	L22_restore_the_attoners = {
+	L22_restore_the_atoners = {
 		icon = mission_son_fetishist_alliances
 		position = 5
 		required_missions = { L22_a_kingdoms_pride } 
@@ -324,37 +308,37 @@ binwarji_branch_2 = {
 			}
 			OR = {
 				adm_power = 100
-				has_reform = gods_attoners
+				has_reform = gods_atoners
 			}
 		}
 
 		effect = {
 			if = {
 				limit = {
-					NOT = { has_reform = gods_attoners }
+					NOT = { has_reform = gods_atoners }
 				}
 				add_adm_power = -100
 			}
 			custom_tooltip = L22_free_planetouched_agenda_TT
 			hidden_effect = {
-				set_country_flag = L22_attoners_will_flag
+				set_country_flag = L22_atoners_will_flag
 				change_variable = { which = planetouched_agenda_good_var value = 1 }
 				set_country_flag = recently_done_planetouched_agenda
 			}
-			set_estate_privilege = estate_planetouched_L22_attoners_will
+			set_estate_privilege = estate_planetouched_L22_atoners_will
 		} 
 	}
 
 	L22_to_earn_our_place = {
 		icon = mission_noble_council
 		position = 6
-		required_missions = { L22_restore_the_attoners } 
+		required_missions = { L22_restore_the_atoners } 
 		provinces_to_highlight = {  } 
 
 		trigger = {
 			check_variable = { which = L22_court_request_completed value = 5 }
-			check_variable = { which = total_compleated_agendas value = 6 }
-			every_estates_loyalty_influence = { loyalty/influence = loyalty amount = 60 }
+			check_variable = { which = total_completed_agendas  value = 6 }
+			every_estates_loyalty_influence = { which = loyalty amount = 60 }
 		} 
 
 		effect = {
@@ -392,7 +376,7 @@ binwarji_branch_2 = {
 				NOT = { devastation = 1 }
 				num_of_buildings_in_province = 1
 			}
-			check_variable = { which = total_compleated_agendas value = 8 }
+			check_variable = { which = total_completed_agendas  value = 8 }
 			check_variable = { which = fangaulan_pantheon_actions_used_counter value = 2 }
 			OR = {
 				adm = 5
@@ -435,7 +419,7 @@ binwarji_branch_3 = {
 		trigger = {
 			stability = 0
 			custom_trigger_tooltip = {
-				tooltip = L22_binsplotion_ended_TT
+				tooltip = L22_binsplosion_ended_TT
 				has_country_flag = binsplosion_ended
 			}
 		} 
@@ -548,8 +532,8 @@ binwarji_branch_3 = {
 		provinces_to_highlight = {  } 
 
 		trigger = {
-			check_variable = { which = total_compleated_agendas value = 2 }
-			every_estates_loyalty_influence = { loyalty/influence = loyalty amount = 50 }
+			check_variable = { which = total_completed_agendas  value = 2 }
+			every_estates_loyalty_influence = { which = loyalty amount = 50 }
 		} 
 
 		effect = {
@@ -1011,8 +995,14 @@ binwarji_branch_3 = {
 
 		trigger = {
 			check_variable = { which = L22_court_request_completed value = 8 }
-			check_variable = { which = fangaulan_pantheon_aro_worship value = 1 }
-			check_variable = { which = fangaulan_pantheon_biakata_worship value = 1 }
+			custom_trigger_tooltip = {
+				tooltip = L22_fangaulan_pantheon_aro_worship_TT
+				has_country_flag = L22_fangaulan_pantheon_aro_worship
+			}
+			custom_trigger_tooltip = {
+				tooltip = L22_fangaulan_pantheon_biakata_worship_TT
+				has_country_flag = L22_fangaulan_pantheon_biakata_worship
+			}
 			5816 = { #Tannifila Oka
 				has_tax_building_trigger = yes
 				has_ruler_leader_from = ROOT
@@ -1147,7 +1137,7 @@ binwarji_branch_4 = {
 							medium_tolerance_gnollish_race_trigger = yes
 						}
 					}
-					province_id = 5794#Zoborr
+					province_id = 5794 #Zoborr
 					NOT = { has_fort_building_trigger = yes }
 				}
 			}

@@ -13833,6 +13833,15 @@ L22_court_of_fangaula_helped_locals_effect = {
 				which = L22_court_request_completed
 				value = 1
 			}
+			if = {
+				limit = {
+					has_country_flag = L22_fangaula_court_removes_negative_trait
+				}
+				change_variable = {
+					which = L22_fangaula_court_ruler_trait_counter
+					value = 1
+				}
+			}
 			L22_fangaula_court_removes_negative_trait_scripted_effect = yes
 		}
 	}
@@ -13905,8 +13914,9 @@ L22_court_of_fangaula_events_fire = {
 		}
 		1 = {
 			trigger = {
-				any_owned_or_subject_province = {
-					trade_goods = gems
+				OR = {
+					gems = 1
+					any_subject_country = { gems = 1 }
 				}
 			}
 			$province$ = {
@@ -13920,13 +13930,11 @@ L22_court_of_fangaula_events_fire = {
 		}
 		1 = {
 			trigger = {
-				calc_true_if = {
-					amount = 2
-					any_owned_or_subject_province = {
-						OR = {
-							trade_goods = livestock
-							trade_goods = grain
-						}
+				num_of_provinces_owned_or_owned_by_subjects_with = {
+					value = 2
+					OR = {
+						trade_goods = livestock
+						trade_goods = grain
 					}
 				}
 			}
