@@ -476,9 +476,15 @@ col_2 = {
 			create_explorer = {
 				tradition = 60
 			}
-			add_country_modifier = { #todo recode the on_action
+			add_country_modifier = { 
 				name = A29_narawen_1
 				duration = -1
+			}
+			hidden_effect = {
+				set_variable = {
+					which = A29_tiles_discovered
+					value = 0 
+				}
 			}
 		} 
 	}
@@ -739,6 +745,7 @@ col_2 = {
 					policy = propagate_religion
 				}
 				trade_company_eborthil = {
+					type = all 
 					religion = ravelian
 				}
 			}
@@ -857,9 +864,49 @@ col_2 = {
 		}
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = {
+			OR = {
+				custom_trigger_tooltip = {
+ 			 		tooltip = torrieth_is_rectorate_tt
+  					Z97 = { #Ravelian State
+						has_ruler_flag = torrieth_is_ruler
+  					}
+				}
+				is_papal_controller = yes 
 
-		effect = {  } 
+				has_country_modifier = papal_blessing
+
+			}
+
+			OR = {
+				AND = {
+					hre_religion = ravelian
+					is_emperor = yes 
+				}
+				AND = {
+					NOT = {
+						hre_size = 1 
+					}
+					calc_true_if = {
+						amount = 75 
+						east_dameshead_region = {
+							type = all
+							religion = ravelian  
+						}
+						esmaria_region = {
+							type = all 
+							religion = ravelian 
+						}
+					}
+				}
+			}
+		} 
+
+		effect = {
+			country_event = {
+				id = busilar.15 
+			}
+		} 
 	}
 
 	A29_leader_of_thought = {
@@ -868,9 +915,159 @@ col_2 = {
 		required_missions = { A29_lions_might } 
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = {
+			has_country_modifier = holy_research 
 
-		effect = {  } 
+			num_of_owned_provinces_with = {
+				value = 50 
+				has_building = cathedral 
+				has_building = university 
+			}
+			if = {
+				limit = {
+					has_dlc = "Rule Britannia"
+				}
+				innovativeness = 100 
+			}
+			else = {
+				adm_power = 300
+				dip_power = 300
+				mil_power = 300 
+			}
+
+			OR = {
+				has_country_modifier = A29_narawen_4
+
+				NOT = {
+					any_province = {
+						is_sea = yes 
+						NOT = {
+							has_discovered = ROOT 
+						}
+					}
+				}
+			}
+
+		} 
+
+		effect = {
+			add_country_modifier = {
+				name = A29_mastery_of_the_mind 
+				duration = -1 
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_building = cathedral
+						has_building = university
+					}
+					if = {
+						limit = {
+							ROOT = {
+								has_unembraced_institution = feudalism 
+								is_institution_enabled = feudalism 
+							}
+						}
+						add_institution_embracement = {
+							which = feudalism 
+							value = 50 
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+								has_unembraced_institution = renaissance 
+								is_institution_enabled = renaissance 
+							}
+						}
+						add_institution_embracement = {
+							which = renaissance
+							value = 50 
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+								has_unembraced_institution = new_world_i 
+								is_institution_enabled = new_world_i 
+							}
+						}
+						add_institution_embracement = {
+							which = new_world_i 
+							value = 50 
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+								has_unembraced_institution = printing_press 
+								is_institution_enabled = printing_press 
+							}
+						}
+						add_institution_embracement = {
+							which = printing_press
+							value = 50 
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+								has_unembraced_institution = global_trade 
+								is_institution_enabled = global_trade
+							}
+						}
+						add_institution_embracement = {
+							which = global_trade
+							value = 50 
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+							has_unembraced_institution = manufactories 
+							is_institution_enabled = manufactories
+							}
+						}
+						add_institution_embracement = {
+							which = manufactories 
+							value = 50 
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+								has_unembraced_institution = enlightenment 
+								is_institution_enabled = enlightenment 
+							}
+						}
+						add_institution_embracement = {
+							which = enlightenment 
+							value = 50 
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+								has_unembraced_institution = industrialization
+								is_institution_enabled = industrialization 
+							}
+						}
+						add_institution_embracement = {
+							which = industrialization 
+							value = 50 
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+								is_lacking_institutions = no 
+							}
+						}
+						add_prosperity = 50 
+					}
+				}
+			}
+		} 
 	}
 
 	A29_one_world = {
@@ -882,9 +1079,81 @@ col_2 = {
 		}
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = {
+			is_hegemon = yes 
+			all_country = {
+				OR = {
+					NOT = {
+						is_great_power = yes 
+					}
+					tag = ROOT 
+					AND = {
+						has_been_insulted_by_root = yes 
+						trade_embargo_by = ROOT 
+						ROOT = {
+							has_won_war_against = {
+								who = PREV 
+								max_years_since = 20 
+							}
+						}
 
-		effect = {  } 
+					}
+					AND = {
+						religion = ravelian
+						alliance_with = ROOT 
+						trust = {
+							who = ROOT 
+							value = 100 
+						}
+					}
+				}
+			}
+		} 
+
+		effect = {
+			set_global_flag = A29_only_hegemony
+			hidden_effect = {
+				if = {
+					limit = { 
+						is_hegemon_of_type = economic_hegemon
+					}
+					add_country_modifier = {
+						name = pashaine_naval_hegemon_half
+						duration = -1
+					}
+					add_country_modifier = {
+						name = pashaine_military_hegemon_half
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = {
+						is_hegemon_of_type = naval_hegemon
+					}
+					add_country_modifier = {
+						name = pashaine_economic_hegemon_half
+						duration = -1
+					}
+					add_country_modifier = {
+						name = pashaine_military_hegemon_half
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = {
+						is_hegemon_of_type = military_hegemon
+					}
+					add_country_modifier = {
+						name = pashaine_economic_hegemon_half
+						duration = -1
+					}
+					add_country_modifier = {
+						name = pashaine_naval_hegemon_half
+						duration = -1
+					}
+				}
+			}
+		} 
 	}
 }
 col_3 = {

@@ -15402,7 +15402,7 @@ on_five_year_pulse_4 = {
 
 # El Dorado
 on_explore_coast = {
-	# Only triggers with a 2% chance, defined in defines.lua EXPLORE_COAST_EVENT_CHANCE
+	# triggers with a 100% chance, defined in defines.lua EXPLORE_COAST_EVENT_CHANCE
 	random_events = {
 		10 = exploration_events.1
 		10 = exploration_events.2
@@ -15419,9 +15419,82 @@ on_explore_coast = {
 		10 = exploration_events.13
 		10 = exploration_events.14
 		10 = exploration_events.15
+		7350 = 0 
 	}
-	events = {
-		unraveling.0
+	random = {
+  		chance = 2
+ 		province_event = {
+   			id = unraveling.0
+ 		}
+	}
+
+	FROM = {
+		if = {
+			limit = {
+				has_country_modifier = A29_narawen_1
+			}
+			change_variable = {
+				which = A29_tiles_discovered
+				value = 1
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = A29_tiles_discovered
+						value = 50 
+					}
+				}
+				remove_country_modifier = A29_narawen_1
+				add_country_modifier = {
+					name = A29_narawen_2
+					duration = -1
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_modifier = A29_narawen_2
+			}
+			change_variable = {
+				which = A29_tiles_discovered
+				value = 1
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = A29_tiles_discovered
+						value = 100
+					}
+				}
+				remove_country_modifier = A29_narawen_2
+				add_country_modifier = {
+					name = A29_narawen_3
+					duration = -1
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_modifier = A29_narawen_3
+			}
+			change_variable = {
+				which = A29_tiles_discovered
+				value = 1
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = A29_tiles_discovered
+						value = 150
+					}
+				}
+				remove_country_modifier = A29_narawen_3
+				add_country_modifier = {
+					name = A29_narawen_4
+					duration = -1 
+				}
+			}
+		}
 	}
 }
 
