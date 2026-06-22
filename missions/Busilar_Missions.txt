@@ -427,7 +427,7 @@ col_1 = {
 							any_country = {
 								is_part_of_hre = yes 
 								NOT = { religion = ravelian }
-								NOT = { total_development = PREV }
+								total_development = PREV
 							}
 						}
 					}
@@ -442,7 +442,7 @@ col_1 = {
 			}
 
 			declare_war_with_cb = {
-				casus_belli = cb_usurp_emperorship
+				casus_belli = cb_busilar_rav_war
 				who = event_target:league_war_defender
 			}
 
@@ -1178,16 +1178,6 @@ col_2 = {
 						}
 						add_prosperity = 50 
 					}
-				}
-			}
-			if = {
-				limit = {
-					NOT = {
-						is_institution_enabled = enlightenment
-					}
-				}
-				408 = {
-					add_next_institution_embracement = 100 
 				}
 			}
 		} 
@@ -2215,12 +2205,20 @@ col_4 = {
 		}
 
 		effect = {
-			ardimya_region = {
-   				limit = { owned_by = ROOT }
-				add_permanent_province_modifier = {
-					name = A29_ardimyan_investments
-					duration = -1 
-				} 
+			for = {
+			amount = 15
+				effect = random_owned_province = {
+					limit = {
+						region = ardimya_region
+						has_dock_building_trigger = yes 
+						has_shipyard_building_trigger = yes 
+						base_production = 4 
+						NOT = {
+							has_province_modifier = A29_ardimyan_investments
+						}
+					}
+					add_province_modifier = A29_ardimyan_investments
+				}
 			}
 			ringlet_isles_region = { add_permanent_claim = ROOT } 
 			bedaphire_area = { add_permanent_claim = ROOT }
