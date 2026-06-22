@@ -118,6 +118,9 @@ col_1 = {
 				name = A29_aelantir_rush
 				duration = 300
 			}
+			dry_coast_region = {
+				add_permanent_claim = ROOT 
+			}
 		} 
 	}
 
@@ -176,6 +179,12 @@ col_1 = {
 				}
 				change_innovativeness = 0.5
 			}
+			hidden_effect = {
+				set_country_flag = A29_adm_tech
+				set_country_flag = A29_dip_tech
+				set_country_flag = A29_mil_tech
+			}
+			custom_tooltip = A29_taking_next_tech_tt
 		} 
 	}
 
@@ -359,7 +368,56 @@ col_1 = {
 		} 
 
 		effect = { 
-			#todo rav war - cba rn
+			if = {
+				limit = {
+					ROOT = {
+						is_emperor = yes 
+					}
+				}
+				random_country = {
+					limit = {
+						is_part_of_hre = yes 
+						NOT = { religion = ravelian }
+						NOT = {
+							any_country = {
+								is_part_of_hre = yes 
+								NOT = { religion = ravelian }
+								NOT = { total_development = PREV }
+							}
+						}
+					}
+					save_event_target_as = league_war_defender
+				}
+			}
+
+			else = {
+				emperor = {
+					save_event_target_as = league_war_defender
+				}
+			}
+
+			declare_war_with_cb = {
+				casus_belli = cb_usurp_emperorship
+				who = event_target:league_war_defender
+			}
+
+			every_country = {
+				limit = {
+					is_part_of_hre = yes
+					NOT = { religion = ravelian }
+				}
+				join_all_defensive_wars_of = event_target:league_war_defender
+			}
+
+			every_country = {
+				limit = {
+					is_part_of_hre = yes
+					religion = ravelian 
+				}
+				join_all_offensive_wars_of = ROOT 
+			}
+
+
 		} 
 	}
 }
@@ -476,9 +534,15 @@ col_2 = {
 			create_explorer = {
 				tradition = 60
 			}
-			add_country_modifier = { #todo recode the on_action
+			add_country_modifier = { 
 				name = A29_narawen_1
 				duration = -1
+			}
+			hidden_effect = {
+				set_variable = {
+					which = A29_tiles_discovered
+					value = 0 
+				}
 			}
 		} 
 	}
@@ -739,6 +803,7 @@ col_2 = {
 					policy = propagate_religion
 				}
 				trade_company_eborthil = {
+					type = all 
 					religion = ravelian
 				}
 			}
@@ -774,6 +839,7 @@ col_2 = {
 		trigger = {
 			OR = {
 				businor_region = {
+					type = all 
 					religion = ravelian
 					development = 15
 					has_tax_building_trigger = yes
@@ -857,9 +923,48 @@ col_2 = {
 		}
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = {
+			OR = {
+				custom_trigger_tooltip = {
+ 			 		tooltip = torrieth_is_rectorate_tt
+  					Z97 = { #Ravelian State
+						has_ruler_flag = torrieth_is_ruler
+  					}
+				}
+				is_papal_controller = yes 
 
-		effect = {  } 
+				has_country_modifier = papal_blessing
+
+			}
+
+			OR = {
+				AND = {
+					hre_religion = ravelian
+					is_emperor = yes 
+				}
+				AND = {
+					eoa_is_dismantled = yes
+
+					calc_true_if = {
+						amount = 75 
+						east_dameshead_region = {
+							type = all
+							religion = ravelian  
+						}
+						esmaria_region = {
+							type = all 
+							religion = ravelian 
+						}
+					}
+				}
+			}
+		} 
+
+		effect = {
+			country_event = {
+				id = busilar.15 
+			}
+		} 
 	}
 
 	A29_leader_of_thought = {
@@ -868,9 +973,176 @@ col_2 = {
 		required_missions = { A29_lions_might } 
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = {
+			has_country_modifier = holy_research 
 
-		effect = {  } 
+			num_of_owned_provinces_with = {
+				value = 50 
+				has_building = cathedral 
+				has_building = university 
+			}
+			if = {
+				limit = {
+					has_dlc = "Rule Britannia"
+				}
+				innovativeness = 100 
+			}
+			else = {
+				adm_power = 300
+				dip_power = 300
+				mil_power = 300 
+			}
+
+			OR = {
+				has_country_modifier = A29_narawen_4
+
+				NOT = {
+					any_province = {
+						is_sea = yes 
+						NOT = {
+							has_discovered = ROOT 
+						}
+					}
+				}
+			}
+
+		} 
+
+		effect = {
+			add_country_modifier = {
+				name = A29_mastery_of_the_mind 
+				duration = -1 
+			}
+
+			custom_tooltip = A29_enlightenment_spawn_tt 
+
+			custom_tooltip = A29_embracement_or_prosperity_tt
+
+			
+
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_building = cathedral
+						has_building = university
+					}
+					if = {
+						limit = {
+							ROOT = {
+								has_unembraced_institution = feudalism 
+								is_institution_enabled = feudalism 
+							}
+						}
+						add_institution_embracement = {
+							which = feudalism 
+							value = 50 
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+								has_unembraced_institution = renaissance 
+								is_institution_enabled = renaissance 
+							}
+						}
+						add_institution_embracement = {
+							which = renaissance
+							value = 50 
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+								has_unembraced_institution = new_world_i 
+								is_institution_enabled = new_world_i 
+							}
+						}
+						add_institution_embracement = {
+							which = new_world_i 
+							value = 50 
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+								has_unembraced_institution = printing_press 
+								is_institution_enabled = printing_press 
+							}
+						}
+						add_institution_embracement = {
+							which = printing_press
+							value = 50 
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+								has_unembraced_institution = global_trade 
+								is_institution_enabled = global_trade
+							}
+						}
+						add_institution_embracement = {
+							which = global_trade
+							value = 50 
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+							has_unembraced_institution = manufactories 
+							is_institution_enabled = manufactories
+							}
+						}
+						add_institution_embracement = {
+							which = manufactories 
+							value = 50 
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+								has_unembraced_institution = enlightenment 
+								is_institution_enabled = enlightenment 
+							}
+						}
+						add_institution_embracement = {
+							which = enlightenment 
+							value = 50 
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+								has_unembraced_institution = industrialization
+								is_institution_enabled = industrialization 
+							}
+						}
+						add_institution_embracement = {
+							which = industrialization 
+							value = 50 
+						}
+					}
+					if = {
+						limit = {
+							ROOT = {
+								is_lacking_institutions = no 
+							}
+						}
+						add_prosperity = 50 
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						is_institution_enabled = enlightenment
+					}
+				}
+				408 = {
+					add_next_institution_embracement = 100 
+				}
+			}
+		} 
 	}
 
 	A29_one_world = {
@@ -882,9 +1154,40 @@ col_2 = {
 		}
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = {
+			is_hegemon = yes 
+			all_country = {
+				OR = {
+					NOT = {
+						is_great_power = yes 
+					}
 
-		effect = {  } 
+					AND = {
+						has_been_insulted_by_root = yes 
+						trade_embargo_by = ROOT 
+						ROOT = {
+							has_won_war_against = {
+								who = PREV 
+								max_years_since = 20 
+							}
+						}
+
+					}
+					AND = {
+						religion = ravelian
+						alliance_with = ROOT 
+						trust = {
+							who = ROOT 
+							value = 100 
+						}
+					}
+				}
+			}
+		} 
+
+		effect = {
+			 reset_golden_age = yes 
+		} 
 	}
 }
 col_3 = {
@@ -1504,7 +1807,11 @@ col_3 = {
 			}
 		} 
 
-		effect = {  } 
+		effect = {
+			country_event = {
+				id = busilar.13
+			}
+		} 
 	}
 }
 col_4 = {
@@ -1939,9 +2246,10 @@ col_4 = {
 		} 
 
 		effect = {
-			anb_gain_permanent_claims_on_continent = {
-				continent = oceania 
+			insyaan_lowlands_superregion = {
+				add_permanent_claim = ROOT 
 			}
+
 			set_country_flag = A29_faster_genepillar_expedition
 			custom_tooltip = A29_faster_genepillar_tt
 		} 
@@ -2084,18 +2392,9 @@ col_5 = {
 		} 
 
 		effect = {
-			if = {
-				limit = {
-					exists = A33 
-				}
-				A30 = {
-					add_rival = A33
-				}
-				A33 = {
-					add_country_modifier = {
-						name = A29_says_mean_things_bout_bread_dogs
-						duration = 3650 
-					}
+			A33 = {
+				country_event = {
+					id = busilar.16
 				}
 			}
 			else = {
