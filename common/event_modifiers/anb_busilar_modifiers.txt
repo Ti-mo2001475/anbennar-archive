@@ -65,7 +65,22 @@ A29_naval_focus = {
 }
 
 A29_ardimyan_investments = {
-	naval_maintenance_modifier = -1
+	naval_maintenance_modifier = -0.01
+		for = {
+			amount = 15
+			effect = random_owned_province = {
+				limit = {
+					region = ardimya_region
+					has_dock_building_trigger = yes 
+					has_shipyard_building_trigger = yes 
+					base_production = 4 
+					NOT = {
+						has_province_modifier = A29_ardimyan_investments
+					}
+				}
+				add_province_modifier = A29_ardimyan_investments
+			}
+	}
 }
 
 A29_hinuifire_1 = {
@@ -261,7 +276,7 @@ A29_insyaan_staging = {
 }
 
 A29_efficient_extraction = {
-	trade_goods_size_modifier = 0.1 
+	trade_goods_size_modifier = 0.25
 }
 
 A29_robot_work_for_free = {

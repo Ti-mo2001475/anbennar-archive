@@ -118,6 +118,9 @@ col_1 = {
 				name = A29_aelantir_rush
 				duration = 300
 			}
+			dry_coast_region = {
+				add_permanent_claim = ROOT 
+			}
 		} 
 	}
 
@@ -176,6 +179,12 @@ col_1 = {
 				}
 				change_innovativeness = 0.5
 			}
+			hidden_effect = {
+				set_country_flag = A29_adm_tech
+				set_country_flag = A29_dip_tech
+				set_country_flag = A29_mil_tech
+			}
+			custom_tooltip = A29_taking_next_tech_tt
 		} 
 	}
 
@@ -781,6 +790,7 @@ col_2 = {
 		trigger = {
 			OR = {
 				businor_region = {
+					type = all 
 					religion = ravelian
 					development = 15
 					has_tax_building_trigger = yes
@@ -884,9 +894,8 @@ col_2 = {
 					is_emperor = yes 
 				}
 				AND = {
-					NOT = {
-						hre_size = 1 
-					}
+					eoa_is_dismantled = yes
+
 					calc_true_if = {
 						amount = 75 
 						east_dameshead_region = {
@@ -955,6 +964,13 @@ col_2 = {
 				name = A29_mastery_of_the_mind 
 				duration = -1 
 			}
+
+			custom_tooltip = A29_enlightenment_spawn_tt 
+
+			custom_tooltip = A29_embracement_or_prosperity_tt
+
+			
+
 			hidden_effect = {
 				every_owned_province = {
 					limit = {
@@ -1067,6 +1083,16 @@ col_2 = {
 					}
 				}
 			}
+			if = {
+				limit = {
+					NOT = {
+						is_institution_enabled = enlightenment
+					}
+				}
+				408 = {
+					add_next_institution_embracement = 100 
+				}
+			}
 		} 
 	}
 
@@ -1086,7 +1112,7 @@ col_2 = {
 					NOT = {
 						is_great_power = yes 
 					}
-					tag = ROOT 
+
 					AND = {
 						has_been_insulted_by_root = yes 
 						trade_embargo_by = ROOT 
@@ -1111,48 +1137,7 @@ col_2 = {
 		} 
 
 		effect = {
-			set_global_flag = A29_only_hegemony
-			hidden_effect = {
-				if = {
-					limit = { 
-						is_hegemon_of_type = economic_hegemon
-					}
-					add_country_modifier = {
-						name = pashaine_naval_hegemon_half
-						duration = -1
-					}
-					add_country_modifier = {
-						name = pashaine_military_hegemon_half
-						duration = -1
-					}
-				}
-				else_if = {
-					limit = {
-						is_hegemon_of_type = naval_hegemon
-					}
-					add_country_modifier = {
-						name = pashaine_economic_hegemon_half
-						duration = -1
-					}
-					add_country_modifier = {
-						name = pashaine_military_hegemon_half
-						duration = -1
-					}
-				}
-				else_if = {
-					limit = {
-						is_hegemon_of_type = military_hegemon
-					}
-					add_country_modifier = {
-						name = pashaine_economic_hegemon_half
-						duration = -1
-					}
-					add_country_modifier = {
-						name = pashaine_naval_hegemon_half
-						duration = -1
-					}
-				}
-			}
+			 reset_golden_age = yes 
 		} 
 	}
 }
@@ -1773,7 +1758,11 @@ col_3 = {
 			}
 		} 
 
-		effect = {  } 
+		effect = {
+			country_event = {
+				id = busilar.13
+			}
+		} 
 	}
 }
 col_4 = {
@@ -2208,9 +2197,10 @@ col_4 = {
 		} 
 
 		effect = {
-			anb_gain_permanent_claims_on_continent = {
-				continent = oceania 
+			insyaan_lowlands_superregion = {
+				add_permanent_claim = ROOT 
 			}
+
 			set_country_flag = A29_faster_genepillar_expedition
 			custom_tooltip = A29_faster_genepillar_tt
 		} 
@@ -2353,18 +2343,9 @@ col_5 = {
 		} 
 
 		effect = {
-			if = {
-				limit = {
-					exists = A33 
-				}
-				A30 = {
-					add_rival = A33
-				}
-				A33 = {
-					add_country_modifier = {
-						name = A29_says_mean_things_bout_bread_dogs
-						duration = 3650 
-					}
+			A33 = {
+				country_event = {
+					id = busilar.16
 				}
 			}
 			else = {
