@@ -864,23 +864,172 @@ estate_raj_ministries_enforced_one_faith = {
 	}
 }
 
-estate_raj_ministries_eunuch_integration = {
-  icon = privilege_royal_authority
-  is_valid = {
-		has_government_attribute = is_raja
-	  has_country_flag = dhenijanraj_ministry_eunuch_integration
+estate_raj_ministries_establish_provincial_bureaucracies = {
+	icon = estate_eunuchs_land_rights_privilege
+	max_absolutism = -5
+	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
+	loyalty = 0.05
+	influence = 0.10
+	land_share = 5
+	loyalty_scaled_conditional_modifier = {
+		trigger = {
+			always = yes
+		}
+		modifier = {
+			administrative_efficiency = 0.05
+			governing_capacity_modifier = 0.1
+		}
 	}
-  can_revoke = {
+	on_granted = {
+		custom_tooltip = estate_raj_ministries_establish_provincial_bureaucracies_tt
+		custom_tooltip = " "
+		scaling_with_loyalty_privilege_tooltip = {
+			estate_privilege = estate_raj_ministries_establish_provincial_bureaucracies
+		}
+	}
+	on_invalid = {
+		scaling_with_loyalty_privilege_tooltip = {
+			estate_privilege = estate_raj_ministries_establish_provincial_bureaucracies
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_raj_ministries_establish_provincial_bureaucracies_tt
+		scaling_with_loyalty_privilege_tooltip = {
+			estate_privilege = estate_raj_ministries_establish_provincial_bureaucracies
+		}
+	}
+	ai_will_do = {
+		factor = 0
+	}
+}
+
+estate_raj_ministries_grant_treasury_oversight = {
+	icon = privilege_gold_mint
+	max_absolutism = -5
+	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
+	loyalty = 0.05
+	influence = 0.05
+	penalties = {
+		yearly_corruption = 0.1
+	}
+	benefits = {
+		inflation_reduction = 0.1
+	}
+	conditional_modifier = {
+		trigger = {
+			all_owned_province = {
+				area_for_scope_province = { has_trade_building_trigger = yes }
+			}
+		}
+		modifier = {
+			trade_efficiency = 0.1
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_raj_ministries_grant_treasury_oversight_tt
+	}
+	on_revoked = {
+		custom_tooltip = estate_raj_ministries_grant_treasury_oversight_tt
+	}
+	ai_will_do = {
+		factor = 0
+	}
+}
+
+estate_raj_ministries_utilize_ministerial_connections = {
+	icon = privilege_recruit_minister
+	max_absolutism = -5
+	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
+	influence = 0.05
+	penalties = {
+		global_tax_modifier = -0.05
+	}
+	benefits = {
+		improve_relation_modifier = 0.1
+		diplomatic_upkeep = 1
+	}
+	on_granted = {
+		custom_tooltip = estate_raj_ministries_utilize_ministerial_connections_tt
+	}
+	on_revoked = {
+		custom_tooltip = estate_raj_ministries_utilize_ministerial_connections_tt
+	}
+	ai_will_do = {
+		factor = 0
+	}
+}
+
+estate_raj_ministries_grant_logistical_oversight = {
+	icon = privilege_recruit_rajput_general
+	max_absolutism = -5
+	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
+	loyalty = 0.05
+	influence = 0.05
+	penalties = {
+		land_maintenance_modifier = 0.15
+		uppercastes_loyalty_modifier = -0.05
+		uppercastes_influence_modifier = -0.05
+		nobles_loyalty_modifier = -0.05
+		nobles_influence_modifier = -0.05
+	}
+	on_granted = {
+		custom_tooltip = estate_raj_ministries_grant_logistical_oversight_tt
+	}
+	on_revoked = {
+		custom_tooltip = estate_raj_ministries_grant_logistical_oversight_tt
+	}
+	ai_will_do = {
+		factor = 0
+	}
+}
+
+estate_raj_ministries_magical_oversight_commission = {
+	icon = privilege_cast_spell
+	max_absolutism = -5
+	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
+	loyalty = 0.05
+	influence = 0.10
+	is_valid = {
+		has_estate = estate_mages
+	}
+	penalties = {
+		yearly_corruption = 0.03
+		mages_loyalty_modifier = -0.1
+		mages_influence_modifier = -0.1
+	}
+	benefits = {
+		mages_mana_regen = 0.25
+	}
+	on_granted = {
+		custom_tooltip = estate_raj_ministries_magical_oversight_commission_tt
+		hidden_effect = { update_mana_regen_vars = yes }
+	}
+	on_revoked = {
+		custom_tooltip = estate_raj_ministries_magical_oversight_commission_tt
+		hidden_effect = { update_mana_regen_vars = yes }
+	}
+	ai_will_do = {
+		factor = 0
+	}
+}
+
+estate_raj_ministries_eunuch_integration = {
+	icon = privilege_royal_authority
+	is_valid = {
+		has_government_attribute = is_raja
+		has_country_flag = dhenijanraj_ministry_eunuch_integration
+	}
+	can_revoke = {
 		always = no
-  }
-  benefits = {
+	}
+	benefits = {
 		possible_adm_policy = 1
 		free_adm_policy = 1
 		state_maintenance_modifier = -0.25
-  }
-  ai_will_do = {
-  factor = 1
-  }
+	}
+	ai_will_do = {
+	factor = 1
+	}
 }
 
 estate_raj_ministries_tiltaghar_deal = {

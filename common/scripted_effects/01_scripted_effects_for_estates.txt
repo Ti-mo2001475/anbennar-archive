@@ -8138,7 +8138,27 @@ on_completed_agenda_effect_estate_tiger_command = {}
 on_completed_agenda_effect_estate_lowercastes = {}
 on_completed_agenda_effect_estate_middlecastes = {}
 on_completed_agenda_effect_estate_uppercastes = {}
-on_completed_agenda_effect_estate_raj_ministries = {}
+on_completed_agenda_effect_estate_raj_ministries = {
+	if = {
+		limit = { has_estate_privilege = estate_raj_ministries_utilize_ministerial_connections }
+		custom_tooltip = estate_raj_ministries_utilize_ministerial_connections_agenda_tt
+		hidden_effect = {
+			every_neighbor_country = {
+				limit = {
+					OR = {
+						capital_scope = { superregion = rahen_superregion }
+						has_government_attribute = is_raja
+						has_government_attribute = is_raja_subject
+					}
+				}
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_estate_raj_ministries_utilize_ministerial_connections
+				}
+			}
+		}
+	}
+}
 on_completed_agenda_effect_estate_shinukhorchi = {}
 on_completed_agenda_effect_estate_ajgriijarul = {}
 on_completed_agenda_effect_estate_chumijemoya = {}
