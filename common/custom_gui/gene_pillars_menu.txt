@@ -227,7 +227,6 @@ custom_button = {
 			is_not_exploring_any_gene_pillar = yes
 			gene_pillars_has_any_class_selected = yes
 			gene_pillars_did_not_party_wipe = yes
-			gene_pillars_did_not_abandon_recently = yes
 			if = {
 				limit = { NOT = { controlled_by = owner } }
 				controlled_by = owner
@@ -268,7 +267,6 @@ custom_button = {
 			is_not_exploring_any_gene_pillar = yes
 			gene_pillars_has_any_class_selected = yes
 			gene_pillars_did_not_party_wipe = yes
-			gene_pillars_did_not_abandon_recently = yes
 			if = {
 				limit = { NOT = { controlled_by = owner } }
 				controlled_by = owner
@@ -319,7 +317,6 @@ custom_button = {
 			is_not_exploring_any_gene_pillar = yes
 			gene_pillars_has_any_class_selected = yes
 			gene_pillars_did_not_party_wipe = yes
-			gene_pillars_did_not_abandon_recently = yes
 			if = {
 				limit = { NOT = { controlled_by = owner } }
 				controlled_by = owner
@@ -463,15 +460,21 @@ custom_window = {
 				tooltip = gene_pillars_does_not_have_pending_event_tt
 				owner = { NOT = { has_country_flag = gene_pillars_has_pending_event } }
 			}
+			hidden_trigger = { #To let Player see that it worked after first click, they still need to wait for ptm tho
+				NOT = {
+					has_province_modifier = gene_pillar_abandon_randomness_ptm
+				}
+			}
 		}
 		tooltip = gene_pillars_abandon_expedition_tt
 		effect = {
-			hidden_effect = { # Since downstream effects use event_target:gene_pillar_exploration_province
-				save_event_target_as = gene_pillar_exploration_province
+			hidden_effect = {
+				add_province_triggered_modifier = gene_pillar_abandon_randomness_ptm
 			}
 			owner = {
-				gene_pillar_abandon_expedition_effect = { province_notification_event = yes }
-				add_country_modifier = { name = gene_pillars_abandoned duration = 730 } # To prevent you starting another expedition in the next 2 years
+				tooltip = {
+					add_country_modifier = { name = gene_pillars_party_preparing duration = 730 } # 2 years
+				}
 			}
 		}
 	}
@@ -1014,7 +1017,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_rogue_A } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_rogue_A }
+				NOT = {
+					gene_pillars_injured_class = { class = rogue_A }
+				}
 			}
 		}
 		tooltip = gene_pillars_rogue_A_tt
@@ -1034,7 +1039,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_rogue_B } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_rogue_B }
+				NOT = {
+					gene_pillars_injured_class = { class = rogue_B }
+				}
 			}
 		}
 		tooltip = gene_pillars_rogue_B_tt
@@ -1054,7 +1061,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_rogue_C } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_rogue_C }
+				NOT = {
+					gene_pillars_injured_class = { class = rogue_C }
+				}
 			}
 		}
 		tooltip = gene_pillars_rogue_C_tt
@@ -1074,7 +1083,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_rogue_D } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_rogue_D }
+				NOT = {
+					gene_pillars_injured_class = { class = rogue_D }
+				}
 			}
 		}
 		tooltip = gene_pillars_rogue_D_tt
@@ -1094,7 +1105,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_rogue_E } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_rogue_E }
+				NOT = {
+					gene_pillars_injured_class = { class = rogue_E }
+				}
 			}
 		}
 		tooltip = gene_pillars_rogue_E_tt
@@ -1120,7 +1133,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_ranger_A } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_ranger_A }
+				NOT = {
+					gene_pillars_injured_class = { class = ranger_A }
+				}
 			}
 		}
 		tooltip = gene_pillars_ranger_A_tt
@@ -1140,7 +1155,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_ranger_B } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_ranger_B }
+				NOT = {
+					gene_pillars_injured_class = { class = ranger_B }
+				}
 			}
 		}
 		tooltip = gene_pillars_ranger_B_tt
@@ -1160,7 +1177,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_ranger_C } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_ranger_C }
+				NOT = {
+					gene_pillars_injured_class = { class = ranger_C }
+				}
 			}
 		}
 		tooltip = gene_pillars_ranger_C_tt
@@ -1180,7 +1199,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_ranger_D } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_ranger_D }
+				NOT = {
+					gene_pillars_injured_class = { class = ranger_D }
+				}
 			}
 		}
 		tooltip = gene_pillars_ranger_D_tt
@@ -1200,7 +1221,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_ranger_E } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_ranger_E }
+				NOT = {
+					gene_pillars_injured_class = { class = ranger_E }
+				}
 			}
 		}
 		tooltip = gene_pillars_ranger_E_tt
@@ -1226,7 +1249,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_fighter_A } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_fighter_A }
+				NOT = {
+					gene_pillars_injured_class = { class = fighter_A }
+				}
 			}
 		}
 		tooltip = gene_pillars_fighter_A_tt
@@ -1246,7 +1271,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_fighter_B } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_fighter_B }
+				NOT = {
+					gene_pillars_injured_class = { class = fighter_B }
+				}
 			}
 		}
 		tooltip = gene_pillars_fighter_B_tt
@@ -1266,7 +1293,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_fighter_C } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_fighter_C }
+				NOT = {
+					gene_pillars_injured_class = { class = fighter_C }
+				}
 			}
 		}
 		tooltip = gene_pillars_fighter_C_tt
@@ -1286,7 +1315,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_fighter_D } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_fighter_D }
+				NOT = {
+					gene_pillars_injured_class = { class = fighter_D }
+				}
 			}
 		}
 		tooltip = gene_pillars_fighter_D_tt
@@ -1306,7 +1337,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_fighter_E } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_fighter_E }
+				NOT = {
+					gene_pillars_injured_class = { class = fighter_E }
+				}
 			}
 		}
 		tooltip = gene_pillars_fighter_E_tt
@@ -1332,7 +1365,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_cleric_A } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_cleric_A }
+				NOT = {
+					gene_pillars_injured_class = { class = cleric_A }
+				}
 			}
 		}
 		tooltip = gene_pillars_cleric_A_tt
@@ -1352,7 +1387,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_cleric_B } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_cleric_B }
+				NOT = {
+					gene_pillars_injured_class = { class = cleric_B }
+				}
 			}
 		}
 		tooltip = gene_pillars_cleric_B_tt
@@ -1372,7 +1409,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_cleric_C } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_cleric_C }
+				NOT = {
+					gene_pillars_injured_class = { class = cleric_C }
+				}
 			}
 		}
 		tooltip = gene_pillars_cleric_C_tt
@@ -1392,7 +1431,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_cleric_D } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_cleric_D }
+				NOT = {
+					gene_pillars_injured_class = { class = cleric_D }
+				}
 			}
 		}
 		tooltip = gene_pillars_cleric_D_tt
@@ -1412,7 +1453,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_cleric_E } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_cleric_E }
+				NOT = {
+					gene_pillars_injured_class = { class = cleric_E }
+				}
 			}
 		}
 		tooltip = gene_pillars_cleric_E_tt
@@ -1438,7 +1481,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_mage_A } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_mage_A }
+				NOT = {
+					gene_pillars_injured_class = { class = mage_A }
+				}
 			}
 		}
 		tooltip = gene_pillars_mage_A_tt
@@ -1458,7 +1503,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_mage_B } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_mage_B }
+				NOT = {
+					gene_pillars_injured_class = { class = mage_B }
+				}
 			}
 		}
 		tooltip = gene_pillars_mage_B_tt
@@ -1478,7 +1525,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_mage_C } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_mage_C }
+				NOT = {
+					gene_pillars_injured_class = { class = mage_C }
+				}
 			}
 		}
 		tooltip = gene_pillars_mage_C_tt
@@ -1498,7 +1547,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_mage_D } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_mage_D }
+				NOT = {
+					gene_pillars_injured_class = { class = mage_D }
+				}
 			}
 		}
 		tooltip = gene_pillars_mage_D_tt
@@ -1518,7 +1569,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_mage_E } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_mage_E }
+				NOT = {
+					gene_pillars_injured_class = { class = mage_E }
+				}
 			}
 		}
 		tooltip = gene_pillars_mage_E_tt
@@ -1544,7 +1597,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_artificer_A } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_artificer_A }
+				NOT = {
+					gene_pillars_injured_class = { class = artificer_A }
+				}
 			}
 		}
 		tooltip = gene_pillars_artificer_A_tt
@@ -1564,7 +1619,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_artificer_B } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_artificer_B }
+				NOT = {
+					gene_pillars_injured_class = { class = artificer_B }
+				}
 			}
 		}
 		tooltip = gene_pillars_artificer_B_tt
@@ -1584,7 +1641,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_artificer_C } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_artificer_C }
+				NOT = {
+					gene_pillars_injured_class = { class = artificer_C }
+				}
 			}
 		}
 		tooltip = gene_pillars_artificer_C_tt
@@ -1604,7 +1663,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_artificer_D } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_artificer_D }
+				NOT = {
+					gene_pillars_injured_class = { class = artificer_D }
+				}
 			}
 		}
 		tooltip = gene_pillars_artificer_D_tt
@@ -1624,7 +1685,9 @@ custom_window = {
 		potential = { FROM = { has_country_flag = gene_pillars_unlocked_artificer_E } }
 		trigger = {
 			FROM = {
-				NOT = { has_country_modifier = gene_pillars_injured_artificer_E }
+				NOT = {
+					gene_pillars_injured_class = { class = artificer_E }
+				}
 			}
 		}
 		tooltip = gene_pillars_artificer_E_tt
