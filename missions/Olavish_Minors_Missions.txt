@@ -16,6 +16,120 @@ olavish_minor_1 = {
 		icon = mission_rb_conquer_the_highlands
 		position = 3
 		required_missions = { olavish_minor_olavish_dominance}
+
+		provinces_to_highlight = {
+			if = {
+				limit = {
+					ROOT = {
+						tag = Z14 #Avnkaup
+					}
+				}
+				AND = {
+					province_id = 6271 #Vaengheim
+					NOT = {
+						AND = {
+							owned_by = ROOT
+							is_core = ROOT
+						}
+					}
+				}
+				AND = {
+					province_id = 6270 #Smidafjall
+					NOT = {
+						AND = {
+							owned_by = ROOT
+							is_core = ROOT
+						}
+					}
+				}
+				AND = {
+					province_id = 6269 #Djupfyri
+					NOT = {
+						AND = {
+							owned_by = ROOT
+							is_core = ROOT
+						}
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							Z09 = { #Skaldskola
+								has_opinion_modifier = {
+									who = ROOT
+									modifier = insulted
+								}
+							}
+						}
+					}
+					owned_by = Z09 #Skaldskola
+				}
+			} else = {
+				if = {
+					limit = {
+						NOT = {
+							Z88 = { #Vaengheim
+								has_opinion_modifier = {
+									who = ROOT
+									modifier = insulted
+								}
+							}
+						}
+					}
+					owned_by = Z88 #Skaldskola
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							tag = Z13 #Redgarhavn
+						}
+					}
+					AND = {
+						area = olavslund_area
+						NOT = {
+							AND = {
+								owned_by = ROOT
+								is_core = ROOT
+							}
+						}
+					}
+					AND = {
+						area = drekkiskali_area
+						NOT = {
+							AND = {
+								owned_by = ROOT
+								is_core = ROOT
+							}
+						}
+					}
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							tag = Z12 #Naugsvol
+						}
+					}
+					AND = {
+						area = naugsvol_area
+						NOT = {
+							AND = {
+								owned_by = ROOT
+								is_core = ROOT
+							}
+						}
+					}
+					AND = {
+						area = esfjall_area
+						NOT = {
+							AND = {
+								owned_by = ROOT
+								is_core = ROOT
+							}
+						}
+					}
+				}
+			}
+		}
 		
 		trigger = {
 			if = { #Avnkaup's requirements are to have conquer vaengheim.
