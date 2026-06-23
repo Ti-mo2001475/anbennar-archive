@@ -485,12 +485,10 @@ gene_pillar_clear_all_class_country_flags = {
 #Fires a generic event, and then a scripted event
 gene_pillar_generic_then_specific_event = {
 	hidden_effect = {
-		# Check party isn't dead before firing events
+		# Check party is still exploring before firing events
 		if = {
 			limit = {
-				event_target:gene_pillar_exploration_province = {
-					aPUI_check_variable = { name = gene_pillar_health value = 1 }
-				}
+				aPUI_gene_pillar_root_is_exploring_event_target_province_trigger = yes
 			}
 			# calculate speed
 			set_variable = { GenePillarsSpeed = 12 } # base speed of 12 months
