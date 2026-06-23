@@ -3764,6 +3764,34 @@ on_battle_won_country = {
 			set_country_flag = L76_rip_and_tear_mana_refund
 		}
 	}
+
+	#Beikling Mask Enchantment
+	if = {
+		limit = {
+			has_country_flag = mask_enchanment_effect_flag
+			NOT = { FROM = { tag = REB } }
+		}
+		if = {
+			limit = {
+				tag = V23
+			}
+			add_army_tradition = 5
+			every_war_enemy_country = {
+				limit = {
+					is_in_war = {
+						participants = FROM
+					}
+				}
+				country_event = { id = flavor_beiklings.501 }
+			}
+		}
+		else = {
+			FROM = {
+				country_event = { id = flavor_beiklings.501 }
+			}
+		}
+		clr_country_flag = mask_enchanment_effect_flag
+	}
 	
 	dragon_turtles_casualty_friendship_effect = yes
 }
@@ -26303,12 +26331,14 @@ on_trade_good_changed = {
 			add_province_modifier = {
 				name = temple_of_ruby_and_bronze_livestock_mod_2
 				duration = -1
+				hidden = yes
 			}
 		}
 		else = {
 			add_province_modifier = {
 				name = temple_of_ruby_and_bronze_livestock_mod_1
 				duration = -1
+				hidden = yes
 			}
 		}
 	}
