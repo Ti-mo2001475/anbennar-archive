@@ -1,0 +1,451 @@
+namespace = flavour_banbe_anen
+
+
+###########
+
+
+country_event = { #Banbe Anen Handler
+	id = flavour_banbe_anen.0
+	title = flavour_banbe_anen.0.t
+	desc = flavour_banbe_anen.0.d
+	picture = MILITARY_CAMP_eventPicture
+
+	is_triggered_only = yes
+	trigger = { has_ruler_modifier = banbe_anen_quest_for_Reehanviza }
+	hidden = yes
+
+	option = { #Generic
+		name = flavour_banbe_anen.0.a
+		ai_chance = {
+			factor = 20
+		}
+
+		random_list = {
+			20 = {
+				country_event = { id = flavour_banbe_anen.2 }
+			}
+			20 = {
+				country_event = { id = flavour_banbe_anen.3 }
+			}
+			10 = {
+				trigger = { NOT = { tag = V17 } }
+				country_event =  { id = flavour_banbe_anen.4 }
+			}
+		}
+	}
+	option = { #Order
+		name = flavour_banbe_anen.0.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 2
+				has_ruler_flag = Reehanviza_order_focus_flag
+			}
+			modifier = {
+				factor = 1.5
+				has_active_fervor = banbe_anen_order
+			}
+		}
+	}
+	option = { #Chaos
+		name = flavour_banbe_anen.0.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 2
+				has_ruler_flag = Reehanviza_chaos_focus_flag
+			}
+			modifier = {
+				factor = 1.5
+				has_active_fervor = banbe_anen_chaos
+			}
+		}
+	}
+	option = { #Household Gods
+		name = flavour_banbe_anen.0.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 2
+				has_ruler_flag = Reehanviza_gods_focus_flag
+			}
+			modifier = {
+				factor = 1.5
+				has_active_fervor = banbe_anen_household_gods
+			}
+		}
+	}
+	option = { #Outer Realms
+		name = flavour_banbe_anen.0.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 2
+				has_ruler_flag = Reehanviza_realms_focus_flag
+			}
+			modifier = {
+				factor = 1.5
+				has_active_fervor = banbe_anen_outer_realms
+			}
+		}
+	}
+}
+
+#Generic Events
+
+country_event = { #Quest for Reehanviza Start
+	id = flavour_banbe_anen.1
+	title = flavour_banbe_anen.1.t
+	desc = flavour_banbe_anen.1.d
+	picture = MILITARY_CAMP_eventPicture
+
+	is_triggered_only = yes
+	trigger = { }
+
+
+	option = {
+		name = flavour_banbe_anen.1.a
+
+		banbe_anen_quest_for_Reehanviza_values = { which = order amount = 2 }
+		custom_tooltip = Reehanviza_order_events_TT
+		set_ruler_flag = Reehanviza_order_focus_flag
+	}
+
+	option = {
+		name = flavour_banbe_anen.1.b
+
+		banbe_anen_quest_for_Reehanviza_values = { which = chaos amount = 2 }
+		custom_tooltip = Reehanviza_chaos_events_TT
+		set_ruler_flag = Reehanviza_chaos_focus_flag
+	}
+
+	option = {
+		name = flavour_banbe_anen.1.c
+
+		banbe_anen_quest_for_Reehanviza_values = { which = household_gods amount = 2 }
+		custom_tooltip = Reehanviza_gods_events_TT
+		set_ruler_flag = Reehanviza_gods_focus_flag
+	}
+
+	option = {
+		name = flavour_banbe_anen.1.e
+
+		banbe_anen_quest_for_Reehanviza_values = { which = outer_realms amount = 2 }
+		custom_tooltip = Reehanviza_realms_events_TT
+		set_ruler_flag = Reehanviza_realms_focus_flag
+	}
+}
+
+country_event = { #Village Celebration
+	id = flavour_banbe_anen.2
+	title = flavour_banbe_anen.2.t
+	desc = flavour_banbe_anen.2.d
+	picture = MILITARY_CAMP_eventPicture
+
+	is_triggered_only = yes
+	trigger = { }
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				save_event_target_as = banbe_anen_Reehanviza_village
+			}
+		}
+	}
+
+	option = {
+		name = flavour_banbe_anen.2.a
+
+		event_target:banbe_anen_Reehanviza_village = {
+			random_list = {
+				33 = {
+					add_base_tax = 1
+				}
+				33 = {
+					add_base_production = 1
+				}
+				33 = {
+					add_base_manpower = 1
+				}
+			}
+		}
+	}
+
+	option = {
+		name = flavour_banbe_anen.2.b
+
+		add_prestige = -5
+	}
+
+	option = { #Order
+		name = flavour_banbe_anen.2.c
+		trigger = {
+			OR = {
+				has_active_fervor = banbe_anen_order
+				has_active_fervor = banbe_anen_order_mastered
+			}
+		}
+
+		banbe_anen_quest_for_Reehanviza_values = { which = order amount = 1 }
+		event_target:banbe_anen_Reehanviza_village = {
+			area = {
+				add_province_modifier = {
+					name = quest_for_Reehanviza_village_helped_tax
+					duration = 3650
+				}
+			}
+		}
+	}
+
+	option = {
+		name = flavour_banbe_anen.2.e
+		trigger = {
+			OR = {
+				has_active_fervor = banbe_anen_chaos
+				has_active_fervor = banbe_anen_chaos_mastered
+			}
+		}
+
+		banbe_anen_quest_for_Reehanviza_values = { which = chaos amount = 1 }
+		event_target:banbe_anen_Reehanviza_village = {
+			area = {
+				add_province_modifier = {
+					name = quest_for_Reehanviza_village_helped_production_1
+					duration = 3650
+				}
+			}
+		}
+	}
+
+	option = {
+		name = flavour_banbe_anen.2.f
+		trigger = {
+			OR = {
+				has_active_fervor = banbe_anen_household_gods
+				has_active_fervor = banbe_anen_household_gods_mastered
+			}
+		}
+
+		banbe_anen_quest_for_Reehanviza_values = { which = household_gods amount = 1 }
+		event_target:banbe_anen_Reehanviza_village = {
+			area = {
+				add_province_modifier = {
+					name = quest_for_Reehanviza_village_helped_production_2
+					duration = 3650
+				}
+			}
+		}
+	}
+
+	option = {
+		name = flavour_banbe_anen.2.g
+		trigger = {
+			OR = {
+				has_active_fervor = banbe_anen_outer_realms
+				has_active_fervor = banbe_anen_outer_realms_mastered
+			}
+		}
+
+		banbe_anen_quest_for_Reehanviza_values = { which = outer_realms amount = 1 }
+		event_target:banbe_anen_Reehanviza_village = {
+			area = {
+				add_province_modifier = {
+					name = quest_for_Reehanviza_village_helped_manpower
+					duration = 3650
+				}
+			}
+		}	
+	}
+}
+
+country_event = {
+	id = flavour_banbe_anen.3
+	title = flavour_banbe_anen.3.t
+	desc = flavour_banbe_anen.3.d
+	picture = MILITARY_CAMP_eventPicture
+
+	is_triggered_only = yes
+	trigger = { }
+
+
+	option = {
+		name = flavour_banbe_anen.3.a
+
+		add_prestige = 5
+	}
+
+	option = {
+		name = flavour_banbe_anen.3.b
+
+		add_prestige = -5
+		add_treasury = 50
+	}
+
+	option = {
+		name = flavour_banbe_anen.3.c
+		trigger = {
+			OR = {
+				has_active_fervor = banbe_anen_chaos
+				has_active_fervor = banbe_anen_chaos_mastered
+			}
+		}
+
+		add_prestige = -10
+		add_adm_power = 50
+		banbe_anen_quest_for_Reehanviza_values = { which = chaos amount = 1 }
+	}
+}
+
+country_event = { 
+	id = flavour_banbe_anen.4
+	title = flavour_banbe_anen.4.t
+	desc = flavour_banbe_anen.4.d
+	picture = MILITARY_CAMP_eventPicture
+
+	is_triggered_only = yes
+	trigger = { }
+
+
+	option = {
+		name = flavour_banbe_anen.4.a
+
+		kill_ruler = yes
+	}
+}
+
+country_event = { 
+	id = flavour_banbe_anen.5
+	title = flavour_banbe_anen.5.t
+	desc = flavour_banbe_anen.5.d
+	picture = MILITARY_CAMP_eventPicture
+
+	is_triggered_only = yes
+	trigger = { }
+
+
+	option = {
+		name = flavour_banbe_anen.5.a
+
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ##### END
+
+country_event = { #Quest for Reehanviza End
+	id = flavour_banbe_anen.1000
+	title = flavour_banbe_anen.1000.t
+	desc = flavour_banbe_anen.1000.d
+	picture = MILITARY_CAMP_eventPicture
+
+	is_triggered_only = yes
+	trigger = { }
+
+	option = {
+		name = flavour_banbe_anen.1000.a
+		trigger = {
+			OR = {
+				banbe_anen_quest_for_Reehanviza_mastery_trigger = { which = order }
+				banbe_anen_quest_for_Reehanviza_mastery_trigger = { which = chaos }
+				banbe_anen_quest_for_Reehanviza_mastery_trigger = { which = household_gods }
+				banbe_anen_quest_for_Reehanviza_mastery_trigger = { which = outer_realms }
+			}
+		}
+
+		if = { #Order Mastered
+			limit = {
+				banbe_anen_quest_for_Reehanviza_mastery_trigger = { which = order }
+			}
+			add_ruler_modifier = {
+				name = banbe_anen_quest_for_Reehanviza_mastered_order
+				duration = -1
+			}
+		}
+		if = { #Chaos Mastered
+			limit = {
+				banbe_anen_quest_for_Reehanviza_mastery_trigger = { which = chaos }
+			}
+			add_ruler_modifier = {
+				name = banbe_anen_quest_for_Reehanviza_mastered_chaos
+				duration = -1
+			}
+		}
+		if = { #Household Gods Mastered
+			limit = {
+				banbe_anen_quest_for_Reehanviza_mastery_trigger = { which = household_gods }
+			}
+			add_ruler_modifier = {
+				name = banbe_anen_quest_for_Reehanviza_mastered_household_gods
+				duration = -1
+			}
+		}
+		if = { #Outer Realms Mastered
+			limit = {
+				banbe_anen_quest_for_Reehanviza_mastery_trigger = { which = outer_realms }
+			}
+			add_ruler_modifier = {
+				name = banbe_anen_quest_for_Reehanviza_mastered_outer_realms
+				duration = -1
+			}
+		}
+		remove_country_modifier = banbe_anen_quest_for_Reehanviza
+	}
+
+	option = {
+		name = flavour_banbe_anen.1000.b
+		trigger = {
+			NOT = {
+				banbe_anen_quest_for_Reehanviza_mastery_trigger = { which = order }
+				banbe_anen_quest_for_Reehanviza_mastery_trigger = { which = chaos }
+				banbe_anen_quest_for_Reehanviza_mastery_trigger = { which = household_gods }
+				banbe_anen_quest_for_Reehanviza_mastery_trigger = { which = outer_realms }
+			}
+		}
+
+		add_prestige = -50
+		add_legitimacy_equivalent = { amount = -50 republican_tradition = -30 }
+		add_stability = -1
+		remove_country_modifier = banbe_anen_quest_for_Reehanviza
+	}
+}
