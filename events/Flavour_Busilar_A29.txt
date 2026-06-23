@@ -162,10 +162,32 @@ country_event = { #fate of the stonewings
 	option = {
 		name = busilar.8.a
 		set_country_flag = A29_one_dove
+		akasik_region = {
+			limit = {
+				has_terrain = mountain 
+			}
+			change_culture = stonewing_harpy
+			harpy_roost_se_add_roost_tier_1 = yes 
+		}
+
+		hidden_effect = {
+			change_variable = {
+				which = A29_assimilation
+				value = 1
+			}
+		}
 	}
 
 	option = {
 		name = busilar.8.b 
+		akasik_region = {
+			limit = {
+				has_terrain = mountain
+			}
+			change_culture = busilari
+			change_religion = ROOT 
+			add_base_tax = 1
+		}
 	}
 }
 
@@ -718,6 +740,27 @@ country_event = {
 			}
 		}
 	}
+}
+
+province_event = { #hidden for dev 
+	id = busilar.90 
+
+	is_triggered_only = yes 
+	hidden = yes 
+
+		trigger = {
+			owner = {
+				has_country_flag = A29_investment_development
+			}
+		}
+		option = {
+			name = busilar.90.a 
+				ROOT = {
+					area = {
+						add_base_production = 1 
+					}
+				}
+		}
 }
 
 
