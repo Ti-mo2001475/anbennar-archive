@@ -544,6 +544,10 @@ gene_pillar_generic_then_specific_event = {
 
 			### Add Speed modifiers above here ###
 
+			# NOTE TO FUTURE DEVELOPERS: This speed variable is currently capped at 6 and 24 as the minimum and maximum
+			# DO NOT increase this max of 24, since this may cause a queued event that is left over from a failed expedition
+			# to fire for another expedition the player starts on the same gene pillar
+			
 			round_variable = { which = GenePillarsSpeed value = 0 }
 			if = { # clamp speed at minimum of 6 months
 				limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 6 } } }
@@ -3392,5 +3396,9 @@ gene_pillars_get_random_insyaa_invention_flag = {
 } 
 gene_pillar_on_expedition_ended = { #Effects that needs to trigger after expedition is finished in any way
 	# We want the timer to be per gene pillar
+
+	# NOTE TO FUTURE DEVELOPERS: If there end up being ways to remove this modifier to reduce the cooldown, DO NOT allow it to be shorter than 1 year. It is possible
+	# that after failing an expedition, there can be an event queued for up to 363 days. So we don't have that event pop up for an expedition you start too soon,
+	# the minimum cooldown MUST be 1 year
 	event_target:gene_pillar_exploration_province = { add_province_modifier = { name = gene_pillars_party_preparing duration = 730 } } # 2 years
 }
