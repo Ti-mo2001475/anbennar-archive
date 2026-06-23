@@ -1603,7 +1603,8 @@ gene_pillars_injure_class_effect = {
 		remove_country_modifier = gene_pillars_injured_$class$
 		add_country_modifier = { name = gene_pillars_heavy_injured_$class$ duration = 7300 } # 20 years
 	}
-	else = {
+	else_if = {
+		limit = { NOT = { has_country_modifier = gene_pillars_heavy_injured_$class$ } } # Don't gain another injury if you are already gravely injured
 		add_country_modifier = { name = gene_pillars_injured_$class$ duration = 3650 } # 10 years
 	}
 }
