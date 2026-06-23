@@ -2972,7 +2972,7 @@ custom_text_box = {
 
 ### Banbe Anem
 custom_window = {
-	name = banbe_anen_quest_for_Reehanviza
+	name = banbe_anen_quest_for_reehanviza
 	potential = {
 		religion = banbe_anen
 	}
@@ -2988,21 +2988,37 @@ custom_button = {
 
 	trigger = {
 		fervor = 75
-		NOT = { has_ruler_modifier = banbe_anen_quest_for_Reehanviza }
+		NOT = { has_ruler_modifier = banbe_anen_quest_for_reehanviza }
 	}
 
 	effect = {
 		if = {
-			limit = { NOT = { has_ruler_modifier = banbe_anen_quest_for_Reehanviza } }
+			limit = { NOT = { has_ruler_modifier = banbe_anen_quest_for_reehanviza } }
 			add_fervor = -75
 			country_event = { id = flavour_banbe_anen.1 } #Quest for Reehanviza Start
 
 			add_ruler_modifier = {
-				name = banbe_anen_quest_for_Reehanviza
+				name = banbe_anen_quest_for_reehanviza
 				duration = -1
 			}
 			custom_tooltip = quest_for_reehanviza_cant_magic_TT
 			hidden_effect = {
+				set_variable = {
+					which = reehanviza_order
+					value = 0
+				}
+				set_variable = {
+					which = reehanviza_chaos
+					value = 0
+				}
+				set_variable = {
+					which = reehanviza_household_gods
+					value = 0
+				}
+				set_variable = {
+					which = reehanviza_outer_realms
+					value = 0
+				}
 				#The Random Events
 				country_event = { id = flavour_banbe_anen.0 days = 365 random = 180 }
 				country_event = { id = flavour_banbe_anen.0 days = 730 random = 180 }
