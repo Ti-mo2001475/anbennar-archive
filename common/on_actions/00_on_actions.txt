@@ -3764,6 +3764,19 @@ on_battle_won_country = {
 			set_country_flag = L76_rip_and_tear_mana_refund
 		}
 	}
+
+	if = {
+		limit = {
+			has_country_flag = A29_oops_we_are_racist
+			NOT = {
+				has_spawned_rebels = nationalist_rebels
+			}
+		}
+		country_event = {
+			id = busilar.19 
+		}
+		clr_country_flag = A29_oops_we_are_racist
+	}
 	
 	dragon_turtles_casualty_friendship_effect = yes
 }
@@ -23902,6 +23915,30 @@ on_dependency_lost = {
 		remove_country_modifier = abandoned_city_overlord_1
 		remove_country_modifier = abandoned_city_overlord_2
 		remove_country_modifier = abandoned_city_overlord_3
+	}
+
+	#Busilar 
+	if = {
+		limit = {
+			1343 = {
+				has_trade_modifier = {
+					who = ROOT 
+					key = A29_friendly_traders
+				}
+			}
+			FROM = {
+				OR = {
+					tag = L55 
+					tag = L61 
+				}
+			}
+		}
+		1343 = {
+			remove_trade_modifier = {
+				who = ROOT 
+				key = A29_strong_merchants
+			}
+		}
 	}
 
 	#PUT NEW EFFECT ABOVE THIS

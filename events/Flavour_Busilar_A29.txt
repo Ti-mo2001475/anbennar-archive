@@ -163,6 +163,10 @@ country_event = { #fate of the stonewings
 		name = busilar.8.a
 		set_country_flag = A29_one_dove
 	}
+
+	option = {
+		name = busilar.8.b 
+	}
 }
 
 country_event = { #the khet and busilar
@@ -220,44 +224,65 @@ country_event = { #HARPYHARPYHARPYHARPYHARPY
 
 	option = {
 		name = busilar.11.a
-		release = L55 
-		L55 = {
-			change_religion = ravelian 
-			if = {
-				limit = {
-					is_subject = yes 
-				}
-				1343 ={
-					trade_node
-				}
-
-			} 
-		}
 		bedaphire_area = { 
 			cede_province = L55 
 		}
 		irkan_eparta_area = {
 			cede_province = L55 
 		}
-
-		if = {
-			limit = {
-				is_subject = L55 
-			}
+		L55 = {
+			change_religion = ravelian 
+			1343 ={
+				add_trade_modifier = {
+					who = A29 
+					duration = -1 
+					power = 50 
+					key = A29_friendly_traders
+				}
+			} 
+		}
+		create_subject = {
+			subject_type = vassal 
+			subject = L55 
+		}
+		trigger = {
+			has_country_flag = A29_one_dove
 		}
 	}
 
 	option = {
 		name = busilar.11.b
-		release = L61 
+		bedaphire_area = {
+			cede_province = L61 
+		}
+		irkan_eparta_area = {
+			cede_province = L62 
+		}
 		L61 = {
 			change_religion = ravelian
+			1343 ={
+				add_trade_modifier = {
+					who = A29 
+					duration = -1 
+					power = 50 
+					key = A29_friendly_traders
+				}
+			} 
 		}
 		bedaphire_area = {
 			cede_province = L61 
 		}
 		irkan_eparta_area = {
 			cede_province = L62 
+		}
+		create_subject = {
+			subject_type = vassal 
+			subject = L61
+		}
+		trigger = {
+			NOT = {
+				has_country_flag = A29_one_dove 
+			}
 		}
 	}
 }
@@ -272,6 +297,126 @@ country_event = { #The Nature of Busilar
 
 	option = {
 		name = busilar.12.a
+		
+		OR = {
+			if = {
+				limit = {
+					check_variable = {
+						name = A29_assimilation
+						value = 1 
+					}
+				}
+				random_owned_province = {
+					limit = {
+						superregion = fangaula_superregion
+					}
+					spawn_rebels = {
+						size = 3 
+						type = nationalist_rebels
+						separatists_target = L22 
+					}
+				}
+				random_owned_province = {
+					limit = {
+						superregion = fangaula_superregion
+					}
+					spawn_rebels = {
+						size = 3 
+						type = nationalist_rebels
+						separatists_target = L22 
+					}
+				}
+				random_owned_province = {
+					limit = {
+						superregion = fangaula_superregion
+					}
+					spawn_rebels = {
+						size = 3 
+						type = nationalist_rebels
+						separatists_target = L22 
+					}
+				}
+				set_country_flag = A29_oops_we_are_racist
+				
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						name = A29_assimilation
+						value = 2 
+					}
+				}
+				random_owned_province = {
+					limit = {
+						superregion = fangaula_superregion
+					}
+					spawn_rebels = {
+						size = 2
+						type = nationalist_rebels
+						separatists_target = L22 
+					}
+				}
+				random_owned_province = {
+					limit = {
+						superregion = fangaula_superregion
+					}
+					spawn_rebels = {
+						size = 2
+						type = nationalist_rebels
+						separatists_target = L22 
+					}
+				}
+				random_owned_province = {
+					limit = {
+						superregion = fangaula_superregion
+					}
+					spawn_rebels = {
+						size = 2
+						type = nationalist_rebels
+						separatists_target = L22 
+					}
+				}
+				set_country_flag = A29_oops_we_are_racist
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						name = A29_assimilation
+						value = 3
+					}
+				}
+				random_owned_province = {
+					limit = {
+						superregion = fangaula_superregion
+					}
+					spawn_rebels = {
+						size = 1
+						type = nationalist_rebels
+						separatists_target = L22 
+					}
+				}
+				set_country_flag = A29_oops_we_are_racist
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						name = A29_assimilation
+						value = 4
+					}
+				}
+				every_owned_province = {
+					limit = {
+						continent = africa 
+					}
+					change_religion = ravelian 
+				}
+				add_country_modifier = {
+					name = A29_sarhaly_in_spirit
+					duration = -1
+				}
+			}
+		}
+
 	}
 }
 
@@ -285,6 +430,49 @@ country_event = { #The Lions Triumph
 
 	option = {
 		name = busilar.13.a
+		set_global_flag = A29_we_so_pog 
+		custom_tooltip = A29_busilar_is_so_cool_tt
+		hidden_effect = {
+			if = {
+				limit = { 
+					is_hegemon_of_type = economic_hegemon
+				}
+				add_country_modifier = {
+					name = pashaine_naval_hegemon_half
+					duration = -1
+				}
+				add_country_modifier = {
+					name = pashaine_military_hegemon_half
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					is_hegemon_of_type = naval_hegemon
+				}
+				add_country_modifier = {
+					name = pashaine_economic_hegemon_half
+					duration = -1
+				}
+				add_country_modifier = {
+					name = pashaine_military_hegemon_half
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					is_hegemon_of_type = military_hegemon
+				}
+				add_country_modifier = {
+					name = pashaine_economic_hegemon_half
+					duration = -1
+				}
+				add_country_modifier = {
+					name = pashaine_naval_hegemon_half
+					duration = -1
+				}
+			}
+		}
 	}
 }
 
@@ -298,6 +486,32 @@ country_event = { #will set you free
 
 	option = {
 		name = busilar.14.a
+		every_active_trade_node = {
+			limit = {
+				ROOT = {
+					trading_policy_in_node = {
+						node = PREV 
+						policy = propagate_religion
+					}
+				}
+			}
+			every_trade_node_member_province = {
+				if = {
+					limit = {
+						trade_share = {
+							country = A29 
+							share = 100 
+						}
+					}
+					random = {
+						chance = 50 
+						change_religion = ravelian 
+					}
+				}
+			}
+				
+			
+		}
 	}
 }
 
