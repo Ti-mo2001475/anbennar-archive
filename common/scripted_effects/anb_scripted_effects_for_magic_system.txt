@@ -601,6 +601,9 @@ magic_advancement_abort_all_effect = { #Indiscriminate. Assumes nothing about yo
 			}
 			else = { 6182 = { remove_province_modifier = yanacotle_great_forge_construction }}
 		}
+
+		#Ministries Privilege
+		remove_country_modifier = estate_raj_ministries_magical_oversight_commission_mod
 	}
 }
 magic_advancement_clr_type_flags = {
@@ -720,6 +723,16 @@ start_magic_project = { #Country only
 	custom_tooltip = $project$_lookahead
 
 	hidden_effect = {
+		#Ministries Privilege
+		if = {
+			limit = { has_country_modifier = estate_raj_ministries_magical_oversight_commission_mod_dummy }
+			remove_country_modifier = estate_raj_ministries_magical_oversight_commission_mod_dummy
+			add_country_modifier = {
+				name = estate_raj_ministries_magical_oversight_commission_mod
+				duration = -1
+			}
+		}
+
 		set_magic_experience_target = { type = country project = $project$ }
 		set_variable = { which = country_magic_experience value = 0 }
 		update_magic_ui_experience_modifiers = yes
@@ -2615,6 +2628,12 @@ increase_type_witch_king_points_medium = { #2 points
 		}
 		custom_tooltip = $type$_infamy_will_be_respected_tt
 	}
+	if = {
+		limit = {
+			has_country_modifier = absolution_cannor_clerical_spell_mod
+		}
+		add_stability = -1
+	}
 	hidden_effect = {
 		set_$type$_flag = is_infamous_$type$ #We check for this when transferring points
 		change_variable = { $type$_witch_king_points = 2 }
@@ -2640,6 +2659,12 @@ increase_type_witch_king_points_large = { #4 points
 			check_variable = { $type$_witch_king_points = 0 } #undercapping
 		}
 		custom_tooltip = $type$_infamy_will_be_respected_tt
+	}
+	if = {
+		limit = {
+			has_country_modifier = absolution_cannor_clerical_spell_mod
+		}
+		add_stability = -1
 	}
 	hidden_effect = {
 		set_$type$_flag = is_infamous_$type$ #We check for this when transferring points
