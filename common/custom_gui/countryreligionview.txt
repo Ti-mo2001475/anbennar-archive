@@ -2979,16 +2979,11 @@ custom_window = {
 }
 
 custom_button = {
-	name = banbe_anen_quest_for_Reehanviza_button
-	tooltip = banbe_anen_quest_for_Reehanviza_TT
+	name = banbe_anen_quest_for_reehanviza_button
+	tooltip = banbe_anen_quest_for_reehanviza_TT
 
 	potential = {
-		NOT = {
-			has_ruler_modifier = banbe_anen_quest_for_Reehanviza_mastered_order
-			has_ruler_modifier = banbe_anen_quest_for_Reehanviza_mastered_chaos
-			has_ruler_modifier = banbe_anen_quest_for_Reehanviza_mastered_household_gods
-			has_ruler_modifier = banbe_anen_quest_for_Reehanviza_mastered_outer_realms
-		}	
+		NOT = { has_ruler_flag = quest_for_reehanviza_completed }	
 	}
 
 	trigger = {
@@ -3001,29 +2996,38 @@ custom_button = {
 			limit = { NOT = { has_ruler_modifier = banbe_anen_quest_for_Reehanviza } }
 			add_fervor = -75
 			country_event = { id = flavour_banbe_anen.1 } #Quest for Reehanviza Start
-			hidden_effect = { id = flavour_banbe_anen.1000 days = 3650 } #Quest for Reehanviza End
+
 			add_ruler_modifier = {
 				name = banbe_anen_quest_for_Reehanviza
 				duration = -1
 			}
-			custom_tooltip = quest_for_Reehanviza_cant_magic_TT
+			custom_tooltip = quest_for_reehanviza_cant_magic_TT
+			hidden_effect = {
+				#The Random Events
+				country_event = { id = flavour_banbe_anen.0 days = 365 random = 180 }
+				country_event = { id = flavour_banbe_anen.0 days = 730 random = 180 }
+				country_event = { id = flavour_banbe_anen.0 days = 1095 random = 180 }
+				country_event = { id = flavour_banbe_anen.0 days = 1460 random = 180 }
+				country_event = { id = flavour_banbe_anen.0 days = 1825 random = 180 }
+				country_event = { id = flavour_banbe_anen.0 days = 2190 random = 180 }
+				country_event = { id = flavour_banbe_anen.0 days = 2555 random = 180 }
+				country_event = { id = flavour_banbe_anen.0 days = 2920 random = 180 }
+				country_event = { id = flavour_banbe_anen.0 days = 3285 random = 180 }
+				#Quest for Reehanviza End
+				country_event = { id = flavour_banbe_anen.1000 days = 3650 }
+			}
 		}
 		else = {
-			custom_tooltip = quest_for_Reehanviza_counter_TT
+			custom_tooltip = quest_for_reehanviza_counter_TT
 		}
 	}
 }
 
 custom_icon = {
-	name = banbe_anen_quest_for_Reehanviza_achieved
-	tooltip = banbe_anen_quest_for_Reehanviza_achieved_TT
+	name = banbe_anen_quest_for_reehanviza_achieved
+	tooltip = banbe_anen_quest_for_reehanviza_achieved_TT
 
 	potential = {
-		OR = {
-			has_ruler_modifier = banbe_anen_quest_for_Reehanviza_mastered_order
-			has_ruler_modifier = banbe_anen_quest_for_Reehanviza_mastered_chaos
-			has_ruler_modifier = banbe_anen_quest_for_Reehanviza_mastered_household_gods
-			has_ruler_modifier = banbe_anen_quest_for_Reehanviza_mastered_outer_realms
-		}	
+		has_ruler_flag = quest_for_reehanviza_completed
 	}
 }
