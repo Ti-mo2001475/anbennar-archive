@@ -148,6 +148,76 @@ country_event = { #event about vassalising crathanor
 
 	option = {
 		name = busilar.7.a
+		if = {
+			limit = {
+				NOT = {
+					U17 = {
+						total_development = 150 
+					}
+				}
+				U17 = {
+					alliance_with = A29 
+				}
+			}
+			U17 = {
+				country_event = {
+					id = Busilar.20 
+				}
+			}
+		}
+
+		else_if = {
+			limit = {
+				U17 = {
+					is_subject = yes 
+				}
+			}
+			U17 = {
+				add_historical_friend_mutual = yes 
+			} 
+		}
+
+		else_if = {
+			limit = {
+				NOT = {
+					exists = U17 
+				}
+				U17 = {
+					all_core_province = {
+						seperatism = -30 
+					}
+				}
+			}
+		}
+
+		else_if = {
+			limit = {
+				U17 = {
+					total_development = 150 
+				}
+			}
+			add_casus_belli = {
+				type = cb_vassalize_mission 
+				target = U17 
+			}
+		}
+
+		else_if = {
+			limit = {
+				U17 = {
+					NOT = {
+						overlord = {
+							tag = A29 
+						}
+					}
+					is_subject = yes 
+				}
+			}
+			add_casus_belli = {
+				type = cb_vassalize_mission 
+				target = U17 
+			}
+		}
 	}
 }
 
@@ -749,6 +819,29 @@ country_event = {
 				duration = 18250 
 			}
 		}
+	}
+}
+
+country_event = {
+	id = busilar.20 
+	title = busilar.20.t
+	desc = busilar.20.d 
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes 
+
+	option = {
+		name = busilar.20.a 
+		A29 = {
+			create_subject = {
+				subject_type = vassal
+				subject = U17 
+			}
+		}
+	}
+
+	option = {
+		name = busilar.20.b 
 	}
 }
 
