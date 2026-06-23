@@ -325,11 +325,12 @@ col_1 = {
 			 	first_limit = "has_country_flag = religious_league_war_on_winning_side"
 			 	first_effect = "add_country_modifier = { name = A29_league_war_victory duration = -1 }"
 			}
+			custom_tooltip = A29_the_emperor_tt
+			custom_tooltip = A29_not_the_emperor_tt
 			if = {
 				limit = {
 					is_emperor = yes
 				}
-				custom_tooltip = A29_the_emperor_tt
 				while = { 
 					limit = { 
 						the_borders_region = { 
@@ -351,7 +352,6 @@ col_1 = {
 				}
 			}
 			else = {
-				custom_tooltip = A29_not_the_emperor_tt
 				while = { 
 					limit = { 
 						the_borders_region = { 
@@ -650,11 +650,13 @@ col_2 = {
 
 		effect = {
 			custom_tooltip = A29_owned_ironwood_tt
-			add_years_of_owned_provinces_production_income = {
-				trigger = {
-					has_province_modifier = ironwood_trees
+			hidden_effect = {
+				add_years_of_owned_provinces_production_income = {
+					trigger = {
+						has_province_modifier = ironwood_trees
+					}
+					years = 2
 				}
-				years = 2
 			}
 			custom_tooltip = A29_planetouched_production_unlock_tt
 			set_country_flag = A29_planetouched_production_unlock
@@ -1420,21 +1422,11 @@ col_3 = {
 					}
 				}
 			}
-			complex_dynamic_effect = {
+			complex_dynamic_effect = { #i fucking hate these things, why did I use it, it doesn't even workcomplex_dynamic_effect 
 				first_custom_tooltip = A29_land_and_sea_4_tt
 				first_limit = "
-				is_variable_equal = {
-					which = A29_barracks_value
-					which = A29_dock_value
-				}
-				check_variable = {
-					which = A29_barracks_value
-					value = 5
-				}
-				check_variable = {
-					which = A29_dock_value
-					value = 5
-				}
+				barracks = 5
+				dock = 5
 				"
 				first_effect = "
 				add_country_modifier = {
@@ -1446,7 +1438,14 @@ col_3 = {
 				is_variable_equal = {
 					which = A29_barracks_value
 					which = A29_dock_value
-				}"
+				}
+				NOT = {
+					barracks = 5
+					dock = 5
+				}
+				barracks = 3
+				dock = 3
+				"
 				second_effect = "
 				add_country_modifier = {
 					name = A29_interservice_balance
@@ -1456,7 +1455,8 @@ col_3 = {
 				third_limit = "check_variable = {
 						which = A29_dock_value
 						which = A29_barracks_value
-					}"
+					}
+				"
 				third_effect = "add_country_modifier = {
 					name = A29_naval_focus
 					duration = -1
@@ -1495,18 +1495,28 @@ col_3 = {
 		}
 
 		effect = {  
-			custom_tooltip = A29_emperors_mantle_privilege_tt #todo make priv
+			custom_tooltip = A29_emperors_mantle_privilege_tt
 			set_country_flag = A29_emperors_mantle_privilege_unlock
-			complex_dynamic_effect = {
-				first_custom_tooltip = A29_mantle_oppressed_tt
-				first_limit = "has_estate_privilege = estate_planetouched_organization_oppressed"
-				first_effect = "set_country_flag = tree_of_tales_free_use"
-				second_custom_tooltip = A29_mantle_empowered_tt
-				second_limit = "has_estate_privilege = estate_planetouched_organization_empowered"
-				second_effect = "set_country_flag = imperial_arena_build_bypass_flag"
-				third_custom_tooltip = A29_mantle_state_tt
-				third_limit = "has_estate_privilege = estate_planetouched_organization_state"
-				third_effect = "set_country_flag = dendugma_build_bypass_flag"
+			custom_tooltip = A29_mantle_oppressed_tt
+			custom_tooltip = A29_mantle_empowered_tt
+			custom_tooltip = A29_mantle_state_tt
+			if = {
+				limit = {
+					has_estate_privilege = estate_planetouched_organization_oppressed
+				}
+				set_country_flag = tree_of_tales_free_use
+			}
+			else_if = {
+				limit = { 
+					has_estate_privilege = estate_planetouched_organization_empowered
+				}
+				set_country_flag = imperial_arena_build_bypass_flag
+			}
+			else_if = {
+				limit = {
+					has_estate_privilege = estate_planetouched_organization_state
+				}
+				set_country_flag = dendugma_build_bypass_flag
 			}
 			hidden_effect = {
 				if = {
@@ -1678,7 +1688,7 @@ col_3 = {
 
 		effect = {  
 			custom_tooltip = A29_boons_of_the_society_tt
-			set_country_flag = A29_boons_of_the_society_flag #priv TODO
+			set_country_flag = A29_boons_of_the_society_flag
 		} 
 	}
 
@@ -2164,8 +2174,9 @@ col_4 = {
 		} 
 
 		effect = {
-			add_meritocracy = 25 
-			set_country_flag = A29_steward_reforms
+			add_meritocracy = 25
+			custom_tooltip = A29_palace_economy_unlock_tt
+			set_country_flag = A29_palace_economy_unlock
 		} 
 	}
 
@@ -2205,20 +2216,23 @@ col_4 = {
 		}
 
 		effect = {
+			custom_tooltip = A29_ardimya_investment
 			for = {
 				amount = 15
-				effect =" random_owned_province = {
-					limit = {
-						region = ardimya_region
-						has_dock_building_trigger = yes 
-						has_shipyard_building_trigger = yes 
-						base_production = 4 
-						NOT = {
-							has_province_modifier = A29_ardimyan_investments
+				effect = "
+					random_owned_province = {
+						limit = {
+							region = ardimya_region
+							has_dock_building_trigger = yes 
+							has_shipyard_building_trigger = yes 
+							base_production = 4 
+							NOT = {
+								has_province_modifier = A29_ardimyan_investments
+							}
 						}
+						add_province_modifier = A29_ardimyan_investments
 					}
-					add_province_modifier = A29_ardimyan_investments
-				}"
+				"
 			}
 			ringlet_isles_region = { add_permanent_claim = ROOT } 
 			bedaphire_area = { add_permanent_claim = ROOT }
