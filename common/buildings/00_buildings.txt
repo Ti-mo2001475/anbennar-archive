@@ -4302,6 +4302,34 @@ mage_tower = {
 				duration = -1
 			}
 		}
+		if = {
+			limit = {
+				FROM = {
+					has_estate_privilege = estate_raj_ministries_magical_oversight_commission
+					NOT = {
+						has_country_modifier = estate_raj_ministries_magical_oversight_commission_mod
+						has_country_modifier = estate_raj_ministries_magical_oversight_commission_mod_dummy
+					}
+				}
+			}
+			FROM = {
+				if = {
+					limit = { has_country_flag = magic_project }
+					add_country_modifier = {
+						name = estate_raj_ministries_magical_oversight_commission_mod
+						duration = -1
+					}
+				}
+				else = {
+					add_country_modifier = {
+						name = estate_raj_ministries_magical_oversight_commission_mod_dummy
+						duration = -1
+					}
+					custom_tooltip = estate_raj_ministries_magical_oversight_commission_mod_dummy_desc
+					custom_tooltip = " "
+				}
+			}
+		}
 	}
 	on_destroyed = {
 		on_destroyed_manufactory_effect = yes
