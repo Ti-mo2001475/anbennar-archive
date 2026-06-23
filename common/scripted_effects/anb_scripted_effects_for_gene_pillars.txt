@@ -1599,13 +1599,15 @@ gene_pillars_roll_injury_class_effect = {
 #Injure a specific class
 gene_pillars_injure_class_effect = {
 	if = {
-		limit = { has_country_modifier = gene_pillars_injured_$class$ }
-		remove_country_modifier = gene_pillars_injured_$class$
-		add_country_modifier = { name = gene_pillars_heavy_injured_$class$ duration = 7300 } # 20 years
-	}
-	else_if = {
 		limit = { NOT = { has_country_modifier = gene_pillars_heavy_injured_$class$ } } # Don't gain another injury if you are already gravely injured
-		add_country_modifier = { name = gene_pillars_injured_$class$ duration = 3650 } # 10 years
+		if = {
+			limit = { has_country_modifier = gene_pillars_injured_$class$ }
+			remove_country_modifier = gene_pillars_injured_$class$
+			add_country_modifier = { name = gene_pillars_heavy_injured_$class$ duration = 7300 } # 20 years
+		}
+		else = {
+			add_country_modifier = { name = gene_pillars_injured_$class$ duration = 3650 } # 10 years
+		}
 	}
 }
 
