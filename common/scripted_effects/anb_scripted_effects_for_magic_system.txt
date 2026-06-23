@@ -604,6 +604,9 @@ magic_advancement_abort_all_effect = { #Indiscriminate. Assumes nothing about yo
 			else = { 6182 = { remove_province_modifier = yanacotle_great_forge_construction }}
 		}
 
+		#Ministries Privilege
+		remove_country_modifier = estate_raj_ministries_magical_oversight_commission_mod
+
 		#Deathwinds
 		clr_country_flag = deathwinds_kheion_and_kaydhano_project
 		if = {
@@ -740,6 +743,16 @@ start_magic_project = { #Country only
 	custom_tooltip = $project$_lookahead
 
 	hidden_effect = {
+		#Ministries Privilege
+		if = {
+			limit = { has_country_modifier = estate_raj_ministries_magical_oversight_commission_mod_dummy }
+			remove_country_modifier = estate_raj_ministries_magical_oversight_commission_mod_dummy
+			add_country_modifier = {
+				name = estate_raj_ministries_magical_oversight_commission_mod
+				duration = -1
+			}
+		}
+
 		set_magic_experience_target = { type = country project = $project$ }
 		set_variable = { which = country_magic_experience value = 0 }
 		update_magic_ui_experience_modifiers = yes
