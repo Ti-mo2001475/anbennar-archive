@@ -134,14 +134,22 @@ col_1 = {
 			taychend_superregion = {
 				has_discovered = ROOT
 			}
-			has_global_flag = castellar_mural_discovered
+			custom_trigger_tooltip = {
+				tooltip = A29_mural_discovered_tt
+				has_global_flag = castellar_mural_discovered
+			}
 			if = {
 				limit = {
 					has_dlc = "Rule Britannia"
 				}
 				innovativeness = 15
 			}
-			is_ahead_of_time_in_technology = { tech = all } #todo check works
+			custom_trigger_tooltip = {
+				tooltip = A29_ahead_tech_tt 
+				is_ahead_of_time_in_technology = { tech = adm } 
+				is_ahead_of_time_in_technology = { tech = dip } 
+				is_ahead_of_time_in_technology = { tech = mil } 
+			}
 		} 
 
 		effect = {  
@@ -207,7 +215,10 @@ col_1 = {
 		} 
 
 		trigger = {  
-			has_global_flag = crimson_deluge
+			custom_trigger_tooltip = {
+				tooltip = A29_weird_rain_tt
+				has_global_flag = crimson_deluge
+			}
 			has_estate_privilege = estate_burghers_enforced_interfaith_dialogue
 			all_owned_province = {
 				OR = {
@@ -413,55 +424,58 @@ col_1 = {
 		} 
 
 		effect = { 
-			if = {
-				limit = {
-					ROOT = {
-						is_emperor = yes 
-					}
-				}
-				random_country = {
+			hidden_effect = {
+				if = {
 					limit = {
-						is_part_of_hre = yes 
-						NOT = { religion = ravelian }
-						NOT = {
-							any_country = {
-								is_part_of_hre = yes 
-								NOT = { religion = ravelian }
-								total_development = PREV
-							}
+						ROOT = {
+							is_emperor = yes 
 						}
 					}
-					save_event_target_as = league_war_defender
+					random_country = {
+						limit = {
+							is_part_of_hre = yes 
+							NOT = { religion = ravelian }
+							NOT = {
+								any_country = {
+									is_part_of_hre = yes 
+									NOT = { religion = ravelian }
+									total_development = PREV
+								}
+							}
+						}
+						save_event_target_as = league_war_defender
+					}
+				}
+
+				else = {
+					emperor = {
+						save_event_target_as = league_war_defender
+					}
+				}
+
+				declare_war_with_cb = {
+					casus_belli = cb_busilar_rav_war
+					who = event_target:league_war_defender
+				}
+
+				every_country = {
+					limit = {
+						is_part_of_hre = yes
+						NOT = { religion = ravelian }
+					}
+					join_all_defensive_wars_of = event_target:league_war_defender
+				}
+
+				every_country = {
+					limit = {
+						is_part_of_hre = yes
+						religion = ravelian 
+					}
+					join_all_offensive_wars_of = ROOT 
 				}
 			}
-
-			else = {
-				emperor = {
-					save_event_target_as = league_war_defender
-				}
-			}
-
-			declare_war_with_cb = {
-				casus_belli = cb_busilar_rav_war
-				who = event_target:league_war_defender
-			}
-
-			every_country = {
-				limit = {
-					is_part_of_hre = yes
-					NOT = { religion = ravelian }
-				}
-				join_all_defensive_wars_of = event_target:league_war_defender
-			}
-
-			every_country = {
-				limit = {
-					is_part_of_hre = yes
-					religion = ravelian 
-				}
-				join_all_offensive_wars_of = ROOT 
-			}
-			#todo after war effects
+			custom_tooltip = A29_religion_wars_tt
+			
 		} 
 	}
 }
@@ -714,7 +728,12 @@ col_2 = {
 				node = 3084
 				policy = hostile_trading
 			}
-			#todo ananoma
+			custom_trigger_tooltip = {
+				tooltip = A29_i_deleted_ananoma_hungry_tt
+				any_owned_province = {
+					has_province_modifier = cleared_land 
+				}	
+			}
 		} 
 
 		effect = {
@@ -860,7 +879,7 @@ col_2 = {
 			calc_true_if = {
 				amount = 10
 				any_known_country = {
-					religion = ravelian
+					NOT = { religion = ravelian } 
 					has_50_opinion_improved_relation = { target = ROOT }
 				}
 			}
@@ -1635,8 +1654,11 @@ col_3 = {
 					country_or_non_sovereign_subject_holds = ROOT
 				}
 			}
-			num_of_battles = {
+			custom_trigger_tooltip = {
+				tooltip = A29_winning_battles_tt 
+				num_of_battles = {
 				amount = 75
+				}
 			}
 			all_known_country = {
 				OR = {
@@ -2384,7 +2406,10 @@ col_4 = {
 		provinces_to_highlight = {  } 
 
 		trigger = { 
-			has_country_flag = first_holohana_kill 
+			custom_trigger_tooltip = {
+				tooltip = A29_holohana_kill_tt
+				has_country_flag = first_holohana_kill
+			} 
 		} 
 
 		effect = {
@@ -2419,14 +2444,18 @@ col_4 = {
 					religion = ravelian
 				}
 				amount = 2000 
-				check_variable = { MaxArtificePoints = 100 }
-				OR = {
-					has_country_flag = unlocked_artifice_invention_kraken_galleons 
-					has_country_flag = unlocked_artifice_invention_bio_processor 
-					has_country_flag = unlocked_artifice_invention_spirit_munition 
+			}
+
+			check_variable = { MaxArtificePoints = 100 }
+				custom_trigger_tooltip = {
+					tooltip = A29_bionicle_sets_tt
+					OR = {
+						has_country_flag = unlocked_artifice_invention_kraken_galleons 
+						has_country_flag = unlocked_artifice_invention_bio_processor 
+						has_country_flag = unlocked_artifice_invention_spirit_munition 
+					}
 				}
 				is_all_concessions_in_council_taken = yes 
-			}
 		} 
 
 		effect = {
@@ -2494,6 +2523,7 @@ col_5 = {
 					}
 				}
 			}
+			custom_toolip = A29_wex_rival_verne_tt 
 		} 
 	}
 
@@ -2695,7 +2725,7 @@ col_5 = {
 			3082 = {
 				has_protecting_trade_share_in_trade_node = {
 					who = ROOT 
-					share = 20 
+					share = 0.2  
 				}
 			}
 			6632 = {
@@ -2769,52 +2799,54 @@ col_5 = {
 
 				}
 			}
-			any_owned_province = {
+			custom_trigger_tooltip = {
+				tooltip = A29_trade_company_torture_me_more_tt
+				any_owned_province = {
                 trade_company_region = trade_company_yetshelok
-                OR = {
-                    num_investments_in_trade_company_region = { 
-                        investment = local_quarter
-                        value = 3
-                    }
-                    num_investments_in_trade_company_region = { 
-                        investment = permanent_quarters
-                        value = 3
-                    }
-                    num_investments_in_trade_company_region = { 
-                        investment = company_warehouse
-                        value = 3
-                    }
-                    num_investments_in_trade_company_region = { 
-                        investment = company_depot
-                        value = 3
-                    }
-                    num_investments_in_trade_company_region = { 
-                        investment = brokers_office
-                        value = 3
-                    }
-                    num_investments_in_trade_company_region = { 
-                        investment = brokers_exchange
-                        value = 3
-                    }
-                    num_investments_in_trade_company_region = { 
-                        investment = settlements
-                        value = 3
-                    }
-                    num_investments_in_trade_company_region = { 
-                        investment = district
-                        value = 3
-                    }
-                    num_investments_in_trade_company_region = { 
-                        investment = company_administration
-                        value = 3
-                    }
-                    num_investments_in_trade_company_region = { 
-                        investment = military_administration
-                        value = 3
-                    }
-                    
-                }
-            }
+					OR = {
+						num_investments_in_trade_company_region = { 
+							investment = local_quarter
+							value = 3
+						}
+						num_investments_in_trade_company_region = { 
+							investment = permanent_quarters
+							value = 3
+						}
+						num_investments_in_trade_company_region = { 
+							investment = company_warehouse
+							value = 3
+						}
+						num_investments_in_trade_company_region = { 
+							investment = company_depot
+							value = 3
+						}
+						num_investments_in_trade_company_region = { 
+							investment = brokers_office
+							value = 3
+						}
+						num_investments_in_trade_company_region = { 
+							investment = brokers_exchange
+							value = 3
+						}
+						num_investments_in_trade_company_region = { 
+							investment = settlements
+							value = 3
+						}
+						num_investments_in_trade_company_region = { 
+							investment = district
+							value = 3
+						}
+						num_investments_in_trade_company_region = { 
+							investment = company_administration
+							value = 3
+						}
+						num_investments_in_trade_company_region = { 
+							investment = military_administration
+							value = 3
+						}
+                	}
+            	}
+			}
 			mercantilism = 40 
 		} 
 
@@ -2974,26 +3006,29 @@ col_5 = {
 			num_of_owned_provinces_with = {
 				value = 20
 				has_building = automatory 
-				OR = {
-					trade_goods = coal
-					trade_goods = damestear 
-					trade_goods = mithril 
-					trade_goods = cloves 
-					trade_goods = paper 
-					trade_goods = precursor_relics 
-					trade_goods = coffee 
-					trade_goods = chinaware 
-					trade_goods = copper 
-					trade_goods = cloth
-					trade_goods = glass
-					trade_goods = dyes 
-					trade_goods = silk 
-					trade_goods = cocoa 
-					trade_goods = ivory 
-					trade_goods = slaves 
-					trade_goods = salt 
-					trade_goods = fur 
-					trade_goods = cotton 
+				custom_trigger_tooltip = {
+					tooltip = A29_valuable_goods_tt
+					OR = {
+						trade_goods = coal
+						trade_goods = damestear 
+						trade_goods = mithril 
+						trade_goods = cloves 
+						trade_goods = paper 
+						trade_goods = precursor_relics 
+						trade_goods = coffee 
+						trade_goods = chinaware 
+						trade_goods = copper 
+						trade_goods = cloth
+						trade_goods = glass
+						trade_goods = dyes 
+						trade_goods = silk 
+						trade_goods = cocoa 
+						trade_goods = ivory 
+						trade_goods = slaves 
+						trade_goods = salt 
+						trade_goods = fur 
+						trade_goods = cotton 
+					}
 				}
 				has_production_building_trigger = yes 
 				if = {

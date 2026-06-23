@@ -2952,6 +2952,20 @@ on_main_war_won = {
 		limit = { has_reform = mechanim_self_reflection }
 		add_church_power = 50
 	}
+
+	if = {
+		limit = {
+			has_country_flag = A29_might_mandate_effect
+			FROM = {
+				OR = {
+					is_rival = ROOT
+					is_great_power = yes  
+				}
+			}
+		}
+		add_mandate = 5 
+
+	}
 }
 
 # country
@@ -3763,6 +3777,19 @@ on_battle_won_country = {
 			change_mana = { amount = 25 }
 			set_country_flag = L76_rip_and_tear_mana_refund
 		}
+	}
+
+	if = {
+		limit = {
+			has_country_flag = A29_oops_we_are_racist
+			NOT = {
+				has_spawned_rebels = nationalist_rebels
+			}
+		}
+		country_event = {
+			id = busilar.19 
+		}
+		clr_country_flag = A29_oops_we_are_racist
 	}
 	
 	dragon_turtles_casualty_friendship_effect = yes
@@ -23903,6 +23930,30 @@ on_dependency_lost = {
 		remove_country_modifier = abandoned_city_overlord_1
 		remove_country_modifier = abandoned_city_overlord_2
 		remove_country_modifier = abandoned_city_overlord_3
+	}
+
+	#Busilar 
+	if = {
+		limit = {
+			1343 = {
+				has_trade_modifier = {
+					who = ROOT 
+					key = A29_friendly_traders
+				}
+			}
+			FROM = {
+				OR = {
+					tag = L55 
+					tag = L61 
+				}
+			}
+		}
+		1343 = {
+			remove_trade_modifier = {
+				who = ROOT 
+				key = A29_strong_merchants
+			}
+		}
 	}
 
 	#PUT NEW EFFECT ABOVE THIS
