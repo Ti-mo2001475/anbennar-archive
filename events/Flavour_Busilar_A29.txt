@@ -508,9 +508,125 @@ country_event = { #will set you free
 						change_religion = ravelian 
 					}
 				}
+				else_if = {
+					limit = {
+						trade_share = {
+							country = A29 
+							share = 90 
+						}
+					}
+					random = {
+						chance = 45
+						change_religion = ravelian 
+					}
+				}
+				else_if = {
+					limit = {
+						trade_share = {
+							country = A29 
+							share = 80
+						}
+					}
+					random = {
+						chance = 40
+						change_religion = ravelian 
+					}
+				}
+				else_if = {
+					limit = {
+						trade_share = {
+							country = A29 
+							share = 70
+						}
+					}
+					random = {
+						chance = 35
+						change_religion = ravelian 
+					}
+				}
+				else_if = {
+					limit = {
+						trade_share = {
+							country = A29 
+							share = 60
+						}
+					}
+					random = {
+						chance = 30
+						change_religion = ravelian 
+					}
+				}
+				else_if = {
+					limit = {
+						trade_share = {
+							country = A29 
+							share = 50
+						}
+					}
+					random = {
+						chance = 25
+						change_religion = ravelian 
+					}
+				}
+				else_if = {
+					limit = {
+						trade_share = {
+							country = A29 
+							share = 40
+						}
+					}
+					random = {
+						chance = 20
+						change_religion = ravelian 
+					}
+				}
+				else_if = {
+					limit = {
+						trade_share = {
+							country = A29 
+							share = 30
+						}
+					}
+					random = {
+						chance = 15
+						change_religion = ravelian 
+					}
+				}
+				else_if = {
+					limit = {
+						trade_share = {
+							country = A29 
+							share = 20
+						}
+					}
+					random = {
+						chance = 10
+						change_religion = ravelian 
+					}
+				}
+				else_if = {
+					limit = {
+						trade_share = {
+							country = A29 
+							share = 10
+						}
+					}
+					random = {
+						chance = 5
+						change_religion = ravelian 
+					}
+				}
 			}
-				
-			
+		}
+		every_known_country = {
+			limit = {
+				NOT = {
+					total_development = 201 
+				}
+				NOT = { religion = ravelian } 
+				has_50_opinion_improved_relation = { target = ROOT }
+			}
+			change_religion = ravelian 
 		}
 	}
 }
@@ -525,6 +641,8 @@ country_event = { #guiding the world
 
 	option = {
 		name = busilar.15.a
+		lock_curia = ROOT 
+		set_country_flag = 25_trade_power_for_propogate_religion
 	}
 }
 
@@ -552,7 +670,53 @@ country_event = { #ahati time
 
 	option = {
 		name = busilar.17.a
-		set_country_flag = A29_testing_flag
+		set_global_flag = A29_ahati_a_mad_i
+		add_disaster_progress = {
+			disaster = ahati_disaster
+			value = 100 
+		}
+	}
+}
+
+country_event = { #we beat aakheta 
+	id = busilar.18 
+	title = busilar.18.t 
+	desc = busilar.18.d 
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes 
+
+	option = {
+		name = busilar.18.a 
+		set_global_flag = A29_might_makes_mandate 
+		extend_country_modifier = {
+			name = mandate_steward_victory
+			duration = 18250
+		}
+	}
+}
+
+country_event = {
+	id = busilar.19 
+	title = busilar.19.t
+	desc = busilar.19.d 
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes 
+
+	option = {
+		name = busilar.19.a 
+		every_owned_province = {
+			limit = {
+				continent = africa 
+			}
+			add_local_autonomy = -100 
+			add_nationalism = -30 
+			add_province_modifier = {
+				name = A29_rebellion_crushed
+				duration = 18250 
+			}
+		}
 	}
 }
 
