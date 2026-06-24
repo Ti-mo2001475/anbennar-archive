@@ -1302,7 +1302,7 @@ feiten_missions_2_world = {
 				siege = 0
 			}
 			add_country_modifier = {
-				name = feiten_pioneering_spirit_0
+				name = feiten_pioneering_spirit_0 #TODO adding and expanding the modifier (in on_action)
 				duration = 18250
 			}
 			if = {
@@ -1317,39 +1317,262 @@ feiten_missions_2_world = {
 		}
 	}
 	
-	feiten_the_gene_pillars = {
+	feiten_exploring_the_interior = {
 		icon = mission_alone_in_the_forest
 		position = 14
 		required_missions = {
 			feiten_securing_stormwall
 		}
 		
-		provinces_to_highlight = { }
+		provinces_to_highlight = {
+			yanacotlele_region = {
+				is_island = yes
+				NOT = { owned_by = ROOT }
+			}
+		}
 		
 		trigger = {
-			# TODO once Insyaa is in
+			yanacotlele_region = {
+				all_province = {
+					is_island = yes
+					owned_by = ROOT
+				}
+			}
+			OR = {
+				num_of_owned_provinces_with = { #Centre of trade option
+					value = 2
+					province_has_center_of_trade_of_level = 2
+					if = {
+						limit = { has_dlc = "Leviathan" }
+						num_of_times_expanded_infrastructure = 1
+					}
+					else = {
+						development = 15
+					}
+					has_trade_building_trigger = yes
+				}
+				AND = { #Ponquimetzto Toll
+					6866 = {
+						if = {
+							limit = { has_dlc = "Leviathan" }
+							num_of_times_expanded_infrastructure = 1
+						}
+						else = {
+							development = 15
+						}
+						has_trade_building_trigger = yes
+						num_free_building_slots = 0
+					}
+					6865 = {
+						if = {
+							limit = { has_dlc = "Leviathan" }
+							num_of_times_expanded_infrastructure = 1
+						}
+						else = {
+							development = 15
+						}
+						has_trade_building_trigger = yes
+						num_free_building_slots = 0
+					}
+				}
+				AND = { #Pauhnextli Toll
+					6169 = {
+						if = {
+							limit = { has_dlc = "Leviathan" }
+							num_of_times_expanded_infrastructure = 1
+						}
+						else = {
+							development = 15
+						}
+						has_trade_building_trigger = yes
+						num_free_building_slots = 0
+					}
+					6170 = {
+						if = {
+							limit = { has_dlc = "Leviathan" }
+							num_of_times_expanded_infrastructure = 1
+						}
+						else = {
+							development = 15
+						}
+						has_trade_building_trigger = yes
+						num_free_building_slots = 0
+					}
+				}
+				AND = { #Palimeli Toll
+					6200 = {
+						if = {
+							limit = { has_dlc = "Leviathan" }
+							num_of_times_expanded_infrastructure = 1
+						}
+						else = {
+							development = 15
+						}
+						has_trade_building_trigger = yes
+						num_free_building_slots = 0
+					}
+					6936 = {
+						if = {
+							limit = { has_dlc = "Leviathan" }
+							num_of_times_expanded_infrastructure = 1
+						}
+						else = {
+							development = 15
+						}
+						has_trade_building_trigger = yes
+						num_free_building_slots = 0
+					}
+				}
+			}
 		}
 		
 		effect = {
-			# TODO once Insyaa is in
+			feiten_add_insyaan_trade_centre = yes
+			feiten_add_insyaan_trade_centre = yes
+			feiten_add_insyaan_trade_centre = yes
+			feiten_add_insyaan_trade_centre = yes
+			feiten_add_insyaan_trade_centre = yes
+			pick_best_province = {
+				scope = every_owned_province
+				scale = higher_development_than
+				global_trigger = "has_province_modifier = feiten_insyaan_trade_centre"
+				event_target_name = "feiten_add_skypost_insyaa_target"
+			}
+			do_same_event_target_effect = {
+				event_target_name = feiten_add_skypost_insyaa_target
+				effect = "
+				add_province_triggered_modifier = feiten_skyport_handler_mod
+				add_province_modifier = feiten_even_lower_autonomy_insyaa
+				"
+			}
+			if = {
+				limit = {
+					6865 = { owned_by = ROOT }
+					6866 = { owned_by = ROOT }
+				}
+				6865 = {
+					remove_province_modifier = ponquimetzto_toll
+					add_province_modifier = {
+						name = ponquimetzto_toll_upgraded
+						duration = -1
+					}
+				}
+				6866 = {
+					remove_province_modifier = ponquimetzto_toll
+					add_province_modifier = {
+						name = ponquimetzto_toll_upgraded
+						duration = -1
+					}
+				}
+			}
+			if = {
+				limit = {
+					6169 = { owned_by = ROOT }
+					6170 = { owned_by = ROOT }
+				}
+				6169 = {
+					remove_province_modifier = pauhnextli_toll
+					add_province_modifier = {
+						name = pauhnextli_toll_upgraded
+						duration = -1
+					}
+				}
+				6170 = {
+					remove_province_modifier = pauhnextli_toll
+					add_province_modifier = {
+						name = pauhnextli_toll_upgraded
+						duration = -1
+					}
+				}
+			}
+			if = {
+				limit = {
+					6200 = { owned_by = ROOT }
+					6936 = { owned_by = ROOT }
+				}
+				6200 = {
+					remove_province_modifier = palimeli_toll
+					add_province_modifier = {
+						name = palimeli_toll_upgraded
+						duration = -1
+					}
+				}
+				6936 = {
+					remove_province_modifier = palimeli_toll
+					add_province_modifier = {
+						name = palimeli_toll_upgraded
+						duration = -1
+					}
+				}
+			}
+			country_event = {
+				id = flavor_feiten.316
+			}
 		}
 	}
 	
-	feiten_insyaa_influence = {
+	feiten_the_gene_pillars = {
 		icon = mission_gain_mana
 		position = 16
 		required_missions = {
-			feiten_the_gene_pillars
+			feiten_exploring_the_interior
 		}
 		
-		provinces_to_highlight = { }
+		provinces_to_highlight = { province_id = 6950 }
 		
 		trigger = {
-			# TODO once Insyaa is in
+			6950 = {
+				owned_by = ROOT
+				has_manufactory_trigger = yes
+				if = {
+					limit = { has_dlc = "Leviathan" }
+					num_of_times_expanded_infrastructure = 2
+				}
+				else = {
+					development = 30
+				}
+				infantry_in_province = 20 #you cant scope to artificers so maybe trick player via custom tooltip
+				artillery_in_province = 5
+			}
+			has_estate_privilege = artifice_invention_artillery_autoloader
+			has_estate_privilege = artifice_invention_feiten_expanding_storage_holds
+			OR = {
+				rending_has_not_happened = yes
+				AND = {
+					rending_has_happened = yes
+					has_global_flag = huszien_suppressed
+				}
+			}
 		}
 		
 		effect = {
-			# TODO once Insyaa is in
+			6950 = {
+				kill_units = {
+					who = ROOT
+					amount = 20
+					type = infantry
+				}
+				kill_units = {
+					who = ROOT
+					amount = 5
+					type = infantry
+				}
+				add_province_modifier = {
+					name = feiten_shimua_gene_pillar_extraction
+					duration = -1
+				}
+			}
+			mission_reward_artifice_points_5 = yes
+			every_province = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					same_trade_node_as = 3651
+					same_trade_node_as = 1363
+					same_trade_node_as = 3572
+					same_trade_node_as = 6950
+				}
+				add_permanent_claim = ROOT
+			}
 		}
 	}
 	
@@ -1357,17 +1580,95 @@ feiten_missions_2_world = {
 		icon = mission_empowerment
 		position = 17
 		required_missions = {
-			feiten_insyaa_influence
+			feiten_the_gene_pillars
 		}
 		
 		provinces_to_highlight = { }
 		
 		trigger = {
-			# TODO once Insyaa is in
+			3651 = {
+				trade_share = {
+					country = ROOT
+					share = 66
+				}
+			}
+			1363 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			3572 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			6950 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			### has completed the expedition
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 8
+				region = tagaala_mangroves_region
+			}
 		}
 		
 		effect = {
-			# TODO once Insyaa is in
+			3651 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 50
+					key = FEITEN_PROTECTING_STORMWALL_TRADE
+				}
+			}
+			1363 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 50
+					key = FEITEN_PROTECTING_STORMWALL_TRADE
+				}
+			}
+			3572 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 50
+					key = FEITEN_PROTECTING_STORMWALL_TRADE
+				}
+			}
+			6950 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 50
+					key = FEITEN_PROTECTING_STORMWALL_TRADE
+				}
+			}
+			add_country_modifier = {
+				name = feiten_stormwall_merchant_fleet
+				duration = -1
+			}
+			every_province = {
+				limit = {
+					continent = oceania
+					num_free_building_slots = 0
+					OR = {
+						owned_by = ROOT
+						owned_by_subject_of = ROOT
+					}
+				}
+				add_province_modifier = {
+					name = feiten_insyaan_investment
+					duration = -1
+				}
+			}
+			set_country_flag = mangrove_bio_infra_enabled
 		}
 	}
 	

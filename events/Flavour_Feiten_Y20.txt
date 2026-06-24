@@ -11481,6 +11481,111 @@ country_event = {
 	}
 }
 
+#Stormwall Discovery Event
+country_event = {
+	id = flavor_feiten.315
+	title = flavor_feiten.315.t
+	desc = flavor_feiten.315.desc
+	picture = GENIE_RUINS_eventPicture #TODO Placeholder
+
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_feiten.315.a
+		yanacotlele_region = { ROOT = { discover_province = PREV } }
+		barrier_islands_region = { ROOT = { discover_province = PREV } }
+		yanacotlele_region = { add_claim = ROOT }
+		6936 = { add_claim = ROOT }
+	}
+}
+
+#mechanim Workforce
+country_event = {
+	id = flavor_feiten.316
+	title = flavor_feiten.316.t
+	desc = flavor_feiten.316.desc
+	picture = GENIE_RUINS_eventPicture #TODO Placeholder
+
+	is_triggered_only = yes
+	
+
+	option = {
+		name = flavor_feiten.316.a
+		custom_tooltip = feiten_mechanim_plant_add_effect_tt
+		large_decrease_of_mechanim_tolerance_effect = yes
+		hidden_effect = {
+			set_variable = {
+				which = ForLoopCounter
+				value = 15
+			}
+			while = {
+				limit = {
+					check_variable = {
+						which = ForLoopCounter
+						value = 1
+					}
+				}
+				random_owned_province = {
+					limit = {
+						superregion = yanshen_superregion
+						OR = {
+							owned_by_subject_of = ROOT
+							owned_by = ROOT
+						}
+						province_with_farm_goods = yes
+					}
+					add_mechanim_minority_size_effect = yes
+					owner = { add_treasury = -500 }
+				}
+				subtract_variable = {
+					which = ForLoopCounter
+					value = 1
+				}
+			}
+		}
+	}
+	option = {
+		name = flavor_feiten.316.b
+		custom_tooltip = feiten_mechanim_urban_add_effect_tt
+		large_decrease_of_mechanim_tolerance_effect = yes
+		hidden_effect = {
+			set_variable = {
+				which = ForLoopCounter
+				value = 10
+			}
+			while = {
+				limit = {
+					check_variable = {
+						which = ForLoopCounter
+						value = 1
+					}
+				}
+				random_owned_province = {
+					limit = {
+						superregion = yanshen_superregion
+						OR = {
+							owned_by_subject_of = ROOT
+							owned_by = ROOT
+						}
+						province_with_urban_goods = yes
+					}
+					add_mechanim_minority_size_effect = yes
+					owner = { add_treasury = -750 }
+				}
+				subtract_variable = {
+					which = ForLoopCounter
+					value = 1
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+
 # DEBUG
 country_event = {
 	id = flavor_feiten.1000
