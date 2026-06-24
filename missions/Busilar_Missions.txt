@@ -1969,22 +1969,26 @@ col_4 = {
 					add_devastation = 30
 				}
 			}
-			random_owned_province = {
-				limit = {
-					OR = {
-						area = khenak_area 
-						province_id = 364
+			hidden_effect = {
+				random_owned_province = {
+					limit = {
+						OR = {
+							area = khenak_area 
+							province_id = 364
+						}
+						NOT = {
+							province_id = 376 
+						}
 					}
-					NOT = {
-						province_id = 376 
+					spawn_rebels = {
+						size = 1
+						type = nationalist_rebels
+						separatists_target = A49 
 					}
-				}
-				spawn_rebels = {
-					size = 1
-					type = nationalist_rebels
-					separatists_target = A49 
 				}
 			}
+
+			custom_tooltip = A29_gnolls_more_like_bolls_tt
 
 			large_decrease_of_gnollish_tolerance_effect = yes
 		 } 
@@ -2138,7 +2142,10 @@ col_4 = {
 		}
 
 		effect = {  
-			set_country_flag = can_claim_mandate
+			hidden_effect = {
+				set_country_flag = can_claim_mandate
+			}
+			custom_tooltip = A29_i_am_a_khetist_tt 
 			set_global_flag = A29_no_ahati_disaster 
 			mothers_sorrow_group = { add_permanent_claim = ROOT }
 			ohitsopot_area = { add_devastation = -100 }
