@@ -18,125 +18,140 @@ olavish_minor_1 = {
 		required_missions = { olavish_minor_olavish_dominance}
 
 		provinces_to_highlight = {
-    OR = {
-        if = {
-            limit = {
-                ROOT = { tag = Z14 } #Avnkaup
-            }
-            OR = {
-                AND = {
-                    province_id = 6271 #Vaengheim
-                    OR = {
-                        NOT = { owned_by = ROOT }
-                        NOT = { is_core = ROOT }
-                    }
-                }
-                AND = {
-                    province_id = 6270 #Smidafjall
-                    OR = {
-                        NOT = { owned_by = ROOT }
-                        NOT = { is_core = ROOT }
-                    }
-                }
-                AND = {
-                    province_id = 6269 #Djupfyri
-                    OR = {
-                        NOT = { owned_by = ROOT }
-                        NOT = { is_core = ROOT }
-                    }
-                }
-                if = {
-                    limit = {
-                        NOT = {
-                            Z09 = { #Skaldskola
-                                has_opinion_modifier = {
-                                    who = ROOT
-                                    modifier = insulted
-                                }
-                            }
-                        }
-                    }
-                    owned_by = Z09 #Skaldskola
-                } else = {
+			OR = {
+				if = {
+					limit = {
+						ROOT = { tag = Z14 } #Avnkaup
+					}
+					OR = {
+						AND = {
+							province_id = 6271 #Vaengheim
+							OR = {
+								NOT = { owned_by = ROOT }
+								NOT = { is_core = ROOT }
+							}
+						}
+						AND = {
+							province_id = 6270 #Smidafjall
+							OR = {
+								NOT = { owned_by = ROOT }
+								NOT = { is_core = ROOT }
+							}
+						}
+						AND = {
+							province_id = 6269 #Djupfyri
+							OR = {
+								NOT = { owned_by = ROOT }
+								NOT = { is_core = ROOT }
+							}
+						}
+						if = {
+							limit = {
+								Z09 = { #Skaldskola
+									AND = {
+										NOT = {
+											is_subject_of = ROOT
+										}
+										NOT = {
+											has_opinion_modifier = {
+												who = ROOT
+												modifier = insulted
+											}
+										}
+									}
+								}
+							}
+							owned_by = Z09 #Skaldskola
+						} else = {
+							always = no
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						ROOT = { tag = Z13 } #Redgarhavn
+					}
+					OR = {
+						AND = {
+							area = olavslund_area
+							OR = {
+								NOT = { owned_by = ROOT }
+								NOT = { is_core = ROOT }
+							}
+						}
+						AND = {
+							area = drekkiskali_area
+							OR = {
+								NOT = { owned_by = ROOT }
+								NOT = { is_core = ROOT }
+							}
+						}
+						if = {
+							limit = {
+								Z88 = { #Vaengheim
+									AND = {
+										NOT = {
+											is_subject_of = ROOT
+										}
+										NOT = {
+											has_opinion_modifier = {
+												who = ROOT
+												modifier = insulted
+											}
+										}
+									}
+								}
+							}
+							owned_by = Z88 #Vaengheim
+						} else = {
+							always = no
+						}
+					}
+				} else_if = {
+					limit = {
+						ROOT = { tag = Z12 } #Naugsvol
+					}
+					OR = {
+						AND = {
+							area = naugsvol_area
+							OR = {
+								NOT = { owned_by = ROOT }
+								NOT = { is_core = ROOT }
+							}
+						}
+						AND = {
+							area = esfjall_area
+							OR = {
+								NOT = { owned_by = ROOT }
+								NOT = { is_core = ROOT }
+							}
+						}
+						if = {
+							limit = {
+								Z88 = { #Vaengheim
+									AND = {
+										NOT = {
+											is_subject_of = ROOT
+										}
+										NOT = {
+											has_opinion_modifier = {
+												who = ROOT
+												modifier = insulted
+											}
+										}
+									}
+								}
+							}
+							owned_by = Z88 #Vaengheim
+						} else = {
+							always = no
+						}
+					}
+				} else = {
 					always = no
 				}
-            }
-        }
-        else_if = {
-            limit = {
-                ROOT = { tag = Z13 } #Redgarhavn
-            }
-            OR = {
-                AND = {
-                    area = olavslund_area
-                    OR = {
-                        NOT = { owned_by = ROOT }
-                        NOT = { is_core = ROOT }
-                    }
-                }
-                AND = {
-                    area = drekkiskali_area
-                    OR = {
-                        NOT = { owned_by = ROOT }
-                        NOT = { is_core = ROOT }
-                    }
-                }
-                if = {
-                    limit = {
-                        NOT = {
-                            Z88 = { #Vaengheim
-                                has_opinion_modifier = {
-                                    who = ROOT
-                                    modifier = insulted
-                                }
-                            }
-                        }
-                    }
-                    owned_by = Z88 #Vaengheim
-                } else = {
-					always = no
-				}
-            }
-        } else_if = {
-            limit = {
-                ROOT = { tag = Z12 } #Naugsvol
-            }
-            OR = {
-                AND = {
-                    area = naugsvol_area
-                    OR = {
-                        NOT = { owned_by = ROOT }
-                        NOT = { is_core = ROOT }
-                    }
-                }
-                AND = {
-                    area = esfjall_area
-                    OR = {
-                        NOT = { owned_by = ROOT }
-                        NOT = { is_core = ROOT }
-                    }
-                }
-                if = {
-                    limit = {
-                        NOT = {
-                            Z88 = { #Vaengheim
-                                has_opinion_modifier = {
-                                    who = ROOT
-                                    modifier = insulted
-                                }
-                            }
-                        }
-                    }
-                    owned_by = Z88 #Vaengheim
-                } else = {
-					always = no
-				}
-            }
-        } else = {
-			always = no
+			}
 		}
-    }
-}
 		
 		trigger = {
 			if = { #Avnkaup's requirements are to have conquer vaengheim.
@@ -197,9 +212,12 @@ olavish_minor_1 = {
 						Z09 = { exists = yes }
 					}
 					Z09 = { #Skaldskola
-						has_opinion_modifier = {
-							who = ROOT
-							modifier = insulted
+						OR = {
+							is_subject_of = ROOT
+							has_opinion_modifier = {
+								who = ROOT
+								modifier = insulted
+							}
 						}
 					}
 				} else = {
@@ -210,12 +228,15 @@ olavish_minor_1 = {
 			} else = {
 				if = {
 					limit = {
-						Z88 = { exists = yes }
+						Z88 = { exists = yes } #Vaengheim
 					}
-					Z88 = {
-						has_opinion_modifier = {
-							who = ROOT
-							modifier = insulted
+					Z88 = { #Vaengheim
+						OR = {
+							is_subject_of = ROOT
+							has_opinion_modifier = {
+								who = ROOT
+								modifier = insulted
+							}
 						}
 					}
 				} else = {
@@ -242,11 +263,18 @@ olavish_minor_1 = {
 					limit = {
 						Z09 = { exists = yes} #Skaldskola
 					}
-					add_casus_belli = {
-						type = cb_vassalize_mission
-						target = Z09 #Skaldskola
-						months = 240
-					}
+					if = {
+						limit = {
+							Z09 = { is_subject_of = ROOT} #Skaldskola
+						}
+						add_prestige = 20
+					} else = {
+						add_casus_belli = {
+							type = cb_vassalize_mission
+							target = Z09 #Skaldskola
+							months = 240
+						}
+					}	
 				} else = {
 					drekkiskali_area = {
 						add_permanent_claim = ROOT
@@ -263,10 +291,17 @@ olavish_minor_1 = {
 					limit = {
 						Z88 = { exists = yes}
 					}
-					add_casus_belli = {
-						type = cb_vassalize_mission
-						target = Z88 #Vaengheim
-						months = 240
+					if = {
+						limit = { 
+							Z88 = { is_subject_of = ROOT} #Vaengheim
+						}
+						add_prestige = 20
+					} else = {
+						add_casus_belli = {
+							type = cb_vassalize_mission
+							target = Z88 #Vaengheim
+							months = 240
+						}
 					}
 				} else = {
 					6269 = { #Djupfyri
@@ -589,7 +624,7 @@ olavish_minor_2 = {
 			}
 			is_institution_enabled = renaissance
 			num_of_galley = 7
-			has_flagship = yes
+			navy_size = 20
 		}
 
 		effect = {
@@ -751,15 +786,26 @@ olavish_minor_3 = {
 					if = {
 						limit = { 
 							ROOT = {
-								NOT = {
-									trade_embargoing = Z09 #Skaldskola
-								}
-								NOT = {
-									navy_size = Z09 #Skaldskola
+								AND = {
+									OR = {
+										NOT = {
+											trade_embargoing = Z09 #Skaldskola
+										}
+										NOT = {
+											navy_size = Z09 #Skaldskola
+										}
+									}
+									Z09 = {
+										NOT = {
+											is_subject_of = ROOT
+										}
+									}
 								}
 							}
 						}
 						owned_by = Z09 #Skaldskola
+					} else = {
+						always = no
 					}
 				} else = {
 					province_id = 976 #Skaldskol
@@ -777,17 +823,26 @@ olavish_minor_3 = {
 					if = {
 						limit = { 
 							ROOT = {
-								OR = {
-									NOT = {
-										trade_embargoing = Z15 #Urviksten
+								AND = {
+									OR = {
+										NOT = {
+											trade_embargoing = Z15 #Urviksten
+										}
+										NOT = {
+											navy_size = Z15 #Urviksten
+										}
 									}
-									NOT = {
-										navy_size = Z15 #Urviksten
+									Z15 = {
+										NOT = {
+											is_subject_of = ROOT
+										}
 									}
 								}
 							}
 						}
 						owned_by = Z15 #Urviksten
+					} else = {
+						always = no
 					}
 				} else = {
 					province_id = 984 #Urviksten
@@ -808,7 +863,13 @@ olavish_minor_3 = {
 						Z09 = { exists = yes } #Skaldskola
 					}
 					navy_size = Z09 #Skaldskola
-					trade_embargoing = Z09 #Skaldskola
+					OR = {
+						trade_embargoing = Z09 #Skaldskola
+						Z09 = { #Skaldskola
+							is_subject_of = ROOT
+						}
+					}
+					
 				} else = {
 					976 = { #Skaldskol
 						country_or_non_sovereign_subject_holds = ROOT
@@ -820,7 +881,12 @@ olavish_minor_3 = {
 						Z15 = { exists = yes} #Urviksten
 					}
 					navy_size = Z15 #Urviksten
-					trade_embargoing = Z15 #Urviksten
+					OR = {
+						trade_embargoing = Z15 #Urviksten
+						Z15 = { #Urviksten
+							is_subject_of = ROOT
+						}
+					}
 				} else = {
 					984 = { #Urviksten
 						country_or_non_sovereign_subject_holds = ROOT
@@ -843,10 +909,17 @@ olavish_minor_3 = {
 					limit = {
 						Z09 = { exists = yes } #Skaldskola
 					}
-					add_casus_belli = {
-						type = cb_vassalize_mission
-						target = Z09 #Skaldskola
-						months = 240
+					if = {
+						limit = { 
+							Z09 = { is_subject_of = ROOT} #Skaldskola
+						}
+						add_prestige = 20
+					} else = {
+						add_casus_belli = {
+							type = cb_vassalize_mission
+							target = Z09 #Skaldskola
+							months = 240
+						}
 					}
 				} else = {
 					drekkiskali_area = {
@@ -864,10 +937,17 @@ olavish_minor_3 = {
 					limit = {
 						Z15 = { exists = yes } #Urviksten
 					}
-					add_casus_belli = {
-						type = cb_vassalize_mission
-						target = Z15 #Urviksten
-						months = 240
+					if = {
+						limit = { 
+							Z15 = { is_subject_of = ROOT } #Urviksten
+						}
+						add_prestige = 20
+					} else = {
+						add_casus_belli = {
+							type = cb_vassalize_mission
+							target = Z15 #Urviksten
+							months = 240
+						}
 					}
 				} else = {
 					esfjall_area = {
@@ -1055,10 +1135,12 @@ naugsvol_2 = {
 			981 = { #Silvrborg
 				country_or_non_sovereign_subject_holds = ROOT
 				infantry_in_province = 3
+				infantry_in_province = Z12 #Naugsvol
 			}
 			983 = { #Baldersby
 				country_or_non_sovereign_subject_holds = ROOT
 				infantry_in_province = 3
+				infantry_in_province = Z12 #Naugsvol
 			}
 		}
 
