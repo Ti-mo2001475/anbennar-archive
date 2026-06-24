@@ -4011,19 +4011,34 @@ on_siege_won_country = {
 	if = {
 		limit = {
 			has_global_flag = bjarnrik_revolt_flag
+			capital_scope = { superregion = gerudia_superregion }
 			NOT = {
 				Z08 = {
 					controls = 956
 				}
 			}
 		}
-		country_event = {
-			id = gerudia.25
+		if = {
+			limit = { has_country_flag = gerudia_ringleader_flag }
+			country_event = {
+				name = gerudia.25
+			}
+		}
+		else = {
+			random_known_country = {
+				limit = {
+					has_country_flag = gerudia_ringleader_flag
+				}
+				country_event = {
+					name = gerudia.25
+				}
+			}
 		}
 	}
 	if = {
 		limit = {
 			has_global_flag = bjarnrik_revolt_flag
+			capital_scope = { superregion = gerudia_superregion }
 			Z08 = {
 				all_war_enemy_countries = {
 					OR = {
@@ -4041,8 +4056,10 @@ on_siege_won_country = {
 				}
 			}
 		}
-		country_event = {
-			id = gerudia.26
+		Z08 = {
+			country_event = {
+				name = gerudia.25
+			}
 		}
 	}
 	 			
