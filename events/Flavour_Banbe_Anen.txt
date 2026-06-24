@@ -34,6 +34,12 @@ country_event = { #Banbe Anen Handler
 			20 = {
 				country_event = { id = flavour_banbe_anen.5 }
 			}
+			20 = {
+				country_event = { id = flavour_banbe_anen.6 }
+			}
+			20 = {
+				country_event = { id = flavour_banbe_anen.7 }
+			}
 		}
 	}
 	option = { #Order
@@ -48,6 +54,8 @@ country_event = { #Banbe Anen Handler
 				factor = 1.5
 				has_active_fervor = banbe_anen_order
 			}
+
+
 		}
 	}
 	option = { #Chaos
@@ -61,6 +69,30 @@ country_event = { #Banbe Anen Handler
 			modifier = {
 				factor = 1.5
 				has_active_fervor = banbe_anen_chaos
+			}
+		}
+
+		random_list = {
+			20 = {
+				country_event = { id = flavour_banbe_anen.21 }
+			}
+			20 = {
+				trigger = {
+					NOT = { has_ruler_flag = banbe_anen_quest_for_reehanviza_malleable_power_happened }
+				}
+				country_event = { id = flavour_banbe_anen.22 }
+			}
+			20 = {
+				country_event = { id = flavour_banbe_anen.23 }
+			}
+			20 = {
+				country_event = { id = flavour_banbe_anen.24 }
+			}
+			20 = {
+				trigger = {
+					NOT = { has_ruler_flag = banbe_anen_quest_for_reehanviza_headhunter_extra_stat }
+				}
+				country_event = { id = flavour_banbe_anen.25 }
 			}
 		}
 	}
@@ -158,6 +190,11 @@ country_event = { #Village Celebration
 	option = {
 		name = flavour_banbe_anen.2.a
 
+		add_prestige = 10
+		if = {
+			limit = { ai = no }
+			add_treasury = -100
+		}
 		event_target:banbe_anen_reehanviza_village = {
 			random_list = {
 				33 = {
@@ -419,7 +456,7 @@ country_event = { #Nostalgia
 	}
 
 	option = {
-		name = flavour_banbe_anen.7.a
+		name = flavour_banbe_anen.7.b
 
 		add_ruler_modifier = {
 			name = quest_for_reehanviza_protect_the_young
@@ -428,7 +465,7 @@ country_event = { #Nostalgia
 	}
 
 	option = {
-		name = flavour_banbe_anen.7.a
+		name = flavour_banbe_anen.7.c
 		trigger = {
 			tag = V17
 			has_active_fervor = banbe_anen_household_gods
@@ -442,15 +479,320 @@ country_event = { #Nostalgia
 }
 
 
+### Chaos ###
+
+country_event = { #The Last Age Of Order
+	id = flavour_banbe_anen.21
+	title = flavour_banbe_anen.21.t
+	desc = flavour_banbe_anen.21.d
+	picture = MILITARY_CAMP_eventPicture
+
+	is_triggered_only = yes
+	trigger = { }
 
 
+	option = {
+		name = flavour_banbe_anen.21.a
 
+		add_ruler_modifier = {
+			name = quest_for_reehanviza_successor
+			duration = 3650
+		}
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = 1 }
+	}
 
+	option = {
+		name = flavour_banbe_anen.21.b
 
+		add_legitimacy_equivalent = {
+			amount = 10
+			republican_tradition = 5
+		}
+		add_adm_power = 25
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = 1 }
+	}
 
+	option = {
+		name = flavour_banbe_anen.21.c
+		trigger = {
+			tag = V17
+			has_active_fervor = banbe_anen_outer_realms
+		}
 
+		add_ruler_modifier = {
+			name = quest_for_reehanviza_not_alone
+			duration = 3650
+		}	
+		banbe_anen_quest_for_reehanviza_values = { which = order amount = 2 }
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = -1 }
+	}
 
+	option = {
+		name = flavour_banbe_anen.21.e
+		trigger = {
+			tag = V17
+			OR = {
+				ruler_has_personality = just_personality
+				ruler_has_personality = righteous_personality
+				ruler_has_personality = tolerant_personality
+			}
+		}
 
+		add_random_ruler_skill = yes
+
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = 2 }
+	}
+}
+
+country_event = { #Malleable Power
+	id = flavour_banbe_anen.22
+	title = flavour_banbe_anen.22.t
+	desc = flavour_banbe_anen.22.d
+	picture = MILITARY_CAMP_eventPicture
+
+	is_triggered_only = yes
+	trigger = { }
+
+	option = {
+		name = flavour_banbe_anen.22.a
+
+		give_ruler_random_spell_school = yes
+		random_list = {
+			50 = {
+				change_adm = -2
+				change_dip = -2
+				change_mil = -2
+			}
+		}
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = 1 }
+	}
+
+	option = {
+		name = flavour_banbe_anen.22.b
+
+		add_prestige = -10
+		add_legitimacy_equivalent = {
+			amount = 10
+			republican_tradition = 5
+		}
+		add_ruler_modifier = {
+			name = quest_for_reehanviza_not_worth_it
+			duration = -1
+		}
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = 1 }
+	}
+
+	option = {
+		name = flavour_banbe_anen.22.c
+		trigger = {
+			tag = V17
+			has_active_fervor = banbe_anen_household_gods
+		}
+
+		add_stability = 1
+
+		banbe_anen_quest_for_reehanviza_values = { which = household_gods amount = 2 }
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = -1 }
+	}
+
+	after = {
+		set_ruler_flag = banbe_anen_quest_for_reehanviza_malleable_power_happened
+	}
+}
+
+country_event = { #Order is Not Forever
+	id = flavour_banbe_anen.23
+	title = flavour_banbe_anen.23.t
+	desc = flavour_banbe_anen.23.d
+	picture = MILITARY_CAMP_eventPicture
+
+	is_triggered_only = yes
+	trigger = { }
+
+	option = {
+		name = flavour_banbe_anen.23.a
+
+		add_ruler_modifier = {
+			name = quest_for_reehanviza_fight_together
+			duration = 3650
+		}
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = 1 }
+	}
+
+	option = {
+		name = flavour_banbe_anen.23.b
+
+		add_ruler_modifier = {
+			name = quest_for_reehanviza_many_cycle
+			duration = 3650
+		}		
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = 1 }
+	}
+
+	option = {
+		name = flavour_banbe_anen.23.c
+		trigger = {
+			tag = V17
+			has_active_fervor = banbe_anen_chaos
+		}
+		
+		add_ruler_modifier = {
+			name = quest_for_reehanviza_chaos_fight_entropy
+			duration = 3650
+		}
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = 2 }
+	}
+
+	option = {
+		name = flavour_banbe_anen.23.e
+		trigger = {
+			tag = V17
+			has_active_fervor = banbe_anen_order
+		}
+		
+		add_ruler_modifier = {
+			name = quest_for_reehanviza_chaos_leads_to_entropy
+			duration = 3650
+		}
+		banbe_anen_quest_for_reehanviza_values = { which = order amount = 2 }
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = -1 }
+	}
+}
+
+country_event = { #Railing Against Vice
+	id = flavour_banbe_anen.24
+	title = flavour_banbe_anen.24.t
+	desc = flavour_banbe_anen.24.d
+	picture = MILITARY_CAMP_eventPicture
+
+	is_triggered_only = yes
+	trigger = { }
+
+	option = {
+		name = flavour_banbe_anen.24.a
+
+		add_ruler_modifier = {
+			name = quest_for_reehanviza_change_in_ways
+			duration = 3650
+		}
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = 1 }
+	}
+
+	option = {
+		name = flavour_banbe_anen.24.b
+
+		add_prestige = 10
+		add_ruler_modifier = {
+			name = quest_for_reehanviza_old_ways_stand
+			duration = 3650
+		}
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = 1 }
+	}
+
+	option = {
+		name = flavour_banbe_anen.24.c
+		trigger = {
+			tag = V17
+			has_active_fervor = banbe_anen_outer_realms
+		}
+
+		add_legitimacy_equivalent = {
+			amount = 5
+			republican_tradition = 3
+		}
+		banbe_anen_quest_for_reehanviza_values = { which = outer_realms amount = 2 }
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = -1 }
+	}
+
+	option = {
+		name = flavour_banbe_anen.24.e
+		trigger = {
+			tag = V17
+			OR = {
+				ruler_has_personality = midas_touched_personality
+				ruler_has_personality = incorruptible_personality
+				ruler_has_personality = entrepreneur_personality
+			}
+		}
+
+		add_ruler_modifier = {
+			name = quest_for_reehanviza_economic_restructuring
+			duration = 3650
+		}
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = 2 }
+	}
+}
+
+country_event = { #Headhunter Amidst the Graves
+	id = flavour_banbe_anen.25
+	title = flavour_banbe_anen.25.t
+	desc = flavour_banbe_anen.25.d
+	picture = MILITARY_CAMP_eventPicture
+
+	is_triggered_only = yes
+	trigger = { }
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				save_event_target_as = banbe_anen_reehanviza_tombstones
+			}
+		}
+	}
+
+	option = {
+		name = flavour_banbe_anen.25.a
+
+		event_target:banbe_anen_reehanviza_tombstones = {
+			area = {
+				add_province_modifier = {
+					name = quest_for_reehanviza_locals_at_peace
+					duration = 3650
+				}
+			}
+		}
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = 1 }
+	}
+
+	option = {
+		name = flavour_banbe_anen.25.b
+
+		add_adm_power = 25
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = 1 }
+	}
+
+	option = {
+		name = flavour_banbe_anen.25.c
+		trigger = {
+			tag = V17
+			has_active_fervor = banbe_anen_chaos
+			is_overall_evocation_level_1_minimum = yes
+		}
+
+		increase_magic_experience = { amount = 25 }
+		event_target:banbe_anen_reehanviza_tombstones = {
+			add_province_modifier = {
+				name = quest_for_reehanviza_locals_terrorized
+				duration = 3650
+			}
+		}
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = 2 }
+	}
+
+	option = {
+		name = flavour_banbe_anen.25.e
+		trigger = {
+			tag = V17
+			has_active_fervor = banbe_anen_outer_realms
+			is_overall_conjuration_level_3 = yes
+		}
+
+		increase_magic_experience = { amount = 10 }
+		custom_tooltip = banbe_anen_quest_for_reehanviza_headhunter_extra_stat_TT
+		set_ruler_flag = banbe_anen_quest_for_reehanviza_headhunter_extra_stat
+		banbe_anen_quest_for_reehanviza_values = { which = outer_realms amount = 3 }
+		banbe_anen_quest_for_reehanviza_values = { which = chaos amount = -1 }
+	}
+}
 
 
 
@@ -500,6 +842,13 @@ country_event = { #Quest for Reehanviza End
 		name = flavour_banbe_anen.1000.a
 
 		add_random_ruler_skill = yes
+		if = {
+			limit = {
+				has_ruler_flag = banbe_anen_quest_for_reehanviza_headhunter_extra_stat
+			}
+			add_random_ruler_skill = yes
+			clr_ruler_flag = banbe_anen_quest_for_reehanviza_headhunter_extra_stat
+		}
 
 		if = { #Order Mastered
 			limit = {
