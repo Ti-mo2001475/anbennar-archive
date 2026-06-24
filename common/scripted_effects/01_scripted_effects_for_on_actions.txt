@@ -12189,17 +12189,56 @@ on_capital_moved_effect = {
 		}
 	}
 	
-	#Something in here is buggy.
-	#If you are lacking institutions but have at least one institution fully present in your capital,
-	#you can develop another province such that it has like 1% progress towards the next institution,
-	#then you move your capital to that province and it instantly makes that next institution wholly present.
-	#I would shift this over to using the feudalism = X triggers, but those don't seem to work as exportable trigger values.
+	#current_institution trigger is a little buggy. It seems to check for the progress of the last institution that is at all present,
+	# which leads to it returning 100 when it ought to be returning 0.
+	# For example, if you have 100 feudalism but 0 renaissance, and it is 1451 (after renaissance spawned),
+	# the current_institution trigger will return 100 rather than 0.
+
+	# If you are lacking institutions but have at least one institution fully present in your capital,
+	# you can develop another province such that it has like 1% progress towards the next institution,
+	# then you move your capital to that province and the code would instantly makes that next institution wholly present.
+	# The weird NOT-ANDs exist to ameliorate this issue
+	# I would shift this over to using the feudalism = X triggers, but those don't seem to work as exportable trigger values.
 	if = {
-		limit = { owner = { has_government_attribute = move_institutions_with_capital } }
+		limit = {
+			owner = { has_government_attribute = move_institutions_with_capital }
+			NOT = { #Don't run this code if the new capital is ahead in institutions - see above
+				AND = { feudalism = 1 FROM = { NOT = { feudalism = 1 } } }
+				AND = { renaissance = 1 FROM = { NOT = { renaissance = 1 } } }
+				AND = { new_world_i = 1 FROM = { NOT = { new_world_i = 1 } } }
+				AND = { printing_press = 1 FROM = { NOT = { printing_press = 1 } } }
+				AND = { global_trade = 1 FROM = { NOT = { global_trade = 1 } } }
+				AND = { manufactories = 1 FROM = { NOT = { manufactories = 1 } } }
+				AND = { enlightenment = 1 FROM = { NOT = { enlightenment = 1 } } }
+				AND = { industrialization = 1 FROM = { NOT = { industrialization = 1 } } }
+			}
+		}
 		export_to_variable = { which = institution_var value = trigger_value:current_institution who = FROM }
 		export_to_variable = { which = institution_var_subtract value = trigger_value:current_institution }
+		if = { #In some cases (see above) this value will be 100 when it should be 0
+			limit = {
+				check_variable = { institution_var_subtract = 100 }
+				OR = { #If the previous capital is ahead in institutions, this value should be 0
+					AND = { NOT = { feudalism = 1 } FROM = { feudalism = 1 } }
+					AND = { NOT = { renaissance = 1 } FROM = { renaissance = 1 } }
+					AND = { NOT = { new_world_i = 1 } FROM = { new_world_i = 1 } }
+					AND = { NOT = { printing_press = 1 } FROM = { printing_press = 1 } }
+					AND = { NOT = { global_trade = 1 } FROM = { global_trade = 1 } }
+					AND = { NOT = { manufactories = 1 } FROM = { manufactories = 1 } }
+					AND = { NOT = { enlightenment = 1 } FROM = { enlightenment = 1 } }
+					AND = { NOT = { industrialization = 1 } FROM = { industrialization = 1 } }
+				}
+			}
+			set_variable = { institution_var_subtract = 0 } #The actual institution progress is 0
+		}
+
 		subtract_variable = { which = institution_var which = institution_var_subtract } #Find the difference, if any, between past and current capitals
 		
+		while = { #add institution embracement equal to the difference
+			limit = { check_variable = { institution_var = 10 } }
+			subtract_variable = { institution_var = 10 }
+			add_next_institution_embracement = 10
+		}
 		while = { #add institution embracement equal to the difference
 			limit = { check_variable = { institution_var = 1 } }
 			subtract_variable = { institution_var = 1 }
