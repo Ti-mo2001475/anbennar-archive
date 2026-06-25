@@ -1118,14 +1118,38 @@ naugsvol_2 = {
 			OR = {
 				AND = {
 					province_id = 981 #Silvrborg
-					NOT = {
-						infantry_in_province = 3
+					OR = {
+						NOT = {
+							num_of_units_in_province = {
+								amount = 3
+								who = ROOT
+								type = infantry
+							}
+						}
+						NOT = {
+							owned_by = ROOT
+						}
+						NOT = {
+							is_core = ROOT
+						}
 					}
 				}
 				AND = {
 					province_id = 983 #Baldersby
-					NOT = {
-						infantry_in_province = 3
+					OR = {
+						NOT = {
+							num_of_units_in_province = {
+								amount = 3
+								who = ROOT
+								type = infantry
+							}
+						}
+						NOT = {
+							owned_by = ROOT
+						}
+						NOT = {
+							is_core = ROOT
+						}
 					}
 				}
 			}
@@ -1133,14 +1157,22 @@ naugsvol_2 = {
 
 		trigger = {
 			981 = { #Silvrborg
-				country_or_non_sovereign_subject_holds = ROOT
-				infantry_in_province = 3
-				infantry_in_province = Z12 #Naugsvol
+				owned_by = ROOT
+				is_core = ROOT
+				num_of_units_in_province = {
+					amount = 3
+					who = ROOT
+					type = infantry
+				}
 			}
 			983 = { #Baldersby
-				country_or_non_sovereign_subject_holds = ROOT
-				infantry_in_province = 3
-				infantry_in_province = Z12 #Naugsvol
+				owned_by = ROOT
+				is_core = ROOT
+				num_of_units_in_province = {
+					amount = 3
+					who = ROOT
+					type = infantry
+				}
 			}
 		}
 
