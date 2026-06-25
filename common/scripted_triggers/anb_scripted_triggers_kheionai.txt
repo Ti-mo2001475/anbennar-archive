@@ -456,3 +456,35 @@ G54_faction_trigger = {
 		]
 	}
 }
+
+G54_country_opinion_trigger = {
+	if = {
+		limit = { faction_in_power = beso_nautabhen }
+		custom_trigger_tooltip = {
+			tooltip = $low_tt$
+			any_known_country = {
+				$trigger$
+				has_opinion = { who = ROOT value = $low_opinion$ }
+			}
+		}
+	}
+	else = {
+		custom_trigger_tooltip = {
+			tooltip = $high_tt$
+			any_known_country = {
+				$trigger$
+				has_opinion = { who = ROOT value = $high_opinion$ }
+			}
+		}
+	}
+}
+
+G54_is_loyal_subject = {
+	custom_trigger_tooltip = {
+		tooltip = G54_is_loyal_subject_$tag$_tt
+		$tag$ = {
+			is_subject_of = ROOT
+			NOT = { liberty_desire = 50 }
+		}
+	}
+}

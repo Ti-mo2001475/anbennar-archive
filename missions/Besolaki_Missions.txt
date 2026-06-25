@@ -95,17 +95,11 @@ G54_1_missions = {
 			empkeios_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
 			OR = {
 				AND = {
-					G58 = { #Keyolion
-						is_subject_of = ROOT 
-						NOT = { liberty_desire = 50 }
-					}
+					G54_is_loyal_subject = { tag = G58 } #Keyolion
 					NOT = { exists = G53 } #Empkeios
 				}
 				AND = {
-					G53 = { #Empkeios
-						is_subject_of = ROOT 
-						NOT = { liberty_desire = 50 }
-					}
+					G54_is_loyal_subject = { tag = G53 } #Empkeios
 					NOT = { exists = G58 } #Keyolion
 				}
 				AND = {
@@ -183,46 +177,49 @@ G54_1_missions = {
 		}
 
 		trigger = {
-			2674 = { #Eneion
-				NOT = { devastation = 1 }
-				has_trade_building_trigger = yes
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				grown_by_development = 6
-				if = {
-					limit = { NOT = { owned_by = ROOT } }
-					owner = {
-						is_subject_of = ROOT
-						NOT = { liberty_desire = 50 }
+			custom_trigger_tooltip = {
+				tooltip = G54_reorganize_and_rebuild_tt
+				2674 = { #Eneion
+					NOT = { devastation = 1 }
+					has_trade_building_trigger = yes
+					has_tax_building_trigger = yes
+					has_production_building_trigger = yes
+					grown_by_development = 6
+					if = {
+						limit = { NOT = { owned_by = ROOT } }
+						owner = {
+							is_subject_of = ROOT
+							NOT = { liberty_desire = 50 }
+						}
 					}
 				}
-			}
-			2669 = { #Keyolion
-				NOT = { devastation = 1 }
-				has_trade_building_trigger = yes
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				grown_by_development = 6
-				if = {
-					limit = { NOT = { owned_by = ROOT } }
-					owner = {
-						is_subject_of = ROOT
-						NOT = { liberty_desire = 50 }
+				2669 = { #Keyolion
+					NOT = { devastation = 1 }
+					has_trade_building_trigger = yes
+					has_tax_building_trigger = yes
+					has_production_building_trigger = yes
+					grown_by_development = 6
+					if = {
+						limit = { NOT = { owned_by = ROOT } }
+						owner = {
+							is_subject_of = ROOT
+							NOT = { liberty_desire = 50 }
+						}
 					}
 				}
-			}
-			2595 = { #Empkeios
-				NOT = { devastation = 1 }
-				has_fort_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_tax_building_trigger = yes
-				has_production_building_trigger = yes
-				grown_by_development = 6
-				if = {
-					limit = { NOT = { owned_by = ROOT } }
-					owner = {
-						is_subject_of = ROOT
-						NOT = { liberty_desire = 50 }
+				2595 = { #Empkeios
+					NOT = { devastation = 1 }
+					has_fort_building_trigger = yes
+					has_trade_building_trigger = yes
+					has_tax_building_trigger = yes
+					has_production_building_trigger = yes
+					grown_by_development = 6
+					if = {
+						limit = { NOT = { owned_by = ROOT } }
+						owner = {
+							is_subject_of = ROOT
+							NOT = { liberty_desire = 50 }
+						}
 					}
 				}
 			}
@@ -642,15 +639,9 @@ G54_2_missions = {
 			eneion_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
 			OR = {
 				NOT = { exists = G55 } #Eneion
-				AND = {
-					G55 = { #Eneion
-						is_subject_of = ROOT
-						NOT = { liberty_desire = 50 }
-						has_opinion = {
-							who = ROOT
-							value = 200
-						}
-					}
+				G55 = { #Eneion
+					G54_is_loyal_subject = { tag = G55 } #Eneion
+					has_opinion = { who = ROOT value = 200 }
 				}
 			}
 			2708 = { #Trilidir
@@ -676,12 +667,13 @@ G54_2_missions = {
 				set_country_flag = besolaki_peasants_flag 
 				add_government_reform = peasants_republic 
 			}
-			custom_tooltip = G54_eneion_loses_opinion_tt
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = { faction_in_power = beso_nautabhen }
-					}
+			if = {
+				limit = { faction_in_power = beso_nautabhen }
+				custom_tooltip = G54_eneion_loses_opinion_no_tt
+			}
+			else = {
+				custom_tooltip = G54_eneion_loses_opinion_yes_tt
+				hidden_effect = {
 					G55 = {
 						add_opinion = {
 							who = ROOT
@@ -704,17 +696,23 @@ G54_2_missions = {
 			OR = {
 				is_capital_of = G62 #Amgremos
 				is_capital_of = G59 #Anisikheion
-				province_id = 2681 #Kheionai Node
+				province_id = 2595 #Alecand Node
 			}
 		}
 
 		trigger = {
-			G62 = { is_subject_of = ROOT } #Amgremos
+			custom_trigger_tooltip = {
+				tooltip = G54_amgremos_is_subject_tt
+				G62 = { is_subject_of = ROOT } #Amgremos
+			}
 			navy_size = G59 #Anisikheion
-			2681 = { #Kheionai
-				trade_share = {
-					country = ROOT
-					share = 33
+			custom_trigger_tooltip = {
+				tooltip = G54_devand_own_trade_tt
+				2595 = { #Devand Node
+					trade_share = {
+						country = ROOT
+						share = 33
+					}
 				}
 			}
 			G54_faction_trigger = { tag = G59 area = anisikheion_area } #Anisikheion
@@ -790,52 +788,61 @@ G54_2_missions = {
 		trigger = {
 			has_parliament = yes
 			diplomatic_reputation = 3
-			all_subject_country = {
-				NOT = { liberty_desire = 50 }
-				OR = { 
-					has_opinion = {
-						who = ROOT
-						value = 200
+			if = {
+				limit = { faction_in_power = beso_nautabhen }
+				custom_trigger_tooltip = {
+					tooltip = G54_subjects_opinion_low_tt
+					all_subject_country = {
+						NOT = { liberty_desire = 50 }
+						has_opinion = { who = ROOT value = 200 }
 					}
-					AND = {
-						ROOT = { faction_in_power = beso_nautabhen }
-						has_opinion = {
-							who = ROOT
-							value = 150
-						}
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = G54_subjects_opinion_high_tt
+					all_subject_country = {
+						NOT = { liberty_desire = 50 }
+						has_opinion = { who = ROOT value = 150 }
 					}
 				}
 			}
 			deyeion_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
 			OR = {
-				G56 = { is_subject_of = ROOT } #Deyeion
+				custom_trigger_tooltip = {
+					tooltip = G54_deyeion_is_subject_tt
+					G56 = { is_subject_of = ROOT } #Deyeion
+				}
 				NOT = { exists = G56 } #Deyeion
 			}
 		}
 
 		effect = {
-			add_historical_friend_mutual = { tag = G53 } #Empkeios
-			add_historical_friend_mutual = { tag = G58 } #Keyolion
-			add_historical_friend_mutual = { tag = G55 } #Eneion
-			add_historical_friend_mutual = { tag = G57 } #Apikhoxi
-			add_historical_friend_mutual = { tag = G59 } #Anisikheion
-			add_historical_friend_mutual = { tag = G62 } #Amgremos
-			add_historical_friend_mutual = { tag = G56 } #Deyeion
-			every_subject_country = {
-				limit = {
-					NOT = { has_reform = peasants_republic }
-					OR = { #is_a_nekhei = yes
-						tag = G53 #Empkeios
-						tag = G58 #Keyolion
-						tag = G55 #Eneion
-						tag = G57 #Apikhoxi
-						tag = G59 #Anisikheion
-						tag = G62 #Amgremos
-						tag = G56 #Deyeion
+			custom_tooltip = G54_historical_friendships_tt
+			hidden_effect = {
+				add_historical_friend_mutual = { tag = G53 } #Empkeios
+				add_historical_friend_mutual = { tag = G58 } #Keyolion
+				add_historical_friend_mutual = { tag = G55 } #Eneion
+				add_historical_friend_mutual = { tag = G57 } #Apikhoxi
+				add_historical_friend_mutual = { tag = G59 } #Anisikheion
+				add_historical_friend_mutual = { tag = G62 } #Amgremos
+				add_historical_friend_mutual = { tag = G56 } #Deyeion
+				every_subject_country = {
+					limit = {
+						NOT = { has_reform = peasants_republic }
+						OR = { #is_a_nekhei = yes
+							tag = G53 #Empkeios
+							tag = G58 #Keyolion
+							tag = G55 #Eneion
+							tag = G57 #Apikhoxi
+							tag = G59 #Anisikheion
+							tag = G62 #Amgremos
+							tag = G56 #Deyeion
+						}
 					}
+					set_country_flag = besolaki_peasants_flag 
+					add_government_reform = peasants_republic 
 				}
-				set_country_flag = besolaki_peasants_flag 
-				add_government_reform = peasants_republic 
 			}
 			if = {
 				limit = { 
@@ -973,6 +980,7 @@ G54_3_missions = {
 						set_country_flag = besolaki_peasants_flag 
 						add_government_reform = peasants_republic
 					}
+					custom_tooltip = linebreak_tt
 					country_event = {
 						id = besolaki_events.8 #Focusing our Efforts
 					}
@@ -1013,13 +1021,19 @@ G54_3_missions = {
 		}
 
 		trigger = {
-			G57 = { is_subject_of = ROOT } #Apikhoxi
+			custom_trigger_tooltip = {
+				tooltip = G54_apikhoxi_is_subject_tt
+				G57 = { is_subject_of = ROOT } #Apikhoxi
+			}
 			navy_size = G62 #Amgremos
-			NOT = {
-				2681 = { #Kheionai
-					trade_share = {
-						country = PIR
-						share = 1
+			custom_trigger_tooltip = {
+				tooltip = G54_alecand_pirate_trade_tt
+				NOT = {
+					2681 = { #Kheionai
+						trade_share = {
+							country = PIR
+							share = 1
+						}
 					}
 				}
 			}
@@ -1144,15 +1158,18 @@ G54_3_missions = {
 		}
 
 		trigger = {
-			OR = {
-				G53 = { is_subject_of = ROOT } #Empkeios
-				G58 = { is_subject_of = ROOT } #Keyolion
+			custom_trigger_tooltip = {
+				tooltip = G54_all_nekhei_subjects_tt
+				OR = {
+					G53 = { is_subject_of = ROOT } #Empkeios
+					G58 = { is_subject_of = ROOT } #Keyolion
+				}
+				G55 = { is_subject_of = ROOT } #Eneion
+				G57 = { is_subject_of = ROOT } #Apikhoxi
+				G59 = { is_subject_of = ROOT } #Anisikheion
+				G62 = { is_subject_of = ROOT } #Amgremos
+				G56 = { is_subject_of = ROOT } #Deyeion
 			}
-			G55 = { is_subject_of = ROOT } #Eneion
-			G57 = { is_subject_of = ROOT } #Apikhoxi
-			G59 = { is_subject_of = ROOT } #Anisikheion
-			G62 = { is_subject_of = ROOT } #Amgremos
-			G56 = { is_subject_of = ROOT } #Deyeion
 			army_size = G52 #Ameion
 			custom_trigger_tooltip = {
 				tooltip = G54_insult_largest_taychend_tt
@@ -1243,40 +1260,43 @@ G54_3_missions = {
 
 		trigger = {
 			mission_completed = G54_2_1_varamelas_dream
-			OR = {
-				G53 = { #Empkeios
+			custom_trigger_tooltip = {
+				tooltip = G54_all_subjects_tt
+				OR = {
+					G53 = { #Empkeios
+						is_subject_of = ROOT 
+						NOT = { liberty_desire = 1 }
+					} 
+					G58 = { #Keyolion
+						is_subject_of = ROOT 
+						NOT = { liberty_desire = 1 }
+					} 
+				}
+				G55 = { #Eneion
 					is_subject_of = ROOT 
 					NOT = { liberty_desire = 1 }
 				} 
-				G58 = { #Keyolion
+				G57 = { #Apikhoxi
+					is_subject_of = ROOT 
+					NOT = { liberty_desire = 1 }
+				} 
+				G59 = { #Anisikheion
+					is_subject_of = ROOT 
+					NOT = { liberty_desire = 1 }
+				} 
+				G62 = { #Amgremos
+					is_subject_of = ROOT 
+					NOT = { liberty_desire = 1 }
+				} 
+				G56 = { #Deyeion
+					is_subject_of = ROOT 
+					NOT = { liberty_desire = 1 }
+				} 
+				G52 = { #Ameion
 					is_subject_of = ROOT 
 					NOT = { liberty_desire = 1 }
 				} 
 			}
-			G55 = { #Eneion
-				is_subject_of = ROOT 
-				NOT = { liberty_desire = 1 }
-			} 
-			G57 = { #Apikhoxi
-				is_subject_of = ROOT 
-				NOT = { liberty_desire = 1 }
-			} 
-			G59 = { #Anisikheion
-				is_subject_of = ROOT 
-				NOT = { liberty_desire = 1 }
-			} 
-			G62 = { #Amgremos
-				is_subject_of = ROOT 
-				NOT = { liberty_desire = 1 }
-			} 
-			G56 = { #Deyeion
-				is_subject_of = ROOT 
-				NOT = { liberty_desire = 1 }
-			} 
-			G52 = { #Ameion
-				is_subject_of = ROOT 
-				NOT = { liberty_desire = 1 }
-			} 
 			devand_region = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
@@ -1287,7 +1307,7 @@ G54_3_missions = {
 			}
 			all_owned_province = {
 				OR = {
-					NOT = { development = 8 }
+					NOT = { development = 6 }
 					anb_has_seat_in_parliament = yes
 				}
 			}
@@ -1552,15 +1572,22 @@ G54_4_missions = {
 		}
 
 		trigger = {
-			G63 = { #Mteibhara
-				OR = {
-					has_opinion = {
-						who = ROOT
-						value = 100
+			if = {
+				limit = { exists = G63 } #Mteibhara
+				G63 = { #Mteibhara
+					OR = {
+						is_rival = ROOT
+						is_enemy = ROOT
+						if = {
+							limit = { faction_in_power = beso_nautabhen }
+							has_opinion = { who = ROOT value = 75 }
+						}
+						else = { has_opinion = { who = ROOT value = 100 } }
+						custom_trigger_tooltip = {
+							tooltip = G54_nautabhen_req_tt
+							always = no
+						}
 					}
-					is_rival = ROOT
-					is_enemy = ROOT
-					exists = no
 				}
 			}
 			OR = {
@@ -1570,7 +1597,7 @@ G54_4_missions = {
 					faction_in_power = beso_kheinbhen
 				}
 			}
-			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+			num_of_provinces_owned_or_owned_by_subjects_with = {
 				value = 5
 				has_terrain = woods
 				base_manpower = 6
@@ -1595,6 +1622,14 @@ G54_4_missions = {
 			}
 			else = { add_treasury = -400 }
 
+			define_admiral = {
+				shock = 0
+				fire = 0
+				manuever = 6
+				siege = 0
+				trait = accomplished_sailor_personality
+			}
+
 			capital_scope = {
 				if = {
 					limit = { has_fort_building_trigger = no }
@@ -1605,148 +1640,50 @@ G54_4_missions = {
 					}
 				}
 			}
-			random_subject_country = {
-				limit = {
-					NOT = { has_country_flag = G54_temp_flag }
-					capital_scope = { has_fort_building_trigger = no }
-				}
-				set_country_flag = G54_temp_flag
-				capital_scope = {
-					add_building_construction = {
-						building = fort_15th
-						cost = 0
-						speed = 2
-					}
-				}
-			}
-			random_subject_country = {
-				limit = {
-					NOT = { has_country_flag = G54_temp_flag }
-					capital_scope = { has_fort_building_trigger = no }
-				}
-				set_country_flag = G54_temp_flag
-				capital_scope = {
-					add_building_construction = {
-						building = fort_15th
-						cost = 0
-						speed = 2
-					}
-				}
-			}
+			custom_tooltip = G54_subject_forts_tt
 			hidden_effect = {
-				every_subject_country = {
-					clr_country_flag = G54_temp_flag
+				pick_random_tags = {
+					2 = yes
+					scope = random_subject_country
+					global_trigger = "always = yes" #No additional triggers but this is still needed
+					event_target_name = beso_target
 				}
-			}
-
-			random_province = {
-				limit = {
-					OR = {
-						owned_by = ROOT
-						owned_by_subject_of = ROOT
-					}
-					has_manpower_building_trigger = no
-					base_manpower = 6
-					NOT = { has_province_flag = G54_temp_flag }
+				do_same_event_target_effect = {
+					2 = yes
+					event_target_name = beso_target
+					effect = "
+						capital_scope = {
+							add_building_construction = {
+								building = fort_15th
+								cost = 0
+								speed = 2
+							}
+						}
+					"
 				}
-				add_building_construction = {
-					building = barracks
-					cost = 0
+				pick_random_provinces = {
+					5 = yes
+					scope = random_owned_or_subject_province
+					global_trigger = "
+						has_manpower_building_trigger = no
+						base_manpower = 6
+					"
+					event_target_name = beso_target
 				}
-				set_province_flag = G54_temp_flag
-			}
-			random_province = {
-				limit = {
-					OR = {
-						owned_by = ROOT
-						owned_by_subject_of = ROOT
-					}
-					has_manpower_building_trigger = no
-					base_manpower = 6
-					NOT = { has_province_flag = G54_temp_flag }
+				do_same_event_target_effect = {
+					5 = yes
+					event_target_name = beso_target
+					effect = "
+						add_building_construction = {
+							building = barracks
+							cost = 0
+						}
+					"
 				}
-				add_building_construction = {
-					building = barracks
-					cost = 0
-				}
-				set_province_flag = G54_temp_flag
-			}
-			random_province = {
-				limit = {
-					OR = {
-						owned_by = ROOT
-						owned_by_subject_of = ROOT
-					}
-					has_manpower_building_trigger = no
-					base_manpower = 6
-					NOT = { has_province_flag = G54_temp_flag }
-				}
-				add_building_construction = {
-					building = barracks
-					cost = 0
-				}
-				set_province_flag = G54_temp_flag
-			}
-			random_province = {
-				limit = {
-					OR = {
-						owned_by = ROOT
-						owned_by_subject_of = ROOT
-					}
-					has_manpower_building_trigger = no
-					base_manpower = 6
-					NOT = { has_province_flag = G54_temp_flag }
-				}
-				add_building_construction = {
-					building = barracks
-					cost = 0
-				}
-				set_province_flag = G54_temp_flag
-			}
-			random_province = {
-				limit = {
-					OR = {
-						owned_by = ROOT
-						owned_by_subject_of = ROOT
-					}
-					has_manpower_building_trigger = no
-					base_manpower = 6
-					NOT = { has_province_flag = G54_temp_flag }
-				}
-				add_building_construction = {
-					building = barracks
-					cost = 0
-				}
-				set_province_flag = G54_temp_flag
-			}
-			every_province = {
-				limit = {
-					OR = {
-						owned_by = ROOT
-						owned_by_subject_of = ROOT
-					}
-					has_province_flag = G54_temp_flag
-				}
-				clr_province_flag = G54_temp_flag
-			}
-
-			every_owned_province = {
-				limit = { is_colony = yes }
-				add_colonysize = 500
-			}
-			every_subject_country = {
-				every_owned_province = {
+				every_owned_or_subject_province = {
 					limit = { is_colony = yes }
 					add_colonysize = 500
 				}
-			}
-
-			define_admiral = {
-				shock = 0
-				fire = 0
-				manuever = 6
-				siege = 0
-				trait = accomplished_sailor_personality
 			}
 		}
 	}
@@ -1768,48 +1705,22 @@ G54_4_missions = {
 
 		trigger = {
 			if = {
-				limit = {
-					any_known_country = { religion_group = taychendi }
-				}
-				OR = {
-					any_known_country = {
-						religion_group = taychendi
-						has_opinion = {
-							who = ROOT
-							value = 100
-						}
-					}
-					AND = {
-						any_known_country = {
-							religion_group = taychendi
-							has_opinion = {
-								who = ROOT
-								value = 75
-							}
-						}
-						faction_in_power = beso_nautabhen
-					}
+				limit = { any_known_country = { religion_group = taychendi } }
+				G54_country_opinion_trigger = {
+					low_tt = G54_taychend_opinion_low_tt
+					low_opinion = 75
+					high_tt = G54_taychend_opinion_high_tt
+					high_opinion = 100
+					trigger = "religion_group = taychendi"
 				}
 			}
 			else = {
-				OR = {
-					any_known_country = {
-						any_owned_province = { superregion = taychend_superregion }
-						has_opinion = {
-							who = ROOT
-							value = 100
-						}
-					}
-					AND = {
-						any_known_country = {
-							any_owned_province = { superregion = taychend_superregion }
-							has_opinion = {
-								who = ROOT
-								value = 75
-							}
-						}
-						faction_in_power = beso_nautabhen
-					}
+				G54_country_opinion_trigger = {
+					low_tt = G54_taychend_prov_opinion_low_tt
+					low_opinion = 75
+					high_tt = G54_taychend_prov_opinion_high_tt
+					high_opinion = 100
+					trigger = "any_owned_province = { superregion = taychend_superregion }"
 				}
 			}
 			OR = {
@@ -1827,7 +1738,7 @@ G54_4_missions = {
 			set_country_flag = G54_more_potlf_flag
 			random_known_country = {
 				limit = {
-					religion_group = taychendi
+					religion = gods_of_the_taychend
 					has_opinion = {
 						who = ROOT
 						value = 75
@@ -1868,84 +1779,26 @@ G54_4_missions = {
 		}
 
 		trigger = {
-			OR = {
-				H67 = { #Rezankand
-					has_opinion = {
-						who = ROOT
-						value = 150
-					}
-				}
-				H66 = { #Jaherian Exemplers
-					has_opinion = {
-						who = ROOT
-						value = 150
-					}
-				}
-				any_known_country = {
+			G54_country_opinion_trigger = {
+				low_tt = G54_exemplars_opinion_low_tt
+				low_opinion = 125
+				high_tt = G54_exemplars_opinion_high_tt
+				high_opinion = 150
+				trigger = "
 					OR = {
+						tag = H67 #Rezankand
+						tag = H66 #Jaherian Exemplers
 						culture = sun_elf
 						culture_group = bulwari
 					}
-					has_opinion = {
-						who = ROOT
-						value = 150
-					}
-				}
-				hidden_trigger = {
-					AND = {
-						faction_in_power = beso_nautabhen
-						H67 = { #Rezankand
-							has_opinion = {
-								who = ROOT
-								value = 125
-							}
-						}
-					}
-					AND = {
-						faction_in_power = beso_nautabhen
-						H66 = { #Rezankand
-							has_opinion = {
-								who = ROOT
-								value = 125
-							}
-						}
-					}
-					AND = {
-						faction_in_power = beso_nautabhen
-						any_known_country = {
-							OR = {
-								culture = sun_elf
-								culture_group = bulwari
-							}
-							has_opinion = {
-								who = ROOT
-								value = 125
-							}
-						}
-					}
-				}
-				custom_trigger_tooltip = {
-					tooltip = G54_lowered_op_reqs_tt
-					always = yes
-				}
+				"
 			}
-			all_owned_province = {
+			all_owned_or_subject_province = {
 				OR = {
 					religion = kheionism
 					num_of_units_in_province = {
 						who = ROOT
 						amount = 1
-					}
-				}
-			}
-			all_subject_country = {
-				all_owned_province = {
-					OR = {
-						religion = kheionism
-						num_of_units_in_province = {
-							who = ROOT
-							amount = 1
-						}
 					}
 				}
 			}
@@ -1961,87 +1814,41 @@ G54_4_missions = {
 				skill = 3
 			}
 			custom_tooltip = G54_convert_provinces_tt
-			tooltip = {
-				add_province_modifier = { 
-					name = G54_pushing_varamelas_teachings 
-					duration = 3650 #10 years
-				}
-			}
 			hidden_effect = {
-				every_owned_province = {
+				every_owned_or_subject_province = {
 					limit = { num_of_units_in_province = { amount = 1 who = ROOT } NOT = { religion = kheionism } }
 					if = {
-						limit = { num_of_units_in_province = { who = ROOT amount = 5 } NOT = { religion = kheionism } }
+						limit = { num_of_units_in_province = { who = ROOT amount = 5 } }
 						random_list = {
 							50 = { change_religion = kheionism }
 							50 = { kill_units = { who = ROOT } add_province_modifier = { name = G54_pushing_varamelas_teachings duration = 3650 } } #10 years
 						}
 					}
 					else_if = {
-						limit = { num_of_units_in_province = { who = ROOT amount = 4 } NOT = { religion = kheionism } }
+						limit = { num_of_units_in_province = { who = ROOT amount = 4 } }
 						random_list = {
 							40 = { change_religion = kheionism }
 							60 = { kill_units = { who = ROOT } add_province_modifier = { name = G54_pushing_varamelas_teachings duration = 3650 } } #10 years
 						}
 					}
 					else_if = {
-						limit = { num_of_units_in_province = { who = ROOT amount = 3 } NOT = { religion = kheionism } }
+						limit = { num_of_units_in_province = { who = ROOT amount = 3 } }
 						random_list = {
 							30 = { change_religion = kheionism }
 							70 = { kill_units = { who = ROOT } add_province_modifier = { name = G54_pushing_varamelas_teachings duration = 3650 } } #10 years
 						}
 					}
 					else_if = {
-						limit = { num_of_units_in_province = { who = ROOT amount = 2 } NOT = { religion = kheionism } }
+						limit = { num_of_units_in_province = { who = ROOT amount = 2 } }
 						random_list = {
 							20 = { change_religion = kheionism }
 							80 = { kill_units = { who = ROOT } add_province_modifier = { name = G54_pushing_varamelas_teachings duration = 3650 } } #10 years
 						}
 					}
-					else_if = {
-						limit = { num_of_units_in_province = { who = ROOT amount = 1 } NOT = { religion = kheionism } }
+					else = {
 						random_list = {
 							10 = { change_religion = kheionism }
 							90 = { kill_units = { who = ROOT } add_province_modifier = { name = G54_pushing_varamelas_teachings duration = 3650 } } #10 years
-						}
-					}
-				}
-				every_subject_country = {
-					every_owned_province = {
-						limit = { num_of_units_in_province = { amount = 1 who = ROOT } }
-						if = {
-							limit = { num_of_units_in_province = { who = ROOT amount = 5 } }
-							random_list = {
-								50 = { change_religion = kheionism }
-								50 = { kill_units = { who = ROOT } add_province_modifier = { name = G54_pushing_varamelas_teachings duration = 3650 } } #10 years
-							}
-						}
-						else_if = {
-							limit = { num_of_units_in_province = { who = ROOT amount = 4 } }
-							random_list = {
-								40 = { change_religion = kheionism }
-								60 = { kill_units = { who = ROOT } add_province_modifier = { name = G54_pushing_varamelas_teachings duration = 3650 } } #10 years
-							}
-						}
-						else_if = {
-							limit = { num_of_units_in_province = { who = ROOT amount = 3 } }
-							random_list = {
-								30 = { change_religion = kheionism }
-								70 = { kill_units = { who = ROOT } add_province_modifier = { name = G54_pushing_varamelas_teachings duration = 3650 } } #10 years
-							}
-						}
-						else_if = {
-							limit = { num_of_units_in_province = { who = ROOT amount = 2 } }
-							random_list = {
-								20 = { change_religion = kheionism }
-								80 = { kill_units = { who = ROOT } add_province_modifier = { name = G54_pushing_varamelas_teachings duration = 3650 } } #10 years
-							}
-						}
-						else = {
-							random_list = {
-								10 = { change_religion = kheionism }
-								90 = { kill_units = { who = ROOT } add_province_modifier = { name = G54_pushing_varamelas_teachings duration = 3650 } } #10 years
-							}
 						}
 					}
 				}
@@ -2108,10 +1915,6 @@ G54_5_missions = {
 		provinces_to_highlight = { }
 
 		trigger = {
-			# OR = {
-			# 	reform_level = 3
-			# 	government_reform_progress = 150
-			# }
 			government_reform_progress = 150
 			republican_tradition = 95
 			if = {
@@ -2181,46 +1984,44 @@ G54_5_missions = {
 
 		effect = {
 			add_government_reform = besolaki_chaotic_republicanism
+			change_government_reform_progress = -150
+
 			if = {
-				limit = { NOT = { government_rank = 3 } }
-				change_government_reform_progress = -150
+				limit = { ruler_has_personality = peasant_revolt_leader_personality }
+				custom_tooltip = G54_call_election_if_bad_no_tt
 			}
-			custom_tooltip = G54_call_election_if_bad_tt
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = { ruler_has_personality = peasant_revolt_leader_personality }
-					}
-					country_event = { id = besolaki_events.100 } #Election! 
-				}
+			else = {
+				custom_tooltip = G54_call_election_if_bad_yes_tt
+				hidden_effect = { country_event = { id = besolaki_events.100 } } #Election!
 			}
-			custom_tooltip = G54_lose_influence_or_adm_tt
-			hidden_effect = {
-				if = {
-					limit = {
-						OR = {
-							faction_influence = {
-								faction = beso_caribhen
-								influence = 40
-							}
-							faction_influence = {
-								faction = beso_kheinbhen
-								influence = 40
-							}
-							faction_influence = {
-								faction = beso_nautabhen
-								influence = 40
-							}
-							faction_influence = {
-								faction = beso_skighubhen
-								influence = 40
-							}
-							faction_influence = {
-								faction = beso_dhorbhen
-								influence = 40
-							}
+			
+			if = {
+				limit = {
+					OR = {
+						faction_influence = {
+							faction = beso_caribhen
+							influence = 40
+						}
+						faction_influence = {
+							faction = beso_kheinbhen
+							influence = 40
+						}
+						faction_influence = {
+							faction = beso_nautabhen
+							influence = 40
+						}
+						faction_influence = {
+							faction = beso_skighubhen
+							influence = 40
+						}
+						faction_influence = {
+							faction = beso_dhorbhen
+							influence = 40
 						}
 					}
+				}
+				custom_tooltip = G54_lose_influence_or_adm_yes_tt
+				hidden_effect = {
 					if = {
 						limit = { faction_in_power = beso_caribhen }
 						add_faction_influence = {
@@ -2257,9 +2058,10 @@ G54_5_missions = {
 						}
 					}
 				}
-				else = {
-					add_adm_power = -100
-				}
+			}
+			else = {
+				custom_tooltip = G54_lose_influence_or_adm_no_tt
+				hidden_effect = { add_adm_power = -100 }
 			}
 		}
 	}
@@ -2342,38 +2144,39 @@ G54_5_missions = {
 
 		effect = {
 			add_stability = 1
-			custom_tooltip = G54_lose_adm_if_elected_faction_power_tt
-			custom_tooltip = G54_election_bonuses_tt
-			hidden_effect = {
-				set_country_flag = G54_enable_election_bonuses_flag
-				if = {
-					limit = {
-						OR = {
-							AND = {
-								faction_in_power = beso_caribhen
-								has_country_flag = caribhen_elected_flag
-							}
-							AND = {
-								faction_in_power = beso_kheinbhen
-								has_country_flag = kheinbhen_elected_flag
-							}
-							AND = {
-								faction_in_power = beso_nautabhen
-								has_country_flag = nautabhen_elected_flag
-							}
-							AND = {
-								faction_in_power = beso_skighubhen
-								has_country_flag = skighubhen_elected_flag
-							}
-							AND = {
-								faction_in_power = beso_dhorbhen
-								has_country_flag = dhorbhen_elected_flag
-							}
+
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							faction_in_power = beso_caribhen
+							has_country_flag = caribhen_elected_flag
+						}
+						AND = {
+							faction_in_power = beso_kheinbhen
+							has_country_flag = kheinbhen_elected_flag
+						}
+						AND = {
+							faction_in_power = beso_nautabhen
+							has_country_flag = nautabhen_elected_flag
+						}
+						AND = {
+							faction_in_power = beso_skighubhen
+							has_country_flag = skighubhen_elected_flag
+						}
+						AND = {
+							faction_in_power = beso_dhorbhen
+							has_country_flag = dhorbhen_elected_flag
 						}
 					}
-					add_adm_power = -150
 				}
+				custom_tooltip = G54_lose_adm_if_elected_faction_power_yes_tt
+				hidden_effect = { add_adm_power = -150 }
 			}
+			else = { custom_tooltip = G54_lose_adm_if_elected_faction_power_no_tt }
+
+			custom_tooltip = G54_election_bonuses_tt
+			set_country_flag = G54_enable_election_bonuses_flag
 		}
 	}
 
@@ -2407,61 +2210,37 @@ G54_5_missions = {
 			capital_scope = { has_courthouse_building_trigger = yes }
 			has_kheionist_deity = { deity = adm }
 			OR = {
-				AND = {
-					faction_influence = {
-						faction = beso_caribhen
-						influence = 15
-					}
-					faction_influence = {
-						faction = beso_kheinbhen
-						influence = 15
-					}
-					faction_influence = {
-						faction = beso_nautabhen
-						influence = 15
-					}
-					faction_influence = {
-						faction = beso_skighubhen
-						influence = 15
-					}
-					faction_influence = {
-						faction = beso_dhorbhen
-						influence = 15
-					}
+				custom_trigger_tooltip = {
+					tooltip = G54_all_factions_influence_tt
+					faction_influence = { faction = beso_caribhen influence = 15 }
+					faction_influence = { faction = beso_kheinbhen influence = 15 }
+					faction_influence = { faction = beso_nautabhen influence = 15 }
+					faction_influence = { faction = beso_skighubhen influence = 15 }
+					faction_influence = { faction = beso_dhorbhen influence = 15 }
 				}
-				AND = {
-					faction_in_power = beso_caribhen
-					faction_influence = {
-						faction = beso_caribhen
-						influence = 50
-					}
-				}
-				AND = {
-					faction_in_power = beso_kheinbhen
-					faction_influence = {
-						faction = beso_kheinbhen
-						influence = 50
-					}
-				}
-				AND = {
-					faction_in_power = beso_nautabhen
-					faction_influence = {
-						faction = beso_nautabhen
-						influence = 50
-					}
-				}
-				AND = {
-					faction_in_power = beso_skighubhen
-					faction_influence = {
-						faction = beso_skighubhen
-						influence = 50
-					}
-				}
-				AND = {
-					faction_in_power = beso_dhorbhen
-					faction_influence = {
-						faction = beso_dhorbhen
-						influence = 50
+				custom_trigger_tooltip = {
+					tooltip = G54_power_factions_influence_tt
+					OR = {
+						AND = {
+							faction_in_power = beso_caribhen
+							faction_influence = { faction = beso_caribhen influence = 50 }
+						}
+						AND = {
+							faction_in_power = beso_kheinbhen
+							faction_influence = { faction = beso_kheinbhen influence = 50 }
+						}
+						AND = {
+							faction_in_power = beso_nautabhen
+							faction_influence = { faction = beso_nautabhen influence = 50 }
+						}
+						AND = {
+							faction_in_power = beso_skighubhen
+							faction_influence = { faction = beso_skighubhen influence = 50 }
+						}
+						AND = {
+							faction_in_power = beso_dhorbhen
+							faction_influence = { faction = beso_dhorbhen influence = 50 }
+						}
 					}
 				}
 			}
@@ -2469,109 +2248,41 @@ G54_5_missions = {
 
 		effect = {
 			custom_tooltip = G54_bonuses_double_tt
-			custom_tooltip = G54_build_town_hall_tt
-			tooltip = {
-				capital_scope = {
-					add_building = town_hall
-					remove_building = courthouse
-				}
-			}
-			custom_tooltip = G54_change_tg_to_paper_tt
-			tooltip = {
-				capital_scope = {
-					change_trade_goods = paper
-				}
-			}
 			change_government_reform_progress = -200
 			custom_tooltip = G54_20_influ_up_5_influ_tt
+
+			if = {
+				limit = { capital_scope = { trade_goods = damestear } }
+				custom_tooltip = G54_build_town_hall_yes_tt
+				custom_tooltip = G54_change_tg_to_paper_no_tt
+				hidden_effect = { capital_scope = { add_building = town_hall } }
+			}
+			else = {
+				custom_tooltip = G54_build_town_hall_no_tt
+				custom_tooltip = G54_change_tg_to_paper_yes_tt
+				hidden_effect = { capital_scope = { change_trade_goods = paper } }
+			}
 			hidden_effect = {
 				set_country_flag = G54_election_bonuses_double_flag
 				if = {
-					limit = { 
-						capital_scope = { 
-							trade_goods = damestear 
-						} 
-					}
-					capital_scope = {
-						remove_building = town_hall
-						remove_building = courthouse
-						add_building = town_hall
-					}
-				}
-				else = {
-					capital_scope = {
-						change_trade_goods = paper
-					}
+					limit = { NOT = { faction_influence = { faction = beso_caribhen influence = 20 } } }
+					add_faction_influence = { faction = beso_caribhen influence = 5 }
 				}
 				if = {
-					limit = {
-						NOT = {
-							faction_influence = {
-								faction = beso_caribhen
-								influence = 20
-							}
-						}
-					}
-					add_faction_influence = {
-						faction = beso_caribhen
-						influence = 5
-					}
+					limit = { NOT = { faction_influence = { faction = beso_kheinbhen influence = 20 } } }
+					add_faction_influence = { faction = beso_kheinbhen influence = 5 }
 				}
 				if = {
-					limit = {
-						NOT = {
-							faction_influence = {
-								faction = beso_kheinbhen
-								influence = 20
-							}
-						}
-					}
-					add_faction_influence = {
-						faction = beso_kheinbhen
-						influence = 5
-					}
+					limit = { NOT = { faction_influence = { faction = beso_nautabhen influence = 20 } } }
+					add_faction_influence = { faction = beso_nautabhen influence = 5 }
 				}
 				if = {
-					limit = {
-						NOT = {
-							faction_influence = {
-								faction = beso_nautabhen
-								influence = 20
-							}
-						}
-					}
-					add_faction_influence = {
-						faction = beso_nautabhen
-						influence = 5
-					}
+					limit = { NOT = { faction_influence = { faction = beso_skighubhen influence = 20 } } }
+					add_faction_influence = { faction = beso_skighubhen influence = 5 }
 				}
 				if = {
-					limit = {
-						NOT = {
-							faction_influence = {
-								faction = beso_skighubhen
-								influence = 20
-							}
-						}
-					}
-					add_faction_influence = {
-						faction = beso_skighubhen
-						influence = 5
-					}
-				}
-				if = {
-					limit = {
-						NOT = {
-							faction_influence = {
-								faction = beso_dhorbhen
-								influence = 20
-							}
-						}
-					}
-					add_faction_influence = {
-						faction = beso_dhorbhen
-						influence = 5
-					}
+					limit = { NOT = { faction_influence = { faction = beso_dhorbhen influence = 20 } } }
+					add_faction_influence = { faction = beso_dhorbhen influence = 5 }
 				}
 			}
 		}
@@ -2596,77 +2307,27 @@ G54_5_missions = {
 		}
 
 		trigger = {
-			if = {
-				limit = { has_institution = new_world_i }
-				OR = {
-					any_known_country = {
-						capital_scope = { continent = north_america }
-						has_opinion = {
-							who = ROOT
-							value = 125
-						}
-						any_owned_province = {
-							sea_zone = {
-								light_ships_in_province = 15
-								light_ships_in_province = ROOT
-							}
-						}
-					}
-					AND = {
-						faction_in_power = beso_nautabhen
-						any_known_country = {
-							capital_scope = { continent = north_america }
-							has_opinion = {
+			G54_country_opinion_trigger = {
+				low_tt = G54_colonialism_nation_low_tt
+				low_opinion = 100
+				high_tt = G54_colonialism_nation_high_tt
+				high_opinion = 125
+				trigger = "
+					capital_scope = { continent = north_america }
+					has_institution = new_world_i
+					any_owned_province = {
+						sea_zone = {
+							num_of_units_in_province = {
+								amount = 15
 								who = ROOT
-								value = 100
-							}
-						}
-						any_owned_province = {
-							sea_zone = {
-								light_ships_in_province = 15
-								light_ships_in_province = ROOT
+								type = light_ship
 							}
 						}
 					}
-				}
+				"
 			}
-			else = {
-				OR = {
-					any_known_country = {
-						capital_scope = { continent = north_america }
-						has_institution = new_world_i
-						has_opinion = {
-							who = ROOT
-							value = 125
-						}
-						any_owned_province = {
-							sea_zone = {
-								light_ships_in_province = 15
-								light_ships_in_province = ROOT
-							}
-						}
-					}
-					AND = {
-						faction_in_power = beso_nautabhen
-						any_known_country = {
-							capital_scope = { continent = north_america }
-							has_institution = new_world_i
-							has_opinion = {
-								who = ROOT
-								value = 100
-							}
-						}
-						any_owned_province = {
-							sea_zone = {
-								light_ships_in_province = 15
-								light_ships_in_province = ROOT
-							}
-						}
-					}
-				}
-			}
+
 			capital_scope = {
-				#province_has_center_of_trade_of_level = 2
 				has_dock_building_trigger = yes
 				has_shipyard_building_trigger = yes
 			}
@@ -2685,11 +2346,6 @@ G54_5_missions = {
 				}
 				add_human_minority_size_effect = yes
 				center_of_trade = 1
-				# if = {
-				# 	limit = { province_has_center_of_trade_of_level = 3 }
-				# 	ROOT = { add_treasury = 500 }
-				# }
-				# else = { add_center_of_trade_level = 1 }
 			}
 			add_treasury = -200
 		}
@@ -2712,64 +2368,37 @@ G54_5_missions = {
 		trigger = {
 			if = {
 				limit = {
-					NOT = {
-						any_country = {
-							capital_scope = { continent = europe }
-							colony = 1
-							NOT = { is_rival = ROOT }
-							NOT = { is_enemy = ROOT }
-						}
-					}
-				}
-				OR = {
 					any_country = {
+						colony = 1
 						capital_scope = { continent = europe }
 						NOT = { is_rival = ROOT }
 						NOT = { is_enemy = ROOT }
-						has_opinion = {
-							who = ROOT
-							value = 150
-						}
 					}
-					AND = {
-						faction_in_power = beso_nautabhen
-						any_country = {
-							capital_scope = { continent = europe }
-							NOT = { is_rival = ROOT }
-							NOT = { is_enemy = ROOT }
-							has_opinion = {
-								who = ROOT
-								value = 125
-							}
-						}
-					}
+				}
+				G54_country_opinion_trigger = {
+					low_tt = G54_cannorian_colonizer_low_tt
+					low_opinion = 125
+					high_tt = G54_cannorian_colonizer_high_tt
+					high_opinion = 150
+					trigger = "
+						colony = 1
+						capital_scope = { continent = europe }
+						NOT = { is_rival = ROOT }
+						NOT = { is_enemy = ROOT }
+					"
 				}
 			}
 			else = {
-				OR = {
-					any_country = {
+				G54_country_opinion_trigger = {
+					low_tt = G54_cannorian_nation_low_tt
+					low_opinion = 125
+					high_tt = G54_cannorian_nation_high_tt
+					high_opinion = 150
+					trigger = "
 						capital_scope = { continent = europe }
-						colony = 1
 						NOT = { is_rival = ROOT }
 						NOT = { is_enemy = ROOT }
-						has_opinion = {
-							who = ROOT
-							value = 150
-						}
-					}
-					AND = {
-						faction_in_power = beso_nautabhen
-						any_country = {
-							capital_scope = { continent = europe }
-							colony = 1
-							NOT = { is_rival = ROOT }
-							NOT = { is_enemy = ROOT }
-							has_opinion = {
-								who = ROOT
-								value = 125
-							}
-						}
-					}
+					"
 				}
 			}
 			OR = {
