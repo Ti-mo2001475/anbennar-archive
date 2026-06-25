@@ -167,7 +167,17 @@ col_1 = {
 		icon = sponsor_the_arts
 		position = 7
 		required_missions = { A29_first_of_many } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			owned_by = ROOT
+			has_province_modifier = ravelian_society
+			NOT = {
+				AND = {
+					has_tax_building_trigger = yes
+					has_courthouse_building_trigger = yes
+					num_of_times_improved_by_owner = 2
+				}
+			}
+		} 
 
 		trigger = {  
 			num_of_owned_provinces_with = {
@@ -255,11 +265,14 @@ col_1 = {
 				set_country_flag = A29_deluge_better
 				custom_tooltip = A29_corinite_haven_reward_tt
 			}
-			every_owned_province = {
-				limit = {
-					region = businor_region
+			custom_tooltip = A29_businor_buff_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						region = businor_region
+					}
+					add_prosperity = 10
 				}
-				add_prosperity = 10
 			}
 			the_borders_region = {
 				add_permanent_claim = ROOT
@@ -688,6 +701,9 @@ col_2 = {
 			}
 			custom_tooltip = A29_planetouched_production_unlock_tt
 			set_country_flag = A29_planetouched_production_unlock
+			fahvanosy_region = {
+				add_permanent_claim = ROOT
+			}
 		} 
 	}
 
@@ -732,7 +748,6 @@ col_2 = {
 					type = lizardfolk_port
 					tier = 1
 				}
-				is_owned_by_trade_company = yes
 			}
 			trading_policy_in_node = {
 				node = 3082
@@ -793,10 +808,12 @@ col_2 = {
 			}
 		} 
 
-		trigger = {  
-			num_of_owned_provinces_with = {
-				value = 3
-				trade_goods = precursor_relics
+		trigger = {
+			calc_true_if = {
+				amount = 3
+				any_owned_or_non_tributary_subject_province = {
+					trade_goods = precursor_relics
+				}
 			}
 			5763 = {
 				has_great_project = {
@@ -1990,6 +2007,11 @@ col_4 = {
 						separatists_target = A49 
 					}
 				}
+				if = {
+					limit = { has_dlc = "Emperor" }
+					315 = { province_event = { id = flavor_honderaak.2 days = 1825 } }
+				}
+				else = { emperor = { country_event = { id = flavor_honderaak.4 days = 1825 } } }
 			}
 
 			custom_tooltip = A29_gnolls_more_like_bolls_tt
@@ -2593,7 +2615,10 @@ col_5 = {
 			add_country_modifier = { 
 				name = A29_gatekeeper_of_the_divenhal 
 				duration = -1 
-			} 
+			}
+			bahar_region = {
+				add_permanent_claim = ROOT
+			}
 		} 
 	}
 
