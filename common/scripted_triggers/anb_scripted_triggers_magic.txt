@@ -2036,6 +2036,34 @@ consort_has_infamy_respected_or_better = { type_has_infamy_respected_or_better =
 estate_has_infamy_suspicious_or_better = { type_has_infamy_suspicious_or_better = { type = country } }
 estate_has_infamy_respected_or_better = { type_has_infamy_respected_or_better = { type = country } }
 
+everyone_has_infamy_suspicious_or_better = {
+	custom_trigger_tooltip = {
+		tooltip = everyone_infamy_suspicious_or_better
+		type_has_infamy_suspicious_or_better = { type = country }
+		type_has_infamy_suspicious_or_better = { type = ruler }
+		type_has_infamy_suspicious_or_better = { type = heir }
+		type_has_infamy_suspicious_or_better = { type = consort }
+	}
+}
+everyone_has_infamy_respected_or_better = {
+	custom_trigger_tooltip = {
+		tooltip = everyone_infamy_respected_or_better
+		type_has_infamy_respected_or_better = { type = country }
+		type_has_infamy_respected_or_better = { type = ruler }
+		type_has_infamy_respected_or_better = { type = heir }
+		type_has_infamy_respected_or_better = { type = consort }
+	}
+}
+everyone_has_infamy_paragon = {
+	custom_trigger_tooltip = {
+		tooltip = everyone_infamy_paragon
+		type_has_infamy_paragon = { type = country }
+		type_has_infamy_paragon = { type = ruler }
+		type_has_infamy_paragon = { type = heir }
+		type_has_infamy_paragon = { type = consort }
+	}
+}
+
 ####################
 ### SPELLCASTING ###
 ####################
@@ -2322,6 +2350,7 @@ has_cast_war_magic = {
 			#Black Herd
 			has_country_modifier = I55_markhentakruan_1_mod
 			has_country_modifier = I55_markhentakruan_2_mod
+			has_country_modifier = I55_markhentakruan_3_mod
 		}
 	}
 }
@@ -4938,7 +4967,12 @@ has_xhazobkult_spell_list_non_default = {
 	has_custom_spell_list_of_group_non_default = { group = xhazobkult }
 }
 
-
+has_cannor_clerical_spell_list_default = {
+	has_custom_spell_list_of_group_with_subgroup = { group = cannor_clerical subgroup = default }
+}
+has_cannor_clerical_spell_list_non_default = {
+	has_custom_spell_list_of_group_non_default = { group = cannor_clerical }
+}
 
 
 #Magical traditions spell triggers
@@ -5154,20 +5188,6 @@ evocation_2_centaur_black_herd_5_trigger = {
 	is_at_war = yes
 }
 
-evocation_2_centaur_black_herd_5_effect_sub_trigger = {
-	$scope$ = {
-		[[war_leader]
-			OR = {
-				is_in_war = { attacker_leader = THIS defenders = ROOT }
-				is_in_war = { defender_leader = THIS attackers = ROOT }
-			}
-		]
-		any_owned_province = {
-			sieged_by = ROOT
-			[[priority_trigger] $priority_trigger$ ]
-		}
-	}
-}
 
 #Bulwar
 custom_spell_bulwar_default_1_trigger = {
@@ -5380,6 +5400,33 @@ abjuration_1_eordand_eighard_5_trigger = {
 	]
 	is_at_war = yes
 	NOT = { has_country_modifier = H14_icewardery_magic }
+}
+
+#Cannor Clerical spells
+custom_spell_cannor_clerical_default_1_trigger = {
+	abjuration_0_cannor_clerical_default_1_trigger = { [[player] player = $player$ ] }
+}
+custom_spell_cannor_clerical_default_2_trigger = {
+	enchantment_1_cannor_clerical_default_2_trigger = { [[player] player = $player$ ] }
+}
+custom_spell_cannor_clerical_default_3_trigger = {
+	abjuration_2_cannor_clerical_default_3_trigger = { [[player] player = $player$ ] }
+}
+
+abjuration_0_cannor_clerical_default_1_trigger = {
+	[[player] has_mana_to_cast_magical_tradition_spell = { school = abjuration level = 0 id = cannor_clerical_default_1 } ]
+	legitimacy_equivalent = 70
+	everyone_has_infamy_suspicious_or_better = yes
+}
+enchantment_1_cannor_clerical_default_2_trigger = {
+	[[player] has_mana_to_cast_magical_tradition_spell = { school = enchantment level = 1 id = cannor_clerical_default_2 } ]
+	legitimacy_equivalent = 80
+	everyone_has_infamy_respected_or_better = yes
+} 
+abjuration_2_cannor_clerical_default_3_trigger = {
+	[[player] has_mana_to_cast_magical_tradition_spell = { school = abjuration level = 2 id = cannor_clerical_default_3 } ]
+	legitimacy_equivalent = 90
+	everyone_has_infamy_paragon = yes
 }
 
 ### STOP.

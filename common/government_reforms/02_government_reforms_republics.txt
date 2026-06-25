@@ -2200,6 +2200,7 @@ cossacks_reform = {
 		enables_aristocratic_idea_group = no
 		disables_estate_mages = yes
 		disables_estate_eunuchs_anb = yes
+		disables_estate_adventurers = yes
 	}
 	valid_for_nation_designer = yes
 	nation_designer_cost = 60
@@ -2627,6 +2628,7 @@ united_federation = {
 		anb_special_elections = yes
 		anb_special_seats = yes
 		locked_T1_reform = yes
+		cannot_move_capital = yes
 	}
 	duration = 4
 }
@@ -8096,6 +8098,7 @@ newshire_stewardship = {
 		anb_special_elections = yes
 		cannot_become_dictatorship = yes
 		locked_T1_reform = yes
+		cannot_move_capital = yes
 	}
 	modifiers = {
 		max_absolutism = -10
@@ -8158,6 +8161,7 @@ newshire_high_stewardship = {
 		always_mage = yes
 		always_witch_king = yes
 		locked_T1_reform = yes
+		cannot_move_capital = yes
 	}
 	modifiers = {
 		max_absolutism = -10
@@ -10593,6 +10597,7 @@ mangrove_republic = {
 		cannot_become_dictatorship = yes
 		locked_T1_reform = yes
 		mangrove_republic = yes
+		cannot_move_capital = yes
 	}
 	effect = {
 		country_event = { id = mangrove.0 }
@@ -10623,6 +10628,7 @@ mangrove_dictatorship = {
 		locked_government_type = yes
 		locked_T1_reform = yes
 		mangrove_republic = yes
+		cannot_move_capital = yes
 	}
 	effect = {
 		country_event = { id = mangrove.0 }
@@ -10926,5 +10932,37 @@ virtues_of_flamesong = {
 	custom_attributes = {
 		landslide_infantry_events = yes
 		volcanic_armoury_project = yes
+	}
+}
+
+overseas_governorate = {
+	icon = "self_governing_colony_government"
+	potential = { 
+		is_or_was_tag = { tag = U52 } 
+		#has_country_flag = u52_governorate_enabled #for when the mt launches
+	}
+	duration = 12
+
+	modifiers = {
+		colony_development_boost = 1
+		naval_maintenance_modifier = -0.1
+		republican_tradition = -0.5
+	}
+
+	custom_attributes = {
+		enables_plutocratic_idea_group = yes
+		enables_aristocratic_idea_group = no
+		allow_normal_conversion = no
+		locked_government_type = yes
+		republican_name = yes
+		can_use_trade_post = yes
+		can_form_trade_league = yes
+		anb_special_elections = yes
+	}
+
+	#government_abilities = {
+	#	end_overseas_governorate
+	#}
+	effect = {
 	}
 }
