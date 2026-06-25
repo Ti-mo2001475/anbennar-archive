@@ -457,6 +457,33 @@ G54_faction_trigger = {
 	}
 }
 
+G54_faction_highlight = {
+	OR = {
+		AND = {
+			exists = $tag$
+			is_capital_of = $tag$
+		}
+		[[area]
+			AND = {
+				NOT = { exists = $tag$ }
+				area = $area$
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			}
+		]
+	}
+	ROOT = {
+		NOT = {
+			AND = {
+				[[additional_trigger] $additional_trigger$ ]
+				G54_faction_trigger = {
+					tag = $tag$
+					[[area] area = $area$ ]
+				}
+			}
+		}
+	}
+}
+
 G54_country_opinion_trigger = {
 	if = {
 		limit = { faction_in_power = beso_nautabhen }
@@ -475,6 +502,21 @@ G54_country_opinion_trigger = {
 				$trigger$
 				has_opinion = { who = ROOT value = $high_opinion$ }
 			}
+		}
+	}
+}
+
+G54_country_opinion_highlight = {
+	is_capital = yes
+	owner = {
+		$trigger$
+		OR = {
+			ROOT = { faction_in_power = beso_nautabhen }
+			has_opinion = { who = ROOT value = $low_opinion$ }
+		}
+		OR = {
+			ROOT = { NOT = { faction_in_power = beso_nautabhen } }
+			has_opinion = { who = ROOT value = $high_opinion$ }
 		}
 	}
 }
