@@ -1636,6 +1636,7 @@ clear_mages_organization_effect = { #Because on_granted fires before the privile
 		remove_estate_privilege = estate_mages_organization_runesmiths
 		remove_estate_privilege = estate_mages_organization_lihos_maidens
 		remove_estate_privilege = estate_mages_organization_magi_clans
+		remove_estate_privilege = estate_mages_organization_sanarenni
 		remove_estate_privilege = estate_mages_organization_onyxguard
 		remove_estate_privilege = estate_mages_organization_proffesional_mihipha
 		remove_estate_privilege = estate_mages_organization_orda_aldresia
@@ -4658,6 +4659,12 @@ anbennar_building_effect = {
 			province_event = { id = westmoors.23 }
 			province_event = { id = westmoors.24 }
 		}
+	}
+
+	#Devandi Church Power Gain - Mazhthramazh
+	if = {
+		limit = { owner = { religion = mazhthramazh } }
+		owner = { add_church_power = 5 }
 	}
 }
 
@@ -12334,6 +12341,7 @@ form_adenica_scripted_effect = {
 	}
 	swap_non_generic_missions = yes
 	hidden_effect = {
+		set_custom_spell_list = { group = cannor_clerical }
 		set_variable = {
 			which = adenicaChivalryMissionsCompleted
 			value = 0
@@ -13796,4 +13804,35 @@ shirgrii_province_update_scripted_effect = {
 			}
 		}
 	}
+}
+
+anb_change_trade_goods_readd_manufactory = {
+	if = {
+		limit = {
+			has_production_manufactory_or_gold_trigger = yes
+		}
+		change_trade_goods = $tradegoods$
+		add_manufactory = yes
+	}
+	else = {
+		change_trade_goods = $tradegoods$
+	}
+}
+
+anb_change_trade_goods_readd_manufactory_province_id = {
+	if = {
+		limit = { $province_id$ = { has_production_manufactory_or_gold_trigger = yes } }
+		$province_id$ = {
+			change_trade_goods = $tradegoods$
+			add_manufactory = yes
+		}
+	}
+	else = {
+		$province_id$ = { change_trade_goods = $tradegoods$ }
+	}
+}
+
+block_manually_moving_capital = {
+	custom_tooltip = no_move_capital_effect
+	set_country_flag = cannot_move_capital_flag
 }

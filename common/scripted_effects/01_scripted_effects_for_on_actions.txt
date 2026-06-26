@@ -3355,6 +3355,12 @@ on_province_religion_converted_effect = {
 	}
 	#Dragon Turtle
 	owner = { dragon_turtle_change_friendship = { dragon_turtle = maxele_iron_hearted amount = 2 } }
+
+	#Cannor Clerical Spells
+	if = {
+		limit = { owner = { has_country_modifier = ceremony_cannor_clerical_spell_mod } }
+		add_nationalism = -5
+	}
 }
 
 on_trade_good_changed_government_effect = {
@@ -4339,7 +4345,7 @@ on_battle_won_country_effect = {
 			limit = {
 				has_country_modifier = undead_military
 				exactly_magic_project_level = { project = army_of_the_dead level = 3 }
-				NOT = { has_country_flag = disable_default_undead_manpower_gain }
+				NOT = { has_government_attribute = B54_custom_attribute_esthil_necronomics }
 			}
 			set_variable = {
 				which = raise_undead
@@ -4915,7 +4921,7 @@ on_battle_won_country_effect = {
 	}
 
 	if = { #Black Herd
-		limit = { has_estate_privilege = estate_mages_black_herd_shockshroud_mages }
+		limit = { has_estate_privilege = estate_mages_black_herd_shockshroud_mages FROM = { NOT = { tag = NAT } } }
 		change_mana = { amount = 0.5 }
 	}
 
@@ -5258,53 +5264,19 @@ on_battle_lost_country_effect = {
 
 on_battle_won_province_effect = {
 	if = {
-		limit = {
-			from = {
+		limit = { 
+			FROM = { 
 				tag = REB
-				is_rebel_type = revolutionary_rebels
-			}
-			owner = {
-				any_owned_province = {
-					region = root
-					has_revolution_in_province = yes
-				}
-				# NOT = { has_disaster = french_revolution }
-				NOT = { has_disaster = revolution }
-				NOT = { has_spawned_rebels = revolutionary_rebels }
 			}
 		}
-		owner = { country_event = { id = center_of_revolution.1600 } }
+		#Effect to use when losing country is REB
+		#There is quite a lot of effect you need to trigger after player beaten up rebels
+		#Thanks to this we wont need to check if it wasnt against rebels multiple times
+		on_battle_won_province_effect_loser_country_reb = yes
 	}
-
+	#----------------------------------
+	#Only add effects below this line here if they don't involve defeating rebels
 	#Anbennar
-	if = {
-		limit = {
-			from = {
-				tag = REB
-				is_rebel_type = pretender_rebels
-			}
-			owner = {
-				tag = A48
-				has_disaster = sugamber_succession_war
-			}
-		}
-		owner = { country_event = { id = flavor_sugamber.9 } }
-	}
-
-	if = { limit = { has_province_flag = nsc_duel } #Mages vs Artificers duel during the 'Rise of Artificery' NSC incident
-		if = { limit = { NOT = { has_province_flag = nsc_duel_null } }
-			if = { limit = { from = { tag = REB is_rebel_type = artificer_duelists_rebels } }
-				owner = { country_event = { id = new_sun_cult.203 } }
-			}
-			if = { limit = { from = { tag = REB is_rebel_type = mage_duelists_rebels } }
-				owner = { country_event = { id = new_sun_cult.204 } }
-			}
-		}
-		else = {
-			owner = { country_event = { id = new_sun_cult.205 } }
-		}
-	}
-
 	if = {
 		limit = {
 			ROOT = {
@@ -5320,225 +5292,7 @@ on_battle_won_province_effect = {
 			}
 		}
 	}
-
-	if = {
-		limit = {
-			from = {
-				tag = REB
-				is_rebel_type = allclan_rabble
-			}
-			owner = {
-				tag = I98
-				check_variable = {
-					which = tithicIncrement
-					value = 1
-				}
-				NOT = {
-					check_variable = {
-						which = tithicIncrement
-						value = 2
-					}
-				}
-			}
-		}
-		I98 = { country_event = { id = allclan.23 } }
-	}
-	if = {
-		limit = {
-			from = {
-				tag = REB
-				is_rebel_type = allclan_rabble
-			}
-			owner = {
-				tag = I98
-				check_variable = {
-					which = tithicIncrement
-					value = 2
-				}
-				NOT = {
-					check_variable = {
-						which = tithicIncrement
-						value = 3
-					}
-				}
-			}
-		}
-		I98 = { country_event = { id = allclan.24 } }
-	}
-	if = {
-		limit = {
-			from = {
-				tag = REB
-				is_rebel_type = allclan_rabble
-			}
-			owner = {
-				tag = I98
-				check_variable = {
-					which = tithicIncrement
-					value = 3
-				}
-				NOT = {
-					check_variable = {
-						which = tithicIncrement
-						value = 4
-					}
-				}
-			}
-		}
-		I98 = { country_event = { id = allclan.25 } }
-	}
-	if = {
-		limit = {
-			from = {
-				tag = REB
-				is_rebel_type = allclan_rabble
-			}
-			owner = {
-				tag = I98
-				check_variable = {
-					which = tithicIncrement
-					value = 4
-				}
-				NOT = {
-					check_variable = {
-						which = tithicIncrement
-						value = 5
-					}
-				}
-			}
-		}
-		I98 = { country_event = { id = allclan.26 } }
-	}
-	if = {
-		limit = {
-			FROM = {
-				tag = REB
-				is_rebel_type = allclan_rabble
-			}
-			owner = {
-				tag = I98
-				check_variable = {
-					which = tithicIncrement
-					value = 5
-				}
-			}
-		}
-		I98 = { country_event = { id = allclan.27 } }
-	}
-
-	if = {
-		limit = { 
-			owner = {
-				OR = {
-					tag = Y17 #Gushuokguan
-					was_tag = Y17 #Gushuokguan
-				}
-				any_hired_mercenary_company = {
-					template = merc_dacite_dragons
-					location = { province_id = ROOT }
-				}
-			}
-			FROM = {
-				tag = REB
-				is_rebel_type = spirit_swarms 
-			}
-		}
-		owner = {
-			change_variable = {
-				which = gushuokguan_dacite_dragons_death_toll
-				which = land_units_killed
-			}
-		}
-	}
-	else_if = {
-		limit = { 
-			owner = {
-				overlord = {
-					OR = {
-						tag = Y17 #Gushuokguan
-						was_tag = Y17 #Gushuokguan
-					}
-					any_hired_mercenary_company = {
-						template = merc_dacite_dragons
-						location = { province_id = ROOT }
-					}
-				}
-			}
-			FROM = {
-				tag = REB
-				is_rebel_type = spirit_swarms 
-			}
-		}
-		owner = {
-			overlord = {
-				set_variable = {
-					which = land_units_killed
-					which = PREV
-				}
-				change_variable = {
-					which = gushuokguan_dacite_dragons_death_toll
-					which = land_units_killed
-				}
-			}
-		}
-	}
-	if = {
-		limit = { 
-			FROM = {
-				tag = REB
-				is_rebel_type = asarta_merfolk_rebels
-			}
-		}
-		if = {
-			limit = {
-				owner = {
-					has_country_flag = asarta_merfolk_rebels1 
-				}
-			}
-			owner = {
-				country_event = {
-					id = asarta.5
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				owner = {
-					has_country_flag = asarta_merfolk_rebels2
-				}
-			}
-			owner = {
-				country_event = {
-					id = asarta.7
-				}
-			}
-		}
-		owner = {
-			clr_country_flag = asarta_merfolk_rebels1
-			clr_country_flag = asarta_merfolk_rebels2 
-		}
-	}
-	if = {
-		limit = { 
-			owner = {
-				has_country_flag = asarta_remove_sep
-			}
-			FROM = {
-				tag = REB #Must put REB in front of rebel type check, for error log reasons
-				is_rebel_type = nationalist_rebels
-			}
-			owner = {
-				NOT = {
-					num_of_rebel_armies = 1
-				}
-			}
-		}
-		owner = {
-			country_event = {
-				id = asarta.17
-			}
-		}
-	}
+	
 	if = {
 		limit = { 
 			has_ruler_leader_from = I33
@@ -5549,15 +5303,6 @@ on_battle_won_province_effect = {
 				id = flavour_ayeth.16
 			}
 		}
-	}
-	
-
-	if = { #Shuvuush generic missions
-		limit = {
-			FROM = { tag = REB is_rebel_type = face_stealers_rebels }
-			owner = { has_mission = shuvuush_to_forget }
-		}
-		owner = { set_country_flag = has_defeated_face_stealer }
 	}
 
 	#Bibyobi
@@ -5584,32 +5329,6 @@ on_battle_won_province_effect = {
 		}
 	}
 
-	if = {
-		limit = {
-			FROM = {
-				tag = REB
-				rebel_is_holohana = yes
-			}
-		}
-		if = {
-			limit = { has_province_flag = holohana_is_here_flag }
-			FROM = {
-				holohana_injury_trigger_switch = yes
-			}
-		}
-		else = {
-			set_province_flag = holohana_migrated_from_fight
-		}
-	}
-
-	if = { # Ardimyan Minors
-		limit = {
-			has_province_flag = current_qeyikul_warband_uprising
-			FROM = { tag = REB }
-		}
-		owner = { country_event = { id = flavour_AYN.1001 } }
-	}
-
 	#Xhaz spells
 	if = {
 		limit = {
@@ -5632,13 +5351,274 @@ on_battle_won_province_effect = {
 	}
 }
 
+on_battle_won_province_effect_loser_country_reb = {
+	if = {
+		limit = {
+			FROM = {
+				is_rebel_type = revolutionary_rebels
+			}
+			owner = {
+				any_owned_province = {
+					region = root
+					has_revolution_in_province = yes
+				}
+				# NOT = { has_disaster = french_revolution }
+				NOT = { has_disaster = revolution }
+				NOT = { has_spawned_rebels = revolutionary_rebels }
+			}
+		}
+		owner = { country_event = { id = center_of_revolution.1600 } }
+	}
+	#Anbennar
+	if = {
+		limit = {
+			FROM = {
+				is_rebel_type = pretender_rebels
+			}
+			owner = {
+				tag = A48
+				has_disaster = sugamber_succession_war
+			}
+		}
+		owner = { country_event = { id = flavor_sugamber.9 } }
+	}
+	if = {
+		limit = { 
+			FROM = {
+				is_rebel_type = nationalist_rebels
+			}
+			owner = {
+				has_country_flag = asarta_remove_sep
+			}
+			owner = {
+				NOT = {
+					num_of_rebel_armies = 1
+				}
+			}
+		}
+		owner = {
+			country_event = {
+				id = asarta.17
+			}
+		}
+	}
+	if = { limit = { has_province_flag = nsc_duel } #Mages vs Artificers duel during the 'Rise of Artificery' NSC incident
+		if = { limit = { NOT = { has_province_flag = nsc_duel_null } }
+			if = { limit = { FROM = { is_rebel_type = artificer_duelists_rebels } }
+				owner = { country_event = { id = new_sun_cult.203 } }
+			}
+			if = { limit = { FROM = { is_rebel_type = mage_duelists_rebels } }
+				owner = { country_event = { id = new_sun_cult.204 } }
+			}
+		}
+		if = { limit = { has_province_flag = nsc_duel_null }
+			owner = { country_event = { id = new_sun_cult.205 } }
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				is_rebel_type = allclan_rabble
+			}
+			owner = {
+				tag = I98
+				NOT = { has_country_flag = jerry_died } #Nothing matters after his death :(
+			}
+		}
+		owner = {
+			if = {
+				limit = {
+					check_variable = {
+						which = tithicIncrement
+						value = 1
+					}
+					NOT = {
+						check_variable = {
+							which = tithicIncrement
+							value = 2
+						}
+					}
+				}
+				country_event = { id = allclan.23 }
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = tithicIncrement
+						value = 2
+					}
+					NOT = {
+						check_variable = {
+							which = tithicIncrement
+							value = 3
+						}
+					}
+				}
+				country_event = { id = allclan.24 }
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = tithicIncrement
+						value = 3
+					}
+					NOT = {
+						check_variable = {
+							which = tithicIncrement
+							value = 4
+						}
+					}
+				}
+				country_event = { id = allclan.25 }
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = tithicIncrement
+						value = 4
+					}
+					NOT = {
+						check_variable = {
+							which = tithicIncrement
+							value = 5
+						}
+					}
+				}
+				country_event = { id = allclan.26 }
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = tithicIncrement
+						value = 5
+					}
+				}
+				I98 = { country_event = { id = allclan.27 } }
+			}
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				is_rebel_type = spirit_swarms 
+			}
+		}
+		if = {
+			limit = { 
+				owner = {
+					is_or_was_tag = { tag = Y17 } #Gushuokguan
+					any_hired_mercenary_company = {
+						template = merc_dacite_dragons
+						location = { province_id = ROOT }
+					}
+				}
+			}
+			owner = {
+				change_variable = {
+					which = gushuokguan_dacite_dragons_death_toll
+					which = land_units_killed
+				}
+			}
+		}
+		else_if = {
+			limit = { 
+				owner = {
+					overlord = {
+						is_or_was_tag = { tag = Y17 } #Gushuokguan
+						any_hired_mercenary_company = {
+							template = merc_dacite_dragons
+							location = { province_id = ROOT }
+						}
+					}
+				}
+			}
+			owner = {
+				overlord = {
+					set_variable = {
+						which = land_units_killed
+						which = PREV
+					}
+					change_variable = {
+						which = gushuokguan_dacite_dragons_death_toll
+						which = land_units_killed
+					}
+				}
+			}
+		}
+	}
+	if = {
+		limit = { 
+			FROM = {
+				is_rebel_type = asarta_merfolk_rebels
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = asarta_merfolk_rebels1 
+				}
+			}
+			owner = {
+				country_event = {
+					id = asarta.5
+				}
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = asarta_merfolk_rebels2
+				}
+			}
+			owner = {
+				country_event = {
+					id = asarta.7
+				}
+			}
+		}
+		owner = {
+			clr_country_flag = asarta_merfolk_rebels1
+			clr_country_flag = asarta_merfolk_rebels2 
+		}
+	}
+	if = { #Shuvuush generic missions
+		limit = {
+			FROM = { is_rebel_type = face_stealers_rebels }
+			owner = { has_mission = shuvuush_to_forget }
+		}
+		owner = { set_country_flag = has_defeated_face_stealer }
+	}
+	if = {
+		limit = {
+			FROM = {
+				rebel_is_holohana = yes
+			}
+		}
+		if = {
+			limit = { has_province_flag = holohana_is_here_flag }
+			FROM = {
+				holohana_injury_trigger_switch = yes
+			}
+		}
+		else = {
+			set_province_flag = holohana_migrated_from_fight
+		}
+	}
+	if = { # Ardimyan Minors
+		limit = {
+			has_province_flag = current_qeyikul_warband_uprising
+		}
+		owner = { country_event = { id = flavour_AYN.1001 } }
+	}
+}
+
 on_battle_lost_province_effect = {
 	# Crushing rebels trying to stop Silentblade's Emerald Orc ritual 
 	if = {
 		limit = {
 			FROM = { tag = I43 }
 			province_id = 6258
-			NOT = { has_country_flag = silentblade_ritual_complete }
+			NOT = { has_global_flag = silentblade_ritual_complete }
 		}
 
 		I43 = { country_event = { id = silentblade.5 } }
@@ -5650,14 +5630,7 @@ on_battle_lost_province_effect = {
 				TAG = B32
 				has_disaster = castanor_succession_war
 			}
-			ROOT = {
-				NOT = {
-					num_of_units_in_province = {
-						who = B61
-						amount = 1
-					}
-				}
-			}
+			units_in_province = B61
 		}
 		set_province_flag = castanor_stack_wipe
 	}
@@ -7172,6 +7145,7 @@ on_war_declaration_effect = {
 	if = {
 		limit = {
 			has_country_flag = B28_tide_flag
+			has_reform = B28_rule_of_the_strong
 		}
 		remove_country_modifier = B28_ook_01
 		remove_country_modifier = B28_ook_02
@@ -10107,6 +10081,12 @@ on_development_effect = {
 			}
 		}
 	}
+
+	#Devandi Church Power Gain - Mazhthramazh
+	if = {
+		limit = { owner = { religion = mazhthramazh } }
+		owner = { add_church_power = 1 }
+	}
 }
 
 # THIS = Province, FROM = Country, ROOT = Merc Unit
@@ -11622,6 +11602,23 @@ on_built_manpower_building_effect = {
 		}
 		FROM = { S45_add_momentum = { value = 1 action = building } }
 	}
+	if = {
+		limit = {
+			FROM = { has_estate_privilege = estate_raj_ministries_grant_logistical_oversight }
+			NOT = { has_province_modifier = estate_raj_ministries_grant_logistical_oversight_cooldown }
+		}
+		area = {
+			add_or_extend_province_modifier_effect = {
+				MODIFIER = estate_raj_ministries_grant_logistical_oversight_prov
+				DURATION = 365
+			}
+		}
+		add_province_modifier = {
+			name = estate_raj_ministries_grant_logistical_oversight_cooldown
+			duration = 9125
+			hidden = yes
+		}
+	}
 }
 
 on_manpower_building_destroyed_effect = {
@@ -11896,6 +11893,23 @@ on_built_trade_building_effect = {
 			duration = -1
 		}
 	}
+	if = {
+		limit = {
+			FROM = { has_estate_privilege = estate_raj_ministries_grant_treasury_oversight }
+			NOT = { has_province_modifier = estate_raj_ministries_grant_treasury_oversight_cooldown }
+		}
+		area = {
+			add_or_extend_province_modifier_effect = {
+				MODIFIER = estate_raj_ministries_grant_treasury_oversight_prov
+				DURATION = 1825
+			}
+		}
+		add_province_modifier = {
+			name = estate_raj_ministries_grant_treasury_oversight_cooldown
+			duration = 9125
+			hidden = yes
+		}
+	}
 }
 on_trade_building_destroyed_effect = {
 	remove_province_modifier = harpylen_market_roost
@@ -11993,6 +12007,28 @@ on_built_courthouse_building_effect = {
 	if = {
 		limit = { FROM = { has_estate_privilege = estate_wolf_command_war_room_rights } }
 		FROM = { add_legitimacy = 0.5 }
+	}
+	if = {
+		limit = { FROM = { has_estate_privilege = estate_raj_ministries_establish_provincial_bureaucracies } }
+		FROM = {
+			add_estate_loyalty = {
+				estate = estate_raj_ministries
+				loyalty = 1
+			}
+			add_corruption = 0.02
+		}
+		if = {
+			limit = { NOT = { has_province_modifier = estate_raj_ministries_establish_provincial_bureaucracies_cooldown } }
+			add_province_modifier = {
+				name = estate_raj_ministries_establish_provincial_bureaucracies_prov
+				duration = 1825
+			}
+			add_province_modifier = {
+				name = estate_raj_ministries_establish_provincial_bureaucracies_cooldown
+				duration = 9125
+				hidden = yes
+			}
+		}
 	}
 }
 on_courthouse_building_destroyed_effect = {}
@@ -14885,6 +14921,25 @@ on_province_owner_change_effect = {
 			duration = -1
 			hidden = yes
 		}
+	}
+
+	#Itinerant Capital Mechanic - Give modifier to new province
+	if = { 
+		limit = {
+			owner = { has_government_attribute = has_itinerant_capital }
+			area_for_scope_province = {
+				has_province_modifier = itinerant_capital_area
+			}
+			NOT = { has_province_modifier = itinerant_capital_area }
+		}
+		add_province_modifier = {
+			name = itinerant_capital_area
+			duration = -1
+		}
+	}
+	if = {
+		limit = { has_province_flag = is_itinerent_capital }
+		clr_province_flag = is_itinerent_capital
 	}
 
 	#Orlghelovar (I12)
@@ -18694,6 +18749,7 @@ on_province_owner_change_monuments = {
 					add_province_modifier = {
 						name = temple_of_ruby_and_bronze_livestock_mod_1
 						duration = -1
+						hidden = yes
 					}
 				}
 			}
@@ -19290,12 +19346,14 @@ on_province_owner_change_monuments = {
 			add_province_modifier = {
 				name = temple_of_ruby_and_bronze_livestock_mod_2
 				duration = -1
+				hidden = yes
 			}
 		}
 		else = {
 			add_province_modifier = {
 				name = temple_of_ruby_and_bronze_livestock_mod_1
 				duration = -1
+				hidden = yes
 			}
 		}
 	}
