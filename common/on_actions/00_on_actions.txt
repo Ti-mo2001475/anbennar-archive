@@ -2137,22 +2137,6 @@ on_war_won = {
 		}
 		clr_country_flag = G54_deyeion_declared_independence_flag
 	}
-
-	if = { #Besolaki once again
-		limit = {
-			OR = {
-				tag = G54
-				was_tag = G54
-			}
-			FROM = { has_country_flag = G54_supporting_peasant_rebels_flag }
-		}
-		FROM = {
-			country_event = {
-				id = besolaki_events.500
-			}
-			clr_country_flag = G54_supporting_peasant_rebels_flag
-		}
-	}
 	
 	#Bagcatir MT
 	if = {
@@ -3236,6 +3220,11 @@ on_main_war_lost = {
 		country_event = {
 			id = besolaki_events.16
 		}
+	}
+
+	if = { #Besolaki
+		limit = { has_country_flag = G54_supporting_peasant_rebels_flag }
+		country_event = { id = besolaki_events.500 }
 	}
 
 	#Sri Baginda
@@ -26646,26 +26635,6 @@ on_rebels_break_country = {
 	if = {
 		limit = { is_subject_of_type = acolyte_dominion }
 		divide_variable = { aInfluence = 2 }
-	}
-	
-	if = { #Besolaki
-		limit = { has_country_flag = G54_supporting_peasant_rebels_flag }
-		if = {
-			limit = { exists = U27 }
-			U27 = { #Theinos
-				country_event = {
-					id = besolaki_events.50
-				}
-			}
-		}
-		else = {
-			G54 = { #Besolaki
-				country_event = {
-					id = besolaki_events.50
-				}
-			}
-		}
-		clr_country_flag = G54_supporting_peasant_rebels_flag
 	}
 
 	if = { #Larankar
