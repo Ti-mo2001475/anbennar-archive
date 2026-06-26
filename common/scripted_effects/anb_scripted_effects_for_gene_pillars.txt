@@ -307,7 +307,7 @@ gene_pillar_abandon_expedition_effect_helper = {
 #Checks if you've failed the expedition before firing the success
 gene_pillar_end_expedition_effect = {
 	if = {
-		limit = { is_exploring_any_gene_pillar = yes }
+		limit = { aPUI_gene_pillar_root_is_exploring_event_target_province_trigger = yes }
 		gene_pillar_successful_end_expedition_effect = yes
 	}
 }
@@ -1153,9 +1153,9 @@ gene_pillars_lose_hp_effect = {
 		limit = {
 			event_target:gene_pillar_exploration_province = {
 				NOT = { aPUI_check_variable = { name = gene_pillar_health value = 1 } }
+				# in case you trigger this twice by e.g. having two health loss effects in one option
+				aPUI_gene_pillar_is_exploring_this_province_trigger = { who = ROOT }
 			}
-			is_exploring_any_gene_pillar = yes
-			# in case you trigger this twice by e.g. having two health loss effects in one option
 		}
 		gene_pillar_fail_expedition = yes
 	}
