@@ -2926,6 +2926,7 @@ on_main_war_won = {
 		}
 		clr_country_flag = ardimya_war_of_independence
 		FROM = { clr_country_flag = ardimya_war_of_independence_colonial_power }
+		set_country_flag = ardimya_war_ended
 		country_event = {
 			id = ardimya.8
 		}
@@ -30331,14 +30332,12 @@ on_colony_finished = { #ROOT - Province
 	if = {
 		limit = {
 			region = ardimya_region
-			S91 = { exist = yes }
+			exists = S91
 			owner = {
-				owner = {
-					S91 = { 
-						is_colonial_nation_of = PREV
-					}
-					NOT = { has_country_flag = ardimya_war_of_independence_colonial_power }
+				S91 = { 
+					is_colonial_nation_of = PREV
 				}
+				NOT = { has_country_flag = ardimya_war_ended }
 			}
 		}
 		cede_province = S91
@@ -31462,6 +31461,7 @@ on_war_ended = { #ROOT - Winer FROM - Loser
 		}
 		clr_country_flag = ardimya_war_of_independence_colonial_power
         FROM = { clr_country_flag = ardimya_war_of_independence }
+		set_country_flag = ardimya_war_ended
 		country_event = {
 			id = ardimya.10
 		}
