@@ -64,7 +64,14 @@ col_1 = {
 			}
 		} 
 
-		trigger = {  
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 3
+				has_fort_building_trigger = yes
+				any_neighbor_province = {
+					is_part_of_hre = yes
+				}
+			}
 			estate_loyalty = {
 				estate = estate_nobles
 				loyalty = 60
@@ -615,6 +622,7 @@ col_2 = {
 				name = A29_narawen_1
 				duration = -1
 			}
+			custom_tooltip = A29_narawen_upgrade_tt
 			hidden_effect = {
 				set_variable = {
 					which = A29_tiles_discovered
@@ -674,9 +682,10 @@ col_2 = {
 			}
 		} 
 
-		trigger = {  
-			dao_nako_region = {
-				country_or_non_sovereign_subject_holds = ROOT
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 20
+				region = dao_nako_region
 			}
 			OR = {
 				has_cast_plant_growth = yes
@@ -701,8 +710,22 @@ col_2 = {
 			}
 			custom_tooltip = A29_planetouched_production_unlock_tt
 			set_country_flag = A29_planetouched_production_unlock
-			fahvanosy_region = {
+			janama_region = {
 				add_permanent_claim = ROOT
+			}
+			kubaci_region = {
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_cast_plant_growth = yes
+					}
+					NOT = {
+						has_cast_deposit_divination = yes
+					}
+				}
+				change_mana = { amount = -150 }
 			}
 		} 
 	}
@@ -1657,6 +1680,9 @@ col_3 = {
 					duration = -1
 				}
 			}
+			horashesh_region = {
+				add_permanent_claim = ROOT
+			}
 		} 
 	}
 
@@ -1682,6 +1708,7 @@ col_3 = {
 			calc_true_if = {
 				amount = 40
 				horashesh_region = {
+					type = all
 					country_or_non_sovereign_subject_holds = ROOT
 				}
 			}
@@ -1711,6 +1738,9 @@ col_3 = {
 			add_mandate = 25
 			custom_tooltip = A29_two_crowns_reforms_tt
 			set_country_flag = A29_two_crowns
+			ardimya_region = {
+				add_permanent_claim = ROOT
+			}
 		} 
 	}
 
@@ -2302,6 +2332,12 @@ col_4 = {
 			ringlet_isles_region = { add_permanent_claim = ROOT } 
 			bedaphire_area = { add_permanent_claim = ROOT }
 			irkan_eparta_area = { add_permanent_claim = ROOT }
+			bamaliwuni_region = {
+				add_permanent_claim = ROOT
+			}
+			lupulan_rainforest_region = {
+				add_permanent_claim = ROOT
+			}
 		} 
 	}
 
@@ -2775,6 +2811,7 @@ col_5 = {
 				name = A29_extra_flagship 
 				duration = -1 
 			}
+			custom_tooltip = A29_divenhal_trade_maps_unlock_tt
 			set_country_flag = A29_divenhal_trade_maps_unlock
 		} 
 	}
@@ -2783,7 +2820,37 @@ col_5 = {
 		icon = mission_mnd_maj_cloves
 		position = 10
 		required_missions = { A29_wealth_of_sarhal } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			OR = {
+				AND = {
+					province_id = 3082
+					3082 = {
+						NOT = {
+							has_protecting_trade_share_in_trade_node = {
+								who = ROOT 
+								share = 0.2  
+							}
+						}
+					}
+				}
+				AND = {
+					province_id = 6632
+					NOT = {
+						has_great_project = {
+							type = lizardfolk_port 
+							tier = 3 
+						}
+					}
+				}
+				AND = {
+					continent = africa
+					trade_goods = cloves
+					NOT = {
+						country_or_non_sovereign_subject_holds = ROOT 
+					}
+				}
+			}
+		} 
 
 		trigger = {
 			3082 = {
@@ -2860,7 +2927,6 @@ col_5 = {
 					NOT = {
 						trade_goods = coffee
 					} 
-
 				}
 			}
 			custom_trigger_tooltip = {
