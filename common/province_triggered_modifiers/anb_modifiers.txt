@@ -6541,7 +6541,7 @@ khadisrapur_artificers_ptm = {
 #Xanzerbexis Brainmarrow Pact
 A49_brainmarrow_pact_tm = {
 	potential = {
-		owner = { has_country_flag = A49_enable_brainmarrow_pact }
+		owner = { tag = A49 }
 	}
 	trigger = {
 		owner = {
@@ -7850,3 +7850,57 @@ B54_ptm_morgurax_tracker = {
 	}
 }
 
+hallow_randomization_ptm = {
+	potential = { always = yes }
+	hidden = yes 
+
+	trigger = { always = yes }
+
+	on_activation = {
+		owner = {
+			trigger_switch = {
+				on_trigger = government_rank
+				3 = {
+					pick_random_provinces = {
+						3 = yes
+						scope = random_owned_province
+						global_trigger = "has_tax_building_trigger = yes"
+						event_target_name = hallow_target
+					}
+					do_same_event_target_effect = {
+						3 = yes
+						event_target_name = hallow_target
+						effect = "upgrade_tax_building = yes"
+					}
+				}
+				2 = {
+					pick_random_provinces = {
+						2 = yes
+						scope = random_owned_province
+						global_trigger = "has_tax_building_trigger = yes"
+						event_target_name = hallow_target
+					}
+					do_same_event_target_effect = {
+						2 = yes
+						event_target_name = hallow_target
+						effect = "upgrade_tax_building = yes"
+					}
+				}
+				1 = {
+					pick_random_provinces = {
+						1 = yes
+						scope = random_owned_province
+						global_trigger = "has_tax_building_trigger = yes"
+						event_target_name = hallow_target
+					}
+					do_same_event_target_effect = {
+						1 = yes
+						event_target_name = hallow_target
+						effect = "upgrade_tax_building = yes"
+					}
+				}
+			}
+		}
+		remove_province_triggered_modifier = hallow_randomization_ptm
+	}
+}
