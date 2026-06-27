@@ -7723,6 +7723,37 @@ on_war_declaration_effect = {
 		}
 		country_event = { id = dragon_turtles.16 }
 	}
+
+	#Cangji
+	if = {
+		limit = {
+			tag = V05
+		}
+		if = {
+			limit = {
+				has_country_flag = V05_yanshen_wars
+				FROM = {
+					capital_scope = { superregion = yanshen_superregion }
+				}
+			}
+			add_country_modifier = {
+				name = V05_yanshen_warscore
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = V05_yarikhoi_wars
+				FROM = {
+					capital_scope = { superregion = forbidden_lands_superregion }
+				}
+			}
+			add_country_modifier = {
+				name = V05_forbidden_plains_warscore
+				duration = -1
+			}
+		}
+	}
 }
 
 remove_all_age_of_discovery_modifiers = {
