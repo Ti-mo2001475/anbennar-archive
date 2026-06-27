@@ -23,8 +23,20 @@ col4 = {
 			}
 			Y14 = {
 				add_country_modifier = {
-					name = S37_legitimate_claimant
+					name = Y91_neglected_fortifications
 					duration = 7300
+				}
+				every_owned_province = {
+					add_claim = ROOT
+				}
+			}
+			Y16 = {
+				add_country_modifier = {
+					name = Y91_neglected_fortifications
+					duration = 7300
+				}
+				every_owned_province = {
+					add_claim = ROOT
 				}
 			}
 		} 
@@ -41,7 +53,11 @@ col4 = {
 
 		trigger = {  } 
 
-		effect = {  } 
+		effect = {  
+			country_event = {
+				id = flavor_nuugdan_tsarai.1
+			}
+		} 
 	}
 
 	y91_advance_on_tianlou = {
@@ -55,21 +71,37 @@ col4 = {
 
 		trigger = {  } 
 
-		effect = {  } 
+		effect = {  
+			north_yanshen_region = {
+				add_claim = ROOT
+			}
+			4871 = { #tianlou
+				add_claim = ROOT
+			}
+			add_country_modifier = {
+				name = Y91_nightmare_of_yanshen
+				duration = 5475
+			}
+		} 
 	}
 
+	#TODO Re-add connection to break realms
 	y91_crush_the_pearl_of_yanshen = {
 		icon = mission_city_of_the_world's_desire
 		position = 4
 		required_missions = { 
 			y91_advance_on_tianlou 
-			shuvuush_break_realms
+			#shuvuush_break_realms
 		} 
 		provinces_to_highlight = {  } 
 
 		trigger = {  } 
 
-		effect = {  } 
+		effect = {
+			country_event = {
+				id = flavor_nuugdan_tsarai.4
+			}
+		} 
 	}
 
 	y91_imperial_foundations = {
@@ -83,7 +115,33 @@ col4 = {
 
 		trigger = {  } 
 
-		effect = {  } 
+		effect = {
+			add_country_modifier = {
+				name = Y91_integration_and_governance
+				duration = 10950
+			}
+			if = {
+				limit = {
+					Y13 = {
+						is_subject_of = ROOT
+					}
+				}
+				custom_tooltip = Y91_annex_tt
+				hidden_effect = {
+					Y13 = {
+						ROOT = {
+							export_to_variable = { which = JiangduVassalDev value = total_development who = PREV }
+						}
+						every_owned_province = {
+							add_core = ROOT
+							cede_province = ROOT
+						}
+					}
+					multiply_variable = { which = JiangduVassalDev value = 4 }
+					var_effect = { effect = add_dip_power var = JiangduVassalDev sign = - }
+				}
+			}
+		}
 	}
 }
 col5 = {
@@ -100,7 +158,18 @@ col5 = {
 
 		trigger = {  } 
 
-		effect = {  } 
+		effect = {  
+			add_mil_power = 100
+			capital_scope = {
+				cavalry = ROOT
+			}
+			capital_scope = {
+				cavalry = ROOT
+			}
+			capital_scope = {
+				cavalry = ROOT
+			}
+		} 
 	}
 
 	y91_defeat_gowon = {
@@ -111,7 +180,27 @@ col5 = {
 
 		trigger = {  } 
 
-		effect = {  } 
+		#TODO: Custom TT this
+		effect = {  
+			if = {
+				limit = {
+					zunkazhad_area = {
+						owned_by = ROOT
+					}
+					zirariik_area = {
+						owned_by = ROOT
+					}
+				}
+				country_event = {
+					id = flavor_nuugdan_tsarai.3
+				}
+			}
+			else = {
+				country_event = {
+					id = flavor_nuugdan_tsarai.2
+				}
+			}
+		} 
 	}
 
 	Y91_court_the_warlords = {
@@ -122,6 +211,20 @@ col5 = {
 
 		trigger = {  } 
 
-		effect = {  } 
+		effect = {
+			if = {
+				limit = {
+					alliance_with = Y13
+				}
+				country_event = {
+					id = flavor_nuugdan_tsarai.5
+				}
+			}
+			else = {
+				country_event = {
+					id = flavor_nuugdan_tsarai.6
+				}
+			}
+		}
 	}
 }
