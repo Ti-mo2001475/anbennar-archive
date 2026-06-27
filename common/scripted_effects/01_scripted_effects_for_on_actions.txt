@@ -17943,41 +17943,31 @@ on_age_ability_taken_age_of_revolutions = { }
 on_age_ability_taken = {
     on_age_ability_taken_$age$ = yes
     if = {
-        limit = {
-            has_government_attribute = taych_taking_age_rewards_gives_glory
-            religion = gods_of_the_taychend
-        }
-        gain_taychend_glory_effect = { amount = 100 }
-    }
-    if = {
-        limit = {
-            has_government_attribute = taych_taking_age_rewards_gives_glory
-            religion = gods_of_the_taychend_reformed
-            has_government_mechanic = taychend_vainglory_mechanic
-        }
-        add_government_power = {
-            mechanic_type = taychend_vainglory_mechanic
-            power_type = taychend_vainglory_power
-            value = 25
-        }
-    }
-    if = {
-        limit = {
-            has_government_attribute = taych_taking_age_rewards_gives_glory
-            OR = {
-                NOT = { religion = gods_of_the_taychend_reformed }
-                AND = {
-                    religion = gods_of_the_taychend_reformed
-                    NOT = { has_government_mechanic = taychend_vainglory_mechanic }
-                }
-            }
-            NOT = { religion = gods_of_the_taychend }
-        }
-        add_power_projection = {
-            type = mission_rewards_power_projection
-            amount = 7
-        }
-    }
+		limit = {
+			has_government_attribute = taych_taking_age_rewards_gives_glory
+		}
+		if = {
+			limit = { religion = gods_of_the_taychend }
+			gain_taychend_glory_effect = { amount = 100 }
+		}
+		else_if = {
+			limit = {
+				religion = gods_of_the_taychend_reformed
+				has_government_mechanic = taychend_vainglory_mechanic
+			}
+			add_government_power = {
+				mechanic_type = taychend_vainglory_mechanic
+				power_type = taychend_vainglory_power
+				value = 25
+			}
+		}
+		else = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 7
+			}
+		}
+	}
 }
 
 on_scorch_earth_effect = {

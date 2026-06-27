@@ -8306,12 +8306,6 @@ on_monthly_pulse = {
 	else = {
 		remove_country_modifier = defense_of_the_empire_modifier
 	}
-
-	#Taychend gov ref
-	if = {
-		limit = { has_reform = relic_lords_of_taychend }
-		country_event = { id = taychendi_gov_reform.2 }	#modif 
-	}
 	
 	#counter revolution triggered mod replacement
 	if = {
@@ -8953,6 +8947,11 @@ on_yearly_pulse = {
 		country_event = { id = taychendi_gov_reform.1 }	#add glory every year
 	}
 
+	#Taychend gov ref
+	if = {
+		limit = { has_reform = relic_lords_of_taychend }
+		country_event = { id = taychendi_gov_reform.2 }	#modif 
+	}
 
 	if = {
 		limit = { tag = R62 }
@@ -16651,38 +16650,29 @@ on_province_owner_change = {
 
 	#Taychend gov reforms
 	# Ларанкарха
-    if = {
-        limit = {
-            owner = { has_reform = larankarha_gos_ref }
-            has_terrain = mountain
-            region = larankarha_highlands_region
-        }
-        add_province_modifier = { name = larankarha_mountain_expansion_mountains duration = -1 hidden = yes }
-    }
-    if = {
-        limit = {
-            owner = { has_reform = larankarha_gos_ref }
-            has_terrain = highlands
-            region = larankarha_highlands_region
-        }
-        add_province_modifier = { name = larankarha_mountain_expansion_highlands duration = -1 hidden = yes }
-    }
-    if = {
-        limit = {
-            owner = { has_reform = larankarha_gos_ref }
-            has_terrain = hills
-            region = larankarha_highlands_region
-        }
-        add_province_modifier = { name = larankarha_mountain_expansion_hills duration = -1 hidden = yes }
-    }
-    if = {
-        limit = {
-            NOT = { owner = { has_reform = larankarha_gos_ref } }
-        }
-        remove_province_modifier = larankarha_mountain_expansion_mountains
-        remove_province_modifier = larankarha_mountain_expansion_highlands
-        remove_province_modifier = larankarha_mountain_expansion_hills
-    }
+	if = {
+		limit = {
+			owner = { has_reform = larankarha_gos_ref }
+			region = larankarha_highlands_region
+		}
+		if = {
+			limit = { has_terrain = mountain }
+			add_province_modifier = { name = larankarha_mountain_expansion_mountains duration = -1 hidden = yes }
+		}
+		else_if = {
+			limit = { has_terrain = highlands }
+			add_province_modifier = { name = larankarha_mountain_expansion_highlands duration = -1 hidden = yes }
+		}
+		else_if = {
+			limit = { has_terrain = hills }
+			add_province_modifier = { name = larankarha_mountain_expansion_hills duration = -1 hidden = yes }
+		}
+	}
+	else = {
+		remove_province_modifier = larankarha_mountain_expansion_mountains
+		remove_province_modifier = larankarha_mountain_expansion_highlands
+		remove_province_modifier = larankarha_mountain_expansion_hills
+	}
     # Калавенд
     if = {
         limit = {
@@ -16699,29 +16689,23 @@ on_province_owner_change = {
         remove_province_modifier = kalavendy_population
     }
     # Йоднахпур
-    if = {
-        limit = {
-            owner = { has_reform = yodhanpir_gos_ref }
-            superregion = taychend_superregion
-            culture = yodhanpir
-        }
-        add_province_modifier = { name = yodhanpir_gos_regiment duration = -1 hidden = yes }
-    }
-    if = {
-        limit = {
-            owner = { has_reform = yodhanpir_gos_ref }
-            superregion = taychend_superregion
-            NOT = { culture = yodhanpir }
-        }
-        add_province_modifier = { name = yodhanpir_gos_tax duration = -1 hidden = yes }
-    }
-    if = {
-        limit = {
-            NOT = { owner = { has_reform = yodhanpir_gos_ref } }
-        }
-        remove_province_modifier = yodhanpir_gos_regiment
-        remove_province_modifier = yodhanpir_gos_tax
-    }
+	if = {
+		limit = {
+			owner = { has_reform = yodhanpir_gos_ref }
+			superregion = taychend_superregion
+		}
+		if = {
+			limit = { culture = yodhanpir }
+			add_province_modifier = { name = yodhanpir_gos_regiment duration = -1 hidden = yes }
+		}
+		else = {
+			add_province_modifier = { name = yodhanpir_gos_tax duration = -1 hidden = yes }
+		}
+	}
+	else = {
+		remove_province_modifier = yodhanpir_gos_regiment
+		remove_province_modifier = yodhanpir_gos_tax
+	}
     # Тхекврыстана
     if = {
         limit = {
