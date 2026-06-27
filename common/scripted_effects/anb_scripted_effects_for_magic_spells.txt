@@ -1106,6 +1106,8 @@ conjuration_3_extraplanar_contact_effect = { # Extraplanar Contact
 					set_variable = { extraplanar_contact_last_school = 8 }
 				}
 			}
+
+			B54_se_apply_lich_queen_modifiers = yes
 		}
 	}
 	else = {
@@ -1797,7 +1799,12 @@ enchantment_3_dominate_to_surrender_effect = { # Dominate to Surrender
 			custom_tooltip = magic_booster_by_witch_king_tt
 			hidden_effect = {
 				PREV = { save_event_target_as = spell_caster }
-				area = { add_territorial_core = event_target:spell_caster }
+				area = {
+					if = { #apparently this overrides non-territorial cores
+						limit = { NOT = { is_core = event_target:spell_caster } }
+						add_territorial_core = event_target:spell_caster
+					}
+				}
 			}
 		}
 
@@ -3167,6 +3174,7 @@ clr_all_custom_spell_groups = {
 		clr_bulwar_spell_lists = yes
 		clr_xhazobkult_spell_lists = yes
 		clr_eordand_spell_lists = yes
+		clr_cannor_clerical_spell_lists = yes
 		hidden_effect = { #Keep this here - simplifies this effect
 			clr_country_flag = magic_list_any
 			clr_country_flag = show_custom_spell_list #just in case
@@ -3238,6 +3246,13 @@ clr_eordand_spell_lists = {
 		clr_custom_spell_list = { group = eordand subgroup = eighard }
 	}
 }
+clr_cannor_clerical_spell_lists = {
+	if = { #Fast check of group flag
+		limit = { has_any_custom_spell_list_in_group = { group = cannor_clerical } }
+		clr_custom_spell_list = { group = cannor_clerical subgroup = default }
+		#Put any sublists here
+	}
+}
 
 magical_tradition_on_spell_cast_effect = { magical_tradition_on_$group$_spell_cast_effect = yes }
 # magical_tradition_on_$group$_spell_cast_effect
@@ -3260,6 +3275,7 @@ magical_tradition_on_centaur_spell_cast_effect = {}
 magical_tradition_on_bulwar_spell_cast_effect = {}
 magical_tradition_on_eordand_spell_cast_effect = {}
 magical_tradition_on_xhazobkult_spell_cast_effect = {}
+magical_tradition_on_cannor_clerical_spell_cast_effect = {}
 
 
 
@@ -3949,7 +3965,23 @@ evocation_2_centaur_black_herd_5_effect = {
 		set_variable = { markhentakruan_land_units_killed = 0 }
 	}
 	if = {
-		limit = { at_least_magic_project_level = { project = black_herd_project_1 level = 2 } }
+		limit = { exactly_magic_project_level = { project = black_herd_project_1 level = 3 } }
+		add_country_modifier = {
+			name = I55_markhentakruan_3_mod
+			duration = 1825 #5 years
+		}
+		custom_tooltip = magic_list_centaur_spell_5_black_herd_siege_tt
+		every_province = { #Every fort we're sieging sets their garrison to 125
+			limit = {
+				sieged_by = ROOT
+				garrison = 125 #Only forts have garrisons. Also makes sure you aren't accidently giving them men
+			}
+			add_garrison = -999999
+			add_garrison = 125
+		}
+	}
+	else_if = {
+		limit = { exactly_magic_project_level = { project = black_herd_project_1 level = 2 } }
 		add_country_modifier = {
 			name = I55_markhentakruan_2_mod
 			duration = 1825 #5 years
@@ -3961,82 +3993,10 @@ evocation_2_centaur_black_herd_5_effect = {
 			duration = 1825 #5 years
 		}
 	}
-	if = {
-		limit = { exactly_magic_project_level = { project = black_herd_project_1 level = 3 } }
-		custom_tooltip = magic_list_centaur_spell_5_black_herd_siege_tt
-		if = {
-			limit = { evocation_2_centaur_black_herd_5_effect_sub_trigger = { scope = ROOT } }
-			evocation_2_centaur_black_herd_5_sub_effect = {
-				trigger_scope = ROOT
-				effect_scope = ROOT
-			}
-		}
-		else_if = {
-			limit = { evocation_2_centaur_black_herd_5_effect_sub_trigger = { scope = any_war_enemy_country war_leader = yes } }
-			evocation_2_centaur_black_herd_5_sub_effect = {
-				trigger_scope = any_war_enemy_country
-				effect_scope = random_war_enemy_country
-				war_leader = yes
-			}
-		}
-		else_if = {
-			limit = { evocation_2_centaur_black_herd_5_effect_sub_trigger = { scope = any_war_enemy_country } }
-			evocation_2_centaur_black_herd_5_sub_effect = {
-				trigger_scope = any_war_enemy_country
-				effect_scope = random_war_enemy_country
-			}
-		}
-	}
 	increase_witch_king_points_medium = yes
 }
 
-evocation_2_centaur_black_herd_5_sub_effect = {
-	if = {
-		limit = { evocation_2_centaur_black_herd_5_effect_sub_trigger = { scope = $trigger_scope$ [[war_leader] war_leader = yes ] priority_trigger = "is_capital = yes" } }
-		evocation_2_centaur_black_herd_5_sub_sub_effect = { scope = $effect_scope$ [[war_leader] war_leader = yes ] priority_trigger = "is_capital = yes" }
-	}
-	else_if = {
-		limit = { evocation_2_centaur_black_herd_5_effect_sub_trigger = { scope = $trigger_scope$ [[war_leader] war_leader = yes ] priority_trigger = "fort_level = 8" } }
-		evocation_2_centaur_black_herd_5_sub_sub_effect = { scope = $effect_scope$ [[war_leader] war_leader = yes ] priority_trigger = "fort_level = 8" }
-	}
-	else_if = {
-		limit = { evocation_2_centaur_black_herd_5_effect_sub_trigger = { scope = $trigger_scope$ [[war_leader] war_leader = yes ] priority_trigger = "fort_level = 6" } }
-		evocation_2_centaur_black_herd_5_sub_sub_effect = { scope = $effect_scope$ [[war_leader] war_leader = yes ] priority_trigger = "fort_level = 6" }
-	}
-	else_if = {
-		limit = { evocation_2_centaur_black_herd_5_effect_sub_trigger = { scope = $trigger_scope$ [[war_leader] war_leader = yes ] priority_trigger = "fort_level = 4" } }
-		evocation_2_centaur_black_herd_5_sub_sub_effect = { scope = $effect_scope$ [[war_leader] war_leader = yes ] priority_trigger = "fort_level = 4" }
-	}
-	else_if = {
-		limit = { evocation_2_centaur_black_herd_5_effect_sub_trigger = { scope = $trigger_scope$ [[war_leader] war_leader = yes ] priority_trigger = "fort_level = 2" } }
-		evocation_2_centaur_black_herd_5_sub_sub_effect = { scope = $effect_scope$ [[war_leader] war_leader = yes ] priority_trigger = "fort_level = 2" }
-	}
-	else_if = {
-		limit = { evocation_2_centaur_black_herd_5_effect_sub_trigger = { scope = $trigger_scope$ [[war_leader] war_leader = yes ] priority_trigger = "fort_level = 1" } }
-		evocation_2_centaur_black_herd_5_sub_sub_effect = { scope = $effect_scope$ [[war_leader] war_leader = yes ] priority_trigger = "fort_level = 1" }
-	}
-}
 
-evocation_2_centaur_black_herd_5_sub_sub_effect = {
-	$scope$ = {
-		[[war_leader]
-			limit = {
-				OR = {
-					is_in_war = { attacker_leader = THIS defenders = ROOT }
-					is_in_war = { defender_leader = THIS attackers = ROOT }
-				}
-			}
-		]
-		random_owned_province = {
-			limit = {
-				sieged_by = ROOT
-				fort_level = 1
-				$priority_trigger$
-			}
-			change_siege = 4
-		}
-	}
-}
 
 #Eighard
 abjuration_1_eordand_eighard_5_effect = { #Icewardery
@@ -4276,4 +4236,46 @@ evocation_3_xhazobkult_default_3_effect = {
 		add_ruler_modifier = { name = conjuration_spell_half duration = 3650 hidden = yes }
 		country_event = { id = magic_spell.807 days = 3650 }
 	}
+}
+
+#Cannor Clerical spells <school>_<level>_<group>_<subgroup>_<spellnumber>_effect
+abjuration_0_cannor_clerical_default_1_effect = {
+	add_legitimacy_equivalent = { amount = -20 republican_tradition = -6 }
+	custom_tooltip = cannor_clerical_spell_atonement_effect_1
+	decrease_witch_king_points_medium = yes
+	add_country_modifier = { name = absolution_cannor_clerical_spell_mod duration = 1825 }
+	custom_tooltip = cannor_clerical_spell_atonement_effect_2
+	hidden_effect = { country_event = { id = cannor_religious_flavour.100 } }
+}
+
+enchantment_1_cannor_clerical_default_2_effect = {
+	add_legitimacy_equivalent = { amount = -15 republican_tradition = -4.5 }
+	custom_tooltip = cannor_clerical_spell_ceremony_effect_1
+	add_country_modifier = {
+		name = ceremony_cannor_clerical_spell_mod
+		duration = 3650
+	}
+	custom_tooltip = cannor_clerical_spell_ceremony_effect_2
+	hidden_effect = {
+		every_owned_province = {
+			limit = { religion = ROOT }
+			add_nationalism = -5
+		}
+	}
+}
+
+abjuration_2_cannor_clerical_default_3_effect = {
+	add_legitimacy_equivalent = { amount = -10 republican_tradition = -3 }
+	custom_tooltip = cannor_clerical_spell_hallow_effect
+	hidden_effect = {
+		capital_scope = { add_province_triggered_modifier = hallow_randomization_ptm }
+		every_owned_province = {
+			limit = { has_building = temple }
+			add_province_modifier = { name = hallow_temple_cannor_clerical_spell_mod duration = 3650 }
+		}
+		every_owned_province = {
+			limit = { has_building = cathedral }
+			add_province_modifier = { name = hallow_cathedral_cannor_clerical_spell_mod duration = 3650 }
+		}
+	}	
 }

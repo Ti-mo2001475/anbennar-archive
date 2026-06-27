@@ -331,7 +331,7 @@ country_event = { #Magical Infrastructure
 		trigger = {
 			has_estate = estate_mages
 			has_estate = estate_church
-			estate_influence = { estate = estate_mages influence = 40 }
+			estate_influence = { estate = estate_church influence = 40 }
 			NOT = { has_estate_privilege = estate_mages_organization_religious }
 			NOT = { has_mages_special_organization_privilege = yes }
 			NOT = { has_country_flag = magical_infrastructure_help_clergy }
@@ -340,7 +340,7 @@ country_event = { #Magical Infrastructure
 			factor = 1
 			modifier = {
 				factor = 1.5
-				estate_influence = { estate = estate_mages influence = 80 }
+				estate_influence = { estate = estate_church influence = 80 }
 			}
 		}
 		country_event = { id = magic_project_infrastructure.110 }
@@ -3992,13 +3992,13 @@ country_event = { #Theatre of Simulacra menu
 			clr_country_flag = new_theatre_bonus
 			if = {
 				limit = { exactly_magic_project_level = { project = theatre_of_simulacra level = 3 } }
-				add_country_modifier = { name = theatre_cooldown_mod duration = 1825 hidden = yes }
+				add_ruler_modifier = { name = theatre_cooldown_mod duration = 1825 hidden = yes }
 			}
 			else_if = {
 				limit = { exactly_magic_project_level = { project = theatre_of_simulacra level = 2 } }
-				add_country_modifier = { name = theatre_cooldown_mod duration = 3650 hidden = yes }
+				add_ruler_modifier = { name = theatre_cooldown_mod duration = 3650 hidden = yes }
 			}
-			else = { add_country_modifier = { name = theatre_cooldown_mod duration = 5475 hidden = yes } }
+			else = { add_ruler_modifier = { name = theatre_cooldown_mod duration = 5475 hidden = yes } }
 		}
 	}
 
@@ -4692,13 +4692,13 @@ country_event = { #Theatre of Simulacra Bounceback
 				clr_country_flag = new_theatre_bonus
 				if = {
 					limit = { exactly_magic_project_level = { project = theatre_of_simulacra level = 3 } }
-					add_country_modifier = { name = theatre_cooldown_mod duration = 1825 hidden = yes }
+					add_ruler_modifier = { name = theatre_cooldown_mod duration = 1825 hidden = yes }
 				}
 				else_if = {
 					limit = { exactly_magic_project_level = { project = theatre_of_simulacra level = 2 } }
-					add_country_modifier = { name = theatre_cooldown_mod duration = 3650 hidden = yes }
+					add_ruler_modifier = { name = theatre_cooldown_mod duration = 3650 hidden = yes }
 				}
-				else = { add_country_modifier = { name = theatre_cooldown_mod duration = 5475 hidden = yes } }
+				else = { add_ruler_modifier = { name = theatre_cooldown_mod duration = 5475 hidden = yes } }
 			}
 		}
 		else = { country_event = { id = magic_project_theatre_of_simulacra.13 } }
@@ -4725,13 +4725,13 @@ country_event = { #Theatre of Simulacra sub-menu
 			clr_country_flag = new_theatre_bonus
 			if = {
 				limit = { exactly_magic_project_level = { project = theatre_of_simulacra level = 3 } }
-				add_country_modifier = { name = theatre_cooldown_mod duration = 1825 hidden = yes }
+				add_ruler_modifier = { name = theatre_cooldown_mod duration = 1825 hidden = yes }
 			}
 			else_if = {
 				limit = { exactly_magic_project_level = { project = theatre_of_simulacra level = 2 } }
-				add_country_modifier = { name = theatre_cooldown_mod duration = 3650 hidden = yes }
+				add_ruler_modifier = { name = theatre_cooldown_mod duration = 3650 hidden = yes }
 			}
-			else = { add_country_modifier = { name = theatre_cooldown_mod duration = 5475 hidden = yes } }
+			else = { add_ruler_modifier = { name = theatre_cooldown_mod duration = 5475 hidden = yes } }
 		}
 	}
 
@@ -4902,13 +4902,13 @@ country_event = { #Theatre of Simulacra sub-menu bounceback
 				clr_country_flag = new_theatre_bonus
 				if = {
 					limit = { exactly_magic_project_level = { project = theatre_of_simulacra level = 3 } }
-					add_country_modifier = { name = theatre_cooldown_mod duration = 1825 hidden = yes }
+					add_ruler_modifier = { name = theatre_cooldown_mod duration = 1825 hidden = yes }
 				}
 				else_if = {
 					limit = { exactly_magic_project_level = { project = theatre_of_simulacra level = 2 } }
-					add_country_modifier = { name = theatre_cooldown_mod duration = 3650 hidden = yes }
+					add_ruler_modifier = { name = theatre_cooldown_mod duration = 3650 hidden = yes }
 				}
-				else = { add_country_modifier = { name = theatre_cooldown_mod duration = 5475 hidden = yes } }
+				else = { add_ruler_modifier = { name = theatre_cooldown_mod duration = 5475 hidden = yes } }
 			}
 		}
 		else = { country_event = { id = magic_project_theatre_of_simulacra.15 } }
@@ -5903,7 +5903,6 @@ country_event = { #Lich Revival Interregnum
 		else_if = {
 			limit = { has_country_flag = esthil_varina_lich }
 			tooltip = { define_ruler = { age = 33 name = "Varina" dynasty = "Escer" female = yes max_random_adm = 0 max_random_dip = 0 max_random_mil = 0 hide_skills = yes } }
-			B54_se_apply_lich_queen_modifiers = yes
 		}
 		else_if = {
 			limit = { has_country_flag = wyvernheart_the_regent_lich }
@@ -5944,6 +5943,9 @@ country_event = { #Lich Revival Interregnum
 				limit = { ruler_is_witch_king = yes }
 				become_a_witch_king_effect = yes
 			}
+
+			B54_se_apply_lich_queen_modifiers = yes
+
 
 			if = { #MT content
 				limit = {
@@ -6717,13 +6719,18 @@ country_event = { #Army of the Dead 6 - Discover Corpse Recycling
 
 	option = { #Sacrifice your heir
 		name = magic_project_army_of_the_dead.9.c
+		trigger = { has_heir = yes }
 
 		custom_tooltip = aotd_real_warning_tt
-		if = {
-			limit = { has_heir = yes }
-			kill_heir = { allow_new_heir = no }
-		}
-		else = { add_prestige = -50 }
+		kill_heir = { allow_new_heir = no }
+		add_country_modifier = { name = studying_aotd_mod_2 duration = -1 desc = until_advancement_concludes }
+	}
+	option = { #No heir, sacrifice some other child
+		name = magic_project_army_of_the_dead.9.c2
+		trigger = { has_heir = no }
+
+		custom_tooltip = aotd_real_warning_tt
+		add_prestige = -50
 		add_country_modifier = { name = studying_aotd_mod_2 duration = -1 desc = until_advancement_concludes }
 	}
 
@@ -10011,7 +10018,7 @@ country_event = {
 			}
 			else_if = { 
 				limit = {
-					check_variable = { black_herd_causalities_var = 10000 }
+					check_variable = { black_herd_causalities_var = 50000 }
 					check_variable = { current_experience_percent = 92 } #~550/600 exp
 					exactly_magic_project_level = { project = black_herd_project_1 level = 1 }
 				}

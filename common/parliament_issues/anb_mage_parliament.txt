@@ -1,0 +1,95 @@
+
+anb_magic_mana_zone = {
+	category = 2
+	allow = {
+		has_estate = estate_mages
+	}
+	effect = {
+		issue_effect_scaling_with_estate_influence = {
+			estate = estate_mages
+			effect1 = "change_mana = { amount = 25 }"
+			effect2 = "change_mana = { amount = 50 }"
+			effect3 = "change_mana = { amount = 75 }"
+			effect4 = "change_mana = { amount = 100 }"
+			effect5 = "change_mana = { amount = 125 }"
+			fallback_effect = "change_mana = { amount = 75 }"
+		}
+	}
+	modifier = {}
+	
+	chance = {
+		factor = 1
+		modifier =  {
+			factor = 2
+			NOT = { has_mana = { amount = 100 } }
+		}
+	}
+
+	ai_will_do = {
+		factor = 1
+	}	
+}
+
+anb_magic_improve_study = {
+	category = 2
+	allow = {
+		has_country_flag = magic_study
+	}
+	effect = {
+		issue_effect_scaling_with_estate_influence = {
+			estate = estate_mages
+			effect1 = "
+			define_advisor = {
+				type = court_mage
+				skill = 3
+			}
+			"
+			effect2 = "
+			define_advisor = {
+				type = court_mage
+				skill = 3
+				cost_multiplier = 0.75
+			}
+			"
+			effect3 = "
+			define_advisor = {
+				type = court_mage
+				skill = 3
+				cost_multiplier = 0.5
+			}
+			"
+			effect4 = "
+			define_advisor = {
+				type = court_mage
+				skill = 3
+				cost_multiplier = 0.25
+			}
+			"
+			effect5 = "
+			define_advisor = {
+				type = court_mage
+				skill = 3
+				cost_multiplier = 0.1
+			}
+			"
+			fallback_effect = "
+			define_advisor = {
+				type = court_mage
+				skill = 3
+				cost_multiplier = 0.75
+			}
+			"
+		}
+	}
+	modifier = {
+		mages_estate_experience_mod = 0.2
+	}
+	
+	chance = {
+		factor = 2
+	}
+
+	ai_will_do = {
+		factor = 1
+	}	
+}

@@ -1,3 +1,124 @@
+#Endralliande Political Organization
+estate_nobles_end_conservative_factions = {
+	icon = privilege_monopoly_of_goods_iron
+	max_absolutism = 0
+	loyalty = 0.1
+	influence = 0.1
+	is_valid = {
+		has_reform = overseas_governorate
+	}
+	can_select = {
+		always = yes
+	}
+	can_revoke = {
+		always = no
+	}
+	on_granted = {
+		hidden_effect = {
+			set_variable = {
+				which = end_local_happiness
+				value = 50
+			}
+			set_variable = {
+				which = end_noble_happiness
+				value = 50
+			}
+			set_variable = {
+				which = end_elven_happiness
+				value = 50
+			}
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+		improve_relation_modifier = 0.1
+		nobles_privilege_slots = 1
+	}
+	conditional_modifier = {
+		trigger = { 
+			check_variable = {
+				which = end_local_happiness
+				value = 70
+			}
+		}
+		modifier = { 
+			global_prov_trade_power_modifier = 0.1
+			candidate_random_bonus = 1
+		}
+	}
+	conditional_modifier = {
+		trigger = { 
+			check_variable = {
+				which = end_noble_happiness
+				value = 70
+			}
+		}
+		modifier = { 
+			dip_advisor_cost = -0.15
+			candidate_random_bonus = 1
+		}
+	}
+	conditional_modifier = {
+		trigger = { 
+			check_variable = {
+				which = end_elven_happiness
+				value = 70
+			}
+		}
+		modifier = {
+			reinforce_speed = 0.1
+			candidate_random_bonus = 1
+		}
+	}
+	#below 40, they are disloyal
+	conditional_modifier = {
+		trigger = {
+			NOT = {
+				check_variable = {
+					which = end_local_happiness
+					value = 40
+				}
+			}	
+		}
+		modifier = { 
+			candidate_random_bonus = -1
+		}
+	}
+	conditional_modifier = {
+		trigger = { 
+			NOT = {
+				check_variable = {
+					which = end_noble_happiness
+					value = 40
+				}
+			}
+		}
+		modifier = { 
+			candidate_random_bonus = -1
+		}
+	}
+	conditional_modifier = {
+		trigger = { 
+			NOT = {
+				check_variable = {
+					which = end_elven_happiness
+					value = 40
+				}
+			}
+		}
+		modifier = { 
+			candidate_random_bonus = -1
+		}
+	}
+	
+	on_revoked = {}
+	on_invalid = {}
+	ai_will_do = {
+		factor = 0
+	}
+}
+
 estate_nobles_land_rights = {
 	icon = privilege_grant_autonomy
 	land_share = 5
@@ -1279,7 +1400,11 @@ estate_nobles_monopoly_of_gems = {
 				duration = -1
 			}
 			if = {
-				limit = { ROOT = { has_country_flag = karach_upgraded_gem_monopoly } }
+				limit = { 
+					ROOT = { 
+						has_country_flag = karach_upgraded_gem_monopoly
+					} 
+				}
 				if = {
 					limit = { ROOT = { has_country_flag = karach_improved_nobles_monopolies_again } }
 					add_province_modifier = {
@@ -1409,7 +1534,7 @@ estate_nobles_strong_duchies = {
 				#Anbennar
 				is_subject_of_type = autonomous_vassal
 				is_subject_of_type = patronate
-				is_subject_of_type = loyal_crathanor_subject # Special Ovdal Tûngr subject for Crathanor, called "Ilatani March"
+				is_subject_of_type = loyal_crathanor_subject # Special Ovdal Tungr subject for Crathanor, called "Ilatani March"
 				is_subject_of_type = maghargma_special_subject
 				is_subject_of_type = medasi_subject
 			}
@@ -1433,7 +1558,7 @@ estate_nobles_strong_duchies = {
 						#Anbennar
 						is_subject_of_type = autonomous_vassal
 						is_subject_of_type = patronate
-						is_subject_of_type = loyal_crathanor_subject # Special Ovdal Tûngr subject for Crathanor, called "Ilatani March"
+						is_subject_of_type = loyal_crathanor_subject # Special Ovdal Tungr subject for Crathanor, called "Ilatani March"
 						is_subject_of_type = maghargma_special_subject
 						is_subject_of_type = medasi_subject
 					}
@@ -1506,7 +1631,7 @@ estate_nobles_golden_liberty = {
 		OR = {
 			has_estate_privilege = estate_nobles_golden_liberty #Poland starts with it
 			has_reform = elective_monarchy
-			has_reform = polish_elective_monarchy
+			# has_reform = polish_elective_monarchy
 		}
 	}
 	can_revoke = {
@@ -1577,7 +1702,7 @@ estate_nobles_golden_liberty = {
 			limit = {
 				OR = {
 					has_reform = elective_monarchy
-					has_reform = polish_elective_monarchy
+					# has_reform = polish_elective_monarchy
 				}
 				has_estate = estate_nobles
 			}
@@ -1657,7 +1782,7 @@ estate_nobles_veto_heir_apparent = {
 	is_valid = {
 		has_dlc = "Emperor"
 		OR = {
-			has_reform = polish_elective_monarchy
+			# has_reform = polish_elective_monarchy
 			has_reform = elective_monarchy
 		}
 	}
