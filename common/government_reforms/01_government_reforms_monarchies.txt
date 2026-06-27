@@ -5375,6 +5375,7 @@ hobgoblin_stratocracy_reform = {
 		disables_regular_estates = yes
 		disables_estate_mages = yes
 		locked_T1_reform = yes
+		disables_estate_adventurers = yes
 	}
 
 	government_abilities = {
@@ -5545,6 +5546,7 @@ raja_reform = {
 	custom_attributes = {
 		locked_government_type = yes
 		is_raja = yes
+		cannot_move_capital = yes
 		locked_T1_reform = yes
 	}
 
@@ -5578,6 +5580,9 @@ tiltaghar_grand_vizier_reform = {
 	custom_attributes = {
 		locked_government_type = yes
 	}
+
+	effect = { set_country_flag = enables_raj_ministries_flag }
+	removed_effect = { clr_country_flag = enables_raj_ministries_flag }
 }
 
 phoenix_akalate = {
@@ -6679,6 +6684,7 @@ teplinbasiet_arena_kingdom_reform = {
 	}
 	custom_attributes = {
 		locked_T1_reform = yes
+		cannot_move_capital = yes
 	}
 	effect = {
 		hidden_effect = { remove_heir = { } }
@@ -6836,6 +6842,7 @@ titanium_stratocracy = {
 	custom_attributes = {
 		generals_become_rulers = yes
 		locked_government_type = yes
+		cannot_move_capital = yes
 	}
 	effect = {
 		custom_tooltip = titanium_stratocracy_magic_tt
@@ -7122,7 +7129,6 @@ konolkhatep_gnolls_sorrow_reform_horutep = {
 	valid_for_nation_designer = no
 	lock_level_when_selected = yes
 	fixed_rank = 3
-	rulers_can_be_generals = no
 	heir = no
 	queen = no
 
@@ -9404,6 +9410,7 @@ raja_magocracy_reform = {
 	custom_attributes = {
 		locked_government_type = yes
 		is_raja = yes
+		cannot_move_capital = yes
 		is_magocracy = yes
 		locked_T1_reform = yes
 	}
@@ -15075,8 +15082,16 @@ imperial_parliament_reform = {
 			has_dlc = "Domination"
 			has_dlc = "Emperor"
 		}
-		is_emperor = yes
-		hre_reform_passed = anbennar_internal_divisions
+		OR = {
+			AND = {
+				tag = Z01 #Empire of Anbennar
+				has_reform = imperial_parliament_reform
+			}
+			AND = {
+				is_emperor = yes
+				hre_reform_passed = anbennar_internal_divisions
+			}
+		}
 	}
 	modifiers = {
 		administrative_efficiency = 0.025

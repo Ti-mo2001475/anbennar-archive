@@ -17279,6 +17279,13 @@ artifice_invention_industrial_automatories = {
 
 	on_granted = {
 		custom_tooltip = artifice_invention_industrial_automatories.tt
+		if = {
+			limit = { NOT = { has_country_flag = mechanim_automatory_building_allowed } }
+			custom_tooltip = gain_access_to_automatory
+			hidden_effect = {
+				set_country_flag = mechanim_automatory_building_allowed
+			}
+		}
 		hidden_effect = {
 			artifice_inventions_currently_used_increase = yes
 			set_variable = {
@@ -17649,6 +17656,14 @@ artifice_invention_behavioral_chip = {
 				add_province_modifier = {
 					name = artifice_behavioral_chip_modifier
 					duration = -1
+				}
+			}
+			if = {
+				limit = { NOT = { has_country_flag = mechanim_tolerance_events.6_fired } }
+				country_event = {
+					id = mechanim_tolerance_events.6
+					days = 30
+					random = 60
 				}
 			}
 		}
