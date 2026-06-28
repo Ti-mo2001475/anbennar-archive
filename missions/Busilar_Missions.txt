@@ -206,6 +206,10 @@ col_1 = {
 					}
 				}
 				change_innovativeness = 0.5
+				change_variable = {
+					which = A29_rav_dev_clicks
+					value = -1
+				}
 			}
 			hidden_effect = {
 				set_country_flag = A29_adm_tech
@@ -1632,7 +1636,7 @@ col_3 = {
 				AND = {
 					OR = {
 						region = businor_region
-						region = khetapera_region
+						region = kheterata_region
 						region = janama_region
 					}
 					unrest = 0.01
@@ -1645,7 +1649,7 @@ col_3 = {
 			any_owned_province = {
 				OR = {
 					region = businor_region
-					region = khetapera_region
+					region = kheterata_region
 					region = janama_region
 				}
 				NOT = {
@@ -1793,7 +1797,10 @@ col_3 = {
 					region = businor_region 
 					NOT = {
 						AND = {
-							has_manufactory_trigger = yes 
+							OR = {
+								trade_goods = gold
+								has_manufactory_trigger = yes
+							}
 							has_production_building_trigger = yes 
 						}
 					}
@@ -1816,7 +1823,10 @@ col_3 = {
 		trigger = {  
 			businor_region = {
 				type = all
-				has_manufactory_trigger = yes
+				OR = {
+					trade_goods = gold
+					has_manufactory_trigger = yes
+				}
 				has_production_building_trigger = yes
 			}
 			num_of_owned_provinces_with = {
@@ -2743,7 +2753,7 @@ col_5 = {
 					NOT = {
 						trade_share = {
 							country = A29
-							share = 35
+							share = 65
 						}
 					}
 				}
