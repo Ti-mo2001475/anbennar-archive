@@ -92,8 +92,9 @@ country_event = {
 
 	option = {
 		name = busilar.3.a
-		unlock_artificery = yes
 		set_country_flag = artificery_needed
+		set_country_flag = A29_boons_of_the_society_flag
+		unlock_artificery = yes
 	}
 }
 
@@ -132,12 +133,30 @@ country_event = { #truth and consquences
 			limit = {
 				continent = africa
 			}
-			#todo
+			add_province_modifier = {
+				name = A29_offer_tolerance
+				duration = 18250
+			}
+		}
+		custom_tooltip = A29_truth_conq_tt
+		hidden_effect = {
+			change_variable = {
+				which = A29_assimilation
+				value = 1
+			}
 		}
 	}
 	option = {
 		name = busilar.5.b
-		
+		every_owned_province = {
+			limit = {
+				continent = africa
+			}
+			add_province_modifier = {
+				name = A29_demand_conversion
+				duration = 18250
+			}
+		}
 	}
 }
 
@@ -333,8 +352,10 @@ country_event = { #the stewards from far away
 		name = busilar.10.a
 		country_event = {
 			id = busilar.17 
-			days = 1095 
+			days = 700 
 		}
+		set_country_flag = ahati_disaster_start
+		set_global_flag = A29_ahati_a_mad_i
 	}
 }
 
@@ -348,65 +369,69 @@ country_event = { #HARPYHARPYHARPYHARPYHARPY
 
 	option = {
 		name = busilar.11.a
+		trigger = {
+			has_country_flag = A29_one_dove
+		}
 		bedaphire_area = { 
 			cede_province = L55 
+			add_core = L55
 		}
 		irkan_eparta_area = {
 			cede_province = L55 
+			add_core = L55
 		}
 		L55 = {
-			change_religion = ravelian 
-			1343 ={
-				add_trade_modifier = {
-					who = A29 
-					duration = -1 
-					power = 50 
-					key = A29_friendly_traders
-				}
-			} 
+			change_religion = ravelian  
+		}
+		1343 = {
+			add_trade_modifier = {
+				who = A29 
+				duration = -1 
+				power = 50 
+				key = A29_friendly_traders
+			}
 		}
 		create_subject = {
 			subject_type = vassal 
 			subject = L55 
 		}
-		trigger = {
-			has_country_flag = A29_one_dove
+		365 = {
+			add_province_triggered_modifier = A29_ptm_trade_steer
 		}
 	}
 
 	option = {
 		name = busilar.11.b
-		bedaphire_area = {
-			cede_province = L61 
-		}
-		irkan_eparta_area = {
-			cede_province = L62 
+		trigger = {
+			NOT = {
+				has_country_flag = A29_one_dove 
+			}
 		}
 		L61 = {
 			change_religion = ravelian
-			1343 ={
-				add_trade_modifier = {
-					who = A29 
-					duration = -1 
-					power = 50 
-					key = A29_friendly_traders
-				}
-			} 
 		}
+		1343 = {
+			add_trade_modifier = {
+				who = A29 
+				duration = -1 
+				power = 50 
+				key = A29_friendly_traders
+			}
+		} 
 		bedaphire_area = {
-			cede_province = L61 
+			cede_province = L61
+			add_core = L61
 		}
 		irkan_eparta_area = {
-			cede_province = L62 
+			cede_province = L61
+			add_core = L61
 		}
 		create_subject = {
 			subject_type = vassal 
 			subject = L61
 		}
-		trigger = {
-			NOT = {
-				has_country_flag = A29_one_dove 
-			}
+		365 = {
+			add_province_triggered_modifier = A29_ptm_trade_steer
 		}
 	}
 }
@@ -814,7 +839,6 @@ country_event = { #ahati time
 
 	option = {
 		name = busilar.17.a
-		set_global_flag = A29_ahati_a_mad_i
 		add_disaster_progress = {
 			disaster = ahati_disaster
 			value = 100 
@@ -911,19 +935,22 @@ country_event = { #hidden for dev
 	is_triggered_only = yes 
 	hidden = yes 
 		trigger = {
-				has_country_modifier= A29_investment_development
+			has_country_modifier = A29_investment_development
 		}
 		option = {
 			name = busilar.90.a 
-				FROM = {
-					area = {
-						limit = {
-							is_owned_by_trade_company = yes 
-						} 
-						add_base_production = 1
-					}
+			FROM = {
+				area = {
+					limit = {
+						is_owned_by_trade_company = yes 
+						NOT = {
+							has_province_flag = A29_invested
+						}
+					} 
+					add_base_production = 1
+					set_province_flag = A29_invested
 				}
-			log = "im a chud"
+			}
 		}
 }
 
