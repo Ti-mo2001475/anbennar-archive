@@ -291,9 +291,13 @@ col4 = {
 				AND = {
 					region = north_yanshen_region
 					NOT = {
-						has_province_modifier = autonomy_decreased
-						NOT = { local_autonomy = 25 }
-						owned_by = ROOT
+						AND = {
+							OR = {
+								has_province_modifier = autonomy_decreased
+								NOT = { local_autonomy = 25 }
+							}
+							owned_by = ROOT
+						}
 					}
 				}
 				AND = {
