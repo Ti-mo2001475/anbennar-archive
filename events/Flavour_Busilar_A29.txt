@@ -446,126 +446,110 @@ country_event = { #The Nature of Busilar
 
 	option = {
 		name = busilar.12.a
-		
-		OR = {
-			if = {
-				limit = {
-					check_variable = {
-						name = A29_assimilation
-						value = 1 
-					}
+		if = {
+			limit = {
+				check_variable = {
+					name = A29_assimilation
+					value = 4
 				}
-				random_owned_province = {
-					limit = {
-						superregion = fangaula_superregion
-					}
-					spawn_rebels = {
-						size = 3 
-						type = nationalist_rebels
-						separatists_target = L22 
-					}
-				}
-				random_owned_province = {
-					limit = {
-						superregion = fangaula_superregion
-					}
-					spawn_rebels = {
-						size = 3 
-						type = nationalist_rebels
-						separatists_target = L22 
-					}
-				}
-				random_owned_province = {
-					limit = {
-						superregion = fangaula_superregion
-					}
-					spawn_rebels = {
-						size = 3 
-						type = nationalist_rebels
-						separatists_target = L22 
-					}
-				}
-				set_country_flag = A29_oops_we_are_racist
-				
 			}
-			else_if = {
+			every_owned_province = {
 				limit = {
-					check_variable = {
-						name = A29_assimilation
-						value = 2 
-					}
+					continent = africa 
 				}
-				random_owned_province = {
-					limit = {
-						superregion = fangaula_superregion
-					}
-					spawn_rebels = {
-						size = 2
-						type = nationalist_rebels
-						separatists_target = L22 
-					}
-				}
-				random_owned_province = {
-					limit = {
-						superregion = fangaula_superregion
-					}
-					spawn_rebels = {
-						size = 2
-						type = nationalist_rebels
-						separatists_target = L22 
-					}
-				}
-				random_owned_province = {
-					limit = {
-						superregion = fangaula_superregion
-					}
-					spawn_rebels = {
-						size = 2
-						type = nationalist_rebels
-						separatists_target = L22 
-					}
-				}
-				set_country_flag = A29_oops_we_are_racist
+				change_religion = ravelian 
 			}
-			else_if = {
-				limit = {
-					check_variable = {
-						name = A29_assimilation
-						value = 3
-					}
-				}
-				random_owned_province = {
-					limit = {
-						superregion = fangaula_superregion
-					}
-					spawn_rebels = {
-						size = 1
-						type = nationalist_rebels
-						separatists_target = L22 
-					}
-				}
-				set_country_flag = A29_oops_we_are_racist
-			}
-			else_if = {
-				limit = {
-					check_variable = {
-						name = A29_assimilation
-						value = 4
-					}
-				}
-				every_owned_province = {
-					limit = {
-						continent = africa 
-					}
-					change_religion = ravelian 
-				}
-				add_country_modifier = {
-					name = A29_sarhaly_in_spirit
-					duration = -1
-				}
+			add_country_modifier = {
+				name = A29_sarhaly_in_spirit
+				duration = -1
 			}
 		}
-
+		else_if = {
+			limit = {
+				check_variable = {
+					name = A29_assimilation
+					value = 3
+				}
+			}
+			every_owned_province = {
+				limit = {
+					continent = africa 
+				}
+				change_religion = ravelian 
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					name = A29_assimilation
+					value = 2
+				}
+			}
+			custom_tooltip = A29_2_assim_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						continent = africa
+					}
+					random_list = {
+						2 = {
+							spawn_rebels = {
+								size = 1
+							}	
+						}
+						1 = {
+						}
+					}
+				}
+			}
+			set_country_flag = A29_oops_we_are_racist
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					name = A29_assimilation
+					value = 1
+				}
+			}
+			custom_tooltip = A29_1_assim_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						continent = africa
+					}
+					random_list = {
+						2 = {
+							spawn_rebels = {
+								size = 2
+							}	
+						}
+						1 = {
+						}
+					}
+				}
+			}
+			set_country_flag = A29_oops_we_are_racist
+		}
+		else = {
+			custom_tooltip = A29_0_assim_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						continent = africa
+					}
+					random_list = {
+						3 = {
+							spawn_rebels = {
+								size = 3
+							}	
+						}
+						1 = {
+						}
+					}
+				}
+			}
+			set_country_flag = A29_oops_we_are_racist
+		}
 	}
 }
 
