@@ -18,7 +18,7 @@ celliande_1_missions = {
 		}
 
 		provinces_to_highlight = {
-			province_id = 413
+			province_id = 413 #Sorncell
 			NOT = {
 				num_of_units_in_province = {
 					amount = 3
@@ -73,7 +73,7 @@ celliande_1_missions = {
 		}
 
 		provinces_to_highlight = {
-			province_id = 451
+			province_id = 451 #Nathalaire
 			OR = {
 				NOT = { is_core = ROOT }
 				has_construction = any
@@ -140,7 +140,7 @@ celliande_2_missions = {
 				AND = {
 					is_capital_of = A48
 					NOT = {
-						A48 = {
+						A48 = { #Sugamber
 							has_opinion_modifier = {
 								who = ROOT
 								modifier = scornfully_insulted
@@ -151,7 +151,7 @@ celliande_2_missions = {
 				AND = {
 					is_capital_of = A86
 					NOT = {
-						A86 = {
+						A86 = { #Tellum?
 							OR = {
 								has_opinion_modifier = {
 									who = ROOT
@@ -172,24 +172,30 @@ celliande_2_missions = {
 		}
 
 		trigger = {
-			A48 = {
-				has_opinion_modifier = {
-					who = ROOT
-					modifier = scornfully_insulted
-				}
-			}
-			A86 = {
-				OR = {
-					AND = {
-						alliance_with = ROOT
-						has_opinion = {
-							who = ROOT
-							value = 150
-						}
-					}
+			if = {
+				limit = { exists = A48 }
+				A48 = { 
 					has_opinion_modifier = {
 						who = ROOT
 						modifier = scornfully_insulted
+					}
+				}
+			}
+			if = {
+				limit = { exists = A86 }
+				A86 = {
+					OR = {
+						AND = {
+							alliance_with = ROOT
+							has_opinion = {
+								who = ROOT
+								value = 150
+							}
+						}
+						has_opinion_modifier = {
+							who = ROOT
+							modifier = scornfully_insulted
+						}
 					}
 				}
 			}
@@ -250,13 +256,12 @@ celliande_2_missions = {
 				AND = {
 					area = eastborders_area
 					NOT = {
-						owned_by = ROOT
-						owned_by_subject_of = ROOT
+						country_or_subject_holds = ROOT
 					}
 					is_city = yes
 				}
 				AND = {
-					province_id = 904
+					province_id = 904 #Arannen
 					NOT = {
 						num_of_units_in_province = {
 							amount = 5
@@ -283,8 +288,7 @@ celliande_2_missions = {
 			eastborders_area = {
 				type = all
 				OR = {
-					owned_by = ROOT
-					owned_by_subject_of = ROOT
+					country_or_subject_holds = ROOT
 					is_city = no
 				}
 			}
@@ -293,15 +297,14 @@ celliande_2_missions = {
 		effect = {
 			904 = {
 				add_devastation = 50
-				if = {
-					limit = { has_fort_building_trigger = yes }
-					remove_fortifications = yes
-				}
+				remove_fortifications = yes
 			}
 			add_splendor = 200
-			add_country_modifier = {
-				name = celliande_spite_modifier
-				duration = -1
+			hidden_effect = {
+				add_country_modifier = {
+					name = celliande_spite_modifier
+					duration = -1
+				}
 			}
 			custom_tooltip = celliande_eagle_lion.tt
 		}
@@ -318,7 +321,7 @@ celliande_2_missions = {
 		}
 
 		trigger = {
-			U16 = {
+			U16 = { #Ourdia
 				OR = {
 					alliance_with = ROOT
 					has_opinion_modifier = {
@@ -346,7 +349,7 @@ celliande_2_missions = {
 						amount = 10
 					}
 					if = {
-						limit = { U11 = { exists = yes } }
+						limit = { exists = U11 }
 						custom_tooltip = celliande_castellan_problems.tt
 						hidden_effect = {
 							U11 = {
@@ -417,19 +420,43 @@ celliande_2_missions = {
 				AND = {
 					region = ourdia_region
 					NOT = {
-						owned_by = ROOT
-						owned_by_subject_of = ROOT
-						owned_by = U16
-						owned_by_subject_of = U16
+						country_or_subject_holds = ROOT
+						country_or_subject_holds = U16
 					}
 				}
 				AND = {
-					province_id = 451
+					province_id = 451 #Nath
 					NOT = {
 						num_of_units_in_province = {
 							amount = 6
 							type = infantry
 							who = ROOT
+						}
+					}
+				}
+				owned_by = U11
+				AND = {
+					is_capital = yes
+					AND = {
+						is_capital_of = F32
+						F32 = {
+							NOT = {
+								has_opinion_modifier = {
+									who = ROOT
+									modifier = scornfully_insulted
+								}
+							}
+						}
+					}
+					AND = {
+						is_capital_of = U07
+						U07 = {
+							NOT = {
+								has_opinion_modifier = {
+									who = ROOT
+									modifier = scornfully_insulted
+								}
+							}
 						}
 					}
 				}
@@ -440,16 +467,14 @@ celliande_2_missions = {
 			ourdia_region = {
 				type = all
 				OR = {
-					owned_by = ROOT
-					owned_by_subject_of = ROOT
-					owned_by = U16
-					owned_by_subject_of = U16
+					country_or_subject_holds = ROOT
+					country_or_subject_holds = U16
 				}
 			}
-			U11 = {
+			U11 = { #Land Sharku
 				exists = no
 			}
-			F32 = {
+			F32 = { #Dro lak and
 				OR = {
 					has_opinion_modifier = {
 						who = ROOT
@@ -458,7 +483,7 @@ celliande_2_missions = {
 					exists = no
 				}
 			}
-			U07 = {
+			U07 = { #Viakkoc
 				OR = {
 					has_opinion_modifier = {
 						who = ROOT
@@ -467,7 +492,7 @@ celliande_2_missions = {
 					exists = no
 				}
 			}
-			451 = {
+			451 = { #Nath
 				num_of_units_in_province = {
 					amount = 6
 					type = infantry
@@ -481,7 +506,7 @@ celliande_2_missions = {
 				id = celliande.4
 			}
 			if = {
-				limit = { F32 = { exists = yes } }
+				limit = { exists = F32 }
 				add_casus_belli = {
 					type = cb_insult
 					target = F32
@@ -489,7 +514,7 @@ celliande_2_missions = {
 				}
 			}
 			if = {
-				limit = { U07 = { exists = yes } }
+				limit = { exists = U07 }
 				add_casus_belli = {
 					type = cb_insult
 					target = U07
@@ -499,16 +524,8 @@ celliande_2_missions = {
 			complex_dynamic_effect = {
 				first_custom_tooltip = celliande_beyond_coast.tt1
 				first_limit = "
-					OR = {
-						445 = {
-							is_city = no
-						}
-						447 = {
-							is_city = no
-						}
-						448 = {
-							is_city = no
-						}
+					flooded_coast_area = {
+						is_city = no
 					}
 				"
 				first_effect = "
@@ -614,7 +631,7 @@ celliande_3_missions = {
 		}
 
 		provinces_to_highlight = {
-			is_capital_of = A57
+			is_capital_of = A57 #Toarnen
 		}
 
 		trigger = {
@@ -699,12 +716,20 @@ celliande_3_missions = {
 						area = rhinmond_area
 						area = gnollsgate_area
 					}
-					NOT = { owned_by = ROOT }
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
 				}
 				AND = {
 					province_id = 919
 					NOT = {
 						has_province_flag = anb_has_been_exploited_flag
+						AND = {
+							NOT = { has_dlc = "Cradle of Civilization" }
+							num_of_units_in_province = {
+								amount = 6
+								type = infantry
+								who = ROOT
+							}
+						}
 					}
 				}
 			}
@@ -719,7 +744,7 @@ celliande_3_missions = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
 			}
-			919 = {
+			919 = { #Rhinmondu
 				if = { limit = { has_dlc = "Cradle of Civilization" } 
 					anb_has_been_exploited = yes 
 				}
@@ -779,9 +804,9 @@ celliande_3_missions = {
 
 		provinces_to_highlight = {
 			OR = {
-				province_id = 919
-				province_id = 413
-				province_id = 419
+				province_id = 919 #Rhinmond
+				province_id = 413 #Sorncell
+				province_id = 419 #Varlosen
 			}
 			NOT = { has_building = mage_tower }
 		}
@@ -827,10 +852,7 @@ celliande_3_missions = {
 		}
 
 		trigger = {
-			custom_trigger_tooltip = {
-				tooltip = celliande_first_many.tt1
-				has_country_flag = celliande_rise_hero_aran
-			}
+			at_least_magic_project_level = { project = labyrinth_of_sorncell level = 1 }
 			has_estate_privilege = estate_mages_seek_magical_advice
 			estate_loyalty = {
 				estate = estate_mages
@@ -914,10 +936,10 @@ celliande_3_missions = {
 
 		provinces_to_highlight = {
 			OR = {
-				province_id = 321
-				province_id = 326
+				province_id = 321 #Corsoja
+				province_id = 326 #Gisden
 				AND = {
-					province_id = 312
+					province_id = 312 #Quintenbury
 					NOT = { development = 10 }
 				}
 			}
@@ -925,7 +947,7 @@ celliande_3_missions = {
 		}
 
 		trigger = {
-			326 = {
+			321 = {
 				owned_by = ROOT
 			}
 			326 = {
@@ -941,7 +963,7 @@ celliande_3_missions = {
 			ashfields_area = {
 				add_permanent_claim = ROOT
 			}
-			314 = {
+			314 = { #Teinmas
 				add_permanent_claim = ROOT
 			}
 			add_country_modifier = {
@@ -968,25 +990,25 @@ celliande_3_missions = {
 		provinces_to_highlight = {
 			OR = {
 				AND = {
-					province_id = 419
+					province_id = 419 #Varlosen
 					NOT = {
 						has_province_flag = celliande_already_explored
 					}
 				}
 				AND = {
-					province_id = 919
+					province_id = 919 #Rhinmond
 					NOT = {
 						has_province_flag = celliande_already_explored
 					}
 				}
 				AND = {
-					province_id = 312
+					province_id = 312 #Quintenbury
 					NOT = {
 						has_province_flag = celliande_already_explored
 					}
 				}
 				AND = {
-					province_id = 332
+					province_id = 332 #Corseton
 					NOT = {
 						has_province_flag = celliande_already_explored
 					}
@@ -1088,8 +1110,9 @@ celliande_3_missions = {
 
 		effect = {
 			change_mana = { amount = -50 }
+			set_country_flag = force_favored_RC_13
 			country_event = {
-				id = celliande.12
+				id = favored_RC.13
 			}
 			country_event = {
 				id = celliande.13
@@ -1142,20 +1165,19 @@ celliande_4_missions = {
 					tooltip = celliande_moon_party.tt1
 					any_ally = {
 						has_country_flag = lilac_wars_moon_party
+						marriage_with = ROOT
 					}
-					marriage_with = A11
-					alliance_with = A11
+					marriage_with = A11 #Pearlsedge
+					alliance_with = A11 #Or maybe its a Pearlsgate?
 				}
-				custom_trigger_tooltip = {
-					tooltip = celliande_moon_party.tt2
-					calc_true_if = {
-						all_ally = {
-							total_development = 50
-							has_country_flag = lilac_wars_moon_party
-							marriage_with = ROOT
-						}
-						amount = 2
+				calc_true_if = {
+					desc = celliande_moon_party.tt2
+					all_ally = {
+						total_development = 50
+						has_country_flag = lilac_wars_moon_party
+						marriage_with = ROOT
 					}
+					amount = 2
 				}
 			}
 		}
@@ -1191,7 +1213,7 @@ celliande_4_missions = {
 		}
 
 		provinces_to_highlight = {
-			province_id = 413
+			province_id = 413 #Sorncell
 		}
 
 		trigger = {
@@ -1284,19 +1306,17 @@ celliande_4_missions = {
 						modifier = improved_relation
 						value = 100
 					}
-					any_owned_province = {
-						trade_goods = silk
-					}
+					silk = 1
 				}
 			}
 			num_of_light_ship = 5
 		}
 
 		effect = {
-			412 = {
+			412 = { #Doveswall
 				change_trade_goods = silk
 			}
-			414 = {
+			414 = { #Idlorn
 				change_trade_goods = cloth
 			}
 			country_event = {
@@ -1343,15 +1363,20 @@ celliande_4_missions = {
 		provinces_to_highlight = {
 			OR = {
 				AND = {
-					province_id = 412
-					NOT = { base_production = 10 }
+					OR = {
+						province_id = 412 #Doveswall
+						province_id = 414 #Idlorn
+					}
+					NOT = {
+						AND = {
+							base_production = 10
+							has_production_building_trigger = yes
+							has_trade_building_trigger = yes
+						}
+					}
 				}
 				AND = {
-					province_id = 414
-					NOT = { base_production = 10 }
-				}
-				AND = {
-					province_id = 332
+					province_id = 332 #Corseton
 					NOT = {
 						has_great_project = {
 							type = the_necropolis
@@ -1415,7 +1440,7 @@ celliande_5_missions = {
 		}
 
 		provinces_to_highlight = {
-			province_id = 413
+			province_id = 413 #Sorncell
 		}
 
 		trigger = {
@@ -1475,7 +1500,6 @@ celliande_5_missions = {
 		}
 
 		provinces_to_highlight = {
-			province_id = 413
 			has_province_modifier = celliande_capital_renovation
 		}
 
@@ -1518,9 +1542,9 @@ celliande_5_missions = {
 		}
 
 		provinces_to_highlight = {
-			continent = europe
 			is_capital = yes
 			owner = {
+				120_opinion_25_spy_network_who_ROOT = yes
 				OR = {
 					tag = A30
 					tag = A33
@@ -1541,25 +1565,23 @@ celliande_5_missions = {
 			has_institution = renaissance
 			calc_true_if = {
 				amount = 2
-				all_known_country = {
-					OR = {
-						tag = A30
-						tag = A33
-						tag = A38
-						tag = A35
-						tag = A55
-						tag = A85
-					}
-					OR = {
-						has_opinion = {
-							who = ROOT
-							value = 120
-						}
-						has_spy_network_from = {
-							who = ROOT
-							value = 25
-						}
-					}
+				A30 = { #Wex
+					120_opinion_25_spy_network_who_ROOT = yes
+				}
+				A33 = { #Verne
+					120_opinion_25_spy_network_who_ROOT = yes
+				}
+				A38 = { #Anbenncoast
+					120_opinion_25_spy_network_who_ROOT = yes
+				}
+				A35 = { #Konwell
+					120_opinion_25_spy_network_who_ROOT = yes
+				}
+				A55 = { #Menibor
+					120_opinion_25_spy_network_who_ROOT = yes
+				}
+				A85 = { #Magisterium
+					120_opinion_25_spy_network_who_ROOT = yes
 				}
 			}
 			has_estate_privilege = estate_church_one_faith_one_culture
@@ -1582,12 +1604,12 @@ celliande_5_missions = {
 			every_known_country = {
 				limit = {
 					OR = {
-						tag = A30
-						tag = A33
-						tag = A38
-						tag = A35
-						tag = A55
-						tag = A85
+						tag = A30 #Wex
+						tag = A33 #Verne
+						tag = A38 #Anbenncoast
+						tag = A35 #Konwell
+						tag = A55 #Menibor
+						tag = A85 #Magisterium
 					}
 					OR = {
 						has_opinion = {
@@ -1600,7 +1622,7 @@ celliande_5_missions = {
 						}
 					}
 				}
-				A56 = {
+				A56 = { #Hey its you!
 					add_adm_power = 25
 					add_dip_power = 25
 					add_mil_power = 25
@@ -1654,7 +1676,7 @@ celliande_5_missions = {
 					has_province_modifier = autonomy_decreased
 				}
 			}
-			332 = {
+			332 = { #Corseton
 				development = 15
 			}
 		}
@@ -1707,6 +1729,13 @@ celliande_5_missions = {
 						}
 					}
 				}
+				AND = {
+					owned_by = A60 #Asheniande
+					OR = {
+						region = the_borders_region
+						region = esmaria_region
+					}
+				}
 			}
 			
 		}
@@ -1719,7 +1748,7 @@ celliande_5_missions = {
 					NOT = { culture = arannese }
 				}
 			}
-			A60 = {
+			A60 = { #Asheniande
 				NOT = {
 					any_owned_province = {
 						OR = {
@@ -1741,12 +1770,6 @@ celliande_5_missions = {
 		}
 
 		effect = {
-			every_owned_province = {
-				limit = {
-					culture = arannese
-				}
-				add_nationalism = -30
-			}
 			add_country_modifier = {
 				name = celliande_religious_culture
 				duration = -1
@@ -1756,6 +1779,12 @@ celliande_5_missions = {
 				skill = 3
 				cost_multiplier = 0.5
 				culture = milcori
+			}
+			every_owned_province = {
+				limit = {
+					culture = arannese
+				}
+				add_nationalism = -30
 			}
 		}
 	}

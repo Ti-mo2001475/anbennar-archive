@@ -11,7 +11,7 @@ country_event = { #Looming Shadows
 	
 	option = {
 		name = celliande.1.a
-		451 = {
+		451 = { #Nathalaire
 			add_permanent_claim = ROOT
 		}
 		add_country_modifier = {
@@ -35,7 +35,7 @@ country_event = { #Ultimatum
 
 	major = yes
 	major_trigger = {
-		tag = A56
+		tag = A56 #Celliande
 	}
 	
 	option = {
@@ -65,7 +65,7 @@ country_event = { #Ultimatum
 		if = {
 			limit = {
 				A56 = {
-					alliance_with = A34
+					alliance_with = A34 #Bisan
 				}
 			}
 			every_owned_province = {
@@ -110,7 +110,7 @@ country_event = { #Tellum accord
 			name = celliande_tellum_modifier
 			duration = 3650
 		}
-		A86 = {
+		A86 = { #Tellum
 			if = {
 				limit = { total_development = 50 }
 				add_liberty_desire = 30
@@ -130,7 +130,7 @@ country_event = { #On trail of Hero 1
 	
 	option = {
 		name = celliande.4.a
-		U16 = {
+		U16 = { #Ourdia
 			if = {
 				limit = {
 					OR = {
@@ -285,18 +285,12 @@ country_event = { #On trail of Hero 4
 	}
 	option = {
 		name = celliande.8.b
-		451 = {
+		451 = { #Nathalaire
 			add_permanent_province_modifier = {
 				name = celliande_cheese_mausoleum
 				duration = -1
 			}
-			if = {
-				limit = { has_building = cathedral }
-				add_base_tax = 2
-			}
-			else = {
-				add_or_upgrade_tax_building = yes
-			}
+			add_or_upgrade_tax_building = yes
 		}
 	}
 	after = {
@@ -416,76 +410,7 @@ country_event = { #Enter, the Nameless
 		}
 	}
 }
-country_event = { #Fake Nerat
-	id = celliande.12
-	title = favored_RC.13.t
-	desc = favored_RC.13.d
-	picture = RELIGION_eventPicture
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-
-	# Emulate aspect 1
-	option = {
-		name = "favored_RC.13.a"
-		add_ruler_modifier = {
-			name = favored_RC_nerat_t_a
-			hidden = yes
-			duration = -1
-		}
-		add_ruler_modifier = {
-			name = RC_withdrawn_meditation
-			duration = 1825
-		}
-		custom_tooltip = favored_tt
-		tooltip = {
-			add_ruler_modifier = {
-				name = RC_emulant_nerat_1
-				duration = -1
-			}
-		}
-		hidden_effect = {
-			country_event = {
-				id = favored_RC.14
-				days = 1826
-			}
-		}
-	}
-
-	# Emulate aspect 2
-	option = {
-		name = "favored_RC.13.b"
-		add_ruler_modifier = {
-			name = favored_RC_nerat_t_b
-			hidden = yes
-			duration = -1
-		}
-		add_ruler_modifier = {
-			name = RC_withdrawn_meditation
-			duration = 1825
-		}
-		custom_tooltip = favored_tt
-		tooltip = {
-			add_ruler_modifier = {
-				name = RC_emulant_nerat_2
-				duration = -1
-			}
-		}
-		hidden_effect = {
-			country_event = {
-				id = favored_RC.15
-				days = 1826
-			}
-		}
-	}
-
-	# Eschew emulation
-	option = {
-		name = "favored_RC.13.c"
-		add_prestige = 2
-		set_ruler_flag = RC_emulant_rejected_nerat
-	}
-}
+#Free space 12
 country_event = { #Final
 	id = celliande.13
 	title = celliande.13.t
@@ -557,7 +482,7 @@ country_event = { #Renovation suprise
 		name = celliande.16.a
 		goto = 413
 		add_prestige = 25
-		413 = {
+		413 = { #Sorncell
 			add_province_modifier = {
 				name = celliande_adventuring_hotspot
 				duration = 5475
@@ -606,30 +531,17 @@ country_event = { #Nameless Tutors
 	fire_only_once = yes
 
 	immediate = {
-		random_owned_province = {
-			save_event_target_as = celliande_target_1
-		}
-		random_owned_province = {
-			limit = {
-				NOT = {
-					province_id = event_target:celliande_target_1
-				}
-			}
-			save_event_target_as = celliande_target_2
-		}
-		random_owned_province = {
-			limit = {
-				NOT = { province_id = event_target:celliande_target_1 }
-				NOT = { province_id = event_target:celliande_target_2 }
-			}
-			save_event_target_as = celliande_target_3
+		pick_random_provinces = {
+			3 = yes
+			scope = random_owned_province
+			event_target_name = celliande_target
 		}
 	}
 	
 	option = {
 		name = celliande.18.a
 		set_heir_mage_effect = yes
-		set_heir_flag = necromancy_1
+		magic_school_level_up = { type = heir school = necromancy }
 		if = {
 			limit = { heir_is_powerful_mage = yes }
 			add_treasury = -50
@@ -637,14 +549,10 @@ country_event = { #Nameless Tutors
 		else = {
 			add_treasury = -150
 		}
-		event_target:celliande_target_1 = {
-			remove_random_development = yes
-		}
-		event_target:celliande_target_2 = {
-			remove_random_development = yes
-		}
-		event_target:celliande_target_3 = {
-			remove_random_development = yes
+		do_same_event_target_effect = {
+			3 = yes
+			event_target_name = celliande_target
+			effect = "remove_random_development = yes"
 		}
 	}
 	option = {
@@ -766,6 +674,7 @@ country_event = { #Start level 2
 		add_country_modifier = {
 			name = celliande_shrine_rhin
 			duration = 365
+			desc = until_end_of_exploration
 		}
 		add_country_modifier = {
 			name = celliande_shrine_rhin2
@@ -786,6 +695,7 @@ country_event = { #Start level 2
 		add_country_modifier = {
 			name = celliande_archives_search
 			duration = 730
+			desc = until_end_of_exploration
 		}
 		increase_magic_experience = { amount = 50 }
 		add_country_modifier = {
@@ -1179,7 +1089,7 @@ country_event = { #Varlosen 1
 		add_treasury = -100
 		add_dip_power = -25
 		reverse_add_opinion = {
-			who = A85
+			who = A85 #Magisterium
 			modifier = celliande_tower_deal
 		}
 		country_event = {
@@ -1223,7 +1133,7 @@ country_event = { #Varlosen 2
 	option = {
 		name = celliande.151.a
 		goto = 419
-		419 = {
+		419 = { #Varlosen
 			change_trade_goods = glass
 			add_province_modifier = {
 				name = celliande_mage_shop
@@ -1276,7 +1186,7 @@ country_event = { #Rhinmond 1
 	
 	option = {
 		name = celliande.152.a
-		goto = 919
+		goto = 919 #Rhinmond
 		add_prestige = -25
 		add_manpower = 1.5
 		919 = {
@@ -1460,17 +1370,7 @@ country_event = { #Rhinmond 5
 		}
 		919 = {
 			change_trade_goods = paper
-			if = {
-				limit = { has_building = cathedral }
-				add_base_tax = 2
-			}
-			else_if = {
-				limit = { has_building = temple }
-				add_building = cathedral
-			}
-			else = {
-				add_building = temple
-			}
+			add_or_upgrade_tax_building = yes
 			if = {
 				limit = { owner = { has_country_flag = celliande_rebels_recruited } }
 				add_nationalism = -5
@@ -1503,7 +1403,7 @@ country_event = { #Rhinmond 5
 		}
 	}
 }
-country_event = { #Quinterbury 1
+country_event = { #Quintenbury 1
 	id = celliande.157
 	title = celliande.157.t
 	desc = celliande.157.d
@@ -1532,13 +1432,13 @@ country_event = { #Quinterbury 1
 		highlight = yes
 		trigger = {
 			OR = {
-				A33 = {
+				A33 = { #Verne
 					has_opinion = {
 						who = ROOT
 						value = 50
 					}
 				}
-				A55 = {
+				A55 = { #Menibor
 					has_opinion = {
 						who = ROOT
 						value = 50
@@ -1601,7 +1501,7 @@ country_event = { #Quinterbury 1
 		}
 	}
 }
-country_event = { #Quinterbury 2
+country_event = { #Quintenbury 2
 	id = celliande.158
 	title = celliande.158.t
 	desc = celliande.158.d
@@ -1633,7 +1533,7 @@ country_event = { #Quinterbury 2
 		
 	}
 }
-country_event = { #Quinterbury 3
+country_event = { #Quintenbury 3
 	id = celliande.159
 	title = celliande.159.t
 	desc = celliande.159.d
@@ -1651,7 +1551,7 @@ country_event = { #Quinterbury 3
 		}
 	}
 }
-country_event = { #Quinterbury 4
+country_event = { #Quintenbury 4
 	id = celliande.160
 	title = celliande.160.t
 	desc = celliande.160.d
@@ -1671,19 +1571,9 @@ country_event = { #Quinterbury 4
 	}
 	option = {
 		name = celliande.160.b
-		goto = 312
+		goto = 312 #Quintenbury
 		312 = {
-			if = {
-				limit = { has_building = town_hall }
-				add_base_tax = 2
-			}
-			else_if = {
-				limit = { has_building = courthouse }
-				add_building = town_hall
-			}
-			else = {
-				add_building = courthouse
-			}
+			add_or_upgrade_courthouse_building = yes
 		}
 		add_treasury = 50
 		add_estate_loyalty = {
@@ -1755,7 +1645,7 @@ country_event = { #Corseton 1
 	}
 	option = {
 		name = celliande.161.b
-		goto = 332
+		goto = 332 #Corseton
 		332 = {
 			spawn_rebels = {
 				size = 3
