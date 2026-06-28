@@ -12,17 +12,16 @@ col4 = {
 			is_capital = yes
 			OR = {
 				owner = {
-					tag = Y14 #zhiqian
+					owns = 4979 #damaogong
 					NOT = {
 						has_spy_network_from = { 
 							who = ROOT 
 							value = 30 
 						} 
 					}
-					truce_with = ROOT
 				}
 				owner = {
-					tag = Y16
+					owns = 4925 #jiantsiang
 					NOT = {
 						has_spy_network_from = { 
 							who = ROOT 
@@ -30,57 +29,71 @@ col4 = {
 						} 
 					}
 				}
-				truce_with = ROOT
 			}
 		} 
 
 		trigger = {
-			Y14 = { #zhiqian
-				has_spy_network_from = { 
-					who = ROOT 
-					value = 30
-				}
-				NOT = {
-					truce_with = ROOT
+			4979 = { #damaogong
+				owner = {
+					has_spy_network_from = { 
+						who = ROOT 
+						value = 30 
+					}
 				}
 			}
-			Y16 = { #jiantsiang
-				has_spy_network_from = { 
-					who = ROOT 
-					value = 30 
-				}
-				NOT = {
-					truce_with = ROOT
+			4925 = { #jiantsiang
+				owner = {
+					has_spy_network_from = { 
+						who = ROOT 
+						value = 30 
+					}
 				}
 			}
 		} 
 
-		effect = {  
-			add_spy_network_in = {
-				who = Y14 #zhiqian
-				value = -30
+		effect = {
+			4979 = { #damaogong
+				owner = {
+					add_spy_network_in = {
+						who = PREV
+						value = -30
+					}
+					add_country_modifier = {
+						name = Y91_neglected_fortifications
+						duration = 7300
+					}
+				}
+			} 
+			4925 = { #jiantsiang
+				owner = {
+					add_spy_network_in = {
+						who = PREV
+						value = -30
+					}
+					add_country_modifier = {
+						name = Y91_neglected_fortifications
+						duration = 7300
+					}
+				}
 			}
-			add_spy_network_in = {
-				who = Y16 #jiantsiang
-				value = -30
+
+			yiguan_area = {
+				type = all
+				add_claim = ROOT
 			}
-			Y14 = { #zhiqian
-				add_country_modifier = {
-					name = Y91_neglected_fortifications
-					duration = 7300
-				}
-				every_owned_province = {
-					add_claim = ROOT
-				}
+			jiantsiang_area = {
+				type = all
+				add_claim = ROOT
 			}
-			Y16 = { #jiantsiang
-				add_country_modifier = {
-					name = Y91_neglected_fortifications
-					duration = 7300
-				}
-				every_owned_province = {
-					add_claim = ROOT
-				}
+			jianzhong_area = {
+				type = all
+				add_claim = ROOT
+			}
+			4916 = { #shangbu
+				add_claim = ROOT
+			}
+			4979 = { #damaogong
+				add_claim = ROOT
 			}
 		} 
 	}
@@ -101,6 +114,7 @@ col4 = {
 					}
 					NOT = {
 						is_core = ROOT
+						province_id = 4910 #heikhai
 					}
 				}
 				owned_by = Y14
@@ -128,11 +142,19 @@ col4 = {
 					}
 				}
 			}
-			xuanbing_area = {
-				type = all
+			4916 = { #shangbu
 				is_core = ROOT
 				custom_trigger_tooltip = {
-					tooltip = Y91_no_fort_tt
+					tooltip = Y91_no_fort_prov_tt
+					NOT = {
+						province_has_current_tech_fort_trigger = yes
+					}
+				}
+			}
+			4979 = { #damaogong
+				is_core = ROOT
+				custom_trigger_tooltip = {
+					tooltip = Y91_no_fort_prov_tt
 					NOT = {
 						province_has_current_tech_fort_trigger = yes
 					}
@@ -277,6 +299,7 @@ col4 = {
 				AND = {
 					OR = {
 						province_id = 4979 #damaogong
+						province_id = 4925 #jiantsiang
 						province_id = 4871 #tianlou
 						province_id = 4914 #gushibi
 						province_id = 4868 #jiangdu
@@ -317,6 +340,9 @@ col4 = {
 				has_tax_building_trigger = yes
 			}
 			4930 = { #lanjincun
+				has_tax_building_trigger = yes
+			}
+			4925 = { #jiantsiang
 				has_tax_building_trigger = yes
 			}
 		}
