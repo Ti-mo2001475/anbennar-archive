@@ -15501,7 +15501,7 @@ on_explore_coast = {
  		}
 	}
 
-	FROM = {
+	FROM = { #busilar
 		if = {
 			limit = {
 				has_country_modifier = A29_narawen_1
@@ -15517,10 +15517,8 @@ on_explore_coast = {
 						value = 100 
 					}
 				}
-				remove_country_modifier = A29_narawen_1
-				add_country_modifier = {
-					name = A29_narawen_2
-					duration = -1
+				country_event = {
+					id = busilar.30
 				}
 			}
 		}
@@ -15539,10 +15537,8 @@ on_explore_coast = {
 						value = 200
 					}
 				}
-				remove_country_modifier = A29_narawen_2
-				add_country_modifier = {
-					name = A29_narawen_3
-					duration = -1
+				country_event = {
+					id = busilar.31
 				}
 			}
 		}
@@ -15561,10 +15557,8 @@ on_explore_coast = {
 						value = 300
 					}
 				}
-				remove_country_modifier = A29_narawen_3
-				add_country_modifier = {
-					name = A29_narawen_4
-					duration = -1 
+				country_event = {
+					id = busilar.32
 				}
 			}
 		}
@@ -17534,11 +17528,14 @@ on_province_owner_change = {
 	if = {
 		limit = {
 			owner = { mission_completed = A29_new_labour }
-			any_neighbor_province = {
+			OR = {
 				has_building = automatory 
-				owner = {
-					is_or_was_tag = {
-						tag = A29 
+				any_neighbor_province = {
+					has_building = automatory 
+					owner = {
+						is_or_was_tag = {
+							tag = A29 
+						}
 					}
 				}
 			}

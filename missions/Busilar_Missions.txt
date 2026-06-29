@@ -226,8 +226,8 @@ col_1 = {
 		required_missions = { A29_sponsoring_the_society } 
 		provinces_to_highlight = {  
 			owned_by = ROOT
+			continent = europe
 			NOT = {
-				continent = europe
 				AND = {
 					NOT = { devastation = 10 }
 					OR = {
@@ -1268,7 +1268,10 @@ col_2 = {
 			A29_leader_of_thought
 			A29_the_faith_and_the_people
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			
+
+		} 
 
 		trigger = {
 			is_hegemon = yes 
@@ -1908,7 +1911,12 @@ col_3 = {
 		icon = evengelize_the_faith
 		position = 15
 		required_missions = { A29_lions_might } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			continent = africa
+			NOT = {
+				religion = ravelian
+			}
+		} 
 
 		trigger = {
 			OR = {
@@ -2615,7 +2623,15 @@ col_4 = {
 				}
 				amount = 2000 
 			}
-			check_variable = { MaxArtificePoints = 100 }
+			if = {
+				limit = {
+					is_not_in_mixed_mode = yes
+				}
+				check_variable = { MaxArtificePoints = 100 }
+			}
+			else = {
+				check_variable = { MaxArtificePoints = 50 }
+			}
 			custom_trigger_tooltip = {
 				tooltip = A29_bionicle_sets_tt
 				OR = {
@@ -3243,18 +3259,22 @@ col_5 = {
 
 		effect = {
 			custom_tooltip = A29_not_at_all_problematic_tt 
-			vimdatrong_superregion = {
-				limit = {
-					owned_by = ROOT 
-					trade_goods = tropical_wood
-					has_production_building_trigger = yes 
-					anb_has_been_exploited = yes 
-				}
-				add_province_modifier = {
-					name = A29_efficient_extraction
-					duration = -1
+			custom_tooltip = A29_effect_because_pdx_tt_sucks_tt
+			hidden_effect = {
+				vimdatrong_superregion = {
+					limit = {
+						owned_by = ROOT 
+						trade_goods = tropical_wood
+						has_production_building_trigger = yes 
+						anb_has_been_exploited = yes 
+					}
+					add_province_modifier = {
+						name = A29_efficient_extraction
+						duration = -1
+					}
 				}
 			}
+			
 		} 
 	}
 
@@ -3266,7 +3286,43 @@ col_5 = {
 			A29_extraction_economy
 		}
 		provinces_to_highlight = {
-			superregion = vimdatrong_superregion 
+			owned_by = ROOT
+			OR = {
+				trade_goods = coal
+				trade_goods = damestear 
+				trade_goods = mithril 
+				trade_goods = cloves 
+				trade_goods = paper 
+				trade_goods = precursor_relics 
+				trade_goods = coffee 
+				trade_goods = chinaware 
+				trade_goods = copper 
+				trade_goods = cloth
+				trade_goods = glass
+				trade_goods = dyes 
+				trade_goods = silk 
+				trade_goods = cocoa 
+				trade_goods = ivory 
+				trade_goods = slaves 
+				trade_goods = salt 
+				trade_goods = fur 
+				trade_goods = cotton 
+			}
+			NOT = {
+				AND = {
+					has_building = automatory
+					has_production_building_trigger = yes
+					if = {
+						limit = {
+							has_dlc = "Leviathan"
+						}
+						num_of_times_expanded_infrastructure = 1 
+					}
+					else = {
+						development = 15 
+					}
+				}
+			}
 		} 
 
 		trigger = {
@@ -3316,14 +3372,6 @@ col_5 = {
 		} 
 
 		effect = {
-			define_advisor = {
-				type = statesman 
-				name = "Toniel Silnara"
-				skill = 3 
-				cost_multiplier = .1 
-				culture = ROOT  
-				religion = ravelian 
-			}
 			custom_tooltip = A29_mechsploitation_tt 
 			hidden_effect = {
 				every_owned_province = {
@@ -3345,6 +3393,14 @@ col_5 = {
 					}
 
 				}
+			}
+			define_advisor = {
+				type = statesman 
+				name = "Toniel Silnara"
+				skill = 3 
+				cost_multiplier = 0.1 
+				culture = ROOT  
+				religion = ravelian 
 			}
 		} 
 	}
