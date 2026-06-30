@@ -11499,7 +11499,7 @@ country_event = {
 	}
 }
 
-#mechanim Workforce
+#Spirit Energy
 country_event = {
 	id = flavor_feiten.316
 	title = flavor_feiten.316.t
@@ -11509,81 +11509,132 @@ country_event = {
 	is_triggered_only = yes
 	
 
-	option = {
-		name = flavor_feiten.316.a
-		custom_tooltip = feiten_mechanim_plant_add_effect_tt
-		large_decrease_of_mechanim_tolerance_effect = yes
+	option = { #Investigate Pillar
+		name = flavour_feiten.316.a
+		add_treasury = -7500
+		add_manpower = -7500
+		6950 = { remove_province_modifier = feiten_shimua_gene_pillar_extraction }
 		hidden_effect = {
-			set_variable = {
-				which = ForLoopCounter
-				value = 15
-			}
-			while = {
-				limit = {
-					check_variable = {
-						which = ForLoopCounter
-						value = 1
-					}
-				}
-				random_owned_province = {
-					limit = {
-						superregion = yanshen_superregion
-						OR = {
-							owned_by_subject_of = ROOT
-							owned_by = ROOT
-						}
-						province_with_farm_goods = yes
-					}
-					add_mechanim_minority_size_effect = yes
-					owner = { add_treasury = -500 }
-				}
-				subtract_variable = {
-					which = ForLoopCounter
-					value = 1
-				}
+			country_event = {
+				id = flavor_feiten.317
+				days = 365
+				random = 365
 			}
 		}
 	}
+}
+
+#Investgation into Pillar
+country_event = {
+	id = flavor_feiten.317
+	title = flavor_feiten.317.t
+	desc = flavor_feiten.317.desc
+	picture = GENIE_RUINS_eventPicture #TODO Placeholder
+
+	is_triggered_only = yes
+	
+
 	option = {
-		name = flavor_feiten.316.b
-		custom_tooltip = feiten_mechanim_urban_add_effect_tt
-		large_decrease_of_mechanim_tolerance_effect = yes
+		name = flavour_feiten.317.a
+		add_treasury = -7500
+		add_manpower = -7500
 		hidden_effect = {
-			set_variable = {
-				which = ForLoopCounter
-				value = 10
-			}
-			while = {
+			if = {
 				limit = {
-					check_variable = {
-						which = ForLoopCounter
-						value = 1
+					OR = {
+						has_global_flag = rending_happened
+						has_global_flag = rending_active
 					}
 				}
-				random_owned_province = {
-					limit = {
-						superregion = yanshen_superregion
-						OR = {
-							owned_by_subject_of = ROOT
-							owned_by = ROOT
-						}
-						province_with_urban_goods = yes
-					}
-					add_mechanim_minority_size_effect = yes
-					owner = { add_treasury = -750 }
-				}
-				subtract_variable = {
-					which = ForLoopCounter
-					value = 1
+				country_event = {
+					id = flavor_feiten.318 #Post/During Rending
+					days = 365
+					random = 365
 				}
 			}
 		}
 	}
 }
 
+#Post/During Rending Stabilisation
+country_event = {
+	id = flavor_feiten.318
+	title = flavor_feiten.318.t
+	desc = flavor_feiten.318.desc
+	picture = GENIE_RUINS_eventPicture #TODO Placeholder
 
+	is_triggered_only = yes
+	
 
+	option = {
+		name = flavour_feiten.317.a
+		4879 = {
+			add_province_modifier = {
+				name = feiten_stabilising_temple
+				duration = 1825
+			}
+		}
+		country_event = {
+			id = flavor_feiten.320
+			days = 1825
+		}
+	}
+}
 
+#Pre Rending (Currently not avalible but SHOULD be when Insyaa gets a unique opener) and the cooler effect
+country_event = {
+	id = flavor_feiten.319
+	title = flavor_feiten.319.t
+	desc = flavor_feiten.319.desc
+	picture = GENIE_RUINS_eventPicture #TODO Placeholder
+
+	is_triggered_only = yes
+	
+
+	option = {
+		name = flavour_feiten.317.a
+		custom_tooltip = feiten_starts_rending_huszien_sealed
+		4879 = {
+			add_province_modifier = {
+				name = feiten_stabilising_temple
+				duration = 1825
+			}
+		}
+		country_event = {
+			id = flavor_feiten.320
+			days = 1825
+		}
+		hidden_effect = {
+			set_country_flag = feiten_cool_rending_activities
+		}
+	}
+}
+
+#Energy Stabilised
+country_event = {
+	id = flavor_feiten.320
+	title = flavor_feiten.320.t
+	desc = flavor_feiten.320.desc
+	picture = GENIE_RUINS_eventPicture #TODO Placeholder
+
+	is_triggered_only = yes
+	
+
+	option = {
+		name = flavour_feiten.317.a
+		6950 = {
+			change_trade_goods = precursor_relics
+			add_province_modifier = {
+				name = feiten_shimua_gene_pillar_extraction
+				duration = -1
+			}
+			add_province_triggered_modifier = feiten_skyport_handler_mod
+		}
+		hidden_effect = {
+			set_country_flag = Y20_finished_unique_collection_pillar
+		}
+	}
+}
 
 
 # DEBUG
@@ -11597,6 +11648,22 @@ country_event = {
 
 	immediate = {
 		save_global_event_target_as = feiten_or_was_feiten_target
+		1343 = {
+			add_trade_modifier = {
+				who = Y20
+				duration = -1
+				power = 10000
+				key = DEBUGFEITEN
+			}
+		}
+		1347 = {
+		add_trade_modifier = {
+				who = Y20
+				duration = -1
+				power = 10000
+				key = DEBUGFEITEN
+			}
+		}
 	}
 
 	option = {

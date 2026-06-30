@@ -1300,19 +1300,18 @@ feiten_missions_2_world = {
 				fire = 3
 				manuever = 6
 				siege = 0
+				name = "Tlalikapu Fweinern"
+			}
+			custom_tooltip = feiten_explain_pioneering_spirit_tt
+			hidden_effect = {
+				add_country_modifier = {
+					name = feiten_pioneering_spirit_0
+					duration = 18250
+				}
 			}
 			add_country_modifier = {
-				name = feiten_pioneering_spirit_0 #TODO adding and expanding the modifier (in on_action)
-				duration = 18250
-			}
-			if = {
-				limit = {
-					num_of_colonists = 0
-				}
-				add_country_modifier = {
-					name = feiten_insyaan_expansion
-					duration = 9125
-				}
+				name = feiten_insyaan_expansion
+				duration = 9125
 			}
 		}
 	}
@@ -1427,11 +1426,41 @@ feiten_missions_2_world = {
 		}
 		
 		effect = {
-			feiten_add_insyaan_trade_centre = yes
-			feiten_add_insyaan_trade_centre = yes
-			feiten_add_insyaan_trade_centre = yes
-			feiten_add_insyaan_trade_centre = yes
-			feiten_add_insyaan_trade_centre = yes
+			if = { #otherwise the effect didn't work as you need "" around the Leviathan
+				limit = { has_dlc = "Leviathan" }
+				set_country_flag = Y20_has_leviathan
+			}
+			for = {
+				amount = 5
+				effect = "random_owned_province = {
+					limit = {
+						NOT = { has_province_modifier = feiten_insyaan_trade_centre } 
+						OR = {
+							province_has_center_of_trade_of_level = 2
+							AND = {
+								OR = {
+									has_province_modifier = ponquimetzto_toll
+									has_province_modifier = pauhnextli_toll
+									has_province_modifier = palimeli_toll
+								}
+								num_free_building_slots = 0
+							}
+						}
+						if = {
+							limit = { has_country_flag = Y20_has_leviathan }
+							num_of_times_expanded_infrastructure = 1
+						}
+						else = {
+							development = 15
+						}
+						has_trade_building_trigger = yes
+					}
+					add_province_modifier = {
+						name = feiten_insyaan_trade_centre
+						duration = -1
+					}
+				}"
+			}
 			pick_best_province = {
 				scope = every_owned_province
 				scale = higher_development_than
@@ -1505,8 +1534,10 @@ feiten_missions_2_world = {
 					}
 				}
 			}
-			country_event = {
-				id = flavor_feiten.316
+			custom_tooltip = feiten_reverse-engineered_mechanim_tt
+			hidden_effect = {
+				set_country_flag = unlocked_artifice_invention_reverse_mechanim
+				clr_country_flag = researching_artifice_invention_reverse_mechanim #if you are researching it
 			}
 		}
 	}
@@ -1540,7 +1571,7 @@ feiten_missions_2_world = {
 				rending_has_not_happened = yes
 				AND = {
 					rending_has_happened = yes
-					has_global_flag = huszien_suppressed
+					#has any rending end TODO
 				}
 			}
 		}
@@ -1572,6 +1603,11 @@ feiten_missions_2_world = {
 					same_trade_node_as = 6950
 				}
 				add_permanent_claim = ROOT
+			}
+			country_event = {
+				id = flavor_feiten.316
+				days = 730
+				random = 730
 			}
 		}
 	}
@@ -1610,7 +1646,10 @@ feiten_missions_2_world = {
 					share = 66
 				}
 			}
-			### has completed the expedition
+			custom_trigger_tooltip = {
+				tooltip = feiten_has_completed_pillar_investigation
+				has_country_flag = Y20_finished_unique_collection_pillar
+			}
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				value = 8
 				region = tagaala_mangroves_region
@@ -1654,21 +1693,83 @@ feiten_missions_2_world = {
 				name = feiten_stormwall_merchant_fleet
 				duration = -1
 			}
-			every_province = {
+			if = {
 				limit = {
-					continent = oceania
-					num_free_building_slots = 0
-					OR = {
-						owned_by = ROOT
-						owned_by_subject_of = ROOT
+					num_of_owned_provinces_with = {
+						value = 8
+						region = tagaala_mangroves_region
 					}
 				}
-				add_province_modifier = {
-					name = feiten_insyaan_investment
-					duration = -1
+				set_country_flag = mangrove_bio_infra_enabled
+			}
+			else_if = {
+				limit = {
+					any_subject_country = {
+						num_of_owned_provinces_with = {
+							value = 8
+							region = tagaala_mangroves_region
+						}
+						NOT = { has_country_flag = mangrove_bio_infra_enabled }
+					}
+				}
+				random_subject_country = {
+					limit = {
+						num_of_owned_provinces_with = {
+							value = 8
+							region = tagaala_mangroves_region
+						}
+						NOT = { has_country_flag = mangrove_bio_infra_enabled }
+					}
+					set_country_flag = mangrove_bio_infra_enabled
 				}
 			}
-			set_country_flag = mangrove_bio_infra_enabled
+			else_if = {
+				limit = {
+					any_subject_country = {
+						num_of_owned_provinces_with = {
+							value = 8
+							region = tagaala_mangroves_region
+						}
+						has_country_flag = mangrove_bio_infra_enabled
+					}
+				}
+				random_subject_country = {
+					limit = { 
+						any_subject_country = {
+							num_of_owned_provinces_with = {
+								value = 8
+								region = tagaala_mangroves_region
+							}
+							has_country_flag = mangrove_bio_infra_enabled
+						}
+					}
+					every_owned_province = {
+						limit = {
+							region = tagaala_mangroves_region
+						}
+						add_province_modifier = {
+							name = feiten_subject_mangrove_lower_dev_cost
+							duration = -1
+						}
+					}
+				}
+			}
+			custom_tooltip = feiten_insyaan_investment_tt
+			hidden_effect = {
+				every_province = {
+					limit = {
+						continent = oceania
+						OR = {
+							owned_by = ROOT
+							owned_by_subject_of = ROOT
+						}
+					}
+					add_province_modifier = {
+						name = feiten_insyaan_investment
+						duration = -1
+					}
+				}
+			}
 		}
 	}
 	
@@ -2691,14 +2792,199 @@ feiten_missions_3_world = {
 			feiten_riches_of_rahen
 		}
 		
-		provinces_to_highlight = { }
+		provinces_to_highlight = {
+			OR = {
+				region = yetefesefi_region
+				region = telekenid_region
+				region = dreksaret_region
+				region = denibari_region
+			}
+			NOT = {
+				owner = {
+					any_ally = {
+						tag = Y20
+					}
+					overlord = {
+						tag = Y20
+					}
+				}
+			}
+		}
 		
 		trigger = {
-			# TODO once Sarhal is in
+			OR = {
+				any_ally = { #owned by ally
+					capital_scope = {
+						continent = africa
+					}
+					num_of_owned_provinces_with = {
+						value = 30
+						OR = {
+							region = yetefesefi_region
+							region = telekenid_region
+							region = dreksaret_region
+							region = denibari_region
+						}
+					}
+					trust = {
+						who = ROOT
+						value = 66
+					}
+					has_opinion = {
+						who = ROOT
+						value = 150
+					}
+					any_rival_country = {
+						trade_embargo_by = ROOT
+					}
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = { #you or subjects
+					value = 30
+					OR = {
+						region = yetefesefi_region
+						region = telekenid_region
+						region = dreksaret_region
+						region = denibari_region
+					}
+				}
+			}
+			1343 = {
+				trade_share = {
+					country = ROOT
+					share = 66
+				}
+			}
+			1347 = {
+				trade_share = {
+					country = ROOT
+					share = 66
+				}
+			}
 		}
 		
 		effect = {
-			# TODO once Sarhal is in
+			if = {
+				limit = {
+					any_ally = {
+						capital_scope = {
+							continent = africa
+						}
+						num_of_owned_provinces_with = {
+							value = 30
+							OR = {
+								region = yetefesefi_region
+								region = telekenid_region
+								region = dreksaret_region
+								region = denibari_region
+							}
+						}
+						trust = {
+							who = ROOT
+							value = 66
+						}
+						has_opinion = {
+							who = ROOT
+							value = 150
+						}
+						any_rival_country = {
+							trade_embargo_by = ROOT
+						}
+					}
+				}
+				random_ally = {
+					limit = {
+						capital_scope = {
+							continent = africa
+						}
+						num_of_owned_provinces_with = {
+							value = 30
+							OR = {
+								region = yetefesefi_region
+								region = telekenid_region
+								region = dreksaret_region
+								region = denibari_region
+							}
+						}
+						trust = {
+							who = ROOT
+							value = 66
+						}
+						has_opinion = {
+							who = ROOT
+							value = 150
+						}
+						any_rival_country = {
+							trade_embargo_by = ROOT
+						}
+					}
+					add_country_modifier = {
+						name = feiten_exports_to_yanshen
+						duration = -1
+					}
+					capital_scope = { add_province_triggered_modifier = feiten_skyport_handler_mod }
+				}
+			}
+			else_if = {
+				limit = {
+					any_subject_country = {
+						num_of_owned_provinces_with = {
+							value = 30
+							region = yetefesefi_region
+							region = telekenid_region
+							region = dreksaret_region
+							region = denibari_region
+						}
+					}
+				}
+				random_subject_country = {
+					limit = {
+						num_of_owned_provinces_with = {
+							value = 30
+							region = yetefesefi_region
+							region = telekenid_region
+							region = dreksaret_region
+							region = denibari_region
+						}
+					}
+					add_country_modifier = {
+						name = feiten_exports_to_yanshen
+						duration = -1
+					}
+					if = {
+						limit = {
+							NOT = {
+								this = {
+									liberty_desire = 50
+								}
+							}
+						}
+						capital_scope = { add_province_triggered_modifier = feiten_skyport_handler_mod }
+					}
+				}
+			}
+			hidden_effect = {
+				for = {
+					amount = 5
+					effect = "
+					random_owned_province = {
+						limit = {
+							superregion = yanshen_superregion
+							trade_goods = grain
+						}
+						random_list = {
+							1 = { change_trade_goods = silk }
+							1 = { change_trade_goods = paper }
+							1 = { change_trade_goods = cloth }
+							1 = { change_trade_goods = dyes }
+							1 = { change_trade_goods = glass }
+						}
+						add_province_modifier = {
+							name = feiten_fast_urban_prov_mod
+							duration = 7300
+						}
+					}"
+				}
+			}
 		}
 	}
 	
@@ -2712,11 +2998,37 @@ feiten_missions_3_world = {
 		provinces_to_highlight = { }
 		
 		trigger = {
-			# TODO once Sarhal is in
+			calc_true_if = {
+				amount = 3
+				trading_bonus = {
+					trade_goods = coffee
+					value = yes
+				}
+				trading_bonus = {
+					trade_goods = cloves
+					value = yes
+				}
+				trading_bonus = {
+					trade_goods = dyes
+					value = yes
+				}
+				trading_bonus = {
+					trade_goods = slaves
+					value = yes
+				}
+				trading_bonus = {
+					trade_goods = incense
+					value = yes
+				}
+			}
 		}
 		
 		effect = {
-			# TODO once Sarhal is in
+			add_years_of_trade_income = {
+				years = 4
+				custom_tooltip = gainFourYearsTradeIncome
+			}
+			add_mercantilism_excess_to_diplo_power_effect = { VAL = 10 }
 		}
 	}
 	
