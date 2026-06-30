@@ -302,6 +302,9 @@ col4 = {
 							}
 							owned_by = ROOT
 						}
+						owner = {
+							is_subject_of = ROOT
+						}
 					}
 				}
 				AND = {
@@ -323,10 +326,17 @@ col4 = {
 		trigger = {
 			north_yanshen_region = {
 				type = all
-				owned_by = ROOT
 				OR = {
-					has_province_modifier = autonomy_decreased
-					NOT = { local_autonomy = 25 }
+					AND = {
+						owned_by = ROOT
+						OR = {
+							has_province_modifier = autonomy_decreased
+							NOT = { local_autonomy = 25 }
+						}
+					}
+					owner = {
+						is_subject_of = ROOT
+					}
 				}
 			}
 			all_subject_country = {
