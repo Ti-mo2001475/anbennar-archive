@@ -203,6 +203,7 @@ col4 = {
 								}
 							}
 						}
+						owned_by = ROOT
 					}
 				}
 			}
@@ -219,15 +220,18 @@ col4 = {
 				owned_by = ROOT
 			}
 			4871 = { #tianlou
-				owner = {
-					OR = {
-						has_opinion_modifier = {
-							who = ROOT
-							modifier = scornfully_insulted
-						}
-						has_opinion_modifier = {
-							who = ROOT
-							modifier = insulted
+				OR = {
+					owned_by = ROOT
+					owner = {
+						OR = {
+							has_opinion_modifier = {
+								who = ROOT
+								modifier = scornfully_insulted
+							}
+							has_opinion_modifier = {
+								who = ROOT
+								modifier = insulted
+							}
 						}
 					}
 				}
@@ -608,11 +612,19 @@ col5 = {
 						trust = { who = ROOT value = 75 }
 					}
 				}
-				Y13 = {
-					all_core_province = {
+				AND = {
+					num_of_owned_provinces_with = {
+						value = 7
+						is_core = Y13
+					}
+					4868 = { #jiangdu
+						owned_by = ROOT
+					}
+					4930 = { #lanjincun
 						owned_by = ROOT
 					}
 				}
+				
 			}
 		} 
 
