@@ -9023,6 +9023,18 @@ on_yearly_pulse = {
 		orenvalyam_events.103 #Advance Yodhan's Sickness after 10 years
 		flavor_swift_legged_bongo.43 #Swift Legged Bongo Statue Speaks Event
 	}
+	#Taychend gov reforms
+	if = {
+		limit = { has_reform = lesser_heroes_state }
+		country_event = { id = taychendi.2002 }	#add glory every year
+	}
+
+	#Taychend gov ref
+	if = {
+		limit = { has_reform = relic_lords_of_taychend }
+		country_event = { id = taychendi.2003 }	#modif 
+	}
+
 	if = {
 		limit = { tag = R62 }
 		country_event = { id = the_command.1971 }	#Noriko Dragonborn
@@ -16716,6 +16728,102 @@ on_province_owner_change = {
 	# This maintenance for the hinuilands secrets is here, so that anything that engages with it in this on_action
 	# Can still rely on the assumption that this flag is present in provinces with hinuiland secrets
 	# (additional hinuilands secret code is in on_province_owner_change_monuments)
+
+	#Taychend gov reforms
+	# Ларанкарха
+	if = {
+		limit = {
+			owner = { has_reform = larankarha_gos_ref }
+			region = larankarha_highlands_region
+		}
+		if = {
+			limit = { has_terrain = mountain }
+			add_province_modifier = { name = larankarha_mountain_expansion_mountains duration = -1 hidden = yes }
+		}
+		else_if = {
+			limit = { has_terrain = highlands }
+			add_province_modifier = { name = larankarha_mountain_expansion_highlands duration = -1 hidden = yes }
+		}
+		else_if = {
+			limit = { has_terrain = hills }
+			add_province_modifier = { name = larankarha_mountain_expansion_hills duration = -1 hidden = yes }
+		}
+	}
+	else = {
+		remove_province_modifier = larankarha_mountain_expansion_mountains
+		remove_province_modifier = larankarha_mountain_expansion_highlands
+		remove_province_modifier = larankarha_mountain_expansion_hills
+	}
+    # Калавенд
+    if = {
+        limit = {
+            owner = { has_reform = kalavendy_gos_ref }
+            province_with_arable_goods = yes
+            region = kalavend_region
+        }
+        add_province_modifier = { name = kalavendy_population duration = -1 hidden = yes }
+    }
+    if = {
+        limit = {
+            NOT = { owner = { has_reform = kalavendy_gos_ref } }
+        }
+        remove_province_modifier = kalavendy_population
+    }
+    # Йоднахпур
+	if = {
+		limit = {
+			owner = { has_reform = yodhanpir_gos_ref }
+			superregion = taychend_superregion
+		}
+		if = {
+			limit = { culture = yodhanpir }
+			add_province_modifier = { name = yodhanpir_gos_regiment duration = -1 hidden = yes }
+		}
+		else = {
+			add_province_modifier = { name = yodhanpir_gos_tax duration = -1 hidden = yes }
+		}
+	}
+	else = {
+		remove_province_modifier = yodhanpir_gos_regiment
+		remove_province_modifier = yodhanpir_gos_tax
+	}
+    # Тхекврыстана
+    if = {
+        limit = {
+            owner = { has_reform = thekvrystana_gos_ref }
+            superregion = taychend_superregion
+			has_port = yes
+			OR = {
+				has_river_estuary_trigger = yes
+				province_has_center_of_trade_of_level = 1
+			}
+        }
+        add_province_modifier = { name = thekvrystana_coastal_trade_modifier duration = -1 hidden = yes }
+    }
+    if = {
+        limit = {
+            NOT = { owner = { has_reform = thekvrystana_gos_ref } }
+        }
+        remove_province_modifier = thekvrystana_coastal_trade_modifier
+    }
+    # Сарихаддхи
+    if = {
+        limit = {
+            owner = { has_reform = sarihaddhi_gos_ref }
+            superregion = taychend_superregion
+            trade_goods = livestock
+        }
+        add_province_modifier = { name = sarihaddhi_lives_mod duration = -1 hidden = yes }
+    }
+    if = {
+        limit = {
+            NOT = { owner = { has_reform = sarihaddhi_gos_ref } }
+        }
+        remove_province_modifier = sarihaddhi_lives_mod
+    }
+
+
+
 	if = {
 		limit = {	# re-add the flag, a hinuiland secret province was decolonised
 			is_empty = yes
