@@ -8733,22 +8733,6 @@ on_colony_finished_effect = {
 		cede_province = U42
 	}
 
-	if = {
-		limit = {
-			owner = { has_estate_privilege = estate_nobles_tribes_tame_the_frontier_privilege }
-			OR = {
-				region = yyl_moista_region
-				region = northern_pass_region
-				superregion = gerudia_superregion
-			}
-		}
-		add_province_modifier = {
-			name = estate_tame_the_frontier_new_colony_mod
-			duration = 18250 # 50 years
-		}
-		remove_province_modifier = estate_tame_the_frontier_discount_mod
-	}
-	
 	#Seraeddun CN
 	if= {
 		limit = {
@@ -13766,7 +13750,68 @@ startup_1444_effects = {
 			limit = { owns = 4871 }
 			country_event = { id = spirits.021 }
 		}
-	}
+		
+		#Gerudia colonization setup
+		if = {
+			limit = { tag = Z89 } #digoveda observes all
+			2953 = { #Icereach
+				province_event = {
+					id = gerudia.100 #Gerudian Frontier settlement wave 1
+					days = 10950 #1474
+					random = 1095 #3y
+				}
+			}
+			2832 = { #Nednvidr
+				province_event = {
+					id = gerudia.101 #Gerudian Frontier settlement wave 2
+					days = 19345 #1497
+					random = 1095 #3y
+				}
+			}
+			971 = { #Grymskali
+				province_event = {
+					id = gerudia.102 #Gerudian Frontier settlement wave 1
+					days = 10585 #1473
+					random = 1095 #3y
+				}
+			}
+			6274 = { #Volvahringr
+				province_event = {
+					id = gerudia.103 #Gerudian Frontier settlement wave 2
+					days = 16790 #1490
+					random = 1095 #3y
+				}
+			}
+			6271 = { #Vaengheim
+				province_event = {
+					id = gerudia.104 #Gerudian Frontier settlement wave 1
+					days = 8030 #1466
+					random = 1095 #3y
+				}
+			}
+			2831 = { #Hagisandr
+				province_event = {
+					id = gerudia.105 #Gerudian Frontier settlement wave 2
+					days = 18250 #1494
+					random = 1095 #3y
+				}
+			}
+			986 = { #Esvjall
+				province_event = {
+					id = gerudia.106 #Gerudian Frontier settlement wave 1
+					days = 9490 #1470
+					random = 1095 #3y
+				}
+			}
+			2833 = { #Grenholt
+				province_event = {
+					id = gerudia.107 #Gerudian Frontier settlement wave 2
+					days = 18250 #1494
+					random = 1095 #3y
+				}
+			}
+		}	
+	}	
 }
 
 on_province_owner_change_effect = {
