@@ -11510,9 +11510,9 @@ country_event = {
 	
 
 	option = { #Investigate Pillar
-		name = flavour_feiten.316.a
+		name = flavor_feiten.316.a
 		add_treasury = -7500
-		add_manpower = -7500
+		add_manpower = -7.5
 		6950 = { remove_province_modifier = feiten_shimua_gene_pillar_extraction }
 		hidden_effect = {
 			country_event = {
@@ -11535,19 +11535,29 @@ country_event = {
 	
 
 	option = {
-		name = flavour_feiten.317.a
+		name = flavor_feiten.317.a
 		add_treasury = -7500
-		add_manpower = -7500
+		add_manpower = -7.5
 		hidden_effect = {
 			if = {
 				limit = {
 					OR = {
-						has_global_flag = rending_happened
-						has_global_flag = rending_active
+						rending_has_happened = yes
+						rending_is_over = yes
 					}
 				}
 				country_event = {
 					id = flavor_feiten.318 #Post/During Rending
+					days = 365
+					random = 365
+				}
+			}
+			else_if = {
+				limit = {
+					rending_has_not_happened = yes
+				}
+				country_event = {
+					id = flavor_feiten.319 #Pre Rending
 					days = 365
 					random = 365
 				}
@@ -11567,7 +11577,7 @@ country_event = {
 	
 
 	option = {
-		name = flavour_feiten.317.a
+		name = flavor_feiten.318.a
 		4879 = {
 			add_province_modifier = {
 				name = feiten_stabilising_temple
@@ -11592,7 +11602,7 @@ country_event = {
 	
 
 	option = {
-		name = flavour_feiten.317.a
+		name = flavor_feiten.319.a
 		custom_tooltip = feiten_starts_rending_huszien_sealed
 		4879 = {
 			add_province_modifier = {
@@ -11621,7 +11631,7 @@ country_event = {
 	
 
 	option = {
-		name = flavour_feiten.317.a
+		name = flavor_feiten.320.a
 		6950 = {
 			change_trade_goods = precursor_relics
 			add_province_modifier = {

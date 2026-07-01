@@ -1284,7 +1284,7 @@ feiten_missions_2_world = {
 		provinces_to_highlight = { }
 		
 		trigger = {
-			has_global_flag = stormwall_open
+			stormwall_is_open = yes
 			num_of_owned_provinces_with = {
 				value = 10
 				region = yanacotlele_region
@@ -1322,220 +1322,196 @@ feiten_missions_2_world = {
 		required_missions = {
 			feiten_securing_stormwall
 		}
-		
 		provinces_to_highlight = {
-			yanacotlele_region = {
-				is_island = yes
-				NOT = { owned_by = ROOT }
+			AND = {
+				superregion = kanolowele_superregion
+				OR = {
+					province_has_center_of_trade_of_level = 1
+					province_is_any_1444_insyaan_toll = yes
+				}
 			}
 		}
 		
 		trigger = {
 			yanacotlele_region = {
-				all_province = {
-					is_island = yes
+				type = all
+				OR = {
 					owned_by = ROOT
+					owned_by_subject_of = ROOT
 				}
 			}
 			OR = {
 				num_of_owned_provinces_with = { #Centre of trade option
-					value = 2
-					province_has_center_of_trade_of_level = 2
-					if = {
-						limit = { has_dlc = "Leviathan" }
-						num_of_times_expanded_infrastructure = 1
-					}
-					else = {
-						development = 15
-					}
-					has_trade_building_trigger = yes
-				}
-				AND = { #Ponquimetzto Toll
-					6866 = {
-						if = {
-							limit = { has_dlc = "Leviathan" }
-							num_of_times_expanded_infrastructure = 1
+					value = 5
+					OR = {
+						AND = {
+							superregion = kanolowele_superregion
+							OR = {
+								province_has_center_of_trade_of_level = 1
+								AND = {
+									province_is_any_1444_insyaan_toll = yes
+									num_free_building_slots = 0
+								}
+							}
+							if = {
+								limit = { has_dlc = "Leviathan" }
+								num_of_times_expanded_infrastructure = 1
+							}
+							else = {
+								development = 15
+							}
+							has_trade_building_trigger = yes
 						}
-						else = {
-							development = 15
-						}
-						has_trade_building_trigger = yes
-						num_free_building_slots = 0
-					}
-					6865 = {
-						if = {
-							limit = { has_dlc = "Leviathan" }
-							num_of_times_expanded_infrastructure = 1
-						}
-						else = {
-							development = 15
-						}
-						has_trade_building_trigger = yes
-						num_free_building_slots = 0
-					}
-				}
-				AND = { #Pauhnextli Toll
-					6169 = {
-						if = {
-							limit = { has_dlc = "Leviathan" }
-							num_of_times_expanded_infrastructure = 1
-						}
-						else = {
-							development = 15
-						}
-						has_trade_building_trigger = yes
-						num_free_building_slots = 0
-					}
-					6170 = {
-						if = {
-							limit = { has_dlc = "Leviathan" }
-							num_of_times_expanded_infrastructure = 1
-						}
-						else = {
-							development = 15
-						}
-						has_trade_building_trigger = yes
-						num_free_building_slots = 0
-					}
-				}
-				AND = { #Palimeli Toll
-					6200 = {
-						if = {
-							limit = { has_dlc = "Leviathan" }
-							num_of_times_expanded_infrastructure = 1
-						}
-						else = {
-							development = 15
-						}
-						has_trade_building_trigger = yes
-						num_free_building_slots = 0
-					}
-					6936 = {
-						if = {
-							limit = { has_dlc = "Leviathan" }
-							num_of_times_expanded_infrastructure = 1
-						}
-						else = {
-							development = 15
-						}
-						has_trade_building_trigger = yes
-						num_free_building_slots = 0
 					}
 				}
 			}
 		}
 		
 		effect = {
-			if = { #otherwise the effect didn't work as you need "" around the Leviathan
-				limit = { has_dlc = "Leviathan" }
-				set_country_flag = Y20_has_leviathan
-			}
-			for = {
-				amount = 5
-				effect = "random_owned_province = {
-					limit = {
-						NOT = { has_province_modifier = feiten_insyaan_trade_centre } 
-						OR = {
-							province_has_center_of_trade_of_level = 2
-							AND = {
-								OR = {
-									has_province_modifier = ponquimetzto_toll
-									has_province_modifier = pauhnextli_toll
-									has_province_modifier = palimeli_toll
-								}
-								num_free_building_slots = 0
-							}
-						}
-						if = {
-							limit = { has_country_flag = Y20_has_leviathan }
-							num_of_times_expanded_infrastructure = 1
-						}
-						else = {
-							development = 15
-						}
-						has_trade_building_trigger = yes
-					}
-					add_province_modifier = {
-						name = feiten_insyaan_trade_centre
-						duration = -1
-					}
-				}"
-			}
-			pick_best_province = {
-				scope = every_owned_province
-				scale = higher_development_than
-				global_trigger = "has_province_modifier = feiten_insyaan_trade_centre"
-				event_target_name = "feiten_add_skypost_insyaa_target"
-			}
-			do_same_event_target_effect = {
-				event_target_name = feiten_add_skypost_insyaa_target
-				effect = "
-				add_province_triggered_modifier = feiten_skyport_handler_mod
-				add_province_modifier = feiten_even_lower_autonomy_insyaa
-				"
-			}
-			if = {
-				limit = {
-					6865 = { owned_by = ROOT }
-					6866 = { owned_by = ROOT }
-				}
-				6865 = {
-					remove_province_modifier = ponquimetzto_toll
-					add_province_modifier = {
-						name = ponquimetzto_toll_upgraded
-						duration = -1
-					}
-				}
-				6866 = {
-					remove_province_modifier = ponquimetzto_toll
-					add_province_modifier = {
-						name = ponquimetzto_toll_upgraded
-						duration = -1
-					}
-				}
-			}
-			if = {
-				limit = {
-					6169 = { owned_by = ROOT }
-					6170 = { owned_by = ROOT }
-				}
-				6169 = {
-					remove_province_modifier = pauhnextli_toll
-					add_province_modifier = {
-						name = pauhnextli_toll_upgraded
-						duration = -1
-					}
-				}
-				6170 = {
-					remove_province_modifier = pauhnextli_toll
-					add_province_modifier = {
-						name = pauhnextli_toll_upgraded
-						duration = -1
-					}
-				}
-			}
-			if = {
-				limit = {
-					6200 = { owned_by = ROOT }
-					6936 = { owned_by = ROOT }
-				}
-				6200 = {
-					remove_province_modifier = palimeli_toll
-					add_province_modifier = {
-						name = palimeli_toll_upgraded
-						duration = -1
-					}
-				}
-				6936 = {
-					remove_province_modifier = palimeli_toll
-					add_province_modifier = {
-						name = palimeli_toll_upgraded
-						duration = -1
-					}
-				}
-			}
+			custom_tooltip = feiten_trade_station_upgrade_tt
+			custom_tooltip = feiten_any_tolls_upgrade_tt
 			custom_tooltip = feiten_reverse-engineered_mechanim_tt
 			hidden_effect = {
+					if = { #otherwise the effect didn't work as you need "" around the Leviathan
+					limit = { has_dlc = "Leviathan" }
+					set_country_flag = Y20_has_leviathan
+				}
+				for = {
+					amount = 5
+					effect = "
+					random_owned_province = {
+						limit = {
+							NOT = { has_province_modifier = feiten_insyaan_trade_centre } 
+							OR = {
+								province_has_center_of_trade_of_level = 1
+								AND = {
+									province_is_any_1444_insyaan_toll = yes
+									#num_free_building_slots = 0
+								}
+							}
+							if = {
+								limit = { has_country_flag = Y20_has_leviathan }
+								num_of_times_expanded_infrastructure = 1
+							}
+							else = {
+								development = 15
+							}
+							has_trade_building_trigger = yes
+						}
+						add_province_modifier = {
+							name = feiten_insyaan_trade_centre
+							duration = -1
+						}
+					}"
+				}
+				pick_best_province = {
+					scope = yanacotlele_region
+					scale = higher_development_than
+					global_trigger = "has_province_modifier = feiten_insyaan_trade_centre"
+					event_target_name = "feiten_add_skypost_insyaa_target"
+				}
+				do_same_event_target_effect = {
+					1 = yes
+					event_target_name = feiten_add_skypost_insyaa_target
+					effect = "
+					add_province_triggered_modifier = feiten_skyport_handler_mod
+					add_province_modifier = feiten_even_lower_autonomy_insyaa
+					"
+				}
+			
+				if = {
+					limit = {
+						6865 = { owned_by = ROOT }
+						6866 = { owned_by = ROOT }
+					}
+					6865 = {
+						remove_province_modifier = ponquimetzto_toll
+						add_province_modifier = {
+							name = ponquimetzto_toll_upgraded
+							duration = -1
+						}
+					}
+					6866 = {
+						remove_province_modifier = ponquimetzto_toll
+						add_province_modifier = {
+							name = ponquimetzto_toll_upgraded
+							duration = -1
+						}
+					}
+				}
+				if = {
+					limit = {
+						6169 = { owned_by = ROOT }
+						6170 = { owned_by = ROOT }
+					}
+					6169 = {
+						remove_province_modifier = pauhnextli_toll
+						add_province_modifier = {
+							name = pauhnextli_toll_upgraded
+							duration = -1
+						}
+					}
+					6170 = {
+						remove_province_modifier = pauhnextli_toll
+						add_province_modifier = {
+							name = pauhnextli_toll_upgraded
+							duration = -1
+						}
+					}
+				}
+				if = {
+					limit = {
+						6200 = { owned_by = ROOT }
+						6936 = { owned_by = ROOT }
+					}
+					6200 = {
+						remove_province_modifier = palimeli_toll
+						add_province_modifier = {
+							name = palimeli_toll_upgraded
+							duration = -1
+						}
+					}
+					6936 = {
+						remove_province_modifier = palimeli_toll
+						add_province_modifier = {
+							name = palimeli_toll_upgraded
+							duration = -1
+						}
+					}
+				}
+				if = {
+					limit = {
+						6190 = { owned_by = ROOT }
+						6199 = { owned_by = ROOT }
+					}
+					6190 = {
+						remove_province_modifier = punaonu_toll
+						add_province_modifier = {
+							name = punaonu_toll_upgraded
+							duration = -1
+						}
+					}
+					6199 = {
+						remove_province_modifier = punaonu_toll
+						add_province_modifier = {
+							name = punaonu_toll
+							duration = -1
+						}
+					}
+				}
+				if = {
+					limit = {
+						6219 = { owned_by = ROOT }
+					}
+					6219 = {
+						remove_province_modifier = khetepuha_toll
+						add_province_modifier = {
+							name = khetepuha_toll_upgraded
+							duration = -1
+						}
+					}
+				}
+				
 				set_country_flag = unlocked_artifice_invention_reverse_mechanim
 				clr_country_flag = researching_artifice_invention_reverse_mechanim #if you are researching it
 			}
@@ -1571,7 +1547,14 @@ feiten_missions_2_world = {
 				rending_has_not_happened = yes
 				AND = {
 					rending_has_happened = yes
-					#has any rending end TODO
+					custom_trigger_tooltip = {
+						tooltip = feiten_huszien_any_choice_tt
+						OR = {
+							has_appeased_huszien = yes
+							has_global_flag = huszien_suppressed
+							has_global_flag = huszien_scoured
+						}
+					}
 				}
 			}
 		}
@@ -1693,17 +1676,16 @@ feiten_missions_2_world = {
 				name = feiten_stormwall_merchant_fleet
 				duration = -1
 			}
-			if = {
-				limit = {
-					num_of_owned_provinces_with = {
+			complex_dynamic_effect = {
+				first_custom_tooltip = feiten_owns_tagaala_yourself
+				first_limit = "num_of_owned_provinces_with = {
 						value = 8
 						region = tagaala_mangroves_region
-					}
-				}
-				set_country_flag = mangrove_bio_infra_enabled
-			}
-			else_if = {
-				limit = {
+					}"
+				first_effect = "custom_tooltip = feiten_own_unlocks_bio_infra set_country_flag = mangrove_bio_infra_enabled"
+
+				second_custom_tooltip = feiten_sub_owns_tagaala_no_infra
+				second_limit = "
 					any_subject_country = {
 						num_of_owned_provinces_with = {
 							value = 8
@@ -1711,20 +1693,23 @@ feiten_missions_2_world = {
 						}
 						NOT = { has_country_flag = mangrove_bio_infra_enabled }
 					}
-				}
-				random_subject_country = {
-					limit = {
-						num_of_owned_provinces_with = {
-							value = 8
-							region = tagaala_mangroves_region
+				"
+				second_effect = "
+					random_subject_country = {
+						limit = {
+							num_of_owned_provinces_with = {
+								value = 8
+								region = tagaala_mangroves_region
+							}
+							NOT = { has_country_flag = mangrove_bio_infra_enabled }
 						}
-						NOT = { has_country_flag = mangrove_bio_infra_enabled }
+						custom_tooltip = feiten_sub_unlocks_bio_infra
+						set_country_flag = mangrove_bio_infra_enabled
 					}
-					set_country_flag = mangrove_bio_infra_enabled
-				}
-			}
-			else_if = {
-				limit = {
+				"
+
+				third_custom_tooltip = feiten_sub_owns_tagaala_yes_infra
+				third_limit = "
 					any_subject_country = {
 						num_of_owned_provinces_with = {
 							value = 8
@@ -1732,27 +1717,32 @@ feiten_missions_2_world = {
 						}
 						has_country_flag = mangrove_bio_infra_enabled
 					}
-				}
-				random_subject_country = {
-					limit = { 
-						any_subject_country = {
-							num_of_owned_provinces_with = {
-								value = 8
+				"
+				third_effect = "
+					custom_tooltip = feiten_sub_unlocks_dev_cost_red
+					hidden_effect = {
+						random_subject_country = {
+						limit = { 
+							any_subject_country = {
+								num_of_owned_provinces_with = {
+									value = 8
+									region = tagaala_mangroves_region
+								}
+								has_country_flag = mangrove_bio_infra_enabled
+							}
+						}
+						every_owned_province = {
+							limit = {
 								region = tagaala_mangroves_region
 							}
-							has_country_flag = mangrove_bio_infra_enabled
-						}
-					}
-					every_owned_province = {
-						limit = {
-							region = tagaala_mangroves_region
-						}
-						add_province_modifier = {
-							name = feiten_subject_mangrove_lower_dev_cost
-							duration = -1
+							add_province_modifier = {
+								name = feiten_subject_mangrove_lower_dev_cost
+								duration = -1
+							}
 						}
 					}
 				}
+				"
 			}
 			custom_tooltip = feiten_insyaan_investment_tt
 			hidden_effect = {
@@ -2925,6 +2915,8 @@ feiten_missions_3_world = {
 				}
 			}
 			else_if = {
+				custom_tooltip = feiten_sarhal_ally_tt
+				hidden_effect = {
 				limit = {
 					any_subject_country = {
 						num_of_owned_provinces_with = {
@@ -2962,7 +2954,6 @@ feiten_missions_3_world = {
 					}
 				}
 			}
-			hidden_effect = {
 				for = {
 					amount = 5
 					effect = "
