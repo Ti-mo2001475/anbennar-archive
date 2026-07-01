@@ -456,6 +456,20 @@ col_1 = {
 				}
 				hre_religion = ravelian
 			}
+			else_if = {
+				limit = {
+					OR = {
+						hre_reform_passed = anbennar_mages_peace
+						hre_reform_passed = anbennar_empower_imperial_diet
+						tag = Z01
+					}
+				}
+				OR = {
+					hre_reform_passed = anbennar_mages_peace
+					hre_reform_passed = anbennar_empower_imperial_diet
+					tag = Z01
+				}
+			}
 			else = {
 				army_size = 150
 				all_known_country = {
@@ -469,61 +483,76 @@ col_1 = {
 					}
 				}
 			}
+			is_at_war = no
 		} 
 
-		effect = { 
-			hidden_effect = {
-				if = {
-					limit = {
-						ROOT = {
-							is_emperor = yes 
-						}
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						hre_reform_passed = anbennar_mages_peace
+						hre_reform_passed = anbennar_empower_imperial_diet
+						tag = Z01
+						hre_religion = ravelian
 					}
-					random_country = {
+				}
+				hidden_effect = {
+					if = {
 						limit = {
-							is_part_of_hre = yes 
-							NOT = { religion = ravelian }
-							NOT = {
-								any_country = {
-									is_part_of_hre = yes 
-									NOT = { religion = ravelian }
-									total_development = PREV
-								}
+							ROOT = {
+								is_emperor = yes 
 							}
 						}
-						save_event_target_as = league_war_defender
+						random_country = {
+							limit = {
+								is_part_of_hre = yes 
+								NOT = { religion = ravelian }
+								NOT = {
+									any_country = {
+										is_part_of_hre = yes 
+										NOT = { religion = ravelian }
+										total_development = PREV
+									}
+								}
+							}
+							save_event_target_as = league_war_defender
+						}
 					}
-				}
-				else = {
-					emperor = {
-						save_event_target_as = league_war_defender
+					else = {
+						emperor = {
+							save_event_target_as = league_war_defender
+						}
 					}
-				}
-				declare_war_with_cb = {
-					casus_belli = cb_busilar_rav_war
-					who = event_target:league_war_defender
-				}
-				every_country = {
-					limit = {
-						is_part_of_hre = yes
-						NOT = { religion = ravelian }
+					declare_war_with_cb = {
+						casus_belli = cb_busilar_rav_war
+						who = event_target:league_war_defender
 					}
-					join_all_defensive_wars_of = event_target:league_war_defender
-				}
+					every_country = {
+						limit = {
+							is_part_of_hre = yes
+							NOT = { religion = ravelian }
+						}
+						join_all_defensive_wars_of = event_target:league_war_defender
+					}
 
-				every_country = {
-					limit = {
-						is_part_of_hre = yes
-						religion = ravelian 
+					every_country = {
+						limit = {
+							is_part_of_hre = yes
+							religion = ravelian 
+						}
+						join_all_offensive_wars_of = ROOT 
 					}
-					join_all_offensive_wars_of = ROOT 
+					
 				}
+				custom_tooltip = A29_religion_wars_tt
 			}
-			custom_tooltip = A29_religion_wars_tt
-			
+			else = {
+				#bypass
+			}
 		} 
 	}
 }
+
 col_2 = {
 	slot = 2
 	generic = no
@@ -935,14 +964,13 @@ col_2 = {
 				AND = {
 					is_capital = yes
 					owner = {
-						religion = ravelian
 						NOT = {
 							has_50_opinion_improved_relation = { target = ROOT }
+							religion = ravelian
 						}
 					}
 				}
 			}
-			
 		} 
 
 		trigger = {  
