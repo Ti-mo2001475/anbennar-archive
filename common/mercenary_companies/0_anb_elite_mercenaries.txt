@@ -1014,9 +1014,6 @@ merc_shazstundihr_marbleblood = {
 	sprites = { group_dwarves_sprite_pack }
     trigger = {
 		tag = I11
-		NOT = { has_country_modifier = monstrous_nation }
-		NOT = { culture_group = centaur }
-		NOT = { has_country_modifier = centaur_military }
 		has_unlocked_merc_company = { merc_company = merc_shazstundihr_marbleblood }
 	}
 	cost_modifier = 0.1
@@ -1333,7 +1330,7 @@ merc_surani_exemplars = {
 		NOT = { has_country_modifier = centaur_military }
 		OR = {
 			is_incident_active = incident_thirteenth_night
-			has_country_flag = vacyntassi_serondars_request_flag
+			hidden_trigger = { has_country_flag = vacyntassi_serondars_request_flag }
 			has_unlocked_merc_company = { merc_company = merc_surani_exemplars }
 		}
 		owns_core_province = 631
@@ -1830,7 +1827,7 @@ merc_daughters_of_akasik_elite = {
 	home_province = 402
 	sprites = { akasi_units_pack }
     trigger = {
-		has_country_flag = improved_daughters_of_akasik
+		has_unlocked_merc_company = { merc_company = merc_daughters_of_akasik_elite }
 	}
 	cost_modifier = 1
 	modifier = {
@@ -2951,7 +2948,7 @@ merc_ironwall = {
 	trigger = {
 		capital_scope = { continent = europe }
 		NOT = { is_or_was_tag = { tag = Z18 } }
-		has_global_flag = ironwall_enabled
+		has_unlocked_merc_company = { merc_company = merc_ironwall }
 	}
 	cost_modifier = 0.75
 
@@ -3347,7 +3344,7 @@ merc_deranne_seaflower_knights = {
 	home_province = 113 #Deranne
 	trigger = {
 		mission_completed = deranne_vengeance_of_tomorrow
-		NOT = { has_country_flag = deranne_disable_seaflowerknights }
+		NOT = { mission_completed = deranne_derannic_behemoths }
 	}
 	regiments_per_development = 0.06
 	cost_modifier = 0.5
@@ -3905,7 +3902,10 @@ merc_ostavranan = {
 	artillery_weight = 0
 	sprites = { green_orc_sprite_pack } 
 	trigger = {
-		has_country_flag = B27_merc
+		hidden_trigger = {
+			NOT = { technology_group = tech_centaur }
+		}
+		has_unlocked_merc_company = { merc_company = merc_ostavranan } 
 	}
 	cost_modifier = 0.5
 	modifier = {
