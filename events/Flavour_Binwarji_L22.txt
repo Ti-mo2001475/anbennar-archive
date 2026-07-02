@@ -550,48 +550,56 @@ country_event = {
 
 	option = { #Sigilan
 		name = binwarji.101.a
+		ai_chance = { factor = 10 }
 		trigger = { has_country_modifier = L22_court_in_sigilan }
 		L22_court_of_fangaula_events_fire = { province = 5813 }
 	}
 
 	option = { #Zitan Tomon
 		name = binwarji.101.a
+		ai_chance = { factor = 10 }
 		trigger = { has_country_modifier = L22_court_in_zitan_tomon }
 		L22_court_of_fangaula_events_fire = { province = 5802 }
 	}
 
 	option = { #Woloso
 		name = binwarji.101.a
+		ai_chance = { factor = 10 }
 		trigger = { has_country_modifier = L22_court_in_woloso }
 		L22_court_of_fangaula_events_fire = { province = 5741 }
 	}
 
 	option = { #Jiridese So
 		name = binwarji.101.a
+		ai_chance = { factor = 10 }
 		trigger = { has_country_modifier = L22_court_in_jiridese_so }
 		L22_court_of_fangaula_events_fire = { province = 5779 }
 	}
 
 	option = { #Sinjetaso
 		name = binwarji.101.a
+		ai_chance = { factor = 10 }
 		trigger = { has_country_modifier = L22_court_in_sinjetaso }
 		L22_court_of_fangaula_events_fire = { province = 5745 }
 	}
 
 	option = { #Izini
 		name = binwarji.101.a
+		ai_chance = { factor = 10 }
 		trigger = { has_country_modifier = L22_court_in_izini }
 		L22_court_of_fangaula_events_fire = { province = 5724 }
 	}
 
 	option = { #Kunolo
 		name = binwarji.101.a
+		ai_chance = { factor = 10 }
 		trigger = { has_country_modifier = L22_court_in_kunolo }
 		L22_court_of_fangaula_events_fire = { province = 5710 }
 	}
 
 	option = { #Jagab Faru
 		name = binwarji.101.a
+		ai_chance = { factor = 10 }
 		trigger = { has_country_modifier = L22_court_in_jagab_faru }
 		L22_court_of_fangaula_events_fire = { province = 5680 }
 	}
@@ -703,12 +711,16 @@ province_event = { #Advisor Insults Province
 		name = binwarji.103.c
 
 		owner = { add_prestige = 10 }
-		hidden_effect = {
-			remove_country_modifier = L22_defended_court_member
+		hidden_effect = { #Cleaner Tooltip
+			owner = {
+				remove_country_modifier = L22_defended_court_member
+			}
 		}
-		add_country_modifier = {
-			name = L22_defended_court_member
-			duration = 3650
+		owner = {
+			add_country_modifier = {
+				name = L22_defended_court_member
+				duration = 3650
+			}
 		}
 	}
 }
@@ -737,7 +749,10 @@ province_event = { #Priest Wants Investment
 			limit = {
 				country_or_non_sovereign_subject_holds = event_target:L22CourtOwner
 			}
-			random_owned_or_subject_province = {
+			random_province_in_state = {
+				limit = {
+					country_or_non_sovereign_subject_holds = event_target:L22CourtOwner
+				}
 				if = {
 					limit = { 
 						OR = {
@@ -935,7 +950,9 @@ province_event = {
 	option = {
 		name = binwarji.106.c
 
-		add_prestige = 10
+		owner = {
+			add_prestige = 10
+		}
 		add_province_modifier = {
 			name = L22_insuficient_manpower
 			duration = 3650
