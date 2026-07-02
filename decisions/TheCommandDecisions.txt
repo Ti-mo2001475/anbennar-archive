@@ -40,6 +40,17 @@ country_decisions = {
 		}
 		ai_will_do = {
 			factor = 100
+			modifier = { #Tries to be fair about pushing one clan above the other
+				factor = 0
+				R64 = {
+					NOT = { num_of_cities = R63 } #This clan is strictly bigger than the other
+					is_subject_of_type_with_overlord = {
+						who = R62
+						type = slave_state
+					}
+					NOT = { overextension_percentage = 0.01 } #The other can be pushed
+				}
+			}
 		}
 	}
 	
@@ -82,6 +93,17 @@ country_decisions = {
 		}
 		ai_will_do = {
 			factor = 100
+			modifier = { #Tries to be fair about pushing one clan above the other
+				factor = 0
+				R63 = {
+					NOT = { num_of_cities = R64 } #This clan is strictly bigger than the other
+					is_subject_of_type_with_overlord = {
+						who = R62
+						type = slave_state
+					}
+					NOT = { overextension_percentage = 0.01 } #The other can be pushed
+				}
+			}
 		}
 	}
 
