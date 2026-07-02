@@ -253,7 +253,7 @@ country_event = { #Rising a Hero
 	}
 	option = {
 		name = celliande.7.exit
-		
+		highlight = yes
 	}
 	after = {
 		clr_country_flag = celliande_rising_hero_menu_open
@@ -523,18 +523,21 @@ country_event = { #Nameless Tutors
 	picture = MAGES_ESTATE_eventPicture
 
 	trigger = {
-		is_or_was_tag = { tag = A56 }
-		mission_completed = celliande_stewards_history
+		NOT = { has_country_flag = celliande_18_happend }
 		NOT = { heir_age = 15 }
+		heir_is_powerful_mage = no
 	}
 
-	fire_only_once = yes
+	is_triggered_only = yes
 
 	immediate = {
-		pick_random_provinces = {
-			3 = yes
-			scope = random_owned_province
-			event_target_name = celliande_target
+		hidden_effect = {
+			set_country_flag = celliande_18_happend
+			pick_random_provinces = {
+				3 = yes
+				scope = random_owned_province
+				event_target_name = celliande_target
+			}
 		}
 	}
 	

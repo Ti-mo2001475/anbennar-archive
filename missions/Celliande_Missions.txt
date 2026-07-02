@@ -559,6 +559,7 @@ celliande_2_missions = {
 					duration = -1
 				}
 			}
+			custom_tooltip = celliande_beyond_coast.tt2
 		}
 	}
 	celliande_serondor_expedition = {
@@ -839,6 +840,19 @@ celliande_3_missions = {
 				set_country_flag = labyrinth_of_sorncell_unlocked
 			}
 			custom_tooltip = celliande_stewards_history.tt2
+			hidden_effect = {
+				if = {
+					limit = {
+						has_heir = yes
+						NOT = { heir_age = 14 }
+						heir_is_powerful_mage = no
+					}
+					country_event = {
+						id = celliande.18
+						days = 365 #a 1 year
+					}
+				}
+			}
 		}
 	}
 	celliande_first_many = {
@@ -1440,7 +1454,6 @@ celliande_5_missions = {
 		}
 
 		provinces_to_highlight = {
-			province_id = 413 #Sorncell
 		}
 
 		trigger = {
@@ -1544,7 +1557,7 @@ celliande_5_missions = {
 		provinces_to_highlight = {
 			is_capital = yes
 			owner = {
-				120_opinion_25_spy_network_who_ROOT = yes
+				has_opinion_120_or_spy_network_25 = no
 				OR = {
 					tag = A30
 					tag = A33
@@ -1563,28 +1576,41 @@ celliande_5_missions = {
 				has_dip_advisor_2 = yes
 			}
 			has_institution = renaissance
-			calc_true_if = {
-				amount = 2
-				A30 = { #Wex
-					120_opinion_25_spy_network_who_ROOT = yes
+			has_estate_privilege = estate_church_one_faith_one_culture
+			if = {
+				limit = {
+					OR = {
+						exists = A30
+						exists = A33
+						exists = A38
+						exists = A35
+						exists = A55
+						exists = A85
+					}
 				}
-				A33 = { #Verne
-					120_opinion_25_spy_network_who_ROOT = yes
-				}
-				A38 = { #Anbenncoast
-					120_opinion_25_spy_network_who_ROOT = yes
-				}
-				A35 = { #Konwell
-					120_opinion_25_spy_network_who_ROOT = yes
-				}
-				A55 = { #Menibor
-					120_opinion_25_spy_network_who_ROOT = yes
-				}
-				A85 = { #Magisterium
-					120_opinion_25_spy_network_who_ROOT = yes
+				calc_true_if = {
+					desc = celliande_from_grave_custom_tt
+					amount = 2
+					A30 = { #Wex
+						has_opinion_120_or_spy_network_25 = yes
+					}
+					A33 = { #Verne
+						has_opinion_120_or_spy_network_25 = yes
+					}
+					A38 = { #Anbenncoast
+						has_opinion_120_or_spy_network_25 = yes
+					}
+					A35 = { #Konwell
+						has_opinion_120_or_spy_network_25 = yes
+					}
+					A55 = { #Menibor
+						has_opinion_120_or_spy_network_25 = yes
+					}
+					A85 = { #Magisterium
+						has_opinion_120_or_spy_network_25 = yes
+					}
 				}
 			}
-			has_estate_privilege = estate_church_one_faith_one_culture
 		}
 
 		effect = {
@@ -1780,11 +1806,14 @@ celliande_5_missions = {
 				cost_multiplier = 0.5
 				culture = milcori
 			}
-			every_owned_province = {
-				limit = {
-					culture = arannese
+			custom_tooltip = celliande_last_arannese_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = arannese
+					}
+					add_nationalism = -30
 				}
-				add_nationalism = -30
 			}
 		}
 	}
