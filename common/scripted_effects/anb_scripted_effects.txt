@@ -5226,6 +5226,11 @@ anb_on_development_effect = {
 			duration = -1
 		}
 	}
+
+	if = {
+		limit = { owner = { has_government_attribute = move_development_with_capital } }
+		change_variable = { $development$_increased_by_owner = 1 }
+	}
 }
 
 create_vassal_with_religion_and_culture = {
@@ -12194,6 +12199,7 @@ B43_corvuria_crusade_effect = {
 	}
 	else_if = {
 		limit = { A59 = { ai = yes } }
+		white_peace = A59
 		A59 = { #Corvuria
 			custom_tooltip = B43_remove_vampires.tt
 			clr_country_flag = has_vampires_estate
@@ -13830,4 +13836,9 @@ anb_change_trade_goods_readd_manufactory_province_id = {
 	else = {
 		$province_id$ = { change_trade_goods = $tradegoods$ }
 	}
+}
+
+block_manually_moving_capital = {
+	custom_tooltip = no_move_capital_effect
+	set_country_flag = cannot_move_capital_flag
 }
