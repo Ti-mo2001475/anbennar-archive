@@ -644,7 +644,7 @@ feiten_missions_1_last = {
 			OR = {
 				NOT = { development = 30 }
 				AND = {
-					NOT = { has_building = stock_exchange }
+					NOT = { has_building = stock_exchange } #buildings stay as upgrade to previous mission requiring marketplace
 					NOT = { has_building = trade_depot }
 				}
 				AND = {
@@ -1116,7 +1116,7 @@ feiten_missions_2_established = {
 					}
 					NOT = {
 						AND = {
-							has_building = wharf
+							has_manufactory_trigger = yes
 							base_production = 8
 						}
 					}
@@ -1124,7 +1124,12 @@ feiten_missions_2_established = {
 						ROOT = {
 							num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 								value = 3
-								has_building = wharf
+								has_manufactory_trigger = yes
+								OR = {
+									trade_goods = naval_supplies
+									trade_goods = fish
+									trade_goods = salt
+								}
 								base_production = 8
 							}
 						}
@@ -1139,7 +1144,7 @@ feiten_missions_2_established = {
 					}
 					NOT = {
 						AND = {
-							has_building = textile
+							has_manufactory_trigger = yes
 							base_production = 8
 						}
 					}
@@ -1147,7 +1152,13 @@ feiten_missions_2_established = {
 						ROOT = {
 							num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 								value = 2
-								has_building = textile
+								has_manufactory_trigger = yes
+								OR = {
+									trade_goods = silk
+									trade_goods = cloth
+									trade_goods = dyes
+									trade_goods = wool
+								}
 								base_production = 8
 							}
 						}
@@ -1160,7 +1171,7 @@ feiten_missions_2_established = {
 					}
 					NOT = {
 						AND = {
-							has_building = weapons
+							has_manufactory_trigger = yes
 							base_production = 8
 						}
 					}
@@ -1168,7 +1179,11 @@ feiten_missions_2_established = {
 						ROOT = {
 							num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 								value = 1
-								has_building = weapons
+								has_manufactory_trigger = yes
+								OR = {
+									trade_goods = iron
+									trade_goods = copper
+								}
 								base_production = 8
 							}
 						}
@@ -1180,17 +1195,32 @@ feiten_missions_2_established = {
 		trigger = {
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				value = 3
-				has_building = wharf
+				has_manufactory_trigger = yes
+				OR = {
+					trade_goods = naval_supplies
+					trade_goods = fish
+					trade_goods = salt
+				}
 				base_production = 8
 			}
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				value = 2
-				has_building = textile
+				has_manufactory_trigger = yes
+				OR = {
+					trade_goods = silk
+					trade_goods = cloth
+					trade_goods = dyes
+					trade_goods = wool
+				}
 				base_production = 8
 			}
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				value = 1
-				has_building = weapons
+				has_manufactory_trigger = yes
+				OR = {
+					trade_goods = iron
+					trade_goods = copper
+				}
 				base_production = 8
 			}
 		}
@@ -1213,14 +1243,13 @@ feiten_missions_2_established = {
 					clr_country_flag = feiten_to_build_an_airship
 					every_owned_province = {
 						limit = {
-							OR = {
-								has_building = wharf
-								has_building = textile
-								has_building = weapons
-							}
+							has_manufactory_trigger = yes
 						}
 						if = {
-							limit = { base_production = 12 }
+							limit = {
+								base_production = 12
+								has_production_manufactory_or_gold_trigger = yes
+							}
 							add_province_modifier = {
 								name = feiten_state_investment
 								duration = 14600
@@ -1236,14 +1265,13 @@ feiten_missions_2_established = {
 					every_subject_country = {
 						every_owned_province = {
 							limit = {
-								OR = {
-									has_building = wharf
-									has_building = textile
-									has_building = weapons
-								}
+								has_manufactory_trigger = yes
 							}
 							if = {
-								limit = { base_production = 12 }
+								limit = {
+									base_production = 12
+									has_production_manufactory_or_gold_trigger = yes
+								}
 								add_province_modifier = {
 									name = feiten_state_investment
 									duration = 14600
@@ -1572,7 +1600,7 @@ feiten_missions_2_world = {
 					type = infantry
 				}
 				add_province_modifier = {
-					name = feiten_shimua_gene_pillar_extraction
+					name = feiten_shuimu_gene_pillar_extraction
 					duration = -1
 				}
 			}
@@ -1869,7 +1897,7 @@ feiten_missions_2_last = {
 			NOT = {
 				AND = {
 					heavy_ships_in_province = 40
-					has_building = drydock
+					has_dock_building_trigger = yes
 				}
 			}
 		}
@@ -1878,7 +1906,7 @@ feiten_missions_2_last = {
 			treasury = 1000
 			4879 = {
 				heavy_ships_in_province = 40
-				has_building = drydock
+				has_dock_building_trigger = yes
 			}
 		}
 		
@@ -1886,11 +1914,19 @@ feiten_missions_2_last = {
 			if = {
 				limit = {
 					4879 = {
-						num_free_building_slots = 1
-						NOT = { has_building = grand_shipyard }
+						OR = {
+							AND = {
+								num_free_building_slots = 1
+								NOT = { has_building = grand_shipyard }
+							}
+							has_building = shipyard
+						}
 					}
 				}
-				4879 = { add_building = grand_shipyard }
+				4879 = {
+					remove_building = shipyard
+					add_building = grand_shipyard
+				}
 			}
 			4879 = { add_province_modifier = { name = feiten_harbour_dredged duration = -1 } }
 			hidden_effect = { country_event = { id = flavor_feiten.204 days = 730 random = 365 } }
@@ -1909,8 +1945,14 @@ feiten_missions_2_last = {
 			NOT = {
 				AND = {
 					country_or_non_sovereign_subject_holds = ROOT
-					has_building = university
-					has_building = cathedral
+					OR = {
+						has_building = university
+						AND = {
+							num_of_buildings_in_province = 8
+							num_free_building_slots = 0
+						}
+					}
+					has_tax_building_trigger = yes
 					development = 40
 				}
 			}
@@ -1936,8 +1978,14 @@ feiten_missions_2_last = {
 			OR = {
 				4861 = {
 					country_or_non_sovereign_subject_holds = ROOT
-					has_building = university
-					has_building = cathedral
+					OR = {
+						has_building = university
+						AND = {
+							num_of_buildings_in_province = 8
+							num_free_building_slots = 0
+						}
+					}
+					has_tax_building_trigger = yes
 					development = 40
 				}
 				4861 = {
@@ -2584,13 +2632,13 @@ feiten_missions_3_world = {
 				province_id = 1624 # Ringlet Basin
 				AND = {
 					province_id = 6145 # Inahmang
-					NOT = { has_building = naval_battery }
+					NOT = { has_coast_defense_building_trigger = yes }
 				}
 			}
 		}
 		
 		trigger = {
-			6145 = { has_building = naval_battery }
+			6145 = { has_coast_defense_building_trigger = yes }
 			custom_trigger_tooltip = {
 				tooltip = feiten_bait_and_trap_the_pirates_trigger_tt
 				variable_arithmetic_trigger = {
@@ -2791,10 +2839,13 @@ feiten_missions_3_world = {
 			}
 			NOT = {
 				owner = {
-					any_ally = {
-						tag = Y20
-					}
-					overlord = {
+					OR = {
+						any_ally = {
+							tag = Y20
+						}
+						overlord = {
+							tag = Y20
+						}
 						tag = Y20
 					}
 				}
@@ -2853,107 +2904,107 @@ feiten_missions_3_world = {
 		}
 		
 		effect = {
-			if = {
-				limit = {
-					any_ally = {
-						capital_scope = {
-							continent = africa
-						}
-						num_of_owned_provinces_with = {
-							value = 30
-							OR = {
-								region = yetefesefi_region
-								region = telekenid_region
-								region = dreksaret_region
-								region = denibari_region
-							}
-						}
-						trust = {
-							who = ROOT
-							value = 66
-						}
-						has_opinion = {
-							who = ROOT
-							value = 150
-						}
-						any_rival_country = {
-							trade_embargo_by = ROOT
-						}
-					}
-				}
-				random_ally = {
+			custom_tooltip = feiten_sarhal_ally_tt
+			hidden_effect = {
+				if = {
 					limit = {
-						capital_scope = {
-							continent = africa
-						}
-						num_of_owned_provinces_with = {
-							value = 30
-							OR = {
-								region = yetefesefi_region
-								region = telekenid_region
-								region = dreksaret_region
-								region = denibari_region
+						any_ally = {
+							capital_scope = {
+								continent = africa
 							}
-						}
-						trust = {
-							who = ROOT
-							value = 66
-						}
-						has_opinion = {
-							who = ROOT
-							value = 150
-						}
-						any_rival_country = {
-							trade_embargo_by = ROOT
-						}
-					}
-					add_country_modifier = {
-						name = feiten_exports_to_yanshen
-						duration = -1
-					}
-					capital_scope = { add_province_triggered_modifier = feiten_skyport_handler_mod }
-				}
-			}
-			else_if = {
-				custom_tooltip = feiten_sarhal_ally_tt
-				hidden_effect = {
-				limit = {
-					any_subject_country = {
-						num_of_owned_provinces_with = {
-							value = 30
-							region = yetefesefi_region
-							region = telekenid_region
-							region = dreksaret_region
-							region = denibari_region
-						}
-					}
-				}
-				random_subject_country = {
-					limit = {
-						num_of_owned_provinces_with = {
-							value = 30
-							region = yetefesefi_region
-							region = telekenid_region
-							region = dreksaret_region
-							region = denibari_region
-						}
-					}
-					add_country_modifier = {
-						name = feiten_exports_to_yanshen
-						duration = -1
-					}
-					if = {
-						limit = {
-							NOT = {
-								this = {
-									liberty_desire = 50
+							num_of_owned_provinces_with = {
+								value = 30
+								OR = {
+									region = yetefesefi_region
+									region = telekenid_region
+									region = dreksaret_region
+									region = denibari_region
 								}
 							}
+							trust = {
+								who = ROOT
+								value = 66
+							}
+							has_opinion = {
+								who = ROOT
+								value = 150
+							}
+							any_rival_country = {
+								trade_embargo_by = ROOT
+							}
+						}
+					}
+					random_ally = {
+						limit = {
+							capital_scope = {
+								continent = africa
+							}
+							num_of_owned_provinces_with = {
+								value = 30
+								OR = {
+									region = yetefesefi_region
+									region = telekenid_region
+									region = dreksaret_region
+									region = denibari_region
+								}
+							}
+							trust = {
+								who = ROOT
+								value = 66
+							}
+							has_opinion = {
+								who = ROOT
+								value = 150
+							}
+							any_rival_country = {
+								trade_embargo_by = ROOT
+							}
+						}
+						add_country_modifier = {
+							name = feiten_exports_to_yanshen
+							duration = -1
 						}
 						capital_scope = { add_province_triggered_modifier = feiten_skyport_handler_mod }
 					}
 				}
-			}
+				else_if = {
+					limit = {
+						any_subject_country = {
+							num_of_owned_provinces_with = {
+								value = 30
+								region = yetefesefi_region
+								region = telekenid_region
+								region = dreksaret_region
+								region = denibari_region
+							}
+						}
+					}
+					random_subject_country = {
+						limit = {
+							num_of_owned_provinces_with = {
+								value = 30
+								region = yetefesefi_region
+								region = telekenid_region
+								region = dreksaret_region
+								region = denibari_region
+							}
+						}
+						add_country_modifier = {
+							name = feiten_exports_to_yanshen
+							duration = -1
+						}
+						if = {
+							limit = {
+								NOT = {
+									this = {
+										liberty_desire = 50
+									}
+								}
+							}
+							capital_scope = { add_province_triggered_modifier = feiten_skyport_handler_mod }
+						}
+					}
+				}
 				for = {
 					amount = 5
 					effect = "
@@ -3859,8 +3910,8 @@ feiten_missions_4_early = {
 		}
 		
 		effect = {
-			if = {
-				limit = { 4896 = { owned_by = ROOT } }
+			custom_tooltip = feiten_monopoly_on_salt_explain_tt_1
+			tooltip = {
 				add_years_of_owned_provinces_production_income = {
 					years = 10
 					trigger = { province_id = 4896 }
@@ -3873,10 +3924,30 @@ feiten_missions_4_early = {
 					}
 				}
 			}
-			else = {
-				add_years_of_trade_income = {
-					years = 2
-					custom_tooltip = feiten_monopoly_on_salt_effect_tt
+			custom_tooltip = feiten_monopoly_on_salt_explain_tt_2
+			tooltip = {
+				custom_tooltip = feiten_monopoly_on_salt_effect_tt
+			}
+			hidden_effect = {
+				if = {
+					limit = { 4896 = { owned_by = ROOT } }
+					add_years_of_owned_provinces_production_income = {
+						years = 10
+						trigger = { province_id = 4896 }
+						custom_tooltip = feiten_monopoly_on_salt_effect_tt_2
+					}
+					4896 = {
+						add_permanent_province_modifier = {
+							name = feiten_local_trade_monopoly
+							duration = 10950
+						}
+					}
+				}
+				else = {
+					add_years_of_trade_income = {
+						years = 2
+						custom_tooltip = feiten_monopoly_on_salt_effect_tt
+					}
 				}
 			}
 		}
@@ -4475,7 +4546,7 @@ feiten_missions_4_last = {
 			NOT = {
 				AND = {
 					has_building = furnace
-					has_building = counting_house
+					has_production_building_trigger = yes
 				}
 			}
 		}
@@ -4487,7 +4558,7 @@ feiten_missions_4_last = {
 				}
 				4881 = {
 					has_building = furnace
-					has_building = counting_house
+					has_production_building_trigger = yes
 				}
 			}
 			else = {
@@ -5073,7 +5144,15 @@ feiten_missions_5_last = {
 		provinces_to_highlight = {
 			province_group = jellyfish_coast_provinces
 			OR = {
-				NOT = { has_building = university }
+				NOT = {
+					OR = {
+						has_building = university
+						AND = {
+							num_of_buildings_in_province = 8
+							num_free_building_slots = 0
+						}
+					}
+				}
 				AND = {
 					NOT = { enlightenment = 100 }
 					NOT = { has_province_modifier = feiten_shuimu_engineering_workshop }
@@ -5085,7 +5164,13 @@ feiten_missions_5_last = {
 		trigger = {
 			jellyfish_coast_provinces = {
 				type = all
-				has_building = university
+				OR = {
+						has_building = university
+						AND = {
+							num_of_buildings_in_province = 8
+							num_free_building_slots = 0
+						}
+					}
 				OR = {
 					has_province_modifier = feiten_shuimu_engineering_workshop
 					has_province_modifier = feiten_shuimu_engineering_workshop_no_tech_cost
@@ -5136,8 +5221,16 @@ feiten_missions_5_last = {
 			trade_goods = fish
 			OR = {
 				NOT = { has_building = wharf }
-				NOT = { has_building = cathedral }
-				NOT = { has_building = university }
+				NOT = { has_tax_building_trigger = yes }
+				NOT = {
+					OR = {
+						has_building = university
+						AND = {
+							num_of_buildings_in_province = 8
+							num_free_building_slots = 0
+						}
+					}
+				}
 			}
 			NOT = {
 				ROOT = {
@@ -5145,8 +5238,14 @@ feiten_missions_5_last = {
 						value = 5
 						trade_goods = fish
 						has_building = wharf
-						has_building = cathedral
+						has_tax_building_trigger = yes
+						OR = {
 						has_building = university
+						AND = {
+							num_of_buildings_in_province = 8
+							num_free_building_slots = 0
+						}
+					}
 					}
 				}
 			}
@@ -5166,8 +5265,14 @@ feiten_missions_5_last = {
 				value = 5
 				trade_goods = fish
 				has_building = wharf
-				has_building = cathedral
-				has_building = university
+				has_tax_building_trigger = yes
+				OR = {
+					has_building = university
+					AND = {
+						num_of_buildings_in_province = 8
+						num_free_building_slots = 0
+					}
+				}
 			}
 		}
 		
