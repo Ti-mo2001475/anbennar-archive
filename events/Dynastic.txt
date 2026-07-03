@@ -55,18 +55,19 @@
 country_event = {
 	id = 9451
 	title = "EVTNAME9451"
-	desc = "EVTDESC9451"
+	desc = { desc = "EVTDESC9451" trigger = { ruler_attracted_to_women = yes } }
+	desc = { desc = EVTDESC9451_servant trigger = { ruler_attracted_to_men = yes } } #ANBENNAR - sets up dilemma
 	picture = DEATH_OF_HEIR_eventPicture
 	
 	trigger = {
 		has_heir = yes
 		heir_claim = 90
-		is_female = no
+		#is_female = no #ANBENNAR - queens exist
 		is_lesser_in_union = no
 		has_regency = no
 		government = monarchy
 		NOT = { has_reform = elective_monarchy }
-		NOT = { has_reform = polish_elective_monarchy }
+		# NOT = { has_reform = polish_elective_monarchy }
 		# NOT = { has_reform = mamluk_government }
 		NOT = { has_government_attribute = has_harem_events }
 		NOT = { has_reform = harpy_matriarchy_reform }
@@ -103,7 +104,28 @@ country_event = {
 	
 	option = {
 		name = "EVTOPTB9451"
+		trigger = { ruler_attracted_to_women = yes } #ANBENNAR
 		kill_heir = { allow_new_heir = no }
+		if = {
+			limit = { is_female = yes }
+			custom_tooltip = ruler_magic_bypass_biology
+			change_mana = { amount = -25 }
+		}
+		define_heir = {
+			dynasty = ROOT
+			claim = 30
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB9451_servant"
+		trigger = { ruler_attracted_to_men = yes } #ANBENNAR
+		kill_heir = { allow_new_heir = no }
+		if = {
+			limit = { is_female = no }
+			custom_tooltip = ruler_magic_bypass_biology
+			change_mana = { amount = -25 }
+		}
 		define_heir = {
 			dynasty = ROOT
 			claim = 30
@@ -121,6 +143,13 @@ country_event = {
 		}
 		custom_tooltip = S98_horns_used_tt
 		clr_country_flag = S98_horns
+	}
+
+	option = { #Orb level 3 avoids bad generic events
+		name = orb_of_omniscience_no_hunting_accident
+		highlight = yes
+		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		add_splendor = 1
 	}
 }
 
@@ -143,7 +172,7 @@ country_event = {
 		government = monarchy
 		# NOT = { has_reform = mamluk_government }
 		NOT = { has_reform = elective_monarchy }
-		NOT = { has_reform = polish_elective_monarchy }
+		# NOT = { has_reform = polish_elective_monarchy }
 		NOT = { has_government_attribute = has_harem_events }
 		NOT = { has_reform = harpy_matriarchy_reform }
 		NOT = { has_reform = harpy_matriarchy_ayarallen_early_gov_mechanic_reform }
@@ -172,6 +201,13 @@ country_event = {
 		name = "EVTOPTB9452"
 		kill_heir = {}
 	}
+
+	option = { #Orb level 3 avoids bad generic events
+		name = orb_of_omniscience_no_hunting_accident
+		highlight = yes
+		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		add_splendor = 1
+	}
 }
 
 # The Weeping Song
@@ -198,7 +234,7 @@ country_event = {
 		# NOT = { has_reform = mamluk_government }
 		heir_age = 4
 		NOT = { has_reform = elective_monarchy }
-		NOT = { has_reform = polish_elective_monarchy }
+		# NOT = { has_reform = polish_elective_monarchy }
 	}
 	
 	mean_time_to_happen = {
@@ -214,6 +250,13 @@ country_event = {
 	option = {
 		name = "EVTOPTB9453"
 		add_manpower = 1
+	}
+
+	option = { #Orb level 3 avoids bad generic events
+		name = orb_of_omniscience_generic_event_avoidance
+		highlight = yes
+		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		add_splendor = 1
 	}
 }
 
@@ -360,32 +403,59 @@ country_event = {
 	option = {
 		name = "EVTOPTA9455"
 		trigger = {
-			is_female = no
+			OR = {
+				is_female = no #Anbennar - homosexuality rep
+				ruler_attracted_to_women = yes #Anbennar - homosexuality rep
+			}
 			NOT = { ruler_is_immortal = yes } #Anbennar
 		}
-		define_heir = {
-			dynasty = ROOT
-			claim = 30
+		if = {
+			limit = { is_female = yes has_ruler_flag = is_gay }
+			add_splendor = 50
+		}
+		else = {
+			if = { limit = { fast_ruler_is_harpy = yes }
+				define_heir = {
+					dynasty = ROOT
+					claim = 30
+					female = yes
+				}
+			}
+			else = {
+				define_heir = {
+					dynasty = ROOT
+					claim = 30
+				}
+			}
 		}
 		add_prestige = -10
 	}
 	option = {
 		name = "EVTOPTB9455"
 		trigger = {
-			is_female = yes
+			OR = {
+				is_female = yes #Anbenanr - homosexuality rep
+				ruler_attracted_to_men = yes #Anbennar - homosexuality rep
+			}
 			NOT = { ruler_is_immortal = yes } #Anbennar
 		}
-		if = { limit = { culture_group = harpy }
-		define_heir = {
-			dynasty = ROOT
-			claim = 30
-				female = yes
-			}
+		if = {
+			limit = { is_female = no has_ruler_flag = is_gay }
+			add_splendor = 50
 		}
 		else = {
-			define_heir = {
-				dynasty = ROOT
-				claim = 30
+			if = { limit = { fast_ruler_is_harpy = yes }
+				define_heir = {
+					dynasty = ROOT
+					claim = 30
+					female = yes
+				}
+			}
+			else = {
+				define_heir = {
+					dynasty = ROOT
+					claim = 30
+				}
 			}
 		}
 		add_prestige = -10
@@ -445,7 +515,7 @@ country_event = {
 		has_regency = no
 		is_lesser_in_union = no
 		NOT = { has_reform = elective_monarchy }
-		NOT = { has_reform = polish_elective_monarchy }
+		# NOT = { has_reform = polish_elective_monarchy }
 		NOT = { has_country_flag = healthy_heir_diet }
 		heir_is_not_immortal = yes #Anbennar
 	}
@@ -488,6 +558,13 @@ country_event = {
 		custom_tooltip = S98_horns_used_tt
 		clr_country_flag = S98_horns
 	}
+
+	option = { #Orb level 3 avoids bad generic events
+		name = orb_of_omniscience_no_hunting_accident
+		highlight = yes
+		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		add_splendor = 1
+	}
 }
 
 # Child in the Reeds
@@ -509,7 +586,7 @@ country_event = {
 		NOT = { has_reform = harpy_matriarchy_ayarallen_early_gov_mechanic_reform }
 		NOT = { has_reform = harpy_queendom_reform }
 		NOT = { has_reform = elective_monarchy }
-		NOT = { has_reform = polish_elective_monarchy }
+		# NOT = { has_reform = polish_elective_monarchy }
 		NOT = { has_country_flag = disabled_heir_events }
 		has_government_attribute = heir
 	}
@@ -570,7 +647,7 @@ country_event = {
 		heir_age = 15
 		is_lesser_in_union = no
 		NOT = { has_reform = elective_monarchy }
-		NOT = { has_reform = polish_elective_monarchy }
+		# NOT = { has_reform = polish_elective_monarchy }
 		NOT = { has_government_attribute = has_harem_events }
 		# NOT = { has_reform = mamluk_government }
 		NOT = { has_reform = harpy_matriarchy_reform }
@@ -627,7 +704,7 @@ country_event = {
 		heir_age = 15
 		is_lesser_in_union = no
 		NOT = { has_reform = elective_monarchy }
-		NOT = { has_reform = polish_elective_monarchy }
+		# NOT = { has_reform = polish_elective_monarchy }
 		NOT = { has_country_flag = no_more_hunting_for_heir }
 		heir_is_not_immortal = yes #Anbennar
 	}
@@ -671,6 +748,13 @@ country_event = {
 		custom_tooltip = S98_horns_used_tt
 		clr_country_flag = S98_horns
 	}
+
+	option = { #Orb level 3 avoids bad generic events
+		name = orb_of_omniscience_no_hunting_accident
+		highlight = yes
+		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		add_splendor = 1
+	}
 }
 
 
@@ -690,7 +774,7 @@ country_event = {
 		government = monarchy
 		# NOT = { has_reform = mamluk_government }
 		NOT = { has_reform = elective_monarchy }
-		NOT = { has_reform = polish_elective_monarchy }
+		# NOT = { has_reform = polish_elective_monarchy }
 	}
 	
 	mean_time_to_happen = {
@@ -705,6 +789,13 @@ country_event = {
 	option = {
 		name = "EVTOPTB9460"
 		add_heir_claim = -10
+	}
+
+	option = { #Orb level 3 avoids bad generic events
+		name = orb_of_omniscience_generic_event_avoidance
+		highlight = yes
+		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		add_splendor = 1
 	}
 }
 
@@ -748,6 +839,13 @@ country_event = {
 		#set_legacy_government = bureaucratic_despotism
 		kill_ruler = yes
 		add_stability = -6
+	}
+
+	option = { #Orb level 3 avoids bad generic events
+		name = orb_of_omniscience_generic_event_avoidance
+		highlight = yes
+		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		add_splendor = 1
 	}
 }
 
@@ -854,15 +952,23 @@ country_event = {
 		add_stability = -2
 		add_heir_claim = 30
 	}
-}
 
-# Born under a star
+	option = { #Orb level 3 avoids bad generic events
+		name = orb_of_omniscience_no_hunting_accident
+		highlight = yes
+		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		add_splendor = 1
+	}
+}
+# Reian Seren / Lux Stella reworked
 country_event = {
 	id = 9469
 	title = "EVTNAME9469"
 	desc = "EVTDESC9469"
 	picture = NEW_HEIR_eventPicture
-	
+
+	is_triggered_only = yes
+
 	trigger = {
 		government = monarchy
 		NOT = { has_government_attribute = has_harem_events }
@@ -871,8 +977,8 @@ country_event = {
 		NOT = { has_reform = harpy_matriarchy_ayarallen_early_gov_mechanic_reform }
 		NOT = { has_reform = harpy_queendom_reform }
 		NOT = { culture_group = harpy }
-		NOT = { has_reform = elective_monarchy }
-		NOT = { has_reform = polish_elective_monarchy }
+		# NOT = { has_reform = elective_monarchy }
+		# NOT = { has_reform = polish_elective_monarchy }
 		is_lesser_in_union = no
 		has_heir = no
 		has_regency = no
@@ -884,404 +990,302 @@ country_event = {
 		NOT = { ruler_is_immortal = yes } #Anbennar
 		NOT = { has_country_flag = disabled_heir_events }
 	}
-	
-	mean_time_to_happen = {
-		months = 5000
-	}
-	
+
 	option = {
 		name = "EVTOPTA9469"
-		trigger = {
-			NOT = { culture_group = ynnic_ruinborn_elf }
-			
-		}
-		define_heir = {
-			male = yes
-			dynasty = ROOT
-			name = "Jaher"
-			claim = 100
-			mil = 6
-		}
+		trigger = { NOT = { culture_group = ynnic_ruinborn_elf } }
+		define_6heir_male = { stat = mil name = "Jaher" }
+	}
+	option = {
+		name = "EVTOPTAa9469"
+		trigger = { NOT = { culture_group = ynnic_ruinborn_elf } }
+		define_6heir_male = { stat = adm name = "Castan" }
 	}
 	option = {
 		name = "EVTOPTAb9469"
-		trigger = {
-			culture_group = lencori
-		}
-		define_heir = {
-			dynasty = ROOT
-			male = yes
-			name = "Lorenan"
-			claim = 100
-			mil = 6
-		}
+		trigger = { culture_group = lencori }
+		define_6heir_male = { stat = mil name = "Lorenan" }
 	}
 	option = {
 		name = "EVTOPTAc9469"
 		trigger = {
-			has_country_modifier = elven_administration
+			OR = {
+				culture_group = eordan_ruinborn_elf
+				culture_group = elven
+			}
 		}
-		define_heir = {
-			dynasty = ROOT
-			male = yes
-			name = "Venaan"
-			claim = 100
-			mil = 6
-		}
+		define_6heir_male = { stat = mil name = "Venaan" }
 	}
 	option = {
 		name = "EVTOPTAd9469"
-		trigger = {
-			has_country_modifier = gnollish_administration
-		}
-		define_heir = {
-			dynasty = ROOT
-			male = yes
-			name = "Krah"
-			claim = 100
-			mil = 6
-		}
+		trigger = { culture_group = gnollish }
+		define_6heir_male = { stat = mil name = "Krah" }
 	}
 	option = {
 		name = "EVTOPTAe9469"
-		trigger = {
-			culture_group = alenic
-		}
-		define_heir = {
-			dynasty = ROOT
-			male = yes
-			name = "Godryc"
-			claim = 100
-			mil = 6
-		}
+		trigger = { culture_group = alenic }
+		define_6heir_male = { stat = mil name = "Godryc" }
 	}
 	option = {
 		name = "EVTOPTAf9469"
-		trigger = {
-			dynasty = "Silmuna"
-		}
-		define_heir = {
-			dynasty = ROOT
-			male = yes
-			name = "Munas"
-			claim = 100
-			dip = 6
-		}
+		trigger = { dynasty = "Silmuna" }
+		define_6heir_male = { stat = dip name = "Munas" }
 	}
 	option = {
 		name = "EVTOPTAg9469"
-		trigger = {
-			dynasty = "Silurion"
-		}
-		define_heir = {
-			dynasty = ROOT
-			male = yes
-			name = "Urion"
-			claim = 100
-			mil = 6
-		}
+		trigger = { dynasty = "Silurion"}
+		define_6heir_male = { stat = mil name = "Urion" }
 	}
 	option = {
 		name = "EVTOPTAh9469"
-		trigger = {
-			dynasty = "Silgarion"
-		}
-		define_heir = {
-			dynasty = ROOT
-			male = yes
-			name = "Garion"
-			claim = 100
-			adm = 6
-		}
+		trigger = { dynasty = "Silgarion"}
+		define_6heir_male = { stat = adm name = "Garion" }
 	}
 	option = {
 		name = "EVTOPTAi9469"
-		trigger = {
-			dynasty = "Silcalas"
-		}
-		define_heir = {
-			dynasty = ROOT
-			male = yes
-			name = "Calasandur"
-			claim = 100
-			adm = 6
-		}
+		trigger = { dynasty = "Silcalas"}
+		define_6heir_male = { stat = adm name = "Calasandur" }
 	}
 	option = {
 		name = "EVTOPTAj9469"
-		trigger = {
-			dynasty = "Silnara"
-		}
-		define_heir = {
-			dynasty = ROOT
-			male = yes
-			name = "Narwendir"
-			claim = 100
-			dip = 6
-		}
+		trigger = { dynasty = "Silnara"}
+		define_6heir_male = { stat = dip name = "Narwendir" }
 	}
 	option = {
 		name = "EVTOPTAk9469"
-		trigger = {
-			dynasty = "Silebor"
-		}
-		define_heir = {
-			dynasty = ROOT
-			male = yes
-			name = "Eborian"
-			claim = 100
-			dip = 6
-		}
+		trigger = { dynasty = "Silebor" }
+		define_6heir_male = { stat = dip name = "Eborian" }
 	}
 	option = {
 		name = "EVTOPTAl9469"
-		trigger = {
-			dynasty = "Silistra"
-		}
-		define_heir = {
-			dynasty = ROOT
-			male = yes
-			name = "Istralan"
-			claim = 100
-			mil = 6
-		}
+		trigger = { dynasty = "Silistra" }
+		define_6heir_male = { stat = mil name = "Istralan" }
 	}
 	option = {
 		name = "EVTOPTAm9469"
-		trigger = {
-			culture_group = harimari
-		}
-		define_heir = {
-			dynasty = ROOT
-			male = yes
-			name = "Harimar"
-			claim = 100
-			mil = 6
+		trigger = { culture_group = harimari}
+		define_6heir_male = { stat = mil name = "Harimar" }
+	}
+	option = {
+		name = "EVTOPTAn9469"
+		trigger = { culture_group = giantkind }
+		define_6heir_male = { stat = mil name = "Gerud" }
+	}
+	option = {
+		name = "EVTOPTAo9469"
+		trigger = { culture_group = ynnic_ruinborn_elf }
+		define_6heir_male = { stat = mil name = "Levodas" }
+	}
+	option = {
+		name = "EVTOPTAp9469"
+		trigger = { culture_group = ynnic_ruinborn_elf }
+		define_6heir_male = { stat = adm name = "Lukaus" }
+	}
+	option = {
+		name = "EVTOPTAq9469"
+		trigger = { culture_is_half_orcish = yes }
+		define_6heir_male = { stat = mil name = "Lothane" }
+	}
+	option = {
+		name = "EVTOPTAr9469"
+		trigger = { culture_group = gnomish }
+		define_6heir_male = { stat = dip name = "Fizwick" }
+	}
+	option = {
+		name = "EVTOPTAs9469"
+		trigger = { culture_group = halfling }
+		define_6heir_male = { stat = dip name = "Azaly" }
+	}
+	option = {
+		name = "EVTOPTAt9469"
+		trigger = { culture_group = orcish }
+		define_6heir_male = { stat = mil name = "Korgus" }
+	}
+	option = {
+		name = "EVTOPTAu9469"
+		trigger = { culture_group = orcish }
+		define_6heir_male = { stat = dip name = "Bramash" }
+	}
+	option = {
+		name = "EVTOPTAv9469"
+		trigger = { culture_group = goblin }
+		define_6heir_male = { stat = adm name = "Perzuk" }
+	}
+	option = {
+		name = "EVTOPTAw9469"
+		trigger = { culture_group = goblin }
+		define_6heir_male = { stat = mil name = "Glozok" }
+	}
+	option = {
+		name = "EVTOPTAx9469"
+		trigger = { culture_group = ogre }
+		define_6heir_male = { stat = mil name = "Ghornma" }
+	}
+	option = {
+		name = "EVTOPTAy9469"
+		trigger = { culture_group = centaur }
+		define_6heir_male = { stat = mil name = "Naegol" }
+	}
+	option = {
+		name = "EVTOPTAz9469"
+		trigger = { culture_group = hobgoblin }
+		define_6heir_male = { stat = mil name = "Moguwon" }
+	}
+	option = {
+		name = "EVTOPTAaa9469"
+		trigger = { culture_group = yan }
+		define_6heir_male = { stat = adm name = "Jia" }
+	}
+	option = {
+		name = "EVTOPTAab9469"
+		trigger = { culture_group = kai }
+		define_6heir_male = { stat = mil name = "Ca" }
+	}
+	option = {
+		name = "EVTOPTAac9469"
+		trigger = { culture_group = khantaar }
+		random_list = {
+			1 = { 
+				define_6heir_male = { stat = adm name = "Oedek" }
+			}
+			1 = { 
+				define_6heir_male = { stat = dip name = "Tsarai" }
+			}
+			1 = { 
+				define_6heir_male = { stat = mil name = "Jaal" }
+			}
 		}
 	}
 	option = {
-		name = "EVTOPTBn469" 
-		trigger = {
-			culture_group = ynnic_ruinborn_elf 
-		}
-		define_heir = {
-			dynasty = ROOT
-			male = yes
-			name = "Lukaus" 
-			claim = 100
-			adm = 6
-		}
+		name = "EVTOPTAad9469"
+		trigger = { culture_group = eordan_ruinborn_elf }
+		define_6heir_male = { stat = dip name = "Arethon" }
 	}
 	option = {
-		name = "EVTOPTAo9469" 
-		trigger = {
-			culture_group = ynnic_ruinborn_elf 
-		}
-		define_heir = {
-			dynasty = ROOT
-			male = yes
-			name = "Levodas" 
-			claim = 100
-			mil = 6 
-		}
+		name = "EVTOPTAae9469"
+		trigger = { culture_group = eordan_ruinborn_elf }
+		define_6heir_male = { stat = adm name = "Aldan" }
 	}
 	option = {
-		name = "EVTOPTBb9469" 
-		trigger = {
-			culture_group = taychendi_ruinborn_elf 
-		}
-		define_heir = {
-			dynasty = ROOT
-			male = yes
-			name = "Bukka Raya" 
-			claim = 100
-			adm = 6
-		}
+		name = "EVTOPTAaf9469"
+		trigger = { culture_group = eordan_ruinborn_elf }
+		define_6heir_male = { stat = dip name = "Ealar" }
 	}
 	option = {
-		name = "EVTOPTC9469"
-		trigger = {
-			NOT = { culture_group = ynnic_ruinborn_elf }
-		}
-		define_heir = {
-			male = yes
-			dynasty = ROOT
-			name = "Castan"
-			claim = 100
-			adm = 6
-		}
+		name = "EVTOPTAag9469"
+		trigger = { culture_group = west_sarhaly }
+		define_6heir_male = { stat = dip name = "Aro" }
 	}
-
-	
-	# option = {
-		# name = "EVTOPTB9469"
-		# trigger = {
-			# has_flag = not_used
-		# }
-		# define_heir = {
-			# dynasty = ROOT
-			# male = yes
-			# name = "Castan"
-			# claim = 100
-			# adm = 6
-		# }
-	# }
-	# option = {
-		# name = "EVTOPTBb9469"
-		# trigger = {
-			# has_flag = not_used
-		# }
-		# define_heir = {
-			# dynasty = ROOT
-			# male = yes
-			# name = "Mansur"
-			# claim = 100
-			# adm = 6
-		# }
-	# }
-	# option = {
-		# name = "EVTOPTBc9469"
-		# trigger = {
-			# has_flag = not_used
-		# }
-		# define_heir = {
-			# dynasty = ROOT
-			# male = yes
-			# name = "Krishna"
-			# claim = 100
-			# adm = 6
-		# }
-	# }
-	# option = {
-		# name = "EVTOPTBd9469"
-		# trigger = {
-			# has_flag = not_used
-		# }
-		# define_heir = {
-			# dynasty = ROOT
-			# male = yes
-			# name = "Kubilai"
-			# claim = 100
-			# adm = 6
-		# }
-	# }
-	# option = {
-		# name = "EVTOPTBe9469"
-		# trigger = {
-			# has_flag = not_used
-		# }
-		# define_heir = {
-			# male = yes
-			# dynasty = ROOT
-			# name = "Erik"
-			# claim = 100
-			# adm = 6
-		# }
-	# }
-	# option = {
-		# name = "EVTOPTBf9469"
-		# trigger = {
-			# has_flag = not_used
-		# }
-		# define_heir = {
-			# male = yes
-			# dynasty = ROOT
-			# name = "Itzcoatl"
-			# claim = 100
-			# adm = 6
-		# }
-	# }
-	# option = {
-		# name = "EVTOPTBg9469"
-		# trigger = {
-			# has_flag = not_used
-		# }
-		# define_heir = {
-			# male = yes
-			# dynasty = ROOT
-			# name = "Viracocha"
-			# claim = 100
-			# adm = 6
-		# }
-	# }
-	# option = {
-		# name = "EVTOPTBh9469"
-		# trigger = {
-			# has_flag = not_used
-		# }
-		# define_heir = {
-			# male = yes
-			# dynasty = ROOT
-			# name = "Hiawatha"
-			# claim = 100
-			# adm = 6
-		# }
-	# }
-	# option = {
-		# name = "EVTOPTBi9469"
-		# trigger = {
-			# has_flag = not_used
-		# }
-		# define_heir = {
-			# male = yes
-			# dynasty = ROOT
-			# name = "Ruhanga"
-			# claim = 100
-			# adm = 6
-		# }
-	# }
-	# option = {
-		# name = "EVTOPTBj9469"
-		# trigger = {
-			# has_flag = not_used
-		# }
-		# define_heir = {
-			# male = yes
-			# dynasty = ROOT
-			# name = "Bochica"
-			# claim = 100
-			# adm = 6
-		# }
-	# }
-	# option = {
-		# name = "EVTOPTBk9469"
-		# trigger = {
-			# has_flag = not_used
-		# }
-		# define_heir = {
-			# male = yes
-			# dynasty = ROOT
-			# name = "Ashoka"
-			# claim = 100
-			# adm = 6
-		# }
-	# }
-	# option = {
-		# name = "EVTOPTBl9469"
-		# trigger = {
-			# has_flag = not_used
-		# }
-		# define_heir = {
-			# male = yes
-			# dynasty = ROOT
-			# name = "Zal"
-			# claim = 100
-			# adm = 6
-		# }
-	# }
-	# option = {
-		# name = "EVTOPTBm9469"
-		# trigger = {
-			# has_flag = not_used
-		# }
-		# define_heir = {
-			# male = yes
-			# dynasty = ROOT
-			# name = "Solomon"
-			# claim = 100
-			# adm = 6
-		# }
-	# }
+	option = {
+		name = "EVTOPTAah9469"
+		trigger = { culture_group = lizardfolk }
+		define_6heir_male = { stat = mil name = "Teranak" }
+	}
+	option = {
+		name = "EVTOPTAai9469"
+		trigger = { culture_group = mengi }
+		define_6heir_male = { stat = adm name = "Ayufar" }
+	}
+	option = {
+		name = "EVTOPTAaj9469"
+		trigger = { culture_group = dwarven }
+		define_6heir_male = { stat = adm name = "Balgar" }
+	}
+	option = {
+		name = "EVTOPTAak9469"
+		trigger = { culture_group = dwarven }
+		define_6heir_male = { stat = dip name = "Udrek" }
+	}
+	option = {
+		name = "EVTOPTAal9469"
+		trigger = { culture_group = gerudian }
+		define_6heir_male = { stat = dip name = "Askel" }
+	}
+	option = {
+		name = "EVTOPTAam9469"
+		trigger = { culture_group = gerudian }
+		define_6heir_male = { stat = mil name = "Urvik" }
+	}
+	option = {
+		name = "EVTOPTAan9469"
+		trigger = { culture_group = gerudian }
+		define_6heir_male = { stat = adm name = "Olav" }
+	}
+	option = {
+		name = "EVTOPTAao9469"
+		trigger = { culture_group = baashidi }
+		define_6heir_male = { stat = mil name = "Baashi" }
+	}
+	option = {
+		name = "EVTOPTAap9469"
+		trigger = { culture_group = bulwari }
+		define_6heir_male = { stat = mil name = "Barid" }
+	}
+	option = {
+		name = "EVTOPTAaq9469"
+		trigger = { culture_group = bulwari }
+		define_6heir_male = { stat = dip name = "Giz" }
+	}
+	option = {
+		name = "EVTOPTAar9469"
+		trigger = { culture_group = bulwari }
+		define_6heir_male = { stat = adm name = "Ardašir" }
+	}
+	option = {
+		name = "EVTOPTAas9469"
+		trigger = { culture_group = kheionai_ruinborn_elf }
+		define_6heir_male = { stat = dip name = "Archatirades" }
+	}
+	option = {
+		name = "EVTOPTAat9469"
+		trigger = { culture_group = kheionai_ruinborn_elf }
+		define_6heir_male = { stat = mil name = "Laskaris" }
+	}
+	option = {
+		name = "EVTOPTAau9469"
+		trigger = { culture_group = kheionai_ruinborn_elf }
+		define_6heir_male = { stat = dip name = "Gelmonias" }
+	}
+	option = {
+		name = "EVTOPTAav9469"
+		trigger = { culture_group = taychendi_ruinborn_elf }
+		define_6heir_male = { stat = mil name = "Ebenanth" }
+	}
+	option = {
+		name = "EVTOPTAaw9469"
+		trigger = { culture_group = taychendi_ruinborn_elf }
+		define_6heir_male = { stat = mil name = "Yodhan" }
+	}
+	option = {
+		name = "EVTOPTAax9469"
+		trigger = { culture_group = devandi_ruinborn_elf }
+		define_6heir_male = { stat = dip name = "Munazhlan" }
+	}
+	option = {
+		name = "EVTOPTAay9469"
+		trigger = { culture_group = devandi_ruinborn_elf }
+		define_6heir_male = { stat = mil name = "Ultarlanbeg" }
+	}
+	option = {
+		name = "EVTOPTAaz9469"
+		trigger = { culture_group = triunic }
+		define_6heir_male = { stat = adm name = "Chelkot Talsen" }
+	}
+	option = {
+		name = "EVTOPTAba9469"
+		trigger = { culture_group = dwarven }
+		define_6heir_male = { stat = adm name = "Hehogrim"}
+	}
+	option = {
+		name = "EVTOPTAbb9469"
+		trigger = { culture_group = dwarven }
+		define_6heir_male = { stat = dip name = "Dagrin"}
+	}
+	option = {
+		name = "EVTOPTAbc9469"
+		trigger = { culture_group = bom }
+		define_6heir_male = { stat = dip name = "Chakroval" }
+	}
 }
 
 # Heir is of our Dynasty
@@ -1460,7 +1464,7 @@ province_event = {
 			has_heir = yes
 			religion_group = cannorian
 			NOT = { has_reform = elective_monarchy }
-			NOT = { has_reform = polish_elective_monarchy }
+			# NOT = { has_reform = polish_elective_monarchy }
 			# NOT = { has_government_attribute = has_harem_events }
 			NOT = { has_reform = harpy_matriarchy_reform }
 			NOT = { has_reform = harpy_matriarchy_ayarallen_early_gov_mechanic_reform }
@@ -1495,6 +1499,13 @@ province_event = {
 			set_country_flag = contained_insanity
 		}
 	}
+
+	option = { #Orb level 3 avoids bad generic events
+		name = orb_of_omniscience_no_hunting_accident
+		highlight = yes
+		trigger = { owner = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } } }
+		owner = { add_splendor = 1 }
+	}
 }
 
 # Fear and Loathing 2/3
@@ -1526,6 +1537,13 @@ country_event = {
 		add_prestige = -5
 		add_treasury = -100
 		set_country_flag = contained_insanity
+	}
+
+	option = { #Orb level 3 avoids bad generic events
+		name = orb_of_omniscience_generic_event_avoidance
+		highlight = yes
+		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		add_splendor = 1
 	}
 }
 
@@ -1561,6 +1579,13 @@ country_event = {
 			duration = 3650
 		}
 		clr_country_flag = contained_insanity
+	}
+
+	option = { #Orb level 3 avoids bad generic events
+		name = orb_of_omniscience_generic_event_avoidance
+		highlight = yes
+		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		add_splendor = 1
 	}
 }
 
@@ -1657,6 +1682,19 @@ country_event = {
 		add_country_modifier = {
 			name = "sought_after_bachelor"
 			duration = -1
+		}
+	}
+
+	option = {
+		name = "EVTOPTC9484"		# Adventurer
+		highlight = yes
+		trigger = { ruler_has_personality = renowned_adventurer_personality }
+		add_prestige = -5
+		define_consort = {
+			adm = 2
+			dip = 5
+			mil = 5
+			female = yes
 		}
 	}
 }
@@ -1801,7 +1839,7 @@ country_event = {
 	trigger = {
 		government = monarchy
 		NOT = { has_reform = elective_monarchy }
-		NOT = { has_reform = polish_elective_monarchy }
+		# NOT = { has_reform = polish_elective_monarchy }
 		has_heir = yes
 		is_heir_leader = yes
 		heir_age = 20
@@ -1828,6 +1866,13 @@ country_event = {
 		name = "EVTOPTB9488"
 		kill_heir = {}
 		add_war_exhaustion = -2
+	}
+
+	option = { #Orb level 3 avoids bad generic events
+		name = orb_of_omniscience_cucked_avoidance
+		highlight = yes
+		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		add_splendor = 1
 	}
 }
 
@@ -1874,7 +1919,7 @@ country_event = {
 		NOT = { has_reform = harpy_matriarchy_ayarallen_early_gov_mechanic_reform }
 		NOT = { has_reform = harpy_queendom_reform }
 		NOT = { has_reform = elective_monarchy }
-		NOT = { has_reform = polish_elective_monarchy }
+		# NOT = { has_reform = polish_elective_monarchy }
 		has_heir = no
 		is_female = no
 		has_regency = no
@@ -1885,9 +1930,11 @@ country_event = {
 				has_dlc = "Rights of Man"
 			}
 			has_consort = yes
+			has_female_consort = yes #ANBENNAR - event text only refers to a female consort
 		}
 		NOT = {
 			has_country_modifier = a_woman_scorned
+			has_country_modifier = a_woman_flattered #ANBENNAR
 		}
 		NOT = { ruler_is_immortal = yes } #Anbennar
 		NOT = { has_country_flag = disabled_heir_events }
@@ -1899,9 +1946,17 @@ country_event = {
 	
 	option = {
 		name = "EVTOPTA9490"
+		trigger = { ruler_attracted_to_women = yes } #ANBENNAR
 		define_heir = {
 			dynasty = ROOT
 		}
+	}
+
+	option = { #ANBENNAR
+		name = seeing_real_you_gay_option
+		trigger = { ruler_attracted_to_men = yes }
+
+		add_ruler_modifier = { name = a_woman_flattered duration = 1825 }
 	}
 	
 	option = {
@@ -1935,48 +1990,49 @@ country_event = {
 		NOT = { has_reform = harpy_matriarchy_reform }	
 		NOT = { has_reform = harpy_matriarchy_ayarallen_early_gov_mechanic_reform }	
 		NOT = { has_reform = harpy_queendom_reform }	
-		NOT = { has_reform = elective_monarchy }
-		NOT = { has_reform = polish_elective_monarchy }
+		# NOT = { has_reform = elective_monarchy }
+		# NOT = { has_reform = polish_elective_monarchy }
 		is_lesser_in_union = no
 		has_government_attribute = heir
 		NOT = { ruler_is_immortal = yes } #Anbennar
 		NOT = { has_country_flag = disabled_heir_events }
 	}
 	
+	is_triggered_only = yes
+
 	mean_time_to_happen = {
-		months = 10000
-		
+		days = 1
 		modifier = {
-			factor = 0.5
+			factor = 2
 			ruler_age = 50
-			NOT = { is_long_lived_ruler = yes } #Anbennar
+			NOT = { is_long_lived_ruler = yes }
 		}
 		modifier = {
-			factor = 0.5
+			factor = 2
 			ruler_age = 60
-			NOT = { is_long_lived_ruler = yes } #Anbennar
+			NOT = { is_long_lived_ruler = yes }
 		}
 		modifier = {
-			factor = 0.5
+			factor = 2
 			ruler_age = 70
-			NOT = { is_long_lived_ruler = yes } #Anbennar
+			NOT = { is_long_lived_ruler = yes }
 		}
 		modifier = {
-			factor = 0.5
+			factor = 2
 			ruler_age = 80
-			NOT = { is_long_lived_ruler = yes } #Anbennar
+			NOT = { is_long_lived_ruler = yes }
 		}
 		modifier = {
-			factor = 0.5
+			factor = 2
 			ruler_age = 90
-			NOT = { is_long_lived_ruler = yes } #Anbennar
+			NOT = { is_long_lived_ruler = yes }
 		}
 	}
-	
+
 	option = {
 		name = dynastic_events.1.a
 		define_heir = {
-			name = "Elisabeth"
+			name = "Riannón"
 			dynasty = ROOT
 			claim = 50
 			female = yes
@@ -1990,7 +2046,7 @@ country_event = {
 		name = dynastic_events.1.b
 		define_heir = {
 			dynasty = ROOT
-			name = "Caterine"
+			name = "Ioriel"
 			claim = 50
 			adm = 3
 			dip = 3
@@ -2013,7 +2069,7 @@ country_event = {
 		name = dynastic_events.1.e
 		define_heir = {
 			dynasty = ROOT
-			name = "Sara"
+			name = "Aucanna"
 			claim = 50
 			adm = 3
 			dip = 3
@@ -2037,13 +2093,9 @@ country_event = {
 		#NOT = { religion_group = muslim }
 		NOT = { has_government_attribute = has_harem_events }
 		# NOT = { has_reform = mamluk_government }
-		NOT = { has_reform = harpy_matriarchy_reform }
-		NOT = { has_reform = harpy_matriarchy_ayarallen_early_gov_mechanic_reform }
-		NOT = { has_reform = harpy_queendom_reform }
-		NOT = { has_reform = siadan_harpy_empire }
+		NOT = { fast_ruler_is_harpy = yes }
 		NOT = { has_reform = elective_monarchy }
-		NOT = { has_reform = polish_elective_monarchy }
-		NOT = { has_reform = naleni_thalassocracy_reform }
+		# NOT = { has_reform = polish_elective_monarchy }
 		# NOT = { has_reform = shogunate }
 		is_lesser_in_union = no
 		NOT = {
@@ -2106,7 +2158,7 @@ country_event = {
 		ruler_age = 40
 		government = monarchy
 		NOT = { has_reform = elective_monarchy }
-		NOT = { has_reform = polish_elective_monarchy }
+		# NOT = { has_reform = polish_elective_monarchy }
 		# NOT = { religion_group = muslim }
 		NOT = { has_government_attribute = has_harem_events }
 		# NOT = { has_reform = mamluk_government }
@@ -2222,7 +2274,7 @@ country_event = {
 		government = monarchy
 		NOT = { has_government_attribute = has_harem_events }
 		NOT = { has_reform = elective_monarchy }
-		NOT = { has_reform = polish_elective_monarchy }
+		# NOT = { has_reform = polish_elective_monarchy }
 		# NOT = { has_reform = mamluk_government }
 		NOT = { has_reform = harpy_matriarchy_reform }
 		NOT = { has_reform = harpy_matriarchy_ayarallen_early_gov_mechanic_reform }
@@ -2246,7 +2298,7 @@ country_event = {
 			NOT = { has_reform = harpy_matriarchy_ayarallen_early_gov_mechanic_reform }
 			NOT = { has_reform = harpy_queendom_reform }
 			NOT = { has_reform = elective_monarchy }
-			NOT = { has_reform = polish_elective_monarchy }
+			# NOT = { has_reform = polish_elective_monarchy }
 			
 			#Anbennar
 			NOT = { has_reform = free_slave_reform }	#Mamluk
@@ -2283,7 +2335,7 @@ country_event = {
 					NOT = { has_reform = harpy_queendom_reform }
 
 					NOT = { has_reform = elective_monarchy }
-					NOT = { has_reform = polish_elective_monarchy }
+					# NOT = { has_reform = polish_elective_monarchy }
 					
 					#Anbennar
 					NOT = { has_reform = free_slave_reform }	#Mamluk
@@ -2482,7 +2534,7 @@ country_event = {
 				government = monarchy
 				NOT = { has_government_attribute = has_harem_events }
 				NOT = { has_reform = elective_monarchy }
-				NOT = { has_reform = polish_elective_monarchy }
+				# NOT = { has_reform = polish_elective_monarchy }
 				# NOT = { has_reform = mamluk_government }
 				
 				#Anbennar

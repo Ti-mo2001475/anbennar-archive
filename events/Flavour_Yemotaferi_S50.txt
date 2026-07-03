@@ -17,10 +17,9 @@ country_event = {
 
 	option = {
 		name = yemotaferi.1.a
-		hidden_effect = {
-			set_country_flag = S50_council_of_wardens_unlocked
+		tooltip = {
+			add_government_reform = yemotaferi_council_of_wardens
 		}
-		add_government_reform = yemotaferi_council_of_wardens
 	}
 }
 
@@ -734,6 +733,33 @@ country_event = {
 				kill_leader = { type = "Komina Riftwhisper" }
 			}
 		}
+
+		hidden_effect = {
+			if = {
+				limit = {
+					NOT = { has_global_flag = ilfanill_dead }
+					NOT = { has_global_flag = komina_dead }
+					NOT = { has_global_flag = hireet_dead }
+				}
+				set_global_flag = ilfanill_dead
+				every_country = {
+					limit = {
+						NOT = { tag = ROOT }
+						OR = {
+							capital_scope = { continent = africa }
+							development_in_provinces = {
+								value = 100
+								continent = africa
+							}
+						}
+					}
+					
+					country_event = {
+						id = sarhalevents.1001
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -1005,5 +1031,59 @@ country_event = {
 		name = yemotaferi.13.a
 		
 		S50_add_advisor_modifiers_effect = yes
+	}
+}
+
+# Hidden event to turn Tanizu vassal into Bwa Tanizu, to avoid crashes
+country_event = {
+	id = yemotaferi.15
+	title = yemotaferi.15.t
+	desc = yemotaferi.15.d
+	picture = ADVISOR_eventPicture
+	is_triggered_only = yes
+	hidden = yes
+
+	option = {
+		name = yemotaferi.15.a
+		
+		random_subject_country = {
+			limit = {
+				primary_culture = tanizu
+			}
+			
+			if = {
+				limit = {
+					NOT = { exists = L59 } # Bwa Tanizu
+				}
+				custom_tooltip = S50_form_bwa_tanizu_tt
+				hidden_effect = {
+					form_bwa_tanizu_effect = yes
+				}
+
+				L59 = {
+					add_country_modifier = {
+						name = S50_one_tribe
+						duration = -1
+					}
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = S50_one_tribe
+					duration = -1
+				}
+			}
+
+			custom_tooltip = S50_tanizu_claims_tt
+			hidden_effect = {
+				east_sarhal_superregion = {
+					limit = {
+						religion = beast_memory
+						NOT = { country_or_subject_holds = ROOT }
+					}
+					add_permanent_claim = PREV
+				}
+			}
+		}
 	}
 }

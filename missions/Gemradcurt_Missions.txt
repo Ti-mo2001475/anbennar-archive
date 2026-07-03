@@ -196,16 +196,7 @@ gemradcurt_3_1 = {
 					}
 					AND = {
 						is_rival = ROOT
-						OR = {
-							has_opinion_modifier = {
-								who = ROOT
-								modifier = insulted
-							}
-							has_opinion_modifier = {
-								who = ROOT
-								modifier = scornfully_insulted
-							}
-						}
+						has_been_insulted_by_root = yes
 					}
 					
 					exists = no
@@ -221,16 +212,7 @@ gemradcurt_3_1 = {
 					}
 					AND = {
 						is_rival = ROOT
-						OR = {
-							has_opinion_modifier = {
-								who = ROOT
-								modifier = insulted
-							}
-							has_opinion_modifier = {
-								who = ROOT
-								modifier = scornfully_insulted
-							}
-						}
+						has_been_insulted_by_root = yes
 					}
 					
 					exists = no
@@ -1090,11 +1072,30 @@ gemradcurt_2_2 = {
 					adm_power = 100
 				}
 			}
-			num_of_owned_provinces_with = {
-				value = 3
-				has_province_modifier = eordan_expedition_site
-				base_production = 10
-				has_building = mage_tower
+			if = {
+				limit = {
+					calc_true_if = {
+						amount = 3
+						eordand_superregion = {
+							type = all
+							has_province_modifier = eordan_expedition_site
+						}
+					}
+				}
+				num_of_owned_provinces_with = {
+					value = 3
+					has_province_modifier = eordan_expedition_site
+					base_production = 10
+					has_building = mage_tower
+				}
+			}
+			else = {
+				num_of_owned_provinces_with = {
+					value = 3
+					superregion = eordand_superregion
+					base_production = 10
+					has_building = mage_tower
+				}
 			}
 		} 
 

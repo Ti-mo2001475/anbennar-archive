@@ -1494,7 +1494,9 @@ lodhum_feywoods_branch_2 = {
 					any_known_country = {
 						culture = wood_elf
 						NOT = { tag = I45 }
-						is_subject = no
+						capital_scope = {
+							superregion = deepwoods_superregion
+						}
 					}
 				}
 			}
@@ -4376,7 +4378,13 @@ lodhum_part3_4b = {
 		trigger = {
 			mil_power = 200
 			army_reformer = 3
-			army_professionalism = 0.5
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" } 
+				army_professionalism = 0.5
+			}
+			else = {
+				army_tradition = 70
+			}
 			F26 = { manpower_percentage = 0.5 }
 		}
 		

@@ -249,6 +249,12 @@ age_of_discovery = {
 			effect = {
 				on_age_ability_taken = { age = age_of_discovery }
 			}
+			allow = {
+				custom_trigger_tooltip = {
+					tooltip = S37_age_ability_disable_tt
+					NOT = { has_country_flag = S37_age_ability_disable }
+				}
+			}
 			modifier = {
 				can_transfer_vassal_wargoal = yes
 				can_chain_claim = yes
@@ -545,11 +551,18 @@ age_of_reformation = {
 				religion = soise_vio
 				religion = nur_dahvaraesa
 				religion = gods_of_the_taychend_reformed
+				if = { # to only show once
+					limit = { religion = oren_nayiru_reformed }
+					religion = oren_nayiru_reformed
+				}
+				else = {
+					religion = oren_nayiru 
+				}
 				religion = ynn_river_reformed
-				religion = oren_nayiru_reformed
 				religion = suhans_praxis
 				religion = reformed_feast_of_the_gods
 				religion = kalyin_worshippers
+				religion = yudunyovi
 				religion = runefather_worship
 				religion = molten_eternity
 				AND = {
@@ -599,6 +612,7 @@ age_of_reformation = {
 							is_incident_happened = incident_whisper_shadows
 							is_incident_happened = incident_trapped_in_shadows
 							is_incident_happened = incident_one_sun
+							is_incident_happened = incident_F80_kings_queens_kneeling
 						}
 					}
 				}

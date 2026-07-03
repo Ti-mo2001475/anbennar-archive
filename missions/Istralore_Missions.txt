@@ -75,7 +75,7 @@ Column_1_part_1 = {
 			damerian_dales_area = {
 				type = all 
 				has_tax_building_trigger = yes
-				has_seat_in_parliament = yes
+				anb_has_seat_in_parliament = yes
 			}
 			damerian_dales_area = { 
 				development = 25
@@ -89,6 +89,14 @@ Column_1_part_1 = {
 				add_province_modifier = {
 				name = A45_damerian_renaissance
 				duration = 18250
+				}
+			}
+			hidden_effect = { # pre set the province to match tt and effect in the parliament issue
+				random_owned_province = {
+					limit = {
+						trade_goods = wool
+					}
+					set_province_flag = home_front_target
 				}
 			}
 		} 
@@ -119,11 +127,7 @@ Column_1_part_1 = {
 				has_country_flag = istralore_egalitarian_education_completed_flag
 			}
 			NOT = { average_unrest = 1 }
-			OR = {
-				is_ahead_of_time_in_technology = { tech = dip }
-				is_ahead_of_time_in_technology = { tech = adm }
-				is_ahead_of_time_in_technology = { tech = mil }
-			} 
+			is_ahead_of_time_in_any_technology = yes
 		}
 		 
 
@@ -716,6 +720,11 @@ Column_3_part_1 = {
 						id = istralore.9
 					}
 				}
+				custom_tooltip = A45_loyal_to_the_last_bonus_tt
+				if = {
+					limit = { is_emperor = yes }
+					add_historical_friend = A77
+				}
 			}
 		} 
 	}
@@ -1070,13 +1079,16 @@ Column_4_part_1 = {
 					province_id = 306
 				}
 			}
-			custom_trigger_tooltip = {
-				tooltip = A45_exploit_wex_tt
-				306 = {
-					has_province_flag = anb_has_been_exploited_flag
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				custom_trigger_tooltip = {
+					tooltip = A45_exploit_wex_tt
+					306 = {
+						has_province_flag = anb_has_been_exploited_flag
+					}
 				}
 			}
-		} 
+		}
 
 		effect = { 
 			country_event = {
@@ -1653,16 +1665,25 @@ Column_2_part_2 = {
 			}
 			custom_trigger_tooltip = {
 				tooltip = A45_denied_rav_tt
-				OR = {
-					has_country_flag = denied_ravelian_society
-					has_country_flag = denied_ravelian_lodge
-					any_owned_province = {
-						OR = {
-							has_province_modifier = ravelian_lodge
-							has_province_modifier = ravelian_society
-							religion = ravelian
+				if = {
+					limit = { has_dlc = "Cradle of Civilization" }
+					OR = {
+						has_country_flag = denied_ravelian_society
+						has_country_flag = denied_ravelian_lodge
+						any_owned_province = {
+							OR = {
+								has_province_modifier = ravelian_lodge
+								has_province_modifier = ravelian_society
+								religion = ravelian
+							}
+							has_province_flag = anb_has_been_exploited_flag
 						}
-						has_province_flag = anb_has_been_exploited_flag
+					}
+				}
+				else = {
+					OR = {
+						has_country_flag = denied_ravelian_society
+						has_country_flag = denied_ravelian_lodge
 					}
 				}
 			}
@@ -2396,10 +2417,13 @@ Column_4_part_2 = {
 					type = all
 					country_or_non_sovereign_subject_holds = ROOT
 				}
-				custom_trigger_tooltip = {
-					tooltip = A45_exploit_lorent_tt
-						67 = {
-						has_province_flag = anb_has_been_exploited_flag
+				if = {
+					limit = { has_dlc = "Cradle of Civilization" }
+					custom_trigger_tooltip = {
+						tooltip = A45_exploit_lorent_tt
+							67 = {
+							has_province_flag = anb_has_been_exploited_flag
+						}
 					}
 				}
 			}

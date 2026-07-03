@@ -21,9 +21,12 @@ AYN_Branch_1 = {
 				tooltip = AYN_owning_a_warband_unrest_tt
 				always = yes
 			}
-			check_variable = {
-				which = qeyikul_reputation_variable
-				value = 2
+			custom_trigger_tooltip = {
+				tooltip = AYN_first_qeyikul_telling_tt
+				check_variable = {
+					which = qeyikul_reputation_variable
+					value = 2
+				}
 			}
 			army_size_percentage = 0.9
 		} 
@@ -271,19 +274,11 @@ AYN_Branch_3 = {
 							who = ROOT
 							value = 75
 							}
-							has_opinion_modifier = {
-								who = ROOT
-								modifier = sent_gift
-								value = 10
-							}
+							has_10_opinion_sent_gift = { target = ROOT }
 						}
 						AND = {
 							is_rival = ROOT
-							has_opinion_modifier = {
-								who = ROOT
-								modifier = sent_gift
-								value = 25
-							}
+							has_25_opinion_sent_gift = { target = ROOT }
 						}
 					}
 				}
@@ -308,7 +303,6 @@ AYN_Branch_3 = {
 		position = 3
 		required_missions = { AYN_3_2 } 
 		
-
 		trigger = {
 			OR = {
 				any_ally = {
@@ -329,17 +323,27 @@ AYN_Branch_3 = {
 					if = {
 						limit = { has_dlc = Dharma }
 						all_known_country = {
-							culture = guryadagga
-							has_opinion_modifier = {
-								who = ROOT
-								modifier = scornfully_insulted
+							OR = {
+								NOT = { culture = guryadagga }
+								AND = {
+									culture = guryadagga
+									has_opinion_modifier = {
+										who = ROOT
+										modifier = scornfully_insulted
+									}
+								}
 							}
 						}
 					}
 					else = {
 						all_known_country = {
-							culture = guryadagga
-							has_been_insulted_by_root = yes
+							OR = {
+								NOT = { culture = guryadagga }
+								AND = {
+									culture = guryadagga
+									has_been_insulted_by_root = yes
+								}
+							}
 						}
 					}
 					prestige = 0
@@ -454,9 +458,23 @@ AYN_Branch_3 = {
 		
 
 		trigger = {
-			calc_true_if = {
-				amount = 3
-				all_subject_country = { culture = guryadagga }
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = AYN_no_more_guryadaggans
+					NOT = {
+						calc_true_if = {
+							amount = 2
+							exists = S85
+							exists = S86
+							exists = S87
+							exists = S88
+						}
+					}
+				}
+				calc_true_if = {
+					amount = 3
+					all_subject_country = { culture = guryadagga }
+				}
 			}
 			custom_trigger_tooltip = {
 				tooltip = AYN_need_all_legacies_tt
@@ -508,7 +526,7 @@ AYN_Branch_3 = {
 		} 
 	}
 
-	AYN_3_6 = { # The Empire That Was (ending mission)
+	AYN_3_6 = { # The Empire That Was (END)
 		icon = mission_crown_of_norway
 		position = 6
 		required_missions = {
@@ -569,8 +587,8 @@ AYN_Branch_3 = {
 			custom_tooltip = AYN_change_government_tt
 			change_government = theocracy
 			add_devotion = 20
-			add_stability = 1
-			add_government_reform = jinnakah_ardimyan_sultanate
+			add_stability_or_adm_power = yes
+			add_government_reform = jinnakah_ardimyan_vizierate
 			
 			custom_tooltip = AYN_get_6063_6584_from_reforming_tt
 
@@ -611,11 +629,14 @@ AYN_Branch_3 = {
 			}
 			hidden_effect = {
 				every_subject_country = {
-					change_government = theocracy
+					every_tribal_land_province = {
+						cede_province = PREV
+					}
 					add_country_modifier = {
 						name = AYN_helped_reform
 						duration = 18250
 					}
+					change_government = theocracy
 				}
 				if = {
 					limit = { any_subject_country = { owns = 6063 } }
@@ -849,7 +870,7 @@ S85_Missions_5 = {
 		effect = {
 			custom_tooltip = S85_unlock_unique_incantation_tt
 			set_country_flag = S85_genie_cult_special_unlock
-			hidden_effect = { subtract_variable = { which = genie_cult_power_counter value = 2 } }
+			hidden_effect = { subtract_variable = { which = genie_cult_power_counter value = 3 } }
 		} 
 	}
 }
@@ -994,7 +1015,7 @@ S86_Missions_5 = {
 
 		effect = {
 			custom_tooltip = S86_unlock_unique_incantation_tt
-			set_country_flag = S86_unqiue_genie_cult_unlock_fl
+			set_country_flag = S86_genie_cult_special_unlock
 			hidden_effect = { subtract_variable = { which = genie_cult_power_counter value = 2 } }
 		} 
 	}
@@ -1018,7 +1039,10 @@ S87_Missions_4 = {
 				value = 4
 			}
 			has_country_modifier = faasas_legacy_modifier
-			num_of_battles = { amount = 5 }
+			check_variable = {
+				which = qeyikul_reputation_variable
+				value = 6
+			}
 			mil_tech = 5
 		} 
 
@@ -1232,14 +1256,20 @@ S88_Missions_5 = {
 		} 
 
 		effect = {
-			ardimya_region = {
-				limit = {
-					island = yes
-					NOT = { province_id = 6061 }
+			custom_tooltip = S88_dev_gain_island_tt
+			hidden_effect = {
+				ardimya_region = {
+					limit = {
+						island = yes
+						OR = {
+							owned_by = ROOT
+							tribal_land_of = ROOT
+						}
+					}
+					add_base_manpower = 1
+					add_base_production = 1
+					add_base_tax = 1
 				}
-				add_base_manpower = 1
-				add_base_production = 1
-				add_base_tax = 1
 			}
 			6068 = { merfolk_spawn_modifier = yes }
 			add_sailors = 4000
@@ -1281,19 +1311,22 @@ AYN_Branch_4_Low = {
 		icon = mission_ahmadabad_paper
 		position = 3
 		required_missions = { AYN_3_2 } 
+		provinces_to_highlight = {
+			owner = {
+				culture = guryadagga
+				army_strength = {
+					who = ROOT
+					value = 1
+				}
+				NOT = { tag = ROOT }
+			}
+		}
 
 		trigger = {
-			NOT = {
-				all_known_country = {
-					OR = {
-						NOT = { culture = guryadagga }
-						NOT = {
-							army_strength = {
-								who = ROOT
-								value = 1
-							}
-						}
-					}
+			all_known_country = {
+				OR = {
+					NOT = { culture = guryadagga }
+					NOT = { army_strength = { who = ROOT value = 1 } }
 				}
 			}
 			land_maintenance = 1
@@ -1303,22 +1336,22 @@ AYN_Branch_4_Low = {
 			add_casus_belli = {
 				type = cb_vassalize_mission
 				target = S85
-				months = 3650
+				months = 1200
 			}
 			add_casus_belli = {
 				type = cb_vassalize_mission
 				target = S86
-				months = 3650
+				months = 1200
 			}
 			add_casus_belli = {
 				type = cb_vassalize_mission
 				target = S87
-				months = 3650
+				months = 1200
 			}
 			add_casus_belli = {
 				type = cb_vassalize_mission
 				target = S88
-				months = 3650
+				months = 1200
 			}
 		} 
 	}
@@ -1326,32 +1359,63 @@ AYN_Branch_4_Low = {
 	AYN_4_4 = {
 		icon = mission_restore_faith_in_the_throne
 		position = 4
-		required_missions = { AYN_4_3 } 
+		required_missions = { AYN_4_3 }
+		provinces_to_highlight = {
+			OR = {
+				has_province_modifier = offcoast_merfolk_allied
+				has_province_modifier = offcoast_merfolk_neutral
+				has_province_modifier = offcoast_merfolk_isolated
+			}
+		}
 		
 
 		trigger = {
-			any_tribal_land = {
-				OR = {
-					has_province_modifier = offcoast_merfolk_allied
-					has_province_modifier = offcoast_merfolk_neutral
-					has_province_modifier = offcoast_merfolk_isolated
+			if = {
+				limit = { is_tribal = yes }
+				any_tribal_land = {
+					OR = {
+						has_province_modifier = offcoast_merfolk_allied
+						has_province_modifier = offcoast_merfolk_neutral
+						has_province_modifier = offcoast_merfolk_isolated
+					}
+				}
+			}
+			else = {
+				any_owned_province = {
+					OR = {
+						has_province_modifier = offcoast_merfolk_allied
+						has_province_modifier = offcoast_merfolk_neutral
+						has_province_modifier = offcoast_merfolk_isolated
+					}
 				}
 			}
 			navy_size = 1
-			check_variable = {
-				which = MerfolkTreatedCounter
-				value = 2
+			custom_trigger_tooltip = {
+				tooltip = AYN_merfolk_system_explain
+				check_variable = {
+					which = MerfolkTreatedCounter
+					value = 2
+				}
 			}
 		} 
 
 		effect = {
-			change_variable = { which = MerfolkLoweredPenatly value = 3 }
-
-			random_province = {
-				limit = { tribal_land_of = ROOT has_port = yes }
-				merfolk_spawn_modifier = yes
+			custom_tooltip = AYN_discounted_merfolk_treaties_tt
+			hidden_effect = { change_variable = { which = MerfolkLoweredPenatly value = 3 } }
+			if = {
+				limit = { is_tribal = yes }
+				random_province = {
+					limit = { tribal_land_of = ROOT has_port = yes }
+					merfolk_spawn_modifier = yes
+				}
 			}
-		} 
+			else = {
+				random_owned_province = {
+					limit = { has_port = yes }
+					merfolk_spawn_modifier = yes
+				}
+			}
+		}
 	}
 
 	AYN_4_5 = {
@@ -1365,7 +1429,7 @@ AYN_Branch_4_Low = {
 
 		trigger = { 
 			check_variable = {
-				which = GeniCultUsageCounter
+				which = GenieCultUsageCounter
 				value = 4
 			}
 			NOT = { any_subject_country = { liberty_desire = 50 } }
@@ -1382,11 +1446,11 @@ AYN_Branch_4_Low = {
 			if = {
 				limit = {
 					check_variable = {
-						which = GeniCultUsageCounter
+						which = GenieCultUsageCounter
 						value = 6
 					}
 					check_variable = {
-						which = GeniCultUsageCounter3plus
+						which = GenieCultUsageCounter3plus
 						value = 2
 					}
 				}

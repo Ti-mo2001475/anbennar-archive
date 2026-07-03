@@ -852,6 +852,26 @@ castanor_1_missions_b = {
 					change_culture = gelkar
 					add_devastation = 50
 				}
+				harpy_hills_region = {
+					if = {
+						limit = { has_any_harpy_pop_trigger = yes }
+						remove_harpy_minority_size_effect = yes
+						trigger_switch = {
+							on_trigger = development
+							33 = { owner = { add_treasury = 250 } }
+							30 = { owner = { add_treasury = 230 } }
+							27 = { owner = { add_treasury = 210 } }
+							24 = { owner = { add_treasury = 180 } }
+							21 = { owner = { add_treasury = 155 } }
+							18 = { owner = { add_treasury = 135 } }
+							15 = { owner = { add_treasury = 115 } }
+							12 = { owner = { add_treasury = 100 } }
+							9 = { owner = { add_treasury = 85 } }
+							6 = { owner = { add_treasury = 60 } }
+							1 = { owner = { add_treasury = 50 } }
+						}
+					}
+				}
 			}
 			
 			custom_tooltip = castanor_declawing_the_queendom_effect_2_tt
@@ -862,26 +882,6 @@ castanor_1_missions_b = {
 				add_province_modifier = {
 					name = castanor_under_human_control
 					duration = 7300
-				}
-			}
-			harpy_hills_region = {
-				if = {
-					limit = { has_any_harpy_pop_trigger = yes }
-					remove_harpy_minority_size_effect = yes
-					trigger_switch = {
-						on_trigger = development
-						33 = { owner = { add_treasury = 250 } }
-						30 = { owner = { add_treasury = 230 } }
-						27 = { owner = { add_treasury = 210 } }
-						24 = { owner = { add_treasury = 180 } }
-						21 = { owner = { add_treasury = 155 } }
-						18 = { owner = { add_treasury = 135 } }
-						15 = { owner = { add_treasury = 115 } }
-						12 = { owner = { add_treasury = 100 } }
-						9 = { owner = { add_treasury = 85 } }
-						6 = { owner = { add_treasury = 60 } }
-						1 = { owner = { add_treasury = 50 } }
-					}
 				}
 			}
 		}
@@ -2394,15 +2394,15 @@ castanor_2_missions = {
 			# }
 			if = {
 				limit = { 831 = { higher_development_than = 8 } }
-				add_prestige_excess_to_splendour_effect = { VAL = 25 }
+				hidden_effect = { add_prestige_excess_to_splendour_effect = { VAL = 25 } }
 			}
 			if = {
 				limit = { 832 = { higher_development_than = 8 } }
-				add_prestige_excess_to_splendour_effect = { VAL = 25 }
+				hidden_effect = { add_prestige_excess_to_splendour_effect = { VAL = 25 } }
 			}
 			if = {
 				limit = { 833 = { higher_development_than = 8 } }
-				add_prestige_excess_to_splendour_effect = { VAL = 25 }
+				hidden_effect = { add_prestige_excess_to_splendour_effect = { VAL = 25 } }
 			}
 			custom_tooltip = castanor_greatest_city_in_the_world_effect_tt
 		}
@@ -8492,7 +8492,7 @@ castanor_5_missions_FP_strong_lake_fed_path = {
 						J33 = { is_rival = B32 }
 					}
 				}
-				num_of_owned_provinces_with = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 					value = 5
 					region = northern_pass_region
 					has_fort_building_trigger = yes
@@ -8545,7 +8545,7 @@ castanor_5_missions_FP_strong_lake_fed_path = {
 			}
 			else = {
 				add_country_modifier = {
-					name = castanor_establishing_embassies
+					name = castanor_establishing_embassies_modifier
 					duration = 10950
 				}
 				4202 = { # Northern Pass
@@ -10762,7 +10762,7 @@ castanor_4_missions_succession_war_patrician = {
 		}
 	}
 
-	castanor_sucession_war_win_the_hearts_and_minds_patrician = {
+	castanor_succession_war_win_the_hearts_and_minds_patrician = {
 		icon = regents_contracts
 		position = 4
 		required_missions = { castanor_succession_war_tipping_the_balance }

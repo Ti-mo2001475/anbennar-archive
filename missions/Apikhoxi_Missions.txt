@@ -102,6 +102,7 @@ apikhoxi_1 = {
 			if = {
 				limit = {
 					exists = G62
+					NOT ={ is_subject_of = ROOT }
 				}
 				add_casus_belli = {
 					target = G62
@@ -235,16 +236,7 @@ apikhoxi_2 = {
 			}
 			OR = {
 				G50 = {
-					OR = {
-						has_opinion_modifier = {
-							who = ROOT
-							modifier = insulted
-						}
-						has_opinion_modifier = {
-							who = ROOT
-							modifier = scornfully_insulted
-						}
-					}
+					has_been_insulted_by_root = yes
 				}
 			   AND = {
 					war_with = G50
@@ -570,7 +562,7 @@ apikhoxi_3 = {
 				}
 				add_prosperity = 20
 			}
-			2707 = {
+			2703 = {
 				add_province_modifier = {
 					name = G57_amdrivos
 					duration = -1
@@ -752,7 +744,7 @@ apikhoxi_4 = {
 			2702 = {
 				add_permanent_claim = ROOT
 			}
-			2707 = {
+			2703 = {
 				add_permanent_claim = ROOT
 			}
 			add_country_modifier = {
@@ -973,7 +965,10 @@ apikhoxi_5 = {
 				num_of_times_improved = 2
 			}
 			estate_loyalty = { estate = estate_nobles loyalty = 50 }
-			has_cast_plant_growth = yes
+			OR = {
+				is_overall_transmutation_level_1_minimum = yes
+				is_overall_advancing_school = { school = transmutation }
+			}
 		}
 		effect = {
 			add_estate_influence_modifier = {
