@@ -925,7 +925,16 @@ merc_order_of_the_zenith = {
 		NOT = { culture_group = centaur }
 		NOT = { has_country_modifier = centaur_military }
 		religion = bulwari_sun_cult
-		has_country_flag = order_of_the_zenith
+		OR {
+			has_unlocked_merc_company = { merc_company = merc_order_of_the_zenith }
+			AND = {
+				custom_trigger_tooltip = {
+					tooltip = nsc_disband_the_order_of_the_zenit_tt
+					NOT = { has_country_flag = nsc_disband_the_order_of_the_zenit }
+				}
+				tag = F37 #Irrliam
+			}
+		}
 	}
 	modifier = {
 		infantry_power = 0.10
