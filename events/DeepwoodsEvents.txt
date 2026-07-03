@@ -425,7 +425,7 @@ country_event = {
 				change_government = monarchy
 				add_stability_or_adm_power = yes
 				define_ruler = {
-					dynasty = "Cenág" 
+					dynasty = "Cenï¿½g" 
 					min_age = 40
 					max_age = 90
 					culture = wood_elf
@@ -844,7 +844,7 @@ country_event = {
 				change_government = monarchy
 				add_stability_or_adm_power = yes
 				define_ruler = {
-					dynasty = "Ghúl"
+					dynasty = "Ghï¿½l"
 					min_age = 40
 					max_age = 90
 					culture = wood_elf
@@ -4576,7 +4576,7 @@ country_event = { #The Hunter's Gambit Tournament Start Handler
 				country_event = { id = deepwoods.103 }
 			}
 			country_event = { id = deepwoods.103 }
-			country_event = { id = deepwoods.105 days = 120 } #Round Outcome
+			7011 = { province_event = { id = deepwoods.105 days = 120 } } #Round Outcome
 		}
 		else_if = { #Exactly two contestants
 			limit = {
@@ -4587,7 +4587,7 @@ country_event = { #The Hunter's Gambit Tournament Start Handler
 				country_event = { id = deepwoods.108 days = 100 } #Final Gambit
 			}
 			country_event = { id = deepwoods.108 days = 100 } #Final Gambit
-			country_event = { id = deepwoods.109 days = 200 } #Final Gambit Handler
+			7011 = { province_event = { id = deepwoods.109 days = 200 } } #Final Gambit Handler
 		}
 		else = { #Only one contestant
 			country_event = { id = deepwoods.106 }
@@ -4886,7 +4886,7 @@ country_event = { #The Hunter's Gambit CHEATERS!
 	}
 }
 
-country_event = { #The Hunter's Gambit Round Handler
+province_event = { #The Hunter's Gambit Round Handler
 	id = deepwoods.105
 	title = deepwoods.105.t
 	desc = deepwoods.105.d
@@ -4900,18 +4900,14 @@ country_event = { #The Hunter's Gambit Round Handler
 			limit = { has_country_flag = hunters_gambit_contender }
 			save_event_target_as = hunters_gambit_round_loser
 		}
-		every_known_country = {
+		every_country = {
 			limit = { has_country_flag = hunters_gambit_contender }
 			if = {
 				limit = {
-					event_target:hunters_gambit_round_loser = {
-						PREV = {
-							NOT = {
-								check_variable = {
-									which = hunters_gambit_vp_tracker
-									which = PREV
-								}
-							}
+					NOT = {
+						check_variable = {
+							which = hunters_gambit_vp_tracker
+							which = event_target:hunters_gambit_round_loser
 						}
 					}
 				}
@@ -4922,24 +4918,15 @@ country_event = { #The Hunter's Gambit Round Handler
 			limit = { has_country_flag = hunters_gambit_contender }
 			save_event_target_as = hunters_gambit_round_winner
 		}
-		every_known_country = {
+		every_country = {
 			limit = { has_country_flag = hunters_gambit_contender }
 			if = {
 				limit = {
-					event_target:hunters_gambit_round_winner = {
-						PREV = {
-							check_variable = {
-								which = hunters_gambit_vp_tracker
-								which = PREV
-							}
-							NOT = {
-								is_variable_equal = {
-									which = hunters_gambit_vp_tracker
-									which = PREV
-								}
-							}
-						}
+					check_variable = {
+						which = hunters_gambit_vp_tracker
+						which = event_target:hunters_gambit_round_winner
 					}
+					NOT = { tag = event_target:hunters_gambit_round_loser }
 				}
 				save_event_target_as = hunters_gambit_round_winner
 			}
@@ -4950,52 +4937,63 @@ country_event = { #The Hunter's Gambit Round Handler
 	option = { #Results
 		name = deepwoods.105.a
 
-		if = { 
+		if = { #3+ contestants
 			limit = {
 				calc_true_if = {
 					amount = 3
-					has_country_flag = hunters_gambit_contender
-					all_known_country = {
+					all_country = {
 						has_country_flag = hunters_gambit_contender
 						NOT = { tag = event_target:hunters_gambit_round_loser }
 					}
 				}
 			}
-			every_known_country = {
+			every_country = {
 				limit = {
 					has_country_flag = hunters_gambit_contender
 					NOT = { tag = event_target:hunters_gambit_round_loser }
 				}
-				country_event = { id = deepwoods.103 days = 121 }
+				country_event = { id = deepwoods.103 days = 121 } #Round Reset
 			}
-			if = {
-				limit = { tag = event_target:hunters_gambit_round_loser }
-				random_known_country = {
-					limit = { has_country_flag = hunters_gambit_contender }
-					country_event = { id = deepwoods.105 days = 241 } #Round Outcome
+			7011 = { province_event = { id = deepwoods.105 days = 241 } } #Round Outcome
+		}
+		else_if = { #2 contestants
+			limit = {
+				calc_true_if = {
+					amount = 2
+					all_country = {
+						has_country_flag = hunters_gambit_contender
+						NOT = { tag = event_target:hunters_gambit_round_loser }
+					}
 				}
 			}
-			else = {
-				country_event = { id = deepwoods.103 days = 121 } #Round Reset
-				country_event = { id = deepwoods.105 days = 241 } #Round Outcome
-			}
-		}
-		else = {
-			every_known_country = {
-				limit = { has_country_flag = hunters_gambit_contender }
+			every_country = {
+				limit = {
+					has_country_flag = hunters_gambit_contender
+					NOT = { tag = event_target:hunters_gambit_round_loser }
+				}
 				country_event = { id = deepwoods.108 days = 100 } #Final Gambit
 			}
-			if = {
-				limit = { has_country_flag = hunters_gambit_contender }
-				country_event = { id = deepwoods.108 days = 100 } #Final Gambit
+			7011 = { province_event = { id = deepwoods.109 days = 200 } } #Final Gambit Handler
+		}
+		else_if = { #1 contestant
+			limit = {
+				any_country = {
+					has_country_flag = hunters_gambit_contender
+					NOT = { tag = event_target:hunters_gambit_round_loser }
+				}
 			}
-			country_event = { id = deepwoods.109 days = 200 } #Final Gambit Handler
+			random_country = {
+				limit = {
+					has_country_flag = hunters_gambit_contender
+					NOT = { tag = event_target:hunters_gambit_round_loser }
+				}
+				country_event = { id = deepwoods.110 days = 100 } #At least two people were found cheating at once, you won, go home.
+			}
 		}
-		every_known_country = {
-			limit = { has_country_flag = hunters_gambit_contender }
-			country_event = { id = deepwoods.107 }
+		else = { #0 contestants
+			#Everyone cheated, may the gods have mercy on your souls, go home.
 		}
-		if = {
+		every_country = {
 			limit = { has_country_flag = hunters_gambit_contender }
 			country_event = { id = deepwoods.107 }
 		}
@@ -5319,7 +5317,7 @@ country_event = { #The Hunter's Gambit Last Round
 	}
 }
 
-country_event = { #The Hunter's Gambit Last Round Handler
+province_event = { #The Hunter's Gambit Last Round Handler
 	id = deepwoods.109
 	title = deepwoods.109.t
 	desc = deepwoods.109.d
@@ -5331,10 +5329,13 @@ country_event = { #The Hunter's Gambit Last Round Handler
 	option = {
 		name = deepwoods.109.a
 
-		random_known_country = {
+		random_country = {
 			limit = { has_country_flag = hunters_gambit_contender }
 			random_known_country = {
-				limit = { has_country_flag = hunters_gambit_contender }
+				limit = {
+					has_country_flag = hunters_gambit_contender
+					NOT = { tag = PREV }
+				}
 				if = {
 					limit = {
 						is_variable_equal = {
@@ -5473,8 +5474,8 @@ country_event = { #Results for Everyone (Flavour only)
 	}
 	desc = {
 		trigger = {
-			NOT = {
-				FROM = {
+			FROM = {
+				NOT = {
 					tag = I26
 					tag = I27
 					tag = I28
