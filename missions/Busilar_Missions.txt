@@ -1175,7 +1175,7 @@ col_2 = {
 			OR = {
 				has_country_modifier = A29_narawen_4
 				NOT = {
-					any_province = {
+					all_province = {
 						is_sea = yes 
 						NOT = {
 							has_discovered = ROOT 
@@ -1962,9 +1962,6 @@ col_3 = {
 
 		effect = {  
 			custom_tooltip = A29_lions_arsenal_tt
-			hidden_effect = {
-
-			}
 			while = {
 				limit = {
 					any_owned_province = {
@@ -2032,6 +2029,7 @@ col_3 = {
 		effect = {  
 			custom_tooltip = A29_warrior_automata_buff_tt
 			set_country_flag = A29_warrior_automata_buff
+			remove_country_modifier = warrior_automata
 		} 
 	}
 
@@ -2399,7 +2397,7 @@ col_4 = {
 			country_event = { 
 				id = busilar.9 
 			}
-			clr_country_flag = A29_no_ahati_disaster 
+			clr_global_flag = A29_no_ahati_disaster 
 			hidden_effect = {
 				country_event = {
 					id = busilar.10
@@ -3354,19 +3352,12 @@ col_5 = {
 		required_missions = { A29_lulupan_staging_area } 
 		provinces_to_highlight = {
 			superregion = vimdatrong_superregion
-			OR ={
-				NOT = { country_or_non_sovereign_subject_holds = ROOT }
-				trade_goods = tropical_wood 
-			}
-			OR = {
-				NOT = {
-					trade_goods = tropical_wood 
-				}
-				NOT = {
-					AND = {
-						has_production_building_trigger = yes 
-						anb_has_been_exploited = yes 
-					}
+			country_or_non_sovereign_subject_holds = ROOT
+			trade_goods = tropical_wood 
+			NOT = {
+				AND = {
+					has_production_building_trigger = yes 
+					anb_has_been_exploited = yes 
 				}
 			}
 		} 
