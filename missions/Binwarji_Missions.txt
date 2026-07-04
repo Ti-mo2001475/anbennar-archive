@@ -121,16 +121,14 @@ binwarji_branch_1 = {
 						}
 					}
 				}
-				AND = {
-					NOT = {
-						AND = {
-							has_dlc = "Leviathan"
-							development = 30
-							has_building = mage_tower
-							OR = {
-								province_has_center_of_trade_of_level = 3
-								owner = { treasury = 500 }
-							}
+				NOT = {
+					AND = {
+						has_dlc = "Leviathan"
+						development = 30
+						has_building = mage_tower
+						OR = {
+							province_has_center_of_trade_of_level = 3
+							owner = { treasury = 500 }
 						}
 					}
 				}
@@ -549,23 +547,19 @@ binwarji_branch_3 = {
 			owned_by = ROOT
 			OR = {
 				AND = {
-					OR = {
-						AND = {
-							has_ogre_minority_trigger = yes
-							owner = {
-								NOT = {
-									any_owned_province = {
-										culture = dunesole_ogre
-									}
-								}
+					has_ogre_minority_trigger = yes
+					owner = {
+						NOT = {
+							any_owned_province = {
+								culture = dunesole_ogre
 							}
-							NOT = { num_of_times_improved_by_owner = 3 }
-						}
-						AND = {
-							culture = dunesole_ogre
-							NOT = { num_of_times_improved_by_owner = 3 }
 						}
 					}
+					NOT = { num_of_times_improved_by_owner = 3 }
+				}
+				AND = {
+					culture = dunesole_ogre
+					NOT = { num_of_times_improved_by_owner = 3 }
 				}
 				AND = {
 					province_id = 5785 #Makan
@@ -639,12 +633,10 @@ binwarji_branch_3 = {
 								culture = dunesole_ogre
 							}
 						}
-						calc_true_if = {
-							amount = 2
-							any_owned_province = {
-								culture = dunesole_ogre
-								num_of_times_improved_by_owner = 3
-							}
+						num_of_owned_provinces_with = {
+							value = 2
+							culture = dunesole_ogre
+							num_of_times_improved_by_owner = 3
 						}
 					}
 					else = {
@@ -709,10 +701,15 @@ binwarji_branch_3 = {
 							culture = dunesole_ogre
 						}
 					}
-					change_trade_goods = slaves
-					add_province_modifier = {
-						name = L22_chains_of_a_new_age
-						duration = -1
+					every_owned_province = {
+						limit = {
+							culture = dunesole_ogre
+						}
+						change_trade_goods = slaves
+						add_province_modifier = {
+							name = L22_chains_of_a_new_age
+							duration = -1
+						}
 					}
 				}
 				else = {
@@ -765,10 +762,15 @@ binwarji_branch_3 = {
 								culture = dunesole_ogre
 							}
 						}
-						change_trade_goods = slaves
-						add_province_modifier = {
-							name = L22_chains_of_a_new_age
-							duration = -1
+						every_owned_province = {
+							limit = {
+								culture = dunesole_ogre
+							}
+							change_trade_goods = slaves
+							add_province_modifier = {
+								name = L22_chains_of_a_new_age
+								duration = -1
+							}
 						}
 					}
 					else = {
@@ -848,24 +850,24 @@ binwarji_branch_3 = {
 				num_of_times_improved_by_owner = 3
 				has_tax_building_trigger = yes
 			}
-			if = {
-				limit = {
+			OR = {
+				AND = {
 					low_tolerance_gnollish_race_trigger = yes
+					5794 = { #Zoborr
+						has_trade_building_trigger = yes
+						province_has_center_of_trade_of_level = 2
+						culture_is_human = yes
+					}
 				}
-				5794 = { #Zoborr
-					has_trade_building_trigger = yes
-					province_has_center_of_trade_of_level = 2
-					culture_is_human = yes
+				AND = {
+					5794 = { #Zoborr
+						has_trade_building_trigger = yes
+						province_has_center_of_trade_of_level = 2
+					}
+					has_gnollish_advisor = yes
 				}
 			}
-			else = {
-				5794 = { #Zoborr
-					has_trade_building_trigger = yes
-					province_has_center_of_trade_of_level = 2
-				}
-				has_gnollish_advisor = yes
-			}
-		} 
+		}
 
 		effect = {
 			country_event = { id = binwarji.2 }
@@ -1115,12 +1117,6 @@ binwarji_branch_4 = {
 		provinces_to_highlight = {
 			OR = {
 				AND = {
-					owner = {
-						OR = {
-							high_tolerance_gnollish_race_trigger = yes
-							medium_tolerance_gnollish_race_trigger = yes
-						}
-					}
 					country_or_non_sovereign_subject_holds = ROOT
 					culture = windhowler_gnoll
 					NOT = {
@@ -1129,16 +1125,22 @@ binwarji_branch_4 = {
 							num_of_times_improved_by_owner = 3
 						}
 					}
+					owner = {
+						OR = {
+							high_tolerance_gnollish_race_trigger = yes
+							medium_tolerance_gnollish_race_trigger = yes
+						}
+					}
 				}
 				AND = {
+					province_id = 5794 #Zoborr
+					NOT = { has_fort_building_trigger = yes }
 					owner = {
 						NOT = {
 							high_tolerance_gnollish_race_trigger = yes
 							medium_tolerance_gnollish_race_trigger = yes
 						}
 					}
-					province_id = 5794 #Zoborr
-					NOT = { has_fort_building_trigger = yes }
 				}
 			}
 		} 
@@ -1285,12 +1287,9 @@ binwarji_branch_4 = {
 		} 
 
 		trigger = {
-			calc_true_if = {
-				amount = 30
-				kubaci_region = {
-					type = ALL
-					country_or_non_sovereign_subject_holds = ROOT
-				}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 30
+				region = kubaci_region
 			}
 			F69 = { exists = no }
 			5734 = { #Bogorr

@@ -745,34 +745,34 @@ province_event = { #Priest Wants Investment
 
 		owner = { add_adm_power = -50 }
 
-		area = {
+		random_province_in_state = {
 			limit = {
 				country_or_non_sovereign_subject_holds = event_target:L22CourtOwner
 			}
-			random_province_in_state = {
-				limit = {
-					country_or_non_sovereign_subject_holds = event_target:L22CourtOwner
+			if = {
+				limit = { 
+					OR = {
+						has_tax_building_trigger = yes
+						has_construction = temple
+						has_construction = cathedral
+					}
 				}
 				if = {
-					limit = { 
-						OR = {
-							has_tax_building_trigger = yes
-							has_construction = temple
-							has_construction = cathedral
-						}
-					}
-					if = {
-						limit = { owner = { ruler_has_personality = zealot_personality } }
-						add_base_tax = 2
-						custom_tooltip = L22_zealot_discount_TT
-					}
-					else = {
-						add_base_tax = 1
-					}
+					limit = { owner = { ruler_has_personality = zealot_personality } }
+					add_base_tax = 2
+					custom_tooltip = L22_zealot_discount_TT
 				}
 				else = {
-					add_building = temple
+					add_base_tax = 1
 				}
+			}
+			else = {
+				add_building = temple
+			}
+		}
+		area = {
+			limit = {
+				country_or_non_sovereign_subject_holds = event_target:L22CourtOwner
 			}
 			hidden_effect = { remove_province_modifier = L22_court_helped_city }
 			add_province_modifier = {
