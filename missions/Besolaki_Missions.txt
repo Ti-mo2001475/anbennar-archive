@@ -338,7 +338,7 @@ G54_1_missions = {
 						}
 					}
 					NOT = {
-						any_country = {
+						any_known_country = {
 							OR = {
 								tag = A85 #Magisterium
 								has_reform = magocracy_reform
@@ -352,12 +352,13 @@ G54_1_missions = {
 					}
 				}
 				AND = {
+					discovered_by = ROOT
 					trade_goods = damestear
 					owner = { NOT = { culture_group = kheionai_ruinborn_elf } }
 					NOT = {
-						any_country = {
+						any_known_country = {
 							NOT = { culture_group = kheionai_ruinborn_elf }
-							any_owned_province = { trade_goods = damestear }
+							damestear = 1
 							OR = {
 								has_opinion = {
 									who = ROOT
@@ -414,6 +415,7 @@ G54_1_missions = {
 				estate = estate_mages
 				influence = 20
 				duration = 3650 #10 years
+				desc = G54_mages_influence_tt
 			}
 			add_country_modifier = {
 				name = G54_embracing_magic
@@ -424,7 +426,7 @@ G54_1_missions = {
 			hidden_effect = {
 				if = {
 					limit = {
-						any_country = {
+						any_known_country = {
 							OR = {
 								tag = A85 #Magisterium
 								has_reform = magocracy_reform
@@ -445,9 +447,9 @@ G54_1_missions = {
 				
 				if = {
 					limit = {
-						any_country = {
+						any_known_country = {
 							NOT = { culture_group = kheionai_ruinborn_elf }
-							any_owned_province = { trade_goods = damestear }
+							damestear = 1
 							OR = {
 								has_opinion = {
 									who = ROOT
@@ -1985,6 +1987,7 @@ G54_4_missions = {
 		}
 
 		provinces_to_highlight = { 
+			superregion = taychend_superregion
 			OR = {
 				AND = {
 					ROOT = { any_known_country = { religion_group = taychendi } }
@@ -2612,11 +2615,8 @@ G54_5_missions = {
 						has_institution = new_world_i
 						any_owned_province = {
 							sea_zone = {
-								num_of_units_in_province = {
-									amount = 15
-									who = ROOT
-									type = light_ship
-								}
+								light_ships_in_province = 15
+								light_ships_in_province = ROOT
 							}
 						}
 					"
@@ -2644,11 +2644,8 @@ G54_5_missions = {
 					has_institution = new_world_i
 					any_owned_province = {
 						sea_zone = {
-							num_of_units_in_province = {
-								amount = 15
-								who = ROOT
-								type = light_ship
-							}
+							light_ships_in_province = 15
+							light_ships_in_province = ROOT
 						}
 					}
 				"
@@ -2687,44 +2684,15 @@ G54_5_missions = {
 		}
 
 		provinces_to_highlight = { 
-			OR = {
-				AND = {
-					any_country = {
-						colony = 1
-						capital_scope = { continent = europe }
-						NOT = { is_rival = ROOT }
-						NOT = { is_enemy = ROOT }
-					}
-					G54_country_opinion_highlight = {
-						low_opinion = 125
-						high_opinion = 150
-						trigger = "
-							colony = 1
-							capital_scope = { continent = europe }
-							NOT = { is_rival = ROOT }
-							NOT = { is_enemy = ROOT }
-						"
-					}
-				}
-				AND = {
-					NOT = {
-						any_country = {
-							colony = 1
-							capital_scope = { continent = europe }
-							NOT = { is_rival = ROOT }
-							NOT = { is_enemy = ROOT }
-						}
-					}
-					G54_country_opinion_highlight = {
-						low_opinion = 125
-						high_opinion = 150
-						trigger = "
-							capital_scope = { continent = europe }
-							NOT = { is_rival = ROOT }
-							NOT = { is_enemy = ROOT }
-						"
-					}
-				}
+			G54_country_opinion_highlight = {
+				low_opinion = 125
+				high_opinion = 150
+				trigger = "
+					colony = 1
+					capital_scope = { continent = europe }
+					NOT = { is_rival = ROOT }
+					NOT = { is_enemy = ROOT }
+				"
 			}
 		}
 
