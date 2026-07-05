@@ -3,16 +3,17 @@ estate_monstrous_tribes = {
 
 	# If true, country will get estate
 	trigger = {	
-		is_monstrous_horde = yes
-		NOT = { government = native }
 		NOT = { has_government_attribute = disables_estate_monstrous_tribes }
-		is_colonial_nation = no
-
+		#NOT = { has_country_flag = disables_estate_monstrous_tribes_flag } #Uncomment when the flag is needed. - CB
 		OR = {
-			NOT = { has_reform = hobgoblin_stratocracy_reform }
-			tag = R94
-			tag = R95
-			tag = R96
+			#has_government_attribute = enables_estate_monstrous_tribes #Uncomment when the gov attribute is needed. - CB
+			has_country_flag = enables_estate_monstrous_tribes_flag
+			AND = {
+				is_monstrous_horde = yes
+				NOT = { government = native }
+				is_colonial_nation = no
+				NOT = { has_reform = hobgoblin_stratocracy_reform }
+			}
 		}
 	}
 
