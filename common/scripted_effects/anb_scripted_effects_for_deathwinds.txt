@@ -1,6 +1,6 @@
 #Setup the Deathwinds level in every province in Alecand at the start of each storm
 setup_deathwinds = {
-	#Break when people realize getting fucked by max level Deathwinds in 1481 with no way to know about it or defend it is bad game design and that deathwind intensity lore isn't fundamental to the setting
+	#Break if it's decided to change back so scaling winds since max level Deathwinds in 1481 with no way to know about it or defend it isn't fun for the player
 	# if = {
 	# 	limit = { is_year = 1700 }
 	# 	calculate_deathwinds_level = {
@@ -119,8 +119,8 @@ calculate_deathwinds_level = {
 
 	alecand_region = {
 		set_variable = { which = deathwinds_var which = PREV }
-		#Reduce it by the provinces windward level
-		set_variable = { which = deathwinds_warded_var which = deathwinds_var } #Change to a different modifier so the other one can be used to display the unwarded deathwinds level
+		#Change to a different modifier so the other one can be used to display the unwarded deathwinds level
+		set_variable = { which = deathwinds_warded_var which = deathwinds_var } 
 
 		#Change it depending on where in the region the province is in
 		trigger_switch = {
@@ -133,6 +133,7 @@ calculate_deathwinds_level = {
 			deathwinds_plus3_group = { change_variable = { deathwinds_warded_var = 3 } }
 		}
 
+		#Reduce it by the provinces windward level
 		trigger_switch = {
 			on_trigger = has_province_modifier
 			windward_level_10 = { change_variable = { deathwinds_warded_var = -10 } }
@@ -487,18 +488,18 @@ upgrade_windwards = {
 				limit = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } }
 				add_treasury = -500
 				if = {
-					limit = { manpower = 20 }
-					add_manpower = -20
+					limit = { has_mana = { amount = 20 } }
+					change_mana = { amount = -20 }
 				}
-				else = { change_mana = { amount = -20 } }
+				else = { add_manpower = -20 }
 			}
 			else = {
 				add_treasury = -1500
 				if = {
-					limit = { manpower = 20 }
-					add_manpower = -20
+					limit = { has_mana = { amount = 200 } }
+					change_mana = { amount = -200 }
 				}
-				else = { change_mana = { amount = -200 } }
+				else = { add_manpower = -20 }
 			}
 		}
 	}
@@ -551,9 +552,12 @@ upgrade_windwards = {
 
 			if = {
 				limit = { NOT = { has_dlc = Leviathan } }
-				add_adm_power = 50
+				add_adm_power = -50
 			}
-			else = { change_mana = { amount = -100 } }
+			else_if = {
+				limit = { NOT = { num_of_times_expanded_infrastructure = 1 } }
+				change_mana = { amount = -100 }
+			}
 		}
 	}
 	#-------------------------------------------------------------------------------------------------------------
