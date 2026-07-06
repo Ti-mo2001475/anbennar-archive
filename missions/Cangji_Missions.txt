@@ -49,11 +49,15 @@ cangji_1 = {
                 value = 3
                 has_cinder_monastery = yes
 		    }
-			is_overall_conjuration_level_1_minimum = yes
-			is_overall_evocation_level_1_minimum = yes
-			is_overall_abjuration_level_1_minimum = yes
-			has_cast_amount_spell = { school = conjuration level = 1 id = summon_animals amount = 1 }
-			has_cast_amount_spell = { school = evocation level = 1 id = shock_and_awe amount = 1 }
+			OR = {
+				is_overall_conjuration_level_1_minimum = yes
+				is_overall_evocation_level_1_minimum = yes
+				is_overall_abjuration_level_1_minimum = yes
+			}
+			OR = {
+				has_cast_amount_spell = { school = conjuration level = 1 id = summon_animals amount = 1 }
+				has_cast_amount_spell = { school = evocation level = 1 id = shock_and_awe amount = 1 }
+			}
 			is_not_advancing_infrastructure = yes
         }
 		effect = {
@@ -377,7 +381,6 @@ cangji_2 = {
 				type = all
 				owned_by = ROOT
 			}
-			has_cast_summon_animals = yes
 		}
 		effect = {
 			nomsyulhan_region = { add_permanent_claim = ROOT }
