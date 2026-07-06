@@ -164,6 +164,24 @@ country_event = { #Banbe Anen Handler
 			}
 		}
 	}
+	after = {
+		if = {
+			limit = {
+				check_variable = {
+					which = banbe_anen_quest_for_reehanviza_ruler_steps
+					value = 1
+				}
+			}
+			country_event = { id = flavour_banbe_anen.0 days = 365 }
+			subtract_variable = {
+				which = banbe_anen_quest_for_reehanviza_ruler_steps
+				value = 1
+			}
+		}
+		else = {
+			country_event = { id = flavour_banbe_anen.101 days = 365 }
+		}
+	}
 }
 
 #Generic Events
@@ -1664,7 +1682,9 @@ country_event = { #Quest for Reehanviza End
 	picture = MAGE_MOON_eventPicture
 
 	is_triggered_only = yes
-	trigger = { }
+	trigger = {
+		has_ruler_modifier = banbe_anen_quest_for_reehanviza
+	}
 	immediate = {
 		hidden_effect = {
 			set_ruler_flag = quest_for_reehanviza_completed
