@@ -337,38 +337,42 @@ G54_1_missions = {
 							}
 						}
 					}
-					NOT = {
-						any_known_country = {
-							OR = {
-								tag = A85 #Magisterium
-								has_reform = magocracy_reform
-								ruler_is_powerful_mage = yes
-							}
-							has_opinion = {
-								who = ROOT
-								value = 50
+					ROOT = {
+						NOT = {
+							any_known_country = {
+								OR = {
+									tag = A85 #Magisterium
+									has_reform = magocracy_reform
+									ruler_is_powerful_mage = yes
+								}
+								has_opinion = {
+									who = ROOT
+									value = 50
+								}
 							}
 						}
 					}
 				}
 				AND = {
-					discovered_by = ROOT
+					has_discovered = ROOT
 					trade_goods = damestear
 					owner = { NOT = { culture_group = kheionai_ruinborn_elf } }
-					NOT = {
-						any_known_country = {
-							NOT = { culture_group = kheionai_ruinborn_elf }
-							damestear = 1
-							OR = {
-								has_opinion = {
-									who = ROOT
-									value = 200
-								}
-								AND = {
-									ROOT = { faction_in_power = beso_nautabhen }
+					ROOT = {
+						NOT = {
+							any_known_country = {
+								NOT = { culture_group = kheionai_ruinborn_elf }
+								damestear = 1
+								OR = {
 									has_opinion = {
 										who = ROOT
-										value = 175
+										value = 200
+									}
+									AND = {
+										ROOT = { faction_in_power = beso_nautabhen }
+										has_opinion = {
+											who = ROOT
+											value = 175
+										}
 									}
 								}
 							}
