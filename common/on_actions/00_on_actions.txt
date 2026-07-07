@@ -24587,7 +24587,102 @@ on_holy_order_established = {
 				duration = -1
 			}
 		}
-	
+		
+		#Kheios gov ref
+		#ADM
+		else_if = {
+			limit = {
+				has_reform = absence_of_divinity
+				OR = {
+					holy_order = maederitic_rule_order_level_1
+					holy_order = maederitic_rule_order_level_2
+					holy_order = maederitic_rule_order_level_3
+
+					holy_order = schaal_onitheia_order_level_1
+					holy_order = schaal_onitheia_order_level_2
+					holy_order = schaal_onitheia_order_level_3
+
+					holy_order = teachings_of_varamelas_order_level_1
+					holy_order = teachings_of_varamelas_order_level_2
+					holy_order = teachings_of_varamelas_order_level_3	
+				}		
+			}
+			area = {
+				limit = { owner = ROOT }
+				if = {
+					limit = { NOT = { has_province_modifier = kheios_gov_cd } }
+					add_province_modifier = {
+						name = kheios_gov_cd
+						duration = 1825
+					}
+					add_local_autonomy = -15
+				}
+			}
+		}
+
+		#DIP
+		else_if = {
+			limit = {
+				has_reform = absence_of_divinity
+				OR = {
+					holy_order = dictats_of_isparokaeus_order_level_1
+					holy_order = dictats_of_isparokaeus_order_level_2
+					holy_order = dictats_of_isparokaeus_order_level_3
+
+					holy_order = archatiradist_doctrine_order_level_1
+					holy_order = archatiradist_doctrine_order_level_2
+					holy_order = archatiradist_doctrine_order_level_3
+
+					holy_order = anagbheism_order_level_1
+					holy_order = anagbheism_order_level_2
+					holy_order = anagbheism_order_level_3	
+				}			
+			}
+			area = {
+				limit = { owner = ROOT }
+				if = {
+					limit = { NOT = { has_province_modifier = kheios_gov_cd } }
+					add_province_modifier = {
+						name = kheios_gov_cd
+						duration = 1825
+					}
+					add_rebel_progress = {
+						value = -15
+					}
+				}
+			}
+		}
+
+		#MIL
+		else_if = {
+			limit = {
+				has_reform = absence_of_divinity
+				OR = {
+					holy_order = axierophonic_mandate_order_level_1
+					holy_order = axierophonic_mandate_order_level_2
+					holy_order = axierophonic_mandate_order_level_3
+
+					holy_order = drivos_rochos_order_level_1
+					holy_order = drivos_rochos_order_level_2
+					holy_order = drivos_rochos_order_level_3
+
+					holy_order = laskaris_creed_order_level_1
+					holy_order = laskaris_creed_order_level_2
+					holy_order = laskaris_creed_order_level_3
+				}
+				NOT = { has_province_modifier = kheios_gov_cd }   
+			}
+			owner = {
+				add_yearly_manpower = 0.1 
+			}
+			area = {
+				add_province_modifier = {
+					name = kheios_gov_cd
+					duration = 1825
+				}
+			}
+		}
+
 		# New Sun Cult
 		else_if = {
 			limit = {
@@ -28516,6 +28611,28 @@ on_institution_embracement = {
 on_national_focus_change = {
 	#Pashaine
 	pashaine_apply_focus_bonus = yes
+
+	#Kheionai gos ref
+	if = {
+		limit = { has_reform = three_branches }
+
+		remove_country_modifier = three_branches_legislative_mod 
+		remove_country_modifier = three_branches_judicial_mod 
+		remove_country_modifier = three_branches_executive_mod 
+
+		if = {
+			limit = { national_focus = administrative }
+			add_country_modifier = { name = three_branches_legislative_mod duration = -1 }
+		}
+		else_if = {
+			limit = { national_focus = diplomatic }
+			add_country_modifier = { name = three_branches_judicial_mod duration = -1 }
+		}
+		else_if = {
+			limit = { national_focus = military }
+			add_country_modifier = { name = three_branches_executive_mod duration = -1 }
+		}
+	}
 }
 
 #ROOT = new capital province, FROM = old capital province
