@@ -2889,20 +2889,17 @@ on_war_won = {
 		}
 	}
 
-	#Cangji
-	if = {
-		limit = {
-			tag = V05
-			has_country_modifier = V05_yanshen_warscore
+	if = { #Cangji
+		FROM = {
+			limit = {
+				OR = {
+					has_province_modifier = V05_yanshen_warscore
+					has_province_modifier = V05_forbidden_plains_warscore
+				}
+			}
+			remove_province_modifier = V05_yanshen_warscore
+			remove_province_modifier = V05_forbidden_plains_warscore
 		}
-		remove_country_modifier = V05_yanshen_warscore
-	}
-	if = {
-		limit = {
-			tag = V05
-			has_country_modifier = V05_forbidden_plains_warscore
-		}
-		remove_country_modifier = V05_forbidden_plains_warscore
 	}
 
 	#Artificery
@@ -3226,22 +3223,6 @@ on_war_lost = {
 		}
 	}
 	clr_country_flag = I78_released_provinces
-
-	#Cangji
-	if = {
-		limit = {
-			tag = V05
-			has_country_modifier = V05_yanshen_warscore
-		}
-		remove_country_modifier = V05_yanshen_warscore
-	}
-	if = {
-		limit = {
-			tag = V05
-			has_country_modifier = V05_forbidden_plains_warscore
-		}
-		remove_country_modifier = V05_forbidden_plains_warscore
-	}
 	
 	update_artifice_points = yes #needs to be last
 }
@@ -27571,17 +27552,6 @@ on_conquest = {
 			else = { U39_purification_effect = { devastation = 15 dev = -1 } }
 		}
 	}
-	if = { #Cangji
-		limit = {
-			OR = {
-				has_province_modifier = V05_yanshen_warscore
-				has_province modifier = V05_forbidden_plains_warscore
-			}
-		}
-		remove_province_modifier = V05_yanshen_warscore
-		remove_province_modifier = V05_forbidden_plains_warscore
-	}
-
 }
 
 on_country_creation = {
@@ -31718,6 +31688,37 @@ on_war_ended = { #ROOT - Winer FROM - Loser
 			}
 		}
 		remove_country_modifier = U09_conquest_of_the_sorrow
+	}
+
+	#Cangji
+	if = {
+		limit = {
+			any_owned_province = {
+				has_province_modifier = V05_yanshen_warscore
+				has_province_modifier = V05_forbidden_plains_warscore
+			}
+		}
+		every_owned_province = {
+			remove_province_modifier = V05_yanshen_warscore
+			remove_province_modifier = V05_forbidden_plains_warscore
+		}
+	}
+
+	if = {
+		limit = {
+			FROM = {
+				any_owned_province = {
+					has_province_modifier = V05_yanshen_warscore
+					has_province_modifier = V05_forbidden_plains_warscore
+				}
+			}
+		}
+		FROM = {
+			every_owned_province = {
+				remove_province_modifier = V05_yanshen_warscore
+				remove_province_modifier = V05_forbidden_plains_warscore
+			}
+		}
 	}
 }
 
