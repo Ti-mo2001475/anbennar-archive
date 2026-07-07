@@ -2889,19 +2889,6 @@ on_war_won = {
 		}
 	}
 
-	if = { #Cangji
-		FROM = {
-			limit = {
-				OR = {
-					has_province_modifier = V05_yanshen_warscore
-					has_province_modifier = V05_forbidden_plains_warscore
-				}
-			}
-			remove_province_modifier = V05_yanshen_warscore
-			remove_province_modifier = V05_forbidden_plains_warscore
-		}
-	}
-
 	#Artificery
 	update_artifice_points = yes #needs to be last
 }
@@ -31693,9 +31680,9 @@ on_war_ended = { #ROOT - Winer FROM - Loser
 	#Cangji
 	if = {
 		limit = {
-			any_owned_province = {
-				has_province_modifier = V05_yanshen_warscore
-				has_province_modifier = V05_forbidden_plains_warscore
+			OR = {
+				has_country_flag = V05_yanshen_target
+				has_country_flag = V05_yarikhoi_target
 			}
 		}
 		every_owned_province = {
@@ -31707,9 +31694,9 @@ on_war_ended = { #ROOT - Winer FROM - Loser
 	if = {
 		limit = {
 			FROM = {
-				any_owned_province = {
-					has_province_modifier = V05_yanshen_warscore
-					has_province_modifier = V05_forbidden_plains_warscore
+				OR = {
+					has_country_flag = V05_yanshen_target
+					has_country_flag = V05_yarikhoi_target
 				}
 			}
 		}
