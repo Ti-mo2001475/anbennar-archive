@@ -31681,23 +31681,8 @@ on_war_ended = { #ROOT - Winer FROM - Loser
 	if = {
 		limit = {
 			OR = {
-				has_country_flag = V05_yanshen_target
-				has_country_flag = V05_yarikhoi_target
-			}
-		}
-		every_owned_province = {
-			remove_province_modifier = V05_yanshen_warscore
-			remove_province_modifier = V05_forbidden_plains_warscore
-		}
-	}
-
-	if = {
-		limit = {
-			FROM = {
-				OR = {
-					has_country_flag = V05_yanshen_target
-					has_country_flag = V05_yarikhoi_target
-				}
+				has_country_flag = V05_yanshen_wars
+				has_country_flag = V05_yarikhoi_wars
 			}
 		}
 		FROM = {
@@ -31705,6 +31690,21 @@ on_war_ended = { #ROOT - Winer FROM - Loser
 				remove_province_modifier = V05_yanshen_warscore
 				remove_province_modifier = V05_forbidden_plains_warscore
 			}
+		}
+	}
+
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					has_country_flag = V05_yanshen_wars
+					has_country_flag = V05_yarikhoi_wars
+				}
+			}
+		}
+		every_owned_province = {
+			remove_province_modifier = V05_yanshen_warscore
+			remove_province_modifier = V05_forbidden_plains_warscore
 		}
 	}
 }
