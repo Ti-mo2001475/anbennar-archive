@@ -354,7 +354,7 @@ G54_1_missions = {
 					}
 				}
 				AND = {
-					discovered_by = ROOT
+					has_discovered = ROOT
 					trade_goods = damestear
 					owner = { NOT = { culture_group = kheionai_ruinborn_elf } }
 					ROOT = {
@@ -2611,11 +2611,11 @@ G54_5_missions = {
 
 		provinces_to_highlight = {
 			OR = {
-				G54_country_opinion_highlight = {
-					low_opinion = 100
-					high_opinion = 125
-					trigger = "
-						capital_scope = { continent = north_america }
+				AND = { #Not using G54_country_opinion_highlight because it doesn't like has_institution for some reason
+					has_discovered = ROOT
+					is_capital = yes
+					continent = north_america
+					owner = {
 						has_institution = new_world_i
 						any_owned_province = {
 							sea_zone = {
@@ -2623,7 +2623,15 @@ G54_5_missions = {
 								light_ships_in_province = ROOT
 							}
 						}
-					"
+						OR = {
+							ROOT = { faction_in_power = beso_nautabhen }
+							has_opinion = { who = ROOT value = $low_opinion$ }
+						}
+						OR = {
+							ROOT = { NOT = { faction_in_power = beso_nautabhen } }
+							has_opinion = { who = ROOT value = $high_opinion$ }
+						}
+					}
 				}
 				AND = {
 					is_capital_of = ROOT
@@ -2638,23 +2646,40 @@ G54_5_missions = {
 		}
 
 		trigger = {
-			G54_country_opinion_trigger = {
-				low_tt = G54_colonialism_nation_low_tt
-				low_opinion = 100
-				high_tt = G54_colonialism_nation_high_tt
-				high_opinion = 125
-				trigger = "
-					capital_scope = { continent = north_america }
-					has_institution = new_world_i
-					any_owned_province = {
-						sea_zone = {
-							light_ships_in_province = 15
-							light_ships_in_province = ROOT
+			 #Not using G54_country_opinion_trigger because it doesn't like has_institution for some reason
+			if = {
+				limit = { faction_in_power = beso_nautabhen }
+				custom_trigger_tooltip = {
+					tooltip = G54_colonialism_nation_low_tt
+					any_known_country = {
+						capital_scope = { continent = north_america }
+						has_institution = new_world_i
+						any_owned_province = {
+							sea_zone = {
+								light_ships_in_province = 15
+								light_ships_in_province = ROOT
+							}
 						}
+						has_opinion = { who = ROOT value = 100 }
 					}
-				"
+				}
 			}
-
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = G54_colonialism_nation_high_tt
+					any_known_country = {
+						capital_scope = { continent = north_america }
+						has_institution = new_world_i
+						any_owned_province = {
+							sea_zone = {
+								light_ships_in_province = 15
+								light_ships_in_province = ROOT
+							}
+						}
+						has_opinion = { who = ROOT value = 125 }
+					}
+				}
+			}
 			capital_scope = {
 				has_dock_building_trigger = yes
 				has_shipyard_building_trigger = yes
