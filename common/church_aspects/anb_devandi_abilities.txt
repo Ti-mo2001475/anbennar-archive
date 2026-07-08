@@ -1,8 +1,98 @@
 #Designed by Spyhaus and Blaziy, Coded by Blaziy
 
+##########################
+# Tag Specific Abilities #
+##########################
+
+J74_to_bear_the_sword = {
+	sprite = "GFX_look_for_omens"
+	cost = 50
+
+	potential = {
+		is_or_was_tag = { tag = J74 } #Caergaraen
+	}
+	
+	trigger = {
+		NOT = { has_country_modifier = J74_saerasyar_sword_base_mod }
+		if = {
+			limit = { has_country_flag = J74_disable_saerasyar_flag }
+			had_country_flag = {
+				flag = J74_disable_saerasyar_flag
+				days = 3650 #10 years
+			}
+		}
+	}
+
+	effect = {
+		country_event = {
+			id = caergaraen.1 #Unsheathing the Sword
+		}
+	}
+
+	ai_will_do = {
+		factor = 1000
+	}
+}
+
 ####################
 # Shared Abilities #
 ####################
+
+an_offering = {
+	sprite = "GFX_sky_domain_denounce_yrilak"
+	cost = 25
+	
+	trigger = {
+		years_of_income = 0.25
+	}
+
+	potential = {
+	}
+
+	effect = {
+		add_years_of_income = -0.25
+		custom_tooltip = an_offering_tt
+		hidden_effect = {
+			country_event = {
+				id = devandi.3
+			}
+		}
+	}
+
+	ai_will_do = {
+		factor = 1
+	}
+}
+
+bonds_of_the_world = {
+	sprite = "GFX_winged_raid"
+	cost = 50
+	
+	trigger = {
+		NOT = { num_of_loans = 1 }
+	}
+
+	potential = {
+	}
+
+	effect = {
+		custom_tooltip = bonds_of_the_world_tt
+		hidden_effect = {
+			for = {
+				amount = 5
+				effect = "
+				add_loan = {
+					duration = 1825 #5 years
+					fixed_interest = 0
+				}"
+			}
+		}
+	}
+
+	ai_will_do = {
+		factor = 1
+	}
+}
 
 unifying_soul_of_nahrei = {
 	sprite = "GFX_sky_domain_great_prayer"
@@ -20,8 +110,19 @@ unifying_soul_of_nahrei = {
 	}
 
 	effect = {
-		country_event = {
-			id = devandi.1
+		if = {
+			limit = { religion = askaeorg }
+			custom_tooltip = askaeorg_steppe_dev_tt
+			custom_tooltip = unifying_soul_of_nahrei_tt
+		}
+		else = {
+			custom_tooltip = mazhthramazh_unifying_soul_of_nahrei_tt
+			custom_tooltip = unifying_soul_of_nahrei_tt
+		}
+		hidden_effect = {
+			country_event = {
+				id = devandi.1
+			}
 		}
 	}
 
@@ -41,10 +142,17 @@ solid_fortitude = {
 	}
 
 	effect = {
-		country_event = {
-			id = devandi.2
+		if = {
+			limit = { religion = askaeorg }
+			custom_tooltip = askaeorg_solid_fortitude_tt
+		}
+		else = {
+			custom_tooltip = mazhthramazh_solid_fortitude_tt
 		}
 		hidden_effect = {
+			country_event = {
+				id = devandi.2
+			}
 			if = { #Hidden event to refund church power since they're paid after the effects
 				limit = { has_country_flag = J74_solid_fortitude_buff_flag }
 				country_event = { id = caergaraen.10 }
@@ -111,51 +219,44 @@ a_sense_of_freedom = {
 	}
 }
 
-an_offering = {
-	sprite = "GFX_sky_domain_denounce_yrilak"
-	cost = 25
+declare_zhutashsar = {
+	sprite = "GFX_sky_domain_great_temple"
+	cost = 200
 	
 	trigger = {
-		years_of_income = 0.25
-	}
-
-	potential = {
-	}
-
-	effect = {
-		add_years_of_income = -0.25
-		country_event = {
-			id = devandi.3
+		stability = 2
+		custom_trigger_tooltip = {
+			tooltip = declare_zhutashsar_tt
+			NOT = { has_ruler_flag = declare_zhutashsar_flag }
+		}
+		2627 = {
+			owned_by = ROOT
+			has_great_project = {
+				type = mteibhar_monastery_tsharab
+				tier = 1
+			}
 		}
 	}
 
-	ai_will_do = {
-		factor = 1
-	}
-}
-
-bonds_of_the_world = {
-	sprite = "GFX_winged_raid"
-	cost = 50
-	
-	trigger = {
-		NOT = { num_of_loans = 1 }
-	}
-
 	potential = {
+		2627 = {
+			owned_by = ROOT
+			has_great_project = {
+				type = mteibhar_monastery_tsharab
+				tier = 1
+			}
+		}
 	}
 
 	effect = {
-		custom_tooltip = bonds_of_the_world_tt
+		custom_tooltip = declare_zhutashsar_effect_tt
 		hidden_effect = {
-			for = {
-				amount = 5
-				effect = "
-				add_loan = {
-					duration = 1825 #5 years
-					fixed_interest = 0
-				}"
-			}
+			add_republican_tradition = -20
+			add_legitimacy = -20
+			add_stability = -1
+		}
+		country_event = {
+			id = devandi.8
 		}
 	}
 
@@ -197,8 +298,35 @@ seismic_sense = {
 	}
 
 	effect = {
-		country_event = {
-			id = devandi.4
+		custom_tooltip = seismic_sense_uncolonized_tt
+		hidden_effect = {
+			country_event = {
+				id = devandi.4
+			}
+		}
+	}
+
+	ai_will_do = {
+		factor = 1
+	}
+}
+
+grand_pilgrimage = {
+	sprite = "GFX_sky_domain_riyitewag_sins"
+	cost = 75
+	
+	trigger = {
+	}
+
+	potential = {
+	}
+
+	effect = {
+		custom_tooltip = grand_pilgrimage_tt
+		hidden_effect = {
+			country_event = {
+				id = devandi.5
+			}
 		}
 	}
 
@@ -268,27 +396,6 @@ plains_of_learning = {
 			else = {
 				add_country_modifier = { name = plains_of_learning_1 duration = 912 } #2.5 years
 			}
-		}
-	}
-
-	ai_will_do = {
-		factor = 1
-	}
-}
-
-grand_pilgrimage = {
-	sprite = "GFX_sky_domain_riyitewag_sins"
-	cost = 75
-	
-	trigger = {
-	}
-
-	potential = {
-	}
-
-	effect = {
-		country_event = {
-			id = devandi.5
 		}
 	}
 
@@ -395,88 +502,15 @@ askaeorg_raid = {
 	}
 
 	effect = {
-		country_event = {
-			id = devandi.6
-		}
-	}
-
-	ai_will_do = {
-		factor = 1
-	}
-}
-
-declare_zhutashsar = {
-	sprite = "GFX_sky_domain_great_temple"
-	cost = 200
-	
-	trigger = {
-		stability = 2
-		custom_trigger_tooltip = {
-			tooltip = declare_zhutashsar_tt
-			NOT = { has_ruler_flag = declare_zhutashsar_flag }
-		}
-		2627 = {
-			owned_by = ROOT
-			has_great_project = {
-				type = mteibhar_monastery_tsharab
-				tier = 1
-			}
-		}
-	}
-
-	potential = {
-		2627 = {
-			owned_by = ROOT
-			has_great_project = {
-				type = mteibhar_monastery_tsharab
-				tier = 1
-			}
-		}
-	}
-
-	effect = {
-		custom_tooltip = declare_zhutashsar_effect_tt
+		custom_tooltip = devandi_raid_short_tt
 		hidden_effect = {
-			add_republican_tradition = -20
-			add_legitimacy = -20
-			add_stability = -1
-		}
-		country_event = {
-			id = devandi.8
+			country_event = {
+				id = devandi.6
+			}
 		}
 	}
 
 	ai_will_do = {
 		factor = 1
-	}
-}
-
-J74_to_bear_the_sword = {
-	sprite = "GFX_look_for_omens"
-	cost = 50
-
-	potential = {
-		is_or_was_tag = { tag = J74 } #Caergaraen
-	}
-	
-	trigger = {
-		NOT = { has_country_modifier = J74_saerasyar_sword_base_mod }
-		if = {
-			limit = { has_country_flag = J74_disable_saerasyar_flag }
-			had_country_flag = {
-				flag = J74_disable_saerasyar_flag
-				days = 3650 #10 years
-			}
-		}
-	}
-
-	effect = {
-		country_event = {
-			id = caergaraen.1 #Unsheathing the Sword
-		}
-	}
-
-	ai_will_do = {
-		factor = 1000
 	}
 }
