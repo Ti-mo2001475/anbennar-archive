@@ -117,14 +117,29 @@ country_decisions = {
 				tag = G27
 				was_tag = G27
 			}
-			NOT = {
-				has_estate_influence_modifier = {
-					estate = estate_burghers
-					modifier = G27_invited_innovator_desc
+			if = {
+				limit = {
+					religion = ravelian
 				}
-				has_estate_influence_modifier = {
-					estate = estate_church
-					modifier = G27_invited_innovator_desc
+				custom_trigger_tooltip = {
+					tooltip = G27_invited_innovator_ravelian
+					NOT = { 
+						has_estate_influence_modifier = {
+						estate = estate_church
+						modifier = G27_invited_innovator_desc
+						}
+					}
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = G27_invited_innovator_ynnic
+					NOT = { 
+						has_estate_influence_modifier = {
+						estate = estate_burghers
+						modifier = G27_invited_innovator_desc
+						}
+					}
 				}
 			}
 			if = {
@@ -359,15 +374,15 @@ country_decisions = {
 		potential = {
 			has_country_flag = g27_unlocked_watermills
 			has_estate_privilege = estate_artificers_clockwork_architects
-			custom_trigger_tooltip = {
-				tooltip = g27_not_building_watermill_tt
+			# custom_trigger_tooltip = {
+			# 	tooltip = g27_not_building_watermill_tt
 				NOT = {
 					watermill_provinces = {
 						type = all
 						has_province_flag = g27_province_is_building_or_has_watermill
 					}
 				}
-			}
+			# }
 		}
 		major = yes
 		provinces_to_highlight = {
@@ -377,7 +392,9 @@ country_decisions = {
 			}
 		}
 		allow = {
-			has_country_flag = g27_unlocked_watermills
+			hidden_trigger = {
+				has_country_flag = g27_unlocked_watermills
+			}
 			artifice_has_points_10 = yes
 			watermill_provinces = {
 				NOT = {
@@ -666,6 +683,7 @@ country_decisions = {
 		potential = {
 			tag = G27
 			mission_completed = g27_veliki_breluslad
+			NOT = { has_country_flag = g27_renamed }
 		}
 		major = yes
 		allow = {
@@ -673,6 +691,9 @@ country_decisions = {
 		}
 		effect = {
 			override_country_name = VELIKI_BRELUSLAD
+			hidden_effect = {
+				set_country_flag = g27_renamed
+			}
 		}
 		ai_will_do = {
 			factor = 1000

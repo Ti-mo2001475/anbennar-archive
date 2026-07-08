@@ -171,6 +171,13 @@ country_event = { # The rule of [Root.Monarch.GetName]
 	
 	trigger = {
 		has_reform = hobgoblin_stratocracy_reform
+		NOT = {
+			primary_culture = yak_command
+			AND = {
+				has_country_flag = tsukqiao_is_yak_command
+				tag = R94
+			}
+		}
 	}
 	
 	immediate = {
@@ -2696,7 +2703,7 @@ country_event = { #A universal Command
 		highlight = yes
 		add_splendor = 800
 		add_prestige = 200
-		override_country_name = THE_GREATEST_COMMAND
+		override_country_name = THE_SUPREME_COMMAND
 		add_country_modifier = {
 			name = command_the_edict
 			duration = -1
@@ -2732,6 +2739,7 @@ country_event = { #The Fate of the Oracle
 		ai_chance = { factor = 1 }
 		add_2_stability_or_adm_power = yes
 		add_legitimacy_or_monarch_power = { VAL = 30 }
+		set_country_flag = command_killed_the_oracle_flag
 		
 		# add_country_modifier = {
 			# name = command_killed_the_oracle_command
@@ -3071,6 +3079,10 @@ country_event = { #Command demands subjugation from the Oni!
 				army_strength = { who = R62 value = 0.75 }
 			}
 		}
+		if = {
+			limit = { war_with = R62 } #strange edge-case that should_quit_wars_on_activation doesn't help with?
+			white_peace = R62
+		}
 		R62 = {
 			create_subject = {
 				subject_type = slave_state
@@ -3156,6 +3168,7 @@ country_event = { #Auto-Wuhyunification pulse
 				tag = R62
 				mission_completed = R62_laws_of_ninun
 				ai = yes
+				NOT = { is_subject = yes }
 				NOT = { has_global_flag = R62_the_edict_of_x_flag }
 			}
 			AND = {
@@ -4237,7 +4250,7 @@ country_event = { #Rise of the Shamans Start (Hidden)
 			change_government = theocracy
 			add_government_reform = magocracy_reform
 			adopt_reform_progress = R62
-			add_country_modifier = { name = mage_rebel_country_mod duration = -1 }
+			add_country_modifier = { name = mage_rebel_country_mod duration = 9125 }
 			add_stability = 3
 			add_treasury = 5000
 			add_manpower = 50
@@ -4457,7 +4470,6 @@ country_event = { #Mage Revolt Leader Start (this is what shows up on-screen)
 						override_country_name = THE_STALKING_WAY_REBELLION
 						change_primary_culture = shamadhan
 						change_religion = suhans_praxis
-						change_unit_type = tech_undead
 						define_ruler = {
 							name = "Suresh"
 							dynasty = "of the Stalking Way"
@@ -4485,7 +4497,6 @@ country_event = { #Mage Revolt Leader Start (this is what shows up on-screen)
 							witch_king = yes
 						}
 
-						necromancy_3_undead_army_effect = yes
 						add_country_modifier = { name = command_suresh_of_the_stalking_way duration = -1 }
 						
 						capital_scope = {
@@ -4879,7 +4890,7 @@ country_event = { #The Betrayal of the Oni!
 								}
 							}
 							save_event_target_as = command_move_target_candidate_1
-							set_province_flag = command_move_target_candidate_1
+							set_province_flag = command_move_target_flag
 						}
 					}
 					command_move_orc_slave_state = {
@@ -4902,7 +4913,7 @@ country_event = { #The Betrayal of the Oni!
 								}
 							}
 							save_event_target_as = command_move_target_candidate_1
-							set_province_flag = command_move_target_candidate_1
+							set_province_flag = command_move_target_flag
 						}
 					}
 					command_move_orc_slave_state = {
@@ -4953,7 +4964,7 @@ country_event = { #The Betrayal of the Oni!
 				country_event = { id = anbennar_setup.3 }
 				change_government = theocracy
 				add_government_reform = magocracy_reform
-				add_country_modifier = { name = mage_rebel_country_mod duration = -1 }
+				add_country_modifier = { name = mage_rebel_country_mod duration = 9125 }
 				add_stability = 3
 				add_treasury = 10000
 				add_manpower = 100
@@ -5055,7 +5066,7 @@ country_event = { #The Betrayal of the Oni!
 				}
 				set_ruler_flag = devouring_life_extension
 				set_ruler_flag = dvp_life_extension_2
-				add_country_modifier = { name = mage_rebel_country_mod duration = -1 }
+				add_country_modifier = { name = mage_rebel_country_mod duration = 9125 }
 				declare_war_with_cb = { who = R62 casus_belli = cb_dissolve_command }
 				country_event = { id = the_command.93 } #delays effect
 			}
@@ -5563,17 +5574,15 @@ country_event = { # Thunderfist Movement Menu
 	immediate = {
 		hidden_effect = {
 			set_country_flag = command_move_menu_open_flag
-			command_generate_move_target_canditates = yes
+			command_generate_move_target_canditates = { index = 1 }
+			command_generate_move_target_canditates = { index = 2 }
+			command_generate_move_target_canditates = { index = 3 }
 		}
 	}
 
 	option = { # Choose first
 		name = the_command.100.a
-		trigger = {
-			any_owned_province = {
-				has_province_flag = command_move_target_candidate_1
-			}
-		}
+		trigger = { has_saved_event_target = command_move_target_candidate_1 }
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -5589,19 +5598,11 @@ country_event = { # Thunderfist Movement Menu
 			tag = R63
 			target = command_move_target_candidate_1
 		}
-		
-		hidden_effect = {
-			clr_country_flag = command_move_menu_open_flag
-		}
 	}
 
 	option = { # Choose second
 		name = the_command.100.b
-		trigger = {
-			any_owned_province = {
-				has_province_flag = command_move_target_candidate_2
-			}
-		}
+		trigger = { has_saved_event_target = command_move_target_candidate_2 }
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -5617,19 +5618,11 @@ country_event = { # Thunderfist Movement Menu
 			tag = R63
 			target = command_move_target_candidate_2
 		}
-		
-		hidden_effect = {
-			clr_country_flag = command_move_menu_open_flag
-		}
 	}
 
 	option = { # Choose third
 		name = the_command.100.c
-		trigger = {
-			any_owned_province = {
-				has_province_flag = command_move_target_candidate_3
-			}
-		}
+		trigger = { has_saved_event_target = command_move_target_candidate_3 }
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -5645,27 +5638,16 @@ country_event = { # Thunderfist Movement Menu
 			tag = R63
 			target = command_move_target_candidate_3
 		}
-		
-		hidden_effect = {
-			clr_country_flag = command_move_menu_open_flag
-		}
 	}
 	
 	option = {
 		name = the_command.100.dd
 		highlight = yes
-		
-		hidden_effect = {
-			clr_country_flag = command_move_menu_open_flag
-		}
 	}
 	
 	after = {
-		every_owned_province = {
-			clr_province_flag = command_move_target_candidate_1
-			clr_province_flag = command_move_target_candidate_2
-			clr_province_flag = command_move_target_candidate_3
-		}
+		clr_country_flag = command_move_menu_open_flag
+		every_owned_province = { clr_province_flag = command_move_target_flag }
 		if = {
 			limit = { ai = yes }
 			command_slave_state_cede_surrounding = { tag = R63 }
@@ -5683,21 +5665,17 @@ country_event = { # Bloodsong Movement Menu
 	is_triggered_only = yes
 	
 	immediate = {
-		
 		hidden_effect = {
 			set_country_flag = command_move_menu_open_flag
-			
-			command_generate_move_target_canditates = yes
+			command_generate_move_target_canditates = { index = 1 }
+			command_generate_move_target_canditates = { index = 2 }
+			command_generate_move_target_canditates = { index = 3 }
 		}
 	}
 
 	option = { # Choose first
 		name = the_command.100.a
-		trigger = {
-			any_owned_province = {
-				has_province_flag = command_move_target_candidate_1
-			}
-		}
+		trigger = { has_saved_event_target = command_move_target_candidate_1 }
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -5713,19 +5691,11 @@ country_event = { # Bloodsong Movement Menu
 			tag = R64
 			target = command_move_target_candidate_1
 		}
-		
-		hidden_effect = {
-			clr_country_flag = command_move_menu_open_flag
-		}
 	}
 
 	option = { # Choose second
 		name = the_command.100.b
-		trigger = {
-			any_owned_province = {
-				has_province_flag = command_move_target_candidate_2
-			}
-		}
+		trigger = { has_saved_event_target = command_move_target_candidate_2 }
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -5741,19 +5711,11 @@ country_event = { # Bloodsong Movement Menu
 			tag = R64
 			target = command_move_target_candidate_2
 		}
-		
-		hidden_effect = {
-			clr_country_flag = command_move_menu_open_flag
-		}
 	}
 
 	option = { # Choose third
 		name = the_command.100.c
-		trigger = {
-			any_owned_province = {
-				has_province_flag = command_move_target_candidate_3
-			}
-		}
+		trigger = { has_saved_event_target = command_move_target_candidate_3 }
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -5769,27 +5731,16 @@ country_event = { # Bloodsong Movement Menu
 			tag = R64
 			target = command_move_target_candidate_3
 		}
-		
-		hidden_effect = {
-			clr_country_flag = command_move_menu_open_flag
-		}
 	}
 	
 	option = {
 		name = the_command.100.dd
 		highlight = yes
-		
-		hidden_effect = {
-			clr_country_flag = command_move_menu_open_flag
-		}
 	}
 	
 	after = {
-		every_owned_province = {
-			clr_province_flag = command_move_target_candidate_1
-			clr_province_flag = command_move_target_candidate_2
-			clr_province_flag = command_move_target_candidate_3
-		}
+		clr_country_flag = command_move_menu_open_flag
+		every_owned_province = { clr_province_flag = command_move_target_flag }
 		if = {
 			limit = { ai = yes }
 			command_slave_state_cede_surrounding = { tag = R64 }
@@ -6069,7 +6020,7 @@ country_event = { #Sir asks for help from Xia
 	id = the_command.114
 	title = the_command.114.t
 	desc = the_command.114.desc
-	picture = EUNUCH_ESTATE_eventPicture
+	picture = EUNUCH_ESTATE_upset_eventPicture
 
 	is_triggered_only = yes
 
@@ -6486,6 +6437,7 @@ country_event = { #Sir revolt starts
 					siege = 3
 				}
 				country_event = { id = anbennar_setup.3 }
+				set_capital = 4633
 			}
 			4633 = {
 				add_latest_building = { builder = R78 fort = yes }
@@ -6640,6 +6592,7 @@ country_event = { #Sir revolt starts
 					siege = 3
 				}
 				country_event = { id = anbennar_setup.3 }
+				set_capital = 4633
 			}
 			4633 = {
 				add_latest_building = { builder = R78 fort = yes }
@@ -8433,6 +8386,11 @@ country_event = { #They Call it Lesser Love
 	}
 }
 
+
+##################
+### BROWN ORCS ###
+##################
+
 country_event = { #Orc Notification
 	id = the_command.131
 	title = the_command.131.t
@@ -8449,6 +8407,137 @@ country_event = { #Orc Notification
 		custom_tooltip = command_must_win_tt
 	}
 }
+
+country_event = { #Command Exacts Punishment
+	id = the_command.132
+	title = the_command.132.t
+	desc = the_command.132.desc
+	picture = AULIC_COUNCIL_eventPicture
+
+	is_triggered_only = yes
+	after = { #bounceback
+		hidden_effect = {
+			if = {
+				limit = {
+					OR = {
+						has_country_flag = brorc_punishment_a
+						has_country_flag = brorc_punishment_b
+						has_country_flag = brorc_punishment_c
+						has_country_flag = brorc_punishment_d
+						has_country_flag = brorc_punishment_e
+					}
+				}
+				country_event = { id = the_command.133 }
+			}
+		}
+	}
+	
+	option = {
+		name = the_command.132.a
+		trigger = { has_country_flag = brorc_punishment_a }
+		kill_ruler = yes
+		clr_country_flag = brorc_punishment_a
+	}
+	option = {
+		name = the_command.132.b
+		trigger = { has_country_flag = brorc_punishment_b }
+		kill_leader = { type = random }
+		kill_leader = { type = random }
+		clr_country_flag = brorc_punishment_b
+	}
+	option = {
+		name = the_command.132.c
+		trigger = { has_country_flag = brorc_punishment_c }
+		kill_advisor = random
+		kill_advisor = random
+		clr_country_flag = brorc_punishment_c
+	}
+	option = {
+		name = the_command.132.d
+		trigger = { has_country_flag = brorc_punishment_d }
+		add_years_of_income = -1
+		clr_country_flag = brorc_punishment_d
+	}
+	option = {
+		name = the_command.132.e
+		trigger = { has_country_flag = brorc_punishment_e }
+		reduce_stability_or_adm_power = yes
+		add_corruption = 4
+		clr_country_flag = brorc_punishment_e
+	}
+}
+
+country_event = { #Command Exacts Punishment Bounceback
+	id = the_command.133
+	title = the_command.133.t
+	desc = the_command.133.desc
+	picture = LAND_MILITARY_eventPicture
+
+	is_triggered_only = yes
+	hidden = yes
+
+	option = {
+		name = the_command.133.a
+		country_event = { id = the_command.132 }
+	}
+}
+# Complicated bug avoidance scheme.
+# Bugs happened when these effects were fired directly from on_min_reached when gov power reaches 0
+# The primary bug was that, upon attempting to create an event with triggered options, the game would crash
+# Secondarily, if the game did not crash, it would still fail to change the variables appropriately
+# The solution is to fire a hidden event that does all that complicated work as a middleman
+# Notably, none of this happens if you just add_government_power. It's only the month tick with monthly_<government power> that crashes the game
+country_event = {
+	id = the_command.134
+	title = the_command.132.t
+	desc = the_command.132.desc
+	picture = LAND_MILITARY_eventPicture
+
+	is_triggered_only = yes
+	hidden = yes
+
+	option = {
+		name = the_command.132.a
+		#You get one more punishment each time, up to six
+		change_variable = { num_of_command_punishments = 1 }
+		if = {
+			limit = { check_variable = { num_of_command_punishments = 6 } }
+			set_variable = { num_of_command_punishments = 6 }
+		}
+		set_variable = { which = current_punishment_num which = num_of_command_punishments }
+		while = {
+			limit = { check_variable = { current_punishment_num = 1 } }
+			subtract_variable = { current_punishment_num = 1 }
+
+			random_list = {
+				1 = {
+					trigger = { NOT = { has_country_flag = brorc_punishment_a } }
+					set_country_flag = brorc_punishment_a
+				}
+				1 = {
+					trigger = { has_leaders = { value = 2 include_monarch = no } NOT = { has_country_flag = brorc_punishment_b } }
+					set_country_flag = brorc_punishment_b
+				}
+				1 = {
+					trigger = {
+						calc_true_if = {
+							amount = 2
+							employed_advisor = { category = ADM }
+							employed_advisor = { category = DIP }
+							employed_advisor = { category = MIL }
+						}
+						NOT = { has_country_flag = brorc_punishment_c }
+					}
+					set_country_flag = brorc_punishment_c
+				}
+				1 = { trigger = { NOT = { has_country_flag = brorc_punishment_d } } set_country_flag = brorc_punishment_d }
+				1 = { trigger = { NOT = { has_country_flag = brorc_punishment_e } } set_country_flag = brorc_punishment_e }
+			}
+		}
+		country_event = { id = the_command.132 } #The actual punishment event with the options
+	}
+}
+
 
 ###################
 #KORASHI + SHAMANS#
@@ -8815,7 +8904,7 @@ country_event = { #Root out Shamans in Hiding
 	option = {
 		name = the_command.157.a
 		ai_chance = { factor = 1 }
-
+		set_country_flag = command_false_shamans_flag
 		add_government_power = {
 			mechanic_type = command_korashi_mechanic
 			power_type = korashi_reserves
@@ -8854,7 +8943,6 @@ province_event = { #The Breaking of Chains
 		OR = {
 			is_neighbor_of = R62
 			war_with = R62
-			controls = ROOT
 		}
 	}
 
@@ -8949,13 +9037,13 @@ country_event = { #War Wizard Escape Handler
 					ai = yes
 					any_neighbor_country = {
 						ai = no
-						NOT = { has_not_banned_magic = yes }
+						has_not_banned_magic = yes
 					}
 				}
 				random_neighbor_country = {
 					limit = {
 						ai = no
-						NOT = { has_not_banned_magic = yes }
+						has_not_banned_magic = yes
 					}
 					country_event = { id = the_command.161 }
 				}
@@ -13671,7 +13759,13 @@ country_event = {		# oni choice for ultimatum, AI only
 
 	option = {		# Submit, AI will always choose this.
 		name = the_command.1979.a
-		ai_chance = { factor = 1 }
+		trigger = {
+			OR = {
+				ai = no
+				is_subject = no
+				is_subject_of = R62
+			}
+		}
 		add_prestige = -20
 		R62 = {
 			white_peace = Y01
@@ -13683,7 +13777,15 @@ country_event = {		# oni choice for ultimatum, AI only
 	}
 	option = {		# WE CAN TAKE EM
 		name = the_command.1979.b
-		ai_chance = { factor = 0 }
+		trigger = {
+			OR = {
+				ai = no
+				NOT = {
+					is_subject = no
+					is_subject_of = R62
+				}
+			}
+		}
 		reverse_add_casus_belli = {
 			target = R62
 			type = cb_vassalize_mission
@@ -14000,7 +14102,7 @@ country_event = { # spawning the tiger command
 								}
 							}
 							save_event_target_as = command_move_target_candidate_1
-							set_province_flag = command_move_target_candidate_1
+							set_province_flag = command_move_target_flag
 						}
 					}
 					command_move_orc_slave_state = { #they move themselves to shamakhad, so the player doesn't pay for it or get buffs
@@ -14024,7 +14126,7 @@ country_event = { # spawning the tiger command
 								}
 							}
 							save_event_target_as = command_move_target_candidate_2
-							set_province_flag = command_move_target_candidate_2
+							set_province_flag = command_move_target_flag
 						}
 					}
 					command_move_orc_slave_state = {
@@ -14428,7 +14530,7 @@ country_event = { # spawning the elephant command
 								}
 							}
 							save_event_target_as = command_move_target_candidate_1
-							set_province_flag = command_move_target_candidate_1
+							set_province_flag = command_move_target_flag
 						}
 					}
 					command_move_orc_slave_state = {
@@ -14452,7 +14554,7 @@ country_event = { # spawning the elephant command
 								}
 							}
 							save_event_target_as = command_move_target_candidate_2
-							set_province_flag = command_move_target_candidate_2
+							set_province_flag = command_move_target_flag
 						}
 					}
 					command_move_orc_slave_state = {
@@ -14826,7 +14928,7 @@ country_event = { # spawning the dragon command
 								}
 							}
 							save_event_target_as = command_move_target_candidate_1
-							set_province_flag = command_move_target_candidate_1
+							set_province_flag = command_move_target_flag
 						}
 					}
 					command_move_orc_slave_state = {
@@ -14855,7 +14957,7 @@ country_event = { # spawning the dragon command
 								}
 							}
 							save_event_target_as = command_move_target_candidate_2
-							set_province_flag = command_move_target_candidate_2
+							set_province_flag = command_move_target_flag
 						}
 					}
 					command_move_orc_slave_state = {

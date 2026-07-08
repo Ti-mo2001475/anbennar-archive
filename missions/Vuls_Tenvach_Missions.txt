@@ -10,10 +10,6 @@ G79_shared_1 = {
 				tag = J84 #Taychendi Empire
 				was_tag = G79
 			}
-			AND = {
-				tag = U39 #Orenvalyam
-				was_tag = G79
-			}
 		}
 	}
 
@@ -38,24 +34,11 @@ G79_shared_1 = {
 								who = ROOT
 								value = 100
 							}
-							has_opinion_modifier = {
-								who = ROOT
-								modifier = sent_gift
-								value = 15
-							}
+							has_15_opinion_sent_gift = { target = ROOT }
 						}
 					}
 					G64 = {
-						OR = {
-							has_opinion_modifier = {
-								who = ROOT
-								modifier = insulted
-							}
-							has_opinion_modifier = {
-								who = ROOT
-								modifier = scornfully_insulted
-							}
-						}
+						has_been_insulted_by_root = yes
 					}
 				}
 			}
@@ -86,16 +69,7 @@ G79_shared_1 = {
 				second_custom_tooltip = G79_appease_the_north_effect_insult_tt
 				second_limit = "
 				G64 = {
-					OR = {
-						has_opinion_modifier = {
-							who = ROOT
-							modifier = insulted
-						}
-						has_opinion_modifier = {
-							who = ROOT
-							modifier = scornfully_insulted
-						}
-					}
+					has_been_insulted_by_root = yes
 				}"
 				second_effect = "
 				create_general = {
@@ -115,10 +89,6 @@ G79_shared_2 = {
 			tag = G79
 			AND = {
 				tag = J84 #Taychendi Empire
-				was_tag = G79
-			}
-			AND = {
-				tag = U39 #Orenvalyam
 				was_tag = G79
 			}
 		}
@@ -305,10 +275,6 @@ G79_shared_3 = {
 				tag = J84 #Taychendi Empire
 				was_tag = G79
 			}
-			AND = {
-				tag = U39 #Orenvalyam
-				was_tag = G79
-			}
 		}
 	} 
 
@@ -478,10 +444,6 @@ G79_shared_4 = {
 				tag = J84 #Taychendi Empire
 				was_tag = G79
 			}
-			AND = {
-				tag = U39 #Orenvalyam
-				was_tag = G79
-			}
 		}
 	} 
 
@@ -616,10 +578,6 @@ G79_shared_5 = {
 				tag = J84 #Taychendi Empire
 				was_tag = G79
 			}
-			AND = {
-				tag = U39 #Orenvalyam
-				was_tag = G79
-			}
 		}
 	} 
 
@@ -691,10 +649,6 @@ G79_expanded_1 = {
 			tag = G79
 			AND = {
 				tag = J84 #Taychendi Empire
-				was_tag = G79
-			}
-			AND = {
-				tag = U39 #Orenvalyam
 				was_tag = G79
 			}
 		}
@@ -826,10 +780,6 @@ G79_expanded_2 = {
 				tag = J84 #Taychendi Empire
 				was_tag = G79
 			}
-			AND = {
-				tag = U39 #Orenvalyam
-				was_tag = G79
-			}
 		}
 		OR = {
 			has_country_flag = G79_chose_taychend
@@ -895,10 +845,6 @@ G79_expanded_3 = {
 				tag = J84 #Taychendi Empire
 				was_tag = G79
 			}
-			AND = {
-				tag = U39 #Orenvalyam
-				was_tag = G79
-			}
 		}
 		OR = {
 			has_country_flag = G79_chose_taychend
@@ -917,12 +863,19 @@ G79_expanded_3 = {
 				army_reformer = 1
 				has_mil_advisor_2 = yes
 			}
-			OR = {
-				army_professionalism = 0.2
-				AND = {
-					army_professionalism = 0.1
-					mil_power = 100
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" } 
+				OR = {
+					army_professionalism = 0.2
+					AND = {
+						army_professionalism = 0.1
+						mil_power = 100
+					}
 				}
+			}
+			else = {
+				army_tradition = 50
+				mil_power = 100
 			}
 			army_size = 30
 			barracks = 5
@@ -1015,10 +968,6 @@ G79_expanded_4 = {
 			tag = G79
 			AND = {
 				tag = J84 #Taychendi Empire
-				was_tag = G79
-			}
-			AND = {
-				tag = U39 #Orenvalyam
 				was_tag = G79
 			}
 		}
@@ -1122,10 +1071,6 @@ G79_validaunea_5 = {
 			tag = G79
 			AND = {
 				tag = J84 #Taychendi Empire
-				was_tag = G79
-			}
-			AND = {
-				tag = U39 #Orenvalyam
 				was_tag = G79
 			}
 		}
@@ -1346,10 +1291,6 @@ G79_taychendi_5 = {
 			tag = G79
 			AND = {
 				tag = J84 #Taychendi Empire
-				was_tag = G79
-			}
-			AND = {
-				tag = U39 #Orenvalyam
 				was_tag = G79
 			}
 		}

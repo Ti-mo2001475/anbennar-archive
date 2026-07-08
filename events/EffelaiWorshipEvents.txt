@@ -5080,6 +5080,15 @@ country_event = { #A Pleasant Exchange
 							value = 100
 						}
 					}
+					NOT = { #Don't let Zena's subject get stolen
+						AND = {
+							is_subject = yes
+							overlord = {
+								ai = no
+								NOT = { tag = ROOT }
+							}
+						}
+					}
 				}
 				save_event_target_as = effei_pleasant_exchange
 				remove_rival = ROOT
@@ -5116,6 +5125,7 @@ country_event = { #Friend or Foe?
 		hidden_effect = {
 			random_known_country = {
 				limit = {
+					NOT = { is_subject = yes }
 					OR = {
 						AND = {
 							is_enemy = ROOT

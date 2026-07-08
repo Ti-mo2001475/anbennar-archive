@@ -358,9 +358,12 @@ mountainhugger_2 = {
 				add_permanent_claim = ROOT
 			}
 			522 = {
-				add_province_modifier = {
-					name = U14_compromised_defences
-					duration = 1825
+				if = {
+					limit = { NOT = { owned_by = ROOT } }
+					add_province_modifier = {
+						name = U14_compromised_defences
+						duration = 1825
+					}
 				}
 				
 				owner = {
@@ -556,16 +559,7 @@ mountainhugger_3 = {
     						share = 0.01
 						}
 						owner = {
-							OR = {
-								has_opinion_modifier = {
-									who = ROOT
-									modifier = insulted
-								}
-								has_opinion_modifier = { 
-									who = ROOT 
-									modifier = scornfully_insulted 
-								}
-							}
+							has_been_insulted_by_root = yes
 						}
 					}
 				}
@@ -711,8 +705,13 @@ mountainhugger_3 = {
 							trade_goods = wine
 							trade_goods = gold
 						}
-						has_tax_building_trigger = no
-						has_trade_building_trigger = no
+ 						OR = {
+							has_tax_building_trigger = no
+							AND = {
+								has_production_building_trigger = no
+								NOT = { trade_goods = gold }
+							}
+						}
 					}
 				}
 			}
@@ -745,7 +744,7 @@ mountainhugger_3 = {
 						NOT = { trade_goods = glass }
 						NOT = { trade_goods = wine }
 						NOT = { trade_goods = gold }
-					} 
+					}
 					AND = {
 						has_tax_building_trigger = yes
 						OR = {
@@ -795,34 +794,18 @@ mountainhugger_4 = {
 					owned_by = U16
 					owner = {
 						NOT = {
-							OR = {
-								has_opinion_modifier = { 
-									who = ROOT 
-									modifier = scornfully_insulted 
-								}
-								has_opinion_modifier = { 
-									who = ROOT 
-									modifier = insulted 
-								}
-							}	
+							has_been_insulted_by_root = yes
 						}
 					}
 				}
-				province_id = 1928
+				province_id = 1298
 			}	
 		}
 
 		trigger = {
 			U16 = {
 				OR = {
-					has_opinion_modifier = { 
-						who = ROOT 
-						modifier = insulted 
-					}
-					has_opinion_modifier = { 
-						who = ROOT 
-						modifier = scornfully_insulted 
-					}
+					has_been_insulted_by_root = yes
 					exists = no
 				}
 			}

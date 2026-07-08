@@ -39,7 +39,7 @@ wisdom_beyond_honor = {
 	effect = {
 		if = {
 			limit = { ruler_is_powerful_mage = yes }
-			change_mana = { amount = 100 }
+			change_mana = { amount = 75 }
 		}
 		else = {
 			custom_tooltip = wisdom_beyond_honor_effect_tt
@@ -81,9 +81,9 @@ barter_with_dark_spirits = {
 					mil = 6
 				}
 				random_list = {
-					1 = { add_adm_power = 100 }
-					1 = { add_dip_power = 100 }
-					1 = { add_mil_power = 100 }
+					1 = { add_adm_power = 75 }
+					1 = { add_dip_power = 75 }
+					1 = { add_mil_power = 75 }
 				}
 			}
 			else = { add_random_ruler_skill = yes }
@@ -99,37 +99,10 @@ barter_with_dark_spirits = {
 	ai_will_do = { factor = 15 }
 }
 
-witches_and_shamans_preview = {
-	cost = 200
-	potential = {
-		NOT = {
-			num_of_aspects = 1
-			has_country_flag = witches_and_shamans_banned
-		}
-	}
-
-	effect = {
-		custom_tooltip = devouring_path_need_one_aspect_tt
-		hidden_effect = {
-			remove_church_aspect = witches_and_shamans_preview
-			country_event = { id = spirits.607 }
-		}
-		hidden_effect = {
-			red_citadel_give_50_chi = yes
-		}
-	}
-
-	modifier = { stability_cost_modifier = 0.2 }
-
-	ai_will_do = { factor = 0 }
-}
-
 witches_and_shamans = {
 	cost = 200
-	potential = {
-		num_of_aspects = 1
-		NOT = { has_country_flag = witches_and_shamans_banned }
-	}
+	potential = { NOT = { has_country_flag = witches_and_shamans_banned } }
+	trigger = { custom_trigger_tooltip = { tooltip = devouring_path_need_one_aspect_tt num_of_aspects = 1 } }
 
 	effect = {
 		custom_tooltip = witches_and_shamans_effect_tt
@@ -197,29 +170,9 @@ advocation_of_chi_stealers = {
 	ai_will_do = { factor = 15 }
 }
 
-from_beyond_preview = {
-	cost = 200
-	potential = { NOT = { num_of_aspects = 1 } }
-
-	effect = {
-		custom_tooltip = devouring_path_need_one_aspect_tt
-		hidden_effect = {
-			remove_church_aspect = from_beyond_preview
-			country_event = { id = spirits.607 }
-		}
-		hidden_effect = {
-			red_citadel_give_50_chi = yes
-		}
-	}
-
-	modifier = { global_monthly_devastation = 0.05 }
-
-	ai_will_do = { factor = 0 }
-}
-
 from_beyond = {
 	cost = 200
-	potential = { num_of_aspects = 1 }
+	trigger = { custom_trigger_tooltip = { tooltip = devouring_path_need_one_aspect_tt num_of_aspects = 1 } }
 
 	effect = { 
 		set_country_flag = devouring_path_damestear_bypass_flag 
@@ -276,43 +229,10 @@ gifts_for_fools = {
 	ai_will_do = { factor = 15 }
 }
 
-to_devour_chi_preview = {
-	cost = 200
-	potential = {
-		NOT = {
-			num_of_aspects = 1
-			has_country_flag = to_devour_chi_locked
-		}
-	}
-
-	effect = {
-		custom_tooltip = devouring_path_need_one_aspect_tt
-		hidden_effect = {
-			remove_church_aspect = to_devour_chi_preview
-			country_event = { id = spirits.607 }
-		}
-		hidden_effect = {
-			red_citadel_give_50_chi = yes
-		}
-	}
-
-	modifier = {
-		legitimacy = -1
-		devotion = -1
-		horde_unity = -1
-		meritocracy = -0.5
-		republican_tradition = -0.5
-	}
-
-	ai_will_do = { factor = 0 }
-}
-
 to_devour_chi = {
 	cost = 200
-	potential = {
-		num_of_aspects = 1
-		NOT = { has_country_flag = to_devour_chi_locked }
-	}
+	potential = { NOT = { has_country_flag = to_devour_chi_locked } }
+	trigger = { custom_trigger_tooltip = { tooltip = devouring_path_need_one_aspect_tt num_of_aspects = 1 } }
 
 	effect = {
 		if = {
@@ -332,7 +252,7 @@ to_devour_chi = {
 			hidden_effect = {
 				random_list = {
 					1 = {
-						trigger = { NOT = { tag = Y01 has_country_flag = devouring_life_extension_unlocked } }
+						trigger = { NOT = { tag = Y01 primary_culture = beikling has_country_flag = devouring_life_extension_unlocked } }
 						set_country_flag = devouring_life_extension_unlocked
 					}
 					1 = {
@@ -342,6 +262,10 @@ to_devour_chi = {
 					1 = {
 						trigger = { NOT = { has_country_flag = devouring_skill_increase_unlocked } }
 						set_country_flag = devouring_skill_increase_unlocked
+					}
+					1 = {
+						trigger = { primary_culture = beikling NOT = { has_country_flag = devouring_rule_their_terror } }
+						set_country_flag = devouring_rule_their_terror
 					}
 				}
 				add_or_extend_ruler_modifier = { name = dvp_devoured_mod duration = 1825 }
@@ -359,6 +283,7 @@ to_devour_chi = {
 					}
 					OR = {
 						tag = Y01
+						primary_culture = beikling
 						has_country_flag = devouring_life_extension_unlocked
 					}
 				}
@@ -499,37 +424,11 @@ the_god_eaters = {
 	ai_will_do = { factor = 15 }
 }
 
-the_dead_serve_the_living_preview = {
-	cost = 200
-
-	potential = {
-		has_country_flag = the_dead_serve_the_living_unlocked
-		NOT = { num_of_aspects = 1 }
-	}
-
-	effect = {
-		custom_tooltip = devouring_path_need_one_aspect_tt
-		hidden_effect = {
-			remove_church_aspect = the_dead_serve_the_living_preview
-			country_event = { id = spirits.607 }
-		}
-		hidden_effect = {
-			red_citadel_give_50_chi = yes
-		}
-	}
-
-	modifier = { movement_speed = -0.2 }
-
-	ai_will_do = { factor = 0 }
-}
-
 the_dead_serve_the_living = {
 	cost = 200
 
-	potential = {
-		has_country_flag = the_dead_serve_the_living_unlocked
-		num_of_aspects = 1
-	}
+	potential = { has_country_flag = the_dead_serve_the_living_unlocked }
+	trigger = { custom_trigger_tooltip = { tooltip = devouring_path_need_one_aspect_tt num_of_aspects = 1 } }
 
 	effect = {
 		if = { #Gets you a proper tooltip this way
@@ -755,37 +654,11 @@ sages_of_deep_shadow = {
 	ai_will_do = { factor = 15 }
 }
 
-the_gods_from_flesh_preview = {
-	cost = 200
-
-	potential = {
-		mission_completed = yuanszi_burn_heart
-		NOT = { num_of_aspects = 1 }
-	}
-
-	effect = {
-		custom_tooltip = devouring_path_need_one_aspect_tt
-		hidden_effect = {
-			remove_church_aspect = the_gods_from_flesh_preview
-			country_event = { id = spirits.607 }
-		}
-		hidden_effect = {
-			red_citadel_give_50_chi = yes
-		}
-	}
-
-	modifier = { province_warscore_cost = 0.1 }
-
-	ai_will_do = { factor = 0 }
-}
-
 the_gods_from_flesh = {
 	cost = 200
 
-	potential = {
-		mission_completed = yuanszi_burn_heart
-		num_of_aspects = 1
-	}
+	potential = { mission_completed = yuanszi_burn_heart }
+	trigger = { custom_trigger_tooltip = { tooltip = devouring_path_need_one_aspect_tt num_of_aspects = 1 } }
 
 	effect = {
 		custom_tooltip = the_gods_from_flesh_effect_tt
@@ -808,7 +681,7 @@ the_gods_from_flesh = {
 
 restore_the_cursed_idea = {
 	cost = 200
-	sprite = "GFX_ask_for_dookan_guidance" 
+	sprite = "GFX_restore_the_cursed_idea" 
 
 	potential = {
 		custom_trigger_tooltip = {
@@ -823,6 +696,9 @@ restore_the_cursed_idea = {
 		hidden_effect = {
 			change_tag = V29
 			restore_country_name = yes
+			hidden_effect = {
+				set_country_flag = formed_end_game_tag_flag
+			}
 			set_capital = 6301
 			change_government = monarchy
 			increase_government_rank_scripted_effect = { rank = 2 }
@@ -842,4 +718,208 @@ restore_the_cursed_idea = {
 	modifier = { }
 
 	ai_will_do = { factor = 0 }
+}
+
+mask_of_might_1 = {
+	cost = 200
+	sprite = "GFX_mask_of_might"
+
+	potential = {
+		has_country_flag = tsukqiao_mask_of_might_unlock 
+	}
+
+	effect = {
+		custom_tooltip = tsukqiao_mask_of_might_effect_1_tt
+		hidden_effect = {
+			if = {
+				limit = { is_at_war = yes }
+				tsukqiao_mask_of_might_effect_calc = yes
+			}
+			red_citadel_give_50_chi = yes
+		}
+	}
+
+	modifier = { technology_cost = 0.05 }
+
+	ai_will_do = { factor = 15 }
+}
+
+mask_of_might_2 = {
+	cost = 200
+	sprite = "GFX_mask_of_might"
+
+	potential = {
+		has_country_flag = tsukqiao_upgrade_might_1 
+	}
+
+	effect = {
+		custom_tooltip = tsukqiao_mask_of_might_effect_2_tt
+		hidden_effect = {
+			if = {
+				limit = { is_at_war = yes }
+				tsukqiao_mask_of_might_effect_calc = yes
+			}
+			red_citadel_give_50_chi = yes
+		}
+	}
+
+	modifier = { technology_cost = 0.075 }
+
+	ai_will_do = { factor = 15 }
+}
+
+mask_of_might_3 = {
+	cost = 200
+	sprite = "GFX_mask_of_might"
+
+	potential = {
+		has_country_flag = tsukqiao_upgrade_might_2 
+	}
+
+	effect = {
+		custom_tooltip = tsukqiao_mask_of_might_effect_3_tt
+		hidden_effect = {
+			if = {
+				limit = { is_at_war = yes }
+				tsukqiao_mask_of_might_effect_calc = yes
+			}
+			red_citadel_give_50_chi = yes
+		}
+	}
+
+	modifier = { technology_cost = 0.1 }
+
+	ai_will_do = { factor = 15 }
+}
+
+earn_their_hate = {
+	cost = 200
+
+	potential = {
+		primary_culture = beikling
+	}
+
+	trigger = {
+		any_neighbor_country = {
+			NOT = { alliance_with = ROOT }
+			NOT = { is_subject_of = ROOT }
+			NOT = { truce_with = ROOT }
+			NOT = { overlord_of = ROOT }
+		}
+	}
+
+	effect = { 
+		custom_tooltip = earn_their_hate_effect_TT
+		hidden_effect = {
+			every_neighbor_province = {
+				limit = {
+					owner = {
+						NOT = { alliance_with = ROOT }
+						NOT = { is_subject_of = ROOT }
+						NOT = { truce_with = ROOT }
+						NOT = { overlord_of = ROOT }
+					}
+				}
+				remove_loot = { amount = 100 who = ROOT }
+				owner = {
+					country_event = { id = flavor_beiklings.500 }
+				}
+			}
+			if = {
+				limit = {
+					tag = V23 #Luzhong
+				}
+				add_power_projection = {
+					type = beikling_fame_earned
+					amount = 10
+				}
+			}
+			red_citadel_give_50_chi = yes
+		}
+	}
+
+	modifier = { diplomatic_reputation = -2 }
+
+	ai_will_do = { factor = 15 }
+}
+
+mask_enchantment = {
+	cost = 200
+
+	potential = {
+		primary_culture = beikling
+	}
+
+	trigger = {
+		custom_trigger_tooltip = {
+			tooltip = mask_enchantment_has_power_TT
+			NOT = { has_country_flag = mask_enchantment_effect_flag }
+		}
+	}
+
+	effect = { 
+		custom_tooltip = mask_enchantment_effect_TT
+		hidden_effect = {
+			set_country_flag = mask_enchantment_effect_flag
+			red_citadel_give_50_chi = yes
+		}
+	}
+
+	modifier = { discipline = -0.025 }
+
+	ai_will_do = { factor = 15 }
+}
+
+rule_their_terror = {
+	cost = 200
+
+	potential = {
+		primary_culture = beikling
+		has_country_flag = devouring_rule_their_terror
+	}
+
+	trigger = {
+		any_owned_province = {
+			NOT = {
+				culture = beikling
+			}
+		}
+	}
+
+	effect = { 
+		custom_tooltip = rule_their_terror_effect_TT
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					NOT = { culture = beikling }
+				}
+				remove_province_modifier = ruled_by_terror_itself
+				add_province_modifier = {
+					name = ruled_by_terror_itself
+					duration = 1825
+				}
+			}
+			if = {
+				limit = {
+					tag = V23
+				}
+				every_owned_province = {
+					limit = {
+						NOT = { culture = beikling }
+					}
+					add_nationalism = -5
+				}
+			}
+			else = {
+				add_rebel_progress = {
+					value = -30
+				}
+			}
+			red_citadel_give_50_chi = yes
+		}
+	}
+
+	modifier = { manpower_recovery_speed = -0.1 }
+
+	ai_will_do = { factor = 15 }
 }

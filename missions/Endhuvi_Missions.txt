@@ -491,9 +491,9 @@ R36_1_2 = {
 		required_missions = { R36_a_porcelain_secret R36_ill_make_a_friend R36_the_first_ruby_garden_debate }
 		
 		trigger = {
-			is_estate_evocation_level_1_minimum = yes
+			is_estate_enchantment_level_1_minimum = yes
 			is_estate_divination_level_1_minimum = yes
-			has_cast_eye_for_talent_amount = { amount = 1 }
+			has_cast_amount_spell = { school = divination level = 1 id = eye_for_talent amount = 1 }
 			mage_tower = 1
 		}
 
@@ -510,7 +510,14 @@ R36_1_2 = {
 				name = R36_knowledge_of_a_different_sort_mod
 				duration = 5475
 			}
-			#TODO 10% discount for divination and evocation for 50 years, waiting for balance approved discount patch
+			add_country_modifier = {
+				name = enchantment_spell_three_quarter
+				duration = 7300
+			}
+			add_country_modifier = {
+				name = divination_spell_three_quarter
+				duration = 7300
+			}
 		}
 	}
 
@@ -595,7 +602,10 @@ R36_1_2 = {
 		}
 
 		trigger = {
-			has_estate_privilege = estate_lowercastes_development_of_castles
+			if = {
+				limit = { has_dlc = "Domination" }
+				has_estate_privilege = estate_lowercastes_development_of_castles
+			}
 			4492 = {
 				province_has_current_tech_fort_trigger = yes
 			}
@@ -662,22 +672,6 @@ R36_1_2 = {
 		
 		trigger = {
 			OR = {
-				any_known_country = {
-					is_elephant_lord = yes
-					OR = {
-						has_opinion = {
-							who = ROOT
-							value = 150
-						}
-						alliance_with = ROOT
-					}
-					ROOT = {
-						OR = {
-							army_size = PREV
-							army_size = 50
-						}
-					}
-				}
 				custom_trigger_tooltip = {
 					tooltip = R36_the_elephant_lords_tt
 					any_owned_province = {
@@ -691,8 +685,33 @@ R36_1_2 = {
 						}
 					}
 				}
+				any_known_country = {
+					is_elephant_lord = yes
+					OR = {
+						has_opinion = {
+							who = ROOT
+							value = 150
+						}
+						alliance_with = ROOT
+					}
+					ROOT = {
+						OR = {
+							custom_trigger_tooltip = {
+								tooltip = R36_the_elephant_lords_army_size
+								army_size = PREV
+							}
+							army_size = 50
+						}
+					}
+				}
 			}
-			army_professionalism = 0.25
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				army_professionalism = 0.25
+			}
+			else = {
+				army_tradition = 65
+			}
 		}
 
 		effect = {
@@ -701,8 +720,58 @@ R36_1_2 = {
 				duration = -1
 			}
 			custom_tooltip = R36_the_elephant_lords_first_trigger_tt
+			if = {
+				limit = {
+					any_known_country = {
+						is_elephant_lord = yes
+						OR = {
+							has_opinion = {
+								who = ROOT
+								value = 150
+							}
+							alliance_with = ROOT
+						}
+						ROOT = {
+							OR = {
+								army_size = PREV
+								army_size = 50
+							}
+						}
+					}
+				}
+				custom_tooltip = BONUS_REWARD_YES
+			}
+			else = {
+				custom_tooltip = BONUS_REWARD_NO
+			}
 			custom_tooltip = R36_the_elephant_lords_main_effect_tt
 			custom_tooltip = mission_alternatively_tt
+			if = {
+				limit = {
+					NOT = {
+						any_known_country = {
+							is_elephant_lord = yes
+							OR = {
+								has_opinion = {
+									who = ROOT
+									value = 150
+								}
+								alliance_with = ROOT
+							}
+							ROOT = {
+								OR = {
+									army_size = PREV
+									army_size = 50
+								}
+							}
+						}
+					}
+				}
+				custom_tooltip = BONUS_REWARD_YES
+			}
+			else = {
+				custom_tooltip = BONUS_REWARD_NO
+			}
 			custom_tooltip = R36_the_elephant_lords_second_effect_tt
 			custom_tooltip = R36_the_elephant_lords_main_effect_tt
 			hidden_effect = {
@@ -1222,7 +1291,13 @@ R36_1_3 = {
 					owner = { alliance_with = ROOT }
 				}
 			}
-			army_professionalism = 0.5
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				army_professionalism = 0.5
+			}
+			else = {
+				army_tradition = 70
+			}
 			monthly_income = 150
 			power_projection = 50
 		}
@@ -1559,9 +1634,9 @@ R36_1_4_hidden = {
 					superregion = vimdatrong_superregion
 				}
 			}
-			at_least_magic_project_level = { project = battlemage_academy level = 1 }
+			at_least_magic_project_level = { project = orb_of_omniscience level = 1 }
 			has_estate_privilege = estate_mages_seek_magical_advice
-			has_cast_enchanting_embassy_2 = yes
+			has_cast_enchanting_embassy = yes
 		}
 
 		effect = {
@@ -1580,7 +1655,7 @@ R36_1_4_hidden = {
 					province_group = temple_province_group
 					region = dhujat_region
 					NOT = {
-						country_or_subject_holds = ROOT
+						country_or_non_sovereign_subject_holds = ROOT
 						owner = { alliance_with = ROOT }
 					}
 				}
@@ -1611,7 +1686,7 @@ R36_1_4_hidden = {
 				type = all
 				OR = {
 					NOT = { region = dhujat_region }
-					country_or_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 					owner = { alliance_with = ROOT }
 				}
 			}
@@ -1645,10 +1720,20 @@ R36_1_4_hidden = {
 					NOT = { owned_by = ROOT }
 					NOT = {
 						ROOT = {
-							num_of_owned_provinces_with = {
-								value = 3
-								province_group = temple_province_group
-								province_group = kharunyana_spirit_area
+							calc_true_if = {
+								temple_province_group = {
+									type = all
+									province_group = kharunyana_spirit_area
+									OR = {
+										owned_by = ROOT
+										owned_by = R49
+										owner = {
+											is_elephant_lord = yes
+											alliance_with = ROOT
+										}
+									}
+								}
+								amount = 3
 							}
 						}
 					}
@@ -1662,10 +1747,20 @@ R36_1_4_hidden = {
 		}
 
 		trigger = {
-			num_of_owned_provinces_with = {
-				value = 3
-				province_group = temple_province_group
-				province_group = kharunyana_spirit_area
+			calc_true_if = {
+				temple_province_group = {
+					type = all
+					province_group = kharunyana_spirit_area
+					OR = {
+						owned_by = ROOT
+						owned_by = R49
+						owner = {
+							is_elephant_lord = yes
+							alliance_with = ROOT
+						}
+					}
+				}
+				amount = 3
 			}
 			any_owned_province = {
 				has_province_modifier = R36_inundated_temple_complex
@@ -2190,8 +2285,8 @@ R36_2_2 = {
 						province_group = dhenbasana_main_river
 					}
 					OR = {
-						NOT = { num_of_times_improved_by_owner = 1 }
-						NOT = { owned_by = ROOT }
+						NOT = { num_of_times_improved = 5 }
+						NOT = { country_or_non_sovereign_subject_holds = ROOT }
 					}
 				}
 			}
@@ -2208,13 +2303,13 @@ R36_2_2 = {
 			}
 			kharunyana_main_river = {
 				type = all
-				owned_by = ROOT
-				num_of_times_improved_by_owner = 1
+				country_or_non_sovereign_subject_holds = ROOT
+				num_of_times_improved = 5
 			}
 			dhenbasana_main_river = {
 				type = all
-				owned_by = ROOT
-				num_of_times_improved_by_owner = 1
+				country_or_non_sovereign_subject_holds = ROOT
+				num_of_times_improved = 5
 			}
 		}
 
@@ -2331,24 +2426,30 @@ R36_2_3 = {
 			OR = {
 				AND = {
 					province_id = 4420
-					NOT = { owned_by = ROOT }
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
 				}
 				AND = {
 					area = dhenbasana_estuary_area
-					NOT = { owned_by = ROOT }
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
 				}
 			}
 		}
 		
 		trigger = {
 			4420 = {
-				owned_by = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 			dhenbasana_estuary_area = {
 				type = all
-				owned_by = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
 			}
-			army_professionalism = 0.75
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				army_professionalism = 0.75
+			}
+			else = {
+				army_tradition = 75
+			}
 			has_global_modifier_value = {
 				which = discipline
 				value = 0.1
@@ -2446,7 +2547,7 @@ R36_2_3 = {
 				area = kradhungur_area
 				region = dhujat_region
 			}
-			NOT = { owned_by = ROOT }
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 
 		trigger = {
@@ -2456,84 +2557,84 @@ R36_2_3 = {
 				#Full Extent
 				ascension_plateau_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				desolate_plains_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				lock_tormscith_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				sand_gate_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				sanctuary_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				iona_saothar_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				overgrowth_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				west_rajnadhaga_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				rakhadesh_region = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				lower_dhenbasana_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				rhamirta_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				harimars_cradle_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				shenral_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				inner_rahen_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				middle_dhenbasana_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				satarsaya_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				#Primary Ambition
 				li_btei_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				kharunyana_estuary_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				dhenbasana_estuary_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				reanthung_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				xianjie_region = {
 					type = all
@@ -2541,56 +2642,56 @@ R36_2_3 = {
 						area = dekaipnam_area
 						area = jilin_anb_area
 						area = tietyuan_area
-						owned_by = ROOT
+						country_or_non_sovereign_subject_holds = ROOT
 					}
 				}
 				yodhilakra_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				nakara_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				tilathi_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				bidhilar_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				middle_nadimraj_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				tiltaghar_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				east_rajnadhaga_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				khadirnadi_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				khadisrapur_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				munlanan_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				kradhungur_area = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 				dhujat_region = {
 					type = all
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 				}
 			}
 			OR = {
@@ -2664,7 +2765,7 @@ R36_2_4 = {
 						area = middle_dhenbasana_area
 						area = satarsaya_area
 					}
-					NOT = { owned_by = ROOT }
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
 				}
 				AND = {
 					province_group = temple_province_group
@@ -2677,39 +2778,39 @@ R36_2_4 = {
 		trigger = {
 			west_rajnadhaga_area = {
 				type = all
-				owned_by = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 			rakhadesh_region = {
 				type = all
-				owned_by = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 			lower_dhenbasana_area = {
 				type = all
-				owned_by = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 			rhamirta_area = {
 				type = all
-				owned_by = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 			harimars_cradle_area = {
 				type = all
-				owned_by = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 			shenral_area = {
 				type = all
-				owned_by = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 			inner_rahen_area = {
 				type = all
-				owned_by = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 			middle_dhenbasana_area = {
 				type = all
-				owned_by = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 			satarsaya_area = {
 				type = all
-				owned_by = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 			dhenbasana_spirit_area = {
 				has_province_modifier = R36_inundated_temple_complex
@@ -2730,7 +2831,7 @@ R36_2_4 = {
 			province_group = dhenbasana_spirit_area
 			NOT = {
 				AND = {
-					owned_by = ROOT
+					country_or_non_sovereign_subject_holds = ROOT
 					OR = {
 						NOT = { province_group = temple_province_group }
 						has_province_modifier = R36_inundated_temple_complex
@@ -2745,19 +2846,19 @@ R36_2_4 = {
 			custom_trigger_tooltip = {
 				tooltip = R36_or_is_it_tt
 				had_country_flag = {
-					flag = R36_a_stampede_active
+					flag = R36_first_stampede_flag
 					days = 365
 				}
 			}
 			dhenbasana_spirit_area = {
 				type = all
-				owned_by = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
 				OR = {
 					NOT = { province_group = temple_province_group }
 					has_province_modifier = R36_inundated_temple_complex
 				}
 				NOT = { devastation = 0.01 }
-				num_of_times_improved_by_owner = 1
+				num_of_times_improved = 5
 			}
 			has_cast_deposit_divination = yes
 		}

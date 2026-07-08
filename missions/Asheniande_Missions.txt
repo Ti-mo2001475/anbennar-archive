@@ -580,16 +580,7 @@ A60_arannen_shenanigans_group = {
 					AND = {
 						is_rival = A72
 						A72 = {
-							OR = {
-								has_opinion_modifier = {
-									who = ROOT
-									modifier = insulted
-								}	
-								has_opinion_modifier = {
-									who = ROOT
-									modifier = scornfully_insulted
-								}
-							}
+							has_been_insulted_by_root = yes
 						}
 					}
 				}
@@ -1594,16 +1585,7 @@ A60_wex_shenanigans_group = {
 					AND = {
 						is_rival = A45
 						A45 = {
-							OR = {
-								has_opinion_modifier = {
-									who = ROOT
-									modifier = insulted
-								}	
-								has_opinion_modifier = {
-									who = ROOT
-									modifier = scornfully_insulted
-								}
-							}
+							has_been_insulted_by_root = yes
 						}
 					}
 				}
@@ -1772,13 +1754,44 @@ A60_development_small_chunk = {
 		position = 11
 		
 		trigger = {
-			any_ally = {
-				OR = {
-					culture_group = escanni
-					primary_culture = barumand_orc
-					primary_culture = newfoot_halfling
-					primary_culture = iron_dwarf
-					primary_culture = stone_dwarf
+			if = {
+				limit = {
+					any_known_country = {
+						OR = {
+							culture_group = escanni
+							primary_culture = barumand_orc
+							primary_culture = newfoot_halfling
+							primary_culture = iron_dwarf
+							primary_culture = stone_dwarf
+							primary_culture = marrodic
+							primary_culture = eclipse_elf
+						}
+						NOT = { is_subject_of = ROOT }
+					}
+				}
+				any_ally = {
+					OR = {
+						culture_group = escanni
+						primary_culture = barumand_orc
+						primary_culture = newfoot_halfling
+						primary_culture = iron_dwarf
+						primary_culture = stone_dwarf
+						primary_culture = marrodic
+						primary_culture = eclipse_elf
+					}
+				}
+			}
+			else = {
+				any_subject_country = {
+					OR = {
+						culture_group = escanni
+						primary_culture = barumand_orc
+						primary_culture = newfoot_halfling
+						primary_culture = iron_dwarf
+						primary_culture = stone_dwarf
+						primary_culture = marrodic
+						primary_culture = eclipse_elf
+					}
 				}
 			}
 		}

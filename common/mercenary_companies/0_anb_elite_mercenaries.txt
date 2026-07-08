@@ -363,12 +363,6 @@ merc_serpent_knights = {
 			tooltip = sk_empowered
 			has_unlocked_merc_company = { merc_company = merc_serpent_knights }
 		}
-		NOT = {
-			OR = {
-				current_age = age_of_revolutions
-				current_age = age_of_absolutism
-			}
-		}
 	}
 	cost_modifier = 1.1
 	modifier = {
@@ -1020,9 +1014,6 @@ merc_shazstundihr_marbleblood = {
 	sprites = { group_dwarves_sprite_pack }
     trigger = {
 		tag = I11
-		NOT = { has_country_modifier = monstrous_nation }
-		NOT = { culture_group = centaur }
-		NOT = { has_country_modifier = centaur_military }
 		has_unlocked_merc_company = { merc_company = merc_shazstundihr_marbleblood }
 	}
 	cost_modifier = 0.1
@@ -1339,7 +1330,7 @@ merc_surani_exemplars = {
 		NOT = { has_country_modifier = centaur_military }
 		OR = {
 			is_incident_active = incident_thirteenth_night
-			has_country_flag = vacyntassi_serondars_request_flag
+			hidden_trigger = { has_country_flag = vacyntassi_serondars_request_flag }
 			has_unlocked_merc_company = { merc_company = merc_surani_exemplars }
 		}
 		owns_core_province = 631
@@ -1743,7 +1734,6 @@ merc_the_silverspite_company = {
 merc_sarraka = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	regiments_per_development = 0.1
-	home_province = 591
 	cavalry_weight = 1.0
 	artillery_weight = 0
 	min_size = 4
@@ -1767,7 +1757,6 @@ merc_sarraka = {
 merc_sarraka_two = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	regiments_per_development = 0.1
-	home_province = 591
 	cavalry_weight = 1.0
 	artillery_weight = 0
 	min_size = 16
@@ -1790,7 +1779,6 @@ merc_sarraka_two = {
 merc_sarraka_three = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	regiments_per_development = 0.1
-	home_province = 591
 	cavalry_weight = 1.0
 	artillery_weight = 0
 	min_size = 40
@@ -1839,7 +1827,7 @@ merc_daughters_of_akasik_elite = {
 	home_province = 402
 	sprites = { akasi_units_pack }
     trigger = {
-		has_country_flag = improved_daughters_of_akasik
+		has_unlocked_merc_company = { merc_company = merc_daughters_of_akasik_elite }
 	}
 	cost_modifier = 1
 	modifier = {
@@ -2117,7 +2105,7 @@ merc_flying_pebbles = {
 	modifier = {
 		movement_speed = 0.2
 		# siege_ability = 0.1 doesn't work in merc scope
-		attrition = -0.2
+		land_attrition = -0.2
 		reinforce_speed = 0.5
 	}
 }
@@ -2138,7 +2126,7 @@ merc_flying_pebbles_tier_2 = {
 	modifier = {
 		movement_speed = 0.2
 		# siege_ability = 0.1 doesn't work in merc scope
-		attrition = -0.4
+		land_attrition = -0.4
 		artillery_level_modifier = 1.5
 		reinforce_speed = 0.4
 	}
@@ -2960,7 +2948,7 @@ merc_ironwall = {
 	trigger = {
 		capital_scope = { continent = europe }
 		NOT = { is_or_was_tag = { tag = Z18 } }
-		has_global_flag = ironwall_enabled
+		has_unlocked_merc_company = { merc_company = merc_ironwall }
 	}
 	cost_modifier = 0.75
 
@@ -3356,7 +3344,7 @@ merc_deranne_seaflower_knights = {
 	home_province = 113 #Deranne
 	trigger = {
 		mission_completed = deranne_vengeance_of_tomorrow
-		NOT = { has_country_flag = deranne_disable_seaflowerknights }
+		NOT = { mission_completed = deranne_derannic_behemoths }
 	}
 	regiments_per_development = 0.06
 	cost_modifier = 0.5
@@ -3486,7 +3474,7 @@ merc_human_iyashlagila_4 = {
 
 merc_angels_base = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
-	regiments_per_development = 0.03
+	min_size = 10
 	max_size = 10
 	cost_modifier = 0.01
 	cavalry_weight = 0
@@ -3498,7 +3486,8 @@ merc_angels_base = {
 }
 merc_angels_defense = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
-	regiments_per_development = 0.05
+	min_size = 25
+	max_size = 25
 	cost_modifier = 0.01
 	cavalry_weight = 0
 	artillery_weight = 0
@@ -3514,7 +3503,6 @@ merc_angels_defense_2 = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 40
 	max_size = 40
-	regiments_per_development = 0.075
 	cost_modifier = 0.01
 	cavalry_weight = 0
 	artillery_weight = 0
@@ -3523,13 +3511,14 @@ merc_angels_defense_2 = {
 	modifier = {
 		reinforce_speed = 0.25
 		morale_damage_received = -0.15
-		land_attrition = -0.9
+		assault_fort_ability = 0.5
 	}
 	counts_towards_force_limit = no
 }
 merc_angels_offense = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
-	regiments_per_development = 0.05
+	min_size = 25
+	max_size = 25
 	cost_modifier = 0.01
 	cavalry_weight = 0
 	artillery_weight = 0
@@ -3545,7 +3534,6 @@ merc_angels_offense_2 = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 40
 	max_size = 40
-	regiments_per_development = 0.075
 	cost_modifier = 0.01
 	cavalry_weight = 0
 	artillery_weight = 0
@@ -3560,7 +3548,7 @@ merc_angels_offense_2 = {
 }
 merc_eldritch_base = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
-	regiments_per_development = 0.03
+	min_size = 10
 	max_size = 10
 	cost_modifier = 0.01
 	cavalry_weight = 1
@@ -3568,21 +3556,22 @@ merc_eldritch_base = {
 
 	trigger = { has_country_flag = summon_extraplanars_eldritch_base }
 	modifier = {
-		cav_to_inf_ratio = 0.5
+		cav_to_inf_ratio = 1
 		reinforce_speed = 0.25
 	}
 	counts_towards_force_limit = no
 }
 merc_eldritch_fast = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
-	regiments_per_development = 0.05
+	min_size = 25
+	max_size = 25
 	cost_modifier = 0.01
 	cavalry_weight = 1
 	artillery_weight = 0
 
 	trigger = { has_country_flag = summon_extraplanars_eldritch_fast }
 	modifier = {
-		cav_to_inf_ratio = 0.5
+		cav_to_inf_ratio = 1
 		reinforce_speed = 0.25
 		movement_speed = 0.33
 	}
@@ -3592,14 +3581,13 @@ merc_eldritch_fast_2 = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 40
 	max_size = 40
-	regiments_per_development = 0.075
 	cost_modifier = 0.01
 	cavalry_weight = 1
 	artillery_weight = 0
 
 	trigger = { has_country_flag = summon_extraplanars_eldritch_fast_2 }
 	modifier = {
-		cav_to_inf_ratio = 0.5
+		cav_to_inf_ratio = 1
 		reinforce_speed = 0.25
 		movement_speed = 0.33
 		shock_damage = 0.2
@@ -3609,14 +3597,15 @@ merc_eldritch_fast_2 = {
 }
 merc_eldritch_mass = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
-	regiments_per_development = 0.05
+	min_size = 25
+	max_size = 25
 	cost_modifier = 0.01
 	cavalry_weight = 1
 	artillery_weight = 0
 
 	trigger = { has_country_flag = summon_extraplanars_eldritch_mass }
 	modifier = {
-		cav_to_inf_ratio = 0.5
+		cav_to_inf_ratio = 1
 		cavalry_power = 0.1
 		reinforce_speed = 1
 	}
@@ -3626,14 +3615,13 @@ merc_eldritch_mass_2 = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 40
 	max_size = 40
-	regiments_per_development = 0.075
 	cost_modifier = 0.01
 	cavalry_weight = 1
 	artillery_weight = 0
 
 	trigger = { has_country_flag = summon_extraplanars_eldritch_mass_2 }
 	modifier = {
-		cav_to_inf_ratio = 0.5
+		cav_to_inf_ratio = 1
 		cavalry_power = 0.1
 		reinforce_speed = 1
 		cavalry_fire = 0.75
@@ -3642,7 +3630,7 @@ merc_eldritch_mass_2 = {
 }
 merc_devils_base = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
-	regiments_per_development = 0.03
+	min_size = 10
 	max_size = 10
 	cost_modifier = 0.01
 	cavalry_weight = 0
@@ -3652,7 +3640,8 @@ merc_devils_base = {
 }
 merc_devils_frontline = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
-	regiments_per_development = 0.05
+	min_size = 25
+	max_size = 25
 	cost_modifier = 0.01
 	cavalry_weight = 0
 	artillery_weight = 1
@@ -3664,7 +3653,6 @@ merc_devils_frontline_2 = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 40
 	max_size = 40
-	regiments_per_development = 0.075
 	cost_modifier = 0.01
 	cavalry_weight = 0
 	artillery_weight = 1
@@ -3677,7 +3665,8 @@ merc_devils_frontline_2 = {
 }
 merc_devils_backline = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
-	regiments_per_development = 0.05
+	min_size = 25
+	max_size = 25
 	cost_modifier = 0.01
 	cavalry_weight = 0
 	artillery_weight = 1
@@ -3689,7 +3678,6 @@ merc_devils_backline_2 = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 40
 	max_size = 40
-	regiments_per_development = 0.075
 	cost_modifier = 0.01
 	cavalry_weight = 0
 	artillery_weight = 1
@@ -3698,6 +3686,44 @@ merc_devils_backline_2 = {
 		backrow_artillery_damage = 0.1
 		fire_damage = 0.15
 	}
+	counts_towards_force_limit = no
+}
+merc_elemental_animals = {
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
+	regiments_per_development = 0.1
+	cost_modifier = 0.01
+	cavalry_weight = 0.2
+	artillery_weight = 0
+	max_size = 20
+
+	trigger = {	has_country_modifier = conjuration_1_summon_elemental_animals_mod }
+
+	modifier = {
+		discipline = -0.1
+		shock_damage_received = 0.1
+		fire_damage_received = 0.1
+		land_morale = 0.05
+		land_attrition = -0.25
+	}
+
+	counts_towards_force_limit = no
+}
+merc_spiritfire_elementals = {
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
+	regiments_per_development = 0.05
+	cost_modifier = 0.01
+	cavalry_weight = 0.33
+	artillery_weight = 0
+	min_size = 10
+
+	trigger = { has_country_modifier = conjuration_2_summon_spiritfire_elementals_mod }
+
+	modifier = {
+		fire_damage_received = -0.2
+		land_morale = 0.1
+		fire_damage = 0.15
+	}
+
 	counts_towards_force_limit = no
 }
 
@@ -3717,6 +3743,7 @@ merc_children_of_the_vanguard = {
 	}
 	cost_modifier = 0.20
 	modifier = {
+		cav_to_inf_ratio = 1
 		morale_damage_received = -0.10
 		movement_speed = 0.10
 		discipline = 0.05
@@ -3769,5 +3796,217 @@ merc_bibyobi_ninki_nanka = {
 		morale_damage = 0.2
 		cavalry_fire = 2
 		cav_to_inf_ratio = 1
+	}
+}
+
+merc_beikling_hill_raiders = { #Hill Raiders
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+    regiments_per_development = 0.04
+	cavalry_weight = 0.3
+	cavalry_cap = 0
+	artillery_weight = 0.1
+	home_province = 4852 #Tiaochi
+	sprites = { yan_sprite_pack }
+    trigger = {
+		has_unlocked_merc_company = { merc_company = merc_beikling_hill_raiders }
+		NOT = { has_unlocked_merc_company = { merc_company = merc_beikling_royal_host } }
+	}
+	cost_modifier = 0.5
+	modifier = {
+		movement_speed = 0.15
+		shock_damage = 0.10
+	}
+}
+
+merc_beikling_royal_host = { #Royal Host
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+    regiments_per_development = 0.05
+	cavalry_weight = 0.2
+	cavalry_cap = 0
+	artillery_weight = 0.3
+	home_province = 4844 #Emgolu
+	sprites = { yan_sprite_pack }
+    trigger = {
+		has_unlocked_merc_company = { merc_company = merc_beikling_royal_host }
+	}
+	cost_modifier = 0.5
+	modifier = {
+		discipline = 0.05
+		movement_speed = 0.2
+		shock_damage = 0.2
+	}
+}
+#Orenvalyam
+merc_wild_magic_casters = {
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+	home_province = 2388 #Cara Lafquen
+	trigger = {
+		has_unlocked_merc_company = { merc_company = merc_wild_magic_casters }
+	}
+	regiments_per_development = 0.05
+	cost_modifier = 1
+	max_size = 60
+	cavalry_weight = 0
+	artillery_weight = 0.4
+	sprites = { westerngfx_sprite_pack }
+	modifier = {
+		shock_damage = 0.25
+		infantry_shock = 0.5
+		artillery_shock = 0.25
+	}
+}
+
+merc_campurana_corintar = {
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+	home_province = 6559 #Kottar Orenkoraim
+	trigger = {
+		has_unlocked_merc_company = { merc_company = merc_campurana_corintar }
+	}
+	regiments_per_development = 0.05
+	cost_modifier = 1
+	max_size = 60
+	cavalry_weight = 0
+	artillery_weight = 0.4
+	sprites = { westerngfx_sprite_pack }
+	modifier = {
+		discipline = 0.05
+		fire_damage_received = -0.1
+		assault_fort_ability = 0.25
+	}
+}
+
+merc_campurana_hotzaya = {
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+	home_province = 1048 #Valorpoint
+	trigger = {
+		has_unlocked_merc_company = { merc_company = merc_campurana_hotzaya }
+	}
+	regiments_per_development = 0.05
+	cost_modifier = 1
+	max_size = 60
+	cavalry_weight = 0
+	artillery_weight = 0.4
+	sprites = { westerngfx_sprite_pack }
+	modifier = {
+		discipline = 0.05
+		fire_damage_received = -0.1
+		assault_fort_ability = 0.25
+	}
+}
+#Bonecarver
+merc_ostavranan = {
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+	regiments_per_development = 0.01
+	home_province = 229
+	cavalry_weight = 0.5
+	artillery_weight = 0
+	sprites = { green_orc_sprite_pack } 
+	trigger = {
+		hidden_trigger = {
+			NOT = { technology_group = tech_centaur }
+		}
+		has_unlocked_merc_company = { merc_company = merc_ostavranan } 
+	}
+	cost_modifier = 0.5
+	modifier = {
+		fire_damage_received = -0.1
+		shock_damage_received = -0.1
+		morale_damage_received = -0.1
+	}
+	min_size = 20
+	max_size = 40
+}
+
+#Lelanan Paladins
+merc_lelanan_daughters_of_lel = {
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
+	home_province = 6599 #Lelanan
+	regiments_per_development = 0.05
+	cavalry_weight = 0.1
+	cavalry_cap = 2
+
+    trigger = {
+		has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel }
+		NOT = { 
+			OR = {
+				has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel_upgraded_1 }
+				has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel_upgraded_2 }
+			}
+		}
+	}
+
+	cost_modifier = 0.5
+	modifier = {
+        may_recruit_female_generals = yes
+		shock_damage_received = -0.10
+		fire_damage_received = -0.10
+		regiment_disembark_speed = 2
+        female_advisor_chance = 1.0
+	}
+	counts_towards_force_limit = no
+}
+
+merc_lelanan_daughters_of_lel_upgraded_1 = {
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
+	home_province = 6599 #Lelanàn
+	regiments_per_development = 0.05
+	cavalry_weight = 0.1
+	cavalry_cap = 2
+
+    trigger = {
+		has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel_upgraded_1 }
+		NOT = { has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel_upgraded_2 } }
+	}
+
+	cost_modifier = 0.5
+	modifier = {
+        may_recruit_female_generals = yes
+		shock_damage_received = -0.20
+		fire_damage_received = -0.20
+		regiment_disembark_speed = 2
+        female_advisor_chance = 1.0
+	}
+	counts_towards_force_limit = no
+}
+
+merc_lelanan_daughters_of_lel_upgraded_2 = {
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
+	home_province = 6599 #Lelanan
+	regiments_per_development = 0.05
+	cavalry_weight = 0.1
+	cavalry_cap = 2
+
+    trigger = {
+		has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel_upgraded_2 }
+	}
+
+	cost_modifier = 0.5
+	modifier = {
+        may_recruit_female_generals = yes
+		shock_damage_received = -0.30
+		fire_damage_received = -0.30
+		regiment_disembark_speed = 2
+        female_advisor_chance = 1.0
+	}
+	counts_towards_force_limit = no
+}
+
+
+#Gnollakaz
+merc_emperors_flame = {
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+	regiments_per_development = 0.05
+	min_size = 30
+	max_size = 30
+	cavalry_weight = 0.2
+	cavalry_cap = 4
+	artillery_weight = 0.2
+	sprites = { gnoll_sprite_pack }
+    trigger = {	has_unlocked_merc_company = { merc_company = merc_emperors_flame } }
+	cost_modifier = 0.7
+	modifier = {
+		allow_mercenary_drill = yes
+		discipline = 0.1
+		morale_damage_received = -0.1
 	}
 }
