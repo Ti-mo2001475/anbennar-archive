@@ -1,0 +1,134 @@
+Namespace = gozengun
+
+country_event = { #Seal event
+    id = gozengun.1
+    title = gozengun.1.t
+    desc = gozengun.1.desc
+    picture = FAR_AND_WIDE_eventPicture
+
+    is_triggered_only = yes 
+
+    trigger = {
+        owns = 5009
+        owns = 5334
+        owns = 5335
+    }
+
+    option = {
+        name = gozengun.1.a
+        add_country_modifier = { name = }
+    }
+
+    option = {
+        name = gozengun.1.b
+        add_prestige = 5
+        add_sailors = 1
+        country_event = { id = gozengun.2 days = 1825 }
+    }
+
+    option = {
+        name = gozengun.1.c
+        add_treasury = 5
+        add_prestige = -1
+        add_sailors = -1
+    }
+
+    option = {
+        name = gozengun.1.d
+        trigger = {
+            OR = {
+                ruler_has_personality = scholar_personality
+                ruler_has_personality = free_thinker_personality
+            } 
+        }
+    }
+}
+
+country_event = { #A seal's life
+    id = gozengun.2
+    title = gozengun.2.t
+    desc = gozengun.2.desc
+    picture = FAR_AND_WIDE_eventPicture
+
+    is_triggered_only = yes
+
+    option = {
+        name = gozengun.2.a
+        add_splendor = 1
+    }
+
+    option = {
+        name = gozengun.2.b
+        add_prestige = 5
+        add_sailors = -1
+    }
+}
+
+country_event = { #manul
+    id = gozengun.3
+    title = gozengun.3.t
+    desc = gozengun.3.desc
+    picture = BLANK_eventPicture
+
+    is_triggered_only = yes
+
+    trigger = {
+        capital = {
+            limit = {
+                superregion = gozengun_superregion
+            }
+        }
+    }
+
+    option = {
+        name = gozengun.3.a
+        add_prestige = 5
+    }
+
+    option = {
+        name = gozengun.3.b
+        random_list = {
+            95 = {
+                add_manpower = 1
+                add_prestige = 2
+            }
+            5 = {
+                define_advisor = {
+                    type = army_reformer
+                    name = "Harimanul 'The Adorable'"
+                    skill = 2
+                    culture = ashwoven_harimari
+                    religion = Levaajan
+                    cost_multiplier = 0.5
+                }
+            }
+        }
+    }
+
+    option  = {
+        name = gozengun.3.c
+        trigger = {
+            OR = {
+                ruler_has_personality = malevolent_personality
+                ruler_has_personality = cruel_personality
+            }
+        }
+        add_treasury = 30
+    }
+
+    option = {
+        name = gozengun.3.d
+        trigger = {
+            OR = {
+                ruler_has_personality = kind_hearted_personality
+                ruler_has_personality = benevolent_personality
+            }
+        }
+        add_prestige = 5
+        add_legitimacy = 5
+        add_republican_tradition = 5
+        add_devotion = 5
+        add_horde_unity = 5
+        add_splendor = 2
+    }
+}
