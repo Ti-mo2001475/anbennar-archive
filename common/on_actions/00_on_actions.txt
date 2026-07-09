@@ -5503,16 +5503,6 @@ on_new_monarch = {
 	country_event = { id = estate_organization.5 days = 35 }		#choose organization for artificer estate
 
 	if = {
-        limit = { has_reform = sophocracy_republic }
-        sophocracy_grant_advisor_effect = yes
-    }
-
-	if = {
-        limit = { has_reform = duumvirate }
-        country_event = { id = duumvirate.1 }
-    }
-
-	if = {
 		limit = { has_country_flag = has_caste_estates has_uppercastes_organization_privilege = no }
 		country_event = { id = estate_castes_events.0 days = 35 }		#add organization for caste estates
 	}
@@ -24646,9 +24636,7 @@ on_holy_order_established = {
 						name = kheios_gov_cd
 						duration = 1825
 					}
-					add_rebel_progress = {
-						value = -15
-					}
+					add_prosperity = 15
 				}
 			}
 		}
@@ -24672,13 +24660,17 @@ on_holy_order_established = {
 				}
 				NOT = { has_province_modifier = kheios_gov_cd }   
 			}
-			owner = {
-				add_yearly_manpower = 0.1 
-			}
 			area = {
-				add_province_modifier = {
-					name = kheios_gov_cd
-					duration = 1825
+				limit = { owner = ROOT }
+				if = {
+					limit = { NOT = { has_province_modifier = kheios_gov_cd } }
+					add_province_modifier = {
+						name = kheios_gov_cd
+						duration = 1825
+					}
+					add_rebel_progress = {
+						value = -15
+					}
 				}
 			}
 		}
