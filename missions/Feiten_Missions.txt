@@ -1368,14 +1368,15 @@ feiten_missions_2_world = {
 					owned_by_subject_of = ROOT
 				}
 			}
-			OR = {
+			custom_trigger_tooltip = {
+					tooltip = feiten_exploring_interior_trigger_tt_dlc
 				num_of_owned_provinces_with = { #Centre of trade option
 					value = 5
 					OR = {
 						AND = {
 							superregion = kanolowele_superregion
 							OR = {
-								province_has_center_of_trade_of_level = 1
+								province_has_center_of_trade_of_level = 2
 								AND = {
 									province_is_any_1444_insyaan_toll = yes
 									num_free_building_slots = 0
@@ -1393,6 +1394,7 @@ feiten_missions_2_world = {
 					}
 				}
 			}
+
 		}
 		
 		effect = {
@@ -1597,7 +1599,7 @@ feiten_missions_2_world = {
 				kill_units = {
 					who = ROOT
 					amount = 5
-					type = infantry
+					type = artillery
 				}
 				add_province_modifier = {
 					name = feiten_shuimu_gene_pillar_extraction
@@ -1605,20 +1607,25 @@ feiten_missions_2_world = {
 				}
 			}
 			mission_reward_artifice_points_5 = yes
-			every_province = {
-				limit = {
-					NOT = { owned_by = ROOT }
-					same_trade_node_as = 3651
-					same_trade_node_as = 1363
-					same_trade_node_as = 3572
-					same_trade_node_as = 6950
-				}
-				add_permanent_claim = ROOT
-			}
+			custom_tooltip = feiten_add_perma_claim_gene_pillars_tt
 			country_event = {
 				id = flavor_feiten.316
 				days = 730
 				random = 730
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						NOT = { owned_by = ROOT }
+						OR = {
+							same_trade_node_as = 3651
+							same_trade_node_as = 1363
+							same_trade_node_as = 3572
+							same_trade_node_as = 6950
+						}
+					}
+					add_permanent_claim = ROOT
+				}
 			}
 		}
 	}
@@ -1751,13 +1758,11 @@ feiten_missions_2_world = {
 					hidden_effect = {
 						random_subject_country = {
 						limit = { 
-							any_subject_country = {
-								num_of_owned_provinces_with = {
-									value = 8
-									region = tagaala_mangroves_region
-								}
-								has_country_flag = mangrove_bio_infra_enabled
+							num_of_owned_provinces_with = {
+								value = 8
+								region = tagaala_mangroves_region
 							}
+							has_country_flag = mangrove_bio_infra_enabled
 						}
 						every_owned_province = {
 							limit = {
