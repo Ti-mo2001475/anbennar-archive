@@ -14,9 +14,25 @@ country_event = { #Seal event
         owns = 5335
     }
 
+    immediate = {
+        hidden_effect = {
+            AND = {
+                province = 5009
+                province = 5334
+                province = 5335
+            }
+            save_event_target_as = lake_kokesal
+        }
+    }
+
     option = {
         name = gozengun.1.a
-        add_country_modifier = { name = }
+        event_target:lake_kokesal = {
+            add_province_modifier = {
+            name = gozengun_seal_modifier_good
+            duration = 1825
+            }
+        }
     }
 
     option = {
@@ -24,6 +40,12 @@ country_event = { #Seal event
         add_prestige = 5
         add_sailors = 1
         country_event = { id = gozengun.2 days = 1825 }
+        event_target:lake_kokesal = {
+            add_province_modifier = {
+                name = gozengun_seal_modifier_bad
+                duration = 1825
+            }
+        }
     }
 
     option = {
@@ -73,10 +95,8 @@ country_event = { #manul
     is_triggered_only = yes
 
     trigger = {
-        capital = {
-            limit = {
-                superregion = gozengun_superregion
-            }
+        capital_scope = {
+            superregion = gozengun_superregion
         }
     }
 
@@ -130,5 +150,137 @@ country_event = { #manul
         add_devotion = 5
         add_horde_unity = 5
         add_splendor = 2
+    }
+}
+
+country_event = { # dead man demanding
+    id = gozengun.4
+    title = gozengun.4.t
+    desc = gozengun.4.desc
+    picture = BLANK_eventPicture
+
+    is_triggered_only = yes
+
+    trigger = {
+        capital_scope = {
+            continent = asia
+        }
+        any_owned_province = {
+            superregion = gozengun_superregion
+        }
+    }
+
+    option = {
+        name = gozengun.4.a
+        add_country_modifier = {
+            name = gozengun_dead_man_will
+            duration = 3650
+        }
+        add_prestige = -10
+    }
+
+    option = {
+        hidden_effect = {
+			random_owned_province = {
+				superregion = gozengun_superregion
+                save_event_target_as = target_province
+			}
+		}
+        event_target:target_province = {
+            add_province_modifier = {
+                name = gozengun_dead_man_family
+            }
+        }
+    }
+
+    option = {
+        add_years_of_income = 1
+        add_stability = -1
+    }
+}
+
+country_event = { #mercenaries event
+    id = gozengun.5
+    title = gozengun.5.t
+    desc = gozengun.5.desc
+    picture = BLANK_eventPicture
+
+    is_triggered_only = yes
+}
+
+country_event = { #facestealer rite event
+    id = gozengun.6
+    title = gozengun.6.t
+    desc = gozengun.6.desc
+    picture = BLANK_eventPicture
+
+    is_triggered_only = yes
+
+    trigger = {
+        culture_group = khantaar
+        any_owned_province = {
+            
+        }
+    }
+
+    immediate = {
+        hidden_effect = {
+            random_owned_province = {
+                limit = {
+                    facestealer_history = { size = 1 }
+                }
+                save_event_target_as = facestealer_province
+            }
+        }
+    }
+
+    option = {
+        name = gozengun.6.a
+        random = {
+            chance = 75
+            event_target:facestealer_province = {
+                add_facestealer_history = { size = 2 }
+            }
+        }
+    }
+
+    option = {
+        name = gozengun.6.b
+        add_yearly_manpower = -0.25
+        random = {
+            chance = 25
+            event_target:facestealer_province = {
+                add_facestealer_history = { size = 2 }
+            }
+        }
+        event_target:facestealer_province = {
+            add_province_modifier = {
+                name = gozengun_facestealer_rites1
+                duration = 1325
+            }
+        }
+        add_adm_power = -10
+    }
+
+    option = {
+        name = gozengun.6.c
+        trigger = {
+            ruler_has_personality = malevolent_personality
+            ruler_has_personality = cruel_personality
+        }
+        add_yearly_manpower = -0.33
+        event_target:facestealer_province = {
+            add_province_modifier = {
+            name = gozengun_facestealer_rites2
+            duration = 1325
+            }
+        }
+        random = {
+            chance = 50 
+            event_target:facestealer_province = {
+                add_facestealer_history = { size = 0 }
+            } 
+        }
+        add_years_of_income = 0.25  
     }
 }
