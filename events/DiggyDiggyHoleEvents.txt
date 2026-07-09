@@ -13517,15 +13517,16 @@ country_event = { #Imported Labor
 	
 	trigger = {
 		NOT = { has_country_flag = dig_imported }
-		any_owned_province = {
-			has_construction = digging_deeper
-		}
+		
 		capital_scope = {
 			continent = serpentspine
 			OR = {
 				has_terrain = dwarven_hold
 				has_terrain = dwarven_hold_surface
 			}
+			any_owned_province = {
+			has_construction = digging_deeper
+		}
 		}
 		OR = {
             low_tolerance_goblin_race_trigger = yes
@@ -13559,6 +13560,17 @@ country_event = { #Imported Labor
 				set_province_flag = diggy_minorities_imported
 				save_event_target_as = import_destination
 			}
+			random_owned_province = {
+				limit = {
+					has_construction = digging_deeper
+					is_city = yes
+					OR = {
+						has_goblin_minority_trigger = yes
+						has_kobold_minority_trigger = yes
+					}
+				}
+				save_event_target_as = import_origin
+			}
 		}
 	}
 
@@ -13578,7 +13590,7 @@ country_event = { #Imported Labor
 		}
 		if = {
     		limit = {
-    			event_target:import_destination = { has_goblin_minority_trigger = yes }
+    			event_target:import_origin = { has_goblin_minority_trigger = yes }
 			} 
 			small_decrease_of_goblin_tolerance_effect = yes
 		}
@@ -13598,7 +13610,7 @@ country_event = { #Imported Labor
         tooltip = { capital_scope = { change_variable = { cons_prog = 0.0125 } } }	
         if = {
             limit = {
-                event_target:import_destination = { has_goblin_minority_trigger = yes }
+                event_target:import_origin = { has_goblin_minority_trigger = yes }
             }
 	        event_target:import_destination = { add_goblin_minority_size_effect = yes }
         }
@@ -13620,10 +13632,7 @@ country_event = { #Imported Labor
         tooltip = { capital_scope = { change_variable = { cons_prog = 0.025 } } }	
         if = {
             limit = {
-                any_owned_province = {
-			    	has_province_flag = diggy_minorities_imported
-			    	has_goblin_minority_trigger = yes
-            	} 
+                event_target:import_origin = { has_goblin_minority_trigger = yes }
             }
 	        event_target:import_destination = { add_goblin_minority_size_effect = yes }
         }
@@ -13646,19 +13655,13 @@ country_event = { #Imported Labor Race War
 	option = {
 		name = diggy.901.a
 		ai_chance = { factor = 100 }
-		event_target:import_destination = {
-            if = {
-                limit = { has_goblin_minority_trigger = yes }
-                remove_goblin_minority_size_effect = yes
-            }
+        if = {
+                limit = { event_target:import_origin = { has_goblin_minority_trigger = yes } }
+                event_target:import_destination = {remove_goblin_minority_size_effect = yes }
         }
     	else_if = { 
-			limit = {
-    			event_target:import_destination = {
-            		has_kobold_minority_trigger = yes
-        		}
-    		}	
-			event_target:import_destination = { remove_kobold_minority_size_effect = yes } 
+			limit = { event_target:import_origin = { has_kobold_minority_trigger = yes } }
+            event_target:import_destination = {remove_kobold_minority_size_effect = yes }
 		}
 		hidden_effect = { capital_scope = { change_variable = { cons_prog = -0.1 } } }
    		tooltip = { capital_scope = { change_variable = { cons_prog = -0.050 } } }
@@ -13694,7 +13697,7 @@ country_event = { #Imported Labor Race War
     	add_yearly_manpower = -0.5
 		if = {
     		limit = {
-    			event_target:import_destination = {
+    			event_target:import_origin = {
             		has_goblin_minority_trigger = yes
 				} 
     		}	
@@ -13702,7 +13705,7 @@ country_event = { #Imported Labor Race War
 		}
 		else_if = { 
 			limit = {
-    			event_target:import_destination = {
+    			event_target:import_origin = {
             		has_kobold_minority_trigger = yes
         		}
     		}	
@@ -13732,7 +13735,7 @@ country_event = { #Imported Labor Race War
         tooltip = { capital_scope ={ change_variable = { cons_prog = 0.0125 } } }
 		if = {
     		limit = {
-    			event_target:import_destination = {
+    			event_target:import_origin = {
             		has_goblin_minority_trigger = yes
         		}
     		}	
@@ -13740,7 +13743,7 @@ country_event = { #Imported Labor Race War
 		}
 		else_if = { 
 			limit = {
-    			event_target:import_destination = {
+    			event_target:import_origin = {
             		has_kobold_minority_trigger = yes
         		}
     		}	
@@ -13774,7 +13777,7 @@ country_event = { #Diggy Diggy Veins Run Red
 		tooltip = { capital_scope = { change_variable = { cons_prog = -0.10 } } }
 		if = {
     		limit = {
-    			event_target:import_destination = {
+    			event_target:import_origin = {
             		has_goblin_minority_trigger = yes
 				} 
     		}	
@@ -13782,7 +13785,7 @@ country_event = { #Diggy Diggy Veins Run Red
 		}
 		else_if = { 
 			limit = {
-    			event_target:import_destination = {
+    			event_target:import_origin = {
             		has_kobold_minority_trigger = yes
         		}
     		}	
