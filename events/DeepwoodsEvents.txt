@@ -425,7 +425,7 @@ country_event = {
 				change_government = monarchy
 				add_stability_or_adm_power = yes
 				define_ruler = {
-					dynasty = "Cenï¿½g" 
+					dynasty = "Cenág" 
 					min_age = 40
 					max_age = 90
 					culture = wood_elf
@@ -844,7 +844,7 @@ country_event = {
 				change_government = monarchy
 				add_stability_or_adm_power = yes
 				define_ruler = {
-					dynasty = "Ghï¿½l"
+					dynasty = "Ghúl"
 					min_age = 40
 					max_age = 90
 					culture = wood_elf
@@ -4535,11 +4535,24 @@ country_event = { #The Hunter's Gambit Tournament Start
 	is_triggered_only = yes
 	fire_only_once = yes
 
+	trigger = {
+		owns = 7011
+		deepwoods_hunter_grove = {
+			type = all
+			owner = { primary_culture = wood_elf }
+		}
+		any_known_country = {
+			primary_culture = wood_elf
+			capital_scope = { superregion = deepwoods_superregion }
+		}
+	}
+
 	option = { #Host Start Event
 		name = deepwoods.100.a
 		ai_chance = { factor = 1 }
 
 		set_country_flag = hunters_gambit_contender
+		custom_tooltip = hunters_gambit_tutorial_tt
 		every_known_country = {
 			limit = {
 				primary_culture = wood_elf
@@ -4548,7 +4561,7 @@ country_event = { #The Hunter's Gambit Tournament Start
 			country_event = { id = deepwoods.101 days = 7 }
 		}
 		hidden_effect = {
-			country_event = { id = deepwoods.102 days = 121 }
+			7011 = { province_event = { id = deepwoods.102 days = 121 } }
 		}
 	}
 
@@ -4571,6 +4584,7 @@ country_event = { #The Hunter's Gambit Tournament Start
 		name = deepwoods.101.a
 		ai_chance = { factor = 1 }
 		set_country_flag = hunters_gambit_contender
+		custom_tooltip = hunters_gambit_tutorial_tt
 	}
 
 	option = { #Contender is a loser
@@ -4580,7 +4594,7 @@ country_event = { #The Hunter's Gambit Tournament Start
 }
 
 
-country_event = { #The Hunter's Gambit Tournament Start Handler
+province_event = { #The Hunter's Gambit Tournament Start Handler
 	id = deepwoods.102
 	title = deepwoods.102.t
 	desc = deepwoods.102.d
@@ -4594,30 +4608,34 @@ country_event = { #The Hunter's Gambit Tournament Start Handler
 		if = { #At least three contestants
 			limit = {
 				calc_true_if = {
-					amount = 2
-					all_known_country = { has_country_flag = hunters_gambit_contender }
+					amount = 3
+					all_country = { has_country_flag = hunters_gambit_contender }
 				}
 			}
-			every_known_country = {
+			every_country = {
 				limit = { has_country_flag = hunters_gambit_contender }
 				country_event = { id = deepwoods.103 }
 			}
-			country_event = { id = deepwoods.103 }
 			7011 = { province_event = { id = deepwoods.105 days = 120 } } #Round Outcome
 		}
 		else_if = { #Exactly two contestants
 			limit = {
-				any_known_country = { has_country_flag = hunters_gambit_contender }
+				calc_true_if = {
+					amount = 2
+					all_country = { has_country_flag = hunters_gambit_contender }
+				}
 			}
-			random_known_country = {
+			every_country = {
 				limit = { has_country_flag = hunters_gambit_contender }
 				country_event = { id = deepwoods.108 days = 100 } #Final Gambit
 			}
-			country_event = { id = deepwoods.108 days = 100 } #Final Gambit
 			7011 = { province_event = { id = deepwoods.109 days = 200 } } #Final Gambit Handler
 		}
 		else = { #Only one contestant
-			country_event = { id = deepwoods.106 }
+			random_country = {
+				limit = { has_country_flag = hunters_gambit_contender }
+				country_event = { id = deepwoods.106 }
+			}
 		}
 	}
 }
@@ -4754,11 +4772,9 @@ country_event = { #The Hunter's Gambit Tournament Preparations
 		else = { add_years_of_income = -0.15 }
 		custom_tooltip = hunters_gambit_need_both_tt
 		if = {
-			limit = { 
-				AND = {
-					innovativeness = 5
-					army_tradition = 60
-				}
+			limit = {
+				innovativeness = 5
+				army_tradition = 60
 			}
 			random_list = {
 				50 = {
@@ -4905,11 +4921,11 @@ country_event = { #The Hunter's Gambit CHEATERS!
 				modifier = hunters_gambit_discovered_as_cheaters
 			}
 		}
-
 		add_country_modifier = {
 			name = hunters_gambit_tournament_cheaters
 			duration = 3650 #10 years
 		}
+		custom_tooltip = hunters_gambit_eliminated_tt
 	}
 }
 
@@ -4925,38 +4941,37 @@ province_event = { #The Hunter's Gambit Round Handler
 	immediate = {
 		random_country = {
 			limit = { has_country_flag = hunters_gambit_contender }
-			save_event_target_as = hunters_gambit_round_loser
-		}
-		every_country = {
-			limit = { has_country_flag = hunters_gambit_contender }
-			if = {
-				limit = {
-					NOT = {
-						check_variable = {
-							which = hunters_gambit_vp_tracker
-							which = event_target:hunters_gambit_round_loser
-						}
-					}
-				}
-				save_event_target_as = hunters_gambit_round_loser
-			}
-		}
-		random_country = {
-			limit = { has_country_flag = hunters_gambit_contender }
 			save_event_target_as = hunters_gambit_round_winner
 		}
 		every_country = {
-			limit = { has_country_flag = hunters_gambit_contender }
-			if = {
-				limit = {
+			limit = {
+				has_country_flag = hunters_gambit_contender
+				check_variable = {
+					which = hunters_gambit_vp_tracker
+					which = event_target:hunters_gambit_round_winner
+				}
+			}
+			save_event_target_as = hunters_gambit_round_winner
+		}
+		random_country = {
+			limit = {
+				has_country_flag = hunters_gambit_contender
+				NOT = { tag = event_target:hunters_gambit_round_winner }
+			}
+			save_event_target_as = hunters_gambit_round_loser
+		}
+		every_country = {
+			limit = {
+				has_country_flag = hunters_gambit_contender
+				NOT = {
 					check_variable = {
 						which = hunters_gambit_vp_tracker
-						which = event_target:hunters_gambit_round_winner
+						which = event_target:hunters_gambit_round_loser
 					}
-					NOT = { tag = event_target:hunters_gambit_round_loser }
+					tag = event_target:hunters_gambit_round_winner
 				}
-				save_event_target_as = hunters_gambit_round_winner
 			}
+			save_event_target_as = hunters_gambit_round_loser
 		}
 	}
 
@@ -5095,6 +5110,7 @@ country_event = { #The Hunter's Gambit Round Results with loc
 		add_prestige = -10
 		add_legitimacy = -10
 		clr_country_flag = hunters_gambit_contender
+		custom_tooltip = hunters_gambit_eliminated_tt
 		hidden_effect = {
 			set_variable = {
 				which = hunters_gambit_vp_tracker
@@ -5107,58 +5123,43 @@ country_event = { #The Hunter's Gambit Round Results with loc
 country_event = { #The Hunter's Gambit Last Round
 	id = deepwoods.108
 	title = deepwoods.108.t
-	desc = {
-		trigger = { tag = I26 }
-		desc = deepwoods.108.desc_elyn
-	}
-	desc = {
-		trigger = { tag = I27 }
-		desc = deepwoods.108.desc_myna
-	}
-	desc = {
-		trigger = { tag = I28 }
-		desc = deepwoods.108.desc_drennen
-	}
-	desc = {
-		trigger = { tag = I29 }
-		desc = deepwoods.108.desc_cenag
-	}
-	desc = {
-		trigger = { tag = I30 }
-		desc = deepwoods.108.desc_fealgarn
-	}
-	desc = {
-		trigger = { tag = I31 }
-		desc = deepwoods.108.desc_scotha
-	}
-	desc = {
-		trigger = { tag = I32 }
-		desc = deepwoods.108.desc_ahain
-	}
-	desc = {
-		trigger = { tag = I33 }
-		desc = deepwoods.108.desc_ayeth
-	}
-	desc = {
-		trigger = { tag = I34 }
-		desc = deepwoods.108.desc_ghul
-	}
-	desc = {
-		trigger = {
-			NOT = {
-				tag = I26
-				tag = I27
-				tag = I28
-				tag = I29
-				tag = I30
-				tag = I31
-				tag = I32
-				tag = I33
-				tag = I34
-			}
-		}
-		desc = deepwoods.108.desc_default
-	}
+#	desc = {
+#		trigger = { tag = I26 }
+#		desc = deepwoods.108.desc_elyn
+#	}
+#	desc = {
+#		trigger = { tag = I27 }
+#		desc = deepwoods.108.desc_myna
+#	}
+#	desc = {
+#		trigger = { tag = I28 }
+#		desc = deepwoods.108.desc_drennen
+#	}
+#	desc = {
+#		trigger = { tag = I29 }
+#		desc = deepwoods.108.desc_cenag
+#	}
+#	desc = {
+#		trigger = { tag = I30 }
+#		desc = deepwoods.108.desc_fealgarn
+#	}
+#	desc = {
+#		trigger = { tag = I31 }
+#		desc = deepwoods.108.desc_scotha
+#	}
+#	desc = {
+#		trigger = { tag = I32 }
+#		desc = deepwoods.108.desc_ahain
+#	}
+#	desc = {
+#		trigger = { tag = I33 }
+#		desc = deepwoods.108.desc_ayeth
+#	}
+#	desc = {
+#		trigger = { tag = I34 }
+#		desc = deepwoods.108.desc_ghul
+#	}
+	desc = deepwoods.108.desc_default
 	picture = MULTI_RACIAL_MERC_eventPicture
 	
 	is_triggered_only = yes
@@ -5335,13 +5336,6 @@ country_event = { #The Hunter's Gambit Last Round
 			}
 		}
 	}
-
-	after = {
-		country_event = {
-			id = deepwoods.110
-			days = 200
-		}
-	}
 }
 
 province_event = { #The Hunter's Gambit Last Round Handler
@@ -5372,12 +5366,12 @@ province_event = { #The Hunter's Gambit Last Round Handler
 					}
 					random_list = {
 						1 = {
-							save_event_target_as = hunters_gambit_round_winner
-							PREV = { save_event_target_as = hunters_gambit_round_loser }
+							save_event_target_as = hunters_gambit_final_round_winner
+							PREV = { save_event_target_as = hunters_gambit_final_round_loser }
 						}
 						1 = {
-							save_event_target_as = hunters_gambit_round_loser
-							PREV = { save_event_target_as = hunters_gambit_round_winner }
+							save_event_target_as = hunters_gambit_final_round_loser
+							PREV = { save_event_target_as = hunters_gambit_final_round_winner }
 						}
 					}
 				}
@@ -5388,13 +5382,21 @@ province_event = { #The Hunter's Gambit Last Round Handler
 							which = PREV
 						}
 					}
-					save_event_target_as = hunters_gambit_round_winner
-					PREV = { save_event_target_as = hunters_gambit_round_loser }
+					save_event_target_as = hunters_gambit_final_round_winner
+					PREV = { save_event_target_as = hunters_gambit_final_round_loser }
 				}
 				else = {
-					save_event_target_as = hunters_gambit_round_loser
-					PREV = { save_event_target_as = hunters_gambit_round_winner }
+					save_event_target_as = hunters_gambit_final_round_loser
+					PREV = { save_event_target_as = hunters_gambit_final_round_winner }
 				}
+				country_event = {
+					id = deepwoods.110
+					days = 200
+				}
+			}
+			country_event = {
+				id = deepwoods.110
+				days = 200
 			}
 		}
 	}
@@ -5410,7 +5412,7 @@ country_event = { #The Hunter's Gambit Last Round Results
 
 	option = { #Winner, option A
 		name = deepwoods.110.a
-		trigger = { tag = event_target:hunters_gambit_round_winner }
+		trigger = { tag = event_target:hunters_gambit_final_round_winner }
 		capital_scope = {
 			add_province_modifier = {
 				name = hunters_gambit_tournament_winner_mod_1
@@ -5421,7 +5423,7 @@ country_event = { #The Hunter's Gambit Last Round Results
 
 	option = { #Winner, option B
 		name = deepwoods.110.b
-		trigger = { tag = event_target:hunters_gambit_round_winner }
+		trigger = { tag = event_target:hunters_gambit_final_round_winner }
 		add_country_modifier = {
 			name = hunters_gambit_tournament_winner_mod_2
 			duration = -1
@@ -5430,7 +5432,7 @@ country_event = { #The Hunter's Gambit Last Round Results
 
 	option = { #Winner, option C
 		name = deepwoods.110.c
-		trigger = { tag = event_target:hunters_gambit_round_winner }
+		trigger = { tag = event_target:hunters_gambit_final_round_winner }
 		add_country_modifier = {
 			name = hunters_gambit_tournament_winner_mod_3
 			duration = -1
@@ -5439,19 +5441,19 @@ country_event = { #The Hunter's Gambit Last Round Results
 
 	option = { #Loser
 		name = deepwoods.110.e
-		trigger = { tag = event_target:hunters_gambit_round_loser }
+		trigger = { tag = event_target:hunters_gambit_final_round_loser }
 		add_army_professionalism = 0.05
 		add_mil_power = 100
 	}
 
 	after = {
 		if = {
-			limit = { tag = event_target:hunters_gambit_round_winner }
+			limit = { tag = event_target:hunters_gambit_final_round_winner }
 			every_known_country = {
 				limit = {
 					primary_culture = wood_elf
 					capital_scope = { superregion = deepwoods_superregion }
-					NOT = { tag = event_target:hunters_gambit_round_loser }
+					NOT = { tag = event_target:hunters_gambit_final_round_loser }
 				}
 				country_event = { id = deepwoods.111 }
 			}
@@ -5499,24 +5501,7 @@ country_event = { #Results for Everyone (Flavour only)
 		trigger = { FROM = { tag = I34 } }
 		desc = deepwoods.111.desc_ghul
 	}
-	desc = {
-		trigger = {
-			FROM = {
-				NOT = {
-					tag = I26
-					tag = I27
-					tag = I28
-					tag = I29
-					tag = I30
-					tag = I31
-					tag = I32
-					tag = I33
-					tag = I34
-				}
-			}
-		}
-		desc = deepwoods.111.desc_default
-	}
+	desc = deepwoods.111.desc_default
 	picture = WOOD_ELF_HUNT_eventPicture
 	
 	is_triggered_only = yes
