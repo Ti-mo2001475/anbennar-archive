@@ -14128,3 +14128,260 @@ block_manually_moving_capital = {
 	custom_tooltip = no_move_capital_effect
 	set_country_flag = cannot_move_capital_flag
 }
+
+L22_court_of_fangaula_helped_locals_effect = {
+	custom_tooltip = L22_court_of_fangaula_helped_TT
+	hidden_effect = {
+		owner = {
+			change_variable = {
+				which = L22_court_request_completed
+				value = 1
+			}
+			if = {
+				limit = {
+					has_country_flag = L22_fangaula_court_removes_negative_trait
+				}
+				change_variable = {
+					which = L22_fangaula_court_ruler_trait_counter
+					value = 1
+				}
+			}
+			L22_fangaula_court_removes_negative_trait_scripted_effect = yes
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_country_flag = L22_restored_high_princes }
+		}
+		custom_tooltip = L22_fairest_king_effect_TT
+		hidden_effect = {
+			every_subject_country = {
+				remove_country_modifier = L22_fairest_among_all_kings
+				add_country_modifier = {
+					name = L22_fairest_among_all_kings
+					duration = 3650
+				}
+			}
+		}
+	}
+}
+
+L22_fangaula_court_removes_negative_trait_scripted_effect = {
+	if = {
+		limit = {
+			check_variable = {
+				which = L22_fangaula_court_ruler_trait_counter
+				value = 3
+			}
+			NOT = { has_ruler_flag = L22_fangaula_court_trait_removed }
+			ruler_has_bad_personality = yes
+		}
+		remove_random_bad_ruler_personality = yes
+	}
+}
+
+L22_court_moved_effect = {
+	hidden_effect = {
+		every_owned_or_subject_province = {
+			remove_province_modifier = L22_court_is_here
+		}
+		remove_country_modifier = L22_court_in_sigilan
+		remove_country_modifier = L22_court_in_zitan_tomon
+		remove_country_modifier = L22_court_in_woloso
+		remove_country_modifier = L22_court_in_jiridese_so
+		remove_country_modifier = L22_court_in_sinjetaso
+		remove_country_modifier = L22_court_in_izini
+		remove_country_modifier = L22_court_in_kunolo
+		remove_country_modifier = L22_court_in_jagab_faru
+	}
+}
+
+L22_court_of_fangaula_events_fire = {
+	random_list = {
+		1 = {
+			$province$ = {
+				province_event = { id = binwarji.102 }
+			}
+		}
+		1 = {
+			trigger = {
+				has_advisor = yes
+			}
+			$province$ = {
+				province_event = { id = binwarji.103 }
+			}
+		}
+		1 = {
+			$province$ = {
+				province_event = { id = binwarji.104 }
+			}
+		}
+		1 = {
+			trigger = {
+				OR = {
+					gems = 1
+					any_subject_country = { gems = 1 }
+				}
+			}
+			$province$ = {
+				province_event = { id = binwarji.105 }
+			}
+		}
+		1 = {
+			$province$ = {
+				province_event = { id = binwarji.106 }
+			}
+		}
+		1 = {
+			trigger = {
+				num_of_provinces_owned_or_owned_by_subjects_with = {
+					value = 2
+					OR = {
+						trade_goods = livestock
+						trade_goods = grain
+					}
+				}
+			}
+			$province$ = {
+				province_event = { id = binwarji.107 }
+			}
+		}
+	}
+}
+
+L22_court_of_fangaula_on_province_owner_change = { #Binwarji Court of Fangaula
+	if = {
+		limit = {
+			superregion = fangaula_superregion
+			owner = { 
+				OR = { 
+					has_country_flag = L22_enable_court_of_fangaula
+					overlord = { has_country_flag = L22_enable_court_of_fangaula }
+				}
+			}
+		}
+		trigger_switch = {
+			on_trigger = province_id
+			5813 = { add_province_modifier = { name = L22_court_city_sigilan duration = -1 } }
+			5802 = { add_province_modifier = { name = L22_court_city_zitan_tomon duration = -1 } }
+			5741 = { add_province_modifier = { name = L22_court_city_woloso duration = -1 } }
+			5779 = { add_province_modifier = { name = L22_court_city_jiridese duration = -1 } }
+			5745 = { add_province_modifier = { name = L22_court_city_sinjetaso duration = -1 } }
+			5724 = { add_province_modifier = { name = L22_court_city_izini duration = -1 } }
+			5710 = { add_province_modifier = { name = L22_court_city_kunolo duration = -1 } }
+			5680 = { add_province_modifier = { name = L22_court_city_jagab_faru duration = -1 } }
+		}
+		if = {
+			limit = {
+				area = biakata_area
+				owner = { OR = { has_country_modifier = L22_court_in_sigilan overlord = { has_country_modifier = L22_court_in_sigilan } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				area = mokatanga_area
+				owner = { OR = { has_country_modifier = L22_court_in_zitan_tomon overlord = { has_country_modifier = L22_court_in_zitan_tomon } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				area = cikela_jigin_area
+				owner = { OR = { has_country_modifier = L22_court_in_woloso overlord = { has_country_modifier = L22_court_in_woloso } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				area = janfanciso_area
+				owner = { OR = { has_country_modifier = L22_court_in_jiridese_so overlord = { has_country_modifier = L22_court_in_jiridese_so } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				area = kaino_binni_area
+				owner = { OR = { has_country_modifier = L22_court_in_sinjetaso overlord = { has_country_modifier = L22_court_in_sinjetaso } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				area = janfanciso_area
+				owner = { OR = { has_country_modifier = L22_court_in_jiridese_so overlord = { has_country_modifier = L22_court_in_jiridese_so } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				area = negetu_area
+				owner = { OR = { has_country_modifier = L22_court_in_izini overlord = { has_country_modifier = L22_court_in_izini } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				area = kunolo_area
+				owner = { OR = { has_country_modifier = L22_court_in_kunolo overlord = { has_country_modifier = L22_court_in_kunolo } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				area = jagab_faru_area
+				owner = { OR = { has_country_modifier = L22_court_in_jagab_faru overlord = { has_country_modifier = L22_court_in_jagab_faru } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+	}
+	if = {
+		limit = {
+			superregion = fangaula_superregion
+			PREV = {
+				OR = {
+					has_country_flag = L22_enable_court_of_fangaula
+					overlord = { has_country_flag = L22_enable_court_of_fangaula }
+				}
+			}
+		}
+		trigger_switch = {
+			on_trigger = province_id
+			5813 = { PREV = { remove_country_modifier = L22_court_in_sigilan remove_country_modifier = L22_court_recently_migrated biakata_area = { remove_province_modifier = L22_court_is_here } } }
+			5802 = { PREV = { remove_country_modifier = L22_court_in_zitan_tomon remove_country_modifier = L22_court_recently_migrated mokatanga_area = { remove_province_modifier = L22_court_is_here } } }
+			5741 = { PREV = { remove_country_modifier = L22_court_in_woloso remove_country_modifier = L22_court_recently_migrated cikela_jigin_area = { remove_province_modifier = L22_court_is_here } } }
+			5779 = { PREV = { remove_country_modifier = L22_court_in_jiridese_so remove_country_modifier = L22_court_recently_migrated janfanciso_area = { remove_province_modifier = L22_court_is_here } } }
+			5745 = { PREV = { remove_country_modifier = L22_court_in_sinjetaso remove_country_modifier = L22_court_recently_migrated kaino_binni_area = { remove_province_modifier = L22_court_is_here } } }
+			5724 = { PREV = { remove_country_modifier = L22_court_in_izini remove_country_modifier = L22_court_recently_migrated negetu_area = { remove_province_modifier = L22_court_is_here } } }
+			5710 = { PREV = { remove_country_modifier = L22_court_in_kunolo remove_country_modifier = L22_court_recently_migrated kunolo_area = { remove_province_modifier = L22_court_is_here } } }
+			5680 = { PREV = { remove_country_modifier = L22_court_in_jagab_faru remove_country_modifier = L22_court_recently_migrated jagab_faru_area = { remove_province_modifier = L22_court_is_here } } }
+		}
+	}
+}
