@@ -11299,3 +11299,54 @@ country_event = {
 	}
 	option = {}
 }
+
+#DEATHWINDS PROJECT
+
+namespace = magic_project_deathwinds_kheion_and_kaydhano
+
+country_event = { 
+	id = magic_project_deathwinds_kheion_and_kaydhano.0
+	title = none
+	desc = none
+	picture = none
+
+	is_triggered_only = yes
+	hidden = yes
+	
+	immediate = {
+		if = {
+			limit = { has_country_flag = magic_project_completed_flag }
+				if = {
+					limit = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 3 } }
+					country_event = { id = kheionai.58 }
+				}
+				else_if = {
+					limit = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 2 } }
+					country_event = { id = kheionai.55 }
+				}
+				else_if = {
+					limit = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } }
+					country_event = { id = kheionai.52 }
+				}
+		}
+		else_if = {
+			limit = { check_variable = { current_experience_percent = 50 } NOT = { has_country_flag = magic_project_first_event_happened } }
+			set_country_flag = magic_project_first_event_happened
+			if = { 
+				limit = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 2 } }
+				country_event = { id = kheionai.57 }
+			}
+			else_if = { 
+				limit = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } }
+				country_event = { id = kheionai.54 }
+			}
+			else_if = {
+				limit = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 0 } }
+				country_event = { id = kheionai.51 }
+			}
+		}
+	}
+	option = {
+		name = none
+	}
+}

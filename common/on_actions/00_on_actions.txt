@@ -231,6 +231,7 @@ on_startup = {
 		merfolk_events.8
 
 		kheionism.1 #Kheionist Variables
+		kheionai.7 #Deathwinds Intro Event
 		
 		#Eordand setup
 		eordellon.5
@@ -8371,6 +8372,12 @@ on_monthly_pulse = {
 
 	ensure_positive_faction_influence = yes
 	
+	if = { #Deathwinds Handler Event & increment deathwinds progress by 1 month
+		limit = { owns = 2728 } #Arpedifer
+		2728 = { province_event = { id = kheionai.1 } } #Deathwinds Handler Event
+		update_deathwinds_bar = yes
+	}
+	
 	#crusade triggered mod replacement
 	if = { limit = { is_religion_enabled = ravelian }
 		if = {
@@ -9686,6 +9693,81 @@ on_yearly_pulse = {
 			is_at_war = no
 		}
 		yenbenmirra_ritual_burning_ai_effect = yes
+	}
+
+	if = { #Deathwinds - AI Upgrade Bypass
+		limit = {
+			#Technically this can cause the ai to get stuck with the modifiers if they lose the system but that's not possible atm so if anyone does that watch out for this
+			has_full_deathwinds_system = yes
+			any_owned_province = { region = alecand_region }
+			ai = yes
+		}
+		if = { #Kill the modifiers if the ai cant afford them anymore so they dont debt-spiral
+			limit = {
+				OR = {
+					has_country_modifier = ai_warding_cost_3
+					has_country_modifier = ai_warding_cost_2
+					has_country_modifier = ai_warding_cost_1
+				}
+				NOT = { treasury = 100 }
+				NOT = { monthly_income = 0 }
+			}
+			remove_country_modifier = ai_warding_cost_3
+			remove_country_modifier = ai_warding_cost_2
+			remove_country_modifier = ai_warding_cost_1
+		}
+		else_if = { #Upgrade the Windwards if they can afford it. Slowly tho so they don't upgrade them too fast
+			limit = { NOT = { num_of_loans = 1 } }
+			if = {
+				limit = {
+					is_year = 1600
+					treasury = 10000
+				}
+				random = {
+					chance = 50
+
+					add_treasury = -2500
+					upgrade_windward_ai = yes
+					add_country_modifier = { #Lose 2500 cash
+						name =  ai_warding_cost_3
+						duration = 1460 #4 years
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					is_year = 1500
+					NOT = { is_year = 1600 }
+					treasury = 2500
+				}
+				random = {
+					chance = 50
+
+					add_treasury = -1000
+					upgrade_windward_ai = yes
+					add_country_modifier = { #Lose 1000 cash
+						name =  ai_warding_cost_2
+						duration = 1460 #4 years
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					NOT = { is_year = 1500 }
+					treasury = 500
+				}
+				random = {
+					chance = 25
+
+					add_treasury = -100
+					upgrade_windward_ai = yes
+					add_country_modifier = { #Lose 100 cash
+						name =  ai_warding_cost_1
+						duration = 1460 #4 years
+					}
+				}
+			}
+		}	
 	}
 }
 
@@ -16738,6 +16820,7 @@ on_province_owner_change = {
 		gerudia.35 #taric and cagodic culture stuff
 		flavour_zokka.9998 #zokka stop slave states leaving spine
 		flavour_eoa_reforms.12 #eoa temple rights
+		kheionai.8 #Deathwinds Intro Event
 	}
 	# This maintenance for the hinuilands secrets is here, so that anything that engages with it in this on_action
 	# Can still rely on the assumption that this flag is present in provinces with hinuiland secrets
