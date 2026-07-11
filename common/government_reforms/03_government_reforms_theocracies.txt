@@ -3451,6 +3451,104 @@ cloistered_doctrines_reform = {
 	}
 }
 
+paragons_of_reverence_reform = {
+	icon = "kingdom_of_god"
+	potential = {
+		religion = regent_court
+		OR = {
+			is_or_was_tag = { tag = A10 }
+			is_or_was_tag = { tag = A41 }
+			is_or_was_tag = { tag = A43 }
+			is_or_was_tag = { tag = A53 }
+			is_or_was_tag = { tag = B92 }
+		}
+	}
+	trigger = {
+		if = {
+			limit = { is_or_was_tag = { tag = A10 } }
+			capital = 97
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A41 } }
+			capital = 4
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A43 } }
+			capital = 265
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A53 } }
+			capital = 249
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = B92 } }
+			capital = 266
+		}
+	}
+	modifiers = {
+		devotion = 1
+		church_influence_modifier = 0.1
+	}
+	effect = {
+		capital_scope = {
+			add_province_modifier = {
+				name = gov_paragons_of_reverence
+				duration = -1
+			}
+		}
+		custom_tooltip = paragons_of_reverence_gods_tt
+		hidden_effect = {
+			if = {
+				limit = { is_or_was_tag = { tag = A10 } }
+				set_country_flag = upgraded_minara
+			}
+			if = {
+				limit = { is_or_was_tag = { tag = A41 } }
+				set_country_flag = upgraded_the_dame
+			}
+			if = {
+				limit = { is_or_was_tag = { tag = A43 } }
+				set_country_flag = upgraded_ryala
+			}
+			if = {
+				limit = { is_or_was_tag = { tag = A53 } }
+				set_country_flag = upgraded_ara
+			}
+			if = {
+				limit = { is_or_was_tag = { tag = B92 } }
+				set_country_flag = upgraded_esmaryal
+			}
+		}
+	}
+	removed_effect = {
+		if = {
+			limit = { is_or_was_tag = { tag = A10 } }
+			clr_country_flag = upgraded_minara
+			97 = { remove_province_modifier = gov_paragons_of_reverence }
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A41 } }
+			clr_country_flag = upgraded_the_dame
+			4 = { remove_province_modifier = gov_paragons_of_reverence }
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A43 } }
+			clr_country_flag = upgraded_ryala
+			265 = { remove_province_modifier = gov_paragons_of_reverence }
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A53 } }
+			clr_country_flag = upgraded_ara
+			249 = { remove_province_modifier = gov_paragons_of_reverence }
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = B92 } }
+			clr_country_flag = upgraded_esmaryal
+			266 = { remove_province_modifier = gov_paragons_of_reverence }
+		}
+	}
+}
+
 #Secularization
 
 maintain_religious_head_reform = {
