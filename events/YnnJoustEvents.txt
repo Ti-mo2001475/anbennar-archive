@@ -55,16 +55,19 @@ country_event = {
 	picture = TOURNAMENT_eventPicture
 
 	is_triggered_only = yes
-
-	option = {
-		name = ynn_joust_events.1.a
-		if = {
-			limit = { has_ruler_flag = G26_partaking_joust }
-			set_country_flag = G26_joust_participant_flag # This is for their monarch dying
-			event_target:ynn_joust_opponent_1 = {
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = { has_ruler_flag = G26_partaking_joust }
 				set_country_flag = G26_joust_participant_flag # This is for their monarch dying
+				event_target:ynn_joust_opponent_1 = {
+					set_country_flag = G26_joust_participant_flag # This is for their monarch dying
+				}
 			}
 		}
+	}
+	option = {
+		name = ynn_joust_events.1.a
 		ai_chance = {
 			factor = 1
 		}
