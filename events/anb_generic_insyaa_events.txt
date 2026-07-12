@@ -269,6 +269,7 @@ province_event = { # Golodh, A Meeting
 	option = {
 		name = insyaa_flavour.11.a
 		ai_chance = { factor = 0 }
+		trigger = { owner = { is_mechanim_tribe = yes } }
 		remove_province_modifier = golodh_wandering
 		owner = {
 			random_list = {
@@ -285,11 +286,13 @@ province_event = { # Golodh, A Meeting
 	option = {
 		name = insyaa_flavour.11.b
 		ai_chance = { factor = 75 }
+		trigger = { owner = { is_mechanim_tribe = yes } }
 		golodh_wanders = yes
 	}
 	option = {
 		name = insyaa_flavour.11.c
 		ai_chance = { factor = 25 }
+		trigger = { owner = { is_mechanim_tribe = yes } }
 		golodh_wanders = yes
 		owner = {
 			add_manpower = -5
@@ -299,6 +302,7 @@ province_event = { # Golodh, A Meeting
 	}
 	option = {	# Let you speed this up if you're ready for your formable
 		name = insyaa_flavour.11.dd
+		trigger = { owner = { is_mechanim_tribe = yes } }
 		highlight = yes
 		trigger = {
 			custom_trigger_tooltip = {
@@ -317,6 +321,17 @@ province_event = { # Golodh, A Meeting
 				id = insyaa_flavour.12
 				days = 90
 			}
+		}
+	}
+	option = {
+		name = insyaa_flavour.11.e
+		ai_chance = { factor = 0 }
+		trigger = { NOT = { owner = { is_mechanim_tribe = yes } } }
+		highlight = yes
+		remove_province_modifier = golodh_wandering
+		owner = { 
+			add_stability_or_adm_power = yes
+			add_mil_power = -50
 		}
 	}
 }
@@ -3222,6 +3237,10 @@ country_event = { #Switching Head
 			limit = { has_country_flag = switching_to_artifice_invention_head_adm_oversight }
 			set_estate_privilege = artifice_invention_head_adm_oversight
 		}
+		else_if = {
+			limit = { has_country_flag = switching_to_artifice_invention_head_special }
+			set_special_head = yes
+		}
 	}
 	after = {
 		hidden_effect = {
@@ -3229,6 +3248,7 @@ country_event = { #Switching Head
 			clr_country_flag = switching_to_artifice_invention_head_war_craved
 			clr_country_flag = switching_to_artifice_invention_head_human_like
 			clr_country_flag = switching_to_artifice_invention_head_adm_oversight
+			clr_country_flag = switching_to_artifice_invention_head_special
 			clr_country_flag = mechanim_waiting_for_head_event
 		}
 	}
@@ -3257,6 +3277,10 @@ country_event = { #Switching Torso
 			limit = { has_country_flag = switching_to_artifice_invention_torso_war_machine }
 			set_estate_privilege = artifice_invention_torso_war_machine
 		}
+		else_if = {
+			limit = { has_country_flag = switching_to_artifice_invention_torso_special }
+			set_special_torso = yes
+		}
 	}
 	after = {
 		hidden_effect = {
@@ -3264,6 +3288,7 @@ country_event = { #Switching Torso
 			clr_country_flag = switching_to_artifice_invention_torso_war_craved
 			clr_country_flag = switching_to_artifice_invention_torso_container_part
 			clr_country_flag = switching_to_artifice_invention_torso_war_machine
+			clr_country_flag = switching_to_artifice_invention_torso_special
 			clr_country_flag = mechanim_waiting_for_torso_event
 		}
 	}
@@ -3292,6 +3317,10 @@ country_event = { #Switching Chassis
 			limit = { has_country_flag = switching_to_artifice_invention_chassis_soarer_struts }
 			set_estate_privilege = artifice_invention_chassis_soarer_struts
 		}
+		else_if = {
+			limit = { has_country_flag = switching_to_artifice_invention_chassis_special }
+			set_special_chassis = yes
+		}
 	}
 	after = {
 		hidden_effect = {
@@ -3299,6 +3328,7 @@ country_event = { #Switching Chassis
 			clr_country_flag = switching_to_artifice_invention_chassis_light
 			clr_country_flag = switching_to_artifice_invention_chassis_waterproof
 			clr_country_flag = switching_to_artifice_invention_chassis_soarer_struts
+			clr_country_flag = switching_to_artifice_invention_chassis_special
 			clr_country_flag = mechanim_waiting_for_chassis_event
 		}
 	}
@@ -3327,6 +3357,10 @@ country_event = { #Switching Arms
 			limit = { has_country_flag = switching_to_artifice_invention_arms_sonic_firearm }
 			set_estate_privilege = artifice_invention_arms_sonic_firearm
 		}
+		else_if = {
+			limit = { has_country_flag = switching_to_artifice_invention_arms_special }
+			set_special_arms = yes
+		}
 	}
 	after = {
 		hidden_effect = {
@@ -3334,6 +3368,7 @@ country_event = { #Switching Arms
 			clr_country_flag = switching_to_artifice_invention_arms_stabilizer
 			clr_country_flag = switching_to_artifice_invention_arms_construction
 			clr_country_flag = switching_to_artifice_invention_arms_sonic_firearm
+			clr_country_flag = switching_to_artifice_invention_arms_special
 			clr_country_flag = mechanim_waiting_for_arms_event
 		}
 	}
@@ -3362,6 +3397,10 @@ country_event = { #Switching Legs
 			limit = { has_country_flag = switching_to_artifice_invention_legs_trailblazer }
 			set_estate_privilege = artifice_invention_legs_trailblazer
 		}
+		else_if = {
+			limit = { has_country_flag = switching_to_artifice_invention_legs_special }
+			set_special_legs = yes
+		}
 	}
 	after = {
 		hidden_effect = {
@@ -3369,6 +3408,7 @@ country_event = { #Switching Legs
 			clr_country_flag = switching_to_artifice_invention_legs_bipedal
 			clr_country_flag = switching_to_artifice_invention_legs_octipedal
 			clr_country_flag = switching_to_artifice_invention_legs_trailblazer
+			clr_country_flag = switching_to_artifice_invention_legs_special
 			clr_country_flag = mechanim_waiting_for_legs_event
 		}
 	}
@@ -3570,19 +3610,17 @@ country_event = { #Random dev
 
 	option = {
 		name = insyaa_flavour.1000.a
-		every_owned_province = {
+		while = {
 			limit = {
-				has_province_flag = foundationism_shepherds_flag_for_ptm
+				check_variable = { which = FoundationismShepherdsDev value = 1 }
 			}
-			clr_province_flag = foundationism_shepherds_flag_for_ptm
-			owner = {
-				random_owned_province = {
-					limit = {
-						region = insyaan_mushroom_forest_region
-					}
-					add_random_development = 1
+			random_owned_province = {
+				limit = {
+					region = insyaan_mushroom_forest_region
 				}
+				add_random_development = 1
 			}
+			change_variable = { FoundationismShepherdsDev = -1 }
 		}
 	}
 }

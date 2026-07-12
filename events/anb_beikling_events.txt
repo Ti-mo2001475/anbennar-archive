@@ -61,6 +61,7 @@ country_event = { #Chinhu Independence
 		custom_tooltip = country_no_mt.tt
 		hidden_effect = {
 			V21 = {
+				ban_necromancy = { country = yes }
 				add_government_reform = leading_clergy_reform
 				create_unit_forcelimit_percentage = {
 					type = infantry 
@@ -149,6 +150,7 @@ country_event = { #Xiongxiap Independence
 		custom_tooltip = country_no_mt.tt
 		hidden_effect = {
 			Z61 = {
+				ban_necromancy = { country = yes }
 				add_government_reform = merchants_reform
 				create_unit_forcelimit_percentage = {
 					type = infantry 
@@ -223,6 +225,7 @@ country_event = { #Jianlin Independence
 		custom_tooltip = country_no_mt.tt
 		hidden_effect = {
 			V22 = {
+				ban_necromancy = { country = yes }
 				add_historical_friend = Y06
 				add_historical_friend = Y04
 				add_historical_friend = Y10
@@ -277,8 +280,12 @@ country_event = {
 		name = flavor_beiklings.4.a
 
 		change_tag = V23
+		custom_tooltip = beikling_aspects_buffed_TT
 		set_government_rank_scripted_effect = { rank = 2 }
-		hidden_effect = { restore_country_name = yes }
+		hidden_effect = {
+			restore_country_name = yes
+			set_country_flag = formed_end_game_tag_flag
+		}
 		if = {
 			limit = { has_custom_ideas = no }
 			country_event = { id = ideagroups.1 } #Swap Ideas
@@ -293,13 +300,8 @@ country_event = {
 		}
 
 		add_prestige = 25
-		yanshen_superregion = {
-			limit = {
-				NOT = { is_core = ROOT }
-				NOT = { country_or_non_sovereign_subject_holds = ROOT }
-			}
-			add_permanent_claim = ROOT
-		}
+		yanshen_superregion = { add_permanent_claim = ROOT }
+		beikling_homeland_provinces = { add_permanent_claim = ROOT }
 	}
 }
 
@@ -1773,6 +1775,45 @@ country_event = { #The Red Citadel Upgrade 3
 			add_base_tax = 1
 			add_base_production = 1
 			add_base_manpower = 1
+		}
+	}
+}
+
+country_event = { #Beikling Raided Us!
+	id = flavor_beiklings.500
+	title = flavor_beiklings.500.t
+	desc =  flavor_beiklings.500.d
+	picture = HORDE_ON_HORSEBACK_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_beiklings.500.a
+
+		custom_tooltip = beikling_raided_us_TT
+		FROM = {
+			reverse_add_opinion = {
+				modifier = beikling_raided_us
+				who = ROOT
+			}
+		}
+	}
+}
+
+country_event = { #Face your Fears
+	id = flavor_beiklings.501
+	title = flavor_beiklings.501.t
+	desc =  flavor_beiklings.501.d
+	picture = HORDE_ON_HORSEBACK_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_beiklings.501.a
+
+		hidden_effect = { remove_country_modifier = mask_enchantment_face_of_fear }
+		add_war_exhaustion = 5
+		add_country_modifier = {
+			name = mask_enchantment_face_of_fear
+			duration = 365
 		}
 	}
 }

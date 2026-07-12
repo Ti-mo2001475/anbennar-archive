@@ -1017,6 +1017,7 @@ wulin = {
 		locked_T1_reform = yes
 		anb_theocracy_unique_heir_election = yes
 		disables_estate_eunuchs_anb = yes
+		cannot_move_capital = yes
 	}
 
 	effect = {
@@ -1647,6 +1648,7 @@ magisterium_reform = {
 		is_magocracy = yes
 		locked_T1_reform = yes
 		anb_theocracy_unique_heir_election = yes
+		is_eligible_for_hre_emperor = yes
 	}
 
 	conditional = {
@@ -3446,6 +3448,104 @@ cloistered_doctrines_reform = {
 	modifiers = {
 		free_land_leader_pool = 1
 		army_tradition = 0.25
+	}
+}
+
+paragons_of_reverence_reform = {
+	icon = "kingdom_of_god"
+	potential = {
+		religion = regent_court
+		OR = {
+			is_or_was_tag = { tag = A10 }
+			is_or_was_tag = { tag = A41 }
+			is_or_was_tag = { tag = A43 }
+			is_or_was_tag = { tag = A53 }
+			is_or_was_tag = { tag = B92 }
+		}
+	}
+	trigger = {
+		if = {
+			limit = { is_or_was_tag = { tag = A10 } }
+			capital = 97
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A41 } }
+			capital = 4
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A43 } }
+			capital = 265
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A53 } }
+			capital = 249
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = B92 } }
+			capital = 266
+		}
+	}
+	modifiers = {
+		devotion = 1
+		church_influence_modifier = 0.1
+	}
+	effect = {
+		capital_scope = {
+			add_province_modifier = {
+				name = gov_paragons_of_reverence
+				duration = -1
+			}
+		}
+		custom_tooltip = paragons_of_reverence_gods_tt
+		hidden_effect = {
+			if = {
+				limit = { is_or_was_tag = { tag = A10 } }
+				set_country_flag = upgraded_minara
+			}
+			if = {
+				limit = { is_or_was_tag = { tag = A41 } }
+				set_country_flag = upgraded_the_dame
+			}
+			if = {
+				limit = { is_or_was_tag = { tag = A43 } }
+				set_country_flag = upgraded_ryala
+			}
+			if = {
+				limit = { is_or_was_tag = { tag = A53 } }
+				set_country_flag = upgraded_ara
+			}
+			if = {
+				limit = { is_or_was_tag = { tag = B92 } }
+				set_country_flag = upgraded_esmaryal
+			}
+		}
+	}
+	removed_effect = {
+		if = {
+			limit = { is_or_was_tag = { tag = A10 } }
+			clr_country_flag = upgraded_minara
+			97 = { remove_province_modifier = gov_paragons_of_reverence }
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A41 } }
+			clr_country_flag = upgraded_the_dame
+			4 = { remove_province_modifier = gov_paragons_of_reverence }
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A43 } }
+			clr_country_flag = upgraded_ryala
+			265 = { remove_province_modifier = gov_paragons_of_reverence }
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A53 } }
+			clr_country_flag = upgraded_ara
+			249 = { remove_province_modifier = gov_paragons_of_reverence }
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = B92 } }
+			clr_country_flag = upgraded_esmaryal
+			266 = { remove_province_modifier = gov_paragons_of_reverence }
+		}
 	}
 }
 
@@ -5349,11 +5449,11 @@ eagle_hobgoblins_searching_reform = {
 	icon = "ambush_tactics"
 	potential = {
 		culture = eagle_command
-		religion = eagle_worship
+		religion = banbe_anen
 	}
 	trigger = {
 		culture = eagle_command
-		religion = eagle_worship
+		religion = banbe_anen
 	}
 	allow_normal_conversion = yes
 	valid_for_nation_designer = yes
@@ -5377,7 +5477,7 @@ eagle_hobgoblins_rule_of_order_reform = {
 	icon = "religious_harmony_reform"
 	potential = {
 		culture = eagle_command
-		religion = eagle_worship
+		religion = banbe_anen
 		has_not_banned_magic_artificery = yes
 	}
 	valid_for_nation_designer = yes
@@ -6522,8 +6622,6 @@ the_vile_one_reform_initial = {
 	icon = "godhood"
 	allow_normal_conversion = no
 	lock_level_when_selected = yes
-	has_term_election = yes
-	duration = 1000
 	heir = no
 	queen = no
 	rulers_can_be_generals = yes
@@ -6539,7 +6637,8 @@ the_vile_one_reform_initial = {
 	custom_attributes = {
 		locked_government_type = yes
 		locked_T1_reform = yes
-		anb_special_elections = yes
+		foreign_slave_rulers = yes
+		immortal_rulers = yes #Currently not checked for anywhere, just for tooltip
 	}
 }
 
@@ -6547,8 +6646,6 @@ the_vile_one_reform = {
 	icon = "godhood"
 	allow_normal_conversion = no
 	lock_level_when_selected = yes
-	has_term_election = yes
-	duration = 1000
 	heir = no
 	queen = no
 	rulers_can_be_generals = yes
@@ -6568,7 +6665,8 @@ the_vile_one_reform = {
 		locked_government_type = yes
 		# better_long_lived = yes # currently immortal rulers can't get these
 		locked_T1_reform = yes
-		anb_special_elections = yes
+		foreign_slave_rulers = yes
+		immortal_rulers = yes #Currently not checked for anywhere, just for tooltip
 	}
 }
 
@@ -6576,8 +6674,6 @@ the_vile_one_reform_razing = {
 	icon = "godhood"
 	allow_normal_conversion = no
 	lock_level_when_selected = yes
-	has_term_election = yes
-	duration = 1000
 	heir = no
 	queen = no
 	rulers_can_be_generals = yes
@@ -6596,7 +6692,8 @@ the_vile_one_reform_razing = {
 		better_long_lived = yes
 		locked_T1_reform = yes
 		raze_province = yes
-		anb_special_elections = yes
+		foreign_slave_rulers = yes
+		immortal_rulers = yes #Currently not checked for anywhere, just for tooltip
 	}
 }
 
@@ -6769,6 +6866,7 @@ mangrove_theocracy = {
 		locked_government_type = yes
 		locked_T1_reform = yes
 		mangrove_republic = yes
+		cannot_move_capital = yes
 	}
 	effect = {
 		country_event = { id = mangrove.0 }
@@ -6871,6 +6969,7 @@ H83_dream_dominion_reform = {
 
 	modifiers = {
 		church_influence_modifier = 0.05
+		missionaries = 1
 	}
 
 	custom_attributes = {
@@ -7000,5 +7099,31 @@ mission_of_flamesong = {
 	custom_attributes = {
 		landslide_infantry_events = yes
 		volcanic_armoury_project = yes
+	}
+}
+
+#Eighard unique T1
+H14_followers_of_the_princess = {
+	icon = "clergyman" 
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	rulers_can_be_generals = yes
+	heirs_can_be_generals = yes
+	potential = {
+		has_country_flag = H14_followers_of_the_princess_flag
+	}
+	custom_attributes = {
+		anb_theocracy_unique_heir_election = yes
+		locked_T1_reform = yes
+		locked_government_type = yes
+	}
+	modifiers = {
+		native_assimilation = -1
+		church_power_modifier = 0.2
+		missionaries = 1
+		culture_conversion_cost = -0.15
+	}
+	effect = {
+		artifice_magic_switch_to_magic_only_mode = yes
 	}
 }

@@ -531,15 +531,7 @@ F27_column3 = {
 			country_event = {
 				id = flavour_ayarallen.7
 			}
-			kuz_mountains_area = {
-				add_permanent_claim = ROOT
-			}
-			imuluses_area = {
-				add_permanent_claim = ROOT
-			}
-			birsartenslib_area = {
-				add_permanent_claim = ROOT
-			}
+			custom_tooltip = F27_event_insight_vassal_tt
 		} 
 	}
 
@@ -573,7 +565,7 @@ F27_column3 = {
 				}
 			}
 			development_in_provinces = {
-				value = 290
+				value = 260
 				region = harpy_hills_region
 			}
 		} 
@@ -639,10 +631,11 @@ F27_column3 = {
 			}
 		} 
 
-		effect = {  
+		effect = {
 			country_event = {
 				id = flavour_ayarallen.9
 			}
+			custom_tooltip = F27_event_insight_vassal_tt
 		} 
 	}
 
@@ -764,6 +757,7 @@ F27_column3 = {
 		} 
 
 		trigger = {
+			is_at_war = no
 			NOT = {
 				any_subject_country = {
 					liberty_desire = 50
@@ -847,7 +841,10 @@ F27_column4 = {
 
 		trigger = {
 			prestige = 40
-			marriage_with = F22
+			OR = {
+				marriage_with = F22
+				F22 = { fast_ruler_is_harpy = yes }
+			}
 			F22 = {
 				NOT = {
 					liberty_desire = 50
@@ -950,6 +947,7 @@ F27_column4 = {
 			country_event = {
 				id = flavour_ayarallen.8
 			}
+			custom_tooltip = F27_event_insight_vassal_tt
 		} 
 	}
 

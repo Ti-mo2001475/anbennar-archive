@@ -642,44 +642,46 @@ B54_se_remove_manufactory_province_modifiers = {
 
 # Country scope
 B54_se_apply_lich_queen_modifiers = {
-	hidden_effect = {
-		remove_country_modifier = B54_rmod_lichqueen_of_escann_1
-		remove_country_modifier = B54_rmod_lichqueen_of_escann_2
-		remove_country_modifier = B54_rmod_lichqueen_of_escann_3
-		remove_country_modifier = B54_rmod_lichqueen_of_escann_4
-		remove_country_modifier = B54_rmod_lichqueen_of_escann_5
-		remove_country_modifier = B54_rmod_lichqueen_of_escann_6
-		remove_country_modifier = B54_rmod_lichqueen_of_escann_7
-		remove_country_modifier = B54_rmod_lichqueen_of_escann_8
-	}
-	if = { 
-		limit = { 
-			has_country_flag = esthil_varina_lich
-			mission_completed = B54_mission_black_empire_rising
+	if = { limit = { is_or_was_tag = { tag = B54 } }
+		hidden_effect = {
+			remove_country_modifier = B54_rmod_lichqueen_of_escann_1
+			remove_country_modifier = B54_rmod_lichqueen_of_escann_2
+			remove_country_modifier = B54_rmod_lichqueen_of_escann_3
+			remove_country_modifier = B54_rmod_lichqueen_of_escann_4
+			remove_country_modifier = B54_rmod_lichqueen_of_escann_5
+			remove_country_modifier = B54_rmod_lichqueen_of_escann_6
+			remove_country_modifier = B54_rmod_lichqueen_of_escann_7
+			remove_country_modifier = B54_rmod_lichqueen_of_escann_8
 		}
-		if = { limit = { is_ruler_all_schools_level_3 = yes }
-			add_ruler_modifier = { name = B54_rmod_lichqueen_of_escann_8 duration = -1 }
-		}
-		else_if = { limit = { is_ruler_num_school_level_3 = { amount = 7 } }
-			add_ruler_modifier = { name = B54_rmod_lichqueen_of_escann_7 duration = -1 }
-		}
-		else_if = { limit = { is_ruler_num_school_level_3 = { amount = 6 } }
-			add_ruler_modifier = { name = B54_rmod_lichqueen_of_escann_6 duration = -1 }
-		}
-		else_if = { limit = { is_ruler_num_school_level_3 = { amount = 5 } }
-			add_ruler_modifier = { name = B54_rmod_lichqueen_of_escann_5 duration = -1 }
-		}
-		else_if = { limit = { is_ruler_num_school_level_3 = { amount = 4 } }
-			add_ruler_modifier = { name = B54_rmod_lichqueen_of_escann_4 duration = -1 }
-		}
-		else_if = { limit = { is_ruler_num_school_level_3 = { amount = 3 } }
-			add_ruler_modifier = { name = B54_rmod_lichqueen_of_escann_3 duration = -1 }
-		}
-		else_if = { limit = { is_ruler_num_school_level_3 = { amount = 2 } }
-			add_ruler_modifier = { name = B54_rmod_lichqueen_of_escann_2 duration = -1 }
-		}
-		else = {
-			add_ruler_modifier = { name = B54_rmod_lichqueen_of_escann_1 duration = -1 }
+		if = {
+			limit = { 
+				has_country_flag = esthil_varina_lich
+				has_country_flag = completed_B54_black_empire_rising
+			}
+			if = { limit = { is_ruler_all_schools_level_3 = yes }
+				add_ruler_modifier = { name = B54_rmod_lichqueen_of_escann_8 duration = -1 }
+			}
+			else_if = { limit = { is_ruler_num_school_level_3 = { amount = 7 } }
+				add_ruler_modifier = { name = B54_rmod_lichqueen_of_escann_7 duration = -1 }
+			}
+			else_if = { limit = { is_ruler_num_school_level_3 = { amount = 6 } }
+				add_ruler_modifier = { name = B54_rmod_lichqueen_of_escann_6 duration = -1 }
+			}
+			else_if = { limit = { is_ruler_num_school_level_3 = { amount = 5 } }
+				add_ruler_modifier = { name = B54_rmod_lichqueen_of_escann_5 duration = -1 }
+			}
+			else_if = { limit = { is_ruler_num_school_level_3 = { amount = 4 } }
+				add_ruler_modifier = { name = B54_rmod_lichqueen_of_escann_4 duration = -1 }
+			}
+			else_if = { limit = { is_ruler_num_school_level_3 = { amount = 3 } }
+				add_ruler_modifier = { name = B54_rmod_lichqueen_of_escann_3 duration = -1 }
+			}
+			else_if = { limit = { is_ruler_num_school_level_3 = { amount = 2 } }
+				add_ruler_modifier = { name = B54_rmod_lichqueen_of_escann_2 duration = -1 }
+			}
+			else = {
+				add_ruler_modifier = { name = B54_rmod_lichqueen_of_escann_1 duration = -1 }
+			}
 		}
 	}
 }

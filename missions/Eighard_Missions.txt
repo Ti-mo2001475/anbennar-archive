@@ -532,8 +532,14 @@ H14_missions_slot_3 = {
 					add_permanent_claim = ROOT
 				}
 			}
-			country_event = { #An Offer Most Frigid
+			if = {
+				limit = { exists = H16 }
+				country_event = { #An Offer Most Frigid
 				id = flavour_eighard.3
+				}
+			}
+			else = {
+				change_mana = { amount = 50 }
 			}
 		}
 	}
@@ -782,16 +788,7 @@ H14_missions_slot_4 = {
 						is_rival = ROOT
 						has_been_eclipsed_by = ROOT
 					}
-					OR = {
-						has_opinion_modifier = {
-							who = ROOT
-							modifier = insulted
-						}
-						has_opinion_modifier = {
-							who = ROOT
-							modifier = scornfully_insulted
-						}
-					}
+					has_been_insulted_by_root = yes
 				}
 			}
 			army_size_percentage = 0.9
@@ -894,6 +891,7 @@ H14_missions_slot_4 = {
 				num_of_units_in_province = {
 					amount = 5
 					who = ROOT
+					type = infantry
 				}
 				religion = autumn_court
 				OR = {
@@ -910,6 +908,7 @@ H14_missions_slot_4 = {
 				kill_units = {
 					who = ROOT
 					amount = 5
+					type = infantry
 				}
 				if = { #Gotta do this otherwise if your subject owns Marathmas it gives it to them 
 					limit = { owned_by = ROOT }
@@ -1367,9 +1366,37 @@ H14_missions_accepted_1 = {
 						}
 					}
 				}
-				province_id = 1770 #Aerin
-				has_great_project = {
-					type = gathgob_lighthouse
+				AND = {
+					province_id = 1770 #Aerin
+					NOT = {
+						AND = {
+							country_or_non_sovereign_subject_holds = ROOT
+							has_dock_building_trigger = yes
+							has_shipyard_building_trigger = yes
+							if = {
+								limit = {
+									ROOT = {
+										has_dlc = "Dharma"
+									}
+								}
+								province_has_center_of_trade_of_level = 2
+							}
+							else = {
+								development = 10
+							}
+						}
+					}
+				}
+				AND = {
+					has_great_project = {
+						type = gathgob_lighthouse
+					}
+					NOT = {
+						has_great_project = {
+							type = gathgob_lighthouse
+							tier = 2
+						}
+					}
 				}
 			}
 		}
@@ -2101,11 +2128,23 @@ H14_missions_accepted_3 = {
 				}
 			}
 			army_size = 40
-			OR = {
-				army_professionalism = 0.2
-				AND = {
-					army_professionalism = 0.1
-					mil_power = 100
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				OR = {
+					army_professionalism = 0.2
+					AND = {
+						army_professionalism = 0.1
+						mil_power = 100
+					}
+				}
+			}
+			else = {
+				OR = {
+					army_tradition = 60
+					AND = {
+						army_tradition = 50
+						mil_power = 100
+					}
 				}
 			}
 			eord_peitar_stronghold_group = {
@@ -2115,12 +2154,17 @@ H14_missions_accepted_3 = {
 		}
 		effect = {
 			if = {
-				limit = {
-					NOT = {
-						army_professionalism = 0.2
-					}
+				limit = { has_dlc = "Cradle of Civilization" }
+				if = {
+					limit = { NOT = { army_professionalism = 0.2 } }
+					add_mil_power = -100
 				}
-				add_mil_power = -100
+			}
+			else = {
+				if = {
+					limit = { NOT = { army_tradition = 60 } }
+					add_mil_power = -100
+				}
 			}
 			country_event = { #Iaochri
 				id = flavour_eighard.15
@@ -2307,6 +2351,9 @@ H14_missions_accepted_3 = {
 				province_id = 1191 #Svemel
 				province_id = 1139 #Arverynn
 				province_id = 1171 #Vareynn
+			}
+			NOT = {
+				H14_breathing_in_trigger = yes
 			}
 		}
 		position = 14
@@ -2603,6 +2650,7 @@ H14_missions_accepted_4 = {
 					superregion = eordand_superregion
 					NOT = {
 						is_empty = yes
+						is_island = yes
 						country_or_non_sovereign_subject_holds = ROOT
 					}
 				}
@@ -2640,6 +2688,7 @@ H14_missions_accepted_4 = {
 				type = all
 				OR = {
 					is_empty = yes
+					is_island = yes
 					country_or_non_sovereign_subject_holds = ROOT
 				}
 				OR = {
@@ -3328,24 +3377,48 @@ H14_final_mission = {
 				is_at_war = yes
 			}
 			at_least_magic_project_level = { project = magical_fortress level = 3 }
-			all_states = {
-				OR = {
-					AND = {
-						has_state_edict = warmth_rites_edict
-						is_prosperous = yes
-					}
-					AND = {
+			calc_true_if = {
+				amount = 12
+				all_states = {
+					has_state_edict = warmth_rites_edict
+				}
+			}
+			OR = {
+				all_states = {
+					OR = {
+						AND = {
+							has_state_edict = warmth_rites_edict
+							is_prosperous = yes
+						}
 						NOT = {
 							has_state_edict = warmth_rites_edict
 						}
-						ROOT = {
-							has_mana = { amount = 25 }
-						}
 					}
+				}
+				ROOT = {
+					has_mana = { amount = 200 }
 				}
 			}
 		}
 		effect = {
+			if = {
+				limit = { 
+					NOT = {
+						all_states = {
+							OR = {
+								AND = {
+									has_state_edict = warmth_rites_edict
+									is_prosperous = yes
+								}
+								NOT = {
+									has_state_edict = warmth_rites_edict
+								}
+							}
+						}
+					}
+				}
+				change_mana = { amount = -200 }
+			}
 			country_event = { #Somni
 				id = flavour_eighard.22
 			}

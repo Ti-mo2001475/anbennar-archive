@@ -65,7 +65,8 @@ country_decisions = {
 			custom_tooltip = unite_the_federation_tooltip
 			hidden_effect = {
 				change_tag = J33
-				hidden_effect = { restore_country_name = yes }
+				restore_country_name = yes
+				set_country_flag = formed_end_game_tag_flag
 				remove_country_modifier = lake_federation_member
 				random_known_country = {
 					limit = { 
@@ -151,10 +152,6 @@ country_decisions = {
 				ai = yes
 				AND = {
 					NOT = { tag = I57 } #Golden Tremor
-					OR = {
-						NOT = { tag = I55 } #Black Herd
-						has_country_flag = I55_enable_formables_flag
-					}
 					NOT = { tag = I69 } #Star Rider
 					NOT = { tag = I80 } #Great Storm
 				}
@@ -313,7 +310,10 @@ country_decisions = {
 		}
 		effect = {
 			change_tag = J54
-			hidden_effect = { restore_country_name = yes }
+			hidden_effect = {
+				restore_country_name = yes
+				set_country_flag = formed_end_game_tag_flag
+			}
 			#swap_non_generic_missions = yes
 			remove_non_electors_emperors_from_empire_effect = yes
 			J54 = { decrease_monstrous_10 = yes }
@@ -345,15 +345,6 @@ country_decisions = {
 				name = "centralization_modifier"
 				duration = 7300
 			}
-			if = {
-				limit = { has_country_modifier = subjugated_horde }
-				remove_country_modifier = subjugated_horde
-			}
-			if = {
-				limit = { has_country_modifier = settled_horde }
-				remove_country_modifier = settled_horde
-			}
-			
 			country_event = { id = ideagroups.1 } #idea swap
 			
 		}
@@ -492,10 +483,6 @@ country_decisions = {
 				ai = yes
 				AND = {
 					NOT = { tag = I57 } #Golden Tremor
-					OR = {
-						NOT = { tag = I55 } #Black Herd
-						has_country_flag = I55_enable_formables_flag
-					}
 				}
 			}
 		}
@@ -568,7 +555,10 @@ country_decisions = {
 		}
 		effect = {
 			change_tag = J56
-			hidden_effect = { restore_country_name = yes }
+			hidden_effect = {
+				restore_country_name = yes
+				set_country_flag = formed_end_game_tag_flag
+			}
 			#swap_non_generic_missions = yes
 			remove_non_electors_emperors_from_empire_effect = yes
 			khaashalg_region = {
@@ -599,15 +589,6 @@ country_decisions = {
 				name = "centralization_modifier"
 				duration = 7300
 			}
-			if = {
-				limit = { has_country_modifier = subjugated_horde }
-				remove_country_modifier = subjugated_horde
-			}
-			if = {
-				limit = { has_country_modifier = settled_horde }
-				remove_country_modifier = settled_horde
-			}
-			
 			country_event = { id = ideagroups.1 } #Swap Ideas
 		
 		}

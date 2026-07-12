@@ -227,7 +227,7 @@ hytiranyalen_1 = {
 					U15 = {
 						NOT = { num_of_cities = 25 }
 						if = {
-							limit = { has_dlc = "Leviathan" }
+							limit = { NOT = { has_dlc = "Leviathan" } }
 							has_opinion = {
 								who = ROOT
 								value = 200
@@ -388,8 +388,11 @@ hytiranyalen_2 = {
 				}
 			}
 			else = {
-				536 = {
-					owner = { is_neighbor_of = ROOT }
+				OR = {
+					536 = {
+						owner = { is_neighbor_of = ROOT }
+					}
+					owns = 536
 				}
 			}
 		} 
@@ -586,6 +589,13 @@ hytiranyalen_2 = {
 				add_province_modifier = {
 					name = hyti_vigilance
 					duration = -1
+				}
+			}
+			custom_tooltip = hyti_bulwar_claim_tt
+			hidden_effect = {
+				bulwar_proper_region = {
+					limit = { area_for_scope_province = { is_neighbor_of = ROOT } }
+					add_claim = ROOT
 				}
 			}
 		} 
@@ -902,7 +912,7 @@ hytiranyalen_3 = {
 	}
 
 	F81_wipeout = {
-		icon = qng_ten_grand_campaigns
+		icon = mission_harpy_fusilier
 		position = 2
 		required_missions = { F81_reignite_the_rivalry } 
 		provinces_to_highlight = {
@@ -1106,6 +1116,7 @@ hytiranyalen_3 = {
 
 		trigger = {
 			2942 = {
+				owned_by = ROOT
 				has_trade_building_trigger = yes
 				has_manufactory_trigger = yes
 				any_neighbor_province = {
@@ -1266,6 +1277,10 @@ hytiranyalen_3 = {
 				}
 			}
 			custom_tooltip = hyti_base_trains_tt
+			if = {
+				limit = { NOT = { adm_tech = 12 } }
+				custom_tooltip = hyti_base_trains_notech_tt
+			}
 		} 
 	}
 
@@ -1379,7 +1394,13 @@ hytiranyalen_4 = {
 		effect = {
 			if = {
 				limit = { F88 = { exists = no } }
-				655 = { owner = { release = F88 } }				
+				if = {
+					limit = { owns = 655 }
+					release = F88
+				}
+				else = {
+					655 = { owner = { change_tag = F88 } }
+				}
 			}
 			if = {
 				limit = { F88 = { is_subject = no } }
@@ -1746,7 +1767,13 @@ hytiranyalen_5 = {
 				tooltip = hyti_court_tt
 				num_of_different_cultures_in_court = 3
 			}
-			harpy_sought_clarity = yes
+			if = {
+				limit = { religion = the_hunt }
+				harpy_sought_clarity = yes
+			}
+			else = {
+				is_ahead_of_time_in_any_technology = yes
+			}
 		} 
 
 		effect = {
@@ -1962,6 +1989,7 @@ hytiranyalen_5 = {
 					}
 				}
 			}
+			6761 = { harpy_roost_se_add_roost_tier_1_free = yes }
 			if = {
 				limit = { NOT = { spymaster = 3 } }
 				add_dip_power = -200

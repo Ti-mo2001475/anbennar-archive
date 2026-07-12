@@ -76,7 +76,10 @@ groundhawk_1 = {
 					who = B31
 					value = 3.00
 				}
-				alliance_with = B31
+				OR = {
+					alliance_with = B31
+					B31 = { is_subject_of = ROOT }
+				}
 				B31 = {
 					has_opinion = {
 						who = ROOT
@@ -101,7 +104,10 @@ groundhawk_1 = {
 					who = B33
 					value = 3.00
 				}
-				alliance_with = B33
+				OR = {
+					alliance_with = B33
+					B33 = { is_subject_of = ROOT }
+				}
 				B33 = {
 					has_opinion = {
 						who = ROOT
@@ -122,7 +128,10 @@ groundhawk_1 = {
 					who = B02
 					value = 3.00
 				}
-				alliance_with = B02 
+				OR = {
+					alliance_with = B02
+					B02 = { is_subject_of = ROOT }
+				}
 				B02 = {
 					has_opinion = {
 						who = ROOT
@@ -514,7 +523,8 @@ groundhawk_2 = {
 				name = B42_civilised_goblins
 				duration = 9125
 			}
-			
+			hidden_effect = { western_cannor_superregion = { discover_country = ROOT } }
+			custom_tooltip = B42_discover_western_cannor_tt
 		}
 	}
 
@@ -1078,9 +1088,8 @@ groundhawk_1b = {
 		}
 		
 		effect = {
-			country_event = {
-				id = flavour_groundhawk.6
-			}
+			country_event = { id = flavour_groundhawk.6 }
+			custom_tooltip = flavour_groundhawk.6.insight
 		}
 	}
 	B42_goblins_in_need = {
@@ -1963,8 +1972,10 @@ groundhawk_2b = {
 			hidden_effect = {
 				escann_superregion = {
 					limit = {
-						has_terrain = woods
-						has_terrain = forest
+						OR = {
+							has_terrain = woods
+							has_terrain = forest
+						}
 					}
 					add_claim = ROOT
 				}			
@@ -2096,7 +2107,7 @@ groundhawk_3b = {
 					}				
 				}
 				custom_trigger_tooltip = {
-					tooltip = crimson_deluge_is_over
+					tooltip = B42_crimson_deluge_ended
 					always = yes
 				}
 			}
@@ -2204,16 +2215,19 @@ groundhawk_3b = {
 				limit = {
 					NOT = { has_global_flag = league_war_complete }
 				}
-				every_country = {
-					limit = {
-						in_league = corinite
+				hidden_effect = {
+					every_country = {
+						limit = {
+							in_league = corinite
+						}
+						medium_increase_of_goblin_tolerance_effect = yes
+						add_opinion = {
+							who = ROOT
+							modifier = B42_corinite_goblin
+						}
 					}
-					medium_increase_of_goblin_tolerance_effect = yes
-					add_opinion = {
-						who = ROOT
-						modifier = B42_corinite_goblin
-					}
-				}
+				}	
+				custom_tooltip = B42_throne_of_the_gods_tt
 				decrease_monstrous_2 = yes
 				add_country_modifier = {
 					name = B42_divine_warfare
@@ -2222,8 +2236,8 @@ groundhawk_3b = {
 			}
 		}
 		
-		
 	}
+
 	B42_the_walled_city = {
 		position = 10
 		icon = fortress_of_belgrade
@@ -3151,9 +3165,3 @@ groundhawk_5c = {
 		}
 	}
 }
-
-#TODO 
-#Corintar march event bug? Solved
-#Make Escanni diplomacy exception player-exclusive? Solved
-#Move Corintar missions down one step? Not sure, maybe should ask druplesnubb?
-#Prevent opinion loss from grazing? didn't notice negative impact in my run, maybe wait for feedback?
