@@ -4370,19 +4370,37 @@ improve_economy_azkare = { #Improve Haless's economy, protect the little man
 		trigger = {
 			4871 = { #Tianlou
 				owned_by = ROOT
-				has_building = cathedral
+				OR = {
+					has_building = cathedral
+					treasury = 500
+					AND = {
+						has_building = temple
+						treasury = 2500
+					}
+				}
+				infantry_in_province = 15
 				development = 60
 			}
-			treasury = 500
 		}
 		
 		effect = {
-			add_treasury = -500
+			custom_tooltip = azkare_worthy_tomb_tooltip
+			if = {
+				limit = { 4871 = { has_building = cathedral } }
+				add_treasury = -500
+			}
+			else = { add_treasury = -2500 }
 			4871 = {
 				add_province_modifier = {
 					name = azkare_modifier_jaerel_mausoleum
 					duration = -1
 				}
+				kill_units = {
+					who = owner
+					type = infantry
+					amount = 15
+				}
+				add_building = cathedral
 			}
 		}
 	}
