@@ -2662,29 +2662,46 @@ on_province_religion_changed_effect = { #Randomizer has fixed outcomes on this o
 		}
 		owner = { country_event = { id = rahen.13 } }
 	}
+	#dictate of understanding
 	if = {
 		limit = {
 			owner = { has_estate_privilege = estate_church_dictate_understanding }
-			has_province_flag = bulwar_evil_religion_xhazobkult
 		}
-		change_religion = kvangahga
-		clr_province_flag = bulwar_evil_religion_xhazobkult
-	}
-	if = {
-		limit = {
-			owner = { has_estate_privilege = estate_church_dictate_understanding }
-			has_province_flag = bulwar_evil_religion_devouring_path
+		if = {
+			limit = {
+				has_province_flag = bulwar_evil_religion_xhazobkult
+			}
+			change_religion = kvangahga
+			clr_province_flag = bulwar_evil_religion_xhazobkult
 		}
-		change_religion = accretive_path
-		clr_province_flag = bulwar_evil_religion_devouring_path
-	}
-	if = {
-		limit = {
-			owner = { has_estate_privilege = estate_church_dictate_understanding }
-			has_province_flag = bulwar_evil_religion_effelai
+		if = {
+			limit = {
+				has_province_flag = bulwar_evil_religion_devouring_path
+			}
+			change_religion = accretive_path
+			clr_province_flag = bulwar_evil_religion_devouring_path
 		}
-		change_religion = orwaii
-		clr_province_flag = bulwar_evil_religion_effelai
+		if = {
+			limit = {
+				has_province_flag = bulwar_evil_religion_effelai
+			}
+			change_religion = orwaii
+			clr_province_flag = bulwar_evil_religion_effelai
+		}
+		if = {
+			limit = {
+				has_province_flag = bulwar_evil_religion_shadow
+			}
+			change_religion = sky_domain
+			clr_province_flag = bulwar_evil_religion_shadow
+		}
+		if = {
+			limit = {
+				has_province_flag = bulwar_evil_religion_infernal
+			}
+			change_religion = regent_court
+			clr_province_flag = bulwar_evil_religion_infernal
+		}
 	}
 	#Command Post-Edict-of-X Laws of Ninun
 	if = {
@@ -15796,41 +15813,52 @@ on_province_owner_change_effect = {
 	}
 
 	cleanup_empty_province = yes
-
+	#dictate of understanding
 	if = {
 		limit = { 
 			owner = {
 				religion_group = bulwari
 			}
-			NOT = { superregion = bulwar_superregion } 
-			religion = xhazobkult
+			NOT = { superregion = bulwar_superregion }
 		}
-		set_province_flag = bulwar_evil_religion_xhazobkult
-	}
-	if = {
-		limit = { 
-			owner = {
-				religion_group = bulwari
+		if = {
+			limit = { 	
+				religion = xhazobkult
 			}
-			NOT = { superregion = bulwar_superregion } 
-			OR = { 
-				religion = tswohvwohii
-				religion = chahinanito
-				religion = song_servants
-				religion = leechfather
-			}
+			set_province_flag = bulwar_evil_religion_xhazobkult
 		}
-		set_province_flag = bulwar_evil_religion_effelai
-	}
-	if = {
-		limit = { 
-			owner = {
-				religion_group = bulwari
+		if = {
+			limit = {  
+				OR = { 
+					religion = tswohvwohii
+					religion = chahinanito
+					religion = song_servants
+					religion = leechfather
+				}
 			}
-			NOT = { superregion = bulwar_superregion } 
-			religion = devouring_path
+			set_province_flag = bulwar_evil_religion_effelai
 		}
-		set_province_flag = bulwar_evil_religion_devouring_path
+		if = {
+			limit = { 
+				religion = devouring_path
+			}
+			set_province_flag = bulwar_evil_religion_devouring_path
+		}
+		if = {
+			limit = { 
+				OR = { 
+					religion = shadow_pact
+					religion = night_coven
+				}
+			}
+			set_province_flag = bulwar_evil_religion_shadow
+		}
+		if = {
+			limit = { 
+				religion = infernal_court
+			}
+			set_province_flag = bulwar_evil_religion_infernal
+		}
 	}
 
 	# Mountainshark T4 Gov Reform
