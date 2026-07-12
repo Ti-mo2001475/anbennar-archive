@@ -145,7 +145,10 @@ F98_col_1 = {
 					owned_by = ROOT
 					NOT = {
 						AND = {
-							has_province_flag = anb_has_been_exploited_flag
+							if = {
+								limit = { has_dlc = "Cradle of Civilization" }
+								has_province_flag = anb_has_been_exploited_flag
+							}
 							num_of_units_in_province = {
 								amount = 1
 								type = infantry
@@ -535,13 +538,7 @@ F98_col_2 = {
 						AND = {
 							has_production_building_trigger = yes
 							has_manufactory_trigger = yes
-							OR = {
-								num_of_times_expanded_infrastructure = 1
-								AND = {
-									NOT = { has_dlc = "Leviathan" }
-									development = 15	
-								}
-							}
+							development = 15
 						}
 					}
 				}
@@ -556,13 +553,7 @@ F98_col_2 = {
 						AND = {
 							has_production_or_gold_building_trigger = yes
 							has_production_manufactory_or_gold_trigger = yes
-							OR = {
-								num_of_times_expanded_infrastructure = 1
-								AND = {
-									NOT = { has_dlc = "Leviathan" }
-									development = 15	
-								}
-							}
+							development = 15	
 						}
 					}
 				}
@@ -577,15 +568,7 @@ F98_col_2 = {
 					AND = {
 						has_production_building_trigger = yes
 						has_manufactory_trigger = yes
-						if = {
-							limit = {
-								has_dlc = "Leviathan"
-							}
-							num_of_times_expanded_infrastructure = 1
-						}
-						else = {
-							development = 15	
-						}
+						development = 15
 					}
 				}
 			}
@@ -600,15 +583,7 @@ F98_col_2 = {
 					AND = {
 						has_production_or_gold_building_trigger = yes
 						has_production_manufactory_or_gold_trigger = yes
-						if = {
-							limit = {
-								has_dlc = "Leviathan"
-							}
-							num_of_times_expanded_infrastructure = 1
-						}
-						else = {
-							development = 15	
-						}
+						development = 15
 					}
 				}
 			}
@@ -1505,13 +1480,15 @@ F98_col_3 = {
 			F98_godking_dragon
 		}
 		provinces_to_highlight = {
-			is_capital = yes 
+			is_capital = yes
+			has_discovered = ROOT
 			owner = {
 				OR = {
 					NOT = {
 						fast_owns_less_than_num_pops_of_race = { race = harpy amount = 1 } 
 						harpylen_encouraged_migration = yes
 						is_subject_of = ROOT
+						has_been_insulted_by_root = yes
 					}				
 					AND = {
 						is_great_power = yes
@@ -1542,10 +1519,8 @@ F98_col_3 = {
 			all_known_country = {
 				OR = {
 					fast_owns_less_than_num_pops_of_race = { race = harpy amount = 1 }
-					OR = {
-						harpylen_encouraged_migration = yes
-						has_been_insulted_by_root = yes
-					}
+					harpylen_encouraged_migration = yes
+					has_been_insulted_by_root = yes
 					is_subject_of = ROOT
 				}
 			}
@@ -1694,10 +1669,7 @@ F98_col_3 = {
 					NOT = { F98_st_country_or_non_sovereign_subject_holds = yes }
 				}
 				AND = {
-					OR = {
-						has_province_modifier = F98_t3_roost_yria
-						ROOT = { harpylen_t3_roost_at_max_capacity = yes }
-					}
+					has_province_modifier = F98_t3_roost_yria						
 					NOT = {
 						AND = {
 							development = 50
@@ -1811,11 +1783,7 @@ F98_col_4 = {
 				}
 			}
 			is_lacking_institutions = no
-			OR = {
-				is_ahead_of_time_in_technology = { tech = dip }
-				is_ahead_of_time_in_technology = { tech = adm }
-				is_ahead_of_time_in_technology = { tech = mil }
-			}
+			is_ahead_of_time_in_any_technology = yes
 			if = {
 				limit = { religion = the_hunt }
 				harpy_odd_hunt_trigger = yes
@@ -1980,7 +1948,11 @@ F98_col_4 = {
 							duration = -1
 						}
 					}
+					change_religion = irdaeos_worship
 				}
+			}
+			else = {
+				J54 = { change_religion = irdaeos_worship }
 			}
 			custom_tooltip = harpylen_divine_tt
 			hidden_effect = {

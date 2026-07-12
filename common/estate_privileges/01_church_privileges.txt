@@ -536,6 +536,8 @@ estate_church_clerical_ministers = {
 				NOT = { religion = rune_scribes }
 				NOT = { religion = gotiriei }
 				NOT = { religion = foundationism }
+				NOT = { religion = dunborgula }
+				NOT = { religion = mumambarra }
 			}
 			if = {
 				limit = {
@@ -544,6 +546,7 @@ estate_church_clerical_ministers = {
 				NOT = { religion = the_jadd }
 				NOT = { religion = weeping_mother }
 				NOT = { religion = ashentree_pact }
+				NOT = { religion = banbe_anen }
 				#NOT = { religion = reformed }
 			}
 			if = {
@@ -635,6 +638,8 @@ estate_church_clerical_ministers = {
 				religion = rune_scribes
 				religion = gotiriei
 				religion = foundationism
+				religion = dunborgula
+				religion = mumambarra
 			}
 		}
 		modifier = {
@@ -650,6 +655,7 @@ estate_church_clerical_ministers = {
 				religion = the_jadd
 				religion = weeping_mother
 				religion = ashentree_pact
+				religion = banbe_anen
 			}
 		}
 		modifier = {
@@ -3702,14 +3708,14 @@ estate_church_subsidized_cult_hunters = {
 	influence = 0.05
 	is_valid = {
 		religion_group = cannorian
-		NOT = { religion = infernal_court }
+		NOT = { 
+			religion = infernal_court 
+			has_country_flag = no_cult_hunters
+		}
 	}
 	can_select = {
 		religion_group = cannorian
-		NOT = {
-			religion = infernal_court
-			has_country_flag = no_cult_hunters
-		}
+		NOT = { religion = infernal_court }
 	}
 	on_granted = {
 		custom_tooltip = less_cult_events_tt
@@ -3773,7 +3779,7 @@ estate_church_monastic_schism = {
 					OR = {
 						religion_group = supreme_spirit
 						religion = sudomegi
-						religion = eagle_worship
+						religion = banbe_anen
 						religion = irdaeos_worship
 						religion = kalyin_worshippers
 						religion = neokttareum
@@ -3809,7 +3815,7 @@ estate_church_monastic_schism = {
 							owner = { has_country_flag = V05_syncretic_monastery_irdaeos }
 						}
 						AND = { 
-							religion = eagle_worship
+							religion = banbe_anen
 							owner = { has_country_flag = V05_syncretic_monastery_eagle }
 						}
 					}
@@ -5205,7 +5211,7 @@ estate_church_primacy_of_haruspicy = {
 		else_if = {
 			limit = { has_country_flag = shadow_warriors_haruspicy_2_1 }
 			set_country_flag = shadow_pact_no_cost_reroll
-			custom_tooltip = shadow_warriors_portent_tt
+			custom_tooltip = shadow_warriors_portent_tt_1
 			add_country_modifier = {
 				name = shadow_warriors_haruspicy_2_1
 				duration = -1
@@ -5842,5 +5848,64 @@ estate_church_H83_dreamforgery_4 = {
 	}
 	benefits = {
 		church_privilege_slots = 1
+	}
+}
+
+estate_church_caretaking_of_the_shirgriis = {
+	icon = estate_church_fund_madrasas
+	land_share = 5
+	max_absolutism = 0
+	influence = 0.20
+	loyalty = 0.10
+	is_valid = {
+		religion = devouring_path
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = shirgrii_owns_any_tt
+			any_owned_province = {
+				province_group = all_starting_shirgrii
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = shirgrii_caretaking_effect_tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = { province_group = all_starting_shirgrii }
+				if = {
+					limit { has_building = mage_tower }
+					add_province_modifier = {
+						name = shirgrii_maintenance_tower
+						duration = -1
+					}
+				}
+				else = {
+					add_province_modifier = {
+						name = shirgrii_maintenance_no_tower
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	can_revoke = {
+		always = yes
+	}
+	on_invalid_province  = {
+		remove_province_modifier = shirgrii_maintenance_tower
+		remove_province_modifier = shirgrii_maintenance_no_tower
+	}
+	on_revoked_province = {
+		remove_province_modifier = shirgrii_maintenance_tower
+		remove_province_modifier = shirgrii_maintenance_no_tower
+	}
+	penalties = {
+
+	}
+	benefits = {
+		relation_with_same_religion = 10
+		reverse_relation_with_same_religion = 10
+		same_religion_advisor_cost = -0.05
 	}
 }

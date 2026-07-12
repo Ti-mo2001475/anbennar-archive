@@ -2200,6 +2200,10 @@ cossacks_reform = {
 		enables_aristocratic_idea_group = no
 		disables_estate_mages = yes
 		disables_estate_eunuchs_anb = yes
+		disables_estate_adventurers = yes
+		enables_horde_idea_group = yes
+		disables_estate_nobles = yes
+		disables_estate_mages = yes
 	}
 	valid_for_nation_designer = yes
 	nation_designer_cost = 60
@@ -2218,12 +2222,7 @@ cossacks_reform = {
 		custom_attributes = {
 			enables_estate_cossacks = yes
 		}
-	}
-	custom_attributes = {
-		enables_horde_idea_group = yes
-		disables_estate_nobles = yes
-		disables_estate_mages = yes
-	}
+	} #Don't add a custom_attributes block below here, there's one just above.
 
 	duration = 4
 }
@@ -2627,6 +2626,7 @@ united_federation = {
 		anb_special_elections = yes
 		anb_special_seats = yes
 		locked_T1_reform = yes
+		cannot_move_capital = yes
 	}
 	duration = 4
 }
@@ -2893,6 +2893,9 @@ eternal_council = {
 		is_magocracy = yes   
 		anb_special_elections = yes
 		locked_T1_reform = yes
+		increased_mage_chance_ruler = yes
+		increased_mage_chance_consort = yes
+		increased_mage_chance_heir = yes
 	}
 	duration = 40
 	effect = {
@@ -5927,13 +5930,16 @@ war_against_the_world_doctrine_reform = {
 		}
 	}
 	trigger = {
-			NOT = { religion = xhazobkult }
-			NOT = { tag = G93 }
+		NOT = { religion = xhazobkult }
+		NOT = { tag = G93 }
 	}
 	modifiers = {
 		pr_buccaneers_influence = 0.1
 		years_of_nationalism = -5
 		global_ship_recruit_speed = -0.15
+	}
+	effect = {
+		ban_orcish_slavery_scripted_effect = yes
 	}
 	custom_attributes = {
 		gives_war_against_the_world_tooltip_dummy = yes
@@ -6710,10 +6716,10 @@ pirate_representation_reform = {
 			limit = { has_dlc = "Res Publica" }
 			NOT = { has_reform = elective_monarchy }
 		}
-		if = {
-			limit = { has_dlc = "Lions of the North" }
-			NOT = { has_reform = polish_elective_monarchy }
-		}
+		# if = {
+		# 	limit = { has_dlc = "Lions of the North" }
+		# 	NOT = { has_reform = polish_elective_monarchy }
+		# }
 		if = {
 			limit = { NOT = { has_dlc = "Mandate of Heaven" } }
 			NOT = { is_emperor_of_china = yes }
@@ -8093,6 +8099,7 @@ newshire_stewardship = {
 		anb_special_elections = yes
 		cannot_become_dictatorship = yes
 		locked_T1_reform = yes
+		cannot_move_capital = yes
 	}
 	modifiers = {
 		max_absolutism = -10
@@ -8155,6 +8162,7 @@ newshire_high_stewardship = {
 		always_mage = yes
 		always_witch_king = yes
 		locked_T1_reform = yes
+		cannot_move_capital = yes
 	}
 	modifiers = {
 		max_absolutism = -10
@@ -10496,7 +10504,7 @@ kheionai_the_urban_litea = {
 					duration = -1
 				}
 			}
-			country_event = { id = kheionai.33 } #add_urban_litea_for_highest_dev_region = yes
+			country_event = { id = kheionai.900 } #add_urban_litea_for_highest_dev_region = yes
 		}
 	}
 	
@@ -10590,6 +10598,7 @@ mangrove_republic = {
 		cannot_become_dictatorship = yes
 		locked_T1_reform = yes
 		mangrove_republic = yes
+		cannot_move_capital = yes
 	}
 	effect = {
 		country_event = { id = mangrove.0 }
@@ -10620,6 +10629,7 @@ mangrove_dictatorship = {
 		locked_government_type = yes
 		locked_T1_reform = yes
 		mangrove_republic = yes
+		cannot_move_capital = yes
 	}
 	effect = {
 		country_event = { id = mangrove.0 }
@@ -10923,5 +10933,37 @@ virtues_of_flamesong = {
 	custom_attributes = {
 		landslide_infantry_events = yes
 		volcanic_armoury_project = yes
+	}
+}
+
+overseas_governorate = {
+	icon = "self_governing_colony_government"
+	potential = { 
+		is_or_was_tag = { tag = U52 } 
+		#has_country_flag = u52_governorate_enabled #for when the mt launches
+	}
+	duration = 12
+
+	modifiers = {
+		colony_development_boost = 1
+		naval_maintenance_modifier = -0.1
+		republican_tradition = -0.5
+	}
+
+	custom_attributes = {
+		enables_plutocratic_idea_group = yes
+		enables_aristocratic_idea_group = no
+		allow_normal_conversion = no
+		locked_government_type = yes
+		republican_name = yes
+		can_use_trade_post = yes
+		can_form_trade_league = yes
+		anb_special_elections = yes
+	}
+
+	#government_abilities = {
+	#	end_overseas_governorate
+	#}
+	effect = {
 	}
 }

@@ -656,26 +656,29 @@ brown_orc_horde = {
 	maintain_dynasty = yes
 	
 
-	modifiers = {	#the design ethos is 2 improved, 3 new
-		#global_manpower_modifier = 0.3
-		#land_forcelimit_modifier = 0.20
-		land_maintenance_modifier = -0.20
+	modifiers = {
+		global_tax_income = 12
+        land_maintenance_modifier = -0.25
+        overextension_impact_modifier = -0.25
+        core_creation = -0.1
 		movement_speed = 0.2
-		reinforce_cost_modifier = -0.1
-		reform_progress_growth = -0.5
-		global_institution_spread = -0.3
-		diplomatic_upkeep = -2
 		
-		global_manpower_modifier = 0.4
-		land_forcelimit_modifier = 0.3
-		
-		prestige_from_land = 0.5
-		#colonists = 1 # They need to colonize out sometimes
+        reform_progress_growth = -0.5
+	}
+	
+	government_abilities = {
+		brorc_slave_mechanic
 	}
 
 	custom_attributes = {
 		is_monstrous_horde = yes
 		locked_T1_reform = yes
+		disabled_expelling = yes
+		disabled_purging = yes
+		disabled_reformation_unless_independent = yes
+		move_development_with_capital = yes
+		move_institutions_with_capital = yes
+		cannot_move_capital = yes
 	}
 }
 
@@ -2374,6 +2377,10 @@ tribe_becomes_monarchy_reform = {
 	}
 	trigger = {
 		NOT = { has_government_attribute_short_desc = locked_government_type }
+		if = {
+			limit = { has_government_attribute = disabled_reformation_unless_independent }
+			is_subject = no
+		}
 	}
 	effect = {
 		set_country_flag = populists_in_government
@@ -2525,6 +2532,10 @@ tribe_becomes_republic_reform = {
 	trigger = {
 		NOT = { is_lesser_in_union = yes }
 		NOT = { has_government_attribute_short_desc = locked_government_type }
+		if = {
+			limit = { has_government_attribute = disabled_reformation_unless_independent }
+			is_subject = no
+		}
 	}
 	effect = {
 		set_country_flag = populists_in_government #1.35
@@ -2698,6 +2709,10 @@ tribe_becomes_theocracy_reform = {
 	trigger = {
 		NOT = { is_lesser_in_union = yes }
 		NOT = { has_government_attribute_short_desc = locked_government_type }
+		if = {
+			limit = { has_government_attribute = disabled_reformation_unless_independent }
+			is_subject = no
+		}
 	}
 	effect = {
 		set_country_flag = populists_in_government #1.35
@@ -3544,7 +3559,7 @@ mechanim_migratory_reform = {
 		}
 	}
 	modifiers = {
-		colonists = -1
+		colonists = -2
 		diplomats = -1
 		reform_progress_growth = -0.5
 		
@@ -4095,7 +4110,6 @@ mandate_of_tiaochi_reform = {
 		nobles_loyalty_modifier = -0.10
 		governing_capacity = -50
 		block_introduce_heir = yes
-		necromancy_experience_mod = -1
 	}
 
 	custom_attributes = {

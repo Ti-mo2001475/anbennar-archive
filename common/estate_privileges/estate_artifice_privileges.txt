@@ -17164,7 +17164,7 @@ artifice_invention_bio_processor = {
 		artificers_privilege_slots = 1
 		core_creation = -0.1
 		administrative_efficiency = 0.05
-		governing_capacity = 0.05
+		governing_capacity_modifier = 0.25
 	}
 
 	ai_will_do = {
@@ -17278,6 +17278,13 @@ artifice_invention_industrial_automatories = {
 	}
 
 	on_granted = {
+		if = {
+			limit = { NOT = { has_country_flag = mechanim_automatory_building_allowed } }
+			custom_tooltip = gain_access_to_automatory
+			hidden_effect = {
+				set_country_flag = mechanim_automatory_building_allowed
+			}
+		}
 		custom_tooltip = artifice_invention_industrial_automatories.tt
 		hidden_effect = {
 			artifice_inventions_currently_used_increase = yes
@@ -17649,6 +17656,14 @@ artifice_invention_behavioral_chip = {
 				add_province_modifier = {
 					name = artifice_behavioral_chip_modifier
 					duration = -1
+				}
+			}
+			if = {
+				limit = { NOT = { has_country_flag = mechanim_tolerance_events.6_fired } }
+				country_event = {
+					id = mechanim_tolerance_events.6
+					days = 30
+					random = 60
 				}
 			}
 		}
@@ -19460,7 +19475,7 @@ artifice_invention_head_adm_oversight = {
 	
 	benefits = {
 		artificers_privilege_slots = 1
-		governing_capacity = 0.15
+		governing_capacity_modifier = 0.15
 	}
 
 	ai_will_do = {
