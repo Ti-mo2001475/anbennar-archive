@@ -2083,7 +2083,6 @@ bomdan_azkare = { #Conquer bomdan
 					add_permanent_claim = ROOT
 				}
 				khindi_area = {
-					limit = { culture = biengdi }
 					add_permanent_claim = ROOT
 				}
 			}
@@ -2431,6 +2430,10 @@ baihon_xinh_azkare = { #Conquer Baihon Xinh
 			amkamsek_area = {
 				add_permanent_claim = ROOT
 			}
+			4807 = { add_permanent_claim = ROOT }
+			4773 = { add_permanent_claim = ROOT }
+			6141 = { add_permanent_claim = ROOT }
+			6153 = { add_permanent_claim = ROOT }
 			add_prestige = 20
 			# hidden_effect = {
 				# if = {
@@ -2872,6 +2875,8 @@ east_thidinkai_azkare = { #Conquer east thidinkai
 					limit = { culture = bokai }
 					add_permanent_claim = ROOT
 				}
+				4757 = { add_permanent_claim = ROOT }
+				4755 = { add_permanent_claim = ROOT }
 			}
 		}
 	}
@@ -3053,17 +3058,15 @@ east_thidinkai_azkare = { #Conquer east thidinkai
 		}
 		
 		effect = {
-			#hidden_effect = {
-				xianjie_region = {
-					limit = { NOT = { country_or_non_sovereign_subject_holds = ROOT } }
-					add_permanent_claim = ROOT
-				}
-				rangadevi_area = {
-					limit = { NOT = { country_or_non_sovereign_subject_holds = ROOT } }
-					add_permanent_claim = ROOT
-				}
-			#}
-			#custom_tooltip = azkare_northward_gaze_tooltip
+			xianjie_region = {
+				limit = { NOT = { country_or_non_sovereign_subject_holds = ROOT } }
+				add_permanent_claim = ROOT
+			}
+			rangadevi_area = {
+				limit = { NOT = { country_or_non_sovereign_subject_holds = ROOT } }
+				add_permanent_claim = ROOT
+			}
+			6300 = { add_permanent_claim = ROOT }
 			hidden_effect = {
 				country_event = { #Goldscale Protections
 					id = azkare.50
@@ -3964,7 +3967,10 @@ connect_the_continent_azkare = { #Golden Highway, Major ports
 				owned_by = ROOT
 				is_core = ROOT
 			}
-			NOT = { exists = R38 }
+			asia = {
+				type = all
+				NOT = { owned_by = R38 }
+			}
 		}
 		
 		effect = {
@@ -6395,7 +6401,7 @@ academies_azkare = { #Academies, Convocationary guard, command conquest, develop
 			custom_tooltip = azkare_breakthrough_into_yanshen_tooltip
 			hidden_effect = {
 				lower_yanshen_region = {
-					limit = { culture = naamjyut }
+					limit = { OR = { culture = naamjyut culture = bokai } }
 					add_permanent_claim = ROOT
 				}
 			}
@@ -6980,18 +6986,31 @@ legions_azkare = { #Jaerelic legions, conquer Yanshen, Develop rahen
 		
 		provinces_to_highlight = {
 			superregion = yanshen_superregion
-			culture = naamjyut
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			OR = {
+				AND = {
+					culture = naamjyut
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				}
+				AND = {
+					culture = bokai
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				}
+			}
 		}
-		
 		trigger = {
 			yanshen_superregion = {
 				type = all
 				OR = {
-					NOT = { culture = naamjyut }
+					AND = { 
+						NOT = { culture = naamjyut }
+						NOT = { culture = bokai }
+					}
 					AND = {
-						culture = naamjyut
-						country_or_non_sovereign_subject_holds = ROOT 
+						OR = {
+							culture = naamjyut
+							culture = bokai
+						}
+						country_or_non_sovereign_subject_holds = ROOT
 					}
 				}
 			}
@@ -7037,10 +7056,14 @@ legions_azkare = { #Jaerelic legions, conquer Yanshen, Develop rahen
 		effect = {
 			custom_tooltip = azkare_jiangyang_tooltip
 			hidden_effect = {
-				asia = {
+				north_yanshen_region = {
 					limit = { culture = jiangyang }
 					add_permanent_claim = ROOT
 				}
+				4871 = { add_permanent_claim = ROOT }
+				4910 = { add_permanent_claim = ROOT }
+				4909 = { add_permanent_claim = ROOT }				
+				4925 = { add_permanent_claim = ROOT }				
 			}
 		}
 	}
