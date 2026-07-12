@@ -10,7 +10,7 @@ before_script:
 
 workflow:
     rules:
-        - if: ($CI_COMMIT_BRANCH == "new-master" || $CI_COMMIT_BRANCH == "steam" || $CI_COMMIT_BRANCH == "GitlabPRPipeline") && $CI_PIPELINE_SOURCE == "push"
+        - if: ($CI_COMMIT_BRANCH == "new-master" || $CI_COMMIT_BRANCH == "steam" || $CI_COMMIT_BRANCH == "GitlabPRPipeline") && $CI_PIPELINE_SOURCE == "push" && $CI_PROJECT_PATH == "anbennar/anbennar-eu4-dev"
         - when: never
 
 validate:
@@ -29,23 +29,30 @@ validate:
             FAIL=0
         - |
             # --- encoding & indentation (.txt) ---
+            #!/bin/bash
             if [ -n "$CHANGED_TXT" ]; then
               echo "=== Checking encoding and indentation for changed .txt files ==="
+              IFS=$'\n'
               echo "$CHANGED_TXT"
-              IFS=$'\n' read -r -d '' -a CHANGED_TXT_ARR <<<"$CHANGED_TXT"
-              bash scripts/encoding.sh -t -i "${CHANGED_TXT_ARR[@]}" || FAIL=1
+              set -f
+              set -- $CHANGED_TXT
+              set +f
+              ./scripts/encoding.sh -t -i "$@" || FAIL=1
             else
               echo "--- No .txt files changed, skipping ---"
             fi
 
         - |
             # --- encoding (.yml) ---
+            #!/bin/bash
             if [ -n "$CHANGED_YML" ]; then
               echo "=== Checking encoding for changed .yml files ==="
               echo "$CHANGED_YML"
-              IFS=$'\n' read -r -d '' -a CHANGED_YML_ARR <<<"$CHANGED_YML"
-              bash scripts/encoding.sh -l "${CHANGED_YML_ARR[@]}" || FAIL=1
-
+              IFS=$'\n'
+              set -f
+              set -- $CHANGED_YML
+              set +f
+              scripts/encoding.sh -l "$@" || FAIL=1
               echo "=== Checking key collisions (all localisation files, to catch collisions with unchanged keys) ==="
               python3 scripts/hash_collision_detect.py || FAIL=1
             else

@@ -2796,7 +2796,7 @@ province_event = { #White Tiger spotted
 	option = { #Zamn
 		name = spirits.101.a
 		if = {
-			limit = { owner = { NOT = { has_reform = hobgoblin_stratocracy_reform } } }
+			limit = { owner = { NOT = { has_government_attribute = is_hobgoblin_stratocracy } } }
 			owner = {
 				add_legitimacy = 25
 				add_horde_unity = 25
@@ -3368,7 +3368,7 @@ province_event = {
 	}
 }
 
-#Baku good
+#Baku bad
 province_event = {
 	id = spirits.123
 	title = spirits.123.t
@@ -3390,7 +3390,7 @@ province_event = {
 	}
 }
 
-#Baku bad
+#Baku good
 province_event = {
 	id = spirits.124
 	title = spirits.124.t
@@ -5788,6 +5788,14 @@ country_event = {
 		}
 		kill_ruler = yes
 	}
+
+	option = {
+		name = spirits.227.b
+		ai_chance = {
+			factor = 1
+		}
+		add_stability = -2
+	}
 }
 
 #spirits kill ur morale
@@ -7183,7 +7191,7 @@ province_event = {
 	trigger = {
 			owner = {
 				NOT = {
-					has_reform = hobgoblin_stratocracy_reform 
+					has_government_attribute = is_hobgoblin_stratocracy 
 					is_subject_of_type = slave_state
 				}
 			}
@@ -11874,8 +11882,9 @@ country_event = { #All Ancestors' Day
 		ai_chance = { factor = 1 }
 
 		custom_tooltip = dvp_every_corrupted_temple_gains_tt
-		tooltip = {
-			random_owned_province = {
+		tooltip = { add_province_modifier = { name = dvp_temple_devcost duration = 7300 } }
+		hidden_effect = {
+			every_owned_province = {
 				limit = { has_province_modifier = corrupted_temple_complex }
 				add_province_modifier = { name = dvp_temple_devcost duration = 7300 }
 			}
@@ -16637,7 +16646,7 @@ country_event = { #Kharunyana destroys the Godswall
 		trigger = {
 			culture = eagle_command
 			AND = {
-				religion = eagle_worship
+				religion = banbe_anen
 				NOT = { religion = mystic_accord }
 			}
 		}
@@ -16667,7 +16676,7 @@ country_event = { #Kharunyana destroys the Godswall
 		trigger = {
 			culture = eagle_command
 			AND = {
-				religion = eagle_worship
+				religion = banbe_anen
 				NOT = { religion = mystic_accord }
 			}
 		}
@@ -16683,7 +16692,7 @@ country_event = { #Kharunyana destroys the Godswall
 					AND = {
 						culture = eagle_command
 						AND = {
-							religion = eagle_worship
+							religion = banbe_anen
 							NOT = { religion = mystic_accord }
 						}
 					}

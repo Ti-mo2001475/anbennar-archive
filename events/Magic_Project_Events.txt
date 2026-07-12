@@ -5944,9 +5944,7 @@ country_event = { #Lich Revival Interregnum
 				become_a_witch_king_effect = yes
 			}
 
-			else_if = { limit = { has_country_flag = esthil_varina_lich }
-				B54_se_apply_lich_queen_modifiers = yes
-			}
+			B54_se_apply_lich_queen_modifiers = yes
 
 
 			if = { #MT content
@@ -10020,7 +10018,7 @@ country_event = {
 			}
 			else_if = { 
 				limit = {
-					check_variable = { black_herd_causalities_var = 10000 }
+					check_variable = { black_herd_causalities_var = 50000 }
 					check_variable = { current_experience_percent = 92 } #~550/600 exp
 					exactly_magic_project_level = { project = black_herd_project_1 level = 1 }
 				}
@@ -11005,7 +11003,10 @@ country_event = { #COMPLETION EVENT
 			if = {
 				limit = { has_ruler_flag = l36_kyola_ruler }
 				hidden_effect = {
-					add_or_extend_ruler_modifier = { name = exceptional_willpower_150 duration = -1 }
+					add_exceptional_willpower = {
+						extend = yes
+						years = 150
+					}
 				}
 				custom_tooltip = L36_Kyola_ruler_yes_end_willpower_tt
 			}
@@ -11297,4 +11298,55 @@ country_event = {
 		}
 	}
 	option = {}
+}
+
+#DEATHWINDS PROJECT
+
+namespace = magic_project_deathwinds_kheion_and_kaydhano
+
+country_event = { 
+	id = magic_project_deathwinds_kheion_and_kaydhano.0
+	title = none
+	desc = none
+	picture = none
+
+	is_triggered_only = yes
+	hidden = yes
+	
+	immediate = {
+		if = {
+			limit = { has_country_flag = magic_project_completed_flag }
+				if = {
+					limit = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 3 } }
+					country_event = { id = kheionai.58 }
+				}
+				else_if = {
+					limit = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 2 } }
+					country_event = { id = kheionai.55 }
+				}
+				else_if = {
+					limit = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } }
+					country_event = { id = kheionai.52 }
+				}
+		}
+		else_if = {
+			limit = { check_variable = { current_experience_percent = 50 } NOT = { has_country_flag = magic_project_first_event_happened } }
+			set_country_flag = magic_project_first_event_happened
+			if = { 
+				limit = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 2 } }
+				country_event = { id = kheionai.57 }
+			}
+			else_if = { 
+				limit = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } }
+				country_event = { id = kheionai.54 }
+			}
+			else_if = {
+				limit = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 0 } }
+				country_event = { id = kheionai.51 }
+			}
+		}
+	}
+	option = {
+		name = none
+	}
 }

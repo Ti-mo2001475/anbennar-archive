@@ -1931,7 +1931,14 @@ country_event = { # Legacy of Aldresia
 		}
 		hidden_effect = {
 			every_known_country = {
-				limit = { is_part_of_hre = yes }
+				limit = {
+					AND = {
+						is_part_of_hre = yes
+						NOT = {
+							is_subject_of = ROOT
+						}
+					}
+				}
 				capital_scope = {
 					spawn_rebels = {
 						size = 2
@@ -2136,7 +2143,7 @@ country_event = { # .46 SPIRIT LOSES DUEL Event
 			}
 			europe = {
 				limit = { is_part_of_hre = yes }
-				add_permanent_claim = A77
+				add_permanent_claim = Z01
 			}
 		}	
 		dismantle_hre = yes
