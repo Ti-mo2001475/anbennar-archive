@@ -4482,19 +4482,6 @@ on_battle_won_country_effect = {
 	}
 	if = {
 		limit = {
-			has_country_flag = G54_supporting_peasant_rebels_flag
-			FROM = { tag = REB }
-			NOT = {
-				has_spawned_supported_rebels = U17 #Theinos
-				has_spawned_supported_rebels = G54 #Besolaki
-				war_with = U17 #Theinos
-				war_with = G54 #Besolaki
-			}
-		}
-		clr_country_flag = G54_supporting_peasant_rebels_flag
-	}
-	if = {
-		limit = {
 			religion = genie_cult
 			has_country_flag = renewed_emancipation_active
 		}
@@ -7742,6 +7729,53 @@ on_war_declaration_effect = {
 		}
 		country_event = { id = dragon_turtles.16 }
 	}
+
+	#Cangji
+	if = {
+		limit = {
+			tag = V05
+		}
+		if = {
+			limit = {
+				has_country_flag = V05_yanshen_wars
+				FROM = {
+					capital_scope = { superregion = yanshen_superregion }
+				}
+			}
+			FROM = {
+				every_owned_province = {
+					limit = {
+						superregion = yanshen_superregion
+					}
+					add_province_modifier = {
+						name = V05_yanshen_warscore
+						duration = -1
+						hidden = yes
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = V05_yarikhoi_wars
+				FROM = {
+					capital_scope = { superregion = forbidden_lands_superregion }
+				}
+			}
+			FROM = {
+				every_owned_province = {
+					limit = {
+						superregion = forbidden_lands_superregion
+					}
+					add_province_modifier = {
+						name = V05_forbidden_plains_warscore
+						duration = -1
+						hidden = yes
+					}
+				}
+			}
+		}
+	}
 }
 
 remove_all_age_of_discovery_modifiers = {
@@ -10175,8 +10209,8 @@ on_mercenary_recruited_effect = {
 				mission_completed = veykodan_guard
 			}
 			OR = {
-				ROOT = { mercenary_company = veykodan_guard_merc }
-				ROOT = { mercenary_company = veykodan_guard_elite_merc }
+				ROOT = { mercenary_company = merc_veykodan_guard}
+				ROOT = { mercenary_company = merc_veykodan_guard_elite }
 			}
 		}
 		FROM = { country_event = { id = flavor_arverynn.46 } }
@@ -11821,17 +11855,21 @@ on_any_fort_destroyed_effect = { # THIS = Province, FROM = Destroyer, Will not b
 	if = {
 		limit = { has_province_modifier = charkuchin_kobold_supply_facility }
 		remove_province_modifier = charkuchin_kobold_supply_facility
-		owner = {
-			change_variable = {
-				which = insyaa_charkuchin_kobold_citadel_supplies_supply_facility_count
-				value = -1
+		custom_tooltip = kobold_citadel_monthly_supply_malus_10
+		custom_tooltip = kobold_citadel_province_upkeep_not_free
+		hidden_effect = {
+			owner = {
+				change_variable = {
+					which = insyaa_charkuchin_kobold_citadel_supplies_supply_facility_count
+					value = -1
+				}
+				change_variable = {
+					which = insyaa_charkuchin_kobold_citadel_supplies_total_gain
+					value = -10
+				}
 			}
-			change_variable = {
-				which = insyaa_charkuchin_kobold_citadel_supplies_total_gain
-				value = -10
-			}
+			kobold_citadel_supplies_add_supply_cost_based_on_region = yes
 		}
-		kobold_citadel_supplies_add_supply_cost_based_on_region = yes
 	}
 	if = {	#windward stuff
 		limit = { region = alecand_region }
@@ -17724,6 +17762,17 @@ on_province_owner_change_effect = {
 				limit = { NOT = { any_owned_province = { province_group = gene_pillars } } }
 				clr_country_flag = owns_gene_pillars
 			}
+		}
+	}
+
+	if = { #Deathwinds
+		limit = {
+			owner = { has_country_flag = desolating_alecand_flag }
+			region = alecand_region
+		}
+		add_province_modifier = {
+			name = desolate_alecand_mod
+			duration = -1
 		}
 	}
 }
