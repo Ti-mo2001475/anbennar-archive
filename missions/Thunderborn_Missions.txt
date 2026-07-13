@@ -362,46 +362,37 @@ thunderborn_3 = {
 		effect = {
 			add_treasury = -50
 			custom_tooltip = I49_ferrous_persuasions_tooltip
-			while = {
-				limit = {
-					NOT = {
-						calc_true_if = {
-							all_owned_or_subject_province = {
-								trade_goods = iron
-								OR = {
-									region = nuzurbokh_region
-									region = east_forbidden_plains_region
-								}
-								OR = {
-									development = 7
-									has_tax_building_trigger = yes
-								}
-								has_construction = workshop
+			for = {
+				amount = 2
+				effect = {
+					random_owned_or_subject_province = {
+						limit = {
+							trade_goods = iron
+							OR = {
+								region = nuzurbokh_region
+								region = east_forbidden_plains_region
 							}
-							amount = 2
+							OR = {
+								development = 7
+								has_tax_building_trigger = yes
+							}
+							has_any_ongoing_construction = no
+							NOT = {
+								has_province_flag = I49_ferrous_invalid
+							}
 						}
+						add_base_production = 1
+						add_building_construction = {
+							building = workshop
+							speed = 1
+							cost = 0
+						}
+						set_province_flag = I49_ferrous_invalid
 					}
 				}
-				random_owned_or_subject_province = {
-					limit = {
-						trade_goods = iron
-						OR = {
-							region = nuzurbokh_region
-							region = east_forbidden_plains_region
-						}
-						OR = {
-							development = 7
-							has_tax_building_trigger = yes
-						}
-						has_any_ongoing_construction = no
-					}
-					add_base_production = 1
-					add_building_construction = {
-						building = workshop
-						speed = 1
-						cost = 0
-					}
-				}
+			}
+			every_owned_province = {
+				clr_province_flag = I49_ferrous_invalid
 			}
 		}
 	}
