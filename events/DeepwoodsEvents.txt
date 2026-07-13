@@ -4956,6 +4956,16 @@ province_event = { #The Hunter's Gambit Round Handler
 		random_country = {
 			limit = {
 				has_country_flag = hunters_gambit_contender
+				is_variable_equal = {
+					which = hunters_gambit_vp_tracker
+					which = event_target:hunters_gambit_round_winner
+				}
+			}
+			save_event_target_as = hunters_gambit_round_winner
+		} # select an actual random winner in case of ties
+		random_country = {
+			limit = {
+				has_country_flag = hunters_gambit_contender
 				NOT = { tag = event_target:hunters_gambit_round_winner }
 			}
 			save_event_target_as = hunters_gambit_round_loser
@@ -4973,6 +4983,16 @@ province_event = { #The Hunter's Gambit Round Handler
 			}
 			save_event_target_as = hunters_gambit_round_loser
 		}
+		random_country = {
+			limit = {
+				has_country_flag = hunters_gambit_contender
+				is_variable_equal = {
+					which = hunters_gambit_vp_tracker
+					which = event_target:hunters_gambit_round_loser
+				}
+			}
+			save_event_target_as = hunters_gambit_round_loser
+		} # select an actual random loser in case of ties
 	}
 
 
@@ -5017,13 +5037,7 @@ province_event = { #The Hunter's Gambit Round Handler
 			}
 			7011 = { province_event = { id = deepwoods.109 days = 200 } } #Final Gambit Handler
 		}
-		else_if = { #1 contestant
-			limit = {
-				any_country = {
-					has_country_flag = hunters_gambit_contender
-					NOT = { tag = event_target:hunters_gambit_round_loser }
-				}
-			}
+		else = { #0-1 contestants
 			random_country = {
 				limit = {
 					has_country_flag = hunters_gambit_contender
@@ -5031,9 +5045,7 @@ province_event = { #The Hunter's Gambit Round Handler
 				}
 				country_event = { id = deepwoods.110 days = 100 } #At least two people were found cheating at once, you won, go home.
 			}
-		}
-		else = { #0 contestants
-			#Everyone cheated, may the gods have mercy on your souls, go home.
+			#Nothing happens if everyone cheated, may the gods have mercy on your souls, go home.
 		}
 		every_country = {
 			limit = { has_country_flag = hunters_gambit_contender }
