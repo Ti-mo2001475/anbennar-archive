@@ -357,7 +357,7 @@ declarewar = {
 	condition = {
 		tooltip = COMMAND_DISLOYAL_RULING_COMMAND
 		potential = {
-			has_reform = hobgoblin_stratocracy_reform
+			has_government_attribute = is_hobgoblin_stratocracy
 			ai = no
 		}
 		allow = {
@@ -4833,6 +4833,43 @@ requestpeace = {
 			}
 			FROM = { set_country_flag = F60_custom_liberation_cb_target_country }
 		}
+		#Besolaki - Set flag if using Support Rebels cb for special event
+		if = {
+			limit = {
+				has_country_flag = G54_supporting_brethern_flag
+				OR = {
+					is_in_war = {
+						attacker_leader = ROOT
+						defender_leader = FROM
+						casus_belli = cb_support_rebels
+					}
+					is_in_war = {
+						attacker_leader = FROM
+						defender_leader = ROOT
+						casus_belli = cb_support_rebels
+					}
+				}
+			}
+			FROM = { set_country_flag = G54_supporting_peasant_rebels_flag }
+		}
+		if = {
+			limit = {
+				FROM = { has_country_flag = G54_supporting_brethern_flag }
+				OR = {
+					is_in_war = {
+						attacker_leader = ROOT
+						defender_leader = FROM
+						casus_belli = cb_support_rebels
+					}
+					is_in_war = {
+						attacker_leader = FROM
+						defender_leader = ROOT
+						casus_belli = cb_support_rebels
+					}
+				}
+			}
+			set_country_flag = G54_supporting_peasant_rebels_flag
+		}
 	}
 	effect = { # This happens after all of the peace effects like on_province_owner_change, on_country_released, etc
 		if = {
@@ -4849,7 +4886,9 @@ requestpeace = {
 				clr_country_flag = F60_custom_liberation_cb_target_country
 			}
 		}
-
+		#Besolaki - Clear flag if using Support Rebels cb for special event
+		clr_country_flag = G54_supporting_peasant_rebels_flag
+		FROM = { clr_country_flag = G54_supporting_peasant_rebels_flag }
 	}
 	condition = { #Iochand
 		tooltip = A80_second_small_war_tt
