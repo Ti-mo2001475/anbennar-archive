@@ -665,12 +665,16 @@ country_event = { #Hidden event to abort magic advancements, hides the size of t
 	
 	hidden = yes
 	is_triggered_only = yes
-	immediate = { magic_advancement_abort_all_effect = yes }
+
+	immediate = {
+		magic_advancement_abort_all_effect = yes #moved here from event option
+		#as magic advancement level up happens immediately, this must also use the immediate and end the project immediately
+		#using the option or delaying allows e.g. multiple ticks of XP on the same day to all level up the same project
+		#leading to gaining multiple levels at once
+	}
 	option = {
 		name = magic_system.99.a
 		ai_chance = { factor = 1 }
-
-		#magic_advancement_abort_all_effect = yes
 	}
 }
 
