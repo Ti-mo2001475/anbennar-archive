@@ -2085,7 +2085,7 @@ has_mana_to_cast_spell = {
 
 	# Alternatively, we could've put everything into a big OR = { AND = { OR = {} } } custom trigger tooltip
 	# And then that tooltip would have linked to has_mana_to_cast_$id$_spell
-	# And has_mana_to_cast_$id$_spell would look like "ï¿½MCurrent Manaï¿½! (ï¿½Y[Root.currentMana.GetValue]ï¿½!) is at least ï¿½Y[GetGuidanceDiscount]ï¿½!"
+	# And has_mana_to_cast_$id$_spell would look like "§MCurrent Mana§! (§Y[Root.currentMana.GetValue]§!) is at least §Y[GetGuidanceDiscount]§!"
 	# The problem, of course, being that we would have to create custom loca for every single spell
 	# It would be slightly more performant but also a lot more work, and either way the AI doesn't check mana costs
 	# So we went with this solution because it was slightly easier
@@ -5424,22 +5424,6 @@ abjuration_2_cannor_clerical_default_3_trigger = {
 	[[player] has_mana_to_cast_magical_tradition_spell = { school = abjuration level = 2 id = cannor_clerical_default_3 } ]
 	legitimacy_equivalent = 90
 	everyone_has_infamy_paragon = yes
-}
-
-#Gemradcurt
-custom_spell_eordand_gemradcurt_5_trigger = {
-	enchantment_1_eordand_gemradcurt_5_trigger = { [[player] player = $player$ ] }
-}
-
-enchantment_1_eordand_gemradcurt_5_trigger = {
-	[[player]
-		has_mana_to_cast_magical_tradition_spell = {
-			school = enchantment
-			level = 1
-			id = eordand_gemradcurt_5
-		}
-	]
-	NOT = { has_country_modifier = gemradcurt_cold_command_mod }
 }
 
 ### STOP.
