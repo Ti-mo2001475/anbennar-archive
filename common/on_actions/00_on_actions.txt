@@ -24582,7 +24582,8 @@ on_holy_order_established = {
 		#ADM
 		else_if = {
 			limit = {
-				has_reform = absence_of_divinity
+				owner = { has_reform = absence_of_divinity }
+				NOT = { has_province_modifier = kheios_gov_cd }
 				OR = {
 					holy_order = maederitic_rule_order_level_1
 					holy_order = maederitic_rule_order_level_2
@@ -24598,9 +24599,10 @@ on_holy_order_established = {
 				}		
 			}
 			area = {
-				limit = { owner = ROOT }
 				if = {
-					limit = { NOT = { has_province_modifier = kheios_gov_cd } }
+					limit = {
+						NOT = { has_province_modifier = kheios_gov_cd }
+					}
 					add_province_modifier = {
 						name = kheios_gov_cd
 						duration = 1825
@@ -24613,7 +24615,8 @@ on_holy_order_established = {
 		#DIP
 		else_if = {
 			limit = {
-				has_reform = absence_of_divinity
+				owner = { has_reform = absence_of_divinity }
+				NOT = { has_province_modifier = kheios_gov_cd }
 				OR = {
 					holy_order = dictats_of_isparokaeus_order_level_1
 					holy_order = dictats_of_isparokaeus_order_level_2
@@ -24628,15 +24631,16 @@ on_holy_order_established = {
 					holy_order = anagbheism_order_level_3	
 				}			
 			}
+			add_prosperity = 15
 			area = {
-				limit = { owner = ROOT }
 				if = {
-					limit = { NOT = { has_province_modifier = kheios_gov_cd } }
+					limit = {
+						NOT = { has_province_modifier = kheios_gov_cd }
+					}
 					add_province_modifier = {
 						name = kheios_gov_cd
 						duration = 1825
 					}
-					add_prosperity = 15
 				}
 			}
 		}
@@ -24644,7 +24648,8 @@ on_holy_order_established = {
 		#MIL
 		else_if = {
 			limit = {
-				has_reform = absence_of_divinity
+				owner = { has_reform = absence_of_divinity }
+				NOT = { has_province_modifier = kheios_gov_cd }
 				OR = {
 					holy_order = axierophonic_mandate_order_level_1
 					holy_order = axierophonic_mandate_order_level_2
@@ -24658,15 +24663,15 @@ on_holy_order_established = {
 					holy_order = laskaris_creed_order_level_2
 					holy_order = laskaris_creed_order_level_3
 				}
-				NOT = { has_province_modifier = kheios_gov_cd }   
 			}
 			area = {
-				limit = { owner = ROOT }
 				if = {
-					limit = { NOT = { has_province_modifier = kheios_gov_cd } }
+					limit = {
+						NOT = { has_province_modifier = kheios_gov_cd }
+					}
 					add_province_modifier = {
 						name = kheios_gov_cd
-						duration = 1825
+						duration = 1825	
 					}
 					add_rebel_progress = {
 						value = -15
@@ -28606,23 +28611,13 @@ on_national_focus_change = {
 
 	#Kheionai gos ref
 	if = {
-		limit = { has_reform = three_branches }
-
-		remove_country_modifier = three_branches_legislative_mod 
-		remove_country_modifier = three_branches_judicial_mod 
-		remove_country_modifier = three_branches_executive_mod 
-
-		if = {
-			limit = { national_focus = administrative }
-			add_country_modifier = { name = three_branches_legislative_mod duration = -1 }
+		limit = {
+			has_reform = three_branches
 		}
-		else_if = {
-			limit = { national_focus = diplomatic }
-			add_country_modifier = { name = three_branches_judicial_mod duration = -1 }
-		}
-		else_if = {
-			limit = { national_focus = military }
-			add_country_modifier = { name = three_branches_executive_mod duration = -1 }
+		hidden_effect = {
+			country_event = {
+				id = duumvirate.2121
+			}
 		}
 	}
 }

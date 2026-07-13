@@ -1,5 +1,6 @@
 namespace = duumvirate
 
+#Duumvirat stuff
 country_event = {
     id = duumvirate.1
     title = duumvirate.1.title
@@ -14,17 +15,23 @@ country_event = {
     hidden = yes   
 
     immediate = {
+        kill_leader = {
+			type = "Duumvir"
+		}
         define_consort = {
-            male = yes
             culture = ROOT
             religion = ROOT
             change_adm = -1
 		    change_dip = -1
 			change_mil = 2
+            male = yes
         }
-
-        country_event = {
-            id = duumvirate.2
+        create_general_with_current_tradition = {
+            add_fire = 1
+            add_shock = 2
+            add_manuever = 1
+            add_siege = 1
+            name = "Duumvir"
         }
     }
 
@@ -33,29 +40,95 @@ country_event = {
     }
 }
 
+
+#If general die new duunvir rise
 country_event = {
-    id = duumvirate.2
-    title = duumvirate.2.title
-    desc = duumvirate.2.desc
-    picture = REFORM_eventPicture
+	id = duumvirate.100
+	title = duumvirate.100.t
+	desc = duumvirate.100.d
+	picture = REFORM_eventPicture
+	
+	hidden = yes
+
+	trigger = {
+		has_reform = duumvirate
+		NOT = {
+			has_leader = "Duumvir"
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		if = {
+			limit = { has_consort = yes }
+			kill_consort = yes
+		}
+	}
+	
+	option = {		
+		name = "flavour_covenblad.100.a"
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+
+#Гос реформа
+country_event = {
+    id = duumvirate.2121
+    title = duumvirate.2121.t
+    desc = duumvirate.2121.d
+    picture = COURT_eventPicture
     
-    trigger = {
-        has_reform = duumvirate
-    }
-
     is_triggered_only = yes
-    hidden = yes   
+    hidden = yes 
 
-    immediate = {
-        define_consort_to_general = {   
-			add_fire = 1
-            add_shock = 2
-			add_manuever = 1
-			add_siege = 1 
+    # ADM focus
+    option = {
+        name = duumvirate.2121.a
+        trigger = {
+            national_focus = ADM
         }
+        ai_chance = { factor = 100 }
+        add_country_modifier = {
+            name = three_branches_legislative_mod
+            duration = -1
+        }
+		remove_country_modifier = three_branches_judicial_mod
+		remove_country_modifier = three_branches_executive_mod
     }
 
+    #DIp focus
     option = {
-        name = duumvirate.2.a
+        name = duumvirate.2121.b
+        trigger = {
+        	national_focus = DIP
+        }
+        ai_chance = { factor = 100 }
+        add_country_modifier = {
+            name = three_branches_judicial_mod
+            duration = -1
+        }
+		remove_country_modifier = three_branches_executive_mod
+		remove_country_modifier = three_branches_legislative_mod
+    }
+
+    # Mil Focus
+    option = {
+        name = duumvirate.2121.m
+        trigger = {
+        	national_focus = MIL
+        }
+        ai_chance = { factor = 100 }
+
+        add_country_modifier = {
+            name = three_branches_executive_mod
+            duration = -1
+        }
+		remove_country_modifier = three_branches_legislative_mod
+		remove_country_modifier = three_branches_judicial_mod
     }
 }
