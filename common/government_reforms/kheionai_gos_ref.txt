@@ -10,7 +10,7 @@ sophocracy_republic = {
 	}
 	modifiers = {
 		stability_cost_modifier = -0.2
-        candidate_random_bonus = 1
+        reform_progress_growth = 0.1
 	}
 	effect = {
 		custom_tooltip = sophocracy_advisor_tt #Upon re-election or the election of a new ruler, grants a level 1/2/3 random advisor with a 25/50/75% cost reduction, depending on government rank. 
@@ -28,16 +28,16 @@ duumvirate = {
 		culture_group = kheionai_ruinborn_elf
 	}
 	modifiers = {
-		reelection_cost = -0.15
-		republican_tradition = 0.15
+		all_estate_loyalty_equilibrium = 0.1
+		republican_tradition = 0.1
 		election_cycle = 2
 	}
 	queen = yes
     # royal_marriage = yes
     custom_attributes = {
-		# rulers_can_be_generals = no
+		rulers_can_be_generals = no
 		# heirs_can_be_generals = no
-        cannot_become_dictatorship = yes
+        # cannot_become_dictatorship = yes
 	}
 	effect = {
 		custom_tooltip = duumvirate_tt #
@@ -79,5 +79,44 @@ three_branches = {
 	}
 	effect = {
 		custom_tooltip = three_branches_tt #Givi bonuses for changing national focuses
+	}
+}
+
+xechtari_above_all = {
+    icon = "giga_chad"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+		capital_scope = { 
+			region = alecand_region
+		}
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+		capital_scope = { 
+			region = alecand_region
+		}
+	}
+	conditional = {
+		allow = {
+			has_dlc = "Res Publica"
+		}
+		can_use_trade_post = yes
+	}
+	conditional = {
+		allow = {
+			has_dlc = "Domination"
+		}
+		custom_attributes = {
+			can_establish_trade_protectorates = yes
+		}
+	}
+	boost_income = yes
+	modifiers = {
+		governing_capacity_modifier = -0.33
+		liberty_desire_from_subject_development = -0.25
+	}
+	effect = {
+		custom_tooltip = xechtari_above_all_tt 
 	}
 }
