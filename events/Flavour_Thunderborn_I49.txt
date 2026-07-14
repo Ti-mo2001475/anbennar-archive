@@ -107,7 +107,7 @@ country_event = { #The Grandest Celebration
 				name = irdaeos_celebration_cooldown
 				duration = 3650
 			}
-			add_innovativeness_or_monarch_power_anb = { amount = 2 }
+			add_innovativeness_or_monarch_power_anb = { amount = 3 }
 			every_subject_country = {
 				add_liberty_desire = -10
 			}
@@ -425,7 +425,18 @@ country_event = { #Cloud Cover
 country_event = { #The Final Darkening
 	id = flavour_thunderborn.14
 	title = flavour_thunderborn.14.t
-	desc = flavour_thunderborn.14.d
+	desc = {
+		trigger = {
+			has_country_flag = I49_no_forming_taryean
+		}
+		desc = flavour_thunderborn.14.d1
+	}
+	desc = {
+		trigger = {
+			NOT = { has_country_flag = I49_no_forming_taryean }
+		}
+		desc = flavour_thunderborn.14.d2
+	}
 	picture = northamericagfx_DEATH_OF_HEIR_eventPicture 
 	
     is_triggered_only = yes
@@ -440,16 +451,23 @@ country_event = { #The Final Darkening
 
 	option = { 
 		name = flavour_thunderborn.14.a
+		trigger = {
+			has_country_flag = I49_no_forming_taryean
+		}
 		clr_country_flag = I49_edeyne_alive
 		add_prestige = 10
 		add_splendor = 100
-		if = {
-			limit = {
-				tag = I49
-			}
-			set_country_flag = I49_edeyne_dead_early
-			swap_non_generic_missions = yes
+		set_country_flag = I49_edeyne_dead_early
+		swap_non_generic_missions = yes
+	}
+	option = { 
+		name = flavour_thunderborn.14.b
+		trigger = {
+			NOT = { has_country_flag = I49_no_forming_taryean }
 		}
+		clr_country_flag = I49_edeyne_alive
+		add_prestige = 10
+		add_splendor = 100
 		else = {
 			country_event = {
 				id = flavour_thunderborn.15
