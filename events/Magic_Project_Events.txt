@@ -3303,19 +3303,27 @@ country_event = { #Battlemage Academy 4 - Graduation
 	is_triggered_only = yes
 	immediate = {
 		if = {
-			limit = { ai = yes } #AI handling for missing progress events, note RNG works normally
-			random_list = {
-				1 = {
-					trigger = { NOT = { has_country_modifier = battlemage_academy_outhouse_1 has_country_modifier = battlemage_academy_outhouse_2 } }
-					set_country_flag = battlemage_academy_outhouse_flag
+			limit = { #AI handling for missing progress events, note RNG works normally. Also supports independent firing of the event such as via magic_project_level_up in missions.
+				NOT = {
+					has_country_flag = battlemage_academy_outhouse_flag
+					has_country_flag = battlemage_academy_underwear_flag
+					has_country_flag = battlemage_academy_graffiti_flag
 				}
-				1 = {
-					trigger = { NOT = { has_country_modifier = battlemage_academy_underwear_1 has_country_modifier = battlemage_academy_underwear_2 } }
-					set_country_flag = battlemage_academy_underwear_flag
-				}
-				1 = {
-					trigger = { NOT = { has_country_modifier = battlemage_academy_graffiti_1 has_country_modifier = battlemage_academy_graffiti_2 } }
-					set_country_flag = battlemage_academy_graffiti_flag
+			}
+			hidden_effect = {
+				random_list = {
+					1 = {
+						trigger = { NOT = { has_country_modifier = battlemage_academy_outhouse_1 has_country_modifier = battlemage_academy_outhouse_2 } }
+						set_country_flag = battlemage_academy_outhouse_flag
+					}
+					1 = {
+						trigger = { NOT = { has_country_modifier = battlemage_academy_underwear_1 has_country_modifier = battlemage_academy_underwear_2 } }
+						set_country_flag = battlemage_academy_underwear_flag
+					}
+					1 = {
+						trigger = { NOT = { has_country_modifier = battlemage_academy_graffiti_1 has_country_modifier = battlemage_academy_graffiti_2 } }
+						set_country_flag = battlemage_academy_graffiti_flag
+					}
 				}
 			}
 		}
