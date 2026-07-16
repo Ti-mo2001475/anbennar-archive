@@ -729,6 +729,116 @@ custom_button = { #Merfolk Settlements
 	}
 }
 
+##############
+# Deathwinds #
+##############
+custom_window = {
+	name = aPUI_deathwinds_window
+	potential = {
+		has_open_aPUI_in_province = { name = deathwinds }
+	}
+}
+custom_text_box = { name = aPUI_deathwinds_title }
+
+custom_button = {
+	name = aPUI_deathwinds_button
+    potential = { has_eligible_aPUI_deathwinds_in_province = yes }
+	trigger = { }
+	effect = {
+		hidden_effect = {
+			open_aPUI_in_province = { name = deathwinds }
+			#Set variable to 0 so thecustom tooltip doesn't look wrong
+			FROM = { set_variable = { deathwinds_kheion_and_kaydhano_level = 0 } }
+		}
+		}
+	tooltip = aPUI_deathwinds_button_tt
+}
+custom_button = { #Deathwinds dummy
+	name = aPUI_deathwinds_button_dummy
+    potential = { has_eligible_aPUI_deathwinds_in_province = yes }
+	tooltip = aPUI_deathwinds_button_dummy_tt
+	frame = { number = 1 }
+}
+
+custom_text_box = { name = aPUI_deathwinds_windward_value tooltip = aPUI_deathwinds_windward_desc }
+custom_text_box = { name = aPUI_deathwinds_deathwinds_value tooltip = aPUI_deathwinds_deathwinds_desc }
+custom_text_box = { name = aPUI_deathwinds_info_title }
+custom_text_box = { name = aPUI_deathwinds_info_prov_r1c1 }
+custom_text_box = { name = aPUI_deathwinds_info_prov_r1c2 }
+custom_text_box = { name = aPUI_deathwinds_info_prov_r1c3 }
+custom_text_box = { name = aPUI_deathwinds_info_prov_r2c1 }
+custom_text_box = { name = aPUI_deathwinds_info_prov_r2c2 }
+
+#Upgrade Windwards Buttons
+custom_button = {
+	name = aPUI_deathwinds_upgrades_button_1
+	tooltip = aPUI_deathwinds_upgrades_button_1
+	trigger = { windward_upgrade_triggers = yes }
+	effect = { upgrade_windwards = yes }
+	frame = { number = 2 }
+}
+custom_button = {
+	name = aPUI_deathwinds_upgrades_area_button_1
+	tooltip = aPUI_deathwinds_upgrades_area_button_1
+	trigger = { windwards_area_trigger = { trigger = windward_upgrade_triggers } }
+	effect = { custom_tooltip = deathwinds_requirements_tt deathwind_button_effect = { effect = upgrade_windwards } }
+	frame = { number = 6 }
+}
+
+#Reinforce with Manpower Buttons
+custom_button = {
+	name = aPUI_deathwinds_upgrades_button_2
+	tooltip = aPUI_deathwinds_upgrades_button_2
+	trigger = { windwards_reinforce_with_manpower_trigger = yes }
+	effect = { windwards_reinforce_with_manpower_effect = yes }
+	frame = { number = 3 }
+}
+custom_button = {
+	name = aPUI_deathwinds_upgrades_area_button_2
+	tooltip = aPUI_deathwinds_upgrades_area_button_2
+	trigger = { area_for_scope_province = { windwards_reinforce_with_manpower_trigger = yes } }
+	effect = { custom_tooltip = deathwinds_requirements_tt deathwind_button_effect = { effect = windwards_reinforce_with_manpower_effect } }
+	frame = { number = 7 }
+}
+
+#Reinforce with Mana Button
+custom_button = {
+	name = aPUI_deathwinds_upgrades_button_3
+	tooltip = aPUI_deathwinds_upgrades_button_3
+	trigger = { windwards_reinforce_with_mana_trigger = yes }
+	effect = { windwards_reinforce_with_mana_effect = yes }
+	frame = { number = 4 }
+}
+custom_button = {
+	name = aPUI_deathwinds_upgrades_area_button_3
+	tooltip = aPUI_deathwinds_upgrades_area_button_3
+	trigger = { area_for_scope_province = { windwards_reinforce_with_mana_trigger = yes } }
+	effect = { custom_tooltip = deathwinds_requirements_tt deathwind_button_effect = { effect = windwards_reinforce_with_mana_effect } }
+	frame = { number = 8 }
+}
+
+#Destroy Windwards Button
+custom_button = {
+	name = aPUI_deathwinds_upgrades_button_4
+	tooltip = aPUI_deathwinds_upgrades_button_4
+	trigger = { reduce_windward_triggers = yes }
+	effect = { reduce_windward_level = yes }
+	frame = { number = 5 }
+}
+custom_button = {
+	name = aPUI_deathwinds_upgrades_area_button_4
+	tooltip = aPUI_deathwinds_upgrades_area_button_4
+	trigger = { area_for_scope_province = { reduce_windward_triggers = yes } }
+	effect = { deathwind_button_effect = { effect = reduce_windward_level } }
+	frame = { number = 9 }
+}
+
+custom_icon = {
+	name = aPUI_deathwinds_progress
+	frame_variable = aPUI_deathwinds_framevar
+}
+custom_icon = { name = aPUI_deathwinds_frame tooltip = aPUI_deathwinds_bar_tt }
+
 #Slot 2 - Province type button
 custom_button = { #Dummy closed
 	name = GFX_province_button_dummy_2
@@ -1487,6 +1597,7 @@ custom_button = { # Build Charkuchin Kobold supply centre
 			}
 		}
 		custom_tooltip = charkuchin_kobold_supply_facility_button_add_tt
+		custom_tooltip = kobold_citadel_province_upkeep_free
 	}
 	tooltip = charkuchin_kobold_supply_facility_button_tt
 }
@@ -2306,7 +2417,10 @@ custom_button = {
 			NOT = { has_province_flag = vault_hearthstone_engine_locked }
 		}
 		NOT = { trade_goods = serpentbloom }
-		NOT = { has_dwarovar_dungeon = yes }
+		custom_trigger_tooltip = {
+			tooltip = can_spawn_expedition_tooltip
+			NOT = { has_dwarovar_dungeon = yes }
+		}
 	}
 	effect = {
 		if = {
