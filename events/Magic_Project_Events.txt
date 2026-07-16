@@ -57,6 +57,7 @@ namespace = magic_project
 ### If you want your project to count for magical infrastructure requirements, tick up magic_projects_completed at the end
 ### Remember to clear your progress flags/modifiers in magic_advancement_abort_all_effect
 
+
 country_event = { #Error code 404: project upgrade not found
 	id = magic_project.404
 	title = magic_project.404.t
@@ -1306,7 +1307,6 @@ country_event = { #Magical Fortress 8 - Complete Castle
 			remove_province_modifier = abjuration_1_ward_mod_1
 			add_province_modifier = { name = magical_fortress_mod_2 duration = -1 }
 			add_province_modifier = { name = abjuration_1_ward_mod_2 duration = -1 }
-			hidden_effect = { province_event = { id = kheionai.2 } }
 		}
 		
 		magical_fortress_grant_bonus = { mod = splendor }
@@ -3303,19 +3303,27 @@ country_event = { #Battlemage Academy 4 - Graduation
 	is_triggered_only = yes
 	immediate = {
 		if = {
-			limit = { ai = yes } #AI handling for missing progress events, note RNG works normally
-			random_list = {
-				1 = {
-					trigger = { NOT = { has_country_modifier = battlemage_academy_outhouse_1 has_country_modifier = battlemage_academy_outhouse_2 } }
-					set_country_flag = battlemage_academy_outhouse_flag
+			limit = { #AI handling for missing progress events, note RNG works normally. Also supports independent firing of the event such as via magic_project_level_up in missions.
+				NOT = {
+					has_country_flag = battlemage_academy_outhouse_flag
+					has_country_flag = battlemage_academy_underwear_flag
+					has_country_flag = battlemage_academy_graffiti_flag
 				}
-				1 = {
-					trigger = { NOT = { has_country_modifier = battlemage_academy_underwear_1 has_country_modifier = battlemage_academy_underwear_2 } }
-					set_country_flag = battlemage_academy_underwear_flag
-				}
-				1 = {
-					trigger = { NOT = { has_country_modifier = battlemage_academy_graffiti_1 has_country_modifier = battlemage_academy_graffiti_2 } }
-					set_country_flag = battlemage_academy_graffiti_flag
+			}
+			hidden_effect = {
+				random_list = {
+					1 = {
+						trigger = { NOT = { has_country_modifier = battlemage_academy_outhouse_1 has_country_modifier = battlemage_academy_outhouse_2 } }
+						set_country_flag = battlemage_academy_outhouse_flag
+					}
+					1 = {
+						trigger = { NOT = { has_country_modifier = battlemage_academy_underwear_1 has_country_modifier = battlemage_academy_underwear_2 } }
+						set_country_flag = battlemage_academy_underwear_flag
+					}
+					1 = {
+						trigger = { NOT = { has_country_modifier = battlemage_academy_graffiti_1 has_country_modifier = battlemage_academy_graffiti_2 } }
+						set_country_flag = battlemage_academy_graffiti_flag
+					}
 				}
 			}
 		}
@@ -11072,7 +11080,10 @@ country_event = { #COMPLETION EVENT
 			if = {
 				limit = { has_ruler_flag = l36_kyola_ruler }
 				hidden_effect = {
-					add_or_extend_ruler_modifier = { name = exceptional_willpower_150 duration = -1 }
+					add_exceptional_willpower = {
+						extend = yes
+						years = 150
+					}
 				}
 				custom_tooltip = L36_Kyola_ruler_yes_end_willpower_tt
 			}
@@ -11364,4 +11375,55 @@ country_event = {
 		}
 	}
 	option = {}
+}
+
+#DEATHWINDS PROJECT
+
+namespace = magic_project_deathwinds_kheion_and_kaydhano
+
+country_event = { 
+	id = magic_project_deathwinds_kheion_and_kaydhano.0
+	title = none
+	desc = none
+	picture = none
+
+	is_triggered_only = yes
+	hidden = yes
+	
+	immediate = {
+		if = {
+			limit = { has_country_flag = magic_project_completed_flag }
+				if = {
+					limit = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 3 } }
+					country_event = { id = kheionai.58 }
+				}
+				else_if = {
+					limit = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 2 } }
+					country_event = { id = kheionai.55 }
+				}
+				else_if = {
+					limit = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } }
+					country_event = { id = kheionai.52 }
+				}
+		}
+		else_if = {
+			limit = { check_variable = { current_experience_percent = 50 } NOT = { has_country_flag = magic_project_first_event_happened } }
+			set_country_flag = magic_project_first_event_happened
+			if = { 
+				limit = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 2 } }
+				country_event = { id = kheionai.57 }
+			}
+			else_if = { 
+				limit = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } }
+				country_event = { id = kheionai.54 }
+			}
+			else_if = {
+				limit = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 0 } }
+				country_event = { id = kheionai.51 }
+			}
+		}
+	}
+	option = {
+		name = none
+	}
 }
