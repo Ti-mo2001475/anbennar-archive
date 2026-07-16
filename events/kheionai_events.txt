@@ -185,6 +185,25 @@ country_event = {
 		trigger = { has_not_full_deathwinds_system = yes }
 		disable_deathwind_events = yes
 	}
+
+	option = {
+		name = kheionai.3.c
+		trigger = {
+			has_reform = tame_the_storm
+		}
+		every_owned_province = {
+			limit = {
+				OR = {
+					AND = {
+						region = alecand_region
+						province_group = kheion_poleis
+					}
+					has_building = mage_tower
+				}
+			}
+			abjuration_1_ward_sub_effect = { duration = 3650 }
+		}
+	}
 }
 
 #Deathwinds start event
@@ -429,6 +448,27 @@ country_event = {
 		trigger = { has_not_full_deathwinds_system = yes }
 		disable_deathwind_events = yes
 	}
+
+	option = { #kheion gov reform
+		name = kheionai.6.b
+		highlight = yes
+		trigger = {
+			has_reform = tame_the_storm
+		}
+		every_owned_province = {
+			limit = {
+				region = alecand_region
+				check_variable = {
+					which = localWindWardLevel
+					value = 7
+				}
+			}
+			add_province_modifier = {
+				name = tame_the_storm_ward_bonus
+				duration = 1825
+			}
+		}
+	}
 }
 
 #1444 Deathwinds intro event
@@ -538,24 +578,6 @@ country_event = {
 		name = kheionai.51.a
 
 	}
-	option = {
-		name = kheionai.2.b
-		trigger = {
-			has_reform = tame_the_storm
-		}
-		every_owned_province = {
-			limit = {
-				OR = {
-					AND = {
-						region = alecand_region
-						province_group = kheionai_capital_provinces
-					}
-					has_building = mage_tower
-				}
-			}
-			abjuration_1_ward_sub_effect = { duration = 3650 }
-		}
-	}
 }
 #
 country_event = {
@@ -573,27 +595,6 @@ country_event = {
 		upgrade_highest_level_windward = yes
 		remove_country_modifier = kaydhano_exp_mod_1
 		decrease_deathwinds_level = { amount = 1 }
-	}
-	
-	option = { #kheion gov reform
-		name = kheionai.8.b
-		highlight = yes
-		trigger = {
-			has_reform = tame_the_storm
-		}
-		every_owned_province = {
-			limit = {
-				region = alecand_region
-				check_variable = {
-					which = localWindWardLevel
-					value = 7
-				}
-			}
-			add_province_modifier = {
-				name = tame_the_storm_ward_bonus
-				duration = 1825
-			}
-		}
 	}
 }
 
