@@ -77,6 +77,9 @@ three_branches = {
 		national_focus_years = -10
 		republican_tradition = 0.15
 	}
+	custom_attributes = {
+        cannot_become_dictatorship = yes
+	}
 	effect = {
 		custom_tooltip = three_branches_tt #Givi bonuses for changing national focuses
 	}
@@ -117,6 +120,45 @@ xechtari_above_all = {
 		liberty_desire_from_subject_development = -0.25
 	}
 	effect = {
-		custom_tooltip = xechtari_above_all_tt 
+		custom_tooltip = xechtari_above_all_tt
+		every_owned_province = {
+			limit = {
+				region = alecand_region
+			}
+			add_province_triggered_modifier = xechtari_above_all_ptm
+		}
+		removed_effect = {
+			remove_province_triggered_modifier = abjuration_spell_three_quarter
+		}
+	}
+}
+
+tame_the_storm = {
+    icon = "giga_chad"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+		capital_scope = { 
+			region = alecand_region
+		}
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+		capital_scope = { 
+			region = alecand_region
+		}
+	}
+	modifiers = {
+		global_monthly_devastation = -0.05
+	}
+	effect = {
+		add_country_modifier = {
+			name = abjuration_spell_three_quarter
+			duration = -1
+		}
+		custom_tooltip = tame_the_storm_tt
+	}
+	removed_effect = {
+		remove_country_modifier = abjuration_spell_three_quarter
 	}
 }

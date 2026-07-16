@@ -401,6 +401,24 @@ country_event = {
 			}
 		}
 	}
+	option = {
+		name = kheionai.2.b
+		trigger = {
+			has_reform = tame_the_storm
+		}
+		every_owned_province = {
+			limit = {
+				OR = {
+					AND = {
+						region = alecand_region
+						province_group = kheionai_capital_provinces
+					}
+					has_building = mage_tower
+				}
+			}
+			abjuration_1_ward_sub_effect = { duration = 3650 }
+		}
+	}
 }
 
 #Informer event that the deathwinds have ended
@@ -425,6 +443,27 @@ country_event = {
 
 	option = {
 		name = kheionai.8.a 
+	}
+	
+	option = { #kheion gov reform
+		name = kheionai.8.b
+		highlight = yes
+		trigger = {
+			has_reform = tame_the_storm
+		}
+		every_owned_province = {
+			limit = {
+				region = alecand_region
+				check_variable = {
+					which = localWindWardLevel
+					value = 7
+				}
+			}
+			add_province_modifier = {
+				name = tame_the_storm_ward_bonus
+				duration = 1825
+			}
+		}
 	}
 }
 
