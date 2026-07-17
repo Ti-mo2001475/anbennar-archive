@@ -532,6 +532,45 @@ country_event = { #Dominate to Surrender notification
 	}
 }
 
+country_event = { #Bardic Magic - Aria of Affection timeout
+	id = magic_spell.406
+	title = magic_spell.406.t
+	desc = magic_spell.406.desc
+	picture = PIRATES_CAPTURED_eventPicture # placeholder
+	
+	is_triggered_only = yes
+	hidden = yes
+
+	option = {
+		name = magic_spell.406.a
+		ai_chance = { factor = 1 }
+
+		# This event is fired for the receiver of my insult
+		# FROM should be the country who sent the insult
+
+		# They lose 10 trust of me
+		add_trust = {
+			who = FROM
+			value = -10
+		}
+		# If their trust of me is now below 50, gain negative opinion
+		if = {
+			limit = {
+				NOT = {
+					trust = {
+						who = FROM
+						value = 50
+					}
+				}
+			}
+			add_opinion = {
+				who = FROM
+				modifier = enchantment_bardic_aria_of_affection_taken_advantage
+			}
+		}
+	}
+}
+
 ###########################
 ### EVOCATION (500-599) ###
 ###########################

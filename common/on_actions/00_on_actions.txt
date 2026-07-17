@@ -236,6 +236,9 @@ on_startup = {
 		
 		#Eordand setup
 		eordellon.5
+
+		# Bardic magic for Harafic Ruinborn
+		haraf_events.16
 		
 		#the hunt
 		the_hunt_events.0
@@ -21647,6 +21650,50 @@ on_culture_promoted = {
 			ascajar_accepted_culture_modifier = yes
 		}
 	}
+	# Bardic magic alternate unlocks
+	if = {
+		limit = {
+			has_custom_spell_list_of_group = { group = bardic }
+		}
+		# Check for Vyzemby Halfling cultures
+		if = {
+			limit = {
+				OR = {
+					accepted_culture = amezatany
+					accepted_culture = mboala
+					accepted_culture = mazava
+					accepted_culture = fomarati
+					accepted_culture = vyoronsi
+					accepted_culture = zohebidi
+				}
+				NOT = { has_country_flag = bardic_magic_spell_2_unlocked }
+			}
+			# Unlock Aria of Affection
+			set_country_flag = bardic_magic_spell_2_unlocked
+		}
+		# Check for Gerudian cultures
+		else_if = {
+			limit = {
+				OR = {
+					accepted_culture = west_dalr
+					accepted_culture = east_dalr
+					accepted_culture = olavish
+					accepted_culture = reverian
+					accepted_culture = talderannic
+					accepted_culture = perlatter
+					accepted_culture = tefskr
+					accepted_culture = divnskr
+					accepted_culture = elnarfolk
+					accepted_culture = taric_gerudian
+					accepted_culture = skamvin
+					accepted_culture = gerudian_reachman
+				}
+				NOT = { has_country_flag = bardic_magic_spell_4_unlocked }
+			}
+			# Unlock Elegy of Exhaustion
+			set_country_flag = bardic_magic_spell_4_unlocked
+		}
+	}
 	if = {
 		limit = {
 			religion = old_bulwari_sun_cult
@@ -28502,6 +28549,23 @@ on_colonial_nation_established = {
 			}
 		}
 		set_country_flag = deranne_integrate_venail_colony_flag
+	}
+
+	# Bardic magic alternate unlocks
+	if = {
+		limit = {
+			capital_scope = {
+				colonial_region = colonial_haraf
+			}
+			overlord = {
+				has_custom_spell_list_of_group = { group = bardic }
+				NOT = { has_country_flag = bardic_magic_spell_3_unlocked }
+			}
+		}
+		# Unlock Hymn of History
+		overlord = {
+			set_country_flag = bardic_magic_spell_3_unlocked
+		}
 	}
 
 	#Reveria

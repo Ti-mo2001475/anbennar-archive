@@ -5,6 +5,7 @@
 @custom_diplomacy_religion_shadowpact_number = 3030
 @custom_diplomacy_cultural_blank_container_number = 4010
 @custom_diplomacy_vampires_container_number = 5010
+@custom_diplomacy_mages_container_number = 5020
 @custom_diplomacy_Y20_number = 6010
 @custom_diplomacy_Y10_number = 6020
 @custom_diplomacy_Z99_number = 6030
@@ -153,6 +154,7 @@ custdip_estates_button_trigger = {
 		OR = {
 			#Put scripted triggers for any subcategories in here
 			custdip_estates_vampires_trigger = yes
+			custdip_estates_mages_trigger = yes
 			# has_global_flag = custdip_debug
 		}
 	}
@@ -166,6 +168,7 @@ custdip_has_multiple_estates_tabs_trigger = {
 			#They must be inside an OR to ensure each scripted trigger only counts once
 
 			OR = { custdip_estates_vampires_trigger = yes }
+			OR = { custdip_estates_mages_trigger = yes }
 			# has_global_flag = custdip_debug
 		}
 	}
@@ -283,6 +286,15 @@ custdip_estates_vampires_trigger = {
 		has_country_flag = has_vampires_estate
 		has_estate = estate_vampires
 	}
+}
+# placeholder actually might be bad because Harafic elves can't use and lot of people with mages will see nothing
+custdip_estates_mages_potential = {
+	is_variable_equal = { which = show_diplo_container value = @custom_diplomacy_mages_container_number }
+}
+custdip_estates_mages_trigger = {
+	# I don't wat this to show for everyone with a mage estate, but this category seems the most appropriate
+	has_estate = estate_mages
+	has_custom_spell_list_of_group = { group = bardic }
 }
 custdip_unique_Y20_potential = {
 	is_variable_equal = { which = show_diplo_container value = @custom_diplomacy_Y20_number }
