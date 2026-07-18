@@ -1915,6 +1915,12 @@ country_event = { #Disaster end. Same event whether you win or lose. This is als
 	after = {
 		clr_country_flag = no_callaction
 		remove_country_modifier = zaradyrra_disaster_disaster_event_month_delay
+		if = { # If this event fires from the 5 year timer we need to end the disaster manually
+			limit = {
+				has_disaster = ashhana_the_agony_of_expression
+			}
+			end_disaster = ashhana_the_agony_of_expression
+		}
 		#Clear all the flags we were using for the disaster events, but keep the Control event
 		#ones since you still meet those Control thresholds
 		clr_country_flag = ashhana_revolt_events_enabled
@@ -1934,6 +1940,16 @@ country_event = { #Disaster end. Same event whether you win or lose. This is als
 		L87 = { remove_country_modifier = ashhana_revolt_buff }
 		U47 = { remove_country_modifier = ashhana_revolt_buff }
 		hidden_effect = { remove_country_modifier = L76_shock_and_awe }
+		hidden_effect = {
+			if = {
+				limit = {
+					has_ruler_flag = is_relork_i_stonecarver
+				}
+				country_event = {
+					id = flavor_zulbur.16
+				}
+			}
+		}
 	}
 
 	# This will be the only option if you defeated the Canvas revolt

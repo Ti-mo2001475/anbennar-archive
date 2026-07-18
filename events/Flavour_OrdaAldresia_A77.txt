@@ -40,7 +40,7 @@ country_event = {
 		}
 
 		add_prestige = 100
-		add_stability = 1
+		add_stability_or_adm_power = yes
 		add_devotion = 100
 
 		add_historical_friend = Z97
@@ -159,7 +159,18 @@ country_event = { #	Orda Aldresia religion conflict
 		emperor = {
 			remove_country_modifier = supporting_orda_aldresia
 		}
-		set_country_flag = broken_oath		
+		set_country_flag = broken_oath
+		if = { # kick them out of the empire so emperor can dec post realm peace
+			limit = {
+				OR = {
+					hre_reform_passed = anbennar_mages_peace
+					hre_reform_passed = anbennar_empower_imperial_diet
+				}
+			}
+			capital_scope = {
+				set_in_empire = no
+			}
+		}
 	}
 
 	option = { # Stay loyal
@@ -1877,6 +1888,7 @@ country_event = { # Fall of Wex
 			destroy_great_project = {
 				type = bal_hyl
 			}
+			set_province_flag = bal_hyl_destroyed_flag
 		}
 	}
 }
@@ -1892,6 +1904,7 @@ country_event = { # Swords of God
 	option = {
 		name = flavor_orda_aldresia.42.a
 		A77 = {
+			white_peace = Z97
 			vassalize = Z97
 		}
 		random_owned_province = {
@@ -1929,7 +1942,14 @@ country_event = { # Legacy of Aldresia
 		}
 		hidden_effect = {
 			every_known_country = {
-				limit = { is_part_of_hre = yes }
+				limit = {
+					AND = {
+						is_part_of_hre = yes
+						NOT = {
+							is_subject_of = ROOT
+						}
+					}
+				}
 				capital_scope = {
 					spawn_rebels = {
 						size = 2
@@ -2134,7 +2154,7 @@ country_event = { # .46 SPIRIT LOSES DUEL Event
 			}
 			europe = {
 				limit = { is_part_of_hre = yes }
-				add_permanent_claim = A77
+				add_permanent_claim = Z01
 			}
 		}	
 		dismantle_hre = yes
