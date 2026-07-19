@@ -10141,6 +10141,12 @@ on_development_effect = {
 		limit = { owner = { religion = mazhthramazh } }
 		owner = { add_church_power = 1 }
 	}
+
+	if = {
+		limit = { has_province_modifier = haless_khantaari_treasure }
+		extend_province_modifier = { name = haless_khantaari_treasure duration = 1095 }
+		province_event = { id = haless.1003 days = 1096 }
+	}
 }
 
 # THIS = Province, FROM = Country, ROOT = Merc Unit
@@ -12682,11 +12688,11 @@ startup_1444_effects = {
 			save_global_event_target_as = feiten_or_was_feiten_target
 		}
 
-		if = {
+		if = { #One-time setup events
 			limit = { tag = REB }
-			emperor = {
-				save_global_event_target_as = Emperor
-			}
+			emperor = { save_global_event_target_as = Emperor }
+
+			5214 = { province_event = { id = haless.1001 days = 3650 } } #Setup event for Gozengun Shifting Sands System
 		}
 
 		if = {
