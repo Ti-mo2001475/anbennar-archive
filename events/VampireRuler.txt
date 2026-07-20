@@ -229,6 +229,10 @@ country_event = { # Ruler Must Step Down (getting too old)
 		}
 		add_adm_power = -100
 		save_ruler_stats = yes
+		if = {
+			limit = { has_government_attribute = better_vampire_ruler }
+			hidden_effect = { set_country_flag = vampire_controlled_rebirth }
+		}
 		kill_ruler = yes
 		reset_vampire_age = yes
 	}
@@ -645,6 +649,10 @@ country_event = { #Vampire Stats and hunting organizer
 			factor = 1.33
 			vampire_age = { greater_than_or_equal_to = 18250 } # 50 years
 		}
+		modifier = {
+			factor = 3
+			has_government_attribute = better_vampire_ruler
+		}
 	}
 
 	#ADM
@@ -682,6 +690,10 @@ country_event = { #Vampire Stats and hunting organizer
 			modifier = {
 				factor = 0.5
 				has_country_flag = vampire_missed_hunt
+			}
+			modifier = {
+				factor = 5
+				has_government_attribute = better_vampire_ruler
 			}
 		}
 		country_event = { id = vampire_ruler.13 }
@@ -1013,6 +1025,10 @@ country_event = { #The Hunt Begins (hidden event)
 		name = vampire_ruler.132.a
 		ai_chance = {
 			factor = 4
+			modifier = {
+				factor = 5
+				has_government_attribute = better_vampire_ruler
+			}
 		}
 		country_event = { id = vampire_ruler.18 days = 30 random = 10 }
 	}
@@ -1021,6 +1037,10 @@ country_event = { #The Hunt Begins (hidden event)
 		name = vampire_ruler.132.a
 		ai_chance = {
 			factor = 4
+			modifier = {
+				factor = 5
+				has_government_attribute = better_vampire_ruler
+			}
 		}
 		country_event = { id = vampire_ruler.19 days = 30 random = 10 }
 	}
@@ -1029,6 +1049,10 @@ country_event = { #The Hunt Begins (hidden event)
 		name = vampire_ruler.132.a
 		ai_chance = {
 			factor = 4
+			modifier = {
+				factor = 5
+				has_government_attribute = better_vampire_ruler
+			}
 		}
 		country_event = { id = vampire_ruler.20 days = 30 random = 10 }
 	}
@@ -1463,6 +1487,11 @@ country_event = { # Confront Hunter
 				custom_trigger_tooltip = {
 					tooltip = J84_mihaela_is_ruler_tt
 					has_country_flag = J84_is_mihaela_flag
+				}
+				AND = {
+					adm = 6
+					dip = 6
+					mil = 6
 				}
 			}
 		}

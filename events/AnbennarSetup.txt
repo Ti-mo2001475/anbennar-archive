@@ -285,6 +285,63 @@ country_event = {
 	}
 }
 
+#Base Setup for Mage Type - some tags can't set privileges in history files, also for unbanning mages
+country_event = {
+	id = anbennar_setup.6
+	title = anbennar_setup.6.t
+	desc = anbennar_setup.6.d
+	picture = WAR_OF_THE_ROSES_eventPicture
+	
+	#fire_only_once = yes
+	hidden = yes
+	is_triggered_only = yes
+	
+	trigger = {
+		has_estate = estate_mages
+		NOT = { has_mages_organization_privilege = yes }
+	}
+	
+	option = {
+		name = "anbennar_setup.6.a"
+		
+		if = { #Various flags that you can put in your history files
+			limit = { has_country_flag = mage_organization_religious_flag }
+			clr_country_flag = mage_organization_religious_flag
+			set_estate_privilege = estate_mages_organization_religious
+		}
+		else_if = {
+			limit = { has_country_flag = mage_organization_state_flag }
+			clr_country_flag = mage_organization_state_flag
+			set_estate_privilege = estate_mages_organization_state
+		}
+		else_if = {
+			limit = { has_country_flag = mage_organization_guilds_flag }
+			clr_country_flag = mage_organization_guilds_flag
+			set_estate_privilege = estate_mages_organization_guilds
+		}
+		else_if = { #Regional orgs that we default to first
+			limit = { has_custom_spell_list_of_group = { group = harpy } }
+			set_estate_privilege = estate_mages_organization_sanarenni
+		}
+		else_if = {
+			limit = { religion_group = bulwari }
+			set_estate_privilege = estate_mages_organization_magi_clans
+		}
+		else_if = {
+			limit = {
+				OR = {
+					is_part_of_hre = yes
+					tag = A85 #Magisterium
+				}
+			}
+			set_estate_privilege = estate_mages_organization_magisterium
+		}
+		else = { #You can force it with a flag to put guilds ahead of regional orgs
+			set_estate_privilege = estate_mages_organization_guilds
+		}
+	}
+}
+
 #Country Setup for Evil Opinions - right now, specifically for witch-kings?
 country_event = {
 	id =  anbennar_setup.7
@@ -1679,12 +1736,18 @@ country_event = { #Initialize magic system
 			monthly_magic_upkeep_pulse = yes #first tick of monthly calcs, for players
 		}
 
-		#disable necromancy for insyaa tags
-		if = {
+		#Regional setup
+
+		if = { #disable necromancy for insyaa tags
 			limit = {
 				capital_scope = { continent = oceania }
 			}
 			set_country_flag = banned_necromancy
+		}
+
+		if = { #Haless Chi startup
+			limit = { can_access_haless_chi_magic = yes }
+			initialise_custom_spell_list = { group = chi }
 		}
 	}
 }

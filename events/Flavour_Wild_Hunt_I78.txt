@@ -117,7 +117,7 @@ country_event = {
 		custom_tooltip = I78_caehns_authority_enable_tt
 		if = {
 			limit = { has_ruler_flag = I78_starting_ruler_flag }
-			add_exceptional_willpower = { years = 100 }
+			add_exceptional_willpower_100 = yes
 			change_adm = 2
 			change_dip = 2
 			change_mil = 2
@@ -699,18 +699,12 @@ country_event = {
 				ROOT = { inherit = PREV }
 			}
 			every_known_country = {
-				limit = {
-					OR = {
-						religious_school = {
-							group = centaur_religion
-							school = maslekhuga_school
-						}
-						religious_school = {
-							group = centaur_religion
-							school = irdukhuga_school
-						}
-					}
-				}
+				limit = { religion = irdaeos_worship }
+				ROOT = { vassalize = PREV }
+				add_liberty_desire = -100
+			}
+			every_known_country = { #This is done because the `inherit` effect can mess with `every_known_country` and drop a couple tags. This is there to catch them.
+				limit = { religion = irdaeos_worship }
 				ROOT = { vassalize = PREV }
 				add_liberty_desire = -100
 			}

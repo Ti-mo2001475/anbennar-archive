@@ -1,0 +1,1941 @@
+namespace = celliande
+
+country_event = { #Looming Shadows
+	id = celliande.1
+	title = celliande.1.t
+	desc = celliande.1.d
+	picture = NAVAL_MILITARY_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.1.a
+		451 = { #Nathalaire
+			add_permanent_claim = ROOT
+		}
+		add_country_modifier = {
+			name = celliande_muster_fleet
+			duration = 1825
+		}
+		hidden_effect = {
+			set_country_flag = got_celliande_looming_shadows
+		}
+	}
+}
+
+country_event = { #Ultimatum
+	id = celliande.2
+	title = celliande.2.t
+	desc = celliande.2.d
+	picture = COURT_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	major = yes
+	major_trigger = {
+		tag = A56 #Celliande
+	}
+	
+	option = { #No
+		name = celliande.2.a
+		hawkfields_area = {
+			add_core = A56
+		}
+		hidden_effect = {
+			A56 = {
+				set_country_flag = celliande_ultimatum_rejected
+			}
+		}
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 0
+				OR = {
+					has_any_disaster = yes
+					AND = {
+						is_at_war = yes
+						NOT = { war_with = A56 }
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = celliande.2.b
+		hawkfields_area = {
+			cede_province = A56
+			add_core = A56
+		}
+		if = {
+			limit = {
+				A56 = { #Celliande
+					alliance_with = A34 #Bisan
+				}
+			}
+			every_owned_province = {
+				limit = {
+					is_core = A34
+				}
+				cede_province = A34
+			}
+		}
+		add_truce_with = A56
+		hidden_effect = {
+			A56 = {
+				country_event = {
+					id = celliande.3
+					days = 7
+				}
+			}
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 100
+				OR = {
+					has_any_disaster = yes
+					AND = {
+						is_at_war = yes
+						NOT = { war_with = A56 }
+					}
+				}
+			}
+		}
+	}
+}
+
+country_event = { #Tellum accord
+	id = celliande.3
+	title = celliande.3.t
+	desc = celliande.3.d
+	picture = FORT_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.3.a
+		if = {
+			limit = {
+				A86 = {
+					exists = yes
+				}
+			}
+			if = {
+				limit = {
+					A86 = {
+						vassal_of = ROOT
+					}
+				}
+				A86 = {
+					add_liberty_desire = -25
+				}
+			}
+			else = {
+				vassalize = A86
+				add_country_modifier = {
+					name = celliande_tellum_modifier
+					duration = 3650
+				}
+				A86 = { #Tellum
+					if = {
+						limit = { total_development = 50 }
+						add_liberty_desire = 30
+					}
+				}
+			}
+		}
+		else = {
+			417 = {
+				add_nationalism = -5
+			}
+		}
+	}
+}
+
+country_event = { #On trail of Hero 1
+	id = celliande.4
+	title = celliande.4.t
+	desc = celliande.4.d
+	picture = LAND_MILITARY_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.4.a
+		U16 = { #Ourdia
+			if = {
+				limit = {
+					OR = {
+						alliance_with = ROOT
+						is_subject_of = ROOT
+					}
+				}
+				add_historical_friend_mutual = { tag = ROOT }
+			}
+		}
+		hidden_effect = {
+			country_event = {
+				id = celliande.5
+				days = 365
+			}
+		}
+	}
+}
+
+country_event = { #On trail of Hero 2
+	id = celliande.5
+	title = celliande.5.t
+	desc = celliande.5.d
+	picture = AULIC_COUNCIL_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.5.a
+		add_country_modifier = {
+			name = celliande_wayward_order
+			duration = 9125
+		}
+		hidden_effect = {
+			set_country_flag = had_celliande_wayward_order
+			country_event = {
+				id = celliande.6
+				days = 1095
+			}
+		}
+	}
+}
+
+country_event = { #On trail of Hero 3
+	id = celliande.6
+	title = celliande.6.t
+	desc = celliande.6.d
+	picture = CATHOLIC_RULERS_PRAYING_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.6.a
+		define_admiral = {
+			name = "Aldres Serondoruni"
+			shock = 2
+			fire = 3
+			manuever = 5
+			siege = 2
+		}
+		remove_country_modifier = celliande_wayward_order
+	}
+}
+
+country_event = { #Rising a Hero
+	id = celliande.7
+	title = celliande.7.t
+	desc = celliande.7.d
+	picture = MAGE_MOON_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		set_country_flag = celliande_rising_hero_menu_open
+	}
+	
+	option = {
+		name = celliande.7.a
+		trigger = {
+			has_country_flag = celliande_rise_hero_aran
+		}
+		hire_advisor = {
+			name = "Aran sil Varlosen"
+			type = natural_scientist
+			skill = 2
+			culture = milcori
+			discount = yes
+		}
+	}
+	option = {
+		name = celliande.7.b
+		trigger = {
+			has_country_flag = celliande_rise_hero_bull
+		}
+		define_general = {
+			name = "Bull of Kwinteme"
+			shock = 6
+			fire = 0
+			manuever = 2
+			siege = 4
+			trait = siege_specialist_personality
+			female = yes
+		}
+	}
+	option = {
+		name = celliande.7.c
+		trigger = {
+			has_country_flag = celliande_rise_hero_serondor
+		}
+		define_admiral = {
+			name = "Serondor sil Sorncell"
+			shock = 3
+			fire = 2
+			manuever = 7
+			siege = 3
+			trait = inspirational_captain_personality
+		}
+	}
+	option = {
+		name = celliande.7.exit
+		highlight = yes
+	}
+	after = {
+		clr_country_flag = celliande_rising_hero_menu_open
+	}
+}
+country_event = { #On trail of Hero 4
+	id = celliande.8
+	title = celliande.8.t
+	desc = celliande.8.d
+	picture = NAVAL_MILITARY_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.8.a
+		add_prestige = 50
+		if = {
+			limit = { NOT = { has_country_flag = celliande_rise_hero_unlocked } }
+			custom_tooltip = celliande_unlock_rise_hero
+			hidden_effect = {
+				set_country_flag = celliande_rise_hero_unlocked
+			}
+		}
+		custom_tooltip = celliande_unlock_serondor
+		hidden_effect = {
+			set_country_flag = celliande_rise_hero_serondor
+		}
+	}
+	option = {
+		name = celliande.8.b
+		451 = { #Nathalaire
+			add_permanent_province_modifier = {
+				name = celliande_cheese_mausoleum
+				duration = -1
+			}
+			add_or_upgrade_tax_building = yes
+		}
+	}
+	after = {
+		hidden_effect = {
+			set_country_flag = celliande_uncovered_serondor
+		}
+	}
+}
+country_event = { #Outcry wex
+	id = celliande.9
+	title = celliande.9.t
+	desc = celliande.9.d
+	picture = NOBLE_ESTATE_DEMANDS_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	trigger = {
+		any_ally = {
+			primary_culture = wexonard
+		}
+	}
+	
+	option = {
+		name = celliande.9.a
+		add_estate_loyalty = {
+			estate = estate_nobles
+			loyalty = -20
+		}
+		add_country_modifier = {
+			name = celliande_outcry
+			duration = 1825
+		}
+	}
+	option = {
+		name = celliande.9.b
+		every_ally = {
+			limit = {
+				primary_culture = wexonard
+			}
+			break_alliance = ROOT
+			add_opinion = {
+				who = ROOT
+				modifier = insulted
+			}
+		}
+		add_estate_loyalty = {
+			estate = estate_nobles
+			loyalty = 10
+		}
+	}
+}
+country_event = { #From beyond the Grave
+	id = celliande.10
+	title = celliande.10.t
+	desc = celliande.10.d
+	picture = COURT_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.10.a
+		change_primary_culture = milcori
+		set_ruler_culture = milcori
+		set_heir_culture = milcori
+		set_consort_culture = milcori
+		highcliff_area = {
+			limit = {
+				owned_by = ROOT
+			}
+			change_culture = milcori
+		}
+		custom_tooltip = celliande.10.tt
+		hidden_effect = {
+			set_country_flag = celliande_convert_wexara
+			every_owned_province = {
+				limit = {
+					OR = {
+						culture = wexonard
+						culture = arannese
+					}
+				}
+				add_province_modifier = {
+					name = celliande_revival
+					duration = -1
+				}
+			}
+		}
+	}
+}
+country_event = { #Enter, the Nameless
+	id = celliande.11
+	title = celliande.11.t
+	desc = celliande.11.d
+	picture = MAGES_ESTATE_MAD_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.11.a
+		
+	}
+	option = {
+		name = celliande.11.b
+		if = {
+			limit = { NOT = { has_estate_privilege = estate_mages_organization_state } }
+			clear_mages_organization_effect = yes
+			set_estate_privilege = estate_mages_organization_state
+		}
+		
+	}
+	after = {
+		hidden_effect = {
+			set_country_flag = celliande_nameless_flag
+		}
+	}
+}
+#Free space 12
+country_event = { #Final
+	id = celliande.13
+	title = celliande.13.t
+	desc = celliande.13.d
+	picture = CITY_VIEW_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.13.a
+		add_prestige_or_monarch_power = { amount = 100 }
+		add_manpower = -5
+		the_borders_region = {
+			add_permanent_claim = ROOT
+		}
+		form_milcorissia = yes
+	}
+}
+country_event = { #Hero Brasan
+	id = celliande.14
+	title = celliande.14.t
+	desc = celliande.14.d
+	picture = HARBOUR_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.14.a
+		add_country_modifier = {
+			name = celliande_brasan_hero
+			duration = 3650
+		}
+	}
+}
+country_event = { #Necromantic Fashion
+	id = celliande.15
+	title = celliande.15.t
+	desc = celliande.15.d
+	picture = FEAST_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.15.a
+		add_years_of_owned_provinces_production_income = {
+			years = 2
+			trigger = {
+				OR = {
+					trade_goods = cloth
+					trade_goods = silk
+				}
+			}
+		}
+	}
+}
+country_event = { #Renovation suprise
+	id = celliande.16
+	title = celliande.16.t
+	desc = celliande.16.d
+	picture = COUNTRY_COLLAPSE_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.16.a
+		goto = 413
+		add_prestige = 25
+		413 = { #Sorncell
+			add_province_modifier = {
+				name = celliande_adventuring_hotspot
+				duration = 5475
+			}
+		}
+	}
+}
+country_event = { #Renovation suprise
+	id = celliande.17
+	title = celliande.17.t
+	desc = celliande.17.d
+	picture = DIPLOMACY_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.17.b
+		custom_tooltip = celliande.17.tt
+		hidden_effect = {
+			add_country_modifier = {
+				name = celliande_until_milcori
+				duration = -1
+			}
+		}
+		
+		add_country_modifier = {
+			name = celliande_border_claim
+			duration = 9125 #25 Years
+		}
+		arannen_area = {
+			add_permanent_claim = ROOT
+		}
+		eastborders_area = {
+			add_permanent_claim = ROOT
+		}
+		rhinmond_area = {
+			add_permanent_claim = ROOT
+		}
+		gnollsgate_area = {
+			add_permanent_claim = ROOT
+		}
+	}
+}
+country_event = { #Nameless Tutors
+	id = celliande.18
+	title = celliande.18.t
+	desc = celliande.18.d
+	picture = MAGES_ESTATE_eventPicture
+
+	trigger = {
+		NOT = { has_country_flag = celliande_18_happend }
+		NOT = { heir_age = 15 }
+	}
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = celliande_18_happend
+			pick_random_provinces = {
+				3 = yes
+				scope = random_owned_province
+				event_target_name = celliande_target
+			}
+		}
+	}
+	
+	option = {
+		name = celliande.18.a
+		if = {
+			limit = { heir_is_powerful_mage = yes }
+			add_treasury = -50
+		}
+		else = {
+			add_treasury = -150
+		}
+		set_heir_mage_effect = yes
+		magic_school_level_up = { type = heir school = necromancy }
+		do_same_event_target_effect = {
+			3 = yes
+			event_target_name = celliande_target
+			effect = "remove_random_development = yes"
+		}
+	}
+	option = {
+		name = celliande.18.b
+		add_prestige = 10
+	}
+}
+#Magical Project
+country_event = { #Start level 1
+	id = celliande.100
+	title = celliande.100.t
+	desc = celliande.100.d
+	picture = MAGES_ESTATE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.100.a
+		add_country_modifier = {
+			name = celliande_nameless_lead
+			duration = -1
+			desc = until_end_of_exploration
+		}
+	}
+	option = {
+		name = celliande.100.b
+		add_country_modifier = {
+			name = celliande_estate_lead
+			duration = -1
+			desc = until_end_of_exploration
+		}
+	}
+}
+country_event = { #Trek deeper level 1
+	id = celliande.101
+	title = celliande.101.t
+	desc = celliande.101.d
+	picture = TRADEGOODS_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.101.a
+		remove_country_modifier = celliande_nameless_lead
+		remove_country_modifier = celliande_estate_lead
+		add_country_modifier = {
+			name = celliande_hunger
+			duration = -1
+			desc = until_end_of_exploration
+		}
+	}
+	option = {
+		name = celliande.101.b
+		trigger = {
+			is_overall_conjuration_level_1_minimum = yes
+		}
+		highlight = yes
+		change_mana = { amount = -50 }
+		add_estate_influence_modifier = {
+			influence = 10
+			estate = estate_mages
+			duration = 1825
+		}
+		increase_magic_experience = { amount = 50 }
+	}
+	option = {
+		name = celliande.101.c
+		trigger = {
+			is_overall_transmutation_level_1_minimum = yes
+		}
+		highlight = yes
+		change_mana = { amount = -25 }
+		add_estate_influence_modifier = {
+			influence = 10
+			estate = estate_mages
+			duration = 1825
+		}
+		increase_magic_experience = { amount = 25 }
+	}
+}
+country_event = { #End level 1
+	id = celliande.102
+	title = celliande.102.t
+	desc = celliande.102.d
+	picture = DECLARATION_INDEPENDENCE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.102.a
+		add_country_modifier = {
+			name = celliande_stage_one
+			duration = -1
+		}
+		if = {
+			limit = { NOT = { has_country_flag = celliande_rise_hero_unlocked } }
+			custom_tooltip = celliande_unlock_rise_hero
+			hidden_effect = {
+				set_country_flag = celliande_rise_hero_unlocked
+			}
+		}
+		custom_tooltip = celliande_unlock_aran
+		hidden_effect = {
+			set_country_flag = celliande_rise_hero_aran
+		}
+	}
+}
+country_event = { #Start level 2
+	id = celliande.103
+	title = celliande.103.t
+	desc = celliande.103.d
+	picture = BANKRUPTCY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.103.a
+		add_legitimacy = -5
+		add_country_modifier = {
+			name = celliande_shrine_rhin
+			duration = 365
+			desc = until_end_of_exploration
+		}
+		add_country_modifier = {
+			name = celliande_shrine_rhin2
+			duration = -1
+			desc = until_end_of_exploration
+		}
+		
+	}
+	option = {
+		name = celliande.103.b
+		highlight = yes
+		trigger = {
+			reverse_has_opinion = {
+				who = A85
+				value = 100
+			}
+		}
+		add_country_modifier = {
+			name = celliande_archives_search
+			duration = 730
+			desc = until_end_of_exploration
+		}
+		increase_magic_experience = { amount = 50 }
+		add_country_modifier = {
+			name = celliande_archives_search2
+			duration = -1
+			desc = until_end_of_exploration
+		}
+	}
+}
+country_event = { #DREAM level 2
+	id = celliande.104
+	title = celliande.104.t
+	desc = celliande.104.d
+	picture = BIG_STAR_IN_SKY_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = { NOT = { has_country_flag = celliande.104.first } }
+				set_country_flag = celliande.104.first
+				set_variable = {
+					which = celliande_number_iteration
+					value = 0
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = celliande.104.a
+		increase_magic_experience = { amount = 100 }
+		hidden_effect = {
+			clr_country_flag = celliande.104.first
+		}
+	}
+	option = {
+		name = celliande.104.b
+		trigger = {
+			NOT = {
+				check_variable = {
+					which = celliande_number_iteration
+					value = 3
+				}
+			}
+		}
+		
+		hidden_effect = {
+			change_variable = {
+				which = celliande_number_iteration
+				value = 1
+			}
+			set_country_flag = celliande.104.bounce
+			country_event = {
+				id = celliande.1000
+			}
+		}
+	}
+	option = {
+		name = celliande.104.a
+		increase_magic_experience = { amount = 101 }
+		trigger = {
+			check_variable = {
+				which = celliande_number_iteration
+				value = 3
+			}
+		}
+		
+		add_stability = -1
+		hidden_effect = {
+			clr_country_flag = celliande.104.first
+		}
+	}
+	option = {
+		name = celliande.104.a
+		increase_magic_experience = { amount = 102 }
+		trigger = {
+			check_variable = {
+				which = celliande_number_iteration
+				value = 3
+			}
+		}
+		add_stability = -2
+		hidden_effect = {
+			clr_country_flag = celliande.104.first
+		}
+	}
+	option = {
+		name = celliande.104.a
+		increase_magic_experience = { amount = 103 }
+		trigger = {
+			check_variable = {
+				which = celliande_number_iteration
+				value = 3
+			}
+		}
+		add_stability = -3
+		hidden_effect = {
+			clr_country_flag = celliande.104.first
+		}
+	}
+	option = {
+		name = celliande.104.a
+		increase_magic_experience = { amount = 104 }
+		trigger = {
+			check_variable = {
+				which = celliande_number_iteration
+				value = 3
+			}
+		}
+		add_stability = -4
+		hidden_effect = {
+			clr_country_flag = celliande.104.first
+		}
+	}
+	option = {
+		name = celliande.104.a
+		increase_magic_experience = { amount = 105 }
+		trigger = {
+			check_variable = {
+				which = celliande_number_iteration
+				value = 3
+			}
+		}
+		add_stability = -5
+		hidden_effect = {
+			clr_country_flag = celliande.104.first
+		}
+	}
+	option = {
+		name = celliande.104.a
+		increase_magic_experience = { amount = 106 }
+		trigger = {
+			check_variable = {
+				which = celliande_number_iteration
+				value = 3
+			}
+		}
+		add_stability = -6
+		hidden_effect = {
+			clr_country_flag = celliande.104.first
+		}
+	}
+	option = {
+		name = celliande.104.a
+		increase_magic_experience = { amount = 107 }
+		trigger = {
+			check_variable = {
+				which = celliande_number_iteration
+				value = 3
+			}
+		}
+		add_stability = -7
+		hidden_effect = {
+			clr_country_flag = celliande.104.first
+		}
+	}
+	option = {
+		name = celliande.104.a
+		increase_magic_experience = { amount = 108 }
+		trigger = {
+			check_variable = {
+				which = celliande_number_iteration
+				value = 3
+			}
+		}
+		add_stability = -8
+		hidden_effect = {
+			clr_country_flag = celliande.104.first
+		}
+	}
+	option = {
+		name = celliande.104.a
+		increase_magic_experience = { amount = 109 }
+		trigger = {
+			check_variable = {
+				which = celliande_number_iteration
+				value = 3
+			}
+		}
+		add_stability = -9
+		hidden_effect = {
+			clr_country_flag = celliande.104.first
+		}
+	}
+	option = {
+		name = celliande.104.a
+		increase_magic_experience = { amount = 110 }
+		trigger = {
+			check_variable = {
+				which = celliande_number_iteration
+				value = 3
+			}
+		}
+		add_stability = -10
+		hidden_effect = {
+			clr_country_flag = celliande.104.first
+		}
+	}
+	option = {
+		name = celliande.104.a
+		increase_magic_experience = { amount = 111 }
+		trigger = {
+			check_variable = {
+				which = celliande_number_iteration
+				value = 3
+			}
+		}
+		add_stability = -11
+		hidden_effect = {
+			clr_country_flag = celliande.104.first
+		}
+	}
+	option = {
+		name = celliande.104.a
+		increase_magic_experience = { amount = 112 }
+		trigger = {
+			check_variable = {
+				which = celliande_number_iteration
+				value = 3
+			}
+		}
+		add_stability = -12
+		hidden_effect = {
+			clr_country_flag = celliande.104.first
+		}
+	}
+	option = {
+		name = celliande.104.a
+		increase_magic_experience = { amount = 113 }
+		trigger = {
+			check_variable = {
+				which = celliande_number_iteration
+				value = 3
+			}
+		}
+		add_stability = -13
+		hidden_effect = {
+			clr_country_flag = celliande.104.first
+		}
+	}
+}
+country_event = { #Sacrifice level 2
+	id = celliande.105
+	title = celliande.105.t
+	desc = celliande.105.d
+	picture = CASTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.105.a
+		add_country_modifier = {
+			name = celliande_sacrifice_prison
+			duration = 3650
+		}
+	}
+}
+country_event = { #END level 2
+	id = celliande.106
+	title = celliande.106.t
+	desc = celliande.106.d
+	picture = GENERALS_DISCUSSING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.106.a
+		remove_country_modifier = celliande_stage_one
+		add_country_modifier = {
+			name = celliande_stage_two
+			duration = -1
+		}
+		custom_tooltip = celliande.106.tt
+		set_country_flag = necromancy_2_speak_with_dead_cost_0
+	}
+}
+country_event = { #Start level 3
+	id = celliande.107
+	title = celliande.107.t
+	desc = celliande.107.d
+	picture = TRADEGOODS_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.107.a
+		add_country_modifier = {
+			name = celliande_ruler_speach
+			duration = -1
+			desc = until_end_of_exploration
+		}
+	}
+	option = {
+		name = celliande.107.b
+		add_country_modifier = {
+			name = celliande_will_die
+			duration = -1
+			desc = until_end_of_exploration
+		}
+	}
+}
+country_event = { #Hallowed halls level 3
+	id = celliande.108
+	title = celliande.108.t
+	desc = celliande.108.d
+	picture = DARK_FOREST_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.108.a
+		add_country_modifier = {
+			name = celliande_darkness_light
+			duration = -1
+			desc = until_end_of_exploration
+		}
+	}
+	option = {
+		name = celliande.108.b
+		add_country_modifier = {
+			name = celliande_cling_light
+			duration = -1
+			desc = until_end_of_exploration
+		}
+	}
+}
+country_event = { #Sanctum level 3
+	id = celliande.109
+	title = celliande.109.t
+	desc = celliande.109.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.109.a
+		custom_tooltip = celliande.109.att
+		add_manpower = -0.037
+		if = {
+			limit = { has_mil_advisor = yes }
+			kill_advisor_by_category_effect = {
+				MIL = yes
+			}
+		}
+		add_country_modifier = {
+			name = celliande_sanctum_sacrifice
+			duration = 3650
+		}
+		increase_magic_experience = { amount = 100 }
+	}
+}
+country_event = { #END level 3
+	id = celliande.110
+	title = celliande.110.t
+	desc = celliande.110.d
+	picture = LOOMING_DEATH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.110.a
+		add_prestige = 20
+		remove_country_modifier = celliande_stage_two
+		add_country_modifier = {
+			name = celliande_stage_three
+			duration = -1
+		}
+		custom_tooltip = celliande.110.tt
+		hidden_effect = {
+			set_country_flag = necromancy_1_steal_vitality_add_attrition
+			set_country_flag = necromancy_1_steal_vitality_add_monarch_lifespan
+		}
+	}
+}
+#Button exploration
+country_event = { #Varlosen 1
+	id = celliande.150
+	title = celliande.150.t
+	desc = celliande.150.d
+	picture = ACCUSATION_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.150.a
+		add_treasury = -100
+		add_dip_power = -25
+		reverse_add_opinion = {
+			who = A85 #Magisterium
+			modifier = celliande_tower_deal
+		}
+		country_event = {
+			id = celliande.151
+			days = 180
+		}
+	}
+	option = {
+		name = celliande.150.b
+		goto = 419
+		419 = {
+			spawn_rebels = {
+				type = mage_rebels
+				estate = estate_mages
+				size = 2
+			}
+		}
+		reverse_add_opinion = {
+			who = A85
+			modifier = celliande_tower_attack
+		}
+		add_trust = {
+			who = A85
+			value = -100
+		}
+		country_event = {
+			id = celliande.151
+			days = 365
+		}
+	}
+}
+country_event = { #Varlosen 2
+	id = celliande.151
+	title = celliande.151.t
+	desc = celliande.151.d
+	picture = BIG_BOOK_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.151.a
+		goto = 419
+		419 = { #Varlosen
+			change_trade_goods = glass
+			add_province_modifier = {
+				name = celliande_mage_shop
+				duration = 3650
+			}
+		}
+		add_estate_loyalty = {
+			estate = estate_mages
+			loyalty = 10
+		}
+	}
+	option = {
+		name = celliande.151.b
+		add_treasury = 300
+		add_estate_loyalty = {
+			estate = estate_nobles
+			loyalty = 10
+		}
+		add_estate_loyalty = {
+			estate = estate_burghers
+			loyalty = 10
+		}
+		add_estate_loyalty = {
+			estate = estate_adventurers
+			loyalty = 10
+		}
+		add_estate_loyalty = {
+			estate = estate_mages
+			loyalty = -10
+		}
+	}
+	after = {
+		hidden_effect = {
+			419 = {
+				clr_province_flag = celliande_is_exploring
+				set_province_flag = celliande_already_explored
+			}
+			clr_country_flag = celliande_is_exploring_country
+		}
+	}
+}
+country_event = { #Rhinmond 1
+	id = celliande.152
+	title = celliande.152.t
+	desc = celliande.152.d
+	picture = PLAGUE_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.152.a
+		goto = 919 #Rhinmond
+		add_prestige = -25
+		add_manpower = 1.5
+		919 = {
+			add_local_autonomy = 15
+		}
+		country_event = {
+			id = celliande.153
+			days = 12
+		}
+		hidden_effect = {
+			set_country_flag = celliande_rebels_recruited
+		}
+	}
+	option = {
+		name = celliande.152.b
+		goto = 919
+		add_adm_power = 25
+		add_dip_power = 25
+		add_mil_power = 25
+		919 = {
+			add_nationalism = -5
+			spawn_rebels = {
+				size = 2
+				type = nationalist_rebels
+				separatists_target = A48
+			}
+		}
+		country_event = {
+			id = celliande.153
+			days = 60
+			random = 120
+		}
+		hidden_effect = {
+			set_country_flag = celliande_rebels_killed
+		}
+	}
+}
+country_event = { #Rhinmond 2
+	id = celliande.153
+	title = celliande.153.t
+	desc = celliande.153.d
+	picture = DARK_FOREST_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.153.a
+		change_mana = { amount = -25 }
+		add_dip_power = -25
+		country_event = {
+			id = celliande.155
+			days = 365
+		}
+	}
+	option = {
+		name = celliande.153.b
+		trigger = {
+			has_country_flag = celliande_rebels_killed
+		}
+		add_country_modifier = {
+			name = celliande_undead_rebels
+			duration = 1825
+		}
+		country_event = {
+			id = celliande.155
+			days = 240
+		}
+		hidden_effect = {
+			clr_country_flag = celliande_rebels_killed
+		}
+	}
+	option = {
+		name = celliande.153.c
+		goto = 919
+		trigger = {
+			has_country_flag = celliande_rebels_recruited
+		}
+		add_prestige = -10
+		919 = {
+			add_local_autonomy = 15
+		}
+		country_event = {
+			id = celliande.154
+			days = 90
+		}
+		
+	}
+}
+country_event = { #Rhinmond 3 rebel path
+	id = celliande.154
+	title = celliande.154.t
+	desc = celliande.154.d
+	picture = CAVE_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.154.a
+		add_country_modifier = {
+			name = celliande_mag_insanity
+			duration = 1825
+		}
+		country_event = {
+			id = celliande.156
+			days = 180
+		}
+	}
+	option = {
+		name = celliande.154.b
+		add_estate_influence_modifier = {
+			influence = 20
+			estate = estate_church
+			duration = 3650
+		}
+		add_country_modifier = {
+			name = celliande_faith_aegis
+			duration = 1825
+		}
+		country_event = {
+			id = celliande.156
+			days = 180
+		}
+	}
+}
+country_event = { #Rhinmond 4 normal path
+	id = celliande.155
+	title = celliande.155.t
+	desc = celliande.155.d
+	picture = COMET_SIGHTED_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.155.a
+		add_country_modifier = {
+			name = celliande_dip_aberrand
+			duration = 730
+		}
+		add_adm_power = 25
+		add_dip_power = 25
+		add_mil_power = 25
+		country_event = {
+			id = celliande.156
+			days = 365
+		}
+	}
+	option = {
+		name = celliande.155.b
+		goto = 919
+		add_manpower = -1
+		919 = {
+			add_province_modifier = {
+				name = celliande_profits
+				duration = 1095
+			}
+		}
+		country_event = {
+			id = celliande.156
+			days = 180
+		}
+	}
+}
+country_event = { #Rhinmond 5
+	id = celliande.156
+	title = celliande.156.t
+	desc = celliande.156.d
+	picture = PRAYING_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.156.a
+		goto = 919
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 10
+		}
+		919 = {
+			change_trade_goods = paper
+			add_or_upgrade_tax_building = yes
+			if = {
+				limit = { owner = { has_country_flag = celliande_rebels_recruited } }
+				add_nationalism = -5
+			}
+		}
+	}
+	option = {
+		name = celliande.156.b
+		goto = 919
+		919 = {
+			change_trade_goods = ivory
+			add_province_modifier = {
+				name = celliande_bone_reparation
+				duration = 9125
+			}
+			if = {
+				limit = { owner = { has_country_flag = celliande_rebels_recruited } }
+				add_nationalism = -5
+			}
+		}
+	}
+	after = {
+		hidden_effect = {
+			clr_country_flag = celliande_rebels_recruited
+			919 = {
+				clr_province_flag = celliande_is_exploring
+				set_province_flag = celliande_already_explored
+			}
+			clr_country_flag = celliande_is_exploring_country
+		}
+	}
+}
+country_event = { #Quintenbury 1
+	id = celliande.157
+	title = celliande.157.t
+	desc = celliande.157.d
+	picture = KINGS_CHOICE_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.157.a
+		add_country_modifier = {
+			name = celliande_mage_rock
+			duration = 730
+		}
+		add_estate_loyalty = {
+			estate = estate_mages
+			loyalty = 10
+		}
+		country_event = {
+			id = celliande.158
+			days = 365
+		}
+	}
+	option = {
+		name = celliande.157.b
+		highlight = yes
+		trigger = {
+			OR = {
+				A33 = { #Verne
+					has_opinion = {
+						who = ROOT
+						value = 50
+					}
+				}
+				A55 = { #Menibor
+					has_opinion = {
+						who = ROOT
+						value = 50
+					}
+				}
+			}
+		}
+		add_treasury = -200
+		add_estate_loyalty = {
+			estate = estate_adventurers
+			loyalty = 10
+		}
+		if = {
+			limit = {
+				A33 = {
+					has_opinion = {
+						who = ROOT
+						value = 50
+					}
+				}
+			}
+			reverse_add_opinion = {
+				who = A33
+				modifier = celliande_sponsored_adventurers
+			}
+		}
+		else_if = {
+			limit = {
+				A55 = {
+					has_opinion = {
+						who = ROOT
+						value = 50
+					}
+				}
+			}
+			reverse_add_opinion = {
+				who = A55
+				modifier = celliande_sponsored_adventurers
+			}
+		}
+		country_event = {
+			id = celliande.158
+			days = 270
+		}
+	}
+	option = {
+		name = celliande.157.c
+		highlight = yes
+		trigger = {
+			is_overall_divination_level_1_minimum = yes
+		}
+		change_mana = { amount = -8 }
+		add_treasury = -10
+		add_adm_power = -10
+		add_dip_power = -10
+		add_mil_power = -10
+		country_event = {
+			id = celliande.158
+			days = 1
+		}
+	}
+}
+country_event = { #Quintenbury 2
+	id = celliande.158
+	title = celliande.158.t
+	desc = celliande.158.d
+	picture = FAR_AND_WIDE_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.158.a
+		add_manpower = -0.1
+		add_treasury = -100
+		add_adm_power = -25
+		country_event = {
+			id = celliande.159
+			days = 547
+		}
+	}
+	option = {
+		name = celliande.158.b
+		add_country_modifier = {
+			name = celliande_star_floor
+			duration = 1095
+		}
+		country_event = {
+			id = celliande.159
+			days = 292
+		}
+		
+	}
+}
+country_event = { #Quintenbury 3
+	id = celliande.159
+	title = celliande.159.t
+	desc = celliande.159.d
+	picture = EXCALIBUR_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.159.a
+		add_manpower = -1
+		country_event = {
+			id = celliande.160
+			days = 182
+		}
+	}
+}
+country_event = { #Quintenbury 4
+	id = celliande.160
+	title = celliande.160.t
+	desc = celliande.160.d
+	picture = THE_HEROINE_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.160.a
+		add_prestige = 25
+		add_country_modifier = {
+			name = celliande_golden_bull
+			duration = -1
+		}
+		add_treasury = 200
+	}
+	option = {
+		name = celliande.160.b
+		goto = 312 #Quintenbury
+		312 = {
+			add_or_upgrade_courthouse_building = yes
+		}
+		add_treasury = 50
+		add_estate_loyalty = {
+			estate = estate_nobles
+			loyalty = 10
+		}
+		add_estate_loyalty = {
+			estate = estate_adventurers
+			loyalty = 10
+		}
+	}
+	option = {
+		name = celliande.160.c
+		highlight = yes
+		trigger = {
+			is_overall_necromancy_level_1_minimum = yes
+		}
+		if = {
+			limit = { NOT = { has_country_flag = celliande_rise_hero_unlocked } }
+			custom_tooltip = celliande_unlock_rise_hero
+			hidden_effect = {
+				set_country_flag = celliande_rise_hero_unlocked
+			}
+		}
+		custom_tooltip = celliande_unlock_bull
+		hidden_effect = {
+			set_country_flag = celliande_rise_hero_bull
+		}
+	}
+	after = {
+		hidden_effect = {
+			312 = {
+				clr_province_flag = celliande_is_exploring
+				set_province_flag = celliande_already_explored
+			}
+			clr_country_flag = celliande_is_exploring_country
+		}
+	}
+}
+country_event = { #Corseton 1
+	id = celliande.161
+	title = celliande.161.t
+	desc = celliande.161.d
+	picture = CHURCH_ESTATE_1_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.161.a
+		add_dip_power = -50
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 10
+		}
+		add_estate_influence_modifier = {
+			influence = 10
+			duration = 3650
+			estate = estate_church
+		}
+		add_estate_loyalty = {
+			estate = estate_mages
+			loyalty = -10
+		}
+		country_event = {
+			id = celliande.162
+			days = 365
+		}
+	}
+	option = {
+		name = celliande.161.b
+		goto = 332 #Corseton
+		332 = {
+			spawn_rebels = {
+				size = 3
+				type = regent_court_rebels
+			}
+		}
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -30
+		}
+		add_estate_influence_modifier = {
+			influence = -20
+			duration = 3650
+			estate = estate_church
+		}
+		country_event = {
+			id = celliande.162
+			days = 182
+		}
+	}
+}
+country_event = { #Corseton 2
+	id = celliande.162
+	title = celliande.162.t
+	desc = celliande.162.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.162.a
+		custom_tooltip = celliande.162.tt
+		country_event = {
+			id = celliande.163
+			days = 182
+		}
+	}
+}
+country_event = { #Corseton 3
+	id = celliande.163
+	title = celliande.163.t
+	desc = celliande.163.d
+	picture = ICONS_IN_CHURCH_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.163.a
+		add_country_modifier = {
+			name = celliande_wound
+			duration = 365
+		}
+		country_event = {
+			id = celliande.164
+		}
+	}
+	option = {
+		name = celliande.163.b
+		add_country_modifier = {
+			name = celliande_khet
+			duration = 3650
+		}
+		country_event = {
+			id = celliande.164
+			days = 365
+		}
+		every_known_country = {
+			limit = {
+				culture_group = kheteratan
+			}
+			add_opinion = {
+				who = ROOT
+				modifier = insulted
+				multiplier = 2
+			}
+		}
+	}
+	after = {
+		hidden_effect = {
+			country_event = {
+				id = celliande.165
+				days = 30
+				random = 60
+			}
+		}
+	}
+}
+country_event = { #Corseton 4
+	id = celliande.164
+	title = celliande.164.t
+	desc = celliande.164.d
+	picture = PRIEST_PHANTOM_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.164.a
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 10
+		}
+		332 = {
+			if = {
+				limit = {
+					NOT = {
+						has_great_project = {
+							type = the_necropolis
+							tier = 1
+						}
+					}
+				}
+				add_great_project_tier = {
+					type = the_necropolis
+					tier = 1
+				}
+			}
+			else = {
+				owner = {
+					add_treasury = 500
+				}
+			}
+		}
+	}
+	option = {
+		name = celliande.164.b
+		goto = 332
+		332 = {
+			add_permanent_province_modifier = {
+				name = celliande_royal_necropolis
+				duration = -1
+			}
+		}
+	}
+	after = {
+		hidden_effect = {
+			332 = {
+				clr_province_flag = celliande_is_exploring
+				set_province_flag = celliande_already_explored
+			}
+			clr_country_flag = celliande_is_exploring_country
+		}
+	}
+}
+country_event = { #Corseton 5
+	id = celliande.165
+	title = celliande.165.t
+	desc = celliande.165.desc
+	picture = KOBOLD_HOARD_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.165.a
+		hidden_effect = {
+			country_event = {
+				id = celliande.166
+			}
+		}
+	}
+	option = {
+		name = celliande.165.b
+		hidden_effect = {
+			country_event = {
+				id = celliande.166
+			}
+		}
+	}
+	option = {
+		name = celliande.165.c
+		hidden_effect = {
+			country_event = {
+				id = celliande.166
+			}
+		}
+	}
+	option = {
+		name = celliande.165.d
+		hidden_effect = {
+			country_event = {
+				id = celliande.166
+			}
+		}
+	}
+	option = {
+		name = celliande.165.e
+		hidden_effect = {
+			country_event = {
+				id = celliande.167
+			}
+		}
+	}
+}
+country_event = { #Corseton 6
+	id = celliande.166
+	title = celliande.166.t
+	desc = celliande.166.d
+	picture = EXCALIBUR_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.166.a
+		add_prestige = -10
+	}
+}
+country_event = { #Corseton 7
+	id = celliande.167
+	title = celliande.167.t
+	desc = celliande.167.d
+	picture = LOOMING_DEATH_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = celliande.167.a
+		add_prestige = 10
+		add_treasury = 200
+		change_mana = { amount = 25 }
+	}
+}
+country_event = { #Bounce back event
+	id = celliande.1000
+	title = celliande.1000.t
+	desc = celliande.1000.d
+	picture = KOBOLD_HOARD_eventPicture
+	
+	is_triggered_only = yes
+	hidden = yes
+	
+	option = {
+		name = celliande.1000.a
+		if = {
+			limit = { has_country_flag = celliande.104.bounce }
+			clr_country_flag = celliande.104.bounce
+			country_event = {
+				id = celliande.104
+			}
+		}
+	}
+}

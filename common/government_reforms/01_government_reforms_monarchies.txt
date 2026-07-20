@@ -4574,7 +4574,7 @@ orcish_kingdom_reform = {
 	allow_normal_conversion = yes
 	potential = {
 		OR = {
-			culture_group = orcish
+			culture_is_orcish = yes
 			culture_is_half_orcish = yes
 		}
 	}
@@ -4582,7 +4582,7 @@ orcish_kingdom_reform = {
 	valid_for_nation_designer = yes
 	nation_designer_cost = 0
 	nation_designer_trigger = {
-		culture_group = orcish
+		culture_is_orcish = yes
 	}
 
 	modifiers = {
@@ -4601,8 +4601,7 @@ ogre_kingdom = {
 	valid_for_nation_designer = yes
 	nation_designer_cost = 10
 	nation_designer_trigger = {
-		culture_group = ogre
-		NOT = { primary_culture = horned_ogre }
+		is_western_ogre_primary_culture = yes
 	}
 	lock_level_when_selected = yes
 	maintain_dynasty = yes
@@ -4630,8 +4629,11 @@ mengotsa = {
 	valid_for_nation_designer = yes
 	nation_designer_cost = 50
 	nation_designer_trigger = {
-		culture_group = ogre
-		NOT = { primary_culture = horned_ogre }
+		OR = {
+			culture = mossmouth_ogre
+			culture = fathide_ogre
+			culture = bloodtooth_ogre
+		}
 	}
 
 	lock_level_when_selected = yes
@@ -4663,8 +4665,11 @@ ogre_empire = {
 	valid_for_nation_designer = yes
 	nation_designer_cost = 75
 	nation_designer_trigger = {
-		culture_group = ogre
-		NOT = { primary_culture = horned_ogre }
+		OR = {
+			culture = mossmouth_ogre
+			culture = fathide_ogre
+			culture = bloodtooth_ogre
+		}
 	}
 
 	lock_level_when_selected = yes
@@ -4693,8 +4698,11 @@ great_ogre_horde = {
 	valid_for_nation_designer = yes
 	nation_designer_cost = 100
 	nation_designer_trigger = {
-		culture_group = ogre
-		NOT = { primary_culture = horned_ogre }
+		OR = {
+			culture = mossmouth_ogre
+			culture = fathide_ogre
+			culture = bloodtooth_ogre
+		}
 	}
 
 	lock_level_when_selected = yes
@@ -4721,6 +4729,7 @@ great_ogre_horde = {
 		queen = no
 		royal_marriage = no
 		disables_regular_estates = yes
+		is_monstrous_horde = yes
 		locked_T1_reform = yes
 	}
 }
@@ -4924,6 +4933,12 @@ jadd_empire = {
 		}
 		mechanim = {
 			global_trade_goods_size = 0.1
+		}
+	}
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
 		}
 	}
 }
@@ -5168,6 +5183,12 @@ drakonshani_dominion = { #skewered drake
 		can_use_tributary_cb = yes
 		locked_T1_reform = yes
 	}
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
+	}
 }
 
 
@@ -5376,55 +5397,6 @@ hobgoblin_stratocracy_reform = {
 		disables_estate_mages = yes
 		locked_T1_reform = yes
 		disables_estate_adventurers = yes
-		is_hobgoblin_stratocracy = yes
-	}
-
-	government_abilities = {
-		command_korashi_mechanic
-	}
-}
-
-hobgoblin_stratocracy_tribal_reform = {
-	icon = "soldiers_5"
-	allow_normal_conversion = yes
-	lock_level_when_selected = yes
-	potential = {
-		culture_group = hobgoblin
-		NOT = { religion = eagle_worship }
-	}
-	valid_for_nation_designer = yes
-	nation_designer_cost = 0
-	nation_designer_trigger = {
-		culture_group = hobgoblin
-	}
-	legacy_equivalent = feudal_monarchy
-	heir = no
-	conditional = {
-		allow = {
-			end_game_tags_blocked = yes
-		}	
-		can_change_primary_culture = no
-	}
-
-	modifiers = {
-		legitimacy = -0.5
-		global_manpower_modifier = 0.1
-		land_maintenance_modifier = -0.1
-		monarch_military_power = 1
-		max_absolutism = 10
-		yearly_army_professionalism = 0.002
-	}
-	custom_attributes = {
-		locked_government_type = yes
-		generals_become_rulers = yes
-		blocked_call_diet = yes
-		royal_marriage = no
-		disables_regular_estates = yes
-		disables_estate_mages = yes
-		locked_T1_reform = yes
-		disables_estate_adventurers = yes
-		is_hobgoblin_stratocracy = yes
-		is_monstrous_horde = yes
 	}
 
 	government_abilities = {
@@ -5551,6 +5523,37 @@ senapti_reform = {
 	}
 }
 
+umsadhri_reform = { #Unique colonial subject for Raja
+	icon = "vandiphan_thalassocracy"
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	maintain_dynasty = yes
+
+	potential = {
+		has_reform = umsadhri_reform
+		is_colonial_nation = yes
+		OR = {
+			overlord = { has_government_attribute = is_raja }
+			any_known_country = {
+				war_with = ROOT
+				has_government_attribute = is_raja
+			}
+		}
+	}
+	valid_for_nation_designer = no
+	legacy_equivalent = daimyo_legacy
+	modifiers = {
+		global_sailors_modifier = 0.1
+		naval_forcelimit_modifier = 0.2
+	}
+
+	custom_attributes = {
+		locked_government_type = yes
+		is_raja_subject = yes
+		locked_T1_reform = yes		
+	}
+}
+
 raja_reform = {
 	icon = "shogunate"
 	allow_normal_conversion = yes
@@ -5668,6 +5671,12 @@ phoenix_akalate = {
 			phoenix_estate_mechanic
 		}
 	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
+	}
 }
 
 damerian_monarchy = {
@@ -5757,6 +5766,12 @@ phoenix_empire = {
 		allow = { has_dlc = "Third Rome" }
 		claim_states = yes
 	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
+	}
 }
 
 phoenix_empire_mandate = {
@@ -5799,6 +5814,12 @@ phoenix_empire_mandate = {
 	conditional = {
 		allow = { has_dlc = "Mandate of Heaven" }
 		has_meritocracy = yes
+	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
 	}
 }
 
@@ -5992,6 +6013,12 @@ karashari_empire = {
 			iqta_mechanic
 		}
 	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
+	}
 }
 
 underkingdom_reform = {
@@ -6125,6 +6152,7 @@ corvurian_midnight_reform = {
 	custom_attributes = {
 		locked_government_type = yes
 		locked_T1_reform = yes
+		better_vampire_ruler = yes
 	}
 	ai = {
 		factor = 10
@@ -6935,6 +6963,12 @@ varamhar_eternal_empire = {
 		allow = { has_dlc = "Third Rome" }
 		claim_states = yes
 	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
+	}
 }
 
 varamhar_eternal_empire_mandate = {
@@ -6984,6 +7018,12 @@ varamhar_eternal_empire_mandate = {
 		allow = { has_dlc = "Mandate of Heaven" }
 		has_meritocracy = yes
 	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
+	}
 }
 
 tluukt_tluuktraak_reform = {
@@ -7023,6 +7063,12 @@ tluukt_tluuktraak_reform = {
 		diplomatic_upkeep = 1
 
 		governing_capacity_modifier = -0.33
+	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
 	}
 }
 
@@ -7156,6 +7202,12 @@ konolkhatep_gnolls_sorrow_reform = {
 		disabled_purging_human = yes
 		locked_T1_reform = yes
 	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
+	}
 
 	ai = { factor = 100 }
 }
@@ -7195,6 +7247,12 @@ konolkhatep_gnolls_sorrow_reform_horutep = {
 		locked_T1_reform = yes
 		foreign_slave_rulers = yes
 		immortal_rulers = yes #Currently not checked for anywhere, just for tooltip
+	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
 	}
 
 	ai = { factor = 100 }
@@ -7240,6 +7298,12 @@ F66_eternal_empire = {
 		locked_T1_reform = yes
 		foreign_slave_rulers = yes
 		immortal_rulers = yes #Currently not checked for anywhere, just for tooltip
+	}
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
 	}
 
 	ai = { factor = 100 }
@@ -7645,7 +7709,7 @@ enforce_privileges_reform = {
 		NOT = { has_reform = dwarovar_dwarven_clan_reform }
 		NOT = { has_reform = verkal_ozovar_monarchy }
 		NOT = { has_reform = krak_monarchy }
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }	#Anbennar
+		NOT = { has_reform = hobgoblin_stratocracy_reform }	#Anbennar
 		NOT = { culture_group = goblin }
 		is_revolutionary = no
 	}
@@ -7673,7 +7737,7 @@ quash_noble_power_reform = {
 		NOT = { has_reform = dwarovar_dwarven_clan_reform }
 		NOT = { has_reform = verkal_ozovar_monarchy }
 		NOT = { has_reform = krak_monarchy }
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }
+		NOT = { has_reform = hobgoblin_stratocracy_reform }
 		NOT = { culture_group = goblin }
 		is_revolutionary = no
 	}
@@ -7700,7 +7764,7 @@ grant_noble_castle_rights_reform = {
 	allow_normal_conversion = yes
 	potential = {
 		is_revolutionary = no
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }	#Anbennar
+		NOT = { has_reform = hobgoblin_stratocracy_reform }	#Anbennar
 		NOT = { culture_group = goblin }
 	}
 	modifiers = {
@@ -7738,7 +7802,7 @@ maintain_nobles_status_quo_reform = {
 	allow_normal_conversion = yes
 	potential = {
 		is_revolutionary = no
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }	#Anbennar
+		NOT = { has_reform = hobgoblin_stratocracy_reform }	#Anbennar
 		NOT = { culture_group = dwarven }
 	}
 	modifiers = { #1.35
@@ -7763,7 +7827,7 @@ grant_military_command_reform = {
 	allow_normal_conversion = yes
 	potential = {
 		is_revolutionary = no
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }	#Anbennar
+		NOT = { has_reform = hobgoblin_stratocracy_reform }	#Anbennar
 		NOT = { culture_group = dwarven }
 	}
 	modifiers = {
@@ -7791,7 +7855,7 @@ grant_nobles_electorate_reform = {
 		is_revolutionary = no
 		#Anbennar
 		NOT = {
-			has_government_attribute = is_hobgoblin_stratocracy
+			has_reform = hobgoblin_stratocracy_reform
 			culture_group = dwarven
 		}
 	}
@@ -7870,7 +7934,7 @@ blackmail_nobility_reform = {
 		NOT = { has_estate_privilege = estate_nobles_golden_liberty }
 		#Anbennar
 		NOT = {
-			has_government_attribute = is_hobgoblin_stratocracy
+			has_reform = hobgoblin_stratocracy_reform
 			culture_group = dwarven
 		}
 	}
@@ -8615,7 +8679,7 @@ hobgoblin_officer_authority = {
 	icon = "black_army_reform"
 	allow_normal_conversion = yes
 	potential = {
-		has_government_attribute = is_hobgoblin_stratocracy
+		has_reform = hobgoblin_stratocracy_reform
 	}
 	modifiers = {
 		army_tradition = 0.5
@@ -8802,6 +8866,14 @@ rogierian_exile_nobility_reform = {
 		disabled_expelling_half_orcish = yes
 		disabled_purging_orcish = yes
 		disabled_expelling_orcish = yes	
+	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = half_orcish }
+			generic_end_purge = { race = half_orcish }
+			generic_end_expulsion = { race = orcish }
+			generic_end_purge = { race = orcish }
+		}
 	}
 }
 
@@ -9248,7 +9320,7 @@ limit_imperial_court_reform = {
 			is_revolutionary = no
 			NOT = { has_dlc = "Emperor" }
 		}
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }
+		NOT = { has_reform = hobgoblin_stratocracy_reform }
 		NOT = { culture_group = goblin }
 	}
 	modifiers = {
@@ -9290,7 +9362,7 @@ representation_of_the_crown_reform = {
 			is_revolutionary = no
 			NOT = { has_dlc = "Emperor" }
 		}
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }
+		NOT = { has_reform = hobgoblin_stratocracy_reform }
 	}
 	modifiers = {
 		diplomatic_upkeep = 1
@@ -9551,7 +9623,7 @@ harpy_honours_system = {
 	allow_normal_conversion = yes
 	potential = {
 		has_country_flag = H72_harpy_honours
-		NOT = { culture_group = harpy }
+		NOT = { culture_is_harpy = yes }
 	}
 	trigger = {
 		OR = {
@@ -9559,8 +9631,8 @@ harpy_honours_system = {
 			high_tolerance_harpy_race_trigger = yes
 		}
 		OR = {
-			any_owned_province = { culture_group = harpy }
-			any_subject_country = { culture_group = harpy }
+			any_owned_province = { culture_is_harpy = yes }
+			any_subject_country = { culture_is_harpy = yes }
 		}
 	}
 	modifiers = {
@@ -9745,7 +9817,7 @@ tluukt_xalgekyr_reform = {
 
 hobgoblin_schools_of_philosophy = {
 	icon = "examination_system_reform"
-	potential = { has_government_attribute = is_hobgoblin_stratocracy }
+	potential = { has_reform = hobgoblin_stratocracy_reform }
 	modifiers = {
 		global_missionary_strength = 0.02
 		tolerance_own = 1
@@ -9754,7 +9826,7 @@ hobgoblin_schools_of_philosophy = {
 }
 hobgoblin_general_education = {
 	icon = "asian_scripture"
-	potential = { has_government_attribute = is_hobgoblin_stratocracy }
+	potential = { has_reform = hobgoblin_stratocracy_reform }
 	modifiers = {
 		embracement_cost = -0.2
 		global_institution_spread = 0.1
@@ -9915,6 +9987,12 @@ overclan_parliament_of_faiths_and_cultures = {
 		disabled_expelling = yes
 		disabled_purging = yes
 	}
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
+	}
 }
 
 
@@ -9924,7 +10002,7 @@ clergy_in_administration_reform = {
 	icon = "religious_leader"
 	allow_normal_conversion = yes
 	potential = {
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }
+		NOT = { has_reform = hobgoblin_stratocracy_reform }
 		NOT = { has_reform = ogre_kingdom }
 		NOT = { has_reform = mengotsa }
 		NOT = { has_reform = ogre_empire }
@@ -9978,7 +10056,7 @@ of_noble_bearing_reform = {
 	icon = "nobleman"
 	allow_normal_conversion = yes
 	potential = {
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }
+		NOT = { has_reform = hobgoblin_stratocracy_reform }
 		NOT = { has_reform = ogre_kingdom }
 		NOT = { has_reform = mengotsa }
 		NOT = { has_reform = ogre_empire }
@@ -10052,7 +10130,7 @@ meritocratic_focus_reform = {
 	icon = "politician"
 	allow_normal_conversion = yes
 	potential = {
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }
+		NOT = { has_reform = hobgoblin_stratocracy_reform }
 		NOT = { has_reform = ogre_kingdom }
 		NOT = { has_reform = mengotsa }
 		NOT = { has_reform = ogre_empire }
@@ -10160,7 +10238,7 @@ dyanstic_administration_reform = {
 			NOT = { has_dlc = "Emperor" }
 		}
 		#Anbennar
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }
+		NOT = { has_reform = hobgoblin_stratocracy_reform }
 		NOT = { culture_group = dwarven }
 		NOT = { culture_group = gnomish }
 	}
@@ -10275,7 +10353,7 @@ hobgoblin_administration_of_the_wolf = {
 	icon = "administration_of_the_wolf"
 	allow_normal_conversion = yes
 	potential = {
-		has_government_attribute = is_hobgoblin_stratocracy
+		has_reform = hobgoblin_stratocracy_reform
 	}
 	modifiers = {
 		governing_capacity = 100
@@ -10296,7 +10374,7 @@ hobgoblin_administration_of_the_boar = {
 	icon = "administration_of_the_boar"
 	allow_normal_conversion = yes
 	potential = {
-		has_government_attribute = is_hobgoblin_stratocracy
+		has_reform = hobgoblin_stratocracy_reform
 	}
 	modifiers = {
 		prestige_from_land = 1
@@ -10314,7 +10392,7 @@ hobgoblin_administration_of_the_lion = {
 	icon = "administration_of_the_lion"
 	allow_normal_conversion = yes
 	potential = {
-		has_government_attribute = is_hobgoblin_stratocracy
+		has_reform = hobgoblin_stratocracy_reform
 	}
 	modifiers = {
 		all_estate_loyalty_equilibrium = 0.05
@@ -10328,7 +10406,7 @@ hobgoblin_flexible_administration = {
 	icon = "strength_of_the_khalsa"
 	allow_normal_conversion = yes
 	potential = {
-		has_government_attribute = is_hobgoblin_stratocracy
+		has_reform = hobgoblin_stratocracy_reform
 	}
 	modifiers = {
 		free_adm_policy = 1
@@ -10608,24 +10686,27 @@ court_of_art_and_culture_reform = {
 	}
 }
 vampires_masquerade_culture_reform = {
-    icon = "royal_court"
-    allow_normal_conversion = yes
-    potential = {
-        has_estate = estate_vampires
-        OR = { 
-            has_estate_privilege = estate_vampires_law_traditional_masquerade 
-            has_estate_privilege = estate_vampires_law_state_collusion_masquerade
-        }
-        NOT = { tag = H81 }
-        NOT = { tag = Y02 }  
+	icon = "royal_court"
+	allow_normal_conversion = yes
+	potential = {
+		has_estate = estate_vampires
+		OR = { 
+			has_estate_privilege = estate_vampires_law_traditional_masquerade 
+			has_estate_privilege = estate_vampires_law_state_collusion_masquerade
+			has_estate_privilege = estate_vampire_law_relic_shrouded_masquerade
+		}
+		NOT = { tag = H81 }
+		NOT = { tag = Y02 }  
 	}
-    modifiers = {
-        improve_relation_modifier = 0.15
-        diplomatic_reputation = 1
-        vampires_influence_modifier = 0.05
+	modifiers = {
+		improve_relation_modifier = 0.15
+		diplomatic_reputation = 1
+		vampires_influence_modifier = 0.05
 	}
-
-    }
+	custom_attributes = {
+		better_vampire_ruler = yes
+	}
+}
 #deliberative_assembly
 
 # parliamentary_reform defined in common file
@@ -10634,7 +10715,7 @@ royal_decree_reform = {
 	icon = "king"
 	allow_normal_conversion = yes
 	potential = {
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }
+		NOT = { has_reform = hobgoblin_stratocracy_reform }
 		NOT = { has_reform = ogre_kingdom }
 		NOT = { has_reform = mengotsa }
 		NOT = { has_reform = ogre_empire }
@@ -10654,7 +10735,7 @@ aristocratic_court_reform = {
 	icon = "soldiers_2"
 	allow_normal_conversion = yes
 	potential = {
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }
+		NOT = { has_reform = hobgoblin_stratocracy_reform }
 		NOT = { has_reform = ogre_kingdom }
 		NOT = { has_reform = mengotsa }
 		NOT = { has_reform = ogre_empire }
@@ -10680,7 +10761,7 @@ states_general_reform = {
 			culture_group = harpy
 			culture_group = goblin
 			has_reform = oak_monarchy_reform
-			has_government_attribute = is_hobgoblin_stratocracy
+			has_reform = hobgoblin_stratocracy_reform
 			has_reform = original_castanor_trials_reform
 			has_reform = dynastic_castanor_trials_reform
 			has_reform = ogre_kingdom
@@ -10778,7 +10859,7 @@ general_estates_reform = {
 	allow_normal_conversion = yes
 	potential = {
 		is_revolutionary = no
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }
+		NOT = { has_reform = hobgoblin_stratocracy_reform }
 		NOT = { has_reform = ogre_kingdom }
 		NOT = { has_reform = mengotsa }
 		NOT = { has_reform = ogre_empire }
@@ -11042,7 +11123,7 @@ hobgoblin_closed_war_room = {
 	icon = "council"
 	allow_normal_conversion = yes
 	potential = {
-		has_government_attribute = is_hobgoblin_stratocracy
+		has_reform = hobgoblin_stratocracy_reform
 	}
 	modifiers = {
 		leader_land_shock = 1
@@ -11057,7 +11138,7 @@ hobgoblin_assembly_of_commands = {
 	icon = "soldiers_4"
 	allow_normal_conversion = yes
 	potential = {
-		has_government_attribute = is_hobgoblin_stratocracy
+		has_reform = hobgoblin_stratocracy_reform
 	}
 	modifiers = {
 		all_estate_influence_modifier = 0.1
@@ -11544,7 +11625,7 @@ peoples_kingdom_reform = {
 	icon = "peasant_republic"
 	allow_normal_conversion = yes
 	potential = {
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }
+		NOT = { has_reform = hobgoblin_stratocracy_reform }
 	}
 	modifiers = {
 		possible_policy = 1
@@ -11559,7 +11640,7 @@ deified_monarchy_reform = {
 	allow_normal_conversion = yes
 	potential = {
 		NOT = { culture_group = dwarven }
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }
+		NOT = { has_reform = hobgoblin_stratocracy_reform }
 		NOT = { religion = goblinic_shamanism }
 	}
 	modifiers = {
@@ -11623,7 +11704,7 @@ political_absolutism_reform = {
 	allow_normal_conversion = yes
 	potential = {
 		is_revolutionary = no
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }
+		NOT = { has_reform = hobgoblin_stratocracy_reform }
 	}
 	modifiers = {
 		administrative_efficiency = 0.025
@@ -11643,7 +11724,7 @@ legislative_houses_reform = {
 	allow_normal_conversion = yes
 	potential = {
 		is_revolutionary = no
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }
+		NOT = { has_reform = hobgoblin_stratocracy_reform }
 	}
 	modifiers = {
 		free_policy = 1
@@ -11654,7 +11735,7 @@ presidential_monarchy_reform = {
 	icon = "queen"
 	allow_normal_conversion = yes
 	potential = {
-		NOT = { has_government_attribute = is_hobgoblin_stratocracy }
+		NOT = { has_reform = hobgoblin_stratocracy_reform }
 	}
 	modifiers = {
 		national_focus_years = -5
@@ -12173,7 +12254,7 @@ command_consolidate_rule = {
 	icon = "giga_chad"
 	allow_normal_conversion = yes
 	potential = {
-		has_government_attribute = is_hobgoblin_stratocracy
+		has_reform = hobgoblin_stratocracy_reform
 	}
 	modifiers = {
 		max_absolutism_effect = 0.1
@@ -12185,7 +12266,7 @@ command_elevation_of_the_dragon = {
 	icon = "chinese_palace"
 	allow_normal_conversion = yes
 	potential = {
-		has_government_attribute = is_hobgoblin_stratocracy
+		has_reform = hobgoblin_stratocracy_reform
 	}
 	trigger = {
 		has_estate_privilege = estate_dragon_command_war_room_rights
@@ -12203,7 +12284,7 @@ command_elevation_of_the_elephant = {
 	icon = "sakdina_system_reform"
 	allow_normal_conversion = yes
 	potential = {
-		has_government_attribute = is_hobgoblin_stratocracy
+		has_reform = hobgoblin_stratocracy_reform
 	}
 	trigger = {
 		has_estate_privilege = estate_elephant_command_war_room_rights
@@ -12244,7 +12325,7 @@ command_elevation_of_the_tiger = {
 	icon = "indian_sultanate"
 	allow_normal_conversion = yes
 	potential = {
-		has_government_attribute = is_hobgoblin_stratocracy
+		has_reform = hobgoblin_stratocracy_reform
 	}
 	trigger = {
 		has_estate_privilege = estate_tiger_command_war_room_rights
@@ -12286,7 +12367,7 @@ command_commingling_of_the_commands = {
 	icon = "parliament_highlighted"
 	allow_normal_conversion = yes
 	potential = {
-		has_government_attribute = is_hobgoblin_stratocracy
+		has_reform = hobgoblin_stratocracy_reform
 	}
 	trigger = {
 		has_estate_privilege = estate_dragon_command_war_room_rights
@@ -12494,6 +12575,53 @@ harpy_matriarchy_reform = {
 		queen = no
 		disabled_expelling_human = yes
 		disabled_purging_human = yes
+		is_harpy_matriarchy = yes
+		locked_T1_reform = yes
+	}
+	conditional = {
+		allow = { has_dlc = "Rights of Man" }
+		has_harem = yes
+	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
+	}
+}
+
+harpy_matriarchy_tribal_reform = {
+	lock_level_when_selected = yes
+	allow_normal_conversion = yes
+	icon = "harpy_matriarchy"
+	potential = {
+		ruler_is_harpy = yes
+	}
+	valid_for_nation_designer = yes
+	nation_designer_cost = 20
+	nation_designer_trigger = {
+		OR = {
+			ruler_culture = firanyan_harpy
+			ruler_culture = siadunan_harpy
+			ruler_culture = stonewing_harpy
+			ruler_culture = nzeri_harpy
+			ruler_culture = nuzenapu_harpy
+			ruler_culture = nuraryi_harpy
+		}
+	}
+	legacy_equivalent = ottoman_government_legacy
+
+	modifiers = {
+		legitimacy = 0.5
+		stability_cost_modifier = -0.10
+		can_fabricate_for_vassals = yes
+		block_introduce_heir = yes
+	}
+
+	custom_attributes = {
+		queen = no
+		disabled_expelling_human = yes
+		disabled_purging_human = yes
 		is_monstrous_horde = yes
 		is_harpy_matriarchy = yes
 		locked_T1_reform = yes
@@ -12501,6 +12629,12 @@ harpy_matriarchy_reform = {
 	conditional = {
 		allow = { has_dlc = "Rights of Man" }
 		has_harem = yes
+	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
 	}
 }
 
@@ -12542,13 +12676,18 @@ harpy_matriarchy_ayarallen_early_gov_mechanic_reform = {
 		queen = no
 		disabled_expelling_human = yes
 		disabled_purging_human = yes
-		is_monstrous_horde = yes
 		is_harpy_matriarchy = yes
 		locked_T1_reform = yes
 	}
 	conditional = {
 		allow = { has_dlc = "Rights of Man" }
 		has_harem = yes
+	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
 	}
 }
 
@@ -12760,6 +12899,12 @@ siadan_harpy_empire = {
         allow = { has_dlc = "Rights of Man" }
         has_harem = yes
     }
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
+	}
 }
 
 siadan_institutional_harem = {
@@ -13014,6 +13159,10 @@ luciande_board_of_chains_reform = {
 				}
 			}
 		}
+		hidden_effect = {
+			generic_end_expulsion = { race = orcish }
+			generic_end_purge = { race = orcish }
+		}
 	}
 	
 	removed_effect = {
@@ -13045,6 +13194,7 @@ luciande_lucians_domain_reform = {
 		rulers_can_be_generals = no
 		locked_government_type = yes
 		locked_T1_reform = yes
+		better_vampire_ruler = yes
 	}
 
 	heir = no
@@ -13205,6 +13355,14 @@ orldhum_vainglorious_nobility = {
 		disabled_purging_orcish = yes
 		disabled_expelling_orcish = yes
 	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = orcish }
+			generic_end_purge = { race = orcish }
+			generic_end_expulsion = { race = goblin }
+			generic_end_purge = { race = goblin }
+		}
+	}
 }
 
 orldhum_highlords_retinue = {
@@ -13251,11 +13409,18 @@ harpy_queendom_reform = {
 		queen = no
 		disabled_expelling_human = yes
 		disabled_purging_human = yes
+		is_harpy_matriarchy = yes
 		locked_T1_reform = yes
 	}
 	conditional = {
 		allow = { has_dlc = "Rights of Man" }
 		has_harem = yes
+	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
 	}
 }
 
@@ -13538,6 +13703,12 @@ exwesser_monarchy_reform = { #Exwes
 		allowed_marine_fraction = 0.1
 		num_accepted_cultures = 2
 		diplomatic_reputation = 1
+	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = halfling }
+			generic_end_purge = { race = halfling }
+		}
 	}
 }
 
@@ -14035,6 +14206,12 @@ naleni_thalassocracy_reform = {
 		allow = { has_dlc = "Rights of Man" }
 		has_harem = yes
 	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
+	}
 }
 
 winged_menkaunswt_reform = {
@@ -14312,6 +14489,12 @@ floodborn_council_reform = {
 		locked_government_type = yes
 		blocked_call_diet = yes
 	}
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
+	}
 	ai = {
 		factor = 0.75 #generic
 	}
@@ -14340,6 +14523,12 @@ floodborn_council_reform_always_mage = {
 		disabled_purging = yes
 		locked_government_type = yes
 		blocked_call_diet = yes
+	}
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
 	}
 	ai = {
 		factor = 0.75 #generic
@@ -14370,6 +14559,12 @@ floodborn_council_reform_late_monarchy = {
 		locked_government_type = yes
 		blocked_call_diet = yes
 		enables_estate_church = yes
+	}
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
 	}
 	ai = {
 		factor = 0.75 #generic
@@ -14457,6 +14652,14 @@ rosande_disgraced_nobility_reform = {
 		disabled_expelling_orcish = yes
 		locked_government_type = yes
 	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = half_orcish }
+			generic_end_purge = { race = half_orcish }
+			generic_end_expulsion = { race = orcish }
+			generic_end_purge = { race = orcish }
+		}
+	}
 }
 
 rosande_blooming_nobility_reform = {
@@ -14480,6 +14683,14 @@ rosande_blooming_nobility_reform = {
 		disabled_purging_orcish = yes
 		disabled_expelling_orcish = yes
 		locked_government_type = yes
+	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = half_orcish }
+			generic_end_purge = { race = half_orcish }
+			generic_end_expulsion = { race = orcish }
+			generic_end_purge = { race = orcish }
+		}
 	}
 }
 
@@ -14825,6 +15036,14 @@ hisost_diarchy_reform = {
 		locked_government_type = yes
 		locked_T1_reform = yes
 	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+			generic_end_expulsion = { race = gnollish }
+			generic_end_purge = { race = gnollish }
+		}
+	}
 }
 
 #Xanzerbexis
@@ -14854,6 +15073,10 @@ A49_hillthrone_kingdom_reform = {
 			estate_privilege = estate_burghers_mountain_expansion
 		}
 		set_country_flag = A49_defensive_mountain_expansion
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
 	}
 }
 
@@ -14895,6 +15118,10 @@ A49_hakulharaag_gravot_reform = {
 				name = estate_burghers_A49_defensive_mountain_expansion_2_mod
 				duration = -1
 			}
+		}
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
 		}
 	}
 }
@@ -14946,6 +15173,12 @@ gnoll_medasi_reform = {
 		locked_government_type = yes
 		maintain_dynasty = yes
 		locked_T1_reform = yes
+	}
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
 	}
 }
 karakhanbar_black_hearth_council_reform_ch = { #Karakhanbar for Cursed Howl, Monarchy Version
@@ -15084,6 +15317,12 @@ Z88_gerudian_council_reform = {
 		locked_government_type = yes
 		has_parliament = yes
 	}
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
+	}
 }
 
 farranean_united_farrani_court = {
@@ -15131,6 +15370,12 @@ farranean_united_farrani_court = {
 		has_parliament = yes
 		custom_attributes = {
 			estates_influenced_parliament = yes
+		}
+	}
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
 		}
 	}
 }
@@ -15760,6 +16005,12 @@ bibyobi_dynasties_reform = {
 		disabled_expelling_human = yes
 		disabled_purging_human = yes
 	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
+	}
 
 	ai = {
 		factor = 1
@@ -15987,6 +16238,10 @@ reaver_noble_class = {
 			}
 			custom_tooltip = reveria_naval_raid_reform.tt
 		}
+		hidden_effect = {
+			generic_end_expulsion = { race = gnomish }
+			generic_end_purge = { race = gnomish }
+		}
 	}
 
 	ai = {
@@ -16212,6 +16467,8 @@ iochand_gnomish_monarchy = {
 				change_primary_culture = creek_gnome
 			}
 			enable_iochandization_effect = yes
+			end_all_purge = yes
+			end_all_expel = yes
 		}
 	}
 	removed_effect = {
@@ -16295,6 +16552,8 @@ iochand_hezoggdoum = {
 				}
 			}
 			enable_iochandization_effect = yes
+			end_all_purge = yes
+			end_all_expel = yes
 		}
 	}
 	removed_effect = {
@@ -16410,6 +16669,12 @@ yenbenmirra_federation = {
 		disabled_purging = yes
 		locked_government_type = yes
 		locked_T1_reform = yes
+	}
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
 	}
 }
 
@@ -16724,4 +16989,42 @@ relic_lords_of_taychend = {
         remove_country_modifier = relic_lords_absolutism_4
         remove_country_modifier = relic_lords_absolutism_5
     }
+}
+
+A29_tripartite_empire_reform = {
+	icon = "crown"
+	lock_level_when_selected = yes
+	potential = {
+		has_reform = A29_tripartite_empire_reform
+	}
+	modifiers = {
+		governing_capacity_modifier = 0.2
+		min_autonomy_in_territories = -0.1
+	}
+	custom_attributes = {
+		locked_government_type = yes
+		locked_T1_reform = yes
+	}
+}
+
+V33_grand_council_of_the_seas = {
+	icon = "arabian_plutocracy_reform"
+	potential = { tag = V33 }
+	
+	lock_level_when_selected = yes
+
+	modifiers = {
+		global_ship_cost = -0.2
+		naval_forcelimit_modifier = +0.20
+		naval_morale = 0.10
+		land_forcelimit = 10
+		allowed_marine_fraction = 0.20
+		max_absolutism = -50
+	}
+
+	custom_attributes = {
+		locked_T1_reform = yes
+		has_ruler_election = yes
+		has_gataw_seaking = yes
+	}
 }

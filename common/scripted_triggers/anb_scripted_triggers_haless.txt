@@ -111,3 +111,116 @@ has_pajeong_reassimilation_points = {
 		value = $value$
 	}
 }
+
+can_use_monument_jianxusi_trigger = { # 4811 = { can_use_monument_jianxusi_trigger = yes }
+	OR = {
+		religion = accretive_path
+		religion = transmutative_path
+		religion = mystic_accord
+	}
+	has_owner_religion = yes
+	owner = {
+		has_estate = estate_mages
+		capital_scope = {
+			OR = {
+				superregion = yanshen_superregion
+				region = xianjie_region
+				region = shamakhad_region
+				region = thidinkai_region
+			}
+		}
+	}
+	OR = {
+		has_owner_accepted_culture = yes
+		has_owner_culture = yes
+	}
+}
+province_can_use_tabai_spirit_palace = {
+	culture_group = bom
+	OR = {
+		has_owner_culture = yes
+		has_owner_accepted_culture = yes
+	}
+	owner = {
+		OR = {
+			culture_group = bom
+			religion = mystic_accord
+			secondary_religion = mystic_accord
+		}
+	}
+}
+province_is_in_bom_cultural_sphere = {
+	OR = {
+		region = bomdan_region
+		area = nagon_area
+		area = nui_phom_area
+		area = tamran_ma_area
+		area = hoangdesinh_area
+		area = khindi_area
+		area = cmor_krueng_area
+		area = lower_telebei_area
+		area = reanthung_area
+		area = li_btei_area
+		area = phangban_area
+		area = semphrerong_area
+	}
+}
+
+can_use_the_high_bastion = {
+	if = {
+		limit = { mission_completed = V05_shelter_from_sands } #Cangji
+		mission_completed = V05_shelter_from_sands
+	}
+	else = { religion = levaajan }
+}
+
+can_use_ghalorcander = {
+	ruler_is_powerful_mage = yes
+	if = {
+		limit = { mission_completed = V05_eagle_secrets } #Cangji
+		mission_completed = V05_eagle_secrets
+	}
+	else = {
+		OR = {
+			primary_culture = eagle_command
+			primary_culture = soulseeker_ogre
+			primary_culture = nuzenapu_harpy
+		}
+	}
+}
+province_can_use_holarohana = {
+	owner = {
+		OR = {
+			culture_group = harimari
+			accepted_culture = primal_harimari
+		}
+	}
+	owner = {
+		OR = {
+			religion = high_philosophy
+			religion = suhans_praxis
+		}
+	}
+}
+province_can_use_salvation_promise = {
+	owner = {
+		OR = {
+			primary_culture = soulseeker_ogre
+			accepted_culture = soulseeker_ogre
+		}
+	}
+	owner = {
+		capital_scope = {
+			region = nomsyulhan_region
+		}
+	}
+}
+spirit_fort_country_can_use = { #COUNTRY SCOPE
+	OR = {
+		culture_group = bom
+		custom_trigger_tooltip = {
+			tooltip = unlocked_spirit_forts_tt
+			has_country_flag = unlocked_spirit_forts 
+		}
+	}
+}

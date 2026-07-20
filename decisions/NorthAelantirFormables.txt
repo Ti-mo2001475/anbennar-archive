@@ -647,7 +647,10 @@ country_decisions = {
 			religion = rune_scribes
 			NOT = {
 				tag = U22
+				was_tag = U22
 			}
+			normal_or_historical_nations = yes
+			was_never_end_game_tag_trigger = yes
 		}
 
 		provinces_to_highlight = {
@@ -729,11 +732,10 @@ country_decisions = {
 			}
 			if = {
 				limit = {
-					NOT = {
-						has_country_flag = formed_radavezyr_flag
-						owns = 2858
-					}
+					NOT = { has_country_flag = formed_radavezyr_flag }
+					owns = 2858
 				}
+				custom_tooltip = ynn_veykodirzag_capital_yes
 				set_capital = 2858 #Fadhevych, seat of old King Bemo
 				2858 = {
 					add_base_tax = 3
@@ -742,6 +744,21 @@ country_decisions = {
 					add_province_modifier = {
 						name = ynn_veykodirzag_capital
 						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = ynn_veykodirzag_capital_no
+				tooltip = {
+					set_capital = 2858 #Fadhevych, seat of old King Bemo
+					2858 = {
+						add_base_tax = 3
+						add_base_manpower = 3
+						add_base_production = 3
+						add_province_modifier = {
+							name = ynn_veykodirzag_capital
+							duration = -1
+						}
 					}
 				}
 			}
@@ -770,6 +787,7 @@ country_decisions = {
 				}
 			}
 			normal_or_historical_nations = yes
+			was_never_end_game_tag_trigger = yes
 		}
 
 		provinces_to_highlight = {
@@ -1244,6 +1262,96 @@ country_decisions = {
 			factor = 1
 		}
 		ai_importance = 400
+	}
+
+	epednar_nation = { 
+		major = yes
+
+		potential = {
+			primary_culture = epednar
+			   
+			NOT = { exists = U89 }
+			NOT = { has_country_flag = formed_great_epednar_host_flag }
+
+			normal_or_historical_nations = yes
+			was_never_end_game_tag_trigger = yes
+		}
+
+		provinces_to_highlight = {
+			superregion = ynn_superregion
+			NOT = { owned_by = ROOT }
+		}
+
+		allow = {
+			hidden_trigger = { primary_culture = epednar }
+			religion = eotomolaque
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			reform_level = 5
+			calc_true_if = {
+				amount = 30
+				ynn_superregion = {
+					type = ALL
+					OR = {
+						owned_by = ROOT
+						AND = {
+							tribal_land_of = ROOT
+							is_empty = yes
+						}
+						owner = {
+							is_subject_of = ROOT
+							primary_culture = epednar
+						}
+						AND = {
+							tribal_owner = { 
+								is_subject_of = ROOT
+								primary_culture = epednar
+							}
+							is_empty = yes
+						}
+					}
+				}
+			}
+		}
+
+		effect = {
+			change_tag = U89
+			#if = {
+			#	limit = {
+			#		has_custom_ideas = no
+			#	}
+			#	country_event = { id = ideagroups.1 } #Swap Ideas
+			#}
+			add_prestige = 50
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			increase_government_rank_scripted_effect = { rank = 2 }
+			ynn_superregion = { add_permanent_claim = ROOT }
+			custom_tooltip = government_type_change_tribal_tt
+			custom_tooltip = great_epednar_host_effect_TT
+			add_government_reform = steppe_horde
+			hidden_effect = {
+				every_tribal_land_province = {
+					limit = { is_empty = yes }
+					settle_province = ROOT
+				}
+				every_subject_country = {
+					limit = {
+						primary_culture = epednar
+					}
+					every_tribal_land_province = {
+						limit = { is_empty = yes }
+						settle_province = ROOT
+					}
+				}
+				change_government = tribal
+				set_dynasty = Who-Guides-Thunder
+			}
+			set_country_flag = formed_end_game_tag_flag
+			set_country_flag = formed_great_epednar_host_flag
+		}
 	}
 
 }

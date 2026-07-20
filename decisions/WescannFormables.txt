@@ -792,6 +792,10 @@ country_decisions = {
 				country_event = { id = ideagroups.1 } #Swap Ideas
 			}
 			set_country_flag = formed_verne_flag
+			if = {
+				limit = { NOT = { government = monarchy } }
+				change_government = monarchy
+			}
 		}
 		ai_will_do = {
 			factor = 1
@@ -1017,7 +1021,7 @@ country_decisions = {
    	 	}
 		allow = {
 			hidden_trigger = {
-				culture_group = halfling # cannorian halflings are a subset of this, eliminates most nations immediately with 1 check
+				culture_is_halfling = yes # cannorian halflings are a subset of this, eliminates most nations immediately with 1 check
 				capital_scope = { continent = europe }
 				is_cannorian_halfling_primary_culture = yes
 			}
@@ -1453,5 +1457,285 @@ country_decisions = {
 		}
 		ai_importance = 400
 	}
-
+	
+	#Busilar - A29
+	busilar_nation = {
+		major = yes
+		potential = {
+			primary_culture = busilari
+			NOT = { tag = A29 }
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_busilar }
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+		}		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 408
+				province_id = 367
+				province_id = 365
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}		
+		allow = {
+			hidden_trigger = {
+				primary_culture = busilari
+			}
+			NOT = { exists = A29 }
+			num_of_owned_provinces_with = {
+				value = 8
+				culture = busilari
+			}
+			owns_core_province = 408
+			owns_core_province = 367
+			owns_core_province = 365
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+		}
+		effect = {
+			change_tag = A29
+			hidden_effect = { restore_country_name = yes }
+			remove_non_electors_emperors_from_empire_effect = yes
+			increase_government_rank_scripted_effect = { rank = 2 }
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_prestige = 25
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			set_country_flag = formed_busilar
+			if = {
+				limit = { NOT = { government = monarchy } }
+				change_government = monarchy
+			}
+			408 = { move_capital_effect = yes }
+			swap_non_generic_missions = yes
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}
+	
+	#Wex - A30
+	wex_nation = {
+		major = yes
+		potential = {
+			primary_culture = wexonard
+			NOT = { tag = A30 }
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_wex }
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+			was_never_anbennarian_regional_tag_trigger =yes
+		}		
+		provinces_to_highlight = {
+			area = wexhills_area
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}		
+		allow = {
+			hidden_trigger = {
+				primary_culture = wexonard
+			}
+			NOT = { exists = A30 }
+			num_of_owned_provinces_with = {
+				value = 11
+				culture = wexonard
+			}
+			wexhills_area = {
+				type = all
+				owned_by = ROOT
+				is_core = ROOT
+			}
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+		}
+		effect = {
+			change_tag = A30
+			hidden_effect = { restore_country_name = yes }
+			increase_government_rank_scripted_effect = { rank = 2 }
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_prestige = 25
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			set_country_flag = formed_wex
+			swap_non_generic_missions = yes
+			hidden_effect = {
+				complete_mission = A30_lothane_triumph
+				complete_mission = A30_ripest_of_fruits
+				complete_mission = A30_grand_cross
+				complete_mission = A30_heirs_of_munas
+				complete_mission = A30_rotten_fruit
+				complete_mission = A30_mines_of_damecross
+				complete_mission = A30_secure_eargate
+			}
+			if = {
+				limit = { NOT = { government = monarchy } }
+				change_government = monarchy
+			}
+			306 = { move_capital_effect = yes }
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}
+	
+	#Arbaran - A46
+	arbaran_nation = {
+		major = yes
+		potential = {
+			primary_culture = arbarani
+			NOT = { tag = A46 }
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_arbaran }
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+			was_never_anbennarian_regional_tag_trigger =yes
+		}		
+		provinces_to_highlight = {
+			area = arbaran_area
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}		
+		allow = {
+			hidden_trigger = {
+				primary_culture = arbarani
+			}
+			NOT = { exists = A46 }
+			num_of_owned_provinces_with = {
+				value = 8
+				culture = arbarani
+			}
+			arbaran_area = {
+				type = all
+				owned_by = ROOT
+				is_core = ROOT
+			}
+			
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+		}
+		effect = {
+			change_tag = A46
+			hidden_effect = { restore_country_name = yes }
+			increase_government_rank_scripted_effect = { rank = 2 }
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_prestige = 25
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			set_country_flag = formed_arbaran_flag
+			if = {
+				limit = { NOT = { government = monarchy } }
+				change_government = monarchy
+			}
+			349 = { move_capital_effect = yes }
+			swap_non_generic_missions = yes
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}
+	
+	#Damescrown - A25
+	damescrown_nation = {
+		major = yes
+		potential = {
+			primary_culture = crownsman
+			NOT = { tag = A25 }
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_damescrown }
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+			was_never_anbennarian_regional_tag_trigger =yes
+		}		
+		provinces_to_highlight = {
+			province_id = 234
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}		
+		allow = {
+			hidden_trigger = {
+				primary_culture = crownsman
+			}
+			NOT = { exists = A25 }
+			num_of_owned_provinces_with = {
+				value = 5
+				culture = crownsman
+			}
+			owns_core_province = 234
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+		}
+		effect = {
+			change_tag = A25
+			hidden_effect = { restore_country_name = yes }
+			increase_government_rank_scripted_effect = { rank = 2 }
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_prestige = 25
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			set_country_flag = formed_damescrown_flag
+			if = {
+				limit = { NOT = { government = damescrown_republic_reform } }
+				change_government = republic
+				add_government_reform = damescrown_republic_reform
+			}
+			234 = { move_capital_effect = yes }
+			swap_non_generic_missions = yes
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}
 }

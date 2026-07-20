@@ -20,27 +20,16 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			set_country_flag = in_adventurer_heir_selection
-			
-			clr_country_flag = adv_adventure_captain_flag
-			clr_country_flag = adv_marcher_flag
-			clr_country_flag = adv_pioneer_flag
-			clr_country_flag = adv_fortune_seeker_flag
-			clr_country_flag = adv_lilac_wars_veteran_flag
-			clr_country_flag = adv_noble_flag
-			clr_country_flag = adv_escanni_native_flag
-			clr_country_flag = adv_mage_flag
-			
 		}
 	}
 	
 	# A Skilled adventurer Captain (+adventuring efficiency)
 	option = {
 		name = adventurer.1.a
-		set_country_flag = adv_adventure_captain_flag # USED IN DEVOTION.TXT
 		if = {
 			limit = {
 				OR = {
-					culture_group = harpy
+					culture_is_harpy = yes
 					culture_group = gnollish
 				}
 			}
@@ -85,10 +74,13 @@ country_event = {
 			}
 		}
 
-		add_government_power = {
-			mechanic_type = anb_adventurer_unity 
-			power_type = adventurer_unity 
-			value = 5
+		if = {
+			limit = { has_government_mechanic = anb_adventurer_unity }
+			add_government_power = {
+				mechanic_type = anb_adventurer_unity 
+				power_type = adventurer_unity 
+				value = 5
+			}
 		}
 
 		clr_country_flag = in_adventurer_heir_selection
@@ -98,11 +90,10 @@ country_event = {
 	# A Powerful Marcher (+marcher)
 	option = {
 		name = adventurer.1.b	
-		set_country_flag = adv_marcher_flag # USED IN DEVOTION.TXT
 		if = {
 			limit = {
 				OR = {
-					culture_group = harpy
+					culture_is_harpy = yes
 					culture_group = gnollish
 				}
 			}
@@ -131,10 +122,13 @@ country_event = {
 			}
 		}
 		add_faction_influence = { faction = adv_marchers influence = 10 }
-		add_government_power = {
-			mechanic_type = anb_adventurer_unity 
-			power_type = adventurer_unity 
-			value = -5
+		if = {
+			limit = { has_government_mechanic = anb_adventurer_unity }
+			add_government_power = {
+				mechanic_type = anb_adventurer_unity 
+				power_type = adventurer_unity 
+				value = -5
+			}
 		}
 		clr_country_flag = in_adventurer_heir_selection
 	}
@@ -142,11 +136,10 @@ country_event = {
 	# A Charismatic Pioneer (+pioneer) this one doesnt show
 	option = {
 		name = "adventurer.1.c"
-		set_country_flag = adv_pioneer_flag # USED IN DEVOTION.TXT
 		if = {
 			limit = {
 				OR = {
-					culture_group = harpy
+					culture_is_harpy = yes
 					culture_group = gnollish
 				}
 			}
@@ -175,10 +168,13 @@ country_event = {
 			}
 		}
 		add_faction_influence = { faction = adv_pioneers influence = 10 }
-		add_government_power = {
-			mechanic_type = anb_adventurer_unity 
-			power_type = adventurer_unity 
-			value = -5
+		if = {
+			limit = { has_government_mechanic = anb_adventurer_unity }
+			add_government_power = {
+				mechanic_type = anb_adventurer_unity 
+				power_type = adventurer_unity 
+				value = -5
+			}
 		}
 		clr_country_flag = in_adventurer_heir_selection
 	}
@@ -186,11 +182,10 @@ country_event = {
 	# A Shrewd Fortune-Seeker (+fortune seeker) this one doesnt show
 	option = {
 		name = adventurer.1.dd
-		set_country_flag = adv_fortune_seeker_flag # USED IN DEVOTION.TXT
 		if = {
 			limit = {
 				OR = {
-					culture_group = harpy
+					culture_is_harpy = yes
 					culture_group = gnollish
 				}
 			}
@@ -219,10 +214,13 @@ country_event = {
 			}
 		}
 		add_faction_influence = { faction = adv_fortune_seekers influence = 10 }
-		add_government_power = {
-			mechanic_type = anb_adventurer_unity 
-			power_type = adventurer_unity 
-			value = -5
+		if = {
+			limit = { has_government_mechanic = anb_adventurer_unity }
+			add_government_power = {
+				mechanic_type = anb_adventurer_unity 
+				power_type = adventurer_unity 
+				value = -5
+			}
 		}
 		clr_country_flag = in_adventurer_heir_selection
 	}
@@ -235,7 +233,6 @@ country_event = {
 			NOT = { has_reform = dwarovar_adventurer_reform }
 			NOT = { has_reform = sponsored_adventurer_reform }
 		}
-		set_country_flag = adv_lilac_wars_veteran_flag # USED IN DEVOTION.TXT
 		# random_country = {
 			# limit = {
 				# has_regency = no
@@ -263,7 +260,7 @@ country_event = {
 				if = {
 					limit = {
 						OR = {
-							culture_group = harpy
+							culture_is_harpy = yes
 							culture_group = gnollish
 						}
 					}
@@ -302,7 +299,7 @@ country_event = {
 				if = {
 					limit = {
 						OR = {
-							culture_group = harpy
+							culture_is_harpy = yes
 							culture_group = gnollish
 						}
 					}
@@ -341,7 +338,7 @@ country_event = {
 				if = {
 					limit = {
 						OR = {
-							culture_group = harpy
+							culture_is_harpy = yes
 							culture_group = gnollish
 						}
 					}
@@ -377,7 +374,7 @@ country_event = {
 				if = {
 					limit = {
 						OR = {
-							culture_group = harpy
+							culture_is_harpy = yes
 							culture_group = gnollish
 						}
 					}
@@ -431,10 +428,13 @@ country_event = {
 		else = {
 			custom_tooltip = marcher.1.tt4
 		}
-		add_government_power = {
-			mechanic_type = anb_adventurer_unity 
-			power_type = adventurer_unity 
-			value = -5
+		if = {
+			limit = { has_government_mechanic = anb_adventurer_unity }
+			add_government_power = {
+				mechanic_type = anb_adventurer_unity 
+				power_type = adventurer_unity 
+				value = -5
+			}
 		}
 		clr_country_flag = in_adventurer_heir_selection
 	}
@@ -457,7 +457,6 @@ country_event = {
 				}
 			}
 		}
-		set_country_flag = adv_noble_flag # USED IN DEVOTION.TXT
 		# random_known_country = {
 			# limit = {
 				# government = monarchy
@@ -494,7 +493,7 @@ country_event = {
 				if = {
 					limit = {
 						OR = {
-							culture_group = harpy
+							culture_is_harpy = yes
 							culture_group = gnollish
 						}
 					}
@@ -548,10 +547,13 @@ country_event = {
 			# add_opinion = { who = ROOT modifier = opinion_theocracy_noble }
 		# }
 		add_prestige = 10
-		add_government_power = {
-			mechanic_type = anb_adventurer_unity 
-			power_type = adventurer_unity 
-			value = -5
+		if = {
+			limit = { has_government_mechanic = anb_adventurer_unity }
+			add_government_power = {
+				mechanic_type = anb_adventurer_unity 
+				power_type = adventurer_unity 
+				value = -5
+			}
 		}
 		clr_country_flag = in_adventurer_heir_selection
 	}
@@ -563,7 +565,6 @@ country_event = {
 		trigger = {
 			capital_scope = { superregion = escann_superregion }
 		}
-		set_country_flag = adv_escanni_native_flag # USED IN DEVOTION.TXT
 		if = {
 			limit = {
 				capital_scope = {
@@ -640,10 +641,13 @@ country_event = {
 			}
 		}
 		add_yearly_manpower = 2
-		add_government_power = {
-			mechanic_type = anb_adventurer_unity 
-			power_type = adventurer_unity 
-			value = -5
+		if = {
+			limit = { has_government_mechanic = anb_adventurer_unity }
+			add_government_power = {
+				mechanic_type = anb_adventurer_unity 
+				power_type = adventurer_unity 
+				value = -5
+			}
 		}
 		clr_country_flag = in_adventurer_heir_selection
 		}
@@ -659,12 +663,10 @@ country_event = {
 			}
 		}
 		
-		set_country_flag = adv_mage_flag # USED IN DEVOTION.TXT
-		
 		if = {
 			limit = {
 				OR = {
-					culture_group = harpy
+					culture_is_harpy = yes
 					culture_group = gnollish
 				}
 			}
@@ -693,10 +695,13 @@ country_event = {
 			}
 		}
 		define_powerful_mage = { type = heir }
-		add_government_power = {
-			mechanic_type = anb_adventurer_unity
-			power_type = adventurer_unity 
-			value = -10
+		if = {
+			limit = { has_government_mechanic = anb_adventurer_unity }
+			add_government_power = {
+				mechanic_type = anb_adventurer_unity
+				power_type = adventurer_unity 
+				value = -10
+			}
 		}
 		add_prestige = -10
 		clr_country_flag = in_adventurer_heir_selection		

@@ -664,7 +664,7 @@ estate_adventurers_free_company_rosters = {
 }
 
 estate_adventurers_ennoblement_of_adventurers = {
-	icon = privilege_royal_authority
+	icon = privilege_grant_autonomy
 	max_absolutism = -5
 	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
 	loyalty = 0.05
@@ -1332,6 +1332,10 @@ estate_adventurers_sponsor_beast_slayers = {
 	}
 	benefits = {
 
+	}
+	conditional_modifier = {
+		trigger = { mission_completed = Z21_reaffirm_our_mission }
+		modifier = { global_unrest = -1 }
 	}
 	on_granted = {
 		custom_tooltip = estate_adventurers_beast_slayers_tooltip
@@ -2670,6 +2674,7 @@ estate_monstrous_tribes_free_clans = {
 		NOT = { tag = I95 }
 		NOT = { tag = I96 }
 		NOT = { tag = I97 }
+		NOT = { tag = V32 } #Sunhungak
 	}
 	can_select = { always = no }
 	can_revoke = { always = no }
@@ -3307,6 +3312,8 @@ gnoll_the_weak_serve_the_strong = {
 				overlord = { change_variable = { gnoll_tributary_bonus_count = 1 } }
 			}
 		}
+		custom_tooltip = tribs_above_50_dev_counter_tooltip
+		custom_tooltip = " "
 		custom_tooltip = gnoll_the_weak_serve_the_strong_economy_tooltip
 		custom_tooltip = " "
 		custom_tooltip = gnoll_the_weak_serve_the_strong_diplomacy_tooltip_1
@@ -3527,6 +3534,8 @@ gnoll_the_weak_serve_the_strong_burghers = {
 				overlord = { change_variable = { gnoll_tributary_bonus_count = 1 } }
 			}
 		}
+		custom_tooltip = tribs_above_50_dev_counter_tooltip
+		custom_tooltip = " "
 		custom_tooltip = gnoll_the_weak_serve_the_strong_economy_tooltip
 		custom_tooltip = " "
 		custom_tooltip = gnoll_the_weak_serve_the_strong_diplomacy_tooltip_1
@@ -3749,7 +3758,17 @@ xhazobkult_organized_sacrifices = {
 		same_religion_advisor_cost = -0.1
 	}
 	on_granted = {
-		custom_tooltip = exclusive_organized_sacrifices_tooltip
+		if = {
+			limit = {
+				NOT = {
+					has_granted_organized_sacrifices_privilege = yes
+					has_granted_ritualized_cleansing_privilege = yes
+				}
+			}
+			custom_tooltip = exclusive_organized_sacrifices_tooltip
+			custom_tooltip = " "
+		}
+		custom_tooltip = tribs_above_50_dev_counter_tooltip
 		custom_tooltip = " "
 		custom_tooltip = xhazobkult_organized_sacrifices_tribute_tooltip
 		custom_tooltip = " "
@@ -3903,7 +3922,17 @@ xhazobkult_organized_sacrifices_clergy = {
 		same_religion_advisor_cost = -0.1
 	}
 	on_granted = {
-		custom_tooltip = exclusive_organized_sacrifices_tooltip
+		if = {
+			limit = {
+				NOT = {
+					has_granted_organized_sacrifices_privilege = yes
+					has_granted_ritualized_cleansing_privilege = yes
+				}
+			}
+			custom_tooltip = exclusive_organized_sacrifices_tooltip
+			custom_tooltip = " "
+		}
+		custom_tooltip = tribs_above_50_dev_counter_tooltip
 		custom_tooltip = " "
 		custom_tooltip = xhazobkult_organized_sacrifices_tribute_tooltip
 		custom_tooltip = " "
@@ -4061,7 +4090,17 @@ xhazobkult_ritualized_cleansing = {
 		tolerance_heathen = 1
 	}
 	on_granted = {
-		custom_tooltip = exclusive_ritualized_cleansing_tooltip
+		if = {
+			limit = {
+				NOT = {
+					has_granted_organized_sacrifices_privilege = yes
+					has_granted_ritualized_cleansing_privilege = yes
+				}
+			}
+			custom_tooltip = exclusive_ritualized_cleansing_tooltip
+			custom_tooltip = " "
+		}
+		custom_tooltip = tribs_above_50_dev_counter_tooltip
 		custom_tooltip = " "
 		add_patriarch_authority = -0.2
 		custom_tooltip = " "
@@ -4175,6 +4214,10 @@ xhazobkult_ritualized_cleansing = {
 			check_variable = { gnoll_tributary_bonus_count = 10 }
 		}
 		modifier = { technology_cost = -0.1 development_cost = -0.05 }
+	}
+	conditional_modifier = {
+		trigger = { has_government_attribute = sociocultural_synthesis_ritualized_cleansing_buff }
+		modifier = { tolerance_heathen = 1 }
 	}
 	ai_will_do = {
 		factor = 100
@@ -4216,7 +4259,17 @@ xhazobkult_ritualized_cleansing_clergy = {
 		tolerance_heathen = 1
 	}
 	on_granted = {
-		custom_tooltip = exclusive_ritualized_cleansing_tooltip
+		if = {
+			limit = {
+				NOT = {
+					has_granted_organized_sacrifices_privilege = yes
+					has_granted_ritualized_cleansing_privilege = yes
+				}
+			}
+			custom_tooltip = exclusive_ritualized_cleansing_tooltip
+			custom_tooltip = " "
+		}
+		custom_tooltip = tribs_above_50_dev_counter_tooltip
 		custom_tooltip = " "
 		add_patriarch_authority = -0.2
 		custom_tooltip = " "
@@ -4330,6 +4383,10 @@ xhazobkult_ritualized_cleansing_clergy = {
 			check_variable = { gnoll_tributary_bonus_count = 10 }
 		}
 		modifier = { technology_cost = -0.1 development_cost = -0.05 }
+	}
+	conditional_modifier = {
+		trigger = { has_government_attribute = sociocultural_synthesis_ritualized_cleansing_buff }
+		modifier = { tolerance_heathen = 1 }
 	}
 	ai_will_do = {
 		factor = 100
@@ -7563,6 +7620,10 @@ estate_church_dictate_understanding = { #pure bait
 	penalties = {
 	}
 	benefits = {
+	}
+	conditional_modifier = { #NSC The Chosens Duty
+		trigger = { has_government_attribute = buffed_dictate_understanding }
+		modifier = { tolerance_heathen = 2 }
 	}
 	ai_will_do = {
 		factor = 0 # bait
@@ -11259,7 +11320,7 @@ estate_burghers_alashakan_mutation = {
 		has_global_flag = khatalashya_zulkanez_2
 	}
 	can_select = {
-		culture_group = lizardfolk
+		culture_is_lizardfolk = yes
 		can_have_more_mutations = yes
 	}
 	can_revoke = {
@@ -11317,7 +11378,7 @@ estate_nobility_glidz_mutation = {
 		has_country_modifier = 333_kuvunika_citadel_colony
 	}
 	can_select = {
-		culture_group = lizardfolk
+		culture_is_lizardfolk = yes
 		can_have_more_mutations = yes
 	}
 	on_granted = {
@@ -20019,6 +20080,34 @@ estate_adventurers_U39_order_of_exemplars = { #Orenvalyam
 		}
 	}
 }
+
+
+
+#kaino magical project privilege
+estate_mages_kaino_bringers_of_mercy = {
+	icon = estate_eunuchs_royal_intrigue_keepers_privilege
+	loyalty = 0.1
+	influence = 0.1
+	max_absolutism = 0
+	land_share = 0
+
+	is_valid = { has_estate_privilege = estate_mages_kaino_bringers_of_mercy }
+	can_select = { has_estate_privilege = estate_mages_kaino_bringers_of_mercy }
+
+	benefits = {
+		core_creation = -0.1
+	}
+	ai_will_do = { factor = 10 }
+
+	can_revoke = {
+		always = no
+	}
+
+	on_granted = {
+		#tooltip here
+	}
+}
+
 
 #Landslide Infantry (Yanacotle culture group)
 estate_church_landslide_inquisitors = {

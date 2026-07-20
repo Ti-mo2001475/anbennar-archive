@@ -1,0 +1,183 @@
+# prepare lineage in the immediate first
+# so add_lineage has a proper tooltip
+N93_prepare_all_lineages = {
+	clr_country_flag = N93_prepared_lineage_0
+	clr_country_flag = N93_prepared_lineage_1
+	clr_country_flag = N93_prepared_lineage_2
+	clr_country_flag = N93_prepared_lineage_3
+	clr_country_flag = N93_prepared_lineage_4
+	clr_country_flag = N93_prepared_lineage_5
+	clr_country_flag = N93_prepared_lineage_6
+	clr_country_flag = N93_prepared_lineage_7
+	clr_country_flag = N93_prepared_lineage_8
+	clr_country_flag = N93_prepared_lineage_9
+	clr_country_flag = N93_prepared_lineage_10
+	clr_country_flag = N93_prepared_lineage_11
+	clr_country_flag = N93_prepared_lineage_12
+	clr_country_flag = N93_prepared_lineage_13
+
+	N93_prepare_lineage = { slot = 0 }
+	N93_prepare_lineage = { slot = 1 check_0 = yes }
+	N93_prepare_lineage = { slot = 2 check_0 = yes check_1 = yes }
+	if = { limit = { has_government_attribute = enables_nepotism }
+		N93_prepare_lineage = { slot = 3 check_0 = yes check_1 = yes check_2 = yes }
+	}
+}
+N93_prepare_lineage = {
+	random_variable = { which = N93_slot_$slot$_lineage value = 14 }
+	round_variable = { N93_slot_$slot$_lineage = -1 }
+	while = {
+		limit = {
+			OR = {
+				is_variable_equal = { which = N93_slot_$slot$_lineage which = N93_chose_lineage }
+				[[check_0]
+				is_variable_equal = { which = N93_slot_$slot$_lineage which = N93_slot_0_lineage }
+				]
+				[[check_1]
+				is_variable_equal = { which = N93_slot_$slot$_lineage which = N93_slot_1_lineage }
+				]
+				[[check_2]
+				is_variable_equal = { which = N93_slot_$slot$_lineage which = N93_slot_2_lineage }
+				]
+			}
+		}
+		random_variable = { which = N93_slot_$slot$_lineage value = 14 }
+		round_variable = { N93_slot_$slot$_lineage = -1 }
+	}
+}
+# slot: which election option (0-3)
+N93_add_lineage = {
+	hidden_effect = {
+		set_variable = { which = N93_chose_lineage which = N93_slot_$slot$_lineage }
+	}
+	if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 0 } }
+		add_ruler_modifier = { name = N93_lineage_0 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 1 } }
+		add_ruler_modifier = { name = N93_lineage_1 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 2 } }
+		add_ruler_modifier = { name = N93_lineage_2 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 3 } }
+		add_ruler_modifier = { name = N93_lineage_3 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 4 } }
+		add_ruler_modifier = { name = N93_lineage_4 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 5 } }
+		add_ruler_modifier = { name = N93_lineage_5 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 6 } }
+		add_ruler_modifier = { name = N93_lineage_6 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 7 } }
+		add_ruler_modifier = { name = N93_lineage_7 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 8 } }
+		add_ruler_modifier = { name = N93_lineage_8 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 9 } }
+		add_ruler_modifier = { name = N93_lineage_9 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 10 } }
+		add_ruler_modifier = { name = N93_lineage_10 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 11 } }
+		add_ruler_modifier = { name = N93_lineage_11 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 12 } }
+		add_ruler_modifier = { name = N93_lineage_12 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 13 } }
+		add_ruler_modifier = { name = N93_lineage_13 duration = -1 }
+	}
+}
+
+# level: abjuration level (proficient, renowned)
+# number: merc instance (0-3)
+N93_disband_merc = {
+	random_hired_mercenary_company = {
+		limit = { template = merc_mobile_fortress_$level$_$number$ }
+		disband_mercenary_company = THIS
+	}
+}
+# level: abjuration level (proficient, renowned)
+N93_disband_mercs = {
+	if = { limit = { any_hired_mercenary_company = { template = merc_mobile_fortress_$level$_0 } }
+		N93_disband_merc = { level = $level$ number = 0 }
+	}
+	if = { limit = { any_hired_mercenary_company = { template = merc_mobile_fortress_$level$_1 } }
+		N93_disband_merc = { level = $level$ number = 1 }
+	}
+	if = { limit = { any_hired_mercenary_company = { template = merc_mobile_fortress_$level$_2 } }
+		N93_disband_merc = { level = $level$ number = 2 }
+	}
+	if = { limit = { any_hired_mercenary_company = { template = merc_mobile_fortress_$level$_3 } }
+		N93_disband_merc = { level = $level$ number = 3 }
+	}
+}
+# happens before school is actually leveled up
+N93_on_estate_level_up = {
+	if = { limit = { is_or_was_tag = { tag = N93 } }
+		if = { # disband old mercs
+			limit = {
+				mission_completed = N93_rushing_stone
+				has_country_flag = abjuration_advancement
+			}
+			if = { limit = { is_estate_abjuration_level_1 = yes }
+				N93_disband_mercs = { level = proficient }
+				custom_tooltip = N93_upgrade_mobile_fortress_1_tt
+			}
+			else_if = { limit = { is_estate_abjuration_level_2 = yes }
+				N93_disband_mercs = { level = renowned }
+				custom_tooltip = N93_upgrade_mobile_fortress_2_tt
+			}
+		}
+		if = { # upgrade scaling mod
+			limit = {
+				mission_completed = N93_kobold_kinship
+				has_country_flag = conjuration_advancement
+			}
+			if = { limit = { is_estate_conjuration_level_1 = yes }
+				remove_country_modifier = N93_stonestory_support_1
+				add_country_modifier = { name = N93_stonestory_support_2 duration = -1 }
+			}
+			else_if = { limit = { is_estate_conjuration_level_2 = yes }
+				remove_country_modifier = N93_stonestory_support_2
+				add_country_modifier = { name = N93_stonestory_support_3 duration = -1 }
+			}
+			else = {
+				remove_country_modifier = N93_stonestory_support_0
+				add_country_modifier = { name = N93_stonestory_support_1 duration = -1 }
+			}
+		}
+	}
+}
+
+# insta disband outdated mercs upon hiring
+# ROOT = merc, FROM = country, THIS = province
+N93_merc_anti_cheese = {
+	if = { limit = { FROM = { is_or_was_tag = { tag = N93 } } }
+		if = { limit = { FROM = { is_estate_abjuration_level_2 = yes } }
+			N93_merc_anti_cheese_helper = { level = proficient }
+		}
+		else_if = { limit = { FROM = { is_estate_abjuration_level_3 = yes } }
+			N93_merc_anti_cheese_helper = { level = renowned }
+		}
+	}
+}
+N93_merc_anti_cheese_helper = {
+	if = { limit = { ROOT = { mercenary_company = merc_mobile_fortress_$level$_0 } }
+		FROM = { N93_disband_merc = { level = $level$ number = 0 } }
+	}
+	else_if = { limit = { ROOT = { mercenary_company = merc_mobile_fortress_$level$_1 } }
+		FROM = { N93_disband_merc = { level = $level$ number = 1 } }
+	}
+	else_if = { limit = { ROOT = { mercenary_company = merc_mobile_fortress_$level$_2 } }
+		FROM = { N93_disband_merc = { level = $level$ number = 2 } }
+	}
+	else_if = { limit = { ROOT = { mercenary_company = merc_mobile_fortress_$level$_3 } }
+		FROM = { N93_disband_merc = { level = $level$ number = 3 } }
+	}
+}

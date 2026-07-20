@@ -3434,6 +3434,7 @@ country_event = { #Beyond the Sect Walls, Within Human Rule?
 		ai_chance = { factor = 1 }
 
 		event_target:xia_province = { area = { limit = { owned_by = ROOT } add_province_modifier = { name = haless_law_loyalty duration = 3650 } } }
+		add_absolutism = 10
 	}
 
 	option = { #Negotiate a solution to gain their understanding.
@@ -3771,6 +3772,475 @@ country_event = { #Bazuneizar Artificery Add
 		}
 		else = {
 			mission_reward_artifice_points_10 = yes
+		}
+	}
+}
+
+province_event = { #The Sands Shift!
+	id = haless.1001
+	title = haless.1001.t
+	desc = haless.1001.desc
+	picture = ARTILLERY_eventPicture
+	hidden = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		add_province_triggered_modifier = shifting_sands_handler_ptm #Self-queues so it happens every 10 years, PTM to avoid stack depth issues
+		khaashalg_region = {
+			type = random
+			amount = 1
+			limit = {
+				OR = {
+					trade_goods = livestock
+					trade_goods = wool
+					trade_goods = grain
+					trade_goods = wine
+				}
+			}
+			province_event = { id = haless.1002 }
+		}
+	}
+
+	option = { name = haless.1001.a }
+}
+
+province_event = { #The Sands Shift!
+	id = haless.1002
+	title = haless.1002.t
+	desc = haless.1002.d
+	picture = LAKE_TREASURE_eventPicture
+
+	is_triggered_only = yes
+	major = yes
+	major_trigger = { capital_scope = { superregion = gozengun_superregion } }
+
+	option = {
+		name = haless.1002.a
+		goto = ROOT
+
+		if = {
+			limit = { has_production_manufactory_or_gold_trigger = yes } #"or gold" is never happening
+			hidden_effect = { add_permanent_province_modifier = { name = haless_old_manufactory duration = -1 } } #effect is hidden, modifier isn't
+		}
+		save_trade_goods = yes
+		random_list = {
+			1 = { change_trade_goods = damestear }
+			1 = { change_trade_goods = mithril }
+			1 = { change_trade_goods = dyes }
+			1 = { change_trade_goods = gems }
+			1 = { change_trade_goods = silk }
+			1 = { change_trade_goods = chinaware }
+			1 = { change_trade_goods = iron }
+			1 = { change_trade_goods = glass }
+		}
+		if = {
+			limit = { trade_goods = damestear }
+			set_province_flag = permanent_damestear #these dwindle according to this system
+		}
+
+		custom_tooltip = SEPERATOR_TOOLTIP
+		add_permanent_province_modifier = { name = haless_khantaari_treasure duration = 7300 }
+		custom_tooltip = haless_khantaari_treasure_desc
+		custom_tooltip = SEPERATOR_TOOLTIP
+		province_event = { id = haless.1004 days = 7302 } #for some reason, + 1 day doesn't work
+	}
+}
+
+province_event = { #The Lone and Level Sands
+	id = haless.1003
+	title = haless.1003.t
+	desc = haless.1003.d
+	picture = SIERRA_DE_LA_PLATA_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = haless.1003.a
+		ai_chance = { factor = 1 }
+
+		set_from_saved_trade_goods = yes
+		clr_province_flag = permanent_damestear
+		if = {
+			limit = { has_province_modifier = haless_old_manufactory }
+			remove_province_modifier = haless_old_manufactory
+			add_manufactory = yes
+		}
+	}
+
+
+	option = {
+		name = haless.1003.b
+		ai_chance = { factor = 0 }
+		trigger = {
+			owner = {
+				custom_trigger_tooltip = {
+					tooltip = haless_1003_tt
+					ai = no
+				}
+				hidden_trigger = { #no going into mana debt continuously
+					adm_power = 0
+					dip_power = 0
+					mil_power = 0
+				}
+			}
+		}
+		highlight = yes
+
+		owner = {
+			add_adm_power = -50
+			add_dip_power = -50
+			add_mil_power = -50
+		}
+		custom_tooltip = SEPERATOR_TOOLTIP
+		add_permanent_province_modifier = { name = haless_khantaari_treasure duration = 1825 }
+		custom_tooltip = haless_khantaari_treasure_desc
+		custom_tooltip = SEPERATOR_TOOLTIP
+		province_event = { id = haless.1004 days = 1827 } #for some reason, + 1 day doesn't work
+	}
+}
+
+province_event = { #The Lone and Level Sands handler
+	id = haless.1004
+	title = haless.1003.t
+	desc = haless.1003.d
+	picture = SIERRA_DE_LA_PLATA_eventPicture
+
+	is_triggered_only = yes
+	hidden = yes
+
+	trigger = {
+		NOT = { has_province_flag = MT_spawned_trade_good } #In case an MT up here wants to change trade goods and not use the "Khantaari Treasures" modifier
+		NOT = { has_province_flag = summoned_damestear } #Tearfall and so on, we remove the modifier and other flags so should revert to the original trade good
+	}
+
+	immediate = {
+		if = {
+			limit = { has_province_modifier = haless_khantaari_treasure }
+			add_province_triggered_modifier = shifting_sands_reversion_ptm #check again in 3 years, PTM avoids queue depth issues
+		}
+		else = { province_event = { id = haless.1003 } }
+	}
+
+	option = {
+		name  haless.1003.a
+	}
+}
+
+country_event = { #startup warlord of haless event
+	id = haless.1009
+	title = haless.1009.t
+	desc = haless.1009.d
+	picture = SIERRA_DE_LA_PLATA_eventPicture
+
+	is_triggered_only = yes
+	hidden = yes
+	fire_only_once = yes
+
+	trigger = { capital_scope = { continent = asia NOT = { superregion = forbidden_lands_superregion } } }
+
+	immediate = { 4411 = { province_event = { id = haless.1010 days = 1 } } }
+	#Lots of startup events day 1, we can delay Warlordship for a day without losing anything of note 
+	#For some reason, AI Dhenijanraj still triggers the event day 1. But since player Dhenijanraj has a startup event, delay still holds some value.
+
+	option = {
+		name = haless.1009.a
+	}
+}
+
+province_event = { #Do the most general sweep for warlord of haless possible - in province scope so that it still fires if nations stop existing
+	id = haless.1010
+	title = haless.1010.t
+	desc = haless.1010.d
+	picture = SIERRA_DE_LA_PLATA_eventPicture
+
+	is_triggered_only = yes
+	hidden = yes
+	trigger = { NOT = { has_global_flag = delay_warlord_of_haless } }
+
+	immediate = {
+		if = {
+			limit = { NOT = { has_saved_global_event_target = warlord_of_haless } }
+			random_country = { #Independent tag in Haless
+				limit = {
+					capital_scope = { continent = asia NOT = { superregion = forbidden_lands_superregion } }
+					is_subject = no
+				}
+				save_global_event_target_as = warlord_of_haless
+			}
+		}
+		every_country = {
+			limit = {
+				capital_scope = { continent = asia NOT = { superregion = forbidden_lands_superregion } }
+				is_subject = no
+				event_target:warlord_of_haless = { NOT = { total_own_and_non_tributary_subject_development = PREV } } #strictly more dev
+			}
+			save_global_event_target_as = warlord_of_haless
+		}
+
+		if = {
+			limit = { #Only pop the event if we have a new warlord
+				has_saved_global_event_target = warlord_of_haless
+				event_target:warlord_of_haless = { NOT = { tag = event_target:previous_warlord_of_haless } }
+			}
+			event_target:warlord_of_haless = { country_event = { id = haless.1011 } }
+		}
+	}
+
+	option = {
+		name = haless.1010.a
+	}
+}
+
+country_event = { #New Warlord of Haless event
+	id = haless.1011
+	title = haless.1011.t
+	desc = haless.1011.d
+	picture = MILITARISTICALLY_TALENTED_RULER_eventPicture
+	goto = capital_target
+
+	is_triggered_only = yes
+	major = yes
+	major_trigger = { provinces_on_continent = asia }
+
+	immediate = {
+		hidden_effect = {
+			capital_scope = { save_event_target_as = capital_target }
+			if = {
+				limit = { has_saved_global_event_target = previous_warlord_of_haless }
+				event_target:previous_warlord_of_haless = { save_event_target_as = previous_warlord_target } #prevents error.log from being spammed, and helps some edge cases
+			}
+			save_global_event_target_as = previous_warlord_of_haless
+			set_country_flag = claim_warlords_due_timer
+		}
+	}
+
+	option = {
+		name = haless.1011.a
+
+		set_ai_personality = { personality = ai_militarist }
+		remove_country_modifier = haless_previous_warlord_malus
+
+		if = {
+			limit = { has_saved_event_target = event_target:previous_warlord_target }
+			event_target:previous_warlord_target = { add_country_modifier = { name = haless_previous_warlord_malus duration = 9125 desc = until_warlord } }
+		}
+		custom_tooltip = haless_warlord_explanation_tt
+	}
+}
+
+country_event = { #country event for performance's sake. Delayed events aren't run multiple times
+	id = haless.1012
+	title = haless.1012.t
+	desc = haless.1012.d
+	picture = SIERRA_DE_LA_PLATA_eventPicture
+
+	is_triggered_only = yes
+	hidden = yes
+
+	option = {
+		name = haless.1012.a
+
+		warlord_of_haless_check = yes
+	}
+}
+country_event = { #country event for performance's sake. Delayed events aren't run multiple times
+	id = haless.1013
+	title = haless.1013.t
+	desc = haless.1013.d
+	picture = SIERRA_DE_LA_PLATA_eventPicture
+
+	is_triggered_only = yes
+	hidden = yes
+
+	option = {
+		name = haless.1013.a
+
+		anti_warlord_of_haless_check = yes
+	}
+}
+
+country_event = { #Claim the Warlord's Due
+	id = haless.1014
+	title = haless.1014.t
+	desc = haless.1014.desc
+	picture = CONQUEST_eventPicture
+
+	is_triggered_only = yes
+
+	option = { #"I am Harimar's Raging Bile Duct"
+		name = haless.1014.a
+		ai_chance = { factor = 10 }
+
+		custom_tooltip = claim_neighbor_region
+		hidden_effect = { every_neighbor_province = { region = { add_claim = ROOT } } }
+		add_country_modifier = { name = haless_warlord_harimar duration = 9125 }
+	}
+
+	option = { #"I am Ramapalar's Unflinching Gaze"
+		name = haless.1014.b
+		ai_chance = { factor = 10 }
+
+		custom_tooltip = claim_neighbor_area
+		hidden_effect = { every_neighbor_province = { area = { add_claim = ROOT } } }
+	}
+
+	option = { #"I am Jaher's Dusty Hands and Feet"
+		name = haless.1014.c
+		ai_chance = { factor = 1 }
+
+		add_country_modifier = { name = haless_warlord_jaher duration = 9125 }
+		custom_tooltip = haless_warlord_jaher_desc
+	}
+
+	option = { #"I am Jagaddipendra's Overdeveloped Esophagus"
+		name = haless.1014.d
+		ai_chance = { factor = 1 }
+
+		add_owned_provinces_development_ducats = {
+			multiplier = 5
+			age_multiplier = 0
+			trigger = {
+				OR = {
+					NOT = { is_state_core = owner } #no need to micromanage half-states
+					is_state = no
+				}
+			}
+			custom_tooltip = territory_tt
+		}
+	}
+
+	option = { #"I am the Sage-King's Smirking Condescension"
+		name = haless.1014.e
+		ai_chance = { factor = 1 }
+
+		add_subjects_development_manpower = {
+			multiplier = 0.1
+			age_multiplier = 0
+		}
+	}
+
+	option = { #"I am the Ghost Emperor's Inflamed Sense of Impatience"
+		name = haless.1014.f
+		ai_chance = { factor = 1 }
+
+		if = {
+			limit = { NOT = { mil_tech = 7 } }
+			capital_scope = {
+				add_unit_construction = {
+					type = large_cast_bronze_mortar
+					amount = 4
+					speed = 1
+					cost = 0
+				}
+			}
+		}
+		else = {
+			capital_scope = {
+				add_unit_construction = {
+					type = artillery
+					amount = 4
+					speed = 1
+					cost = 0
+				}
+			}
+		}
+		add_country_modifier = { name = haless_warlord_caoban duration = 9125 }
+	}
+}
+
+country_event = { #Sunder the Warlord
+	id = haless.1015
+	title = haless.1015.t
+	desc = haless.1015.desc
+	picture = CONQUEST_eventPicture
+	goto = sunder_target_capital
+
+	immediate = { hidden_effect = { event_target:sunder_target = { capital_scope = { save_event_target_as = sunder_target_capital } } } }
+
+	is_triggered_only = yes
+	major = yes
+
+	option = {
+		name = haless.1015.a
+
+		if = {
+			limit = { event_target:sunder_target = { total_own_and_non_tributary_subject_development = 1000 } }
+			add_adm_power = 100
+			add_dip_power = 100
+			add_mil_power = 100
+		}
+
+		if = {
+			limit = { event_target:sunder_target = { total_own_and_non_tributary_subject_development = 3000 } }
+			add_treasury = 3000
+		}
+		else_if = {
+			limit = { event_target:sunder_target = { total_own_and_non_tributary_subject_development = 2500 } }
+			add_treasury = 2500
+		}
+		else_if = {
+			limit = { event_target:sunder_target = { total_own_and_non_tributary_subject_development = 2000 } }
+			add_treasury = 2000
+		}
+		else_if = {
+			limit = { event_target:sunder_target = { total_own_and_non_tributary_subject_development = 1500 } }
+			add_treasury = 1500
+		}
+		else_if = {
+			limit = { event_target:sunder_target = { total_own_and_non_tributary_subject_development = 1000 } }
+			add_treasury = 1000
+		}
+
+		custom_tooltip = dissolve_warlord_tt
+		hidden_effect = {
+			set_global_flag = delay_warlord_of_haless #so there aren't lots of event pop-ups
+			event_target:sunder_target = {
+				release_all_subjects = yes #Make all subjects independent, first
+
+				#Give back as many cores as possible
+				release_all_possible_countries = yes
+				while = {
+					limit = {
+						any_owned_province = {
+							is_capital = no #release_all_cores doesn't work on capital
+							any_core_country = { NOT = { tag = event_target:sunder_target } }
+						}
+					}
+					release_all_cores = yes #This has to be run several times because it's buggy
+				}
+				capital_scope = {
+					if = {
+						limit = { any_core_country = { NOT = { tag = event_target:sunder_target } } }
+						random_core_country = { save_event_target_as = to_cede_target }
+						cede_province = event_target:to_cede_target
+					}
+				}
+
+				every_owned_province = { cede_province = previous_owner } #you're now down to starting territory or less
+				while = {
+					limit = {
+						exists = yes
+						any_neighbor_country = { exists = yes } #You have a neighbor to cede provinces to
+					}
+					random_neighbor_country = {
+						every_neighbor_province = { #Must be done this way to prevent CTDs
+							limit = { owned_by = event_target:sunder_target }
+							set_province_flag = to_cede_province
+						}
+						save_event_target_as = to_cede_target
+					}
+					every_owned_province = {
+						limit = { has_province_flag = to_cede_province }
+						clr_province_flag = to_cede_province
+						cede_province = event_target:to_cede_target
+					}
+				}
+			}
+
+			clear_global_event_target = warlord_of_haless
+			clr_global_flag = delay_warlord_of_haless
+			4411 = { province_event = { id = haless.1010 } } #Find the new warlord
 		}
 	}
 }

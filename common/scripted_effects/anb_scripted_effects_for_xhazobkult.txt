@@ -604,6 +604,32 @@ light_the_pyres_effect = {
 			}
 		}
 
+		if = {
+			limit = { has_government_attribute = feeding_the_flame_light_the_pyres_buff }
+			multiply_variable = {
+				which = numOfProvincesToBurn
+				value = 2
+			}
+			set_variable = {
+				which = numOfProvincesToDevelop
+				value = numOfProvincesToBurn
+			}
+			divide_variable = {
+				which = numOfProvincesToDevelop
+				value = 4
+			}
+			round_variable = {
+				which = numOfProvincesToDevelop
+				value = -1
+			}
+			for_variable_amount = {
+				variable = numOfProvincesToDevelop
+				effect = "
+					feeding_the_flame_light_the_pyres_buff_develop_effect = yes
+				"
+			}
+		}
+
 		for_variable_amount = {
 			variable = numOfProvincesToBurn
 			effect = "
@@ -613,6 +639,7 @@ light_the_pyres_effect = {
 			
 		every_owned_province = {
 			clr_province_flag = xhazobkult_already_lighted_the_pyre
+			clr_province_flag = xhazobkult_already_developed_via_pyre
 		}
 
 		clr_country_flag = xhazobkult_light_the_pyres_cooldown
@@ -719,6 +746,10 @@ light_the_pyres_effect_for_variable = {
 			limit = { ROOT = { has_estate_privilege = estate_mages_moment_of_felflame } }
 			change_religion = xhazobkult
 		}
+		else_if = {
+			limit = { ROOT = { has_government_attribute = feeding_the_flame_light_the_pyres_buff } }
+			add_base_tax = -1
+		}
 		else = {
 			add_base_tax = -1
 			add_base_production = -1
@@ -765,6 +796,17 @@ light_the_pyres_effect_for_variable = {
 			remove_province_modifier = religious_zeal_at_conv
 		}
 		set_province_flag = xhazobkult_already_lighted_the_pyre
+	}
+}
+
+feeding_the_flame_light_the_pyres_buff_develop_effect = {
+	random_owned_province = {
+		limit = {
+			culture_group = gnollish
+			NOT = { has_province_flag = xhazobkult_already_developed_via_pyre }
+		}
+		add_base_production = 1
+		set_province_flag = xhazobkult_already_developed_via_pyre
 	}
 }
 

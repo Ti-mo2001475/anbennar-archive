@@ -15,16 +15,37 @@ country_event = { #The Traveling Court
 		custom_tooltip = L22_enable_court_of_fangaula_TT
 		set_country_flag = L22_enable_court_of_fangaula
 		hidden_effect = {
-			trigger_switch = {
-				on_trigger = owns_or_subject_of
-				5813 = { 5813 = { add_province_modifier = { name = L22_court_city_sigilan duration = -1 } } }
-				5802 = { 5802 = { add_province_modifier = { name = L22_court_city_zitan_tomon duration = -1 } } }
-				5741 = { 5741 = { add_province_modifier = { name = L22_court_city_woloso duration = -1 } } }
-				5779 = { 5779 = { add_province_modifier = { name = L22_court_city_jiridese duration = -1 } } }
-				5745 = { 5745 = { add_province_modifier = { name = L22_court_city_sinjetaso duration = -1 } } }
-				5724 = { 5724 = { add_province_modifier = { name = L22_court_city_izini duration = -1 } } }
-				5710 = { 5710 = { add_province_modifier = { name = L22_court_city_kunolo duration = -1 } } }
-				5680 = { 5680 = { add_province_modifier = { name = L22_court_city_jagab_faru duration = -1 } } }
+			if = {
+				limit = { owns_or_subject_of = 5813 }
+				5813 = { add_province_modifier = { name = L22_court_city_sigilan duration = -1 } }
+			}
+			if = {
+				limit = { owns_or_subject_of = 5802 }
+				5802 = { add_province_modifier = { name = L22_court_city_zitan_tomon duration = -1 } }
+			}
+			if = {
+				limit = { owns_or_subject_of = 5741 }
+				5741 = { add_province_modifier = { name = L22_court_city_woloso duration = -1 } }
+			}
+			if = {
+				limit = { owns_or_subject_of = 5779 }
+				5779 = { add_province_modifier = { name = L22_court_city_jiridese duration = -1 } }
+			}
+			if = {
+				limit = { owns_or_subject_of = 5745 }
+				5745 = { add_province_modifier = { name = L22_court_city_sinjetaso duration = -1 } }
+			}
+			if = {
+				limit = { owns_or_subject_of = 5724 }
+				5724 = { add_province_modifier = { name = L22_court_city_izini duration = -1 } }
+			}
+			if = {
+				limit = { owns_or_subject_of = 5710 }
+				5710 = { add_province_modifier = { name = L22_court_city_kunolo duration = -1 } }
+			}
+			if = {
+				limit = { owns_or_subject_of = 5680 }
+				5680 = { add_province_modifier = { name = L22_court_city_jagab_faru duration = -1 } }
 			}
 		}
 	}
@@ -547,61 +568,68 @@ country_event = {
 			has_country_modifier = L22_court_in_jagab_faru
 		}
 	}
-
-	option = { #Sigilan
-		name = binwarji.101.a
-		ai_chance = { factor = 10 }
-		trigger = { has_country_modifier = L22_court_in_sigilan }
-		L22_court_of_fangaula_events_fire = { province = 5813 }
+	immediate = {
+		trigger_switch = {
+			on_trigger = has_country_modifier
+			L22_court_in_sigilan = { 5813 = { save_event_target_as = L22_court_of_fangaula_city } }
+			L22_court_in_zitan_tomon = { 5802 = { save_event_target_as = L22_court_of_fangaula_city } }
+			L22_court_in_woloso = { 5741 = { save_event_target_as = L22_court_of_fangaula_city } }
+			L22_court_in_jiridese_so = { 5779 = { save_event_target_as = L22_court_of_fangaula_city } }
+			L22_court_in_sinjetaso = { 5745 = { save_event_target_as = L22_court_of_fangaula_city } }
+			L22_court_in_izini = { 5724 = { save_event_target_as = L22_court_of_fangaula_city } }
+			L22_court_in_kunolo = { 5710 = { save_event_target_as = L22_court_of_fangaula_city } }
+			L22_court_in_jagab_faru = { 5680 = { save_event_target_as = L22_court_of_fangaula_city } }
+		}
 	}
 
-	option = { #Zitan Tomon
+	option = {
 		name = binwarji.101.a
 		ai_chance = { factor = 10 }
-		trigger = { has_country_modifier = L22_court_in_zitan_tomon }
-		L22_court_of_fangaula_events_fire = { province = 5802 }
-	}
 
-	option = { #Woloso
-		name = binwarji.101.a
-		ai_chance = { factor = 10 }
-		trigger = { has_country_modifier = L22_court_in_woloso }
-		L22_court_of_fangaula_events_fire = { province = 5741 }
-	}
-
-	option = { #Jiridese So
-		name = binwarji.101.a
-		ai_chance = { factor = 10 }
-		trigger = { has_country_modifier = L22_court_in_jiridese_so }
-		L22_court_of_fangaula_events_fire = { province = 5779 }
-	}
-
-	option = { #Sinjetaso
-		name = binwarji.101.a
-		ai_chance = { factor = 10 }
-		trigger = { has_country_modifier = L22_court_in_sinjetaso }
-		L22_court_of_fangaula_events_fire = { province = 5745 }
-	}
-
-	option = { #Izini
-		name = binwarji.101.a
-		ai_chance = { factor = 10 }
-		trigger = { has_country_modifier = L22_court_in_izini }
-		L22_court_of_fangaula_events_fire = { province = 5724 }
-	}
-
-	option = { #Kunolo
-		name = binwarji.101.a
-		ai_chance = { factor = 10 }
-		trigger = { has_country_modifier = L22_court_in_kunolo }
-		L22_court_of_fangaula_events_fire = { province = 5710 }
-	}
-
-	option = { #Jagab Faru
-		name = binwarji.101.a
-		ai_chance = { factor = 10 }
-		trigger = { has_country_modifier = L22_court_in_jagab_faru }
-		L22_court_of_fangaula_events_fire = { province = 5680 }
+		event_target:L22_court_of_fangaula_city = {
+			random_list = {
+				1 = {
+					province_event = { id = binwarji.102 }
+				}
+				1 = {
+					trigger = {
+						owner = { has_advisor = yes }
+					}
+					province_event = { id = binwarji.103 }
+				}
+				1 = {
+					province_event = { id = binwarji.104 }
+				}
+				1 = {
+					trigger = {
+						owner = {
+							OR = {
+								gems = 1
+								any_subject_country = { gems = 1 }
+							}
+						}
+					}
+					province_event = { id = binwarji.105 }
+				}
+				1 = {
+					province_event = { id = binwarji.106 }
+				}
+				1 = {
+					trigger = {
+						owner = {
+							num_of_provinces_owned_or_owned_by_subjects_with = {
+								value = 2
+								OR = {
+									trade_goods = livestock
+									trade_goods = grain
+								}
+							}
+						}
+					}
+					province_event = { id = binwarji.107 }
+				}
+			}
+		}
 	}
 }
 
@@ -635,11 +663,7 @@ province_event = { #Province Ask for Investment
 			add_adm_power = -50
 		}
 		add_devastation = -100
-		random_list = {
-			33 = { add_base_tax = 1 }
-			33 = { add_base_production = 1 }
-			33 = { add_base_manpower = 1 }
-		}
+		add_random_development = 1
 		add_prosperity = 25
 		area = {
 			limit = {

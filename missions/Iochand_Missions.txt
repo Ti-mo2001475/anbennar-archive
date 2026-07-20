@@ -1949,7 +1949,7 @@ A80_3 = {
 			hidden_effect = {
 				for = {
 					amount = 6
-					effect = "every_owned_or_non_tributary_subject_province = { 
+					effect = "random_owned_or_non_tributary_subject_province = { 
 limit = { continent = europe OR = { trade_goods = wool trade_goods = livestock trade_goods = fish }
 development = 20 has_manufactory_trigger = yes has_production_building_trigger = yes culture_is_iochandized = no }
 iochandized_effect = yes }"
@@ -3019,42 +3019,32 @@ A80_4 = {
 				}
 				AND = {
 					province_id = 1028
-					NOT = {
-						AND = {
-							country_or_non_sovereign_subject_holds = A19
-							development = 20
-							has_tax_building_trigger = yes
-							has_building = university
-							province_has_center_of_trade_of_level = 2
-						}
-					}
+					NOT = { country_or_non_sovereign_subject_holds = A19 }
+				}
+				AND = {
+					province_id = 1527
+					NOT = { 1527 = { is_strongest_trade_power = A19 } }
 				}
 			}
 		}
 
 		trigger = {
+			1028 = {
+				country_or_non_sovereign_subject_holds = A19
+			}
 			OR = {
-				AND = {
-					trollsbay_region = {
-						type = all
-						country_or_non_sovereign_subject_holds = A19
-					}
-					A19 = {
-						calc_true_if = {
-							all_subject_country = {
-								is_subject_of_type = aelantir_hezoggdoum
-								capital_scope = { region = trollsbay_region }
-							}
-							amount = 6
+				A19 = {
+					calc_true_if = {
+						all_subject_country = {
+							is_subject_of_type = aelantir_hezoggdoum
+							capital_scope = { region = trollsbay_region }
 						}
+						amount = 6
 					}
 				}
-				1028 = {
+				trollsbay_region = {
+					type = all
 					country_or_non_sovereign_subject_holds = A19
-					development = 20
-					has_tax_building_trigger = yes
-					has_building = university
-					province_has_center_of_trade_of_level = 2
 				}
 			}
 			1527 = { is_strongest_trade_power = A19 }
@@ -3073,10 +3063,10 @@ A80_4 = {
 				A19 = {
 					for = {
 						amount = 10
-						effect = "every_owned_or_non_tributary_subject_province = { limit = { region = trollsbay_region }
-	set_province_flag = A80_prov_flag add_gnomish_minority_size_effect = yes }"
+						effect = "random_owned_or_non_tributary_subject_province = {
+limit = { region = trollsbay_region NOT = { fast_has_pop_of_race = { race = gnomish } } }
+add_gnomish_minority_size_effect = yes }"
 					}
-					every_owned_or_non_tributary_subject_province = { clr_country_flag = A80_prov_flag }
 				}
 			}
 		}

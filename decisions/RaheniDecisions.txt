@@ -27,4 +27,64 @@ country_decisions = {
 			}
 		}
 	}
+
+	claim_warlords_due = { #doubles as a tooltip telling people who the warlord is and how much dev they have
+		potential = {
+			provinces_on_continent = asia
+			OR = { #Just to keep the FP people out until later
+				has_discovered = 4411
+				capital_scope = { superregion = gozengun_superregion }
+				capital_scope = { superregion = rahen_superregion }
+				capital_scope = { superregion = vimdatrong_superregion }
+				capital_scope = { superregion = yanshen_superregion }
+			}
+		}
+		allow = {
+			if = {
+				limit = { has_saved_global_event_target = warlord_of_haless }
+				if = { #Technically ties aren't allowed
+					limit = { NOT = { tag = event_target:warlord_of_haless } }
+					custom_trigger_tooltip = {
+						tooltip = warlord_of_haless_no_ties_tt
+						always = no
+					}
+				}
+				total_own_and_non_tributary_subject_development = event_target:warlord_of_haless
+			}
+			capital_scope = { continent = asia NOT = { superregion = forbidden_lands_superregion } }
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = claim_warlords_due_timer_tt
+				had_country_flag = {
+					flag = claim_warlords_due_timer
+					days = 9125
+				}
+			}
+		}
+		provinces_to_highlight = {
+			OR = {
+				AND = { #Highlights the current warlord if there is one
+					has_saved_global_event_target = warlord_of_haless
+					is_capital_of = event_target:warlord_of_haless
+				}
+				AND = { #move your capital, dummy
+					NOT = { has_saved_global_event_target = warlord_of_haless }
+					is_subject = no
+					owned_by = ROOT
+					continent = asia
+					NOT = { superregion = forbidden_lands_superregion }
+				}
+				AND = { #get independent
+					NOT = { has_saved_global_event_target = warlord_of_haless }
+					is_subject = yes
+					owner = { overlord_of = ROOT }
+				}
+			}
+		}
+		effect = {
+			set_country_flag = claim_warlords_due_timer #reset timer
+			country_event = { id = haless.1014 }
+		}
+		ai_will_do = { factor = 100 }
+	}
 }

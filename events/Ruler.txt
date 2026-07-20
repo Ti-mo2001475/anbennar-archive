@@ -107,7 +107,7 @@ country_event = { # Ruler Death Event Part 1
 			NOT = { ruler_culture = wood_elf }
 		}
 		modifier = {
-			factor = 0.5
+			factor = 0.4
 			fast_ruler_is_dwarven = yes
 		}
 		modifier = {
@@ -177,35 +177,24 @@ country_event = { # Ruler Death Event Part 1
 
 		#Dwarven
 		modifier = {
-			factor = 0.7
-			fast_ruler_is_dwarven = yes
-			NOT = { ruler_age = 125 }
-		}
-		modifier = {
-			factor = 0.8
-			fast_ruler_is_dwarven = yes
-			ruler_age = 125
-			NOT = { ruler_age = 175 }
-		}
-		modifier = {
-			factor = 1.7
+			factor = 2
 			fast_ruler_is_dwarven = yes
 			ruler_age = 150
 		}
 		modifier = {
-			factor = 3.2
+			factor = 2.2
+			fast_ruler_is_dwarven = yes
+			ruler_age = 172
+		}
+		modifier = {
+			factor = 2.6
+			fast_ruler_is_dwarven = yes
+			ruler_age = 185
+		}
+		modifier = {
+			factor = 2
 			fast_ruler_is_dwarven = yes
 			ruler_age = 200
-		}
-		modifier = {
-			factor = 3.8
-			fast_ruler_is_dwarven = yes
-			ruler_age = 225
-		}
-		modifier = {
-			factor = 4.6
-			fast_ruler_is_dwarven = yes
-			ruler_age = 250
 		}
 
 		#Gnomish/Wood Elf
@@ -814,11 +803,6 @@ country_event = { #Ruler Dies - for over age 100
 	}
 
 	after = {
-		export_to_variable = {
-			which = GetRulerAge
-			value = monarch_age
-			who = ROOT
-		}
 		hidden_effect = { kill_ruler = yes }
 	}
 }
@@ -841,11 +825,6 @@ country_event = { #Ruler Dies - for under age 100.
 	option = {
 		name = anb_ruler.4.a
 
-		export_to_variable = {
-			which = GetRulerAge
-			value = monarch_age
-			who = ROOT
-		}
 		kill_ruler = yes
 	}
 }
@@ -1331,7 +1310,7 @@ country_event = { # Consort die
 			NOT = { consort_culture = wood_elf }
 		}
 		modifier = {
-			factor = 0.5
+			factor = 0.4
 			fast_consort_is_dwarven = yes
 		}
 		modifier = {
@@ -1403,22 +1382,22 @@ country_event = { # Consort die
 		modifier = {
 			factor = 2
 			fast_consort_is_dwarven = yes
-			consort_age = 135
+			consort_age = 150
 		}
 		modifier = {
 			factor = 2.2
 			fast_consort_is_dwarven = yes
-			consort_age = 151
+			consort_age = 172
 		}
 		modifier = {
 			factor = 2.6
 			fast_consort_is_dwarven = yes
-			consort_age = 167
+			consort_age = 185
 		}
 		modifier = {
 			factor = 2
 			fast_consort_is_dwarven = yes
-			consort_age = 183
+			consort_age = 200
 		}
 
 		#Gnomish/Wood Elf
@@ -1947,7 +1926,7 @@ country_event = { #Heir dies
 			NOT = { heir_culture = wood_elf }
 		}
 		modifier = {
-			factor = 0.5
+			factor = 0.4
 			fast_heir_is_dwarven = yes
 		}
 		modifier = {
@@ -2019,22 +1998,22 @@ country_event = { #Heir dies
 		modifier = {
 			factor = 2
 			fast_heir_is_dwarven = yes
-			heir_age = 135
+			heir_age = 150
 		}
 		modifier = {
 			factor = 2.2
 			fast_heir_is_dwarven = yes
-			heir_age = 151
+			heir_age = 172
 		}
 		modifier = {
 			factor = 2.6
 			fast_heir_is_dwarven = yes
-			heir_age = 167
+			heir_age = 185
 		}
 		modifier = {
 			factor = 2
 			fast_heir_is_dwarven = yes
-			heir_age = 183
+			heir_age = 200
 		}
 
 		#Gnomish/Wood Elf
@@ -2567,34 +2546,20 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_ruler_flag = long_lived_ruler
-		if = {
-			limit = { fast_ruler_is_elven = yes NOT = { ruler_culture = wood_elf } }
-			ruler_age = 500
-		}
-		if = {
-			limit = { ruler_culture = wood_elf }
-			ruler_age = 350
-		}
-		if = {
-			limit = { fast_ruler_is_dwarven = yes }
-			ruler_age = 300
-		}
-		if = {
-			limit = { fast_ruler_is_gnomish = yes }
-			ruler_age = 350
+		OR = {
+			AND = {
+				ruler_is_vampire = yes
+				vampire_age = { greater_than_or_equal_to = 54750 }
+			}
+			AND = {
+				ruler_is_lich = yes
+				had_country_flag = { flag = ruled_by_lich days = 54750 }
+			}
 		}
 		NOT = {
 			has_country_flag = beat_red_reaper
-			has_ruler_flag = ghost_emperor
-			has_ruler_flag = is_a_homunculus
 			has_country_flag = J84_is_mihaela_flag #Taychendi Empire
 		}
-		if = {
-			limit = { ruler_is_vampire = yes }
-			vampire_age = { greater_than_or_equal_to = 54750 } #150 Years
-		}
-		ruler_age = 200
 	}
 
 	mean_time_to_happen = {
@@ -2638,6 +2603,12 @@ country_event = {
 		trigger = {
 			NOT = {
 				is_ruler_all_schools_level_3 = yes
+				AND = {
+					ruler_is_vampire = yes
+					adm = 6
+					dip = 6
+					mil = 6
+				}
 			}
 		}
 
@@ -2649,37 +2620,52 @@ country_event = {
 					country_event = { id = anb_ruler.13 } #You kill the Red Reaper
 
 					modifier = {
-						factor = 1.5
+						factor = 1.8
 						is_ruler_necromancy_level_3 = yes
 					}
 					modifier = {
-						factor = 1.5
+						factor = 1.8
 						is_ruler_divination_level_3 = yes
 					}
 					modifier = {
-						factor = 1.5
+						factor = 1.8
 						is_ruler_evocation_level_3 = yes
 					}
 					modifier = {
-						factor = 1.5
+						factor = 1.8
 						is_ruler_abjuration_level_3 = yes
 					}
 					modifier = {
-						factor = 1.5
+						factor = 1.8
 						is_ruler_transmutation_level_3 = yes
 					}
 					modifier = {
-						factor = 1.5
+						factor = 1.8
 						is_ruler_enchantment_level_3 = yes
 					}
 					modifier = {
-						factor = 1.5
+						factor = 1.8
 						is_ruler_illusion_level_3 = yes
 					}
 					modifier = {
-						factor = 1.5
+						factor = 1.8
 						is_ruler_conjuration_level_3 = yes
 					}
+					modifier = {
+						factor = 1.8
+						ruler_is_vampire = yes
+						adm = 6
+					}
+					modifier = {
+						factor = 1.8
+						ruler_is_vampire = yes
+						dip = 6
+					}
+					modifier = {
+						factor = 1.8
+						ruler_is_vampire = yes
+						mil = 6
+					}	
 					modifier = {
 						factor = 1.05
 						mil = 6
@@ -2698,7 +2684,17 @@ country_event = {
 		highlight = yes
 
 		trigger = {
-			hidden_trigger = { is_ruler_all_schools_level_3 = yes }
+			hidden_trigger = {
+				OR = { 
+					is_ruler_all_schools_level_3 = yes
+					AND = {
+						ruler_is_vampire = yes
+						adm = 6
+						dip = 6
+						mil = 6
+					}
+				} 
+			}
 		}
 
 		custom_tooltip = explode_red_reaper_tt
@@ -2744,13 +2740,13 @@ country_event = {
 		name = anb_ruler.14.a
 		ai_chance = { factor = 100 }
 
-		export_to_variable = {
-			which = GetRulerAge
-			value = monarch_age
-			who = ROOT
+		if = {
+			limit = { ruler_is_vampire = yes }
+			kill_vampire_ruler = yes
 		}
-
-		kill_a_lich_effect = yes
+		else = {
+			kill_a_lich_effect = yes
+		}
 	}
 }
 
@@ -2785,12 +2781,7 @@ country_event = {
 
 	trigger = {
 		#has_dlc = "Rights of Man" - unnecessary as we no longer use ruler personalities
-		OR = {
-			fast_consort_is_elven = yes
-			fast_consort_is_dwarven = yes
-			fast_consort_is_gnomish = yes
-			fast_consort_is_half_elven = yes
-		}
+		is_long_lived_consort = yes
 	}
 
 	option = {
@@ -2811,12 +2802,7 @@ country_event = {
 
 	trigger = {
 		#has_dlc = "Rights of Man" - unnecessary as we no longer use ruler personalities
-		OR = {
-			fast_heir_is_elven = yes
-			fast_heir_is_dwarven = yes
-			fast_heir_is_gnomish = yes
-			fast_heir_is_half_elven = yes
-		}
+		is_long_lived_heir = yes
 	}
 
 	option = {
@@ -2837,12 +2823,7 @@ country_event = {
 
 	trigger = {
 		#has_dlc = "Rights of Man" - unnecessary as we no longer use ruler personalities
-		OR = {
-			fast_ruler_is_elven = yes
-			fast_ruler_is_dwarven = yes
-			fast_ruler_is_gnomish = yes
-			fast_ruler_is_half_elven = yes
-		}
+		is_long_lived_ruler = yes
 	}
 
 	option = {
@@ -2853,6 +2834,5 @@ country_event = {
 			limit = { government = theocracy }
 			set_ruler_flag = long_lived_theocracy
 		}
-			
 	}
 }

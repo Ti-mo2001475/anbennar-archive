@@ -1601,10 +1601,6 @@ sponsored_adventurer_reform = {
 	heirs_can_be_generals = yes
 	native_mechanic = no
 	allow_migration = no
-
-	government_abilities = {
-		anb_adventurer_unity
-	}
 	
 	custom_attributes = {
 		reform_progress_from_conquest = yes
@@ -1685,8 +1681,9 @@ magocracy_reform = {
 	}
 
 	modifiers = {	#for better spellcasting
-		all_power_cost = -0.05
-		
+		all_power_cost = -0.025
+		max_estate_spell_levels = 2
+		mages_monthly_experience = 1
 		mages_influence_modifier = 0.1
 	}
 	custom_attributes = {
@@ -1722,6 +1719,8 @@ arakeprun_magocracy = {
 
 	modifiers = {	#for better spellcasting
 		all_power_cost = -0.025
+		max_estate_spell_levels = 1
+		mages_monthly_experience = 0.5
 		production_efficiency = 0.05
 		mages_loyalty_modifier = 0.1
 		artificers_loyalty_modifier = 0.1
@@ -1751,7 +1750,9 @@ verkal_ozovar_magocracy = {
 	}
 
 	modifiers = {	#for better spellcasting
-		all_power_cost = -0.05
+		all_power_cost = -0.025
+		max_estate_spell_levels = 2
+		mages_monthly_experience = 1
 		mages_influence_modifier = 0.1
 
 		governing_capacity_modifier = -0.80
@@ -2162,7 +2163,7 @@ shadow_horde = {
 	raze_province = yes
 	nation_designer_cost = 0
 	nation_designer_trigger = {
-		culture_group = giantkind
+		culture = swamp_troll
 	}
 	icon = "fist_in_air"
 	lock_level_when_selected = yes
@@ -2744,7 +2745,7 @@ education_of_the_theurge_reform = {
 	modifiers = {
 		mages_loyalty_modifier = 0.1
 		mages_influence_modifier = 0.05
-		mages_estate_experience_mod = 0.2
+		mages_monthly_experience = 1
 	}
 }
 
@@ -4965,7 +4966,9 @@ tehanek_magocracy_reform = {
 	}
 
 	modifiers = {	#for better spellcasting
-		all_power_cost = -0.05
+		all_power_cost = -0.025
+		max_estate_spell_levels = 2
+		mages_monthly_experience = 1
 		advisor_pool = 2
 		church_power_modifier = 0.10
 		mages_influence_modifier = 0.10
@@ -5677,6 +5680,12 @@ floodborn_council_reform_theocracy = {
 	ai = {
 		factor = 0.75 #generic
 	}
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
+	}
 }
 
 raheni_divine_monarchy_reform = {
@@ -5871,6 +5880,12 @@ exemplar_state = {
 		disabled_purging_ruinborn = yes
 		locked_government_type = yes
 		locked_T1_reform = yes
+	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = ruinborn }
+			generic_end_purge = { race = ruinborn }
+		}
 	}
 }
 
@@ -6140,6 +6155,8 @@ zokka_hand_feeds = {
 					}
 				}
 			}
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
 		}
 	}
 
@@ -6341,6 +6358,8 @@ zokka_hand_feeds2 = {
 					}
 				}
 			}
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
 		}
 	}
 
@@ -6582,6 +6601,39 @@ clerical_vic_estate = {
 	}
 }
 
+Z21_order_of_malliath = {
+	icon = "people_walking"
+	allow_normal_conversion = yes
+	potential = { 
+		OR = {
+			have_had_reform = Z21_order_of_malliath
+			has_reform = Z21_order_of_malliath
+		}
+	}
+	
+	lock_level_when_selected = yes
+	boost_income = yes
+	modifiers = {
+		fort_maintenance_modifier = -0.15
+	}
+	custom_attributes = {
+		enables_aristocratic_idea_group = yes
+		enables_divine_idea_group = no
+		is_merchant_republic = yes
+		expand_the_league_1_attribute = yes
+		order_of_malliath_war_boost = yes
+	}
+	conditional = {
+		allow = {
+			has_dlc = "Res Publica"
+		}
+		can_use_trade_post = yes
+	}
+	government_abilities = {
+		vic_league_mechanic
+	}
+}
+
 ashhana_realm_of_art = { #T1 reform for Adzalan lizardfolk formable
 	icon = "mandala_system"
 	allow_normal_conversion = no
@@ -6689,7 +6741,7 @@ the_vile_one_reform_razing = {
 	}
 	custom_attributes = {
 		locked_government_type = yes
-		better_long_lived = yes
+		# better_long_lived = yes # currently immortal rulers can't get these
 		locked_T1_reform = yes
 		raze_province = yes
 		foreign_slave_rulers = yes
@@ -7081,6 +7133,31 @@ U39_kavalali_theo_democracy = {
 		anb_theocracy_unique_heir_election = yes
 		locked_government_type = yes
 		locked_T1_reform = yes
+	}
+}
+
+#Kaino Federation
+
+kainos_kingdom_reform = {
+	icon = "kainos_kingdom"
+
+	potential = {
+		has_reform = kainos_kingdom_reform
+	}
+	lock_level_when_selected = yes
+	rulers_can_be_generals = no
+	heirs_can_be_generals = no
+
+	modifiers = {
+		development_cost = 5
+		raze_power_gain = -1
+		necromancy_experience_mod = 0.35
+	}
+	custom_attributes = {
+		raze_province = yes	
+	}
+	effect = {
+		custom_tooltip = kaino_raze_to_bluepot
 	}
 }
 

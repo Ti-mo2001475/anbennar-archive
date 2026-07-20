@@ -16,7 +16,7 @@ country_event = {
 	id = orenvalyam_events.0
 	title = orenvalyam_events.0.t #Rise of Silverspite
 	desc = orenvalyam_events.0.d
-	picture = SUN_CULT_PRIEST_event_picture
+	picture = SUN_CULT_PRIEST_eventpicture
 	
 	fire_only_once = yes
 	is_triggered_only = yes
@@ -543,7 +543,7 @@ country_event = {
 			set_estate_privilege = estate_burghers_U39_monasticist_faction
 			country_event = { id = orenvalyam_events.405 days = 1 } #Set em again just in case
 		}
-		custom_tooltip = U39_gain_base_privlieges_tt
+		custom_tooltip = U39_gain_base_privileges_tt
 		custom_tooltip = estate_burghers_U39_monasticist_faction_tt
 		if = {
 			limit = { NOT = { alliance_with = H67 } } #Rezankand
@@ -732,7 +732,7 @@ country_event = {
 	
 	option = {
 		name = orenvalyam_events.13.b #Tolerate
-		add_stability = 1
+		add_stability_or_adm_power = yes
 		custom_tooltip = U39_nsc_convert_tt
 		if = {
 			limit = { H67 = { is_subject_of = ROOT } } #Rezankand
@@ -797,7 +797,7 @@ country_event = {
 country_event = {
 	id = orenvalyam_events.14 #Legacy
 	title = orenvalyam_events.14.t
-	picture = SUN_CULT_PRIEST_event_picture
+	picture = SUN_CULT_PRIEST_eventpicture
 
 	desc = {
 		desc = orenvalyam_events.14.descVelaraSilverspite
@@ -3198,7 +3198,7 @@ country_event = {
 	id = orenvalyam_events.205 #Avatar (5 > 6)
 	title = orenvalyam_events.205.t
 	desc = orenvalyam_events.205.desc
-	picture = SUN_CULT_PRIEST_event_picture
+	picture = SUN_CULT_PRIEST_eventpicture
 	
 	is_triggered_only = yes
 	
@@ -4323,7 +4323,6 @@ country_event = {
 			random_list = {
 				90 = {
 					country_event = { id = orenvalyam_events.401 } #Success - Oren ver
-					event_target:orenvalyam_assassination_target = { country_event = { id = orenvalyam_events.402 } } #Success - Target ver
 				}
 				10 = {
 					country_event = { id = orenvalyam_events.403 } #Fail
@@ -4344,7 +4343,6 @@ country_event = {
 			random_list = {
 				66 = {
 					country_event = { id = orenvalyam_events.401 } #Success - Oren ver
-					event_target:orenvalyam_assassination_target= { country_event = { id = orenvalyam_events.402 } } #Success - Target ver
 				}
 				33 = {
 					country_event = { id = orenvalyam_events.403 } #Fail
@@ -4359,7 +4357,6 @@ country_event = {
 			random_list = {
 				33 = {
 					country_event = { id = orenvalyam_events.401 } #Success - Oren ver
-					event_target:orenvalyam_assassination_target= { country_event = { id = orenvalyam_events.402 } } #Success - Target ver
 				}
 				66 = {
 					country_event = { id = orenvalyam_events.403 } #Fail
@@ -4391,8 +4388,10 @@ country_event = {
 				}
 			}
 		}
+		clr_country_flag = U39_assassination_ongoing
 		set_country_flag = U39_assassination_success_flag
 		hidden_effect = {
+			event_target:orenvalyam_assassination_target = { country_event = { id = orenvalyam_events.402 } } #Success - Target ver
 			export_to_variable  = { which = OrenAssMonthVar value = trigger_value:is_month } 
 			export_to_variable  = { which = OrenAssYearVar value = trigger_value:is_year } 
 			change_variable = { OrenAssYearVar = 10 }
@@ -4444,16 +4443,6 @@ country_event = {
 			}
 		}
 		set_country_flag = U39_was_assassinated_flag
-		hidden_effect = {
-			export_to_variable  = { which = OrenAssMonthVar value = trigger_value:is_month } 
-			export_to_variable  = { which = OrenAssYearVar value = trigger_value:is_year } 
-			change_variable = { OrenAssMonthVar = 6 }
-			if = {
-				limit = { check_variable = { OrenAssMonthVar = 12 } }
-				change_variable = { OrenAssYearVar = 1 }
-			}
-			modulo_variable = { OrenAssMonthVar = 11 }
-		}
 	}
 }
 
@@ -4467,7 +4456,18 @@ country_event = {
 	
 	option = {
 		name = orenvalyam_events.403.a
+		clr_country_flag = U39_assassination_ongoing
 		set_country_flag = U39_assassination_fail_flag
+		hidden_effect = {
+			export_to_variable  = { which = OrenAssMonthVar value = trigger_value:is_month } 
+			export_to_variable  = { which = OrenAssYearVar value = trigger_value:is_year } 
+			change_variable = { OrenAssMonthVar = 6 }
+			if = {
+				limit = { check_variable = { OrenAssMonthVar = 12 } }
+				change_variable = { OrenAssYearVar = 1 }
+				subtract_variable = { OrenAssMonthVar = 12 }
+			}
+		}
 	}
 }
 

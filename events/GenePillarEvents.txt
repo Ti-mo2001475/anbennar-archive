@@ -99,6 +99,12 @@ country_event = {
 	
 	is_triggered_only = yes
 
+	immediate = {
+		hidden_effect = {
+			gene_pillars_get_random_insyaa_invention_flag = yes
+		}
+	}
+
 	#Give invention
 	option = {
 		name = gene_pillars.0.a
@@ -8117,10 +8123,10 @@ country_event = {
 		name = gene_pillars.536.d
 		trigger = {
 			OR = {
-				culture_group = halfling
-				culture_group = goblin
-				culture_group = gnomish
-				culture_group = kobold
+				culture_is_halfling = yes
+				culture_is_goblin = yes
+				culture_is_gnomish = yes
+				culture_is_kobold = yes
 			}
 		}
 		highlight = yes
@@ -11528,9 +11534,9 @@ country_event = {
 		trigger = {
 			ROOT = {
 				OR = {
-					culture_group = goblin
-					culture_group = kobold
-					culture_group = halfling
+					culture_is_goblin = yes
+					culture_is_kobold = yes
+					culture_is_halfling = yes
 				}
 			}
 		}
@@ -12109,7 +12115,7 @@ country_event = {
 			ROOT = {
 				OR = {
 					culture_group = ogre
-					culture_group = troll
+					culture_group = giantkind
 				}
 			}
 		}
@@ -12986,7 +12992,7 @@ country_event = {
 			gene_pillars_has_fighter_in_party = yes
 			gene_pillars_is_at_least_party_level = { level = 2 }
 			OR = {
-				culture_group = troll
+				culture_group = giantkind
 				culture_group = ogre
 			}
 		}
@@ -16383,13 +16389,13 @@ country_event = {
 	picture = GENE_PILLAR_SPIRIT_eventPicture
 	
 	is_triggered_only = yes
+	trigger = { # Make sure you are still exploring i.e. the party hasn't been wiped
+		aPUI_gene_pillar_root_is_exploring_event_target_province_trigger = yes
+	}
 	hidden = yes
 
 	option = {
 		name = gene_pillars.1000.a
-		trigger = {
-			aPUI_gene_pillar_root_is_exploring_event_target_province_trigger = yes
-		}
 		random_list = {
 			100 = { # Again, again, again, again...
 				country_event = { id = gene_pillars.1002 }
@@ -16545,13 +16551,6 @@ country_event = {
 				country_event = { id = gene_pillars.1059 }
 			}
 		}
-	}
-	option = {
-		name = gene_pillars.1000.b
-		trigger = {
-			aPUI_gene_pillar_root_is_exploring_event_target_province_trigger = no
-		}
-		gene_pillar_fail_expedition = yes
 	}
 }
 

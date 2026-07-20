@@ -223,7 +223,7 @@ binwarji_branch_2 = {
 					is_subject_of = ROOT
 				}
 			}
-			every_estates_loyalty_influence = { which = loyalty amount = 30 }
+			estate_loyalty = { estate = all loyalty = 30 }
 		}
 
 		effect = {
@@ -336,7 +336,7 @@ binwarji_branch_2 = {
 		trigger = {
 			check_variable = { which = L22_court_request_completed value = 5 }
 			check_variable = { which = total_completed_agendas  value = 6 }
-			every_estates_loyalty_influence = { which = loyalty amount = 60 }
+			estate_loyalty = { estate = all loyalty = 60 }
 		} 
 
 		effect = {
@@ -531,7 +531,7 @@ binwarji_branch_3 = {
 
 		trigger = {
 			check_variable = { which = total_completed_agendas  value = 2 }
-			every_estates_loyalty_influence = { which = loyalty amount = 50 }
+			estate_loyalty = { estate = all loyalty = 50 }
 		} 
 
 		effect = {
@@ -1474,7 +1474,18 @@ binwarji_branch_5 = {
 		icon = mission_jungle
 		position = 6
 		required_missions = { L22_a_claim_to_stake } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					region = dao_nako_region
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				}
+				AND = {
+					owned_by = ROOT
+					NOT = { has_manpower_building_trigger = yes }
+				}
+			}
+		} 
 
 		trigger = {
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
@@ -1486,6 +1497,7 @@ binwarji_branch_5 = {
 					calc_true_if = {
 						amount = 5
 						fangaula_superregion = {
+							type = ALL
 							culture = kaino
 						}
 					}
@@ -1508,7 +1520,7 @@ binwarji_branch_5 = {
 				has_tax_building_trigger = yes
 				has_trade_building_trigger = yes
 				province_has_center_of_trade_of_level = 2
-				num_of_times_improved_by_owner = 3
+				num_of_times_improved = 3
 			}
 			any_owned_or_subject_province = {
 				region = dao_nako_region

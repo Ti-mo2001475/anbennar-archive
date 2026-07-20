@@ -8,8 +8,8 @@ upgrade_seasonal_court_level = {
 			name = seasonal_court_level_one
 			duration = -1  
 		}
-		custom_tooltip = eordellon.mediuminfluencer.unlock
-		set_country_flag = medium_influencer_unlocked
+		custom_tooltip = eordellon.mediumboon.unlock
+		set_country_flag = medium_boon_unlocked
 	}
 	else_if = {
 		limit = {
@@ -30,8 +30,8 @@ upgrade_seasonal_court_level = {
 			name = seasonal_court_level_three
 			duration = -1  
 		}
-		custom_tooltip = eordellon.stronginfluencer.unlock
-		set_country_flag = strong_influencer_unlocked
+		custom_tooltip = eordellon.strongboon.unlock
+		set_country_flag = strong_boon_unlocked
 	}
 	else_if = {
 		limit = {
@@ -134,4 +134,18 @@ remove_fey_mil_aspect = {
 	clr_country_flag = seasonal_adm_winter_aspect
 	clr_country_flag = seasonal_adm_neutral_aspect
 	clr_country_flag = seasonal_adm_eordellon_aspect
+}
+
+add_kraken_lair_effect = {
+	random_owned_province = {
+		limit = { 
+			has_port = yes
+			NOT = { has_province_modifier = kraken_lair } 
+		}
+		galleon_heavy = ROOT
+		add_province_modifier = {
+			name = kraken_lair
+			duration = -1
+		}
+	}
 }

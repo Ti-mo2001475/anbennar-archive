@@ -450,21 +450,34 @@ F60_1_missions = {
 			}
 			# Taafisi must be your ally, your subject, you've improved relations and sent gifts, or
 			# there are no taafi culture provinces left
-			OR = {
-				L17 = { # Taafisi, the only Taafi primary culture country
-					OR = {
-						alliance_with = ROOT
-						is_subject_of = ROOT
-						AND = {
-							has_20_opinion_sent_gift = { target = ROOT }
-							has_80_opinion_improved_relation = { target = ROOT }
+			custom_trigger_tooltip = {
+				tooltip = F60_taafisi_subject_friend_tt
+				OR = {
+					L17 = { # Taafisi, the only Taafi primary culture country
+						OR = {
+							alliance_with = ROOT
+							is_subject_of = ROOT
+							AND = {
+								has_20_opinion_sent_gift = { target = ROOT }
+								has_80_opinion_improved_relation = { target = ROOT }
+							}
 						}
 					}
-				}
-				# I think I can assume if there are no provinces with Taafi culture in Fangaula they are all gone
-				fangaula_superregion = {
-					type = all
-					NOT = { culture = taafi }
+					# I think I can assume if there are no provinces with Taafi culture in Fangaula they are all gone
+					fangaula_superregion = {
+						type = all
+						OR = {
+							NOT = { culture = taafi }
+							# If your tributaries have them all, you can't release Taafisi
+							owner = {
+								is_subject_of_type_with_overlord = {
+									who = ROOT
+									type = tributary_state
+								}
+							}
+						}
+					}
+
 				}
 			}
 			# Have an infantry in every province bordering a non-friendly West Sarhaly country
@@ -824,12 +837,14 @@ F60_2_missions = {
 				custom_tooltip = removes_slaves_province_tt
 				hidden_effect = {
 					change_trade_goods = unknown
+					clr_province_flag = had_slaves # In case they used Tearfall
 				}
 			}
 			5679  = {
 				custom_tooltip = removes_slaves_province_tt
 				hidden_effect = {
 					change_trade_goods = unknown
+					clr_province_flag = had_slaves # In case they used Tearfall
 				}
 			}
 			add_manpower = 5
@@ -1142,10 +1157,7 @@ F60_2_missions = {
 					NOT = {
 						AND = {
 							development = 30
-							has_dock_building_trigger = yes
-							has_courthouse_building_trigger = yes
-							has_trade_building_trigger = yes
-							has_tax_building_trigger = yes
+							num_of_buildings_in_province = 5
 							province_has_current_tech_fort_trigger = yes
 						}
 					}
@@ -1155,10 +1167,7 @@ F60_2_missions = {
 					NOT = {
 						AND = {
 							development = 30
-							has_production_building_trigger = yes
-							has_courthouse_building_trigger = yes
-							has_trade_building_trigger = yes
-							has_tax_building_trigger = yes
+							num_of_buildings_in_province = 5
 							province_has_current_tech_fort_trigger = yes
 						}
 					}
@@ -1177,18 +1186,12 @@ F60_2_missions = {
 			}
 			380 = { # Eborthil
 				development = 30
-				has_dock_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_tax_building_trigger = yes
+				num_of_buildings_in_province = 5
 				province_has_current_tech_fort_trigger = yes
 			}
 			367 = { #Busilar
 				development = 30
-				has_production_building_trigger = yes
-				has_courthouse_building_trigger = yes
-				has_trade_building_trigger = yes
-				has_tax_building_trigger = yes
+				num_of_buildings_in_province = 5
 				province_has_current_tech_fort_trigger = yes
 			}
 		}
@@ -1277,6 +1280,15 @@ F60_3_missions = {
 			country_event_with_insight = { 
 				id = flavour_samsumbat.3
 				insight_tooltip = F60_event_insight_7_tt
+			}
+			# I want to show a tooltip somewhere to explain the rebels. Show it in the mission
+			# effects after you've completed it.
+			if = {
+				limit = {
+					mission_completed = F60_republican_agitators
+				}
+				custom_tooltip = F60_slave_agitators_event_tt.2
+				custom_tooltip = F60_support_rebels_improved_tt
 			}
 		}
 	}
@@ -1916,7 +1928,7 @@ F60_3_missions = {
 						government = monarchy
 					}
 					reverse_add_casus_belli = {
-						type = cb_samsumbat_liberation_of_oppressed_people
+						type = cb_force_satrapy_mission_no_adjacency
 						target = ROOT
 						months = 1200 # 100 years
 					}
@@ -2083,6 +2095,7 @@ F60_3_missions = {
 					add_liberty_desire = -20
 				}
 			}
+			custom_tooltip = F60_topple_the_phoenix_kings_custom_diplo_tt
 		}
 	}
 
@@ -2658,9 +2671,18 @@ F60_4_missions = {
 		}
 
 		trigger = {
-			num_of_estate_agendas_completed = {
-				estate = estate_church
-				value = 3
+			if = {
+				limit = {
+					NOT = { has_government_attribute = blocked_call_diet }
+				}
+				num_of_estate_agendas_completed = {
+					estate = estate_church
+					value = 3
+				}
+			}
+			# Can't complete agendas without the diet
+			else = { # placeholder
+				theologian = 3
 			}
 			estate_loyalty = {
 				estate = estate_church

@@ -528,6 +528,17 @@ hytiranyalen_2 = {
 			}
 			if = {
 				limit = {
+					2942 = { owned_by = U15 }
+				}
+				2942 = {
+					add_core = ROOT
+					cede_province = ROOT
+					hidden_effect = { remove_core = U15 }
+					add_harpy_minority_size_effect = yes
+				}
+			}
+			if = {
+				limit = {
 					birsartenslib_area = { owned_by = U15 }
 				}
 				birsartenslib_area = {
@@ -540,6 +551,14 @@ hytiranyalen_2 = {
 			536 = { add_harpy_minority_size_effect = yes }
 			661 = { add_goblin_minority_size_effect = yes }
 			660 = { add_goblin_minority_size_effect = yes }
+			if = {
+				limit = { U19 = { is_subject_of = ROOT } }
+				if = {
+					limit = { U19 = { has_been_insulted_by_root = yes } }
+					U15 = { inherit = U19 }
+				}
+				else = { custom_tooltip = hyti_aqatbahar_deth }
+			}
 			country_event = {
 				id = hyti.7
 				days = 2000
@@ -890,6 +909,12 @@ hytiranyalen_3 = {
 		effect = {
 			660 = { add_core = ROOT }
 			kharfiraeri_area = { add_permanent_claim = ROOT }
+			if = {
+				limit = {
+					U15 = { alliance_with = F27 ai = yes }
+				}
+				U15 = { break_alliance = F27 }
+			}
 			declare_war_with_cb = {
 				casus_belli = cb_independence_war
 				who = F27
@@ -901,10 +926,6 @@ hytiranyalen_3 = {
 				infantry = ROOT
 			}
 			U15 = {
-				if = {
-					limit = { alliance_with = F27 ai = yes }
-					break_alliance = F27
-				}
 				if = {
 					limit = { NOT = { war_with = F27 } ai = yes }
 					join_all_offensive_wars_of = ROOT

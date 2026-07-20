@@ -1,0 +1,257 @@
+# hidden events start at 1000
+
+namespace = flavour_marunuma
+
+# Lineages of the Fourteen Heroes
+country_event = {
+    id = flavour_marunuma.0
+    title = flavour_marunuma.0.t
+    desc = flavour_marunuma.0.desc
+    picture = COURT_eventPicture
+    is_triggered_only = yes
+    immediate = {
+        hidden_effect = {
+            random_variable = {
+                which = N93_slot_0_lineage
+                value = 14
+            }
+            round_variable = { N93_slot_0_lineage = -1 }
+        }
+    }
+    option = {
+        name = flavour_marunuma.0.a
+        custom_tooltip = N93_unlock_14_lineages_tt
+        N93_add_lineage = { slot = 0 }
+    }
+}
+
+# Where It All Began
+country_event = {
+    id = flavour_marunuma.1
+    title = flavour_marunuma.1.t
+    desc = flavour_marunuma.1.desc
+    picture = BIG_BOOK_eventPicture
+    is_triggered_only = yes
+    option = {
+        name = flavour_marunuma.1.a
+        set_capital = 3673
+        3673 = {
+            add_province_modifier = { name = N93_restored_capital duration = -1 }
+            add_institution_embracement = { which = feudalism value = 50 }
+            add_province_modifier = { name = N93_stone_library_mod duration = -1 }
+        }
+        hidden_effect = {
+            change_variable = { N91_mission_sway = 1 }
+        }
+    }
+    option = {
+        name = flavour_marunuma.1.b
+        capital_scope = {
+            add_base_tax = 1
+            add_base_production = 1
+            add_base_manpower = 1
+            add_institution_embracement = { which = feudalism value = 50 }
+        }
+        3673 = {
+            add_province_modifier = { name = N93_stone_library_mod duration = -1 }
+        }
+        hidden_effect = {
+            change_variable = { N91_mission_sway = -1 }
+        }
+    }
+}
+
+# A Marunuman Offer
+country_event = {
+    id = flavour_marunuma.2
+    title = flavour_marunuma.2.t
+    desc = flavour_marunuma.2.desc
+    picture = DIPLOMACY_SIGNING_eventPicture
+    is_triggered_only = yes
+    option = {
+        name = flavour_marunuma.2.a
+        FROM = {
+            vassalize = ROOT
+        }
+    }
+    option = {
+        trigger = { NOT = { ai = yes } }
+        name = flavour_marunuma.2.b
+    }
+}
+
+# Kuestion of Kooperation
+country_event = {
+    id = flavour_marunuma.3
+    title = flavour_marunuma.3.t
+    desc = flavour_marunuma.3.desc
+    picture = DIPLOMACY_SIGNING_eventPicture
+    is_triggered_only = yes
+    option = {
+        name = flavour_marunuma.3.a
+        custom_tooltip = N93_inherit_sirimadsik_4_dip_tt
+        hidden_effect = {
+            export_to_variable = { which = tempVassalDev value = total_development who = N91 }
+            multiply_variable = { tempVassalDev = 4 }
+            var_effect = {
+                effect = add_dip_power
+                var = tempVassalDev
+                sign = -
+            }
+            inherit = N91
+            change_variable = { N91_mission_sway = 1 }
+        }
+        anb_add_accepted_culture_or_dip_power = { culture = sirimadsik_kobold free = yes }
+    }
+    option = {
+        name = flavour_marunuma.3.b
+        N91 = {
+            add_country_modifier = { name = N93_stonescrawl_march duration = -1 }
+        }
+        create_march = N91
+        anb_add_accepted_culture_or_dip_power = { culture = sirimadsik_kobold free = yes }
+        hidden_effect = {
+            change_variable = { N91_mission_sway = -1 }
+        }
+    }
+}
+
+# Marunuma's Glorious Return
+country_event = {
+    id = flavour_marunuma.4
+    title = flavour_marunuma.4.t
+    desc = flavour_marunuma.4.desc
+    picture = GOOD_WITH_MONARCH_eventPicture
+    is_triggered_only = yes
+    option = {
+        name = flavour_marunuma.4.a
+        override_country_name = bina_marunuma
+        set_country_flag = N93_bina_marunuma_restored
+        add_stability = 1
+        add_republican_tradition = 10
+        hidden_effect = {
+            change_variable = { N91_mission_sway = 1 }
+        }
+    }
+    option = {
+        name = flavour_marunuma.4.b
+        custom_tooltip = N93_enable_ogre_ruler_tt
+        set_country_flag = N93_ogre_ruler_enabled
+        hidden_effect = {
+            change_variable = { N91_mission_sway = -1 }
+        }
+    }
+}
+
+# The Rulers of the Plateau
+country_event = {
+    id = flavour_marunuma.5
+    title = flavour_marunuma.5.t
+    desc = {
+        trigger = { check_variable = { N91_mission_sway = 1 } }
+        desc = flavour_marunuma.5.desc.a
+    }
+    desc = {
+        trigger = { NOT = { check_variable = { N91_mission_sway = 0 } } }
+        desc = flavour_marunuma.5.desc.b
+    }
+    desc = {
+        trigger = { is_variable_equal = { which = N91_mission_sway value = 0 } }
+        desc = flavour_marunuma.5.desc.c
+    }
+    picture = BAD_WITH_MONARCH_eventPicture
+    is_triggered_only = yes
+    option = {
+        name = flavour_marunuma.5.a
+        trigger = { check_variable = { N91_mission_sway = 1 } }
+        capital_scope = {
+            spawn_rebels = {
+                size = 2
+                type = particularist_rebels
+            }
+        }
+        every_subject_country = {
+            capital_scope = {
+                spawn_rebels = {
+                    size = 2
+                    type = particularist_rebels
+                }
+            }
+        }
+        add_stability = -1
+        add_country_modifier = { name = N93_heroic_lineages duration = -1 }
+        custom_tooltip = N93_lose_devastation_tt
+        hidden_effect = {
+            every_owned_province = {
+                limit = { devastation = 0.01 }
+                add_devastation = -100
+            }
+        }
+    }
+    option = {
+        name = flavour_marunuma.5.a
+        trigger = { NOT = { check_variable = { N91_mission_sway = 0 } } }
+        capital_scope = {
+            spawn_rebels = {
+                size = 2
+                type = noble_rebels
+            }
+        }
+        every_subject_country = {
+            capital_scope = {
+                spawn_rebels = {
+                    size = 2
+                    type = noble_rebels
+                }
+            }
+        }
+        add_stability = -1
+        if = { limit = { NOT = { government = republic } }
+            change_government = republic
+        }
+        add_government_reform = merchants_reform
+        add_country_modifier = { name = N93_clan_guild_rule duration = -1 }
+        if = { limit = { NOT = { has_country_flag = N93_ogre_ruler_enabled } }
+            custom_tooltip = N93_enable_ogre_ruler_tt
+            set_country_flag = N93_ogre_ruler_enabled
+        }
+        every_subject_country = {
+            add_liberty_desire = -50
+        }
+    }
+    option = {
+        name = flavour_marunuma.5.b
+        trigger = { is_variable_equal = { which = N91_mission_sway value = 0 } }
+        add_stability = 1
+        add_country_modifier = { name = N93_fifteen_lineages duration = -1 }
+        if = { limit = { NOT = { has_country_flag = N93_ogre_ruler_enabled } }
+            custom_tooltip = N93_enable_ogre_ruler_tt
+            set_country_flag = N93_ogre_ruler_enabled
+        }
+        custom_tooltip = N93_lose_devastation_tt
+        hidden_effect = {
+            every_owned_province = {
+                limit = { devastation = 0.01 }
+                add_devastation = -100
+            }
+        }
+        every_subject_country = {
+            add_liberty_desire = -50
+        }
+    }
+}
+
+# Hidden Events
+
+# Create Frontier
+country_event = {
+    id = flavour_marunuma.1000
+    title = none
+    picture = none
+    desc = none
+    is_triggered_only = yes
+    immediate = {
+        create_colony_mission_reward = { province = 3667 }
+    }
+    option = {}
+}

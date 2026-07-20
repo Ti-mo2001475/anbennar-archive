@@ -1525,10 +1525,12 @@ set_heir_random_planetouched_effect = {
         1 = { set_heir_specific_planetouched_effect = { type = shadow } }
         1 = { set_heir_specific_planetouched_effect = { type = life } }
     }
+	set_heir_flag = heir_ruler_planetouched_personality
 }
 
 set_ruler_specific_planetouched_effect = {
     add_ruler_personality = $type$_planetouched_personality
+	set_ruler_flag = heir_ruler_planetouched_personality
 } 
 
 set_ruler_random_planetouched_effect = {
@@ -1540,6 +1542,7 @@ set_ruler_random_planetouched_effect = {
         1 = { set_ruler_specific_planetouched_effect = { type = shadow } }
         1 = { set_ruler_specific_planetouched_effect = { type = life } }
     }
+	set_ruler_flag = heir_ruler_planetouched_personality
 }
 
 # Used in on_actions under on_heir_needed_theocracy.
@@ -1618,20 +1621,62 @@ genie_cult_usage_counter_3_plus = {
 		}
 	}
 }
-genie_cult_add_mana_1 = { change_mana = { amount = 10 } }
-genie_cult_add_mana_2 = { change_mana = { amount = 20 } }
-genie_cult_add_mana_3 = { change_mana = { amount = 30 } }
-genie_cult_add_mana_4 = { change_mana = { amount = 30 } }
+
+genie_cult_extra_effects_1 = {
+	if = {
+		limit = { has_country_flag = genie_cult_mana_gain }
+		change_mana = { amount = 10 }
+	}
+	if = {
+		limit = {
+			6063 = { has_great_project = { type = genie_palace_of_jinnakah tier = 3 } }
+			6063 = { owned_by = ROOT }
+		}
+		add_absolutism = 2
+	}
+}
+genie_cult_extra_effects_2 = {
+	if = {
+		limit = { has_country_flag = genie_cult_mana_gain }
+		change_mana = { amount = 20 }
+	}
+	if = {
+		limit = {
+			6063 = { has_great_project = { type = genie_palace_of_jinnakah tier = 3 } }
+			6063 = { owned_by = ROOT }
+		}		add_absolutism = 4
+	}
+}
+genie_cult_extra_effects_3 = {
+	if = {
+		limit = { has_country_flag = genie_cult_mana_gain }
+		change_mana = { amount = 30 }
+	}
+	if = {
+		limit = {
+			6063 = { has_great_project = { type = genie_palace_of_jinnakah tier = 3 } }
+			6063 = { owned_by = ROOT }
+		}		add_absolutism = 6
+	}
+}
+genie_cult_extra_effects_4 = {
+	if = {
+		limit = { has_country_flag = genie_cult_mana_gain }
+		change_mana = { amount = 30 }
+	}
+	if = {
+		limit = {
+			6063 = { has_great_project = { type = genie_palace_of_jinnakah tier = 3 } }
+			6063 = { owned_by = ROOT }
+		}
+		add_absolutism = 8
+	}
+}
 genie_cult_extra_effect_shows = {
 	genie_cult_power_loss = { value = $level$ } #already hidden
 	genie_cult_cooldown = yes #already hidden
 	total_genie_cult_usage_counter = yes #already hidden
-	if = {
-		limit = {
-			has_country_flag = genie_cult_mana_gain
-		}
-		genie_cult_add_mana_$level$ = yes
-	}
+	genie_cult_extra_effects_$level$ = yes #this is as they dont add the same amount as the level
 	if = { 
 		limit = { has_country_flag = S87_gain_manpower_from_incations }
 		add_manpower = $level$
@@ -4629,14 +4674,28 @@ planetouched_land_share_equalizer_effect = {
 }
 
 define_planetouched_general = {
-	define_general = {
-		[[name] name = "$name$"]
-		fire = $fire$
-		shock = $shock$
-		manuever = $manuever$
-		siege = $siege$
-		trait = planetouched_commander_personality
-		[[female] female = $female$]
+	if = {
+		limit = { mission_completed = kaino_adaru_3 }
+		define_general = {
+			[[name] name = "$name$"]
+			fire = $fire$
+			shock = 7
+			manuever = $manuever$
+			siege = $siege$
+			trait = planetouched_commander_personality
+			[[female] female = $female$]
+		}
+	}
+	else = {
+		define_general = {
+			[[name] name = "$name$"]
+			fire = $fire$
+			shock = $shock$
+			manuever = $manuever$
+			siege = $siege$
+			trait = planetouched_commander_personality
+			[[female] female = $female$]
+		}
 	}
 	set_country_flag = have_had_planetouched_general
 }
@@ -4858,6 +4917,36 @@ AYN_reform_from_tribe_custom_effect = {
 		add_country_modifier = {
 			name = legacy_qeyikul_rep_1
 			duration = -1
+		}
+	}
+}
+
+S91_upgrade_ardimyan_rite_centre = {
+	6063 = {
+		if = { 
+			limit = { has_province_modifier = ardimyan_rite_religious_centre_0 }
+			remove_province_modifier = ardimyan_rite_religious_centre_0
+			add_province_modifier = { name = ardimyan_rite_religious_centre_1 duration = -1 }
+		}
+		else_if = { 
+			limit = { has_province_modifier = ardimyan_rite_religious_centre_1 }
+			remove_province_modifier = ardimyan_rite_religious_centre_1
+			add_province_modifier = { name = ardimyan_rite_religious_centre_2 duration = -1 }
+		}
+		else_if = { 
+			limit = { has_province_modifier = ardimyan_rite_religious_centre_2 }
+			remove_province_modifier = ardimyan_rite_religious_centre_2
+			add_province_modifier = { name = ardimyan_rite_religious_centre_3 duration = -1 }
+		}
+		else_if = { 
+			limit = { has_province_modifier = ardimyan_rite_religious_centre_3 }
+			remove_province_modifier = ardimyan_rite_religious_centre_3
+			add_province_modifier = { name = ardimyan_rite_religious_centre_4 duration = -1 }
+		}
+		else_if = { 
+			limit = { has_province_modifier = ardimyan_rite_religious_centre_4 }
+			remove_province_modifier = ardimyan_rite_religious_centre_4
+			add_province_modifier = { name = ardimyan_rite_religious_centre_5 duration = -1 }
 		}
 	}
 }

@@ -123,43 +123,6 @@ country_event = {
 	}
 }
 
-#Unban Magic Set Mage Organization
-country_event = {
-	id = estate_organization.3
-	title = estate_organization.3.t
-	desc = estate_organization.3.d
-	picture = DHIMMI_ESTATE_eventPicture
-	
-	hidden = yes
-	is_triggered_only = yes
-	
-	trigger = {
-		has_estate = estate_mages
-		NOT = { has_mages_organization_privilege = yes }
-	}
-	
-	option = { #Regional organizations
-		name = estate_organization.3.a
-		if = {
-			limit = { is_part_of_hre = yes }
-			set_estate_privilege = estate_mages_organization_magisterium
-		}
-		else_if = {
-			limit = { religion_group = bulwari }
-			set_estate_privilege = estate_mages_organization_magi_clans
-		}
-		else_if = {
-			limit = {
-				has_custom_spell_list_of_group = { group = harpy }
-			}
-			set_estate_privilege = estate_mages_organization_sanarenni
-		}
-		else = {
-			set_estate_privilege = estate_mages_organization_guilds
-		}
-	}
-}
-
 # Adventurer 
 country_event = {
 	id = estate_organization.4

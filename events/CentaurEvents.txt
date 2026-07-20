@@ -87,7 +87,10 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_country_modifier = centaur_administration
+		OR = {
+			has_reform = centaur_horde
+			has_reform = I55_centaur_horde
+		}
 		is_subject = no
 		is_at_war = no
 		NOT = { num_of_subjects = 10 }
@@ -99,7 +102,7 @@ country_event = {
 				}
 			}
 			OR = {
-				has_reform =  centaur_horde
+				has_reform = centaur_horde
 				has_reform = I55_centaur_horde
 			}
 			NOT = { truce_with = ROOT }
@@ -173,6 +176,7 @@ country_event = {
 		every_country = {
 			limit = {
 				culture_group = centaur
+				NOT = { culture = zhadshai_centaur }
 			}
 			add_country_modifier = {
 				name = centaur_horde_1
@@ -1004,6 +1008,285 @@ country_event = {
 			every_known_country = {
 				limit = { has_country_modifier = lake_federation_member }
 				add_truce_with = ROOT
+			}
+		}
+	}
+}
+
+country_event = { #To Fire Both
+	id = centaur.300
+	title = centaur.300.t
+	desc = centaur.300.d
+	picture = CONQUEST_eventPicture
+	is_triggered_only = yes
+	hidden = yes
+
+	trigger = {
+		OR = {
+			5213 = { #Nachatai
+				owned_by = ROOT
+				has_province_modifier = fp_gathering_centaur_incursion
+			}
+			5177 = { #Loghnuul
+				owned_by = ROOT
+				has_province_modifier = fp_gathering_centaur_incursion
+			}
+		}
+		culture_group = centaur
+		is_year = 1470
+	}
+
+	option = {
+		name = centaur.300.a
+		if = {
+			limit = {
+				5213 = {
+					has_province_modifier = fp_gathering_centaur_incursion
+					owner = {
+						culture_group = centaur
+					}
+				}
+			}
+			5213 = {
+				owner = {
+					country_event = {
+						id = centaur.301
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				5177 = {
+					has_province_modifier = fp_gathering_centaur_incursion
+					owner = {
+						culture_group = centaur
+					}
+				}
+			}
+			5177 = {
+				owner = {
+					country_event = {
+						id = centaur.301
+					}
+				}
+			}
+		}
+	}
+}
+
+country_event = { #Centaurs Push East
+	id = centaur.301
+	title = centaur.301.t
+	desc = centaur.301.d
+	picture = CONQUEST_eventPicture
+	is_triggered_only = yes
+
+	major = yes
+	major_trigger = {
+		capital_scope = {
+			superregion = forbidden_lands_superregion
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = { owns = 5213 } #Nachatai
+				5213 = {  remove_province_modifier = fp_gathering_centaur_incursion }
+			}
+			if = {
+				limit = { owns = 5177 } #Loghnuul
+				5177 = { remove_province_modifier = fp_gathering_centaur_incursion }
+			}
+		}
+	}
+	
+	option = {
+		name = centaur.301.a
+
+		if = {
+			limit = { owns = 5213 }	#Nachatai
+			zoital_area = {
+				limit = {
+					is_empty = yes
+				}
+				add_siberian_construction = 500
+				change_culture = sochar_centaur
+				change_religion = irdaeos_worship
+				add_core = J58
+			}
+			if = {
+				limit = {
+					5212 = { is_empty = yes }
+				}
+				5212 = {
+					add_siberian_construction = 500
+					change_culture = sochar_centaur
+					change_religion = irdaeos_worship
+					add_core = J58
+				}
+			}
+			if = { #If Burning Frost is a Vassal of Great Storm
+				limit = { 
+					tag = J58
+					overlord = { is_or_was_tag = { tag = I80 } }
+				}
+				overlord = {
+					zoital_area = { add_core = PREV }
+					5212 = { add_core = PREV }
+				}
+			}
+		}
+		if = {
+			limit = { owns = 5177 }	#Loghnuul
+			hidden_effect = {
+				akandhil_area = {
+					limit = {
+						is_empty = yes
+					}
+					add_siberian_construction = 500
+					change_culture = ghanzamh_centaur
+					change_religion = irdaeos_worship
+					add_core = I69
+				}
+			}
+		}
+		custom_tooltip = fp_centaur_invasion_khaasalg_moduk_vision_TT
+		hidden_effect = {
+			khaashalg_region = { 
+				add_claim = ROOT
+				discover_country = ROOT
+			}
+			moduk_region = { 
+				add_claim = ROOT
+				discover_country = ROOT
+			}
+			ilabomar_area = {
+				add_claim = ROOT
+			}
+			baizoi_area = {
+				add_claim = ROOT
+			}
+			6565 = {
+				discover_country = ROOT
+			}
+			4136 = {
+				discover_country = ROOT
+			}
+			yanshen_lakes = { 
+				discover_country = ROOT 
+			}
+			bird_rider_lake = {
+				discover_country = ROOT
+			}
+			4134 = {
+				discover_country = ROOT
+			}
+			4135 = {
+				discover_country = ROOT
+			}
+			4136 = {
+				discover_country = ROOT
+			}
+			2194 = {
+				discover_country = ROOT
+			}
+			6565 = {
+				discover_country = ROOT
+			}
+			1903 = {
+				discover_country = ROOT
+			}
+			overlord = {
+				khaashalg_region = { 
+					add_claim = PREV
+					discover_country = PREV
+				}
+				moduk_region = { 
+					add_claim = PREV
+					discover_country = PREV
+				}
+				ilabomar_area = {
+					add_claim = PREV
+				}
+				baizoi_area = {
+					add_claim = PREV
+				}
+				6565 = {
+					discover_country = ROOT
+				}
+				4136 = {
+					discover_country = ROOT
+				}
+				yanshen_lakes = { 
+					discover_country = ROOT 
+				}
+				bird_rider_lake = {
+					discover_country = ROOT
+				}
+				4134 = {
+					discover_country = ROOT
+				}
+				4135 = {
+					discover_country = ROOT
+				}
+				4136 = {
+					discover_country = ROOT
+				}
+				2194 = {
+					discover_country = ROOT
+				}
+				6565 = {
+					discover_country = ROOT
+				}
+				1903 = {
+					discover_country = ROOT
+				}
+			}
+		}
+	}
+
+	after = {
+		5206 = {
+			owner = {
+				if = {
+					limit = {
+						NOT = { culture_group = centaur }
+					}
+					country_event = { id = centaur.302 }
+				}
+			}
+		}
+	}
+}
+
+country_event = { #Centaurs Threaten Gozengun
+	id = centaur.302
+	title = centaur.302.t
+	desc = centaur.302.d
+	picture = CONQUEST_eventPicture
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	major = yes
+	major_trigger = {
+		capital_scope = {
+			OR = {
+				superregion = gozengun_superregion
+				superregion = yanshen_superregion
+			}
+		}
+	}
+	
+	option = {
+		name = centaur.302.a
+
+		custom_tooltip = fp_centaurs_threaten_gozengun_TT
+		5206 = {
+			add_permanent_province_modifier = {
+				name = fp_gz_vanguard_against_centaurs
+				duration = 18250
 			}
 		}
 	}

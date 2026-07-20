@@ -265,17 +265,15 @@ country_decisions = {
 					}
 					NOT = { owned_by = ROOT }
 					NOT = { 
-						ROOT = { 
-							num_of_owned_provinces_with = {
-								value = 4
-								OR = {
-									province_id = 4477
-									province_id = 4469
-									province_id = 4483
-									province_id = 4479
-									province_id = 4508
-									province_id = 4486
-								}
+						ROOT = {
+							calc_true_if = {
+								amount = 4
+								owns = 4477
+								owns = 4469
+								owns = 4483
+								owns = 4479
+								owns = 4508
+								owns = 4486
 							}
 						}
 					}
@@ -296,16 +294,14 @@ country_decisions = {
 		}
 		allow = {
 			owns_core_province = 4485
-			num_of_owned_provinces_with = {
-				value = 4
-				OR = {
-					province_id = 4477
-					province_id = 4469
-					province_id = 4483
-					province_id = 4479
-					province_id = 4508
-					province_id = 4486
-				}
+			calc_true_if = {
+				amount = 4
+				owns = 4477
+				owns = 4469
+				owns = 4483
+				owns = 4479
+				owns = 4508
+				owns = 4486
 			}
 			num_of_owned_provinces_with = {
 				value = 10
@@ -1102,6 +1098,8 @@ country_decisions = {
 			}
 			NOT = { has_country_flag = formed_lohanparayan_flag }
 			NOT = { has_country_flag = R54_only_harimraj } # Parusahan Saya
+			normal_or_historical_nations = yes
+			was_never_end_game_tag_trigger = yes
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -1212,5 +1210,69 @@ country_decisions = {
 			shamakhad_region = { add_permanent_claim = R00 }
 			temple_province_group = { add_permanent_claim = R00	}
 		}
+	}
+	
+	#Setarudhar - R46
+	setarudhar_nation = {
+		major = yes
+		potential = {
+			OR = {
+				primary_culture = dhukharuved
+				primary_culture = rabhidarubsad
+				tag = R48
+				tag = R47
+			}
+			NOT = { tag = R46 }
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_setarudhar }
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+		}		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4425
+				province_id = 4423
+				province_id = 4427
+				province_id = 4414
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}		
+		allow = {
+			NOT = { exists = R46 }
+			owns_core_province = 4425
+			owns_core_province = 4423
+			owns_core_province = 4427
+			owns_core_province = 4414
+			is_at_war = no
+		}
+		effect = {
+			change_tag = R46
+			hidden_effect = { restore_country_name = yes }
+			remove_non_electors_emperors_from_empire_effect = yes
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_prestige = 25
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			set_country_flag = formed_setarudhar
+			4425 = { move_capital_effect = yes }
+			#swap_non_generic_missions = yes
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
 	}
 }

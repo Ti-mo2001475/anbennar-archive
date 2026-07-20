@@ -1,6 +1,7 @@
 country_has_non_ruinborn_accepted_culture = {
 	calc_true_if = {
 		amount = $amount$
+		desc = country_has_non_ruinborn_accepted_culture_tt
 		has_human_accepted_culture = yes
 		has_elven_accepted_culture = yes
 		has_dwarven_accepted_culture = yes
@@ -20,6 +21,57 @@ country_has_non_ruinborn_accepted_culture = {
 		has_ogre_accepted_culture = yes
 		has_lizardfolk_accepted_culture = yes
 		has_mechanim_accepted_culture = yes
+	}
+}
+
+is_eordand_season_religion = {
+	religion_group = fey_religion	#less checks done this way, 
+	NOT = {							#can do it because we won't really see more religions added at this point
+		religion = fey_court
+		religion = ashentree_pact
+		religion = vechnogejzn
+		religion = pactseeker
+	}
+}
+
+eordand_unlock_season_boon_trigger = {
+	custom_trigger_tooltip = {
+		tooltip = string_$season$_not_exist
+		NOT = {
+			any_known_country = { religion = $season$ }
+		}
+	}
+	OR = {
+		custom_trigger_tooltip = {
+			tooltip = string_$season$_converted
+			NOT = {
+				eordand_superregion = {
+					is_city = yes
+					religion = $season$
+				}
+			}
+		}
+		tolerance_of_heretics = { amount = 2 }
+		if = {
+			limit = { religion = spring_court }
+			has_estate_privilege = estate_church_spring_tolerance
+		}
+		else = { hidden_trigger = { always = no } }
+		if = {
+			limit = { religion = summer_court }
+			has_estate_privilege = estate_church_summer_tolerance
+		}
+		else = { hidden_trigger = { always = no } }
+		if = {
+			limit = { religion = autumn_court }
+			has_estate_privilege = estate_church_autumn_tolerance
+		}
+		else = { hidden_trigger = { always = no } }
+		if = {
+			limit = { religion = winter_court }
+			has_estate_privilege = estate_church_winter_tolerance
+		}
+		else = { hidden_trigger = { always = no } }
 	}
 }
 

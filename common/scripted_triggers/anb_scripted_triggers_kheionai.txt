@@ -614,16 +614,6 @@ has_full_deathwinds_system_button = {
 	}
 }
 
-#Used in assign_deathwind_targets trigger
-not_has_alecand_area_flags = {
-	NOT = {
-		has_province_flag = alecand_area_prov_1
-		has_province_flag = alecand_area_prov_2
-		has_province_flag = alecand_area_prov_3
-		has_province_flag = alecand_area_prov_4
-		has_province_flag = alecand_area_prov_5
-	}
-}
 
 #Button trigger to show the trigger based on what event target it has.
  #This is to have the provinces show up individually on the trigger instead of showing "All provinces in the X area:\n	<trigger>"
@@ -631,30 +621,30 @@ not_has_alecand_area_flags = {
  #ex. If three provinces are upgrading from 0 > 1 and one province is upgrading from 1 > 2 it would show 
  #"All provinces in the X area:\n	<0 > 1 trigger>" and not tell you about the 1 > 2 trigger
 windwards_area_trigger = {
-	windwards_area_subtrigger = { area = 1 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 2 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 3 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 4 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 5 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 6 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 7 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 8 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 9 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 10 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 11 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 12 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 13 trigger = $trigger$ } #Alecand has 13 areas in it
+	windwards_area_subtrigger = { trigger = $trigger$ area = geneltik_area		prov_1 = 2751 prov_2 = 2748 prov_3 = 2779 prov_4 = 2780 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = lokegentia_area	prov_1 = 2752 prov_2 = 2753 prov_3 = 2782 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = lokemeion_area		prov_1 = 2745 prov_2 = 2746 prov_3 = 2743 prov_4 = 2744 prov_5 = 2778 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = ormam_area			prov_1 = 2738 prov_2 = 2739 prov_3 = 2775 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = kherka_area		prov_1 = 2773 prov_2 = 2772 prov_3 = 2776 prov_4 = 2777 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = eltikan_area		prov_1 = 2785 prov_2 = 2786 prov_3 = 2754 prov_4 = 2766 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = degakheion_area	prov_1 = 2736 prov_2 = 2771 prov_3 = 2770 prov_4 = 2769 prov_5 = 2737 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = kimanis_area		prov_1 = 2732 prov_2 = 2733 prov_3 = 2734 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = oktikheion_area	prov_1 = 2731 prov_2 = 2730 prov_3 = 2762 prov_4 = 2763 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = mtelian_area		prov_1 = 2756 prov_2 = 2758 prov_3 = 2755 prov_4 = 2760 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = arpedifer_area		prov_1 = 2728 prov_2 = 2761 prov_3 = 2759 prov_4 = 2727 prov_5 = 2726 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = arpenisi_area		prov_1 = 2735 prov_2 = 2725 prov_3 = 2724 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = kheinos_area		prov_1 = 2764 prov_2 = 2765 prov_3 = 2767 prov_4 = 2768 }
 }
 
 windwards_area_subtrigger = {
 	if = {
-		limit = { has_province_flag = alecand_area_$area$ }
+		limit = { area = $area$ }
 		OR = {
-			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_1 } event_target:alecand_area_$area$_prov_1 = { $trigger$ = yes } } else = { hidden_trigger = { always = no } }
-			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_2 } event_target:alecand_area_$area$_prov_2 = { $trigger$ = yes } } else = { hidden_trigger = { always = no } }
-			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_3 } event_target:alecand_area_$area$_prov_3 = { $trigger$ = yes } } else = { hidden_trigger = { always = no } }
-			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_4 } event_target:alecand_area_$area$_prov_4 = { $trigger$ = yes } } else = { hidden_trigger = { always = no } }
-			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_5 } event_target:alecand_area_$area$_prov_5 = { $trigger$ = yes } } else = { hidden_trigger = { always = no } }
+			$prov_1$ = { $trigger$ = yes }
+			$prov_2$ = { $trigger$ = yes }
+			$prov_3$ = { $trigger$ = yes }
+			[[prov_4] $prov_4$ = { $trigger$ = yes } ]
+			[[prov_5] $prov_5$ = { $trigger$ = yes } ]
 		}
 	}
 }
@@ -663,7 +653,10 @@ windwards_area_subtrigger = {
  #Why is basically every trigger inside a custom tooltip? 
  #Because otherwise it's shown as "Province Owner: \n	<trigger>" which looks bad, isn't necessary or helpful, and I don't want it
 windward_upgrade_triggers = {
-	hidden_trigger = { owned_by = FROM }
+	if = {
+		limit = { NOT = { owned_by = FROM } }
+		owned_by = FROM
+	}
 	if = { #Can't upgrade further if the province has a level 10 Windward
 		limit = { has_province_modifier = windward_level_10 }
 		custom_trigger_tooltip = {
@@ -682,7 +675,7 @@ windward_upgrade_triggers = {
 		limit = { has_province_modifier = windward_level_8 }
 		
 		if = { #If you have the magical project, show it's level trigger
-			limit = { has_full_deathwinds_system = yes }
+			limit = { owner = { has_full_deathwinds_system = yes } }
 			custom_trigger_tooltip = {
 				tooltip = owner_has_magic_project_level_2_tt
 				owner = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 2 } }
@@ -711,21 +704,10 @@ windward_upgrade_triggers = {
 				tooltip = owner_has_treasury_2500_tt
 				owner = { treasury = 2500 }
 			}
-
-			if = { #If they have access to the magical project, show a tooltip that tells them about the discounted triggers
-				limit = { has_full_deathwinds_system = yes }
-				custom_trigger_tooltip = {
-					tooltip = owner_has_mana_100_hint_tt
-					owner = { has_mana = { amount = 100 } }
-				}
+			custom_trigger_tooltip = {
+				tooltip = owner_has_mana_100_hint_tt
+				owner = { has_mana = { amount = 100 } }
 			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = owner_has_mana_100_tt
-					owner = { has_mana = { amount = 100 } }
-				}
-			}
-
 		}
 	}
 	#-------------------------------------------------------------------------------------------------------------
@@ -733,7 +715,7 @@ windward_upgrade_triggers = {
 		limit = { has_province_modifier = windward_level_7 }
 
 		if = { #If you have the magical project, show it's level trigger
-			limit = { has_full_deathwinds_system = yes }
+			limit = { owner = { has_full_deathwinds_system = yes } }
 			custom_trigger_tooltip = {
 				tooltip = owner_has_magic_project_level_1_tt
 				owner = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } }
@@ -762,21 +744,10 @@ windward_upgrade_triggers = {
 				tooltip = owner_has_treasury_2000_tt
 				owner = { treasury = 2000 }
 			}
-
-			if = { #If they have access to the magical project, show a tooltip that tells them about the discounted triggers
-				limit = { has_full_deathwinds_system = yes }
-				custom_trigger_tooltip = {
-					tooltip = owner_has_mana_100_hint_tt
-					owner = { has_mana = { amount = 100 } }
-				}
+			custom_trigger_tooltip = {
+				tooltip = owner_has_mana_100_hint_tt
+				owner = { has_mana = { amount = 100 } }
 			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = owner_has_mana_100_tt
-					owner = { has_mana = { amount = 100 } }
-				}
-			}
-
 		}
 	}
 	#-------------------------------------------------------------------------------------------------------------
@@ -810,15 +781,8 @@ windward_upgrade_triggers = {
 					owner = { manpower = 20 }
 				}
 				custom_trigger_tooltip = {
-					tooltip = owner_has_mana_200_tt
+					tooltip = owner_has_mana_200_hint_tt
 					owner = { has_mana = { amount = 200 } }
-				}
-				if = { #If they have access to the magical project, show a tooltip that tells them about the discounted triggers
-					limit = { has_full_deathwinds_system = yes }
-					custom_trigger_tooltip = {
-						tooltip = deathwinds_tease_magical_project_tt
-						always = no
-					}
 				}
 			}
 		}
@@ -854,15 +818,8 @@ windward_upgrade_triggers = {
 					owner = { manpower = 15 }
 				}
 				custom_trigger_tooltip = {
-					tooltip = owner_has_mana_150_tt
+					tooltip = owner_has_mana_150_hint_tt
 					owner = { has_mana = { amount = 150 } }
-				}
-				if = { #If they have access to the magical project, show a tooltip that tells them about the discounted triggers
-					limit = { has_full_deathwinds_system = yes }
-					custom_trigger_tooltip = {
-						tooltip = deathwinds_tease_magical_project_tt
-						always = no
-					}
 				}
 			}
 		}
@@ -895,18 +852,9 @@ windward_upgrade_triggers = {
 			}
 		}
 		else = {
-			if = { #If they have access to the magical project, show a tooltip that tells them about the discounted triggers
-				limit = { has_full_deathwinds_system = yes }
-				custom_trigger_tooltip = {
-					tooltip = owner_has_manpower_10_hint_tt
-					owner = { manpower = 10 }
-				}
-			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = owner_has_manpower_10_tt
-					owner = { manpower = 10 }
-				}
+			custom_trigger_tooltip = {
+				tooltip = owner_has_manpower_10_hint_tt
+				owner = { manpower = 10 }
 			}
 		}
 	}
@@ -943,7 +891,10 @@ windward_upgrade_triggers = {
 
 #Trigger for the 2nd Deathwinds aPUI button
 windwards_reinforce_with_manpower_trigger = {
-	hidden_trigger = { owned_by = FROM }
+	if = {
+		limit = { NOT = { owned_by = FROM } }
+		owned_by = FROM
+	}
 	has_full_deathwinds_system_button = yes
 	#Requires manpower equal to 5 + (2 * Maximum Potential Deathwind Level) 
 	if = {
@@ -982,7 +933,10 @@ windwards_reinforce_with_manpower_trigger = {
 
 #Trigger for the 3rd Deathwinds aPUI button
 windwards_reinforce_with_mana_trigger = {
-	hidden_trigger = { owned_by = FROM }
+	if = {
+		limit = { NOT = { owned_by = FROM } }
+		owned_by = FROM
+	}
 	has_full_deathwinds_system_button = yes
 	has_deathwind_modifier = yes
 	custom_trigger_tooltip = {
@@ -997,7 +951,10 @@ windwards_reinforce_with_mana_trigger = {
 
 #Trigger for the 4th Deathwinds aPUI button
 reduce_windward_triggers = {
-	hidden_trigger = { owned_by = FROM }
+	if = {
+		limit = { NOT = { owned_by = FROM } }
+		owned_by = FROM
+	}
 	has_full_deathwinds_system_button = yes
 	has_windward_modifier = yes
 	NOT = { province_group = alecandi_capital_provinces }
