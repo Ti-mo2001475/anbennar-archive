@@ -2662,29 +2662,46 @@ on_province_religion_changed_effect = { #Randomizer has fixed outcomes on this o
 		}
 		owner = { country_event = { id = rahen.13 } }
 	}
+	#dictate of understanding
 	if = {
 		limit = {
 			owner = { has_estate_privilege = estate_church_dictate_understanding }
-			has_province_flag = bulwar_evil_religion_xhazobkult
 		}
-		change_religion = kvangahga
-		clr_province_flag = bulwar_evil_religion_xhazobkult
-	}
-	if = {
-		limit = {
-			owner = { has_estate_privilege = estate_church_dictate_understanding }
-			has_province_flag = bulwar_evil_religion_devouring_path
+		if = {
+			limit = {
+				has_province_flag = bulwar_evil_religion_xhazobkult
+			}
+			change_religion = kvangahga
+			clr_province_flag = bulwar_evil_religion_xhazobkult
 		}
-		change_religion = accretive_path
-		clr_province_flag = bulwar_evil_religion_devouring_path
-	}
-	if = {
-		limit = {
-			owner = { has_estate_privilege = estate_church_dictate_understanding }
-			has_province_flag = bulwar_evil_religion_effelai
+		if = {
+			limit = {
+				has_province_flag = bulwar_evil_religion_devouring_path
+			}
+			change_religion = accretive_path
+			clr_province_flag = bulwar_evil_religion_devouring_path
 		}
-		change_religion = orwaii
-		clr_province_flag = bulwar_evil_religion_effelai
+		if = {
+			limit = {
+				has_province_flag = bulwar_evil_religion_effelai
+			}
+			change_religion = orwaii
+			clr_province_flag = bulwar_evil_religion_effelai
+		}
+		if = {
+			limit = {
+				has_province_flag = bulwar_evil_religion_shadow
+			}
+			change_religion = sky_domain
+			clr_province_flag = bulwar_evil_religion_shadow
+		}
+		if = {
+			limit = {
+				has_province_flag = bulwar_evil_religion_infernal
+			}
+			change_religion = regent_court
+			clr_province_flag = bulwar_evil_religion_infernal
+		}
 	}
 	#Command Post-Edict-of-X Laws of Ninun
 	if = {
@@ -3355,6 +3372,12 @@ on_province_religion_converted_effect = {
 	}
 	#Dragon Turtle
 	owner = { dragon_turtle_change_friendship = { dragon_turtle = maxele_iron_hearted amount = 2 } }
+
+	#Cannor Clerical Spells
+	if = {
+		limit = { owner = { has_country_modifier = ceremony_cannor_clerical_spell_mod } }
+		add_nationalism = -5
+	}
 }
 
 on_trade_good_changed_government_effect = {
@@ -4339,7 +4362,7 @@ on_battle_won_country_effect = {
 			limit = {
 				has_country_modifier = undead_military
 				exactly_magic_project_level = { project = army_of_the_dead level = 3 }
-				NOT = { has_country_flag = disable_default_undead_manpower_gain }
+				NOT = { has_government_attribute = B54_custom_attribute_esthil_necronomics }
 			}
 			set_variable = {
 				which = raise_undead
@@ -4456,19 +4479,6 @@ on_battle_won_country_effect = {
 				id = empkeios_events.1306
 			}
 		}
-	}
-	if = {
-		limit = {
-			has_country_flag = G54_supporting_peasant_rebels_flag
-			FROM = { tag = REB }
-			NOT = {
-				has_spawned_supported_rebels = U17 #Theinos
-				has_spawned_supported_rebels = G54 #Besolaki
-				war_with = U17 #Theinos
-				war_with = G54 #Besolaki
-			}
-		}
-		clr_country_flag = G54_supporting_peasant_rebels_flag
 	}
 	if = {
 		limit = {
@@ -4915,7 +4925,7 @@ on_battle_won_country_effect = {
 	}
 
 	if = { #Black Herd
-		limit = { has_estate_privilege = estate_mages_black_herd_shockshroud_mages }
+		limit = { has_estate_privilege = estate_mages_black_herd_shockshroud_mages FROM = { NOT = { tag = NAT } } }
 		change_mana = { amount = 0.5 }
 	}
 
@@ -5258,53 +5268,19 @@ on_battle_lost_country_effect = {
 
 on_battle_won_province_effect = {
 	if = {
-		limit = {
-			from = {
+		limit = { 
+			FROM = { 
 				tag = REB
-				is_rebel_type = revolutionary_rebels
-			}
-			owner = {
-				any_owned_province = {
-					region = root
-					has_revolution_in_province = yes
-				}
-				# NOT = { has_disaster = french_revolution }
-				NOT = { has_disaster = revolution }
-				NOT = { has_spawned_rebels = revolutionary_rebels }
 			}
 		}
-		owner = { country_event = { id = center_of_revolution.1600 } }
+		#Effect to use when losing country is REB
+		#There is quite a lot of effect you need to trigger after player beaten up rebels
+		#Thanks to this we wont need to check if it wasnt against rebels multiple times
+		on_battle_won_province_effect_loser_country_reb = yes
 	}
-
+	#----------------------------------
+	#Only add effects below this line here if they don't involve defeating rebels
 	#Anbennar
-	if = {
-		limit = {
-			from = {
-				tag = REB
-				is_rebel_type = pretender_rebels
-			}
-			owner = {
-				tag = A48
-				has_disaster = sugamber_succession_war
-			}
-		}
-		owner = { country_event = { id = flavor_sugamber.9 } }
-	}
-
-	if = { limit = { has_province_flag = nsc_duel } #Mages vs Artificers duel during the 'Rise of Artificery' NSC incident
-		if = { limit = { NOT = { has_province_flag = nsc_duel_null } }
-			if = { limit = { from = { tag = REB is_rebel_type = artificer_duelists_rebels } }
-				owner = { country_event = { id = new_sun_cult.203 } }
-			}
-			if = { limit = { from = { tag = REB is_rebel_type = mage_duelists_rebels } }
-				owner = { country_event = { id = new_sun_cult.204 } }
-			}
-		}
-		else = {
-			owner = { country_event = { id = new_sun_cult.205 } }
-		}
-	}
-
 	if = {
 		limit = {
 			ROOT = {
@@ -5320,225 +5296,7 @@ on_battle_won_province_effect = {
 			}
 		}
 	}
-
-	if = {
-		limit = {
-			from = {
-				tag = REB
-				is_rebel_type = allclan_rabble
-			}
-			owner = {
-				tag = I98
-				check_variable = {
-					which = tithicIncrement
-					value = 1
-				}
-				NOT = {
-					check_variable = {
-						which = tithicIncrement
-						value = 2
-					}
-				}
-			}
-		}
-		I98 = { country_event = { id = allclan.23 } }
-	}
-	if = {
-		limit = {
-			from = {
-				tag = REB
-				is_rebel_type = allclan_rabble
-			}
-			owner = {
-				tag = I98
-				check_variable = {
-					which = tithicIncrement
-					value = 2
-				}
-				NOT = {
-					check_variable = {
-						which = tithicIncrement
-						value = 3
-					}
-				}
-			}
-		}
-		I98 = { country_event = { id = allclan.24 } }
-	}
-	if = {
-		limit = {
-			from = {
-				tag = REB
-				is_rebel_type = allclan_rabble
-			}
-			owner = {
-				tag = I98
-				check_variable = {
-					which = tithicIncrement
-					value = 3
-				}
-				NOT = {
-					check_variable = {
-						which = tithicIncrement
-						value = 4
-					}
-				}
-			}
-		}
-		I98 = { country_event = { id = allclan.25 } }
-	}
-	if = {
-		limit = {
-			from = {
-				tag = REB
-				is_rebel_type = allclan_rabble
-			}
-			owner = {
-				tag = I98
-				check_variable = {
-					which = tithicIncrement
-					value = 4
-				}
-				NOT = {
-					check_variable = {
-						which = tithicIncrement
-						value = 5
-					}
-				}
-			}
-		}
-		I98 = { country_event = { id = allclan.26 } }
-	}
-	if = {
-		limit = {
-			FROM = {
-				tag = REB
-				is_rebel_type = allclan_rabble
-			}
-			owner = {
-				tag = I98
-				check_variable = {
-					which = tithicIncrement
-					value = 5
-				}
-			}
-		}
-		I98 = { country_event = { id = allclan.27 } }
-	}
-
-	if = {
-		limit = { 
-			owner = {
-				OR = {
-					tag = Y17 #Gushuokguan
-					was_tag = Y17 #Gushuokguan
-				}
-				any_hired_mercenary_company = {
-					template = merc_dacite_dragons
-					location = { province_id = ROOT }
-				}
-			}
-			FROM = {
-				tag = REB
-				is_rebel_type = spirit_swarms 
-			}
-		}
-		owner = {
-			change_variable = {
-				which = gushuokguan_dacite_dragons_death_toll
-				which = land_units_killed
-			}
-		}
-	}
-	else_if = {
-		limit = { 
-			owner = {
-				overlord = {
-					OR = {
-						tag = Y17 #Gushuokguan
-						was_tag = Y17 #Gushuokguan
-					}
-					any_hired_mercenary_company = {
-						template = merc_dacite_dragons
-						location = { province_id = ROOT }
-					}
-				}
-			}
-			FROM = {
-				tag = REB
-				is_rebel_type = spirit_swarms 
-			}
-		}
-		owner = {
-			overlord = {
-				set_variable = {
-					which = land_units_killed
-					which = PREV
-				}
-				change_variable = {
-					which = gushuokguan_dacite_dragons_death_toll
-					which = land_units_killed
-				}
-			}
-		}
-	}
-	if = {
-		limit = { 
-			FROM = {
-				tag = REB
-				is_rebel_type = asarta_merfolk_rebels
-			}
-		}
-		if = {
-			limit = {
-				owner = {
-					has_country_flag = asarta_merfolk_rebels1 
-				}
-			}
-			owner = {
-				country_event = {
-					id = asarta.5
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				owner = {
-					has_country_flag = asarta_merfolk_rebels2
-				}
-			}
-			owner = {
-				country_event = {
-					id = asarta.7
-				}
-			}
-		}
-		owner = {
-			clr_country_flag = asarta_merfolk_rebels1
-			clr_country_flag = asarta_merfolk_rebels2 
-		}
-	}
-	if = {
-		limit = { 
-			owner = {
-				has_country_flag = asarta_remove_sep
-			}
-			FROM = {
-				tag = REB #Must put REB in front of rebel type check, for error log reasons
-				is_rebel_type = nationalist_rebels
-			}
-			owner = {
-				NOT = {
-					num_of_rebel_armies = 1
-				}
-			}
-		}
-		owner = {
-			country_event = {
-				id = asarta.17
-			}
-		}
-	}
+	
 	if = {
 		limit = { 
 			has_ruler_leader_from = I33
@@ -5549,15 +5307,6 @@ on_battle_won_province_effect = {
 				id = flavour_ayeth.16
 			}
 		}
-	}
-	
-
-	if = { #Shuvuush generic missions
-		limit = {
-			FROM = { tag = REB is_rebel_type = face_stealers_rebels }
-			owner = { has_mission = shuvuush_to_forget }
-		}
-		owner = { set_country_flag = has_defeated_face_stealer }
 	}
 
 	#Bibyobi
@@ -5584,26 +5333,6 @@ on_battle_won_province_effect = {
 		}
 	}
 
-	if = {
-		limit = {
-			FROM = {
-				tag = REB
-				rebel_is_holohana = yes
-			}
-		}
-		FROM = {
-			holohana_injury_trigger_switch = yes
-		}
-	}
-
-	if = { # Ardimyan Minors
-		limit = {
-			has_province_flag = current_qeyikul_warband_uprising
-			FROM = { tag = REB }
-		}
-		owner = { country_event = { id = flavour_AYN.1001 } }
-	}
-
 	#Xhaz spells
 	if = {
 		limit = {
@@ -5624,6 +5353,268 @@ on_battle_won_province_effect = {
 			}
 		}
 	}
+	command_brorc_gain_hubris_from_battle = yes
+}
+
+on_battle_won_province_effect_loser_country_reb = {
+	if = {
+		limit = {
+			FROM = {
+				is_rebel_type = revolutionary_rebels
+			}
+			owner = {
+				any_owned_province = {
+					region = root
+					has_revolution_in_province = yes
+				}
+				# NOT = { has_disaster = french_revolution }
+				NOT = { has_disaster = revolution }
+				NOT = { has_spawned_rebels = revolutionary_rebels }
+			}
+		}
+		owner = { country_event = { id = center_of_revolution.1600 } }
+	}
+	#Anbennar
+	if = {
+		limit = {
+			FROM = {
+				is_rebel_type = pretender_rebels
+			}
+			owner = {
+				tag = A48
+				has_disaster = sugamber_succession_war
+			}
+		}
+		owner = { country_event = { id = flavor_sugamber.9 } }
+	}
+	if = {
+		limit = { 
+			FROM = {
+				is_rebel_type = nationalist_rebels
+			}
+			owner = {
+				has_country_flag = asarta_remove_sep
+			}
+			owner = {
+				NOT = {
+					num_of_rebel_armies = 1
+				}
+			}
+		}
+		owner = {
+			country_event = {
+				id = asarta.17
+			}
+		}
+	}
+	if = { limit = { has_province_flag = nsc_duel } #Mages vs Artificers duel during the 'Rise of Artificery' NSC incident
+		if = { limit = { NOT = { has_province_flag = nsc_duel_null } }
+			if = { limit = { FROM = { is_rebel_type = artificer_duelists_rebels } }
+				owner = { country_event = { id = new_sun_cult.203 } }
+			}
+			if = { limit = { FROM = { is_rebel_type = mage_duelists_rebels } }
+				owner = { country_event = { id = new_sun_cult.204 } }
+			}
+		}
+		if = { limit = { has_province_flag = nsc_duel_null }
+			owner = { country_event = { id = new_sun_cult.205 } }
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				is_rebel_type = allclan_rabble
+			}
+			owner = {
+				tag = I98
+				NOT = { has_country_flag = jerry_died } #Nothing matters after his death :(
+			}
+		}
+		owner = {
+			if = {
+				limit = {
+					check_variable = {
+						which = tithicIncrement
+						value = 1
+					}
+					NOT = {
+						check_variable = {
+							which = tithicIncrement
+							value = 2
+						}
+					}
+				}
+				country_event = { id = allclan.23 }
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = tithicIncrement
+						value = 2
+					}
+					NOT = {
+						check_variable = {
+							which = tithicIncrement
+							value = 3
+						}
+					}
+				}
+				country_event = { id = allclan.24 }
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = tithicIncrement
+						value = 3
+					}
+					NOT = {
+						check_variable = {
+							which = tithicIncrement
+							value = 4
+						}
+					}
+				}
+				country_event = { id = allclan.25 }
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = tithicIncrement
+						value = 4
+					}
+					NOT = {
+						check_variable = {
+							which = tithicIncrement
+							value = 5
+						}
+					}
+				}
+				country_event = { id = allclan.26 }
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = tithicIncrement
+						value = 5
+					}
+				}
+				I98 = { country_event = { id = allclan.27 } }
+			}
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				is_rebel_type = spirit_swarms 
+			}
+		}
+		if = {
+			limit = { 
+				owner = {
+					is_or_was_tag = { tag = Y17 } #Gushuokguan
+					any_hired_mercenary_company = {
+						template = merc_dacite_dragons
+						location = { province_id = ROOT }
+					}
+				}
+			}
+			owner = {
+				change_variable = {
+					which = gushuokguan_dacite_dragons_death_toll
+					which = land_units_killed
+				}
+			}
+		}
+		else_if = {
+			limit = { 
+				owner = {
+					overlord = {
+						is_or_was_tag = { tag = Y17 } #Gushuokguan
+						any_hired_mercenary_company = {
+							template = merc_dacite_dragons
+							location = { province_id = ROOT }
+						}
+					}
+				}
+			}
+			owner = {
+				overlord = {
+					set_variable = {
+						which = land_units_killed
+						which = PREV
+					}
+					change_variable = {
+						which = gushuokguan_dacite_dragons_death_toll
+						which = land_units_killed
+					}
+				}
+			}
+		}
+	}
+	if = {
+		limit = { 
+			FROM = {
+				is_rebel_type = asarta_merfolk_rebels
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = asarta_merfolk_rebels1 
+				}
+			}
+			owner = {
+				country_event = {
+					id = asarta.5
+				}
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = asarta_merfolk_rebels2
+				}
+			}
+			owner = {
+				country_event = {
+					id = asarta.7
+				}
+			}
+		}
+		owner = {
+			clr_country_flag = asarta_merfolk_rebels1
+			clr_country_flag = asarta_merfolk_rebels2 
+		}
+	}
+	if = { #Shuvuush generic missions
+		limit = {
+			FROM = { is_rebel_type = face_stealers_rebels }
+			owner = { has_mission = shuvuush_to_forget }
+		}
+		owner = { set_country_flag = has_defeated_face_stealer }
+	}
+	if = {
+		limit = {
+			FROM = {
+				rebel_is_holohana = yes
+			}
+		}
+		if = {
+			limit = { has_province_flag = holohana_is_here_flag }
+			FROM = {
+				holohana_injury_trigger_switch = yes
+			}
+		}
+		else = {
+			set_province_flag = holohana_migrated_from_fight
+		}
+	}
+	if = { # Ardimyan Minors
+		limit = {
+			has_province_flag = current_qeyikul_warband_uprising
+		}
+		owner = { country_event = { id = flavour_AYN.1001 } }
+	}
 }
 
 on_battle_lost_province_effect = {
@@ -5632,7 +5623,7 @@ on_battle_lost_province_effect = {
 		limit = {
 			FROM = { tag = I43 }
 			province_id = 6258
-			NOT = { has_country_flag = silentblade_ritual_complete }
+			NOT = { has_global_flag = silentblade_ritual_complete }
 		}
 
 		I43 = { country_event = { id = silentblade.5 } }
@@ -5644,14 +5635,7 @@ on_battle_lost_province_effect = {
 				TAG = B32
 				has_disaster = castanor_succession_war
 			}
-			ROOT = {
-				NOT = {
-					num_of_units_in_province = {
-						who = B61
-						amount = 1
-					}
-				}
-			}
+			units_in_province = B61
 		}
 		set_province_flag = castanor_stack_wipe
 	}
@@ -5727,6 +5711,15 @@ on_battle_lost_province_effect = {
 		limit = { has_province_flag = holohana_give_credit }
 		holohana_give_credit_for_kill = yes
 	}
+	if = {
+		limit = { has_province_flag = holohana_migrated_from_fight }
+		clr_province_flag = holohana_migrated_from_fight
+		FROM = {
+			country_event = {
+				id = holohana_events.300
+			}
+		}
+	}
 
 	if = {
 		limit = {
@@ -5756,6 +5749,7 @@ on_battle_lost_province_effect = {
 			}
 		}
 	}
+	command_brorc_gain_hubris_from_battle = yes
 }
 
 #1.35
@@ -7157,6 +7151,7 @@ on_war_declaration_effect = {
 	if = {
 		limit = {
 			has_country_flag = B28_tide_flag
+			has_reform = B28_rule_of_the_strong
 		}
 		remove_country_modifier = B28_ook_01
 		remove_country_modifier = B28_ook_02
@@ -7733,6 +7728,53 @@ on_war_declaration_effect = {
 			FROM = { total_development = ROOT } 
 		}
 		country_event = { id = dragon_turtles.16 }
+	}
+
+	#Cangji
+	if = {
+		limit = {
+			tag = V05
+		}
+		if = {
+			limit = {
+				has_country_flag = V05_yanshen_wars
+				FROM = {
+					capital_scope = { superregion = yanshen_superregion }
+				}
+			}
+			FROM = {
+				every_owned_province = {
+					limit = {
+						superregion = yanshen_superregion
+					}
+					add_province_modifier = {
+						name = V05_yanshen_warscore
+						duration = -1
+						hidden = yes
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = V05_yarikhoi_wars
+				FROM = {
+					capital_scope = { superregion = forbidden_lands_superregion }
+				}
+			}
+			FROM = {
+				every_owned_province = {
+					limit = {
+						superregion = forbidden_lands_superregion
+					}
+					add_province_modifier = {
+						name = V05_forbidden_plains_warscore
+						duration = -1
+						hidden = yes
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -8742,22 +8784,6 @@ on_colony_finished_effect = {
 		cede_province = U42
 	}
 
-	if = {
-		limit = {
-			owner = { has_estate_privilege = estate_nobles_tribes_tame_the_frontier_privilege }
-			OR = {
-				region = yyl_moista_region
-				region = northern_pass_region
-				superregion = gerudia_superregion
-			}
-		}
-		add_province_modifier = {
-			name = estate_tame_the_frontier_new_colony_mod
-			duration = 18250 # 50 years
-		}
-		remove_province_modifier = estate_tame_the_frontier_discount_mod
-	}
-	
 	#Seraeddun CN
 	if= {
 		limit = {
@@ -10092,6 +10118,12 @@ on_development_effect = {
 			}
 		}
 	}
+
+	#Devandi Church Power Gain - Mazhthramazh
+	if = {
+		limit = { owner = { religion = mazhthramazh } }
+		owner = { add_church_power = 1 }
+	}
 }
 
 # THIS = Province, FROM = Country, ROOT = Merc Unit
@@ -10177,8 +10209,8 @@ on_mercenary_recruited_effect = {
 				mission_completed = veykodan_guard
 			}
 			OR = {
-				ROOT = { mercenary_company = veykodan_guard_merc }
-				ROOT = { mercenary_company = veykodan_guard_elite_merc }
+				ROOT = { mercenary_company = merc_veykodan_guard}
+				ROOT = { mercenary_company = merc_veykodan_guard_elite }
 			}
 		}
 		FROM = { country_event = { id = flavor_arverynn.46 } }
@@ -11499,8 +11531,12 @@ on_built_tax_building_effect = {
 		}
 	}
 	if = {
-		limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
+		limit = {
+			FROM = { has_government_attribute = learning_by_doing_reform_effect }
+			NOT = { has_province_modifier = learning_by_doing_temple }
+		}
 		FROM = { change_government_reform_progress = 4 }
+		add_province_modifier = { name = learning_by_doing_temple duration = -1 hidden = yes }
 	}
 	if = {
 		limit = { FROM = { has_estate_privilege = estate_tiger_command_war_room_rights } }
@@ -11522,6 +11558,22 @@ on_built_tax_building_effect = {
 		}
 		add_province_modifier = {
 			name = L80_temple_buff
+			duration = -1
+		}
+	}
+
+	#Shirgriis
+	if = {
+		limit = {
+			province_id = 4848
+			owner = { religion = devouring_path }
+			development = 12
+			NOT = { has_province_flag = shirgrii_khelorvalshi_repaired }
+		}
+		set_province_flag = shirgrii_khelorvalshi_repaired
+		remove_province_modifier = shirgrii_ruined_khelorvalshi
+		add_province_modifier = {
+			name = shirgrii_khelorvalshi
 			duration = -1
 		}
 	}
@@ -11591,6 +11643,23 @@ on_built_manpower_building_effect = {
 		}
 		FROM = { S45_add_momentum = { value = 1 action = building } }
 	}
+	if = {
+		limit = {
+			FROM = { has_estate_privilege = estate_raj_ministries_grant_logistical_oversight }
+			NOT = { has_province_modifier = estate_raj_ministries_grant_logistical_oversight_cooldown }
+		}
+		area = {
+			add_or_extend_province_modifier_effect = {
+				MODIFIER = estate_raj_ministries_grant_logistical_oversight_prov
+				DURATION = 365
+			}
+		}
+		add_province_modifier = {
+			name = estate_raj_ministries_grant_logistical_oversight_cooldown
+			duration = 9125
+			hidden = yes
+		}
+	}
 }
 
 on_manpower_building_destroyed_effect = {
@@ -11658,28 +11727,162 @@ on_built_any_fort_building_effect = {	# THIS = Province,  FROM = Builder (not ne
 		}
 	}
 	FROM = { dragon_turtle_change_friendship = { dragon_turtle = monzaketzya amount = 3 } } #Dragon Turtle
+	if = { #1.35
+		limit = {
+			owner = { has_estate_privilege = estate_nobles_development_of_castles }
+		}
+		if = {
+			limit = { owner = { has_country_flag = karach_improved_fortifications } }
+			add_province_modifier = {
+				name = karach_improved_fortifications_mod
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = estate_nobles_development_of_castles_mod
+				duration = -1
+			}
+		}
+	}
+	if = {
+		limit = { FROM = { has_estate_privilege = estate_elephant_command_war_room_rights } }
+		FROM = { add_legitimacy = 1 }
+	}
+	if = {
+		limit = { FROM = { has_government_attribute = command_elephant_elevation_modifier } }
+		add_province_modifier = {
+			name = command_elephant_fort_buff
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			FROM = { religion = winter_court }
+		}
+		FROM = { add_church_power = 10 }
+	}
+	owner = { accretive_path_gain_chi = { aspect = serenity_in_rock_and_stone category = mil amount = 20 } }
+	spirit_fort_awakening_effect = yes
+	if = {	#Brrtekuh
+		limit = {
+			has_building = mage_tower
+			owner = {
+				OR = {
+					has_estate_privilege = estate_church_U10_purification_posts_along_the_sorrow
+					has_country_modifier = U10_exorcist_combine
+				}
+			}
+		}
+		add_province_modifier = {
+			name = U10_containment_array
+			duration = -1
+		}
+	}
+	if = {
+		limit = { owner = { has_country_modifier = organized_aid } }
+		add_devastation = -5
+		every_neighbor_province = { 
+			limit = { owned_by = FROM }
+			add_devastation = -5
+		}	
+	}
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					has_government_attribute = expand_the_league_1_attribute
+					has_government_attribute = expand_the_league_2_attribute
+					has_government_attribute = expand_the_league_3_attribute
+				}
+				is_subject = no
+			}
+			owner = {
+				OR = {
+					tag = FROM
+					is_subject_of_type = vic_league_member
+				}
+			}
+		}
+		FROM = {
+			add_government_power = {
+				mechanic_type = vic_league_mechanic
+				power_type = vic_league_mil_power
+				value = 10
+			}
+		}
+	}	
+	FROM = {	#Molten Eternity
+		if = {
+			limit = {
+				religion = molten_eternity
+				has_personal_deity = volcanic_truth_persistence
+			}
+			change_variable = {
+				which = moltenEternityObligationVar
+				value = 100
+			}
+		}
+	}
+	if = {	# Huugeta Mercenary Chapters
+		limit = {
+			owner = { has_country_flag = S45_mercenary_chapters }
+			S45_mercenary_chapter_requirements = yes
+		}
+		add_province_modifier = {
+			name = S45_mercenary_chapter
+			duration = -1
+		}
+	}
 }
 
 on_any_fort_destroyed_effect = { # THIS = Province, FROM = Destroyer, Will not be called on buildings made obsolete!
 	remove_province_modifier = H14_secured_fringes #Eighard
 	remove_province_modifier = harpylen_fort_roost
+	remove_province_modifier = U10_containment_array
+	remove_province_modifier = estate_nobles_development_of_castles_mod
+	remove_province_modifier = karach_improved_fortifications_mod
+	remove_province_modifier = spiked_log_spiky_traps
+	remove_province_modifier = command_elephant_fort_buff
 	FROM = { dragon_turtle_change_friendship = { dragon_turtle = monzaketzya amount = -3 } } #Dragon Turtle
-	#Charkuchin Kobold Supply Facility - needs a fort and production building, but I'll only care about you
-	#deleting the fort
+	#Charkuchin Kobold Supply Facility - needs a fort and production building, but I'll only care about you deleting the fort
 	if = {
 		limit = { has_province_modifier = charkuchin_kobold_supply_facility }
 		remove_province_modifier = charkuchin_kobold_supply_facility
-		owner = {
-			change_variable = {
-				which = insyaa_charkuchin_kobold_citadel_supplies_supply_facility_count
-				value = -1
+		custom_tooltip = kobold_citadel_monthly_supply_malus_10
+		custom_tooltip = kobold_citadel_province_upkeep_not_free
+		hidden_effect = {
+			owner = {
+				change_variable = {
+					which = insyaa_charkuchin_kobold_citadel_supplies_supply_facility_count
+					value = -1
+				}
+				change_variable = {
+					which = insyaa_charkuchin_kobold_citadel_supplies_total_gain
+					value = -10
+				}
 			}
-			change_variable = {
-				which = insyaa_charkuchin_kobold_citadel_supplies_total_gain
-				value = -10
-			}
+			kobold_citadel_supplies_add_supply_cost_based_on_region = yes
 		}
-		kobold_citadel_supplies_add_supply_cost_based_on_region = yes
+	}
+	if = {	#Bibyobi
+		limit = { has_province_modifier = S98_jungle_fortress }
+		remove_province_modifier = S98_jungle_fortress
+		every_neighbor_province = {
+			limit = {
+				NOT = {
+					any_neighbor_province = {
+						owned_by = FROM
+						has_fort_building_trigger = yes
+					}
+				}
+			}
+			remove_province_modifier = S98_jungle_fortress
+		}
+	}
+	if = { # Anbennar Kobold Traps
+		limit = { has_province_flag = has_kobold_traps }
+		province_event = { id = kobold_traps.8 }
 	}
 }
 on_any_fort_obsolete_effect = { # THIS = Province, FROM = Destroyer, Will not be called on buildings destroyed!
@@ -11689,8 +11892,12 @@ on_any_fort_construction_started_effect = { #Fires when you start the constructi
 
 on_built_trade_building_effect = {
 	if = {
-		limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
+		limit = {
+			FROM = { has_government_attribute = learning_by_doing_reform_effect }
+			NOT = { has_province_modifier = learning_by_doing_marketplace }
+		}
 		FROM = { change_government_reform_progress = 4 }
+		add_province_modifier = { name = learning_by_doing_marketplace duration = -1 hidden = yes }
 	}
 	if = { #Zulbur
 		limit = {
@@ -11721,6 +11928,23 @@ on_built_trade_building_effect = {
 		add_province_modifier = {
 			name = harpylen_market_roost
 			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			FROM = { has_estate_privilege = estate_raj_ministries_grant_treasury_oversight }
+			NOT = { has_province_modifier = estate_raj_ministries_grant_treasury_oversight_cooldown }
+		}
+		area = {
+			add_or_extend_province_modifier_effect = {
+				MODIFIER = estate_raj_ministries_grant_treasury_oversight_prov
+				DURATION = 1825
+			}
+		}
+		add_province_modifier = {
+			name = estate_raj_ministries_grant_treasury_oversight_cooldown
+			duration = 9125
+			hidden = yes
 		}
 	}
 }
@@ -11814,12 +12038,38 @@ on_forcelimit_building_destroyed_effect = {}
 
 on_built_courthouse_building_effect = {
 	if = {
-		limit = { FROM = { has_government_attribute = learning_by_doing_reform_effect } }
+		limit = {
+			FROM = { has_government_attribute = learning_by_doing_reform_effect }
+			NOT = { has_province_modifier = learning_by_doing_courthouse }
+		}
 		FROM = { change_government_reform_progress = 4 }
+		add_province_modifier = { name = learning_by_doing_courthouse duration = -1 hidden = yes }
 	}
 	if = {
 		limit = { FROM = { has_estate_privilege = estate_wolf_command_war_room_rights } }
 		FROM = { add_legitimacy = 0.5 }
+	}
+	if = {
+		limit = { FROM = { has_estate_privilege = estate_raj_ministries_establish_provincial_bureaucracies } }
+		FROM = {
+			add_estate_loyalty = {
+				estate = estate_raj_ministries
+				loyalty = 1
+			}
+			add_corruption = 0.02
+		}
+		if = {
+			limit = { NOT = { has_province_modifier = estate_raj_ministries_establish_provincial_bureaucracies_cooldown } }
+			add_province_modifier = {
+				name = estate_raj_ministries_establish_provincial_bureaucracies_prov
+				duration = 1825
+			}
+			add_province_modifier = {
+				name = estate_raj_ministries_establish_provincial_bureaucracies_cooldown
+				duration = 9125
+				hidden = yes
+			}
+		}
 	}
 }
 on_courthouse_building_destroyed_effect = {}
@@ -11947,6 +12197,81 @@ on_capital_moved_effect = {
         }
         FROM = { remove_province_modifier = U09_gnollkind_fort }
     }
+	if = {
+		limit = { owner = { has_government_attribute = move_development_with_capital } }
+		while = {
+			limit = { FROM = { check_variable = { tax_increased_by_owner = 1 } } }
+			FROM = { add_base_tax = -1 subtract_variable = { tax_increased_by_owner = 1 } }
+			add_base_tax = 1 change_variable = { tax_increased_by_owner = 1 }
+		}
+		while = {
+			limit = { FROM = { check_variable = { production_increased_by_owner = 1 } } }
+			FROM = { add_base_production = -1 subtract_variable = { production_increased_by_owner = 1 } }
+			add_base_production = 1 change_variable = { production_increased_by_owner = 1 }
+		}
+		while = {
+			limit = { FROM = { check_variable = { manpower_increased_by_owner = 1 } } }
+			FROM = { add_base_manpower = -1 subtract_variable = { manpower_increased_by_owner = 1 } }
+			add_base_manpower = 1 change_variable = { manpower_increased_by_owner = 1 }
+		}
+	}
+	
+	#current_institution trigger is a little buggy. It seems to check for the progress of the last institution that is at all present,
+	# which leads to it returning 100 when it ought to be returning 0.
+	# For example, if you have 100 feudalism but 0 renaissance, and it is 1451 (after renaissance spawned),
+	# the current_institution trigger will return 100 rather than 0.
+
+	# If you are lacking institutions but have at least one institution fully present in your capital,
+	# you can develop another province such that it has like 1% progress towards the next institution,
+	# then you move your capital to that province and the code would instantly makes that next institution wholly present.
+	# The weird NOT-ANDs exist to ameliorate this issue
+	# I would shift this over to using the feudalism = X triggers, but those don't seem to work as exportable trigger values.
+	if = {
+		limit = {
+			owner = { has_government_attribute = move_institutions_with_capital }
+			NOT = { #Don't run this code if the new capital is ahead in institutions - see above
+				AND = { feudalism = 1 FROM = { NOT = { feudalism = 1 } } }
+				AND = { renaissance = 1 FROM = { NOT = { renaissance = 1 } } }
+				AND = { new_world_i = 1 FROM = { NOT = { new_world_i = 1 } } }
+				AND = { printing_press = 1 FROM = { NOT = { printing_press = 1 } } }
+				AND = { global_trade = 1 FROM = { NOT = { global_trade = 1 } } }
+				AND = { manufactories = 1 FROM = { NOT = { manufactories = 1 } } }
+				AND = { enlightenment = 1 FROM = { NOT = { enlightenment = 1 } } }
+				AND = { industrialization = 1 FROM = { NOT = { industrialization = 1 } } }
+			}
+		}
+		export_to_variable = { which = institution_var value = trigger_value:current_institution who = FROM }
+		export_to_variable = { which = institution_var_subtract value = trigger_value:current_institution }
+		if = { #In some cases (see above) this value will be 100 when it should be 0
+			limit = {
+				check_variable = { institution_var_subtract = 100 }
+				OR = { #If the previous capital is ahead in institutions, this value should be 0
+					AND = { NOT = { feudalism = 1 } FROM = { feudalism = 1 } }
+					AND = { NOT = { renaissance = 1 } FROM = { renaissance = 1 } }
+					AND = { NOT = { new_world_i = 1 } FROM = { new_world_i = 1 } }
+					AND = { NOT = { printing_press = 1 } FROM = { printing_press = 1 } }
+					AND = { NOT = { global_trade = 1 } FROM = { global_trade = 1 } }
+					AND = { NOT = { manufactories = 1 } FROM = { manufactories = 1 } }
+					AND = { NOT = { enlightenment = 1 } FROM = { enlightenment = 1 } }
+					AND = { NOT = { industrialization = 1 } FROM = { industrialization = 1 } }
+				}
+			}
+			set_variable = { institution_var_subtract = 0 } #The actual institution progress is 0
+		}
+
+		subtract_variable = { which = institution_var which = institution_var_subtract } #Find the difference, if any, between past and current capitals
+		
+		while = { #add institution embracement equal to the difference
+			limit = { check_variable = { institution_var = 10 } }
+			subtract_variable = { institution_var = 10 }
+			add_next_institution_embracement = 10
+		}
+		while = { #add institution embracement equal to the difference
+			limit = { check_variable = { institution_var = 1 } }
+			subtract_variable = { institution_var = 1 }
+			add_next_institution_embracement = 1
+		}
+	}
 }
 
 on_government_change_effect = {
@@ -12798,12 +13123,12 @@ startup_1444_effects = {
 				duration = 18250 #50 years
 			}
 			country_event = {
-				id = kheionai.200
+				id = kheionai.112
 			}
 		}
 		if = { #Ameion doesn't need help colonizing so they just get the event
 			limit = { tag = G52 } #Ameion
-			country_event = { id = kheionai.200 }
+			country_event = { id = kheionai.112 }
 		}
 		
 		# Dwarovar cheap colonies modifier and event to make them start colonizing
@@ -13013,7 +13338,7 @@ startup_1444_effects = {
 				ai = no
 			}
 			country_event = {
-				id = kheionai.30
+				id = kheionai.200
 				days = 730
 			}
 		}
@@ -13401,6 +13726,7 @@ startup_1444_effects = {
 		if = {
 			limit = { tag = Z60 }
 			country_event = { id = tsukqiao.1 days = 7 } #Save primary culture
+			ban_necromancy = { country = yes }
 		}
 		
 		#Pachpalka initialization
@@ -13436,9 +13762,7 @@ startup_1444_effects = {
 
 		#Planetouched setup
 		if = {
-			limit = {
-				has_country_flag = has_planetouched_estate
-			}
+			limit = { has_country_flag = has_planetouched_estate }
 			country_event = {
 				id = planetouched.107
 			}
@@ -13455,20 +13779,74 @@ startup_1444_effects = {
 			set_country_flag = allowed_dragon_turtle_outside_religon
 		}
 
-		#Tsukqiao No Necromancy
-		if = {
-			limit = {
-				tag = Z60
-			}
-			ban_necromancy = { country = yes }
-		}
-
 		# Setup high temple objects
 		if = {
 			limit = { owns = 4871 }
 			country_event = { id = spirits.021 }
 		}
-	}
+		
+		#Gerudia colonization setup
+		if = {
+			limit = { tag = Z89 } #digoveda observes all
+			2953 = { #Icereach
+				province_event = {
+					id = gerudia.100 #Gerudian Frontier settlement wave 1
+					days = 10950 #1474
+					random = 1095 #3y
+				}
+			}
+			2832 = { #Nednvidr
+				province_event = {
+					id = gerudia.101 #Gerudian Frontier settlement wave 2
+					days = 19345 #1497
+					random = 1095 #3y
+				}
+			}
+			971 = { #Grymskali
+				province_event = {
+					id = gerudia.102 #Gerudian Frontier settlement wave 1
+					days = 10585 #1473
+					random = 1095 #3y
+				}
+			}
+			6274 = { #Volvahringr
+				province_event = {
+					id = gerudia.103 #Gerudian Frontier settlement wave 2
+					days = 16790 #1490
+					random = 1095 #3y
+				}
+			}
+			6271 = { #Vaengheim
+				province_event = {
+					id = gerudia.104 #Gerudian Frontier settlement wave 1
+					days = 8030 #1466
+					random = 1095 #3y
+				}
+			}
+			2831 = { #Hagisandr
+				province_event = {
+					id = gerudia.105 #Gerudian Frontier settlement wave 2
+					days = 18250 #1494
+					random = 1095 #3y
+				}
+			}
+			986 = { #Esvjall
+				province_event = {
+					id = gerudia.106 #Gerudian Frontier settlement wave 1
+					days = 9490 #1470
+					random = 1095 #3y
+				}
+			}
+			2833 = { #Grenholt
+				province_event = {
+					id = gerudia.107 #Gerudian Frontier settlement wave 2
+					days = 18250 #1494
+					random = 1095 #3y
+				}
+			}
+		}
+		country_event = { id = genie_cult.1 }	#genie cult gain power
+	}	
 }
 
 on_province_owner_change_effect = {
@@ -14714,6 +15092,25 @@ on_province_owner_change_effect = {
 		}
 	}
 
+	#Itinerant Capital Mechanic - Give modifier to new province
+	if = { 
+		limit = {
+			owner = { has_government_attribute = has_itinerant_capital }
+			area_for_scope_province = {
+				has_province_modifier = itinerant_capital_area
+			}
+			NOT = { has_province_modifier = itinerant_capital_area }
+		}
+		add_province_modifier = {
+			name = itinerant_capital_area
+			duration = -1
+		}
+	}
+	if = {
+		limit = { has_province_flag = is_itinerent_capital }
+		clr_province_flag = is_itinerent_capital
+	}
+
 	#Orlghelovar (I12)
 	if = {
 		limit = {
@@ -15187,7 +15584,7 @@ on_province_owner_change_effect = {
 				FROM = { religion = nakavy_avo } #Check the country is nakavy_avo
 				has_any_active_nakavy_avo_shrine_in_province_trigger = yes #and lost an active shrine
 			}
-			FROM = { country_event = { id = fahvanosy.11 } } #Check if FROM owns a valid shrine before removing the ruler mod
+			FROM = { country_event = { id = fahvanosy.12 } } #Check if FROM owns a valid shrine before removing the ruler mod
 		}
 		nakavy_avo_shrines_deactivate_all_province_effect = yes #deactivate all because only 1/12 chance to keep even if avo nakavy
 		
@@ -15396,41 +15793,52 @@ on_province_owner_change_effect = {
 	}
 
 	cleanup_empty_province = yes
-
+	#dictate of understanding
 	if = {
 		limit = { 
 			owner = {
 				religion_group = bulwari
 			}
-			NOT = { superregion = bulwar_superregion } 
-			religion = xhazobkult
+			NOT = { superregion = bulwar_superregion }
 		}
-		set_province_flag = bulwar_evil_religion_xhazobkult
-	}
-	if = {
-		limit = { 
-			owner = {
-				religion_group = bulwari
+		if = {
+			limit = { 	
+				religion = xhazobkult
 			}
-			NOT = { superregion = bulwar_superregion } 
-			OR = { 
-				religion = tswohvwohii
-				religion = chahinanito
-				religion = song_servants
-				religion = leechfather
-			}
+			set_province_flag = bulwar_evil_religion_xhazobkult
 		}
-		set_province_flag = bulwar_evil_religion_effelai
-	}
-	if = {
-		limit = { 
-			owner = {
-				religion_group = bulwari
+		if = {
+			limit = {  
+				OR = { 
+					religion = tswohvwohii
+					religion = chahinanito
+					religion = song_servants
+					religion = leechfather
+				}
 			}
-			NOT = { superregion = bulwar_superregion } 
-			religion = devouring_path
+			set_province_flag = bulwar_evil_religion_effelai
 		}
-		set_province_flag = bulwar_evil_religion_devouring_path
+		if = {
+			limit = { 
+				religion = devouring_path
+			}
+			set_province_flag = bulwar_evil_religion_devouring_path
+		}
+		if = {
+			limit = { 
+				OR = { 
+					religion = shadow_pact
+					religion = night_coven
+				}
+			}
+			set_province_flag = bulwar_evil_religion_shadow
+		}
+		if = {
+			limit = { 
+				religion = infernal_court
+			}
+			set_province_flag = bulwar_evil_religion_infernal
+		}
 	}
 
 	# Mountainshark T4 Gov Reform
@@ -17273,12 +17681,13 @@ on_province_owner_change_effect = {
 	if = {
 		limit = {
 			region = ardimya_region
-			S91 = { exists = yes }
+			exists = S91
 			is_city = yes
 			owner = {
 				S91 = { 
 					is_colonial_nation_of = PREV
 				}
+				NOT = { has_country_flag = ardimya_war_ended }
 			}
 		}
 		cede_province = S91
@@ -17333,6 +17742,17 @@ on_province_owner_change_effect = {
 				limit = { NOT = { any_owned_province = { province_group = gene_pillars } } }
 				clr_country_flag = owns_gene_pillars
 			}
+		}
+	}
+
+	if = { #Deathwinds
+		limit = {
+			owner = { has_country_flag = desolating_alecand_flag }
+			region = alecand_region
+		}
+		add_province_modifier = {
+			name = desolate_alecand_mod
+			duration = -1
 		}
 	}
 }
@@ -17713,8 +18133,33 @@ on_age_ability_taken_age_of_reformation = { }
 on_age_ability_taken_age_of_absolutism = { }
 on_age_ability_taken_age_of_revolutions = { }
 on_age_ability_taken = {
-	on_age_ability_taken_$age$ = yes
-
+    on_age_ability_taken_$age$ = yes
+    if = {
+		limit = {
+			has_government_attribute = taych_taking_age_rewards_gives_glory
+		}
+		if = {
+			limit = { religion = gods_of_the_taychend }
+			gain_taychend_glory_effect = { amount = 100 }
+		}
+		else_if = {
+			limit = {
+				religion = gods_of_the_taychend_reformed
+				has_government_mechanic = taychend_vainglory_mechanic
+			}
+			add_government_power = {
+				mechanic_type = taychend_vainglory_mechanic
+				power_type = taychend_vainglory_power
+				value = 25
+			}
+		}
+		else = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 7
+			}
+		}
+	}
 }
 
 on_scorch_earth_effect = {
@@ -18521,6 +18966,7 @@ on_province_owner_change_monuments = {
 					add_province_modifier = {
 						name = temple_of_ruby_and_bronze_livestock_mod_1
 						duration = -1
+						hidden = yes
 					}
 				}
 			}
@@ -19117,12 +19563,14 @@ on_province_owner_change_monuments = {
 			add_province_modifier = {
 				name = temple_of_ruby_and_bronze_livestock_mod_2
 				duration = -1
+				hidden = yes
 			}
 		}
 		else = {
 			add_province_modifier = {
 				name = temple_of_ruby_and_bronze_livestock_mod_1
 				duration = -1
+				hidden = yes
 			}
 		}
 	}
@@ -19411,5 +19859,143 @@ on_consort_death_effects = {
 			has_country_flag = harpy_tolerance_harpy_wife_happy_life
 		}
 		clr_country_flag = harpy_tolerance_harpy_wife_happy_life
+	}
+}
+
+#Ensures that faction influence can't go below 1
+#Checks for has_faction instead of has_reform when factions are enabled by multiple reforms to reduce checks. Requires the factions are only ever enabled together tho
+ensure_positive_faction_influence = {
+	if = {
+		limit = {
+			ai = no
+			has_factions = yes
+		}
+		
+		#############
+		# Base Game #
+		#############
+		if = { #Merchant Factions
+			limit = { has_faction = mr_aristocrats }
+			faction_influence_update_subeffect = { faction = mr_aristocrats }
+			faction_influence_update_subeffect = { faction = mr_traders }
+			faction_influence_update_subeffect = { faction = mr_guilds }
+		}
+		if = { #Revolutionary Republics
+			limit = { has_faction = rr_jacobins }
+			faction_influence_update_subeffect = { faction = rr_jacobins }
+			faction_influence_update_subeffect = { faction = rr_royalists }
+			faction_influence_update_subeffect = { faction = rr_girondists }
+		}
+		if = { #Pirate Republics
+			limit = { has_faction = pr_buccaneers }
+			faction_influence_update_subeffect = { faction = pr_buccaneers }
+			faction_influence_update_subeffect = { faction = pr_smugglers }
+			faction_influence_update_subeffect = { faction = pr_captains }
+		}
+
+		############
+		# Anbennar #
+		############
+		#Mykx
+		faction_influence_update_subeffect = { faction = mykx_xhazobkult }
+		if = { #Adventurers
+			limit = { has_faction = adv_marchers }
+			faction_influence_update_subeffect = { faction = adv_marchers }
+			faction_influence_update_subeffect = { faction = adv_pioneers }
+			faction_influence_update_subeffect = { faction = adv_fortune_seekers }
+		}
+		if = { #Technocracy
+			limit = { has_faction = tec_brilliance }
+			faction_influence_update_subeffect = { faction = tec_brilliance }
+			faction_influence_update_subeffect = { faction = tec_technomancy }
+			faction_influence_update_subeffect = { faction = tec_mechanists }
+		}
+		if = { #Aelnar
+			limit = { has_reform = enlightened_empire_reform }
+			faction_influence_update_subeffect = { faction = aelnar_blaiddtar }
+			faction_influence_update_subeffect = { faction = aelnar_cymscal }
+			faction_influence_update_subeffect = { faction = aelnar_suir }
+		}
+		if = { #Khuraen Ulaeg - Factions are enabled seperately from a reform and from each other so a tag trigger is best
+			limit = { tag = I89 }
+			faction_influence_update_subeffect = { faction = burning_spear }
+			faction_influence_update_subeffect = { faction = verdant_bliss }
+			faction_influence_update_subeffect = { faction = tiger_bane }
+			faction_influence_update_subeffect = { faction = raging_blizzard }
+			faction_influence_update_subeffect = { faction = vine_tearer }
+			faction_influence_update_subeffect = { faction = rosen_rider }
+		}
+		if = { #Marlliande
+			limit = { has_reform = ar_callein_reform }
+			faction_influence_update_subeffect = { faction = vilaechi }
+			faction_influence_update_subeffect = { faction = rosrholych }
+			faction_influence_update_subeffect = { faction = drominar }
+		}
+		if = { #Northern League
+			limit = { has_reform = northern_league_magnates }
+			faction_influence_update_subeffect = { faction = nl_cooperatists }
+			faction_influence_update_subeffect = { faction = nl_trade_barons }
+			faction_influence_update_subeffect = { faction = nl_old_guard }
+		}
+		# if = { #Moredhal
+		# 	limit = { has_reform = infernal_autocracy }
+		# 	faction_influence_update_subeffect = { faction = inf_ildran_hedine }
+		# 	faction_influence_update_subeffect = { faction = inf_triad }
+		# 	faction_influence_update_subeffect = { faction = inf_kaz_mesner }
+		# }
+		if = { #New Hevoral
+			limit = { has_reform = new_havoral_bandit_kingdom_reform }
+			faction_influence_update_subeffect = { faction = bandit_kingdom_havoric_homesteaders }
+			faction_influence_update_subeffect = { faction = bandit_kingdom_falah_poachers }
+			faction_influence_update_subeffect = { faction = bandit_kingdom_bandit_captains }
+			faction_influence_update_subeffect = { faction = bandit_kingdom_ynnic_loyalists }
+		}
+		if = { #All-Clan
+			limit = { has_reform = pentapandemonium_reform }
+			faction_influence_update_subeffect = { faction = pen_discombobulatorium }
+			faction_influence_update_subeffect = { faction = pen_erectors }
+			faction_influence_update_subeffect = { faction = pen_harmaceuticals }
+			faction_influence_update_subeffect = { faction = pen_cloak_and_swagger }
+			faction_influence_update_subeffect = { faction = pen_clodhoppers }
+		}
+		if = { #Royakottar
+			limit = { has_reform = royakottar_four_families }
+			faction_influence_update_subeffect = { faction = four_families_kattyva }
+			faction_influence_update_subeffect = { faction = four_families_nymkorai }
+			faction_influence_update_subeffect = { faction = four_families_ursibadur }
+			faction_influence_update_subeffect = { faction = four_families_vustarin }
+		}
+		if = { #Besolaki - Factions are enabled before the reform by effect (but all at the same time still)
+			limit = { has_faction = beso_caribhen }
+			faction_influence_update_subeffect = { faction = beso_caribhen }
+			faction_influence_update_subeffect = { faction = beso_kheinbhen }
+			faction_influence_update_subeffect = { faction = beso_nautabhen }
+			faction_influence_update_subeffect = { faction = beso_skighubhen }
+			faction_influence_update_subeffect = { faction = beso_dhorbhen }
+		}
+		if = { #Celmaldor
+			limit = { has_faction = whitespear_clan }
+			faction_influence_update_subeffect = { faction = whitespear_clan }
+			faction_influence_update_subeffect = { faction = icewind_clan }
+			faction_influence_update_subeffect = { faction = frozentide_clan }
+		}
+	}
+}
+
+faction_influence_update_subeffect = {
+	if = {
+		limit = {
+			has_faction = $faction$
+			NOT = {
+				faction_influence = {
+					faction = $faction$
+					influence = 1
+				}
+			}
+		}
+		add_faction_influence = {
+			faction = $faction$
+			influence = 1
+		}
 	}
 }

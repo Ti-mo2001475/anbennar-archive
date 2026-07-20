@@ -149,17 +149,7 @@ country_event = { #Kheionai Left Behind
 	immediate = {
 		hidden_effect = {
 			random_owned_province = {
-				limit = {
-					OR = {
-						province_id = 2728
-						province_id = 2731
-						province_id = 2732
-						province_id = 2736
-						province_id = 2738
-						province_id = 2745
-						province_id = 2773
-					}
-				}
+				limit = { province_group = alecandi_capital_provinces }
 				save_event_target_as = kf_close_kheios
 			}
 		}
@@ -168,11 +158,7 @@ country_event = { #Kheionai Left Behind
 	option = { #Let them in!
 		name = kheionai_flavour.3.a
 		event_target:kf_close_kheios = {
-			add_devastation = -10
-			add_temporary_windward_damage = {
-				damage = 1
-				length = 1825
-			}
+			add_devastation = -25
 		}
 	}
 	
@@ -811,7 +797,10 @@ country_event = { #feeeding the famished
 	}
 
 	trigger = {
-		has_country_modifier = recent_kaydhano_wind
+		#Deathwinds happens within the last 2 years
+		check_variable = { aPUI_deathwinds_var = 25 }
+		NOT = { check_variable = { aPUI_deathwinds_var = 48 } }
+		
 		culture_group = kheionai_ruinborn_elf
 		any_owned_province = {
 			is_core = ROOT
@@ -1072,25 +1061,23 @@ country_event = { #Too Close for Comfort
 		culture_group = kheionai_ruinborn_elf
 		is_year = 1500
 		any_owned_province = {
-			has_province_modifier = kheionai_warded_city
+			province_group = alecandi_capital_provinces
 		}
 	}
 
 	immediate = {
 		hidden_effect = {
 		random_owned_province = {
-			limit = { has_province_modifier = kheionai_warded_city }
+			limit = { province_group = alecandi_capital_provinces }
 			save_event_target_as = kheionai_warded_city_overpopulation
 		}
 		random_owned_province = {
 			limit = {
 				any_neighbor_province = {
 					owned_by = ROOT
-					has_province_modifier = kheionai_warded_city
+					province_group = alecandi_capital_provinces
 				}
-				NOT = {
-					has_province_modifier = kheionai_warded_city
-				}
+				NOT = { province_group = alecandi_capital_provinces }
 			}
 			save_event_target_as = kheionai_random
 		}
@@ -1129,7 +1116,7 @@ country_event = { #Too Close for Comfort
         name = kheionai_flavour.21.c
 		goto = kheionai_random
 		event_target:kheionai_random = {
-			add_permanent_windward_level = { level = 1 }
+			upgrade_windward_for_free = yes
 			add_province_modifier = {
 				name = kheionai_countryside_refuge
 				duration = 1825 
@@ -1226,7 +1213,7 @@ country_event = { #Sheltering their faith
 			duration = 3650
 		}
 		event_target:kheionai_metei_passage = {
-			add_permanent_windward_level = { level = 1 }
+			upgrade_windward_for_free = yes
 		}
 	}
 
@@ -1312,7 +1299,7 @@ country_event = { #Nekheis mil
 		name = kheionai_flavour.23.b
 		every_subject_country = {
 			limit = { is_subject_of_type = nekhei }
-			country_event = { id = kheionai.20 }
+			country_event = { id = kheionai.108 }
 			add_country_modifier = {
 				name = nekhei_military_expanded
 				duration = 7300
