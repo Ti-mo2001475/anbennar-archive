@@ -739,19 +739,11 @@ abjuration_1_ward_sub_effect = { # Ward sub-effect
 		limit = { PREV = { at_least_magic_project_level = { project = magical_fortress level = 3 } } }
 		add_province_modifier = { name = abjuration_1_ward_mod_3 duration = $duration$ }
 		custom_tooltip = abjuration_1_ward_upgrade_3
-		hidden_effect = {
-			province_event = { id = kheionai.2 } #wind wards from fort
-			province_event = { id = kheionai.2 days = $duration$ }
-		}
 	}
 	else_if = {
 		limit = { PREV = { at_least_magic_project_level = { project = magical_fortress level = 2 } } }
 		add_province_modifier = { name = abjuration_1_ward_mod_2 duration = $duration$ }
 		custom_tooltip = abjuration_1_ward_upgrade_2
-		hidden_effect = {
-			province_event = { id = kheionai.2 } #wind wards from fort
-			province_event = { id = kheionai.2 days = $duration$ }
-		}
 	}
 	else_if = {
 		limit = { PREV = { at_least_magic_project_level = { project = magical_fortress level = 1 } } }
@@ -2458,6 +2450,14 @@ necromancy_0_false_life_effect = { # False Life
 necromancy_1_steal_vitality_effect = { # Steal Vitality
 	custom_tooltip = necromancy_1_steal_vitality_effect_tt
 	necromancy_1_steal_vitality_sub_effect = { days = 1825 }
+	if = {
+		limit = { has_country_flag = necromancy_1_steal_vitality_add_attrition }
+		add_country_modifier = { name = necromancy_1_steal_vitality_mod_attrition duration = 1825 }
+	}
+	if = {
+		limit = { has_country_flag = necromancy_1_steal_vitality_add_monarch_lifespan }
+		add_ruler_modifier = { name = necromancy_1_steal_vitality_mod_monarch_lifespan duration = -1 }
+	}
 }
 necromancy_1_steal_vitality_sub_effect = { # Steal Vitality sub-effect (not needed rn)
 	tooltip = {
@@ -2553,14 +2553,14 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 					ruler_is_homunculus = yes
 				}
 			}
-			add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = 18250 }
+			add_necromancy_2_speak_with_dead_cost = { duration = 18250 }
 		}
 		else_if = { #30 years
 			limit = {
 				fast_ruler_is_elven = yes
 				NOT = { ruler_culture = wood_elf }
 			}
-			add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = 10950 }
+			add_necromancy_2_speak_with_dead_cost = { duration = 10950 }
 		}
 		else_if = { #20 years
 			limit = {
@@ -2570,10 +2570,10 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 					fast_ruler_is_dwarven = yes
 				}
 			}
-			add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = 7300 }
+			add_necromancy_2_speak_with_dead_cost = { duration = 7300 }
 		}
 		else = { #8 years - default
-			add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = 2920 }
+			add_necromancy_2_speak_with_dead_cost = { duration = 2920 }
 		}
 	}
 	
@@ -2746,6 +2746,15 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 				else = { change_adm = 1 }
 			"
 		}
+	}
+}
+add_necromancy_2_speak_with_dead_cost = {
+	if = {
+		limit = { has_country_flag = necromancy_2_speak_with_dead_cost_05 }
+		add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod_05 duration = $duration$ }
+	}
+	else = {
+		add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = $duration$ }
 	}
 }
 necromancy_2_remove_pain_effect = { # Remove Pain
@@ -4278,4 +4287,12 @@ abjuration_2_cannor_clerical_default_3_effect = {
 			add_province_modifier = { name = hallow_cathedral_cannor_clerical_spell_mod duration = 3650 }
 		}
 	}	
+}
+
+#Gemradcurt
+enchantment_1_eordand_gemradcurt_5_effect = { #Cold Command
+	add_country_modifier = { 
+		name = gemradcurt_cold_command_mod
+		duration = 3650
+	}
 }
