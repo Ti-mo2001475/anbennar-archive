@@ -191,14 +191,20 @@ country_event = {
 		trigger = {
 			has_reform = tame_the_storm
 		}
-		every_owned_province = {
-			limit = {
-				OR = {
-					province_group = alecandi_capital_provinces
-					has_building = mage_tower
+		if = {
+			limit = { abjuration_1_ward_trigger = { player = yes } }
+			custom_tooltip = tame_cast_ward
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							province_group = alecandi_capital_provinces
+							has_building = mage_tower
+						}
+					}
+					abjuration_1_ward_sub_effect = { duration = 3650 }
 				}
 			}
-			abjuration_1_ward_sub_effect = { duration = 3650 }
 		}
 	}
 }
@@ -455,7 +461,14 @@ country_event = {
 		every_owned_province = {
 			limit = {
 				region = alecand_region
-				NOT = { check_variable = { which = deathwinds_warded_var value = -4 } }
+				OR = {
+					check_variable = { which = deathwinds_warded_var value = -5 } 
+					check_variable = { which = deathwinds_warded_var value = -6 } 
+					check_variable = { which = deathwinds_warded_var value = -7 } 
+					check_variable = { which = deathwinds_warded_var value = -8 } 
+					check_variable = { which = deathwinds_warded_var value = -9 } 
+					check_variable = { which = deathwinds_warded_var value = -10 } 
+				}
 			}
 			add_province_modifier = {
 				name = tame_the_storm_ward_bonus
