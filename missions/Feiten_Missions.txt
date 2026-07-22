@@ -1608,10 +1608,21 @@ feiten_missions_2_world = {
 			}
 			mission_reward_artifice_points_5 = yes
 			custom_tooltip = feiten_add_perma_claim_gene_pillars_tt
-			country_event = {
-				id = flavor_feiten.316
-				days = 730
-				random = 730
+			if = {
+				limit = { rending_has_happened = yes }
+				country_event = {
+					id = flavor_feiten.316
+					days = 730
+					random = 730
+				}
+			}
+			else_if = {
+				limit = { rending_has_not_happened = yes }
+				country_event = {
+					id = flavor_feiten.321
+					days = 730
+					random = 730
+				}
 			}
 			hidden_effect = {
 				every_province = {

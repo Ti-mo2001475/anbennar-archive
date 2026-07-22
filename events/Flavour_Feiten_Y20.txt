@@ -11499,7 +11499,7 @@ country_event = {
 	}
 }
 
-#Spirit Energy
+#Spirit Energy post rending
 country_event = {
 	id = flavor_feiten.316
 	title = flavor_feiten.316.t
@@ -11524,7 +11524,7 @@ country_event = {
 	}
 }
 
-#Investgation into Pillar
+#Insyaan Expedition Report
 country_event = {
 	id = flavor_feiten.317
 	title = flavor_feiten.317.t
@@ -11646,6 +11646,30 @@ country_event = {
 	}
 }
 
+#spirit Energy Pre Rending
+country_event = {
+	id = flavor_feiten.321
+	title = flavor_feiten.321.t
+	desc = flavor_feiten.321.desc
+	picture = GENIE_RUINS_eventPicture #TODO Placeholder
+
+	is_triggered_only = yes
+	
+
+	option = { #Investigate Pillar
+		name = flavor_feiten.321.a
+		add_treasury = -7500
+		add_manpower = -7.5
+		6950 = { remove_province_modifier = feiten_shuimu_gene_pillar_extraction }
+		hidden_effect = {
+			country_event = {
+				id = flavor_feiten.317
+				days = 365
+				random = 365
+			}
+		}
+	}
+}
 
 # DEBUG
 country_event = {
@@ -11658,22 +11682,6 @@ country_event = {
 
 	immediate = {
 		save_global_event_target_as = feiten_or_was_feiten_target
-		1343 = {
-			add_trade_modifier = {
-				who = Y20
-				duration = -1
-				power = 10000
-				key = DEBUGFEITEN
-			}
-		}
-		1347 = {
-		add_trade_modifier = {
-				who = Y20
-				duration = -1
-				power = 10000
-				key = DEBUGFEITEN
-			}
-		}
 	}
 
 	option = {
