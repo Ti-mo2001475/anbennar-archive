@@ -2071,6 +2071,18 @@ estate_mages_magocratic_reactionism = {
 				has_government_attribute = is_magocracy
 			}
 			has_reform = magical_elite_reform
+			if = {
+				limit = {
+					hre_reform_passed = anbennar_nobles_of_the_wand
+					OR = {
+ 						tag = Z01
+						is_part_of_hre = yes
+						is_subject_of = Z01
+ 					}
+				}
+				has_reform = nobles_of_the_wand_reform
+			}
+			else = { hidden_trigger = { always = no } }
 		}
 	}
 
@@ -5080,7 +5092,7 @@ estate_mages_vacyntassi_order = { #Eduz-Vacyn
 estate_mages_legacy_hakin = { #Eduz-Vacyn
 	icon = privilege_missionary
 	max_absolutism = 0
-	loyalty = 5
+	loyalty = 0.05
 	influence = 0
 	is_valid = {
 		has_estate_privilege = estate_mages_legacy_hakin
@@ -6166,7 +6178,7 @@ estate_mages_B54_necrocratic_administration = {
 }
 
 estate_mages_irrliam_sunblessed_exorcists = { #Irrliam
-	icon = privilege_monopoly_of_goods_livestock
+	icon = privilege_covenblad_silver_reliquary
 	max_absolutism = -5
 	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
 	loyalty = 0.05
