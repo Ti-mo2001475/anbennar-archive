@@ -192,16 +192,7 @@ col4 = {
 					province_id = 4871 #tianlou
 					NOT = {
 						owner = {
-							OR = {
-								has_opinion_modifier = {
-									who = ROOT
-									modifier = scornfully_insulted
-								}
-								has_opinion_modifier = {
-									who = ROOT
-									modifier = insulted
-								}
-							}
+							has_been_insulted_by_root = yes
 						}
 						owned_by = ROOT
 					}
@@ -223,16 +214,7 @@ col4 = {
 				OR = {
 					owned_by = ROOT
 					owner = {
-						OR = {
-							has_opinion_modifier = {
-								who = ROOT
-								modifier = scornfully_insulted
-							}
-							has_opinion_modifier = {
-								who = ROOT
-								modifier = insulted
-							}
-						}
+						has_been_insulted_by_root = yes
 					}
 				}
 			}
@@ -340,10 +322,14 @@ col4 = {
 				}
 			}
 			all_subject_country = {
-				capital_scope = {
-					region = north_yanshen_region
+				OR = {
+					NOT = {
+						capital_scope = {
+							superregion = yanshen_superregion
+						}
+					}
+					trust = { who = ROOT value = 80 }
 				}
-				trust = { who = ROOT value = 80 }
 			}
 			4979 = { #damaogong
 				has_tax_building_trigger = yes
