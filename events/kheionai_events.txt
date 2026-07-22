@@ -453,28 +453,63 @@ country_event = {
 	}
 
 	option = { #kheion gov reform
-		name = kheionai.6.a
-		highlight = yes
-		trigger = {
-			has_reform = tame_the_storm
-		}
-		every_owned_province = {
-			limit = {
-				region = alecand_region
-				OR = {
-					check_variable = { which = deathwinds_warded_var value = -5 } 
-					check_variable = { which = deathwinds_warded_var value = -6 } 
-					check_variable = { which = deathwinds_warded_var value = -7 } 
-					check_variable = { which = deathwinds_warded_var value = -8 } 
-					check_variable = { which = deathwinds_warded_var value = -9 } 
-					check_variable = { which = deathwinds_warded_var value = -10 } 
+			name = kheionai.6.a
+			highlight = yes
+			trigger = {
+				has_reform = tame_the_storm
+			}
+			every_owned_province = {
+				limit = {
+					region = alecand_region
+					OR = {
+						has_province_modifier = windward_level_5
+						has_province_modifier = windward_level_6
+						has_province_modifier = windward_level_7
+						has_province_modifier = windward_level_8
+						has_province_modifier = windward_level_9
+						has_province_modifier = windward_level_10
+						AND = {
+							has_province_modifier = windward_level_4
+							OR = {
+								has_building = mage_tower
+								has_province_modifier = abjuration_1_ward_mod_1
+								has_province_modifier = abjuration_1_ward_mod_2
+								has_province_modifier = abjuration_1_ward_mod_3
+							}
+						}
+						AND = {
+							has_province_modifier = windward_level_3
+							OR = {
+								has_province_modifier = abjuration_1_ward_mod_2
+								has_province_modifier = abjuration_1_ward_mod_3
+								AND = {
+									has_building = mage_tower
+									has_province_modifier = abjuration_1_ward_mod_1
+								}
+							}
+						}
+						AND = {
+							has_province_modifier = windward_level_2
+							OR = {
+								has_province_modifier = abjuration_1_ward_mod_3
+								AND = {
+									has_building = mage_tower
+									has_province_modifier = abjuration_1_ward_mod_2
+								}
+							}
+						}
+						AND = {
+							has_province_modifier = windward_level_1
+							has_building = mage_tower
+							has_province_modifier = abjuration_1_ward_mod_3
+						}
+					}
+				}
+				add_province_modifier = {
+					name = tame_the_storm_ward_bonus
+					duration = 1825
 				}
 			}
-			add_province_modifier = {
-				name = tame_the_storm_ward_bonus
-				duration = 1825
-			}
-		}
 	}
 }
 
