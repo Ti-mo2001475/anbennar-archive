@@ -159,7 +159,18 @@ country_event = { #	Orda Aldresia religion conflict
 		emperor = {
 			remove_country_modifier = supporting_orda_aldresia
 		}
-		set_country_flag = broken_oath		
+		set_country_flag = broken_oath
+		if = { # kick them out of the empire so emperor can dec post realm peace
+			limit = {
+				OR = {
+					hre_reform_passed = anbennar_mages_peace
+					hre_reform_passed = anbennar_empower_imperial_diet
+				}
+			}
+			capital_scope = {
+				set_in_empire = no
+			}
+		}
 	}
 
 	option = { # Stay loyal
@@ -1047,7 +1058,7 @@ country_event = { #Legacy of Aldresia
 	id = flavor_orda_aldresia.22
 	title = flavor_orda_aldresia.22.t
 	desc = flavor_orda_aldresia.22.d
-	picture = FEMALE_GENERAL_eventPicture
+	picture = wihgfx_FEMALE_GENERAL_eventPicture
 
 	fire_only_once = yes
 	is_triggered_only = yes
@@ -1931,7 +1942,14 @@ country_event = { # Legacy of Aldresia
 		}
 		hidden_effect = {
 			every_known_country = {
-				limit = { is_part_of_hre = yes }
+				limit = {
+					AND = {
+						is_part_of_hre = yes
+						NOT = {
+							is_subject_of = ROOT
+						}
+					}
+				}
 				capital_scope = {
 					spawn_rebels = {
 						size = 2
@@ -2136,7 +2154,7 @@ country_event = { # .46 SPIRIT LOSES DUEL Event
 			}
 			europe = {
 				limit = { is_part_of_hre = yes }
-				add_permanent_claim = A77
+				add_permanent_claim = Z01
 			}
 		}	
 		dismantle_hre = yes
