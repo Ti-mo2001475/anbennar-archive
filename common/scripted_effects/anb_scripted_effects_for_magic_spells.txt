@@ -1192,32 +1192,73 @@ on_pre_divination_1_deposit_divination_effect = {
 divination_1_deposit_divination_effect = {  # Deposit Divination
 	on_pre_divination_1_deposit_divination_effect = yes
 	 
-	if = {
-		limit = { at_least_magic_project_level = { project = orb_of_omniscience level = 1 } }
-		if = {
-			limit = { receiving_mindarayan_buff = yes }
-			if = {
-				limit = { 4527 = { has_great_project = { type = oracle_mountain tier = 3 } } }
-				divination_1_deposit_divination_sub_effect = { days = 5110 }
+	if = { # effect of monument:jianxusi
+		limit = { 
+			owns = 4811
+			4811 = { # trigger to use the monument
+				has_great_project = {
+					type = Jianxusi
+					tier = 3
+				}
+				can_use_monument_Jianxusi_trigger = yes
 			}
-			else = { divination_1_deposit_divination_sub_effect = { days = 4380 } }
-			custom_tooltip = tughayasa_divination_booster_tt
 		}
-		else = { divination_1_deposit_divination_sub_effect = { days = 3650 } }
-		custom_tooltip = divination_1_deposit_divination_upgrade_yes
+		if = {
+			limit = { at_least_magic_project_level = { project = orb_of_omniscience level = 1 } }
+			if = {
+				limit = { receiving_mindarayan_buff = yes }
+				if = {
+					limit = { 4527 = { has_great_project = { type = oracle_mountain tier = 3 } } }
+					divination_1_deposit_divination_sub_effect = { days = 10220 }
+				}
+				else = { divination_1_deposit_divination_sub_effect = { days = 8760 } }
+				custom_tooltip = tughayasa_divination_booster_tt
+			}
+			else = { divination_1_deposit_divination_sub_effect = { days = 7300 } }
+			custom_tooltip = divination_1_deposit_divination_upgrade_yes
+		}
+		else = {
+			if = {
+				limit = { receiving_mindarayan_buff = yes }
+				if = {
+					limit = { 4527 = { has_great_project = { type = oracle_mountain tier = 3 } } }
+					divination_1_deposit_divination_sub_effect = { days = 5110 }
+				}
+				else = { divination_1_deposit_divination_sub_effect = { days = 4380 } }
+				custom_tooltip = tughayasa_divination_booster_tt
+			}
+			else = { divination_1_deposit_divination_sub_effect = { days = 3650 } }
+			custom_tooltip = divination_1_deposit_divination_upgrade_no
+		}
 	}
 	else = {
 		if = {
-			limit = { receiving_mindarayan_buff = yes }
+			limit = { at_least_magic_project_level = { project = orb_of_omniscience level = 1 } }
 			if = {
-				limit = { 4527 = { has_great_project = { type = oracle_mountain tier = 3 } } }
-				divination_1_deposit_divination_sub_effect = { days = 2555 }
+				limit = { receiving_mindarayan_buff = yes }
+				if = {
+					limit = { 4527 = { has_great_project = { type = oracle_mountain tier = 3 } } }
+					divination_1_deposit_divination_sub_effect = { days = 5110 }
+				}
+				else = { divination_1_deposit_divination_sub_effect = { days = 4380 } }
+				custom_tooltip = tughayasa_divination_booster_tt
 			}
-			else = { divination_1_deposit_divination_sub_effect = { days = 2190 } }
-			custom_tooltip = tughayasa_divination_booster_tt
+			else = { divination_1_deposit_divination_sub_effect = { days = 3650 } }
+			custom_tooltip = divination_1_deposit_divination_upgrade_yes
 		}
-		else = { divination_1_deposit_divination_sub_effect = { days = 1825 } }
-		custom_tooltip = divination_1_deposit_divination_upgrade_no
+		else = {
+			if = {
+				limit = { receiving_mindarayan_buff = yes }
+				if = {
+					limit = { 4527 = { has_great_project = { type = oracle_mountain tier = 3 } } }
+					divination_1_deposit_divination_sub_effect = { days = 2555 }
+				}
+				else = { divination_1_deposit_divination_sub_effect = { days = 2190 } }
+				custom_tooltip = tughayasa_divination_booster_tt
+			}
+			else = { divination_1_deposit_divination_sub_effect = { days = 1825 } }
+			custom_tooltip = divination_1_deposit_divination_upgrade_no
+		}
 	}
 
 	hidden_effect = {
@@ -1230,40 +1271,91 @@ divination_1_deposit_divination_effect = {  # Deposit Divination
 	F80_se_apply_divined_defenses = { duration = 730 }
 }
 divination_1_deposit_divination_sub_effect = { #Deposit Divination sub-effect
-	if = {
-		limit = { has_country_flag = S61_deposit_div_upgrade_flag }
-		add_country_modifier = { name = divination_1_deposit_divination_mod duration = $days$ }
-		custom_tooltip = divination_1_deposit_divination_spell_effect
-		tooltip = { 5690 = { add_province_modifier = { name = divination_1_deposit_divination_local_mod_S61_upgrade duration = $days$ } } }
-		hidden_effect = {
-			every_owned_province = {
-				limit = { OR = { province_with_mineable_goods = yes trade_goods = damestear } }
-				add_province_modifier = { name = divination_1_deposit_divination_local_mod_S61_upgrade duration = $days$ }
-			}
-		}
-	}
-	else_if = {
+	if = { # has monument:Jianxusi
 		limit = {
-			has_country_flag = H83_upgrade_deposit_divination
+			owns = 4811
+			4811 = { # trigger to use the monument
+				has_great_project = {
+					type = Jianxusi
+					tier = 2
+				}
+				can_use_monument_Jianxusi_trigger = yes
+			}
 		}
-		add_country_modifier = { name = divination_1_deposit_divination_mod duration = $days$ }
-		custom_tooltip = divination_1_deposit_divination_spell_effect
-		tooltip = { 5690 = { add_province_modifier = { name = divination_1_deposit_divination_local_mod_H83_upgrade duration = $days$ } } }
-		hidden_effect = {
-			every_owned_province = {
-				limit = { OR = { province_with_mineable_goods = yes trade_goods = damestear } }
-				add_province_modifier = { name = divination_1_deposit_divination_local_mod_H83_upgrade duration = $days$ }
+		if = {
+			limit = { has_country_flag = S61_deposit_div_upgrade_flag }
+			add_country_modifier = { name = divination_1_deposit_divination_mod duration = $days$ }
+			custom_tooltip = divination_1_deposit_divination_spell_effect
+			tooltip = { 5690 = { add_province_modifier = { name = divination_1_deposit_divination_local_mod_S61_upgrade_Jianxusi duration = $days$ } } }
+			hidden_effect = {
+				every_owned_province = {
+					limit = { OR = { province_with_mineable_goods = yes trade_goods = damestear } }
+					add_province_modifier = { name = divination_1_deposit_divination_local_mod_S61_upgrade_Jianxusi duration = $days$ }
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_flag = H83_upgrade_deposit_divination
+			}
+			add_country_modifier = { name = divination_1_deposit_divination_mod duration = $days$ }
+			custom_tooltip = divination_1_deposit_divination_spell_effect
+			tooltip = { 5690 = { add_province_modifier = { name = divination_1_deposit_divination_local_mod_H83_upgrade_Jianxusi duration = $days$ } } }
+			hidden_effect = {
+				every_owned_province = {
+					limit = { OR = { province_with_mineable_goods = yes trade_goods = damestear } }
+					add_province_modifier = { name = divination_1_deposit_divination_local_mod_H83_upgrade_Jianxusi duration = $days$ }
+				}
+			}
+		}
+		else = {
+			add_country_modifier = { name = divination_1_deposit_divination_mod duration = $days$ }
+			custom_tooltip = divination_1_deposit_divination_spell_effect
+			tooltip = { 5690 = { add_province_modifier = { name = divination_1_deposit_divination_local_mod_Jianxusi duration = $days$ } } }
+			hidden_effect = {
+				every_owned_province = {
+					limit = { OR = { province_with_mineable_goods = yes trade_goods = damestear } }
+					add_province_modifier = { name = divination_1_deposit_divination_local_mod_Jianxusi duration = $days$ }
+				}
 			}
 		}
 	}
-	else = {
-		add_country_modifier = { name = divination_1_deposit_divination_mod duration = $days$ }
-		custom_tooltip = divination_1_deposit_divination_spell_effect
-		tooltip = { 5690 = { add_province_modifier = { name = divination_1_deposit_divination_local_mod duration = $days$ } } }
-		hidden_effect = {
-			every_owned_province = {
-				limit = { OR = { province_with_mineable_goods = yes trade_goods = damestear } }
-				add_province_modifier = { name = divination_1_deposit_divination_local_mod duration = $days$ }
+	else = { # no monument:Jianxusi
+		if = {
+			limit = { has_country_flag = S61_deposit_div_upgrade_flag }
+			add_country_modifier = { name = divination_1_deposit_divination_mod duration = $days$ }
+			custom_tooltip = divination_1_deposit_divination_spell_effect
+			tooltip = { 5690 = { add_province_modifier = { name = divination_1_deposit_divination_local_mod_S61_upgrade duration = $days$ } } }
+			hidden_effect = {
+				every_owned_province = {
+					limit = { OR = { province_with_mineable_goods = yes trade_goods = damestear } }
+					add_province_modifier = { name = divination_1_deposit_divination_local_mod_S61_upgrade duration = $days$ }
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_flag = H83_upgrade_deposit_divination
+			}
+			add_country_modifier = { name = divination_1_deposit_divination_mod duration = $days$ }
+			custom_tooltip = divination_1_deposit_divination_spell_effect
+			tooltip = { 5690 = { add_province_modifier = { name = divination_1_deposit_divination_local_mod_H83_upgrade duration = $days$ } } }
+			hidden_effect = {
+				every_owned_province = {
+					limit = { OR = { province_with_mineable_goods = yes trade_goods = damestear } }
+					add_province_modifier = { name = divination_1_deposit_divination_local_mod_H83_upgrade duration = $days$ }
+				}
+			}
+		}
+		else = {
+			add_country_modifier = { name = divination_1_deposit_divination_mod duration = $days$ }
+			custom_tooltip = divination_1_deposit_divination_spell_effect
+			tooltip = { 5690 = { add_province_modifier = { name = divination_1_deposit_divination_local_mod duration = $days$ } } }
+			hidden_effect = {
+				every_owned_province = {
+					limit = { OR = { province_with_mineable_goods = yes trade_goods = damestear } }
+					add_province_modifier = { name = divination_1_deposit_divination_local_mod duration = $days$ }
+				}
 			}
 		}
 	}
