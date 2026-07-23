@@ -9700,6 +9700,7 @@ on_development_effect = {
 	#		}
 	#	}
 	#}
+	owner = { warlord_of_haless_check = yes }
 
 	#Drozma Tur
 	dt_introspection_dev_effect = yes
@@ -12295,6 +12296,11 @@ on_capital_moved_effect = {
 			add_next_institution_embracement = 1
 		}
 	}
+	
+	owner = {
+		warlord_of_haless_check = yes
+		anti_warlord_of_haless_check = yes
+	}
 }
 
 on_government_change_effect = {
@@ -13937,6 +13943,14 @@ on_province_owner_change_effect = {
 			}
 		}
 		province_event = { id = mechanim.2 }
+	}
+
+	owner = { country_event = { id = haless.1012 } }
+	FROM = { country_event = { id = haless.1013 } } #If FROM stops existing we have on_annexed to check
+
+	if = { #Warlord of Haless
+		limit = { owner = { has_country_modifier = haless_warlord_jaher } }
+		add_latest_building = { government = yes builder = owner }
 	}
 
 	#Krakazol/Rahen initial friendship, formerly rahen.1
@@ -18553,6 +18567,8 @@ anb_on_exploit_effect = {
 			}
 		}
 	}
+
+	anti_warlord_of_haless_check = yes
 }
 on_province_owner_change_monuments = {
 	##### When monument changes owner #####

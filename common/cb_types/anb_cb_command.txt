@@ -68,21 +68,23 @@ cb_three_commands = {
 	war_goal = three_commands_wargoal
 }
 
-#Dissolve the Command
-cb_dissolve_command = {
+#Dissolve Warlord of Haless
+cb_dissolve_warlord = {
 	valid_for_subject = no
 
 	prerequisites_self = {
-		R62 = {
-			NOT = { great_power_rank = 2 }
+		has_saved_global_event_target = warlord_of_haless
+		event_target:warlord_of_haless = {
 			OR = {
 				is_neighbor_of = ROOT
 				any_subject_country = { is_neighbor_of = ROOT }
 			}
 		}
-		NOT = { tag = R62 }
+		NOT = { tag = event_target:warlord_of_haless }
 	}
-	prerequisites = { FROM = { NOT = { great_power_rank = 2 } } }
+	prerequisites = {
+		FROM = { tag = event_target:warlord_of_haless }
+	}
 
 	attacker_disabled_po = {
 		po_demand_provinces
@@ -97,7 +99,8 @@ cb_dissolve_command = {
 		po_humiliate
 		po_humiliate_rival
 		po_gold
+		po_give_up_claim
 	}
 	
-	war_goal = dissolve_command_wargoal
+	war_goal = dissolve_warlord_wargoal
 }
