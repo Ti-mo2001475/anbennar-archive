@@ -5,7 +5,10 @@
 can_use_magic = { #Can I cast spells and study? (interact with the magic UI)
 	custom_trigger_tooltip = {
 		tooltip = can_use_magic
-		has_not_banned_magic = yes #banning magic instantly blocks magic, even if you have a PM ruler
+		OR = {
+			has_not_banned_magic_artificery = yes #banning magic instantly blocks magic, even if you have a PM ruler
+			has_country_flag = can_use_magic_while_artificery #Command
+		}
 		NOT = { has_country_modifier = block_magic_temp_modifier } #modifier to block all casting of magic, without removing the mage estate
 		OR = {
 			AND = {
@@ -14,10 +17,6 @@ can_use_magic = { #Can I cast spells and study? (interact with the magic UI)
 			}
 			has_ruler_flag = ruler_can_cast_magic_without_mage_personality_flag #For MT always letting you cast spells, like Zokka
 			ruler_is_powerful_mage = yes
-		}
-		OR = {
-			is_not_in_artificery_mode = yes
-			has_country_flag = can_use_magic_while_artificery #Command
 		}
 	}
 }
@@ -3600,7 +3599,10 @@ necromancy_2_speak_with_dead_trigger = { # Speak With Dead
 	is_lesser_in_union = no
 	custom_trigger_tooltip = {
 		tooltip = necromancy_2_speak_with_dead_spell_trigger_tt
-		NOT = { has_ruler_modifier = necromancy_2_speak_with_dead_cooldown_mod }
+		NOT = {
+			has_ruler_modifier = necromancy_2_speak_with_dead_cooldown_mod
+			has_ruler_modifier = necromancy_2_speak_with_dead_cooldown_mod_05
+		}
 	}
 	OR = {
 		NOT = { adm = 5 }
@@ -5424,6 +5426,22 @@ abjuration_2_cannor_clerical_default_3_trigger = {
 	[[player] has_mana_to_cast_magical_tradition_spell = { school = abjuration level = 2 id = cannor_clerical_default_3 } ]
 	legitimacy_equivalent = 90
 	everyone_has_infamy_paragon = yes
+}
+
+#Gemradcurt
+custom_spell_eordand_gemradcurt_5_trigger = {
+	enchantment_1_eordand_gemradcurt_5_trigger = { [[player] player = $player$ ] }
+}
+
+enchantment_1_eordand_gemradcurt_5_trigger = {
+	[[player]
+		has_mana_to_cast_magical_tradition_spell = {
+			school = enchantment
+			level = 1
+			id = eordand_gemradcurt_5
+		}
+	]
+	NOT = { has_country_modifier = gemradcurt_cold_command_mod }
 }
 
 ### STOP.
