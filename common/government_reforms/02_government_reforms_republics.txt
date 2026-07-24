@@ -10964,3 +10964,146 @@ overseas_governorate = {
 	effect = {
 	}
 }
+
+# Tier 2 republican virtues  типа готово нужно проверить работает ли on_new_monarch c республиками. Работает. Победа!
+sophocracy_republic = { 
+	icon = "parliament"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	modifiers = {
+		stability_cost_modifier = -0.2
+        reform_progress_growth = 0.1
+	}
+	effect = {
+		custom_tooltip = sophocracy_advisor_tt #Upon re-election or the election of a new ruler, grants a level 1/2/3 random advisor with a 25/50/75% cost reduction, depending on government rank. 
+	}
+}
+
+# Tier 3 Frequency of Elections  типа готово нужно проверить работает ли on_new_monarch c республиками. Работает. 
+duumvirate = {
+    icon = "sparapet_office"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	modifiers = {
+		all_estate_loyalty_equilibrium = 0.1
+		republican_tradition = 0.1
+		election_cycle = 2
+	}
+	queen = yes
+    # royal_marriage = yes
+    custom_attributes = {
+		rulers_can_be_generals = no
+		# heirs_can_be_generals = no
+        # cannot_become_dictatorship = yes
+	}
+	effect = {
+		custom_tooltip = duumvirate_tt #
+		hidden_effect = {
+			country_event = {
+				id = duumvirate.1
+			}
+		}
+	}
+}
+
+# Tier 4 Religion within the Republic Приделать сюда механику царства из ванилы. Работает
+absence_of_divinity_rep = {
+    icon = "restoration_of_the_senate_reform"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	modifiers = {
+		idea_cost = -0.05
+		institution_spread_from_true_faith = 0.15
+	}
+	effect = {
+		custom_tooltip = absence_of_divinity_tt #За размещение орденов будет давать бонусы на провинции. Как то так
+	}
+}
+
+# Tier 6 Separation of Power. 
+three_branches = {
+    icon = "fiqh_laws"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	modifiers = {
+		national_focus_years = -10
+		republican_tradition = 0.15
+	}
+	custom_attributes = {
+        cannot_become_dictatorship = yes
+	}
+	effect = {
+		custom_tooltip = three_branches_tt #Givi bonuses for changing national focuses
+	}
+}
+
+# Tier 7 Regionalism
+xechtari_above_all = {
+    icon = "hetra_gos_ref"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+		capital_scope = { 
+			region = alecand_region
+		}
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+		capital_scope = { 
+			region = alecand_region
+		}
+	}
+	conditional = {
+		allow = {
+			has_dlc = "Res Publica"
+		}
+		can_use_trade_post = yes
+	}
+	conditional = {
+		allow = {
+			has_dlc = "Domination"
+		}
+		custom_attributes = {
+			can_establish_trade_protectorates = yes
+		}
+	}
+	boost_income = yes
+	modifiers = {
+		governing_capacity_modifier = -0.33
+		liberty_desire_from_subject_development = -0.25
+	}
+	effect = {
+		custom_tooltip = xechtari_above_all_tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					region = alecand_region
+				}
+				add_province_triggered_modifier = xechtari_above_all_ptm
+			}
+		}
+		removed_effect = {
+			remove_province_triggered_modifier = abjuration_spell_three_quarter
+		}
+	}
+}
