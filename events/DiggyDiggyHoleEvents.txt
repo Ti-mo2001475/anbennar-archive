@@ -13400,20 +13400,32 @@ country_event = { #The People do not Yearn for the Mines
 	option = { #Work in the mines!
 		name = diggy.769.a
 		ai_chance = { factor = 100 }
-		every_owned_province = {
-			limit = {
-				continent = serpentspine
-				OR = {
-					trade_goods = iron
-					trade_goods = copper
-					trade_goods = gold
-					trade_goods = mithril
+		custom_tooltip = dwarovar_more_mines_province_tt
+		tooltip = {
+			5690 = {
+				add_local_autonomy = -5
+				add_province_modifier = {
+					name = dwarovar_more_mines_province
+					duration = 3650 #10 years
 				}
 			}
-			add_local_autonomy = -5
-			add_province_modifier = {
-				name = dwarovar_more_mines_province
-				duration = 3650 #10 years
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					continent = serpentspine
+					OR = {
+						trade_goods = iron
+						trade_goods = copper
+						trade_goods = gold
+						trade_goods = mithril
+					}
+				}
+				add_local_autonomy = -5
+				add_province_modifier = {
+					name = dwarovar_more_mines_province
+					duration = 3650 #10 years
+				}
 			}
 		}
 		add_country_modifier = {

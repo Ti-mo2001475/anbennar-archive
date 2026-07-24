@@ -2474,17 +2474,29 @@ necromancy_1_steal_vitality_sub_effect = { # Steal Vitality sub-effect (not need
 				}
 			}
 			add_province_modifier = { name = necromancy_1_steal_vitality_local_mod duration = $days$ }
+			if = {
+				limit = { owner = { has_country_flag = kaino_steal_vitality_moderation } }
+				add_base_production = -1
+			}
 		}
 		add_country_modifier = { name = necromancy_1_steal_vitality_cooldown_mod duration = $days$ hidden = yes }
 	}
 }
+
 necromancy_1_contagion_effect = { # Contagion
 	increase_witch_king_points_medium = { level = necromancy_level_1_minimum }
 	PREV = {
 		add_devastation = 20
 		custom_tooltip = change_siege_negative_tt
 		hidden_effect = { change_siege = -1 }
-		add_province_modifier = { name = necromancy_1_contagion_local_mod duration = 730 }
+		if = { 
+			limit = { has_country_flag = kaino_contagion_adze_swarm }
+			add_devastation = 80
+			add_province_modifier = { name = kaino_necromancy_1_contagion_local_mod duration = 730 }
+		}
+		else = {
+			add_province_modifier = { name = necromancy_1_contagion_local_mod duration = 730 }
+		}
 	}
 	hidden_effect = {
 		PREV = {
@@ -2571,6 +2583,10 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 				}
 			}
 			add_necromancy_2_speak_with_dead_cost = { duration = 7300 }
+		}
+		else_if = {
+			limit = { has_country_flag =  kaino_speak_with_the_dead_buff } #kaino fed buff
+			custom_tooltip = kaino_speak_with_the_dead_buff_tt
 		}
 		else = { #8 years - default
 			add_necromancy_2_speak_with_dead_cost = { duration = 2920 }
@@ -2777,9 +2793,15 @@ necromancy_2_remove_pain_effect = { # Remove Pain
 }
 necromancy_3_chronophage_effect = { # Chronophage
 	increase_witch_king_points_large = { level = necromancy_level_3 }
-	add_country_modifier = { name = necromancy_3_chronophage_mod duration = 365 } #1 year
-	custom_tooltip = necromancy_3_chronophage_spell_effect_tt
-	country_event = { id = magic_spell.700 days = 366 }
+	if = { 
+		limit = { has_country_flag = kaino_super_duper_chronophage }
+		add_country_modifier = { name = kaino_necromancy_3_chronophage_mod duration = 18250 } #50 years mwahahahaa
+	}
+	else = {
+		add_country_modifier = { name = necromancy_3_chronophage_mod duration = 365 } #1 year
+		custom_tooltip = necromancy_3_chronophage_spell_effect_tt
+		country_event = { id = magic_spell.700 days = 366 }
+	}	
 }
 
 #####################
@@ -3182,8 +3204,10 @@ clr_all_custom_spell_groups = {
 		clr_harpy_spell_lists = yes
 		clr_bulwar_spell_lists = yes
 		clr_xhazobkult_spell_lists = yes
+		clr_centaur_spell_lists = yes
 		clr_eordand_spell_lists = yes
 		clr_cannor_clerical_spell_lists = yes
+		clr_fangaula_spell_lists = yes
 		hidden_effect = { #Keep this here - simplifies this effect
 			clr_country_flag = magic_list_any
 			clr_country_flag = show_custom_spell_list #just in case
@@ -3248,6 +3272,14 @@ clr_centaur_spell_lists = {
 	}
 }
 
+clr_fangaula_spell_lists = {
+	if = {
+		limit = { has_any_custom_spell_list_in_group = { group = fangaula } }
+		clr_custom_spell_list = { group = fangaula subgroup = default }
+		clr_custom_spell_list = { group = fangaula subgroup = kaino }
+	}
+}
+
 clr_eordand_spell_lists = {
 	if = {
 		limit = { has_any_custom_spell_list_in_group = { group = eordand } }
@@ -3270,9 +3302,7 @@ magical_tradition_on_harpy_spell_cast_effect = {
 	# Harpylen (F98) MT cares about this
 	hidden_effect = {
 		if = {
-			limit = {
-				tag = F98
-			}
+			limit = { tag = F98 }
 			change_variable = {
 				which = F98_harpy_spells_cast
 				value = 1
@@ -3285,6 +3315,7 @@ magical_tradition_on_bulwar_spell_cast_effect = {}
 magical_tradition_on_eordand_spell_cast_effect = {}
 magical_tradition_on_xhazobkult_spell_cast_effect = {}
 magical_tradition_on_cannor_clerical_spell_cast_effect = {}
+magical_tradition_on_fangaula_spell_cast_effect = {}
 
 
 
@@ -4295,4 +4326,23 @@ enchantment_1_eordand_gemradcurt_5_effect = { #Cold Command
 		name = gemradcurt_cold_command_mod
 		duration = 3650
 	}
+}
+
+#Kaino Federation
+necromancy_0_fangaula_kaino_1_effect = { #drain life spell
+	hidden_effect = {
+		change_variable = { kaino_casted_drain_life = 1 }
+	}
+	random_owned_province = {
+		limit = {
+			holy_order = kainos_grasp_holy_order
+			development = 4
+		}
+		remove_random_development = yes
+	}
+	custom_tooltip = linebreak_tt
+	add_adm_power = 10
+	add_dip_power = 10
+	add_mil_power = 10
+	increase_witch_king_points_medium = yes
 }

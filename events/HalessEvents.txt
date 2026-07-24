@@ -3816,11 +3816,11 @@ province_event = { #The Sands Shift!
 
 	option = {
 		name = haless.1002.a
+		goto = ROOT
 
-		add_permanent_province_modifier = { name = haless_khantaari_treasure duration = 7300 }
 		if = {
 			limit = { has_production_manufactory_or_gold_trigger = yes } #"or gold" is never happening
-			add_permanent_province_modifier = { name = haless_old_manufactory duration = -1 }
+			hidden_effect = { add_permanent_province_modifier = { name = haless_old_manufactory duration = -1 } } #effect is hidden, modifier isn't
 		}
 		save_trade_goods = yes
 		random_list = {
@@ -3837,6 +3837,11 @@ province_event = { #The Sands Shift!
 			limit = { trade_goods = damestear }
 			set_province_flag = permanent_damestear #these dwindle according to this system
 		}
+
+		custom_tooltip = SEPERATOR_TOOLTIP
+		add_permanent_province_modifier = { name = haless_khantaari_treasure duration = 7300 }
+		custom_tooltip = haless_khantaari_treasure_desc
+		custom_tooltip = SEPERATOR_TOOLTIP
 		province_event = { id = haless.1003 days = 7301 }
 	}
 }
