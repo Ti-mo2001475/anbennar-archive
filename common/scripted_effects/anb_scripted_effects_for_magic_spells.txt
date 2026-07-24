@@ -2658,46 +2658,7 @@ necromancy_1_contagion_effect = { # Contagion
 	}
 }
 necromancy_2_speak_with_dead_effect = { # Speak With Dead
-	tooltip = {
-		random_list = {
-			1 = {
-				trigger = {
-					OR = {
-						NOT = { adm = 5 }
-						AND = {
-							ruler_is_immortal = yes
-							NOT = { adm = 6 }
-						}
-					}
-				}
-				change_adm = 1
-			}
-			1 = {
-				trigger = {
-					OR = {
-						NOT = { dip = 5 }
-						AND = {
-							ruler_is_immortal = yes
-							NOT = { dip = 6 }
-						}
-					}
-				}
-				change_dip = 1
-			}
-			1 = {
-				trigger = {
-					OR = {
-						NOT = { mil = 5 }
-						AND = {
-							ruler_is_immortal = yes
-							NOT = { mil = 6 }
-						}
-					}
-				}
-				change_mil = 1
-			}
-		}
-	}
+	tooltip = { add_random_ruler_skill = yes}
 
 	custom_tooltip = SEPERATOR_TOOLTIP
 	if = {
@@ -2747,165 +2708,33 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 		randnum_effect = {
 			max = 6
 			case6 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { adm = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { adm = 6 }
-							}
-						}
-					}
-					change_adm = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { dip = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { dip = 6 }
-							}
-						}
-					}
-					change_dip = 1
-				}
+				if = { limit = { NOT = { adm = 6 } } change_adm = 1 }
+				else_if = { limit = { NOT = { dip = 6 } } change_dip = 1 }
 				else = { change_mil = 1 }
 			"
 			case5 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { adm = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { adm = 6 }
-							}
-						}
-					}
-					change_adm = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { mil = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { mil = 6 }
-							}
-						}
-					}
-					change_mil = 1
-				}
+				if = { limit = { NOT = { adm = 6 } } change_adm = 1 }
+				else_if = { limit = { NOT = { mil = 6 } } change_mil = 1 }
 				else = { change_dip = 1 }
 			"
 			case4 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { dip = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { dip = 6 }
-							}
-						}
-					}
-					change_dip = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { mil = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { mil = 6 }
-							}
-						}
-					}
-					change_mil = 1
-				}
+				if = { limit = { NOT = { dip = 6 } } change_dip = 1 }
+				else_if = { limit = { NOT = { mil = 6 } } change_mil = 1 }
 				else = { change_adm = 1 }
 			"
 			case3 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { dip = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { dip = 6 }
-							}
-						}
-					}
-					change_dip = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { adm = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { adm = 6 }
-							}
-						}
-					}
-					change_adm = 1
-				}
+				if = { limit = { NOT = { dip = 6 } } change_dip = 1 }
+				else_if = { limit = { NOT = { adm = 6 } } change_adm = 1 }
 				else = { change_mil = 1 }
 			"
 			case2 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { mil = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { mil = 6 }
-							}
-						}
-					}
-					change_mil = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { adm = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { adm = 6 }
-							}
-						}
-					}
-					change_adm = 1
-				}
+				if = { limit = { NOT = { mil = 6 } } change_mil = 1 }
+				else_if = { limit = { NOT = { adm = 6 } } change_adm = 1 }
 				else = { change_dip = 1 }
 			"
 			case1 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { mil = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { mil = 6 }
-							}
-						}
-					}
-					change_mil = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { dip = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { dip = 6 }
-							}
-						}
-					}
-					change_dip = 1
-				}
+				if = { limit = { NOT = { mil = 6 } } change_mil = 1 }
+				else_if = { limit = { NOT = { dip = 6 } } change_dip = 1 }
 				else = { change_adm = 1 }
 			"
 		}
@@ -2913,8 +2742,8 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 }
 add_necromancy_2_speak_with_dead_cost = {
 	if = {
-		limit = { has_country_flag = necromancy_2_speak_with_dead_cost_05 }
-		add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod_05 duration = $duration$ }
+		limit = { has_country_flag = necromancy_2_speak_with_dead_cost_0 }
+		add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod_0 duration = $duration$ }
 	}
 	else = {
 		add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = $duration$ }
