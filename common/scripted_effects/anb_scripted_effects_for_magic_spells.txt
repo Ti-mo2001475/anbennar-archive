@@ -728,30 +728,6 @@ abjuration_1_ward_effect = { # Ward
         hidden_effect = { change_siege = -1 }
         abjuration_1_ward_sub_effect = { duration = 3650 }
     }
-
-    #tame_the_storm птыасю заставить заклу работать на все провинции с маг башнями
-    if = {
-        limit = {
-            PREV = {
-                has_reform = tame_the_storm
-            }
-        }
-        PREV = {
-            every_owned_province = {
-                limit = {
-                    region = Alecand_region
-                    OR = {
-                        has_building = mage_tower
-                        province_group = alecandi_capital_provinces 
-                    }
-                }
-                custom_tooltip = tame_the_storm_ward_extension_tt
-                hidden_effect = {
-                    abjuration_1_ward_sub_effect = { duration = 3650 }
-                }
-             }
-        }
-    }
 }
 abjuration_1_ward_sub_effect = { # Ward sub-effect
 	if = { #Patron buffs
@@ -799,6 +775,36 @@ abjuration_1_ward_sub_effect = { # Ward sub-effect
 			else_if = {
 				limit = { at_least_magic_project_level = { project = magical_fortress level = 1 } }
 				capital_scope = { add_province_modifier = { name = V05_magic_fort_upgrade_1 duration = $duration$ } }
+			}
+		}
+	}
+	if = {
+		limit = { owner = { has_reform = tame_the_storm } }
+		custom_tooltip = tame_the_storm_ward_extension_tt
+		owner = {
+			every_owned_province = {
+				limit = {
+					region = alecand_region
+					OR = {
+						has_building = mage_tower
+						province_group = alecandi_capital_provinces
+					}
+				}
+				if = {
+					limit = { at_least_magic_project_level = { project = magical_fortress level = 3 } }
+					add_province_modifier = { name = abjuration_1_ward_mod_3 duration = $duration$ }
+				}
+				else_if = {
+					limit = { at_least_magic_project_level = { project = magical_fortress level = 2 } }
+					add_province_modifier = { name = abjuration_1_ward_mod_2 duration = $duration$ }
+				}
+				else_if = {
+					limit = { at_least_magic_project_level = { project = magical_fortress level = 1 } }
+					add_province_modifier = { name = abjuration_1_ward_mod_1 duration = $duration$ }
+				}
+				else = {
+					add_province_modifier = { name = abjuration_1_ward_mod_0 duration = $duration$ }
+				}
 			}
 		}
 	}
