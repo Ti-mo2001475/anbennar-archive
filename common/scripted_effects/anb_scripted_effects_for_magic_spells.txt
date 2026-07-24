@@ -2312,27 +2312,13 @@ illusion_1_fear_and_loathing_effect = { #Fear and Loathing
 	tooltip = { add_country_modifier = { name = illusion_1_fear_and_loathing_sabotage_mod duration = 3650 } }
 
 	hidden_effect = {
-		set_variable = { war_enemy_dev = 150 } #Always spawn at least one revolt
-		set_variable = { num_revolts_left = 8 } #Don't spawn more than 8 revolts
+		set_variable = { num_revolts_left = 5 } #Don't spawn more than 5 revolts
 		every_war_enemy_country = {
 			limit = { capital_scope = { controlled_by = PREV has_siege = no } } #No gimping self
 
-			PREV = {
-				export_to_variable = { which = temp_dev_check value = total_development who = PREV }
-				change_variable = { which = war_enemy_dev which = temp_dev_check }
-			}
-
 			while = {
-				limit = {
-					PREV = {
-						check_variable = { war_enemy_dev = 150 }
-						check_variable = { num_revolts_left = 1 }
-					}
-				}
-				PREV = {
-					subtract_variable = { war_enemy_dev = 150 }
-					subtract_variable = { num_revolts_left = 1 }
-				}
+				limit = { PREV = { check_variable = { num_revolts_left = 1 } } }
+				PREV = { subtract_variable = { num_revolts_left = 1 } }
 				
 				illusion_1_fear_and_loathing_sub_effect = { caster_scope = PREV }
 			}
@@ -2350,22 +2336,52 @@ illusion_1_fear_and_loathing_effect = { #Fear and Loathing
 	add_country_modifier = { name = illusion_1_fear_and_loathing_cooldown_mod duration = 1825 hidden = yes } #Sorry no spamming rebels
 }
 illusion_1_fear_and_loathing_sub_effect = { #Fear and Loathing sub-effect that spawns rebels
-	if = { #Orenvalyam overwrite
-		limit = {
-			$caster_scope$ = { has_country_flag = U39_fear_and_loathing_buff_flag }
-			total_development = 300
-		}
-		capital_scope = { anti_tax_rebels = 3 }
-	}
-	else_if = { # kimanis overwrite
+	if = { # kimanis overwrite
 		limit = { $caster_scope$ = { has_country_flag = G61_spell_effect_razzle } }
-		capital_scope = { kimanis_wine_cultists = 1 }
+		capital_scope = { kimanis_wine_cultists = 2 }
 	}
-	else = { capital_scope = { anti_tax_rebels = 1 } }
-
-	if = { #Invention for everyone with mixed
-		limit = { $caster_scope$ = { has_estate_privilege = artifice_invention_sonic_amplifiers } }
-		capital_scope = { anti_tax_rebels = 1 }
+	else_if = { #size 1000 = mage rebels led by war wizard
+		limit = { total_development = 1000 }
+		if = { #Orenvalyam triples size
+			limit = { $caster_scope$ = { has_country_flag = U39_fear_and_loathing_buff_flag } }
+			capital_scope = { spawn_war_wizard_rebels = { type = mage_rebels size = 3 } }
+		}
+		else_if = { #Invention for everyone with mixed
+			limit = { $caster_scope$ = { has_estate_privilege = artifice_invention_sonic_amplifiers } }
+			capital_scope = { spawn_war_wizard_rebels = { type = mage_rebels size = 2 } }
+		}
+		else = { capital_scope = { spawn_war_wizard_rebels = { type = mage_rebels size = 1 } } }
+	}
+	else_if = { #size 600 = pretender
+		limit = { total_development = 600 }
+		if = { #Orenvalyam triples size
+			limit = { $caster_scope$ = { has_country_flag = U39_fear_and_loathing_buff_flag } }
+			capital_scope = { pretender_rebels = 3 }
+		}
+		else_if = { #Invention for everyone with mixed
+			limit = { $caster_scope$ = { has_estate_privilege = artifice_invention_sonic_amplifiers } }
+			capital_scope = { pretender_rebels = 2 }
+		}
+		else = { capital_scope = { pretender_rebels = 1 } }
+	}
+	else_if = { #size 300 = leadered peasants
+		limit = { total_development = 300 }
+		if = { #Orenvalyam triples size
+			limit = { $caster_scope$ = { has_country_flag = U39_fear_and_loathing_buff_flag } }
+			capital_scope = { leadered_peasant_rebels = 3 }
+		}
+		else_if = { #Invention for everyone with mixed
+			limit = { $caster_scope$ = { has_estate_privilege = artifice_invention_sonic_amplifiers } }
+			capital_scope = { leadered_peasant_rebels = 2 }
+		}
+		else = { capital_scope = { leadered_peasant_rebels = 1 } }
+	}
+	else = { #else - anti-tax peasants
+		if = { #Invention for everyone with mixed
+			limit = { $caster_scope$ = { has_estate_privilege = artifice_invention_sonic_amplifiers } }
+			capital_scope = { anti_tax_rebels = 2 }
+		}
+		else = { capital_scope = { anti_tax_rebels = 1 } }
 	}
 }
 illusion_1_bread_and_circuses_effect = { # Bread and Circuses
