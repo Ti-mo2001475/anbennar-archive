@@ -3808,11 +3808,13 @@ transmutation_3_rite_of_conception_trigger = { # Rite of Conception
 	[[player] has_mana_to_cast_spell = { school = transmutation level = 3 id = rite_of_conception } ]
 
 	government_has_heirs = yes
-	NOT = { government = theocracy }
 	heir_is_not_powerful_mage = yes
 
 	if = {
-		limit = { has_government_attribute = queen }
+		limit = {
+			has_government_attribute = queen
+			NOT = { government = theocracy }
+		}
 		has_consort = yes #Can be of the same gender, because of magic
 	}
 

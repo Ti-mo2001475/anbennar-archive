@@ -3057,11 +3057,17 @@ transmutation_2_reshape_terrain_effect = { # Reshape Terrain
 	}
 }
 transmutation_3_rite_of_conception_effect = { # Rite of Conception
-	custom_tooltip = transmutation_3_rite_of_conception_effect_tt
-	hidden_effect = { 
-		add_country_modifier = { name = transmutation_3_rite_of_conception_cooldown_mod duration = 301 hidden = yes }
-		capital_scope = { add_province_triggered_modifier = rite_of_conception_randomization_ptm }
+	if = {
+		limit = { government = theocracy }
+		country_event = { id = magic_spell.808 days = 300 }
+		custom_tooltip = transmutation_3_rite_of_conception_effect_2_tt
 	}
+	if = {
+		limit = { NOT = { government = theocracy } }
+		custom_tooltip = transmutation_3_rite_of_conception_effect_tt
+		hidden_effect = { capital_scope = { add_province_triggered_modifier = rite_of_conception_randomization_ptm } }
+	}
+	add_country_modifier = { name = transmutation_3_rite_of_conception_cooldown_mod duration = 301 hidden = yes }
 }
 
 
