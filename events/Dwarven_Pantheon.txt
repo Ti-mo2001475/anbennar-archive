@@ -3075,15 +3075,25 @@ country_event = {
 	
 	is_triggered_only = yes
 	trigger = { has_disaster = dwarven_pantheon_rediscovery religion = dwarven_pantheon }
+	immediate = {
+		random_owned_province = {
+			save_event_target_as = dp_ancestor_province
+		}
+		random_owned_province = { # if possible select a ancestor worship province
+			limit = { religion = ancestor_worship }
+			save_event_target_as = dp_ancestor_province
+		}
+	}
 
 	after = { hidden_effect = { country_event = { id = dwarven_pantheon.205 days = 150 } } }
+
+	goto = dp_ancestor_province
 
 	#they're important too
 	option = {
 		name = dwarven_pantheon.204.a
 		add_country_modifier = { name = dwarven_pantheon_conflicted_worship duration = 3650 }
-		random_owned_province = {
-			limit = { religion = ancestor_worship }
+		event_target:dp_ancestor_province = {
 			change_religion = dwarven_pantheon
 		}
 		ai_chance = { factor = 5 }
@@ -3092,8 +3102,7 @@ country_event = {
 	option = {
 		name = dwarven_pantheon.204.b
 		reduce_stability_or_adm_power = yes
-		random_owned_province = {
-			limit = { owned_by = ROOT }
+		event_target:dp_ancestor_province = {
 			spawn_rebels = {
 				type = anti_tax_rebels
 				size = 2
