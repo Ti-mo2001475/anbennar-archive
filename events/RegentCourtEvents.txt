@@ -120,6 +120,7 @@ country_event = {
 				NOT = { rc_has_emulant_personality_no_interlock = { dame = yes } }
 				rc_is_emulant = { deity = dame }
 			}
+			hidden_trigger = { NOT = { has_country_flag = upgraded_the_dame } }
 			hidden_trigger = { NOT = { has_country_modifier = seed_of_corinism } }
 		}
 		ai_chance = {
@@ -174,6 +175,7 @@ country_event = {
 		if = {
 			limit = { has_government_attribute = follower_of_many_gods }
 			improve_relations_with_deity_followers = { deity = the_dame }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = the_dame_upgraded } }
 		}
 	}
 	
@@ -184,6 +186,7 @@ country_event = {
 		trigger = {
 			NOT = { rc_is_emulant = { deity = dame } }
 			rc_has_emulant_personality_no_interlock = { dame = yes }
+			hidden_trigger = { NOT = { has_country_flag = upgraded_the_dame } }
 			hidden_trigger = { NOT = { has_country_modifier = seed_of_corinism } }
 		}
 		ai_chance = {
@@ -238,6 +241,140 @@ country_event = {
 		if = {
 			limit = { has_government_attribute = follower_of_many_gods }
 			improve_relations_with_deity_followers = { deity = the_dame }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = the_dame_upgraded } }
+		}
+	}
+
+	#Dame Upgraded Base
+	option = {
+		name = regent_court.2.c
+		trigger = {
+			OR = {
+				NOT = { rc_has_emulant_personality_no_interlock = { dame = yes } }
+				rc_is_emulant = { deity = dame }
+			}
+			hidden_trigger = { has_country_flag = upgraded_the_dame }
+			hidden_trigger = { NOT = { has_country_modifier = seed_of_corinism } }
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 2
+				personality = ai_capitalist
+			}
+			modifier = {
+				factor = 2
+				personality = ai_balanced
+			}
+			modifier = {
+				factor = 1.5
+				personality = ai_diplomat
+			}
+			modifier = {
+				factor = 0.5
+				personality = ai_militarist
+			}
+			modifier = {
+				factor = 2
+				primary_culture = west_damerian	#Kingdom of Dameria dudes
+			}
+			modifier = {
+				factor = 2
+				primary_culture = east_damerian
+			}
+			modifier = {
+				factor = 1.3
+				primary_culture = vernman
+			}
+			modifier = {
+				factor = 1.3
+				primary_culture = pearlsedger	#Lesser boys of the Kingdom of Dameria
+			}
+			modifier = {
+				factor = 5
+				tag = A41	#Damish Temple
+			}
+			modifier = {
+				factor = 3
+				tag = A85	#Magisterium, I mean she's the goddess of magic after all
+			}
+			modifier = {
+				factor = 2
+				culture_group = gnomish
+			}
+		}
+		set_country_flag = regent_court_deity_switch_cooldown
+		change_personal_deity = the_dame_upgraded
+		if = {
+			limit = { has_government_attribute = follower_of_many_gods }
+			improve_relations_with_deity_followers = { deity = the_dame }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = the_dame_upgraded } }
+		}
+	}
+	
+	#Dame Upgraded Favorable
+	option = {
+		name = regent_court.2.c
+		highlight = yes
+		trigger = {
+			NOT = { rc_is_emulant = { deity = dame } }
+			rc_has_emulant_personality_no_interlock = { dame = yes }
+			hidden_trigger = { has_country_flag = upgraded_the_dame }
+			hidden_trigger = { NOT = { has_country_modifier = seed_of_corinism } }
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 2
+				personality = ai_capitalist
+			}
+			modifier = {
+				factor = 2
+				personality = ai_balanced
+			}
+			modifier = {
+				factor = 1.5
+				personality = ai_diplomat
+			}
+			modifier = {
+				factor = 0.5
+				personality = ai_militarist
+			}
+			modifier = {
+				factor = 2
+				primary_culture = west_damerian	#Kingdom of Dameria dudes
+			}
+			modifier = {
+				factor = 2
+				primary_culture = east_damerian
+			}
+			modifier = {
+				factor = 1.3
+				primary_culture = vernman
+			}
+			modifier = {
+				factor = 1.3
+				primary_culture = pearlsedger	#Lesser boys of the Kingdom of Dameria
+			}
+			modifier = {
+				factor = 5
+				tag = A41	#Damish Temple
+			}
+			modifier = {
+				factor = 3
+				tag = A85	#Magisterium, I mean she's the goddess of magic after all
+			}
+			modifier = {
+				factor = 2
+				culture_group = gnomish
+			}
+		}
+		set_country_flag = regent_court_deity_switch_cooldown
+		change_personal_deity = the_dame_upgraded
+		if = {
+			limit = { has_government_attribute = follower_of_many_gods }
+			improve_relations_with_deity_followers = { deity = the_dame }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = the_dame_upgraded } }
 		}
 	}
 	
@@ -802,6 +939,7 @@ country_event = {
 				NOT = { rc_has_emulant_personality_no_interlock = { ara = yes } }
 				rc_is_emulant = { deity = ara }
 			}
+			hidden_trigger = { NOT = { has_country_flag = upgraded_ara } }
 			hidden_trigger = { NOT = { has_country_modifier = seed_of_corinism } }
 		}
 		ai_chance = {
@@ -843,6 +981,7 @@ country_event = {
 		if = {
 			limit = { has_government_attribute = follower_of_many_gods }
 			improve_relations_with_deity_followers = { deity = ara }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = ara_upgraded } }
 		}
 	}
 	
@@ -852,6 +991,7 @@ country_event = {
 		highlight = yes
 		trigger = {
 			NOT = { rc_is_emulant = { deity = ara } }
+			hidden_trigger = { NOT = { has_country_flag = upgraded_ara } }
 			hidden_trigger = { NOT = { has_country_modifier = seed_of_corinism } }
 			rc_has_emulant_personality_no_interlock = { ara = yes }
 		}
@@ -894,6 +1034,114 @@ country_event = {
 		if = {
 			limit = { has_government_attribute = follower_of_many_gods }
 			improve_relations_with_deity_followers = { deity = ara }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = ara_upgraded } }
+		}
+	}
+
+	#Ara Upgraded Base
+	option = {
+		name = regent_court.2.g
+		trigger = {
+			OR = {
+				NOT = { rc_has_emulant_personality_no_interlock = { ara = yes } }
+				rc_is_emulant = { deity = ara }
+			}
+			hidden_trigger = { has_country_flag = upgraded_ara }
+			hidden_trigger = { NOT = { has_country_modifier = seed_of_corinism } }
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 3
+				personality = ai_capitalist
+			}
+			modifier = {
+				factor = 2
+				personality = ai_colonialist
+			}
+			modifier = {
+				factor = 0.5
+				personality = ai_militarist
+			}
+			modifier = {
+				factor = 1.2
+				government = republic
+			}
+			modifier = {
+				factor = 2
+				primary_culture = crownsman
+			}
+			modifier = {
+				factor = 5
+				tag = A53	#Aramari Temple
+			}
+			modifier = {
+				factor = 5
+				OR = {
+					tag = H44 #Shining Circle
+					tag = H45 #Beggaston
+				}
+			}
+		}
+		set_country_flag = regent_court_deity_switch_cooldown
+		change_personal_deity = ara_upgraded
+		if = {
+			limit = { has_government_attribute = follower_of_many_gods }
+			improve_relations_with_deity_followers = { deity = ara }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = ara_upgraded } }
+		}
+	}
+	
+	#Ara Upgraded Favorable
+	option = {
+		name = regent_court.2.g
+		highlight = yes
+		trigger = {
+			NOT = { rc_is_emulant = { deity = ara } }
+			hidden_trigger = { has_country_flag = upgraded_ara }
+			hidden_trigger = { NOT = { has_country_modifier = seed_of_corinism } }
+			rc_has_emulant_personality_no_interlock = { ara = yes }
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 3
+				personality = ai_capitalist
+			}
+			modifier = {
+				factor = 2
+				personality = ai_colonialist
+			}
+			modifier = {
+				factor = 0.5
+				personality = ai_militarist
+			}
+			modifier = {
+				factor = 1.2
+				government = republic
+			}
+			modifier = {
+				factor = 2
+				primary_culture = crownsman
+			}
+			modifier = {
+				factor = 5
+				tag = A53	#Aramari Temple
+			}
+			modifier = {
+				factor = 5
+				OR = {
+					tag = H44 #Shining Circle
+					tag = H45 #Beggaston
+				}
+			}
+		}
+		set_country_flag = regent_court_deity_switch_cooldown
+		change_personal_deity = ara_upgraded
+		if = {
+			limit = { has_government_attribute = follower_of_many_gods }
+			improve_relations_with_deity_followers = { deity = ara }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = ara_upgraded } }
 		}
 	}
 	
@@ -1071,6 +1319,7 @@ country_event = {
 	option = {
 		name = regent_court.2.i
 		trigger = {
+			hidden_trigger = { NOT = { has_country_flag = upgraded_esmaryal } }
 			hidden_trigger = { NOT = { has_country_flag = lady_of_flows_esmaryal } }
 			hidden_trigger = { NOT = { has_country_modifier = seed_of_corinism } }
 			OR = {
@@ -1112,6 +1361,7 @@ country_event = {
 		if = {
 			limit = { has_government_attribute = follower_of_many_gods }
 			improve_relations_with_deity_followers = { deity = esmaryal }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = esmaryal_upgraded } }
 			hidden_effect = { improve_relations_with_deity_followers = { deity = esmaryal_upgraded_themarenn } }
 		}
 	}
@@ -1121,6 +1371,7 @@ country_event = {
 		name = regent_court.2.i
 		highlight = yes
 		trigger = {
+			hidden_trigger = { NOT = { has_country_flag = upgraded_esmaryal } }
 			hidden_trigger = { NOT = { has_country_flag = lady_of_flows_esmaryal } }
 			hidden_trigger = { NOT = { has_country_modifier = seed_of_corinism } }
 			NOT = { rc_is_emulant = { deity = esmaryal } }
@@ -1160,6 +1411,106 @@ country_event = {
 		if = {
 			limit = { has_government_attribute = follower_of_many_gods }
 			improve_relations_with_deity_followers = { deity = esmaryal }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = esmaryal_upgraded } }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = esmaryal_upgraded_themarenn } }
+		}
+	}
+
+	#Esmaryal Upgraded Base
+	option = {
+		name = regent_court.2.i
+		trigger = {
+			hidden_trigger = { has_country_flag = upgraded_esmaryal }
+			hidden_trigger = { NOT = { has_country_modifier = seed_of_corinism } }
+			OR = {
+				NOT = { rc_has_emulant_personality_no_interlock = { esmaryal = yes } }
+				rc_is_emulant = { deity = esmaryal }
+			}
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 1.5
+				personality = ai_diplomat
+			}
+			modifier = {
+				factor = 1.3
+				personality = ai_militarist
+			}
+			modifier = {
+				factor = 0.5
+				personality = ai_capitalist
+			}
+			modifier = {
+				factor = 2
+				primary_culture = esmari
+			}
+			modifier = {
+				factor = 2
+				has_heir = no
+				government = monarchy
+				ruler_age = 40	#old ruler
+			}
+			modifier = {
+				factor = 1.5
+				is_cannorian_halfling_primary_culture = yes
+			}
+		}
+		set_country_flag = regent_court_deity_switch_cooldown
+		change_personal_deity = esmaryal_upgraded
+		if = {
+			limit = { has_government_attribute = follower_of_many_gods }
+			improve_relations_with_deity_followers = { deity = esmaryal }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = esmaryal_upgraded } }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = esmaryal_upgraded_themarenn } }
+		}
+	}
+	
+	#Esmaryal Upgraded Favorable
+	option = {
+		name = regent_court.2.i
+		highlight = yes
+		trigger = {
+			hidden_trigger = { has_country_flag = upgraded_esmaryal }
+			hidden_trigger = { NOT = { has_country_modifier = seed_of_corinism } }
+			NOT = { rc_is_emulant = { deity = esmaryal } }
+			rc_has_emulant_personality_no_interlock = { esmaryal = yes  }
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 1.5
+				personality = ai_diplomat
+			}
+			modifier = {
+				factor = 1.3
+				personality = ai_militarist
+			}
+			modifier = {
+				factor = 0.5
+				personality = ai_capitalist
+			}
+			modifier = {
+				factor = 2
+				primary_culture = esmari
+			}
+			modifier = {
+				factor = 2
+				has_heir = no
+				government = monarchy
+				ruler_age = 40	#old ruler
+			}
+			modifier = {
+				factor = 1.5
+				is_cannorian_halfling_primary_culture = yes
+			}
+		}
+		set_country_flag = regent_court_deity_switch_cooldown
+		change_personal_deity = esmaryal_upgraded
+		if = {
+			limit = { has_government_attribute = follower_of_many_gods }
+			improve_relations_with_deity_followers = { deity = esmaryal }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = esmaryal_upgraded } }
 			hidden_effect = { improve_relations_with_deity_followers = { deity = esmaryal_upgraded_themarenn } }
 		}
 	}
@@ -1208,6 +1559,7 @@ country_event = {
 		if = {
 			limit = { has_government_attribute = follower_of_many_gods }
 			improve_relations_with_deity_followers = { deity = esmaryal }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = esmaryal_upgraded } }
 			hidden_effect = { improve_relations_with_deity_followers = { deity = esmaryal_upgraded_themarenn } }
 		}
 	}
@@ -1255,6 +1607,7 @@ country_event = {
 		if = {
 			limit = { has_government_attribute = follower_of_many_gods }
 			improve_relations_with_deity_followers = { deity = esmaryal }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = esmaryal_upgraded } }
 			hidden_effect = { improve_relations_with_deity_followers = { deity = esmaryal_upgraded_themarenn } }
 		}
 	}
@@ -1513,6 +1866,7 @@ country_event = {
 				NOT = { rc_has_emulant_personality_no_interlock = { minara = yes } }
 				rc_is_emulant = { deity = minara }
 			}
+			hidden_trigger = { NOT = { has_country_flag = upgraded_minara } }
 			hidden_trigger = { NOT = { has_country_modifier = seed_of_corinism } }
 		}
 		ai_chance = {
@@ -1547,6 +1901,7 @@ country_event = {
 		if = {
 			limit = { has_government_attribute = follower_of_many_gods }
 			improve_relations_with_deity_followers = { deity = minara }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = minara_upgraded } }
 		}
 	}
 	
@@ -1556,6 +1911,7 @@ country_event = {
 		highlight = yes
 		trigger = {
 			NOT = { rc_is_emulant = { deity = minara } }
+			hidden_trigger = { NOT = { has_country_flag = upgraded_minara } }
 			hidden_trigger = { NOT = { has_country_modifier = seed_of_corinism } }
 			rc_has_emulant_personality_no_interlock = { minara = yes }
 		}
@@ -1591,6 +1947,100 @@ country_event = {
 		if = {
 			limit = { has_government_attribute = follower_of_many_gods }
 			improve_relations_with_deity_followers = { deity = minara }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = minara_upgraded } }
+		}
+	}
+
+	#Minara Upgraded Base
+	option = {
+		name = regent_court.2.k
+		trigger = {
+			OR = {
+				NOT = { rc_has_emulant_personality_no_interlock = { minara = yes } }
+				rc_is_emulant = { deity = minara }
+			}
+			hidden_trigger = { has_country_flag = upgraded_minara }
+			hidden_trigger = { NOT = { has_country_modifier = seed_of_corinism } }
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 2
+				personality = ai_diplomat
+			}
+			modifier = {
+				factor = 1.5
+				personality = ai_militarist
+			}
+			modifier = {
+				factor = 0.5
+				personality = ai_balanced
+			}
+			modifier = {
+				factor = 2
+				primary_culture = esmari
+			}
+			modifier = {
+				factor = 1.5
+				primary_culture = high_lorentish
+			}
+			modifier = {
+				factor = 5
+				tag = A10	#Minaran Temple
+			}
+		}
+		set_country_flag = regent_court_deity_switch_cooldown
+		change_personal_deity = minara_upgraded
+		if = {
+			limit = { has_government_attribute = follower_of_many_gods }
+			improve_relations_with_deity_followers = { deity = minara }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = minara_upgraded } }
+		}
+	}
+	
+	#Minara Upgraded Favorable
+	option = {
+		name = regent_court.2.k
+		highlight = yes
+		trigger = {
+			NOT = { rc_is_emulant = { deity = minara } }
+			hidden_trigger = { has_country_flag = upgraded_minara }
+			hidden_trigger = { NOT = { has_country_modifier = seed_of_corinism } }
+			rc_has_emulant_personality_no_interlock = { minara = yes }
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 2
+				personality = ai_diplomat
+			}
+			modifier = {
+				factor = 1.5
+				personality = ai_militarist
+			}
+			modifier = {
+				factor = 0.5
+				personality = ai_balanced
+			}
+			modifier = {
+				factor = 2
+				primary_culture = esmari
+			}
+			modifier = {
+				factor = 1.5
+				primary_culture = high_lorentish
+			}
+			modifier = {
+				factor = 5
+				tag = A10	#Minaran Temple
+			}
+		}
+		set_country_flag = regent_court_deity_switch_cooldown
+		change_personal_deity = minara_upgraded
+		if = {
+			limit = { has_government_attribute = follower_of_many_gods }
+			improve_relations_with_deity_followers = { deity = minara }
+			hidden_effect = { improve_relations_with_deity_followers = { deity = minara_upgraded } }
 		}
 	}
 	

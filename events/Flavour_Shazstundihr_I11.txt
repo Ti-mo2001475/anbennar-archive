@@ -351,7 +351,7 @@ country_event = {
 	id = shaz_events.11
 	title = "shaz_events.11.t"
 	desc = "shaz_events.11.d"
-	picture = CATHOLIC_RULERS_PLAYERS_eventPicture
+	picture = CATHOLIC_RULERS_PRAYING_eventPicture
 
 	fire_only_once = yes
 	
@@ -967,7 +967,7 @@ country_event = {
 	id = shaz_events.28
 	title = "shaz_events.28.t"
 	desc = "shaz_events.28.d"
-	picture = MILLTARY_CAMP_eventPicture
+	picture = MILITARY_CAMP_eventPicture
 
 	is_triggered_only = yes
 
@@ -983,12 +983,22 @@ country_event = {
 	
 	option = {
 		name = "shaz_events.28.a"
-			665 = {
+		665 = {
+			add_province_modifier = {
+					name = "shaz_gelkalis_herdlands_wonder"
+					duration = -1
+			}
+		}
+		custom_tooltip = shaz_gelkalis_herdlands_province_tt
+		tooltip = {
+			5690 = {
 				add_province_modifier = {
-						name = "shaz_gelkalis_herdlands_wonder"
-						duration = -1
+					name = shaz_gelkalis_herdlands_province
+					duration = -1
 				}
 			}
+		}
+		hidden_effect = {
 			every_owned_province = {
 				limit = {
 					trade_goods = livestock
@@ -998,6 +1008,7 @@ country_event = {
 					duration = -1
 				}
 			}
+		}
 	}
 	
 	option = {
@@ -1012,12 +1023,22 @@ country_event = {
 	
 	option = {
 		name = "shaz_events.28.c"
-			665 = {
+		665 = {
+			add_province_modifier = {
+					name = "shaz_gelkalis_mine_wonder"
+					duration = -1
+			}
+		}
+		custom_tooltip = shaz_gelkalis_mine_province_tt
+		tooltip = {
+			5690 = {
 				add_province_modifier = {
-						name = "shaz_gelkalis_mine_wonder"
-						duration = -1
+					name = shaz_gelkalis_mine_province
+					duration = -1
 				}
 			}
+		}
+		hidden_effect = {
 			every_owned_province = {
 				limit = {
 					OR = {
@@ -1031,6 +1052,7 @@ country_event = {
 					duration = -1
 				}
 			}
+		}
 	}
 }
 
@@ -1053,12 +1075,12 @@ country_event = {
 			duration = 9125
 		}
 		bulwar_proper_region = {
-				limit = {
-					NOT = { is_core = ROOT }
-					NOT = { is_permanent_claim = ROOT }
-				}
-				add_permanent_claim = ROOT
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
 			}
+			add_permanent_claim = ROOT
+		}
 	}
 }
 
