@@ -14442,3 +14442,35 @@ kill_land_units = {
 		}
 	}
 }
+
+#On action effect
+grant_manpower_from_besieging_fort_spirit_mil = {
+	if = {
+		limit = {
+			ROOT = { has_country_modifier = spirit_military }
+			FROM = {
+				owner = { war_with = ROOT }
+				NOT = { has_province_modifier = estate_nobles_neighbor_raids_fort }
+				fort_level = 1
+			}
+		}
+		FROM = {
+			add_province_modifier = {
+				name = estate_nobles_neighbor_raids_fort
+				duration = 1825
+			}
+		}
+		ROOT = {
+			export_to_variable = {
+				which = manpower_from_fort
+				value = trigger_value:fort_level
+				who = FROM
+			}
+			while = {
+				limit = { check_variable = { manpower_from_fort = 1 } }
+				subtract_variable = { manpower_from_fort = 1 }
+				add_manpower = 2.5
+			}
+		}
+	}
+}
