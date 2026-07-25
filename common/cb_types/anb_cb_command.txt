@@ -74,6 +74,18 @@ cb_dissolve_warlord = {
 
 	prerequisites_self = {
 		has_saved_global_event_target = warlord_of_haless
+		OR = {
+			capital_scope = {
+				continent = asia
+				NOT = { superregion = forbidden_lands_superregion }
+			}
+			NOT = { #Neighboring with the warlord, counting the borders of counts_for_borders = yes subjects on both sides
+				border_distance = {
+					who = event_target:warlord_of_haless
+					distance = 1
+				}
+			}
+		}
 	}
 	prerequisites = {
 		FROM = { tag = event_target:warlord_of_haless }
