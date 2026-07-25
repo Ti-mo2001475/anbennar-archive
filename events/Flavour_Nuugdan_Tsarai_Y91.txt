@@ -1,0 +1,263 @@
+
+namespace = flavor_nuugdan_tsarai
+
+#Y91 Nuugdan Tsarai Events
+
+#A Great Victory
+country_event = {
+	id = flavor_nuugdan_tsarai.1
+	title = flavor_nuugdan_tsarai.1.t
+	desc = flavor_nuugdan_tsarai.1.d
+	picture = COUNTRY_COLLAPSE_eventPicture 
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+	trigger = { tag = Y91 } #Nuugdan Tsarai
+
+	option = {
+		name = flavor_nuugdan_tsarai.1.a
+		add_prestige = 30
+		beikyuan_area = {
+			add_claim = ROOT
+		}
+		linghui_area = {
+			add_claim = ROOT
+		}
+		country_event = {
+			id = flavor_nuugdan_tsarai.9
+			days = 7
+		}
+	}
+}
+
+#Negotiations with the Guwon
+country_event = {
+	id = flavor_nuugdan_tsarai.2
+	title = flavor_nuugdan_tsarai.2.t
+	desc = flavor_nuugdan_tsarai.2.d
+	picture = muslimgfx_HORDE_ON_HORSEBACK_eventPicture 
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+	trigger = { tag = Y91 } #Nuugdan Tsarai
+
+	option = {
+		name = flavor_nuugdan_tsarai.2.a
+		add_treasury = 150
+		white_peace = Y93
+		north_yanshen_region = {
+			limit = {
+				owned_by = Y93
+			}
+			cede_province = Y91
+		}
+		zunkazhad_area = {
+			limit = {
+				owned_by = Y93
+			}
+			cede_province = Y91
+		}
+		zirariik_area = {
+			limit = {
+				owned_by = Y93
+			}
+			cede_province = Y91
+		}
+		country_event = {
+			id = flavor_nuugdan_tsarai.3
+			days = 30
+		}
+	}
+}
+
+#Visitors to the Bhengudak Temple
+country_event = {
+	id = flavor_nuugdan_tsarai.3
+	title = flavor_nuugdan_tsarai.3.t
+	desc = flavor_nuugdan_tsarai.3.d
+	picture = TRIBUTARY_FLEET_eventPicture
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+	trigger = { tag = Y91 } #Nuugdan Tsarai
+
+	option = {
+		name = flavor_nuugdan_tsarai.3.a
+		custom_tooltip = Y61_personal_mask_upgrade_tt
+		set_ruler_flag = Y61_personal_mask_upgrade
+		country_event = {
+			id = shuvuush.0
+		}
+	}
+}
+
+#Celebration and reflection
+country_event = {
+	id = flavor_nuugdan_tsarai.4
+	title = flavor_nuugdan_tsarai.4.t
+	desc = flavor_nuugdan_tsarai.4.d
+	picture = TRIBUTARY_FLEET_eventPicture
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+	trigger = { tag = Y91 } #Nuugdan Tsarai
+
+	option = {
+		name = flavor_nuugdan_tsarai.4.a
+		add_country_modifier = {
+			name = Y91_dawn_of_reform
+			duration = 3650
+		}
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 15
+		}
+		jinjiang_area = {
+			add_claim = ROOT
+		}
+		tianlou_area = {
+			add_claim = ROOT
+		}
+
+		#remove_ruler_personality = conqueror_personality
+		#add_ruler_personality = legendary_conqueror_personality
+
+		if = {
+			limit = {
+				has_ruler_flag = Y91_faceless_queen_alive
+			}
+			remove_ruler_personality = conqueror_personality
+			add_ruler_personality = legendary_conqueror_personality
+		}
+	}
+}
+
+#Cooperation with the warlords
+country_event = {
+	id = flavor_nuugdan_tsarai.5
+	title = flavor_nuugdan_tsarai.5.t
+	desc = flavor_nuugdan_tsarai.5.d
+	picture = NOMAD_ESTATE_eventPicture
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+	trigger = { tag = Y91 } #Nuugdan Tsarai
+
+	option = {
+		name = flavor_nuugdan_tsarai.5.a
+		create_march = Y13
+		every_neighbor_country = {
+			add_aggressive_expansion = {
+				who = ROOT
+				value = 10
+				apply_calc = no
+			}
+		}
+	}
+}
+
+#Carrot and the Stick
+country_event = {
+	id = flavor_nuugdan_tsarai.6
+	title = flavor_nuugdan_tsarai.6.t
+	desc = flavor_nuugdan_tsarai.6.d
+	picture = FARMING_eventPicture
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+	trigger = { tag = Y91 } #Nuugdan Tsarai
+
+	option = {
+		name = flavor_nuugdan_tsarai.6.a
+		north_yanshen_region = {
+			limit = {
+				owned_by = ROOT
+			}
+			add_province_modifier = {
+				name = Y91_pacified_population
+				duration = 3650
+			}
+		}
+	}
+}
+
+#The Death of the Faceless Queen (bad)
+country_event = {
+	id = flavor_nuugdan_tsarai.7
+	title = flavor_nuugdan_tsarai.7.t
+	desc = flavor_nuugdan_tsarai.7.d
+	picture = KING_SICK_IN_BED_eventPicture
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+	trigger = { tag = Y91 } #Nuugdan Tsarai
+
+	option = {
+		name = flavor_nuugdan_tsarai.7.a
+		add_country_modifier = {
+			name = Y91_tribes_in_turmoil
+			duration = 3650
+		}
+	}
+}
+
+#The Death of the Faceless Queen (good)
+country_event = {
+	id = flavor_nuugdan_tsarai.8
+	title = flavor_nuugdan_tsarai.8.t
+	desc = flavor_nuugdan_tsarai.8.d
+	picture = KING_SICK_IN_BED_eventPicture
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+	trigger = { is_or_was_tag = { tag = Y91 } } #Nuugdan Tsarai
+
+	option = {
+		name = flavor_nuugdan_tsarai.8.a
+		custom_tooltip = Y91_nurgai_upgrade_tt
+		set_country_flag = Y91_nurgai_upgrade
+		hidden_effect = {
+			if = {
+				limit = {
+					has_personal_deity = nurgai
+				}
+				change_personal_deity = nurgai_upgraded
+			}
+		}
+	}
+}
+
+#The Eunuchs' Proposal
+country_event = {
+	id = flavor_nuugdan_tsarai.9
+	title = flavor_nuugdan_tsarai.9.t
+	desc = flavor_nuugdan_tsarai.9.d
+	picture = MERITOCRACY_eventPicture
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+	trigger = { tag = Y91 } #Nuugdan Tsarai
+
+	option = {
+		name = flavor_nuugdan_tsarai.9.a
+		change_estate_land_share = {
+			estate = all
+			share = 10
+		}
+		add_country_modifier = {
+			name = Y91_conciliatory_propaganda
+			duration = 3650
+		}
+		custom_tooltip = Y91_eunuch_cooperation_tt
+		set_country_flag = Y91_eunuch_cooperation
+	}
+}
