@@ -3349,6 +3349,10 @@ on_province_religion_changed_effect = { #Randomizer has fixed outcomes on this o
 		}
 		remove_province_modifier = U09_rule_the_khetists_province
 	}
+	if = {
+		limit = { NOT = { religion_group = triunic_lake } }
+		remove_province_modifier = triunic_tolerated_foreign_missionaries
+	}
 }
 
 on_province_religion_converted_effect = {
@@ -11625,6 +11629,7 @@ on_built_manpower_building_effect = {
 			change_government_reform_progress = 2
 		}
 	}
+
 	# Huugeta Mercenary Chapters
 	if = {
         limit = {
@@ -18551,6 +18556,27 @@ anb_on_exploit_effect = {
 			else = {
 				set_country_flag = sacred_grove_exploit_dev_1
 			}
+		}
+	}
+	#Kaino Federation
+	if = {
+		limit = {
+			owner = { has_country_flag = kaino_has_arrived }
+		}
+		owner = {
+			change_variable = {
+				which = kaino_exploit_counter
+				value = 1
+			}
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_country_flag = kaino_free_them_of_woe }
+		}
+		owner = {
+			change_mana = { amount = 1 }
+			add_treasury = 25
 		}
 	}
 }
