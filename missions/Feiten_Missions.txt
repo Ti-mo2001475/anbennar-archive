@@ -1351,11 +1351,17 @@ feiten_missions_2_world = {
 			feiten_securing_stormwall
 		}
 		provinces_to_highlight = {
-			AND = {
-				superregion = kanolowele_superregion
-				OR = {
-					province_has_center_of_trade_of_level = 1
-					province_is_any_1444_insyaan_toll = yes
+			OR = {
+				AND = {
+					superregion = kanolowele_superregion
+					OR = {
+						province_has_center_of_trade_of_level = 1
+						province_is_any_1444_insyaan_toll = yes
+					}
+				}
+				AND = {
+					region = yanacotlele_region
+					country_or_subject_holds = ROOT
 				}
 			}
 		}
@@ -1411,12 +1417,13 @@ feiten_missions_2_world = {
 					effect = "
 					random_owned_province = {
 						limit = {
+							superregion = kanolowele_superregion
 							NOT = { has_province_modifier = feiten_insyaan_trade_centre } 
 							OR = {
 								province_has_center_of_trade_of_level = 1
 								AND = {
 									province_is_any_1444_insyaan_toll = yes
-									#num_free_building_slots = 0
+									num_free_building_slots = 0
 								}
 							}
 							if = {
@@ -1436,17 +1443,14 @@ feiten_missions_2_world = {
 				}
 				pick_best_province = {
 					scope = yanacotlele_region
+					number = 1
 					scale = higher_development_than
 					global_trigger = "has_province_modifier = feiten_insyaan_trade_centre"
 					event_target_name = "feiten_add_skypost_insyaa_target"
 				}
-				do_same_event_target_effect = {
-					1 = yes
-					event_target_name = feiten_add_skypost_insyaa_target
-					effect = "
+				event_target:feiten_add_skypost_insyaa_target_1 = {
 					add_province_triggered_modifier = feiten_skyport_handler_mod
-					add_province_modifier = feiten_even_lower_autonomy_insyaa
-					"
+					add_province_modifier = { name = feiten_even_lower_autonomy_insyaa duration = -1 }
 				}
 			
 				if = {
@@ -1568,8 +1572,16 @@ feiten_missions_2_world = {
 				else = {
 					development = 30
 				}
-				infantry_in_province = 20 #you cant scope to artificers so maybe trick player via custom tooltip
-				artillery_in_province = 5
+				num_of_units_in_province = {
+					amount = 20
+					type = infantry
+					who = ROOT
+				}
+				num_of_units_in_province = {
+					amount = 5
+					type = artillery
+					who = ROOT
+				}
 			}
 			has_estate_privilege = artifice_invention_artillery_autoloader
 			has_estate_privilege = artifice_invention_feiten_expanding_storage_holds
@@ -1790,13 +1802,9 @@ feiten_missions_2_world = {
 			}
 			custom_tooltip = feiten_insyaan_investment_tt
 			hidden_effect = {
-				every_province = {
+				every_owned_or_subject_province = {
 					limit = {
 						continent = oceania
-						OR = {
-							owned_by = ROOT
-							owned_by_subject_of = ROOT
-						}
 					}
 					add_province_modifier = {
 						name = feiten_insyaan_investment
@@ -2855,15 +2863,7 @@ feiten_missions_3_world = {
 			}
 			NOT = {
 				owner = {
-					OR = {
-						any_ally = {
-							tag = Y20
-						}
-						overlord = {
-							tag = Y20
-						}
-						tag = Y20
-					}
+					OR = { alliance_with = Y20 is_subject_of = Y20 tag = Y20 }
 				}
 			}
 		}
@@ -3012,9 +3012,7 @@ feiten_missions_3_world = {
 						if = {
 							limit = {
 								NOT = {
-									this = {
-										liberty_desire = 50
-									}
+									liberty_desire = 50
 								}
 							}
 							capital_scope = { add_province_triggered_modifier = feiten_skyport_handler_mod }
@@ -3920,7 +3918,7 @@ feiten_missions_4_early = {
 				# }
 				custom_trigger_tooltip = {
 					tooltip = feiten_monopoly_on_salt_trigger_tt
-					Y27 = { has_country_flag = transfers_trade_to_feiten }
+					Y27 = { transfers_trade_power_to = ROOT }
 				}
 			}
 		}
@@ -4420,7 +4418,7 @@ feiten_missions_4_world = {
 					OR = {
 						custom_trigger_tooltip = {
 							tooltip = feiten_the_cloud_corridor_trigger_tt
-							has_country_flag = transfers_trade_to_feiten
+							transfers_trade_power_to = Y20
 						}
 						trust = { who = ROOT value = 75 }
 					}
@@ -4440,7 +4438,7 @@ feiten_missions_4_world = {
 							OR = {
 								custom_trigger_tooltip = {
 									tooltip = feiten_the_cloud_corridor_trigger_tt
-									has_country_flag = transfers_trade_to_feiten
+									transfers_trade_power_to = Y20
 								}
 								trust = { who = ROOT value = 75 }
 							}
@@ -5161,12 +5159,10 @@ feiten_missions_5_last = {
 			province_group = jellyfish_coast_provinces
 			OR = {
 				NOT = {
-					OR = {
-						has_building = university
-						AND = {
-							num_of_buildings_in_province = 8
-							num_free_building_slots = 0
-						}
+					has_building = university
+					AND = {
+						num_of_buildings_in_province = 8
+						num_free_building_slots = 0
 					}
 				}
 				AND = {
@@ -5181,11 +5177,11 @@ feiten_missions_5_last = {
 			jellyfish_coast_provinces = {
 				type = all
 				OR = {
-						has_building = university
-						AND = {
-							num_of_buildings_in_province = 8
-							num_free_building_slots = 0
-						}
+					has_building = university
+					AND = {
+						num_of_buildings_in_province = 8
+						num_free_building_slots = 0
+					}
 					}
 				OR = {
 					has_province_modifier = feiten_shuimu_engineering_workshop
@@ -5239,12 +5235,10 @@ feiten_missions_5_last = {
 				NOT = { has_building = wharf }
 				NOT = { has_tax_building_trigger = yes }
 				NOT = {
-					OR = {
-						has_building = university
-						AND = {
-							num_of_buildings_in_province = 8
-							num_free_building_slots = 0
-						}
+					has_building = university
+					AND = {
+						num_of_buildings_in_province = 8
+						num_free_building_slots = 0
 					}
 				}
 			}
