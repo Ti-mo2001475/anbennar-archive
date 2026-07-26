@@ -3349,6 +3349,10 @@ on_province_religion_changed_effect = { #Randomizer has fixed outcomes on this o
 		}
 		remove_province_modifier = U09_rule_the_khetists_province
 	}
+	if = {
+		limit = { NOT = { religion_group = triunic_lake } }
+		remove_province_modifier = triunic_tolerated_foreign_missionaries
+	}
 }
 
 on_province_religion_converted_effect = {
@@ -9700,6 +9704,7 @@ on_development_effect = {
 	#		}
 	#	}
 	#}
+	owner = { warlord_of_haless_check = yes }
 
 	#Drozma Tur
 	dt_introspection_dev_effect = yes
@@ -11625,6 +11630,7 @@ on_built_manpower_building_effect = {
 			change_government_reform_progress = 2
 		}
 	}
+
 	# Huugeta Mercenary Chapters
 	if = {
         limit = {
@@ -12294,6 +12300,11 @@ on_capital_moved_effect = {
 			subtract_variable = { institution_var = 1 }
 			add_next_institution_embracement = 1
 		}
+	}
+	
+	owner = {
+		warlord_of_haless_check = yes
+		anti_warlord_of_haless_check = yes
 	}
 }
 
@@ -13937,6 +13948,14 @@ on_province_owner_change_effect = {
 			}
 		}
 		province_event = { id = mechanim.2 }
+	}
+
+	owner = { country_event = { id = haless.1012 } }
+	FROM = { country_event = { id = haless.1013 } } #If FROM stops existing we have on_annexed to check
+
+	if = { #Warlord of Haless
+		limit = { owner = { has_country_modifier = haless_warlord_jaher } }
+		add_latest_building = { government = yes builder = owner }
 	}
 
 	#Krakazol/Rahen initial friendship, formerly rahen.1
@@ -18553,6 +18572,29 @@ anb_on_exploit_effect = {
 			}
 		}
 	}
+	#Kaino Federation
+	if = {
+		limit = {
+			owner = { has_country_flag = kaino_has_arrived }
+		}
+		owner = {
+			change_variable = {
+				which = kaino_exploit_counter
+				value = 1
+			}
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_country_flag = kaino_free_them_of_woe }
+		}
+		owner = {
+			change_mana = { amount = 1 }
+			add_treasury = 25
+		}
+	}
+
+	anti_warlord_of_haless_check = yes
 }
 on_province_owner_change_monuments = {
 	##### When monument changes owner #####

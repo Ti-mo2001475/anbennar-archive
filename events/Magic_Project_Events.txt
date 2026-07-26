@@ -5594,6 +5594,7 @@ country_event = { #Lich - Gov change to Magocracy
 		NOT = { is_lesser_in_union = yes }
 		NOT = { has_reform = argordstun_gleaming_council } #This is a T2 reform
 		NOT = { has_reform = argordstun_stubborn_reformists }
+		NOT = { has_reform = kainos_kingdom_reform } #Kaino Fed MT alternate
 		NOT = { has_country_flag = cannot_change_governments }
 	}
 	
@@ -6132,6 +6133,7 @@ country_event = { #Lich Destruction - Phylactery destroyed
 		ai_chance = { factor = 50 }
 		
 		kill_a_lich_effect = yes
+		ban_necromancy = yes
 	}
 }
 
@@ -11194,6 +11196,134 @@ country_event = {
 		}
 	}
 }
+
+#Kaino Federation
+namespace = magic_project_kaino_project_apotheosis_of_mercy
+
+country_event = { 
+	id = magic_project_kaino_project_apotheosis_of_mercy.0 
+	title = none
+	desc = none
+	picture = none
+
+	is_triggered_only = yes
+	hidden = yes
+	
+	immediate = {
+		if = {
+			limit = { has_country_flag = magic_project_completed_flag }
+			country_event = {
+				id = magic_project_kaino_project_apotheosis_of_mercy.1
+			}
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 0 } }
+			if = {
+				limit = { check_variable = { current_experience_percent = 1 } NOT = { has_country_flag = magic_project_first_event_happened } }
+				set_country_flag = magic_project_first_event_happened
+				country_event = { id = flavour_kaino.30 }
+			}
+			else_if = {
+				limit = { check_variable = { current_experience_percent = 67 } NOT = { has_country_flag = magic_project_second_event_happened } }
+				set_country_flag = magic_project_second_event_happened
+				country_event = { id = flavour_kaino.31 }
+			}
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 1 } }
+			if = {
+				limit = { check_variable = { current_experience_percent = 1 } NOT = { has_country_flag = magic_project_first_event_happened } }
+				set_country_flag = magic_project_first_event_happened
+				country_event = { id = flavour_kaino.33 }
+			}
+			else_if = {
+				limit = { check_variable = { current_experience_percent = 67 } NOT = { has_country_flag = magic_project_second_event_happened } }
+				set_country_flag = magic_project_second_event_happened
+				country_event = { id = flavour_kaino.34 }
+			}
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 2 } }
+			if = {
+				limit = { check_variable = { current_experience_percent = 1 } NOT = { has_country_flag = magic_project_first_event_happened } }
+				set_country_flag = magic_project_first_event_happened
+				country_event = { id = flavour_kaino.36 }
+			}
+			else_if = {
+				limit = { check_variable = { current_experience_percent = 67 } NOT = { has_country_flag = magic_project_second_event_happened } }
+				set_country_flag = magic_project_second_event_happened
+				country_event = { id = flavour_kaino.37 }
+			}
+		}
+	}
+	option = {
+		name = none
+	}
+}
+
+country_event = {
+	id = magic_project_kaino_project_apotheosis_of_mercy.1
+	title = none
+	desc = none
+	picture = none
+
+	is_triggered_only = yes
+	hidden = yes
+	
+	option = {
+		name = none
+		if = {
+			limit = { at_least_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 3 } }
+			country_event = { id = flavour_kaino.38 }
+		}
+		else_if = {
+			limit = { at_least_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 2 } }
+			country_event = { id = flavour_kaino.35 }
+		}
+		else_if = {
+			limit = { at_least_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 1 } }
+			country_event = { id = flavour_kaino.32 }
+		}
+	}
+}
+
+namespace = magic_project_kaino_project_romantic_date_kyaa
+
+country_event = { 
+	id = magic_project_kaino_project_romantic_date_kyaa.0 
+	title = none
+	desc = none
+	picture = none
+
+	is_triggered_only = yes
+	hidden = yes
+	
+	immediate = {
+		if = {
+			limit = { has_country_flag = magic_project_completed_flag }
+			country_event = {
+				id = flavour_kaino.44
+			}
+		}
+		else_if = {
+			if = {
+				limit = { check_variable = { current_experience_percent = 1 } NOT = { has_country_flag = magic_project_first_event_happened } }
+				set_country_flag = magic_project_first_event_happened
+				country_event = { id = flavour_kaino.42 }
+			}
+			else_if = {
+				limit = { check_variable = { current_experience_percent = 60 } NOT = { has_country_flag = magic_project_second_event_happened } }
+				set_country_flag = magic_project_second_event_happened
+				country_event = { id = flavour_kaino.43 }
+			}
+		}
+	}
+	option = {
+		name = none
+	}
+}
+
+
 namespace = magic_project_kanolowele_volcanic_armoury
 
 country_event = { 
