@@ -96,7 +96,6 @@ country_event = {
 	option = {
 		name = busilar.3.a
 		set_country_flag = artificery_needed
-		set_country_flag = A29_boons_of_the_society_flag
 		unlock_artificery = yes
 	}
 }
@@ -112,12 +111,16 @@ country_event = {
 	option = {
 		name = busilar.4.a
 		custom_tooltip = A29_missionary_strength_tt
+		set_country_flag = A29_truth_set_us_free
 		Z97 = {
 			force_remove_rival = ROOT
 			add_historical_friend_mutual = { tag = ROOT }
 		}
-		country_event = {
-			id = busilar.5
+		hidden_effect = {
+			country_event = {
+				id = busilar.5
+				days = 365
+			}
 		}
 	}
 }
@@ -398,8 +401,9 @@ country_event = { #HARPYHARPYHARPYHARPYHARPY
 			subject_type = vassal 
 			subject = L55 
 		}
-		365 = {
-			add_province_triggered_modifier = A29_ptm_trade_steer
+		add_country_modifier = {
+			name = A29_trade_steer
+			duration = -1
 		}
 	}
 
@@ -433,8 +437,9 @@ country_event = { #HARPYHARPYHARPYHARPYHARPY
 			subject_type = vassal 
 			subject = L61
 		}
-		365 = {
-			add_province_triggered_modifier = A29_ptm_trade_steer
+		add_country_modifier = {
+			name = A29_trade_steer
+			duration = -1
 		}
 	}
 }

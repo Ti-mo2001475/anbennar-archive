@@ -15731,61 +15731,66 @@ on_explore_coast = {
 	FROM = { #busilar
 		if = {
 			limit = {
-				has_country_modifier = A29_narawen_1
-			}
-			change_variable = {
-				which = A29_tiles_discovered
-				value = 1
+				tag = A29
 			}
 			if = {
 				limit = {
-					check_variable = {
-						which = A29_tiles_discovered
-						value = 100 
+					has_country_modifier = A29_narawen_1
+				}
+				change_variable = {
+					which = A29_tiles_discovered
+					value = 1
+				}
+				if = {
+					limit = {
+						check_variable = {
+							which = A29_tiles_discovered
+							value = 100 
+						}
+					}
+					country_event = {
+						id = busilar.30
 					}
 				}
-				country_event = {
-					id = busilar.30
-				}
 			}
-		}
-		else_if = {
-			limit = {
-				has_country_modifier = A29_narawen_2
-			}
-			change_variable = {
-				which = A29_tiles_discovered
-				value = 1
-			}
-			if = {
+			else_if = {
 				limit = {
-					check_variable = {
-						which = A29_tiles_discovered
-						value = 200
+					has_country_modifier = A29_narawen_2
+				}
+				change_variable = {
+					which = A29_tiles_discovered
+					value = 1
+				}
+				if = {
+					limit = {
+						check_variable = {
+							which = A29_tiles_discovered
+							value = 200
+						}
+					}
+					country_event = {
+						id = busilar.31
 					}
 				}
-				country_event = {
-					id = busilar.31
-				}
 			}
-		}
-		else_if = {
-			limit = {
-				has_country_modifier = A29_narawen_3
-			}
-			change_variable = {
-				which = A29_tiles_discovered
-				value = 1
-			}
-			if = {
+			else_if = {
 				limit = {
-					check_variable = {
-						which = A29_tiles_discovered
-						value = 300
-					}
+					has_country_modifier = A29_narawen_3
 				}
-				country_event = {
-					id = busilar.32
+				change_variable = {
+					which = A29_tiles_discovered
+					value = 1
+				}
+				if = {
+					limit = {
+						check_variable = {
+							which = A29_tiles_discovered
+							value = 300
+						}
+					}
+					country_event = {
+						id = busilar.32
+					}
 				}
 			}
 		}
@@ -24423,27 +24428,43 @@ on_dependency_lost = {
 		remove_country_modifier = abandoned_city_overlord_3
 	}
 
-	#Busilar 
+	#Busilar
 	if = {
 		limit = {
-			1343 = {
-				has_trade_modifier = {
-					who = ROOT 
-					key = A29_friendly_traders
+			tag = A29
+		}
+		if = {
+			limit = {
+				1343 = {
+					has_trade_modifier = {
+						who = ROOT 
+						key = A29_friendly_traders
+					}
+				}
+				FROM = {
+					OR = {
+						tag = L55 
+						tag = L61 
+					}
 				}
 			}
-			FROM = {
-				OR = {
-					tag = L55 
-					tag = L61 
+			1343 = {
+				remove_trade_modifier = {
+					who = ROOT 
+					key = A29_strong_merchants
 				}
 			}
 		}
-		1343 = {
-			remove_trade_modifier = {
-				who = ROOT 
-				key = A29_strong_merchants
+		if = {
+			limit = {
+				FROM = {
+					OR = {
+						tag = L55 
+						tag = L61 
+					}
+				}
 			}
+			remove_country_modifier = A29_trade_steer
 		}
 	}
 
@@ -28399,23 +28420,23 @@ on_estate_removed = {
 on_colony_established = {
 	if = {
 		# Helper events since on_explore_coast and on_conquistador_empty don't fire without El Dorado
-		limit = {
-			NOT = { has_dlc = "El Dorado" }
-			owner = { capital_scope = { continent = europe } }
-			OR = {
-				continent = north_america
-				continent = south_america
-			}
-			OR = {
-				NOT = { has_global_flag = new_world_discovered }
-				NOT = { has_global_flag = castellar_mural_discovered }
-			}
-		}
-		save_event_target_as = unraveling_colony
-		owner = {
-			country_event = { id = unraveling.90 }
-			country_event = { id = unraveling.91 }
-		}
+		# limit = {
+		# 	NOT = { has_dlc = "El Dorado" }
+		# 	owner = { capital_scope = { continent = europe } }
+		# 	OR = {
+		# 		continent = north_america
+		# 		continent = south_america
+		# 	}
+		# 	OR = {
+		# 		NOT = { has_global_flag = new_world_discovered }
+		# 		NOT = { has_global_flag = castellar_mural_discovered }
+		# 	}
+		# }
+		# save_event_target_as = unraveling_colony
+		# owner = {
+		# 	country_event = { id = unraveling.90 }
+		# 	country_event = { id = unraveling.91 }
+		# }
 	}
 
 	if = {

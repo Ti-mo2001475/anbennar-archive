@@ -11645,6 +11645,19 @@ on_built_tax_building_effect = {
 			duration = -1
 		}
 	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = A29_temples_give_tax_dev
+			}
+			NOT = {
+				has_province_flag = A29_temple_tax_prov
+			}
+		}
+		add_base_tax = 1
+		set_province_flag = A29_temple_tax_prov
+	}
+
 }
 
 on_tax_building_destroyed_effect = {
@@ -11654,6 +11667,15 @@ on_tax_building_destroyed_effect = {
 	remove_province_modifier = L80_temple_buff
 	remove_province_modifier = A80_expand_the_theatre_temples
 	remove_province_modifier = harpylen_temple_roost
+	if = { #busilar
+		limit = {
+			owner = {
+				has_country_flag = A29_temples_give_tax_dev
+			}
+		}
+		add_base_tax = -1
+		clr_province_flag = A29_temple_tax_prov
+	}
 }
 
 on_built_manpower_building_effect = {	
