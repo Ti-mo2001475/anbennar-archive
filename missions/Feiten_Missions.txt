@@ -1412,9 +1412,17 @@ feiten_missions_2_world = {
 					limit = { has_dlc = "Leviathan" }
 					set_country_flag = Y20_has_leviathan
 				}
-				for = {
-					amount = 5
-					effect = "
+				set_variable = {
+					which = feiten_kanolowele_trade_var
+					value = 5
+				}
+				while = {
+					limit = {
+						check_variable = {
+							which = feiten_kanolowele_trade_var
+							value = 1
+						}
+					}
 					random_owned_province = {
 						limit = {
 							superregion = kanolowele_superregion
@@ -1427,7 +1435,7 @@ feiten_missions_2_world = {
 								}
 							}
 							if = {
-								limit = { has_country_flag = Y20_has_leviathan }
+								limit = { owner = { has_country_flag = Y20_has_leviathan } }
 								num_of_times_expanded_infrastructure = 1
 							}
 							else = {
@@ -1439,7 +1447,11 @@ feiten_missions_2_world = {
 							name = feiten_insyaan_trade_centre
 							duration = -1
 						}
-					}"
+					}
+					subtract_variable = {
+						which = feiten_kanolowele_trade_var
+						value = 1
+					}
 				}
 				pick_best_province = {
 					scope = yanacotlele_region
@@ -1777,27 +1789,15 @@ feiten_missions_2_world = {
 					}
 				"
 				third_effect = "
-					custom_tooltip = feiten_sub_unlocks_dev_cost_red
+					custom_tooltip = Y20_harn_3rd_tt
 					hidden_effect = {
 						random_subject_country = {
-						limit = { 
-							num_of_owned_provinces_with = {
-								value = 8
-								region = tagaala_mangroves_region
-							}
-							has_country_flag = mangrove_bio_infra_enabled
-						}
+						limit = { num_of_owned_provinces_with = { value = 8 region = tagaala_mangroves_region } has_country_flag = mangrove_bio_infra_enabled }
 						every_owned_province = {
-							limit = {
-								region = tagaala_mangroves_region
-							}
-							add_province_modifier = {
-								name = feiten_subject_mangrove_lower_dev_cost
-								duration = -1
-							}
+							limit = { region = tagaala_mangroves_region }
+							add_province_modifier = { name = feiten_subject_mangrove_lower_dev_cost duration = -1 }
 						}
 					}
-				}
 				"
 			}
 			custom_tooltip = feiten_insyaan_investment_tt
