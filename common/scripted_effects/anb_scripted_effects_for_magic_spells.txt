@@ -728,49 +728,21 @@ abjuration_1_ward_effect = { # Ward
         hidden_effect = { change_siege = -1 }
         abjuration_1_ward_sub_effect = { duration = 3650 }
     }
-	hidden_effect = { 
-		if = {
-			limit = { has_reform = tame_the_storm }
-			every_owned_province = {
-				limit = {
-				region = alecand_region
-					OR = {
-						province_group = alecandi_capital_provinces
-						has_building = mage_tower
-					}
-				}
-				abjuration_1_ward_sub_effect = { duration = 3650 }
-			}
-		}
-	}
-	# if = {
-	# 	limit = { has_reform = tame_the_storm }
-	# 	every_owned_province = {
-    #         limit = {
-    #     	region = alecand_region
-    #             OR = {
-    #                 province_group = alecandi_capital_provinces
-    #                 has_building = mage_tower
-    #             }
-    #         }
-    #         abjuration_1_ward_sub_effect = { duration = 3650 }
-    # 	}
+	# hidden_effect = { 
+	# 	if = {
+	# 		limit = { has_reform = tame_the_storm }
+	# 		every_owned_province = {
+	# 			limit = {
+	# 			region = alecand_region
+	# 				OR = {
+	# 					province_group = alecandi_capital_provinces
+	# 					has_building = mage_tower
+	# 				}
+	# 			}
+	# 			abjuration_1_ward_sub_effect = { duration = 3650 }
+	# 		}
+	# 	}
 	# }
-	# hidden_effect = {
-    #     owner = {
-    #         limit = { has_reform = tame_the_storm }
-    #         every_owned_province = {
-    #             limit = {
-    #             	region = alecand_region
-    #                 OR = {
-    #                     province_group = alecandi_capital_provinces
-    #                     has_building = mage_tower
-    #                 }
-    #             }
-    #             abjuration_1_ward_sub_effect = { duration = 3650 }
-    # 	    }
-    #     }
-    # }
 }
 abjuration_1_ward_sub_effect = { # Ward sub-effect
 	if = { #Patron buffs
@@ -821,35 +793,31 @@ abjuration_1_ward_sub_effect = { # Ward sub-effect
 			}
 		}
 	}
-	# if = {
-	# 	limit = { owner = { has_reform = tame_the_storm } }
-	# 	custom_tooltip = tame_the_storm_ward_extension_tt
-	# 	every_owned_province = {
-	# 		limit = {
-	# 			region = alecand_region
-	# 			owned_by = root
-	# 			OR = {
-	# 				has_building = mage_tower
-	# 				province_group = alecandi_capital_provinces
-	# 			}
-	# 		}
-	# 		if = {
-	# 			limit = { at_least_magic_project_level = { project = magical_fortress level = 3 } }
-	# 			add_province_modifier = { name = abjuration_1_ward_mod_3 duration = $duration$ }
-	# 		}
-	# 		else_if = {
-	# 			limit = { at_least_magic_project_level = { project = magical_fortress level = 2 } }
-	# 			add_province_modifier = { name = abjuration_1_ward_mod_2 duration = $duration$ }
-	# 		}
-	# 		else_if = {
-	# 			limit = { at_least_magic_project_level = { project = magical_fortress level = 1 } }
-	# 			add_province_modifier = { name = abjuration_1_ward_mod_1 duration = $duration$ }
-	# 		}
-	# 		else = {
-	# 			add_province_modifier = { name = abjuration_1_ward_mod_0 duration = $duration$ }
-	# 		}
-	# 	}
-	# }
+	if = {
+		limit = {
+			PREV = { 
+				has_reform = tame_the_storm 
+				NOT = { has_country_flag = abjuration_1_ward_spreading }
+			}
+		}
+		custom_tooltip = tame_the_storm_ward_extension_tt
+		hidden_effect = {
+			PREV = {
+				set_country_flag = abjuration_1_ward_spreading
+				every_owned_province = {
+					limit = {
+						region = alecand_region
+						OR = {
+							has_building = mage_tower
+							province_group = alecandi_capital_provinces
+						}
+					}
+					abjuration_1_ward_sub_effect = { duration = $duration$ }
+				}
+				clr_country_flag = abjuration_1_ward_spreading
+			}
+		}
+	}
 }
 abjuration_1_protected_journey_effect = { # Protected Journey
 	add_country_modifier = { name = abjuration_1_protected_journey_mod duration = 3650 }
