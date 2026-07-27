@@ -728,21 +728,6 @@ abjuration_1_ward_effect = { # Ward
         hidden_effect = { change_siege = -1 }
         abjuration_1_ward_sub_effect = { duration = 3650 }
     }
-	# hidden_effect = { 
-	# 	if = {
-	# 		limit = { has_reform = tame_the_storm }
-	# 		every_owned_province = {
-	# 			limit = {
-	# 			region = alecand_region
-	# 				OR = {
-	# 					province_group = alecandi_capital_provinces
-	# 					has_building = mage_tower
-	# 				}
-	# 			}
-	# 			abjuration_1_ward_sub_effect = { duration = 3650 }
-	# 		}
-	# 	}
-	# }
 }
 abjuration_1_ward_sub_effect = { # Ward sub-effect
 	if = { #Patron buffs
@@ -794,27 +779,39 @@ abjuration_1_ward_sub_effect = { # Ward sub-effect
 		}
 	}
 	if = {
-		limit = {
-			PREV = { 
-				has_reform = tame_the_storm 
-				NOT = { has_country_flag = abjuration_1_ward_spreading }
-			}
-		}
+		limit = { PREV = { has_reform = tame_the_storm } }
 		custom_tooltip = tame_the_storm_ward_extension_tt
 		hidden_effect = {
 			PREV = {
-				set_country_flag = abjuration_1_ward_spreading
 				every_owned_province = {
 					limit = {
 						region = alecand_region
+						controlled_by = owner
 						OR = {
 							has_building = mage_tower
 							province_group = alecandi_capital_provinces
 						}
 					}
-					abjuration_1_ward_sub_effect = { duration = $duration$ }
+					if = { #Patron buffs
+						limit = { owner = { OR = { has_ruler_flag = yaksha_patron has_ruler_flag = maiden_patron } } }
+						add_province_modifier = { name = patron_abjuration_ward duration = $duration$ }
+					}
+					if = {
+						limit = { owner = { at_least_magic_project_level = { project = magical_fortress level = 3 } } }
+						add_province_modifier = { name = abjuration_1_ward_mod_3 duration = $duration$ }
+					}
+					else_if = {
+						limit = { owner = { at_least_magic_project_level = { project = magical_fortress level = 2 } } }
+						add_province_modifier = { name = abjuration_1_ward_mod_2 duration = $duration$ }
+					}
+					else_if = {
+						limit = { owner = { at_least_magic_project_level = { project = magical_fortress level = 1 } } }
+						add_province_modifier = { name = abjuration_1_ward_mod_1 duration = $duration$ }
+					}
+					else = {
+						add_province_modifier = { name = abjuration_1_ward_mod_0 duration = $duration$ }
+					}
 				}
-				clr_country_flag = abjuration_1_ward_spreading
 			}
 		}
 	}
