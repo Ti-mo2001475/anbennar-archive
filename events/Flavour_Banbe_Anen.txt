@@ -260,7 +260,11 @@ country_event = { #Village Celebration
 		add_prestige = 10
 		if = {
 			limit = { ai = no }
-			add_treasury = -100
+			if = {
+				limit = { monthly_income = 166 }
+				add_treasury = -100
+			}
+			else = { add_years_of_income = -0.05 }
 		}
 		event_target:banbe_anen_reehanviza_village = {
 			add_random_development = 1

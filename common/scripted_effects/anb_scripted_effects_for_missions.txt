@@ -22546,6 +22546,7 @@ iochand_gnomed_effect = {
 		B95 = { override_country_name = GNOMED_B95 }
 		B96 = { override_country_name = GNOMED_B96 }
 		B97 = { override_country_name = GNOMED_B97 }
+		B98 = { override_country_name = GNOMED_B98 }
 		B99 = { override_country_name = GNOMED_B99 }
 		G01 = { override_country_name = GNOMED_G01 }
 		G04 = { override_country_name = GNOMED_G04 }
@@ -22831,6 +22832,7 @@ iochand_on_dependency_gained = {
 				change_government = monarchy
 			}
 			add_government_reform = iochand_gnomish_monarchy
+			change_country_color = { color = { 100 193 255 } }
 		}
 		if = {
 			limit = {
@@ -23351,6 +23353,36 @@ anzara_gain_subjugation_cb = {
 				target = ROOT
 			}
 		}
+	}
+}
+form_milcorissia = {
+	add_country_modifier = {
+		name = A75_true_heirs_of_milcorissia
+		duration = -1
+	}
+	change_tag = B94
+	hidden_effect = { restore_country_name = yes }
+	add_country_modifier = {
+		name = "centralization_modifier"
+		duration = 7300
+	}
+	if = {
+		limit = {
+			NOT = {
+				primary_culture = milcori
+			}
+		}
+		change_primary_culture = milcori
+		set_ruler_culture = milcori
+		set_heir_culture = milcori
+		set_consort_culture = milcori
+		add_accepted_culture = arannese
+	}
+	if = {
+		limit = {
+			has_custom_ideas = no
+		}
+		country_event = { id = ideagroups.1 } #Swap Ideas
 	}
 }
 

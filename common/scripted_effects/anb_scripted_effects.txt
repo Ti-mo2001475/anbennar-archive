@@ -1648,6 +1648,8 @@ clear_mages_organization_effect = { #Because on_granted fires before the privile
 		remove_estate_privilege = estate_mages_organization_acolytes
 		remove_estate_privilege = estate_mages_organization_hydromancers_guild
 		remove_estate_privilege = estate_mages_organization_decimated_shamans
+		remove_estate_privilege = estate_mages_kaino_dao_nako_magecraft
+		remove_estate_privilege = estate_mages_kaino_shadow_lich_chosen
 	}
 }
 
@@ -7334,7 +7336,7 @@ anb_half_elven_culture_becomes_human = {
 			change_culture = high_lorentish
 		}
 	}
-	else_if {
+	else_if = {
 		limit = { $culture_check_scope$ = { culture_group = businori } }
 		if = {
 			limit = {
@@ -7376,11 +7378,21 @@ anb_half_elven_culture_becomes_human = {
 			}
 			change_culture = nariandi
 		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = milcori
+					}
+				}
+			}
+			change_culture = milcori
+		}
 		else = {
 			change_culture = busilari
 		}
 	}
-	else_if {
+	else_if = {
 		limit = { $culture_check_scope$ = { culture_group = anbennarian } }
 		if = {
 			limit = {
@@ -7596,7 +7608,7 @@ anb_half_elven_culture_becomes_human = {
 			change_culture = east_damerian
 		}
 	}
-	else_if {
+	else_if = {
 		limit = { $culture_check_scope$ = { culture_group = dostanorian_g } }
 		if = {
 			limit = {
@@ -7672,7 +7684,7 @@ anb_half_elven_culture_becomes_human = {
 			change_culture = corvurian
 		}
 	}
-	else_if {
+	else_if = {
 		limit = { $culture_check_scope$ = { culture_group = alenic } }
 		if = {
 			limit = {
@@ -7758,7 +7770,7 @@ anb_half_elven_culture_becomes_human = {
 			change_culture = gawedi
 		}
 	}
-	else_if {
+	else_if = {
 		limit = { $culture_check_scope$ = { culture_group = bom } }
 		if = {
 			limit = {
@@ -7832,7 +7844,7 @@ anb_half_elven_culture_becomes_human = {
 		}
 		else = { change_culture = ranilau }
 	}
-	else_if {
+	else_if = {
 		limit = { $culture_check_scope$ = { culture_group = kai } }
 		if = {
 			limit = {
@@ -7896,7 +7908,7 @@ anb_half_elven_culture_becomes_human = {
 		}
 		else = { change_culture = phonan }
 	}
-	else_if {
+	else_if = {
 		limit = { $culture_check_scope$ = { culture_group = kelino } }
 		if = {
 			limit = {
@@ -7950,7 +7962,7 @@ anb_half_elven_culture_becomes_human = {
 		}
 		else = { change_culture = kelino }
 	}
-	else_if {
+	else_if = {
 		limit = { $culture_check_scope$ = { culture_group = bulwari } }
 		if = {
 			limit = {
@@ -8162,6 +8174,10 @@ anb_changed_ways_effect = {
 				dominant_culture = nariandi
 			}
 			change_primary_culture = nariandi
+		}
+		else_if = {
+			limit = { dominant_culture = milcori }
+			change_primary_culture = milcori
 		}
 	}
 	else_if = {
@@ -14448,6 +14464,38 @@ kill_land_units = {
 		1 = {
 			trigger = { artillery_in_province = ROOT }
 			kill_units = { [[who] who = $who$ ] type = artillery [[amount] amount = $amount$ ] }
+		}
+	}
+}
+
+#On action effect
+grant_manpower_from_besieging_fort_spirit_mil = {
+	if = {
+		limit = {
+			ROOT = { has_country_modifier = spirit_military }
+			FROM = {
+				owner = { war_with = ROOT }
+				NOT = { has_province_modifier = estate_nobles_neighbor_raids_fort }
+				fort_level = 1
+			}
+		}
+		FROM = {
+			add_province_modifier = {
+				name = estate_nobles_neighbor_raids_fort
+				duration = 1825
+			}
+		}
+		ROOT = {
+			export_to_variable = {
+				which = manpower_from_fort
+				value = trigger_value:fort_level
+				who = FROM
+			}
+			while = {
+				limit = { check_variable = { manpower_from_fort = 1 } }
+				subtract_variable = { manpower_from_fort = 1 }
+				add_manpower = 2.5
+			}
 		}
 	}
 }
