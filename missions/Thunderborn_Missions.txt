@@ -299,27 +299,48 @@ thunderborn_3 = {
 		}
 
 		effect = {
-			custom_tooltip = I49_false_claimant_effect_tooltip
-			hidden_effect = {
-				if = {
-					limit = {
-						I80 = { has_been_insulted_by_root = yes } 
-						army_size_percentage = 0.85
-						total_development = 30
-					}
+			if = {
+				limit = {
+					I80 = { has_been_insulted_by_root = yes } 
+					army_size_percentage = 0.85
+					total_development = 30
+				}
+				custom_tooltip = I49_false_claimant_effect_tooltip_1_yes
+				hidden_effect = {
 					kalgazuur_area = { add_permanent_claim = I49 } 
 					add_country_modifier = {
 						name = "I49_against_false_king"
 						duration = 1825
 					}
 				}
-				else = {
+			}
+			else = {
+				custom_tooltip = I49_false_claimant_effect_tooltip_1_no
+			}
+			if = {
+				limit = {
+					NOT = {
+						exists = I80
+					}
+					5195 = {
+						owned_by = I49
+						OR = {
+							anb_has_been_razed = yes
+							is_core = I49
+						}
+					}
+				}
+				custom_tooltip = I49_false_claimant_effect_tooltip_2_yes
+				hidden_effect = {
 					add_estate_loyalty = {
 						estate = estate_monstrous_tribes
 						loyalty = 10
 					}
 					add_prestige = 20
 				}
+			}
+			else = {
+				custom_tooltip = I49_false_claimant_effect_tooltip_2_no
 			}
 		}
 	}
