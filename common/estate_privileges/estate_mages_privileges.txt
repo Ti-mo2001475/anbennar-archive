@@ -692,30 +692,6 @@ estate_mages_organization_magi_clans = { #Sun Cult/Jadd new estate org (also for
 	}
 	ai_will_do = {
 		factor = 5
-		modifier = {
-			factor = 0.8
-			OR = {
-				NOT = { crown_land_share = 40 }
-				AND = {
-					is_absolutism_active = yes
-					NOT = { crown_land_share = 60 }
-				}
-			}
-		}
-		modifier = {
-			factor = 0.8
-			OR = {
-				NOT = { crown_land_share = 30 }
-				AND = {
-					is_absolutism_active = yes
-					NOT = { crown_land_share = 50 }
-				}
-			}
-		}
-		modifier = {
-			factor = 0.8
-			is_absolutism_active = yes
-		}
 	}
 }
 
@@ -753,6 +729,103 @@ estate_mages_organization_onyxguard = { #Lake Federation
 			artificers_influence_modifier = 0.05
 		}
 	}
+	ai_will_do = {
+		factor = 5
+	}
+}
+
+estate_mages_organization_sanarenni = { #Bulwari Harpies/Naleni
+	icon = privilege_promote_maratha_nobility
+	max_absolutism = -10
+	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 2 } }
+	influence = 0.25
+	land_share = 5
+	is_valid = {
+		has_custom_spell_list_of_group = { group = harpy }
+		NOT = { has_mages_special_organization_privilege = yes }
+	}
+	can_select = { can_pay_for_organization_swap = { estate = mages } }
+	can_revoke = {
+		always = no
+	}
+	on_granted = {
+		pay_for_organization_swap = { organization = sanarenni }
+		hidden_effect = {
+			if = {
+				limit = { NOT = { is_year = 1445 } }
+				take_estate_land_share_massive = { estate = estate_mages }
+			}
+		}
+		custom_tooltip = sanarenni_vassals_tt
+	}
+	on_revoked = {
+		custom_tooltip = sanarenni_vassals_tt
+	}
+	on_invalid = {
+		custom_tooltip = estate_mages_sanarenni_invalid_tooltip
+		hidden_effect = {
+			if = {
+				limit = { NOT = { has_mages_organization_privilege = yes } }
+				set_estate_privilege = estate_mages_organization_state
+			}
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+		global_unrest = -2
+		enchantment_experience_mod = 0.1
+	}
+
+	conditional_modifier = {	
+		trigger = {
+			num_of_subjects = 1
+			NOT = { num_of_subjects = 2 }
+		}
+		modifier = {
+			mages_estate_experience_mod = 0.02
+		}
+	}
+
+	conditional_modifier = {	
+		trigger = {
+			num_of_subjects = 2
+			NOT = { num_of_subjects = 3 }
+		}
+		modifier = {
+			mages_estate_experience_mod = 0.04
+		}
+	}
+
+	conditional_modifier = {	
+		trigger = {
+			num_of_subjects = 3
+			NOT = { num_of_subjects = 4 }
+		}
+		modifier = {
+			mages_estate_experience_mod = 0.06
+		}
+	}
+
+	conditional_modifier = {	
+		trigger = {
+			num_of_subjects = 4
+			NOT = { num_of_subjects = 5 }
+		}
+		modifier = {
+			mages_estate_experience_mod = 0.08
+		}
+	}
+
+	conditional_modifier = {	
+		trigger = {
+			num_of_subjects = 5
+		}
+		modifier = {
+			mages_estate_experience_mod = 0.1
+		}
+	}
+	
 	ai_will_do = {
 		factor = 5
 	}
@@ -1998,6 +2071,18 @@ estate_mages_magocratic_reactionism = {
 				has_government_attribute = is_magocracy
 			}
 			has_reform = magical_elite_reform
+			if = {
+				limit = {
+					hre_reform_passed = anbennar_nobles_of_the_wand
+					OR = {
+ 						tag = Z01
+						is_part_of_hre = yes
+						is_subject_of = Z01
+ 					}
+				}
+				has_reform = nobles_of_the_wand_reform
+			}
+			else = { hidden_trigger = { always = no } }
 		}
 	}
 
@@ -5007,7 +5092,7 @@ estate_mages_vacyntassi_order = { #Eduz-Vacyn
 estate_mages_legacy_hakin = { #Eduz-Vacyn
 	icon = privilege_missionary
 	max_absolutism = 0
-	loyalty = 5
+	loyalty = 0.05
 	influence = 0
 	is_valid = {
 		has_estate_privilege = estate_mages_legacy_hakin
@@ -6093,7 +6178,7 @@ estate_mages_B54_necrocratic_administration = {
 }
 
 estate_mages_irrliam_sunblessed_exorcists = { #Irrliam
-	icon = privilege_monopoly_of_goods_livestock
+	icon = privilege_covenblad_silver_reliquary
 	max_absolutism = -5
 	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
 	loyalty = 0.05
@@ -6218,5 +6303,59 @@ estate_mages_tales_of_halanns_love = {
 
 	ai_will_do = {
 		factor = 0
+	}
+}
+
+#starting kaino nations mage privilege
+estate_mages_kaino_dao_nako_magecraft = {
+	icon = privilege_promote_maratha_nobility
+	loyalty = 0.1
+	influence = 0.1
+	max_absolutism = -10
+	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 2 } }
+	land_share = 0
+
+	is_valid = { culture = kaino }
+	can_select = { 
+		culture = kaino
+		NOT = {
+			has_estate_privilege = estate_mages_kaino_shadow_lich_chosen
+		}
+	}
+	benefits = {
+		mages_estate_experience_mod = 0.10
+		mages_ruler_experience_mod = 0.10
+		necromancy_experience_mod = -1
+	}
+	ai_will_do = { factor = 10 }
+
+	can_revoke = {
+		always = no
+	}
+}
+#kaino necromancy mages
+estate_mages_kaino_shadow_lich_chosen = {
+	icon = privilege_the_dark_host
+	loyalty = 0.1
+	influence = 0.05
+	max_absolutism = -5
+	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
+	land_share = 0
+
+	is_valid = { has_estate_privilege = estate_mages_kaino_shadow_lich_chosen }
+	can_select = { has_estate_privilege = estate_mages_kaino_shadow_lich_chosen }
+	benefits = {
+		mages_mana_regen = 0.2
+		mages_estate_experience_mod = 0.15
+		necromancy_experience_mod = 0.15
+	}
+	ai_will_do = { factor = 10 }
+
+	on_granted = {
+		set_country_flag = kaino_not_allowed_lichdom_yet
+	}
+
+	can_revoke = {
+		always = no
 	}
 }

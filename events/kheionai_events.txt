@@ -1,473 +1,745 @@
-# events for kheionai death winds & warding
+#Events for kheionai systems (Deathwinds, Nekheis, Degarikes, etc)
 namespace = kheionai
 
 #Events 0-99 : Deathwinds
+ #Events 50-59 : Kheion and Kaydhano Magical Project
 #Events 100-199 : Nekheis
 #Events 200-299 : Degarikes
 
 #Events 900-999 : Misc System Events
 
-# setup event for Kheionai and introduction to deathwinds
+#Setup event for the to deathwinds
 country_event = {
 	id = kheionai.0
-	title = kheionai.0.t
-	desc = kheionai.0.d
-	picture = BIG_BOOK_eventPicture
+	title = none
+	desc = none
+	picture = none
 	
 	is_triggered_only = yes
+	fire_only_once = yes
+	hidden = yes
 	
 	trigger = {
-		any_owned_province = {
-			region = alecand_region
-		}
-		NOT = { is_year = 1445 }
-		NOT = { has_ruler_flag = deathwinds_setup }
-	}
-	
-	immediate = {
-		set_ruler_flag = deathwinds_setup
-		hidden_effect = {
-			#Do the first storm in 1 year
-			if = {
-				limit = {
-					owns = 2728
-				}
-				2728 = {
-					province_event = {
-						id = kheionai.1
-						days = 365
-						random = 180
-					}
-				}
-			}
-		}
+		owns = 2728 #Arpedifer
+		NOT = { has_country_flag = deathwinds_setup }
 	}
 	
 	option = {
-		custom_tooltip = kheionai_first_event_tt
-		name = kheionai.0.a
+		name = none
+		set_country_flag = deathwinds_setup
+		
+		#Deathwinds aPUI bar setup
 		alecand_region = {
-			limit = {
-				owned_by = ROOT
-			}
-			hidden_effect = {
-				setup_for_deathwinds = yes
-				add_permanent_province_modifier = {
-					name = kheionai_warding_efforts
-					duration = -1
+			set_province_flag = aPUI_deathwinds_flag
+			set_aPUI_cap = { name = deathwinds amount = 108 } #9 years in months (9*12=108)
+			change_aPUI_var_provincial = { name = deathwinds amount = 95 } #Next deathwind is 13 months away (108-13=95)
+			
+			#Define variables to appropriate values for UI tooltips
+			set_variable = { deathwinds_warded_var = -1 }
+			set_variable = { deathwinds_var = -1 }
+			set_variable = { deathwinds_rand_var = -1 }
+			set_variable = { deathwinds_previous_var = 8 } #Lore!
+			set_variable = { deathwinds_high_level_var = 4 }
+			set_variable = { deathwinds_low_level_var = 1 }
+			set_variable = { deathwinds_months_var = 13 } #Time left until next Deathwind, 13 months
+			set_variable = { deathwinds_active_months_var = -71 }
+		}
+		hidden_effect = {
+			#Do the first storm on Jan 1st 1446
+			2728 = { #Arpedifer
+				set_province_flag = deathwinds_warning_event
+				province_event = {
+					id = kheionai.2 #Warning event happens 6 months before
+					days = 225 #June 1st 1445 (minus 6 days)
 				}
 			}
 		}
-		if = {
-			limit = {
-				any_owned_province = {
-					has_province_modifier = kheionai_warded_city
-				}
-			}
-			every_owned_province = {
-				limit = {
-					has_province_modifier = kheionai_warded_city
-				}
-				add_permanent_windward_level = {
-					level = 2
-				}
-			}
-		}
-		
-		if = {
-			limit = {
-				any_owned_province = {
-					has_province_modifier = shielded_by_highlands
-				}
-			}
-			every_owned_province = {
-				limit = {
-					has_province_modifier = shielded_by_highlands
-				}
-				add_permanent_windward_level = {
-					level = 1
-				}
-			}
-		}
-		
-		if = {
-			limit = {
-				any_owned_province = {
-					has_province_modifier = shielded_by_metei
-				}
-			}
-			every_owned_province = {
-				limit = {
-					has_province_modifier = shielded_by_metei
-				}
-				add_permanent_windward_level = {
-					level = 2
-				}
-			}
-		}
+
+		#Assigns every province in Alecand a flag that's different from the other ones
+		 #in the area so you can scope to every area province seperately in the buttons
+		assign_deathwind_targets = { area = 1 }
+		assign_deathwind_targets = { area = 2 }
+		assign_deathwind_targets = { area = 3 }
+		assign_deathwind_targets = { area = 4 }
+		assign_deathwind_targets = { area = 5 }
+		assign_deathwind_targets = { area = 6 }
+		assign_deathwind_targets = { area = 7 }
+		assign_deathwind_targets = { area = 8 }
+		assign_deathwind_targets = { area = 9 }
+		assign_deathwind_targets = { area = 10 }
+		assign_deathwind_targets = { area = 11 }
+		assign_deathwind_targets = { area = 12 }
+		assign_deathwind_targets = { area = 13 } #Alecand has 13 areas in it
 	}
 }
 
-# Death winds brewing
+#Deathwinds Handler Event
+
+#Deathwinds start > Notif event happens, add deathwind modifiers based on province group and windward level
+# > 1 year later destruction event happens
+# > 1 year later deathwinds end notif event happens (modifiers go away on their own)
+# > 6.5 years later deathwinds warning event
+# > 0.5 years later deathwinds start again
 province_event = {
 	id = kheionai.1
-	title = kheionai.1.t
-	desc = kheionai.1.d
-	picture = WOUNDED_SOLDIERS_eventPicture
+	title = none
+	desc = none
+	picture = none
 
 	is_triggered_only = yes
 	hidden = yes
 
-	immediate = {
-		hidden_effect = {
-			setup_deathwinds = {
-				alecand = yes
-			}
-			owner = {
-				every_country = {
-					limit = {
-						any_owned_province = {
-							region = alecand_region
-						}
-					}
-					country_event = { id = kheionai.10 }
-				}
-			}
-		}
-		set_province_flag = deathwinds_controller_prov # To avoid it getting declonized cause that'd be BAD
+	trigger = {
+		has_global_flag = enable_deathwinds_handler_flag
+		NOT = { has_global_flag = permanently_ended_deathwinds }
 	}
 
 	option = {
-		name = kheionai.1.a
-		every_country = {
-			limit = {
-				any_owned_province = {
-					region = alecand_region
-				}
+		name = none
+		#Cycles between 4 events based one which province flag is set
+		trigger_switch = {
+			on_trigger = has_province_flag
+			deathwinds_warning_event = {
+				#Every country with a province in Alecand gets the deathwinds warning event
+				alecand_region = { owner = { country_event = { id = kheionai.3 } } }
+
+				#Prep the deathwinds start event
+				province_event = { id = kheionai.2 days = 175 } #6 months (Couple days behind to ensure the next monthly pulse fires it)
+				clr_province_flag = deathwinds_warning_event
+				set_province_flag = deathwinds_start_event
 			}
-			country_event = {
-				id = kheionai.9
-				days = 365
+			deathwinds_start_event = {
+				#Every country with a province in Alecand gets the deathwinds start event
+				setup_deathwinds = yes
+				alecand_region = { owner = { country_event = { id = kheionai.4 } } }
+
+				#Prep the deathwinds destruction event
+				province_event = { id = kheionai.2 days = 360 } #1 year
+				clr_province_flag = deathwinds_start_event
+				set_province_flag = deathwinds_destruction_event
+			}
+			deathwinds_destruction_event = {
+				#Every country with a province in Alecand gets the deathwinds destruction event
+				alecand_region = { owner = { country_event = { id = kheionai.5 } } }
+
+				#Prep the deathwinds ends event
+				province_event = { id = kheionai.2 days = 360 } #1 year
+				clr_province_flag = deathwinds_destruction_event
+				set_province_flag = deathwinds_end_event
+			}
+			deathwinds_end_event = {
+				#Every country with a province in Alecand gets the deathwinds ends event
+				end_deathwinds = yes
+				alecand_region = { owner = { country_event = { id = kheionai.6 } } }
+
+				#Prep the deathwinds warning event
+				province_event = { id = kheionai.2 days = 2365 } #6.5 years
+				clr_province_flag = deathwinds_end_event
+				set_province_flag = deathwinds_warning_event
 			}
 		}
-		hidden_effect = {
-			province_event = {
-				id = kheionai.8
-				days = 1460
-				random = 730
-			}
-		}
+		clr_global_flag = enable_deathwinds_handler_flag
 	}
 }
 
-#generate warding on forts
+#Second event to enable kheionai.1 again to fire in the monthly pulse after enough time has passed
 province_event = {
 	id = kheionai.2
-	title = kheionai.2.t
-	desc = kheionai.2.d
-	picture = BIG_BOOK_eventPicture
+	title = none
+	desc = none
+	picture = none
 	
 	is_triggered_only = yes
 	hidden = yes
-	
-	trigger = {
-		region = alecand_region
-	}
+	trigger = { NOT = { has_global_flag = permanently_ended_deathwinds } }
 
 	option = {
-		name = kheionai.2.a
-		create_deathwind_ward_level_from_fort = yes
-		every_neighbor_province = {
-			create_deathwind_ward_level_from_fort = yes
-		}
+		name = none
+		set_global_flag = enable_deathwinds_handler_flag
 	}
 }
 
-#generate warding on mage towers
-province_event = {
+#Deathwinds 6 Months earlier warning Event
+country_event = {
 	id = kheionai.3
 	title = kheionai.3.t
-	desc = kheionai.3.d
-	picture = WOUNDED_SOLDIERS_eventPicture
+	desc = kheionai.3.desc
+	picture = MARCHING_PEASANTS_eventPicture
 
 	is_triggered_only = yes
-	hidden = yes
-	
-	trigger = {
-		region = alecand_region
+	trigger = { 
+		NOT = { has_country_flag = deathwinds_disable_events_flag }
+		NOT = { has_country_flag = deathwinds_warn_event_flag }
 	}
+
+	#Flags so the event only fires once and not once per province in Alecand
+	after = { clr_country_flag = deathwinds_warn_event_flag }
+	immediate = { hidden_effect = { set_country_flag = deathwinds_warn_event_flag } }
 
 	option = {
 		name = kheionai.3.a
-		create_deathwind_ward_level_from_mage_tower = yes
-		every_neighbor_province = {
-			create_deathwind_ward_level_from_mage_tower = yes
-		}
+	}
+
+	option = {
+		name = kheionai.3.b
+		trigger = { has_not_full_deathwinds_system = yes }
+		disable_deathwind_events = yes
 	}
 }
 
-#generate warding from development
-province_event = {
+#Deathwinds start event
+country_event = {
 	id = kheionai.4
 	title = kheionai.4.t
-	desc = kheionai.4.d
+	desc = kheionai.4.desc
 	picture = WOUNDED_SOLDIERS_eventPicture
 	
 	is_triggered_only = yes
-	hidden = yes
-
-	trigger = {
-		region = alecand_region
+	major = yes
+	major_trigger = {
+		any_owned_province = { superregion = kheionai_superregion }
+		NOT = { any_owned_province = { region = alecand_region } }
 	}
+	
+	#Flags so the event only fires once and not once per province in Alecand
+	trigger = { NOT = { has_country_flag = deathwinds_disable_events_flag } NOT = { has_country_flag = deathwinds_start_event_flag } }
+	after = { clr_country_flag = deathwinds_start_event_flag }
+	immediate = { hidden_effect = { set_country_flag = deathwinds_start_event_flag } }
 
 	option = {
 		name = kheionai.4.a
-		create_deathwind_ward_level_from_development = yes
+	}
+
+	option = {
+		name = kheionai.3.b
+		trigger = { has_not_full_deathwinds_system = yes }
+		disable_deathwind_events = yes
 	}
 }
 
-#random flavour events
-# enemy damages warding
+#Deathwinds destruction event
 country_event = {
 	id = kheionai.5
 	title = kheionai.5.t
-	desc = kheionai.5.d
-	picture = ASSASSINATION_eventPicture
-
-	trigger = {
-		any_owned_province = {
-			region = alecand_region
-			has_province_modifier = no_deathwinds_effects
-			NOT = { has_province_flag = has_temporary_windward_damage }
-		}
-		any_enemy_country = {
-			culture_group = kheionai_ruinborn_elf
-		}
-	}
-
+	desc = kheionai.5.desc
+	picture = LOOMING_DEATH_eventPicture
+	
 	is_triggered_only = yes
 	
-	goto = damaged_ward_province
+	#Flags so the event only fires once and not once per province in Alecand
+	trigger = { NOT = { has_country_flag = deathwinds_disable_events_flag } NOT = { has_country_flag = deathwinds_devastation_event_flag } }
+	after = { clr_country_flag = deathwinds_devastation_event_flag }
 
 	immediate = {
 		hidden_effect = {
-			random_owned_province = {
-				limit = {
-					region = alecand_region
-					has_province_modifier = no_deathwinds_effects
-					NOT = { has_province_flag = has_temporary_windward_damage }
+			set_country_flag = deathwinds_devastation_event_flag
+			every_owned_province = {
+				limit = { has_deathwind_modifier = yes }
+				#Every affected provicne gains 5 devastation per deathwind level in the provicne
+				if = {
+					limit = { NOT = { has_province_flag = windwards_reinforce_with_manpower_flag } }
+					for_variable_amount = {
+						variable = deathwinds_warded_var
+						effect = "add_devastation = 5"
+					}
 				}
-				save_event_target_as = damaged_ward_province
+				else = { clr_province_flag = windwards_reinforce_with_manpower_flag }
+				
+				#If the deathwinds are at level 7+, destroy a random tax, manpower, forcelimit, dock, shipyard, or production building
+				if = {
+					limit = {
+						OR = {
+							has_province_modifier = deathwind_level_7
+							has_province_modifier = deathwind_level_8
+							has_province_modifier = deathwind_level_9
+							has_province_modifier = deathwind_level_10
+						}
+					}
+					random_list = {
+						1 = {
+							trigger = { has_tax_building_trigger = yes }
+							remove_building = temple
+							remove_building = cathedral
+						}
+						1 = {
+							trigger = { has_manpower_building_trigger = yes }
+							remove_building = barracks
+							remove_building = training_fields
+						}
+						1 = {
+							trigger = { has_forcelimit_building_trigger = yes }
+							remove_building = regimental_camp
+							remove_building = conscription_center
+						}
+						1 = {
+							trigger = { has_dock_building_trigger = yes }
+							remove_building = dock
+							remove_building = drydock
+						}
+						1 = {
+							trigger = { has_shipyard_building_trigger = yes }
+							remove_building = shipyard
+							remove_building = grand_shipyard
+						}
+						1 = {
+							trigger = { has_production_building_trigger = yes }
+							remove_building = workshop
+							remove_building = counting_house
+						}
+					}
+				}
 			}
-			random_enemy_country = {
-				limit = { culture_group = kheionai_ruinborn_elf }
-				save_event_target_as = enemy_country
+			#If deathwinds are 7+ in any province destroy 10 units in Alecand
+			if = {
+				limit = {
+					any_owned_province = {
+						OR = {
+							has_province_modifier = deathwind_level_7
+							has_province_modifier = deathwind_level_8
+							has_province_modifier = deathwind_level_9
+							has_province_modifier = deathwind_level_10
+						}
+					}
+				}
+				for = {
+					amount = 10
+					effect = "
+						random_owned_province = {
+							limit = {
+								has_deathwind_modifier = yes
+								land_units_in_province = { effect = ROOT }
+							}
+							kill_land_units = { who = ROOT amount = 1 }
+						}
+					"
+				}
+			}
+			else_if = { #Otherwise if they're 4-6 in any province destroy 5 units in Alecand
+				limit = {
+					any_owned_province = {
+						OR = {
+							has_province_modifier = deathwind_level_4
+							has_province_modifier = deathwind_level_5
+							has_province_modifier = deathwind_level_6
+						}
+					}
+				}
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								has_deathwind_modifier = yes
+								land_units_in_province = { effect = ROOT }
+							}
+							kill_land_units = { who = ROOT amount = 1 }
+						}
+					"
+				}
 			}
 		}
 	}
 
-	option = { #bastards
+	option = {
 		name = kheionai.5.a
-		event_target:damaged_ward_province = {
-			add_temporary_windward_damage = {
-				damage = 1
-				length = 365
+		trigger = { any_owned_province = { has_deathwind_modifier = yes } }
+
+		custom_tooltip = deathwinds_devastation_tt
+
+		if = {
+			limit = {
+				any_owned_province = {
+					OR = {
+						has_province_modifier = deathwind_level_7
+						has_province_modifier = deathwind_level_8
+						has_province_modifier = deathwind_level_9
+						has_province_modifier = deathwind_level_10
+					}
+				}
 			}
-			add_devastation = 5
+			custom_tooltip = deathwinds_building_yes_tt
+			custom_tooltip = deathwinds_units_yes_tt
+			custom_tooltip = deathwinds_units_small_no_tt
 		}
-		add_opinion = {
-			who = event_target:enemy_country
-			modifier = damaged_warding
+		else_if = {
+			limit = {
+				any_owned_province = {
+					OR = {
+						has_province_modifier = deathwind_level_4
+						has_province_modifier = deathwind_level_5
+						has_province_modifier = deathwind_level_6
+					}
+				}
+			}
+			custom_tooltip = deathwinds_building_no_tt
+			custom_tooltip = deathwinds_units_no_tt
+			custom_tooltip = deathwinds_units_small_yes_tt
 		}
+		else = {
+			custom_tooltip = deathwinds_building_no_tt
+			custom_tooltip = deathwinds_units_no_tt
+			custom_tooltip = deathwinds_units_small_no_tt
+		}
+	}
+
+	option = {
+		name = kheionai.5.b
+		highlight = yes
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = no_deathwinds_tt
+				NOT = { any_owned_province = { has_deathwind_modifier = yes } }
+			}
+		}
+		add_splendor = 10
+	}
+
+	option = {
+		name = kheionai.3.b
+		trigger = { has_not_full_deathwinds_system = yes }
+		disable_deathwind_events = yes
 	}
 }
+
+#Deathwinds end event
+country_event = {
+	id = kheionai.6
+	title = kheionai.6.t
+	desc = kheionai.6.desc
+	picture = WOUNDED_SOLDIERS_eventPicture
 	
-#More deathwinds events
-province_event = {
+	is_triggered_only = yes
+	major = yes
+	major_trigger = {
+		any_owned_province = { superregion = kheionai_superregion }
+		NOT = { any_owned_province = { region = alecand_region } }
+	}
+
+	#Flags so the event only fires once and not once per province in Alecand
+	trigger = { NOT = { has_country_flag = deathwinds_disable_events_flag } NOT = { has_country_flag = deathwinds_end_event_flag } }
+	after = { clr_country_flag = deathwinds_end_event_flag }
+	immediate = { hidden_effect = { set_country_flag = deathwinds_end_event_flag } }
+
+	option = {
+		name = kheionai.6.a
+	}
+
+	option = {
+		name = kheionai.3.b
+		trigger = { has_not_full_deathwinds_system = yes }
+		disable_deathwind_events = yes
+	}
+}
+
+#1444 Deathwinds intro event
+country_event = {
 	id = kheionai.7
 	title = kheionai.7.t
-	desc = kheionai.7.d
-	picture = ASSASSINATION_eventPicture
+	picture = WOUNDED_SOLDIERS_eventPicture
 
-	trigger = {
-		has_province_flag = has_temporary_windward_damage
+	desc = {
+		desc = kheionai.7.descKheionai
+		trigger = { NOT = { tag = G60 } }
+	}
+	desc = {
+		desc = kheionai.7.descEltikan
+		trigger = { tag = G60 } #Eltikan
 	}
 
 	is_triggered_only = yes
-	hidden = yes
+	trigger = {
+		capital_scope = { region = alecand_region }
+		NOT = { has_country_flag = had_deathwinds_intro_event }
+	}
+	immediate = { set_country_flag = had_deathwinds_intro_event }
 
-	option = {
-		name = kheionai.7.a
-		reset_temporary_damage = yes
+	option = { #Kheionai
+		name = kheionai.7.k
+		trigger = { NOT = { tag = G60 } }
+		custom_tooltip = deathwinds_intro_tt
+		custom_tooltip = deathwinds_1444_intro_tt
+	}
+
+	option = { #Eltikan
+		name = kheionai.7.e
+		trigger = { tag = G60 }
+		custom_tooltip = deathwinds_intro_tt
+		custom_tooltip = deathwinds_1444_intro_tt
 	}
 }
 
-
-#End the deathwinds
+#Invading Deathwinds intro event
 province_event = {
 	id = kheionai.8
 	title = kheionai.8.t
-	desc = kheionai.8.d
+	desc = kheionai.8.desc
 	picture = WOUNDED_SOLDIERS_eventPicture
-
-	is_triggered_only = yes
-	hidden = yes
 	
+	is_triggered_only = yes
 	trigger = {
-		has_global_flag = alecand_deathwinds_active
+		region = alecand_region
+		owner = { NOT = { has_country_flag = had_deathwinds_intro_event } }
 	}
-
-	immediate = {
-		clr_global_flag = alecand_deathwinds_active
-		# hidden_effect = {
-			end_deathwinds = {
-				alecand = yes
-			}
-		# }
-		clr_province_flag = deathwinds_controller_prov
-	}
+	immediate = { owner = { set_country_flag = had_deathwinds_intro_event } }
 
 	option = {
 		name = kheionai.8.a
-		owner = {
-			every_country = {
-				limit = {
-					any_owned_province = {
-						region = alecand_region
-					}
-				}
-				country_event = { id = kheionai.11 }
-			}
-		}
+		custom_tooltip = deathwinds_intro_tt
+	}
+
+	option = {
+		name = kheionai.3.b
+		trigger = { owner = { has_not_full_deathwinds_system = yes } }
+		owner = { disable_deathwind_events = yes }
 	}
 }
 
-#Deathwinds are here
+#######################################
+# Kheion and Kaydhano Magical Project
+
+# Stage 1 #
+
+#
 country_event = {
-	id = kheionai.9
-	title = kheionai.9.t
-	desc = kheionai.9.d
-	picture = WOUNDED_SOLDIERS_eventPicture
-
-	is_triggered_only = yes
-	hidden = yes
-
-	trigger = {
-		any_owned_province = {
-			region = alecand_region
-		}
-	}
+	id = kheionai.50
+	title = kheionai.50.t
+	desc = kheionai.50.desc
+	picture = MAGIC_STUDY_AND_RELAX_eventPicture
 	
-	immediate = {
-		set_global_flag = alecand_deathwinds_active
-		hidden_effect = {
-			random = {
-				chance = 20
-				country_event = {
-					id = kheionai_flavour.3
-				}
-			}
-		}
-	}
+	is_triggered_only = yes
+	immediate = { set_country_flag = in_magic_progress_event }
+    after = { clr_country_flag = in_magic_progress_event }
 
 	option = {
-		name = kheionai.9.a
-		tooltip = {
-			country_event = {
-				id = kheionai.8
-				days = 1095
-				random = 730
-			}
+		name = kheionai.50.a
+		increase_deathwinds_level = {
+			amount = 1
+			tooltip = magical_advancement
+		}
+		add_country_modifier = {
+			name = kaydhano_exp_mod_1
+			duration = -1
+			desc = until_advancement_concludes
 		}
 	}
 }
-
-#Informer event that the deathwinds are coming
+#
 country_event = {
-	id = kheionai.10
-	title = kheionai.1.t
-	desc = kheionai.1.d
-	picture = WOUNDED_SOLDIERS_eventPicture
-
+	id = kheionai.51
+	title = kheionai.51.t
+	desc = kheionai.51.desc
+	picture = TEXTILE_INDUSTRY_eventPicture
+	
 	is_triggered_only = yes
+	immediate = { set_country_flag = in_magic_progress_event }
+    after = { clr_country_flag = in_magic_progress_event }
 
 	option = {
-		name = kheionai.1.a
-		custom_tooltip = kheionai_deathwind_reminder_tt
-		tooltip = {
-			country_event = {
-				id = kheionai.9
-				days = 365
-			}
-		}
+		name = kheionai.51.a
+
 	}
 }
-
-#Informer event that the deathwinds have ended
+#
 country_event = {
-	id = kheionai.11
-	title = kheionai.8.t
-	desc = kheionai.8.d
-	picture = WOUNDED_SOLDIERS_eventPicture
-
+	id = kheionai.52
+	title = kheionai.52.t
+	desc = kheionai.52.desc
+	picture = MAGE_MOON_eventPicture
+	
 	is_triggered_only = yes
-	major = yes
-	
-	major_trigger = {
-		any_owned_province = {
-			region = alecand_region
-		}
-	}
-	
-	trigger = {
-		has_global_flag = alecand_deathwinds_active
-	}
+	immediate = { set_country_flag = in_magic_progress_event }
+    after = { clr_country_flag = in_magic_progress_event }
 
 	option = {
-		name = kheionai.8.a 
+		name = kheionai.52.a
+		upgrade_highest_level_windward = yes
+		remove_country_modifier = kaydhano_exp_mod_1
+		decrease_deathwinds_level = { amount = 1 }
 	}
 }
 
-#Helper event for the great project as they are loaded before regions
-province_event = {
-	id = kheionai.12
-	title = kheionai.12.t
-	desc = kheionai.12.d
-	picture = WOUNDED_SOLDIERS_eventPicture
+# Stage 2 #
 
+#
+country_event = {
+	id = kheionai.53
+	title = kheionai.53.t
+	desc = kheionai.53.desc
+	picture = MAGIC_STUDY_AND_RELAX_eventPicture
+	
 	is_triggered_only = yes
-	hidden = yes
+	immediate = { set_country_flag = in_magic_progress_event }
+    after = { clr_country_flag = in_magic_progress_event }
 
 	option = {
-		name = kheionai.9.a
-		alecand_region = {
-			add_permanent_windward_level = {
-				level = 1
+		name = kheionai.53.a
+		increase_deathwinds_level = {
+			amount = 2
+			tooltip = magical_advancement
+		}
+		add_country_modifier = {
+			name = kaydhano_exp_mod_2
+			duration = -1
+			desc = until_advancement_concludes
+		}
+	}
+}
+#
+country_event = {
+	id = kheionai.54
+	title = kheionai.54.t
+	desc = kheionai.54.desc
+	picture = EP_ISLAND_eventPicture
+	
+	is_triggered_only = yes
+	immediate = { set_country_flag = in_magic_progress_event }
+    after = { clr_country_flag = in_magic_progress_event }
+
+	option = {
+		name = kheionai.54.a
+
+	}
+}
+#
+country_event = {
+	id = kheionai.55
+	title = kheionai.55.t
+	desc = kheionai.55.desc
+	picture = DAMESTEAR_CORE_eventPicture
+	
+	is_triggered_only = yes
+	immediate = { set_country_flag = in_magic_progress_event }
+    after = { clr_country_flag = in_magic_progress_event }
+
+	option = {
+		name = kheionai.55.a
+		upgrade_highest_level_windward = yes
+		remove_country_modifier = kaydhano_exp_mod_2
+		decrease_deathwinds_level = { amount = 2 }
+	}
+}
+
+# Stage 3 #
+
+#
+country_event = {
+	id = kheionai.56
+	title = kheionai.56.t
+	desc = kheionai.56.desc
+	picture = MAGIC_STUDY_AND_RELAX_eventPicture
+	
+	is_triggered_only = yes
+	immediate = { set_country_flag = in_magic_progress_event }
+    after = { clr_country_flag = in_magic_progress_event }
+
+	option = {
+		name = kheionai.56.a
+		increase_deathwinds_level = {
+			amount = 3
+			tooltip = magical_advancement
+		}
+		add_country_modifier = {
+			name = kaydhano_exp_mod_3
+			duration = -1
+			desc = until_advancement_concludes
+		}
+	}
+}
+#
+country_event = {
+	id = kheionai.57
+	title = kheionai.57.t
+	desc = kheionai.57.desc
+	picture = BYZ_ADVISOR_eventPicture
+	
+	is_triggered_only = yes
+	immediate = { set_country_flag = in_magic_progress_event }
+    after = { clr_country_flag = in_magic_progress_event }
+
+	option = {
+
+		name = kheionai.57.a
+	}
+}
+#
+country_event = {
+	id = kheionai.58
+	title = kheionai.58.t
+	desc = kheionai.58.desc
+	picture = GOLDEN_CITY_eventPicture
+	
+	is_triggered_only = yes
+	immediate = { set_country_flag = in_magic_progress_event }
+    after = { clr_country_flag = in_magic_progress_event }
+
+	option = {
+		name = kheionai.58.a
+		alecandi_capital_provinces = {
+			add_province_modifier = {
+				name = trading_in_deathsand
+				duration = -1
 			}
 		}
+		remove_country_modifier = kaydhano_exp_mod_3
+		decrease_deathwinds_level = { amount = 3 }
 	}
 }
 
+# #random flavour events
+# # enemy damages warding
+# country_event = {
+# 	id = kheionai.5
+# 	title = kheionai.5.t
+# 	desc = kheionai.5.d
+# 	picture = ASSASSINATION_eventPicture
 
-#More deathwinds events
-province_event = {
-	id = kheionai.15
-	title = kheionai.15.t
-	desc = kheionai.15.d
-	picture = ASSASSINATION_eventPicture
+# 	trigger = {
+# 		any_owned_province = {
+# 			region = alecand_region
+# 			has_province_modifier = no_deathwinds_effects
+# 			NOT = { has_province_flag = has_temporary_windward_damage }
+# 		}
+# 		any_enemy_country = {
+# 			culture_group = kheionai_ruinborn_elf
+# 		}
+# 	}
 
-	trigger = {
-		has_province_flag = has_temporary_windward_boost
-	}
+# 	is_triggered_only = yes
+	
+# 	goto = damaged_ward_province
 
-	is_triggered_only = yes
-	hidden = yes
+# 	immediate = {
+# 		hidden_effect = {
+# 			random_owned_province = {
+# 				limit = {
+# 					region = alecand_region
+# 					has_province_modifier = no_deathwinds_effects
+# 					NOT = { has_province_flag = has_temporary_windward_damage }
+# 				}
+# 				save_event_target_as = damaged_ward_province
+# 			}
+# 			random_enemy_country = {
+# 				limit = { culture_group = kheionai_ruinborn_elf }
+# 				save_event_target_as = enemy_country
+# 			}
+# 		}
+# 	}
 
-	option = {
-		name = kheionai.15.a
-		reset_temporary_level = yes
-	}
-}
+# 	option = { #bastards
+# 		name = kheionai.5.a
+# 		event_target:damaged_ward_province = {
+# 			add_temporary_windward_damage = {
+# 				damage = 1
+# 				length = 365
+# 			}
+# 			add_devastation = 5
+# 		}
+# 		add_opinion = {
+# 			who = event_target:enemy_country
+# 			modifier = damaged_warding
+# 		}
+# 	}
+# }
 
 #################
 # Nekhei Events #
