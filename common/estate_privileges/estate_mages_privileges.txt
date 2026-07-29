@@ -1894,19 +1894,28 @@ estate_mages_monstrous_regiment = {
 			AND = {
 				has_country_modifier = monstrous_nation
 				custom_trigger_tooltip = {
-					tooltip = annexed_non_monstrous
-					has_country_flag = annexed_non_monstrous
+					tooltip = annexed_subjugated_non_monstrous
+					OR = {
+						has_country_flag = annexed_non_monstrous
+						has_country_flag = subjugated_non_monstrous
+					}
 				}
+					
 			}
 			AND = {
-				NOT = { has_country_modifier = monstrous_nation }
+				NOT = { has_country_modifier = monstrous_nation }				
 				custom_trigger_tooltip = {
-					tooltip = annexed_monstrous
-					has_country_flag = annexed_monstrous
+					tooltip =  annexed_subjugated_monstrous
+					OR = {
+						has_country_flag = annexed_monstrous
+						has_country_flag = subjugated_monstrous
+					}
 				}
 			}
+				
 		}
 	}
+}
 	
 	benefits = {
 		available_province_loot = 0.1
