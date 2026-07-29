@@ -23706,6 +23706,18 @@ on_dependency_gained = {
 			}
 		}
 	}
+	
+	ROOT = { # mage privileges
+		if = {
+			limit = { current_age = age_of_discovery }
+			if = {
+				limit = { FROM = { has_country_modifier = monstrous_nation } }
+				set_country_flag = subjugated_monstrous
+			}
+			else = { set_country_flag = subjugated_non_monstrous }
+		}
+	}
+	
 }
 
 # ROOT = Overlord, FROM = Minor
@@ -29764,6 +29776,8 @@ on_new_age = {
 		limit = { current_age = age_of_reformation }
 		clr_country_flag = annexed_monstrous #mage privileges
 		clr_country_flag = annexed_non_monstrous
+		clr_country_flag = subjugated_non_monstrous
+		clr_country_flag = subjugated_monstrous
 	}
 
 
