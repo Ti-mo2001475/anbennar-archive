@@ -40,10 +40,7 @@ country_event = { # Powerful Mage Heir
 		}
 		modifier = {
 			factor = 0.5
-			OR = {
-				has_reform = magical_elite_reform
-				has_reform = endhuvi_erudite_court_reform
-			}
+			has_government_attribute = increased_mage_chance_heir
 		}
 		modifier = {
 			factor = 0.2
@@ -85,8 +82,7 @@ country_event = { # Powerful Mage Bastard - child
 	trigger = {
 		OR = {
 			ruler_is_powerful_mage = yes
-			has_reform = magical_elite_reform
-			has_reform = endhuvi_erudite_court_reform
+			has_government_attribute = increased_mage_chance_heir
 		}
 		has_government_attribute = heir
 		NOT = { government = theocracy }
@@ -110,10 +106,7 @@ country_event = { # Powerful Mage Bastard - child
 		months = 1000
 		modifier = {
 			factor = 0.5
-			OR = {
-				has_reform = magical_elite_reform
-				has_reform = endhuvi_erudite_court_reform
-			}
+			has_government_attribute = increased_mage_chance_heir
 		}
 		modifier = {
 			factor = 0.25
@@ -189,7 +182,7 @@ country_event = { # Young Heir turns to be a promising mage
 		}
 		desc =  magic_ruler.105.da
 	}
-	picture = COMET_eventPicture
+	picture = COMET_SIGHTED_eventPicture
 
 	trigger = {
 		has_government_attribute = heir
@@ -218,10 +211,7 @@ country_event = { # Young Heir turns to be a promising mage
 		}
 		modifier = {
 			factor = 0.5
-			OR = {
-				has_reform = magical_elite_reform
-				has_reform = endhuvi_erudite_court_reform
-			}
+			has_government_attribute = increased_mage_chance_heir
 		}
 		modifier = {
 			factor = 0.5
@@ -302,8 +292,8 @@ country_event = { #Powerful Mage Pretender - get a powerful mage ruler
 
 	trigger = {
 		OR = {
-			has_reform = magical_elite_reform
-			has_reform = endhuvi_erudite_court_reform
+			has_government_attribute = increased_mage_chance_ruler
+			has_government_attribute = increased_mage_chance_heir
 		}
 		government = monarchy
 		ruler_is_not_powerful_mage = yes
@@ -557,6 +547,7 @@ country_event = { #Rise of a Witch-King
 		hidden_effect = {
 			make_spell_half_off = { school = conjuration level = 3 id = extraplanar_contact ruler = yes }
 			remove_country_modifier = necromancy_2_speak_with_dead_cooldown_mod
+			remove_country_modifier = necromancy_2_speak_with_dead_cooldown_mod_05
 		}
 	}
 }

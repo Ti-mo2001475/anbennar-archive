@@ -156,7 +156,6 @@ mechanim_advancement_scripted_effect = {
 		}
 		add_treasury = 100
 		custom_tooltip = mechanim_advancement_scripted_effect_level1.tt
-		set_estate_privilege = estate_artificers_organization_pillar_expedition
 		hidden_effect = {
 			set_country_flag = insyaa_invention_arms_menu_unlocked
 			artifice_unlock_random_part_arms = yes
@@ -1539,6 +1538,32 @@ mechanim_teleport_to_pillar_scripted_effect = {
 						}
 						PREV = {
 							infantry = ROOT
+						}
+					}
+					while = {
+						limit = {
+							cavalry_in_province = ROOT
+						}
+						kill_units = {
+							who = owner
+							type = cavalry
+							amount = 1
+						}
+						PREV = {
+							cavalry = ROOT
+						}
+					}
+					while = {
+						limit = {
+							artillery_in_province = ROOT
+						}
+						kill_units = {
+							who = owner
+							type = artillery
+							amount = 1
+						}
+						PREV = {
+							artillery = ROOT
 						}
 					}
 					copy_building_to_target_province = { building = workshop target = PREV gold = yes }

@@ -5,7 +5,10 @@
 can_use_magic = { #Can I cast spells and study? (interact with the magic UI)
 	custom_trigger_tooltip = {
 		tooltip = can_use_magic
-		has_not_banned_magic = yes #banning magic instantly blocks magic, even if you have a PM ruler
+		OR = {
+			has_not_banned_magic_artificery = yes #banning magic instantly blocks magic, even if you have a PM ruler
+			has_country_flag = can_use_magic_while_artificery #Command
+		}
 		NOT = { has_country_modifier = block_magic_temp_modifier } #modifier to block all casting of magic, without removing the mage estate
 		OR = {
 			AND = {
@@ -14,10 +17,6 @@ can_use_magic = { #Can I cast spells and study? (interact with the magic UI)
 			}
 			has_ruler_flag = ruler_can_cast_magic_without_mage_personality_flag #For MT always letting you cast spells, like Zokka
 			ruler_is_powerful_mage = yes
-		}
-		OR = {
-			is_not_in_artificery_mode = yes
-			has_country_flag = can_use_magic_while_artificery #Command
 		}
 	}
 }
@@ -2350,6 +2349,7 @@ has_cast_war_magic = {
 			#Black Herd
 			has_country_modifier = I55_markhentakruan_1_mod
 			has_country_modifier = I55_markhentakruan_2_mod
+			has_country_modifier = I55_markhentakruan_3_mod
 		}
 	}
 }
@@ -3599,7 +3599,10 @@ necromancy_2_speak_with_dead_trigger = { # Speak With Dead
 	is_lesser_in_union = no
 	custom_trigger_tooltip = {
 		tooltip = necromancy_2_speak_with_dead_spell_trigger_tt
-		NOT = { has_ruler_modifier = necromancy_2_speak_with_dead_cooldown_mod }
+		NOT = {
+			has_ruler_modifier = necromancy_2_speak_with_dead_cooldown_mod
+			has_ruler_modifier = necromancy_2_speak_with_dead_cooldown_mod_05
+		}
 	}
 	OR = {
 		NOT = { adm = 5 }
@@ -4628,6 +4631,16 @@ can_upgrade_to_magical_infrastructure_4 = {
 					}
 				}
 				has_nila_tenvach = { level = 3 }
+				AND = {
+					owns = 4811
+					4811 = { # trigger to use the monument
+						has_great_project = {
+							type = jianxusi
+							tier = 3
+						}
+						can_use_monument_jianxusi_trigger = yes
+					}
+				}
 			}
 		}
 	}
@@ -4706,6 +4719,16 @@ can_upgrade_to_magical_infrastructure_3 = {
 					}
 				}
 				has_nila_tenvach = { level = 3 }
+				AND = {
+					owns = 4811
+					4811 = { # trigger to use the monument
+						has_great_project = {
+							type = jianxusi
+							tier = 3
+						}
+						can_use_monument_jianxusi_trigger = yes
+					}
+				}
 			}
 		}
 	}
@@ -4783,6 +4806,16 @@ can_upgrade_to_magical_infrastructure_2 = {
 					}
 				}
 				has_nila_tenvach = { level = 3 }
+				AND = {
+					owns = 4811
+					4811 = { # trigger to use the monument
+						has_great_project = {
+							type = jianxusi
+							tier = 3
+						}
+						can_use_monument_jianxusi_trigger = yes
+					}
+				}
 			}
 		}
 	}
@@ -4862,6 +4895,16 @@ can_upgrade_to_magical_infrastructure_1 = {
 					}
 				}
 				has_nila_tenvach = { level = 3 }
+				AND = {
+					owns = 4811
+					4811 = { # trigger to use the monument
+						has_great_project = {
+							type = jianxusi
+							tier = 3
+						}
+						can_use_monument_jianxusi_trigger = yes
+					}
+				}
 			}
 		}
 	}
@@ -5184,20 +5227,6 @@ evocation_2_centaur_black_herd_5_trigger = {
 	is_at_war = yes
 }
 
-evocation_2_centaur_black_herd_5_effect_sub_trigger = {
-	$scope$ = {
-		[[war_leader]
-			OR = {
-				is_in_war = { attacker_leader = THIS defenders = ROOT }
-				is_in_war = { defender_leader = THIS attackers = ROOT }
-			}
-		]
-		any_owned_province = {
-			sieged_by = ROOT
-			[[priority_trigger] $priority_trigger$ ]
-		}
-	}
-}
 
 #Bulwar
 custom_spell_bulwar_default_1_trigger = {
@@ -5394,6 +5423,26 @@ evocation_3_xhazobkult_default_3_trigger = {
 	NOT = { has_ruler_modifier = fire_that_burn_the_body_and_soul }
 }
 
+#Kaino Federation
+custom_spell_fangaula_kaino_1_trigger = {
+	necromancy_0_fangaula_kaino_1_trigger = { [[player] player = $player$ ] }
+}
+
+necromancy_0_fangaula_kaino_1_trigger = {
+	[[player]
+		has_mana_to_cast_magical_tradition_spell = {
+			school = necromancy
+			level = 0
+			id = fangaula_kaino_1
+			has_spell_specific_discounts = yes
+		}
+	]
+	any_owned_province = {
+		holy_order = kainos_grasp_holy_order
+		development = 4
+	}
+}
+
 #Eighard
 custom_spell_eordand_eighard_5_trigger = {
 	abjuration_1_eordand_eighard_5_trigger = { [[player] player = $player$ ] }
@@ -5437,6 +5486,22 @@ abjuration_2_cannor_clerical_default_3_trigger = {
 	[[player] has_mana_to_cast_magical_tradition_spell = { school = abjuration level = 2 id = cannor_clerical_default_3 } ]
 	legitimacy_equivalent = 90
 	everyone_has_infamy_paragon = yes
+}
+
+#Gemradcurt
+custom_spell_eordand_gemradcurt_5_trigger = {
+	enchantment_1_eordand_gemradcurt_5_trigger = { [[player] player = $player$ ] }
+}
+
+enchantment_1_eordand_gemradcurt_5_trigger = {
+	[[player]
+		has_mana_to_cast_magical_tradition_spell = {
+			school = enchantment
+			level = 1
+			id = eordand_gemradcurt_5
+		}
+	]
+	NOT = { has_country_modifier = gemradcurt_cold_command_mod }
 }
 
 ### STOP.
