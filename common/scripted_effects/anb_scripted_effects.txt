@@ -1636,6 +1636,7 @@ clear_mages_organization_effect = { #Because on_granted fires before the privile
 		remove_estate_privilege = estate_mages_organization_runesmiths
 		remove_estate_privilege = estate_mages_organization_lihos_maidens
 		remove_estate_privilege = estate_mages_organization_magi_clans
+		remove_estate_privilege = estate_mages_organization_sanarenni
 		remove_estate_privilege = estate_mages_organization_onyxguard
 		remove_estate_privilege = estate_mages_organization_proffesional_mihipha
 		remove_estate_privilege = estate_mages_organization_orda_aldresia
@@ -1647,6 +1648,8 @@ clear_mages_organization_effect = { #Because on_granted fires before the privile
 		remove_estate_privilege = estate_mages_organization_acolytes
 		remove_estate_privilege = estate_mages_organization_hydromancers_guild
 		remove_estate_privilege = estate_mages_organization_decimated_shamans
+		remove_estate_privilege = estate_mages_kaino_dao_nako_magecraft
+		remove_estate_privilege = estate_mages_kaino_shadow_lich_chosen
 	}
 }
 
@@ -4659,6 +4662,12 @@ anbennar_building_effect = {
 			province_event = { id = westmoors.24 }
 		}
 	}
+
+	#Devandi Church Power Gain - Mazhthramazh
+	if = {
+		limit = { owner = { religion = mazhthramazh } }
+		owner = { add_church_power = 5 }
+	}
 }
 
 anb_manufactory_discount = {
@@ -5218,6 +5227,11 @@ anb_on_development_effect = {
 			name = shirgrii_khelorvalshi
 			duration = -1
 		}
+	}
+
+	if = {
+		limit = { owner = { has_government_attribute = move_development_with_capital } }
+		change_variable = { $development$_increased_by_owner = 1 }
 	}
 }
 
@@ -7169,12 +7183,10 @@ anb_spawn_own_religion_rebels = {
 	}
 }
 
-#Half Elf colony transition
-anb_colony_becomes_human = {
-	if = {
-		limit = {
-			culture_group = lencori
-		}
+#Half Elf culture transition
+anb_half_elven_culture_becomes_human = {
+    if = {
+		limit = { $culture_check_scope$ = { culture_group = lencori } }
 		if = {
 			limit = {
 				owner = {
@@ -7300,9 +7312,7 @@ anb_colony_becomes_human = {
 		}
 	}
 	else_if = {
-		limit = {
-			culture_group = businori
-		}
+		limit = { $culture_check_scope$ = { culture_group = businori } }
 		if = {
 			limit = {
 				owner = {
@@ -7343,14 +7353,22 @@ anb_colony_becomes_human = {
 			}
 			change_culture = nariandi
 		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = milcori
+					}
+				}
+			}
+			change_culture = milcori
+		}
 		else = {
 			change_culture = busilari
 		}
 	}
 	else_if = {
-		limit = {
-			culture_group = anbennarian
-		}
+		limit = { $culture_check_scope$ = { culture_group = anbennarian } }
 		if = {
 			limit = {
 				owner = {
@@ -7566,9 +7584,7 @@ anb_colony_becomes_human = {
 		}
 	}
 	else_if = {
-		limit = {
-			culture_group = dostanorian_g
-		}
+		limit = { $culture_check_scope$ = { culture_group = dostanorian_g } }
 		if = {
 			limit = {
 				owner = {
@@ -7644,9 +7660,7 @@ anb_colony_becomes_human = {
 		}
 	}
 	else_if = {
-		limit = {
-			culture_group = alenic
-		}
+		limit = { $culture_check_scope$ = { culture_group = alenic } }
 		if = {
 			limit = {
 				owner = {
@@ -7730,6 +7744,302 @@ anb_colony_becomes_human = {
 		else = {
 			change_culture = gawedi
 		}
+	}
+	else_if = {
+		limit = { $culture_check_scope$ = { culture_group = bom } }
+		if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = ranilau 
+					}
+				}
+			}
+			change_culture = ranilau
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = biengdi 
+					}
+				}
+			}
+			change_culture = biengdi
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = gon 
+					}
+				}
+			}
+			change_culture = gon
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = risbeko
+					}
+				}
+			}
+			change_culture = risbeko
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = teplin
+					}
+				}
+			}
+			change_culture = teplin
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = toelnran
+					}
+				}
+			}
+			change_culture = biengdi
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = khethakran
+					}
+				}
+			}
+			change_culture = khethakran
+		}
+		else = { change_culture = ranilau }
+	}
+	else_if = {
+		limit = { $culture_check_scope$ = { culture_group = kai } }
+		if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = phonan
+					}
+				}
+			}
+			change_culture = phonan
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = hinphat 
+					}
+				}
+			}
+			change_culture = hinphat
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = bokai 
+					}
+				}
+			}
+			change_culture = bokai
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = binhrung 
+					}
+				}
+			}
+			change_culture = binhrung
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = sikai
+					}
+				}
+			}
+			change_culture = sikai
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = tamran 
+					}
+				}
+			}
+			change_culture = tamran
+		}
+		else = { change_culture = phonan }
+	}
+	else_if = {
+		limit = { $culture_check_scope$ = { culture_group = kelino } }
+		if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = kelino
+					}
+				}
+			}
+			change_culture = kelino
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = jahe_kelino 
+					}
+				}
+			}
+			change_culture = jahe_kelino
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = kano_kelino 
+					}
+				}
+			}
+			change_culture = kano_kelino
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = yan_kelino 
+					}
+				}
+			}
+			change_culture = yan_kelino
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = gataw
+					}
+				}
+			}
+			change_culture = gataw
+		}
+		else = { change_culture = kelino }
+	}
+	else_if = {
+		limit = { $culture_check_scope$ = { culture_group = bulwari } }
+		if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = bahari 
+					}
+				}
+			}
+			change_culture = bahari
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = gelkar
+					}
+				}
+			}
+			change_culture = gelkar
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = brasanni
+					}
+				}
+			}
+			change_culture = brasanni
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = surani 
+					}
+				}
+			}
+			change_culture = surani
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = zanite 
+					}
+				}
+			}
+			change_culture = zanite
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = abtazari
+					}
+				}
+			}
+			change_culture = abtazari
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = kuzarami 
+					}
+				}
+			}
+			change_culture = kuzarami
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = maqeti 
+					}
+				}
+			}
+			change_culture = maqeti
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = masnsih
+					}
+				}
+			}
+			change_culture = masnsih
+		}
+		else_if = {
+			limit = {
+				owner = {
+					capital_scope = {
+						culture = sadnatu
+					}
+				}
+			}
+			change_culture = sadnatu
+		}
+		else = { change_culture = bahari }
 	}
 }
 
@@ -7839,6 +8149,10 @@ anb_changed_ways_effect = {
 				dominant_culture = nariandi
 			}
 			change_primary_culture = nariandi
+		}
+		else_if = {
+			limit = { dominant_culture = milcori }
+			change_primary_culture = milcori
 		}
 	}
 	else_if = {
@@ -12187,6 +12501,7 @@ B43_corvuria_crusade_effect = {
 	}
 	else_if = {
 		limit = { A59 = { ai = yes } }
+		white_peace = A59
 		A59 = { #Corvuria
 			custom_tooltip = B43_remove_vampires.tt
 			clr_country_flag = has_vampires_estate
@@ -12334,6 +12649,7 @@ form_adenica_scripted_effect = {
 	}
 	swap_non_generic_missions = yes
 	hidden_effect = {
+		set_custom_spell_list = { group = cannor_clerical }
 		set_variable = {
 			which = adenicaChivalryMissionsCompleted
 			value = 0
@@ -13793,6 +14109,367 @@ shirgrii_province_update_scripted_effect = {
 						}
 					}
 				}
+			}
+		}
+	}
+}
+
+anb_change_trade_goods_readd_manufactory = {
+	if = {
+		limit = {
+			has_production_manufactory_or_gold_trigger = yes
+		}
+		change_trade_goods = $tradegoods$
+		add_manufactory = yes
+	}
+	else = {
+		change_trade_goods = $tradegoods$
+	}
+}
+
+anb_change_trade_goods_readd_manufactory_province_id = {
+	if = {
+		limit = { $province_id$ = { has_production_manufactory_or_gold_trigger = yes } }
+		$province_id$ = {
+			change_trade_goods = $tradegoods$
+			add_manufactory = yes
+		}
+	}
+	else = {
+		$province_id$ = { change_trade_goods = $tradegoods$ }
+	}
+}
+
+block_manually_moving_capital = {
+	custom_tooltip = no_move_capital_effect
+	set_country_flag = cannot_move_capital_flag
+}
+
+L22_court_of_fangaula_helped_locals_effect = {
+	custom_tooltip = L22_court_of_fangaula_helped_TT
+	hidden_effect = {
+		owner = {
+			change_variable = {
+				which = L22_court_request_completed
+				value = 1
+			}
+			if = {
+				limit = {
+					has_country_flag = L22_fangaula_court_removes_negative_trait
+				}
+				change_variable = {
+					which = L22_fangaula_court_ruler_trait_counter
+					value = 1
+				}
+			}
+			L22_fangaula_court_removes_negative_trait_scripted_effect = yes
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_country_flag = L22_restored_high_princes }
+		}
+		custom_tooltip = L22_fairest_king_effect_TT
+		hidden_effect = {
+			every_subject_country = {
+				remove_country_modifier = L22_fairest_among_all_kings
+				add_country_modifier = {
+					name = L22_fairest_among_all_kings
+					duration = 3650
+				}
+			}
+		}
+	}
+}
+
+L22_fangaula_court_removes_negative_trait_scripted_effect = {
+	if = {
+		limit = {
+			check_variable = {
+				which = L22_fangaula_court_ruler_trait_counter
+				value = 3
+			}
+			NOT = { has_ruler_flag = L22_fangaula_court_trait_removed }
+			ruler_has_bad_personality = yes
+		}
+		remove_random_bad_ruler_personality = yes
+	}
+}
+
+L22_court_moved_effect = {
+	hidden_effect = {
+		every_owned_or_subject_province = {
+			remove_province_modifier = L22_court_is_here
+		}
+		remove_country_modifier = L22_court_in_sigilan
+		remove_country_modifier = L22_court_in_zitan_tomon
+		remove_country_modifier = L22_court_in_woloso
+		remove_country_modifier = L22_court_in_jiridese_so
+		remove_country_modifier = L22_court_in_sinjetaso
+		remove_country_modifier = L22_court_in_izini
+		remove_country_modifier = L22_court_in_kunolo
+		remove_country_modifier = L22_court_in_jagab_faru
+	}
+}
+
+L22_court_of_fangaula_events_fire = {
+	random_list = {
+		1 = {
+			$province$ = {
+				province_event = { id = binwarji.102 }
+			}
+		}
+		1 = {
+			trigger = {
+				has_advisor = yes
+			}
+			$province$ = {
+				province_event = { id = binwarji.103 }
+			}
+		}
+		1 = {
+			$province$ = {
+				province_event = { id = binwarji.104 }
+			}
+		}
+		1 = {
+			trigger = {
+				OR = {
+					gems = 1
+					any_subject_country = { gems = 1 }
+				}
+			}
+			$province$ = {
+				province_event = { id = binwarji.105 }
+			}
+		}
+		1 = {
+			$province$ = {
+				province_event = { id = binwarji.106 }
+			}
+		}
+		1 = {
+			trigger = {
+				num_of_provinces_owned_or_owned_by_subjects_with = {
+					value = 2
+					OR = {
+						trade_goods = livestock
+						trade_goods = grain
+					}
+				}
+			}
+			$province$ = {
+				province_event = { id = binwarji.107 }
+			}
+		}
+	}
+}
+
+L22_court_of_fangaula_on_province_owner_change = { #Binwarji Court of Fangaula
+	if = {
+		limit = {
+			superregion = fangaula_superregion
+			owner = { 
+				OR = { 
+					has_country_flag = L22_enable_court_of_fangaula
+					overlord = { has_country_flag = L22_enable_court_of_fangaula }
+				}
+			}
+		}
+		trigger_switch = {
+			on_trigger = province_id
+			5813 = { add_province_modifier = { name = L22_court_city_sigilan duration = -1 } }
+			5802 = { add_province_modifier = { name = L22_court_city_zitan_tomon duration = -1 } }
+			5741 = { add_province_modifier = { name = L22_court_city_woloso duration = -1 } }
+			5779 = { add_province_modifier = { name = L22_court_city_jiridese duration = -1 } }
+			5745 = { add_province_modifier = { name = L22_court_city_sinjetaso duration = -1 } }
+			5724 = { add_province_modifier = { name = L22_court_city_izini duration = -1 } }
+			5710 = { add_province_modifier = { name = L22_court_city_kunolo duration = -1 } }
+			5680 = { add_province_modifier = { name = L22_court_city_jagab_faru duration = -1 } }
+		}
+		if = {
+			limit = {
+				area = biakata_area
+				owner = { OR = { has_country_modifier = L22_court_in_sigilan overlord = { has_country_modifier = L22_court_in_sigilan } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				area = mokatanga_area
+				owner = { OR = { has_country_modifier = L22_court_in_zitan_tomon overlord = { has_country_modifier = L22_court_in_zitan_tomon } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				area = cikela_jigin_area
+				owner = { OR = { has_country_modifier = L22_court_in_woloso overlord = { has_country_modifier = L22_court_in_woloso } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				area = janfanciso_area
+				owner = { OR = { has_country_modifier = L22_court_in_jiridese_so overlord = { has_country_modifier = L22_court_in_jiridese_so } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				area = kaino_binni_area
+				owner = { OR = { has_country_modifier = L22_court_in_sinjetaso overlord = { has_country_modifier = L22_court_in_sinjetaso } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				area = janfanciso_area
+				owner = { OR = { has_country_modifier = L22_court_in_jiridese_so overlord = { has_country_modifier = L22_court_in_jiridese_so } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				area = negetu_area
+				owner = { OR = { has_country_modifier = L22_court_in_izini overlord = { has_country_modifier = L22_court_in_izini } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				area = kunolo_area
+				owner = { OR = { has_country_modifier = L22_court_in_kunolo overlord = { has_country_modifier = L22_court_in_kunolo } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				area = jagab_faru_area
+				owner = { OR = { has_country_modifier = L22_court_in_jagab_faru overlord = { has_country_modifier = L22_court_in_jagab_faru } } }
+			}
+			add_province_modifier = {
+				name = L22_court_is_here
+				duration = -1
+			}
+		}
+	}
+	if = {
+		limit = {
+			superregion = fangaula_superregion
+			PREV = {
+				OR = {
+					has_country_flag = L22_enable_court_of_fangaula
+					overlord = { has_country_flag = L22_enable_court_of_fangaula }
+				}
+			}
+		}
+		trigger_switch = {
+			on_trigger = province_id
+			5813 = { PREV = { remove_country_modifier = L22_court_in_sigilan remove_country_modifier = L22_court_recently_migrated biakata_area = { remove_province_modifier = L22_court_is_here } } }
+			5802 = { PREV = { remove_country_modifier = L22_court_in_zitan_tomon remove_country_modifier = L22_court_recently_migrated mokatanga_area = { remove_province_modifier = L22_court_is_here } } }
+			5741 = { PREV = { remove_country_modifier = L22_court_in_woloso remove_country_modifier = L22_court_recently_migrated cikela_jigin_area = { remove_province_modifier = L22_court_is_here } } }
+			5779 = { PREV = { remove_country_modifier = L22_court_in_jiridese_so remove_country_modifier = L22_court_recently_migrated janfanciso_area = { remove_province_modifier = L22_court_is_here } } }
+			5745 = { PREV = { remove_country_modifier = L22_court_in_sinjetaso remove_country_modifier = L22_court_recently_migrated kaino_binni_area = { remove_province_modifier = L22_court_is_here } } }
+			5724 = { PREV = { remove_country_modifier = L22_court_in_izini remove_country_modifier = L22_court_recently_migrated negetu_area = { remove_province_modifier = L22_court_is_here } } }
+			5710 = { PREV = { remove_country_modifier = L22_court_in_kunolo remove_country_modifier = L22_court_recently_migrated kunolo_area = { remove_province_modifier = L22_court_is_here } } }
+			5680 = { PREV = { remove_country_modifier = L22_court_in_jagab_faru remove_country_modifier = L22_court_recently_migrated jagab_faru_area = { remove_province_modifier = L22_court_is_here } } }
+		}
+	}
+}
+
+banbe_anen_quest_for_reehanviza_values = {
+	change_variable = {
+		which = reehanviza_$which$
+		value = $amount$
+	}
+}
+
+#Scripted effect to add Exceptional Willpower so players will actually see the effect
+ #years = X : Which modifier/how many years you want. Currently just 75, 100, & 150
+ #duration = X : The duration of the modifier (DONT ADD IF IT'S PERMANENT - Permanent ruler mods don't need a duration)
+ #extend = yes : Makes it add or extend the modifier (Does not change the tooltip atm)
+ #hidden = yes : If the modifier is meant to be hidden (Does not change the tooltip atm)
+add_exceptional_willpower = {
+	custom_tooltip = add_exceptional_willpower[[duration]_$duration$]
+	custom_tooltip = add_exceptional_willpower_$years$_mod
+	hidden_effect = {
+		add[[extend]_or_extend]_ruler_modifier = {
+			name = exceptional_willpower_$years$
+			[[duration] duration = $duration$ ]
+			[[hidden] hidden = yes ]
+		}
+	}
+}
+
+kill_land_units = {
+	random_list = {
+		1 = {
+			trigger = { infantry_in_province = ROOT }
+			kill_units = { [[who] who = $who$ ] type = infantry [[amount] amount = $amount$ ] }
+		}
+		1 = {
+			trigger = { cavalry_in_province = ROOT }
+			kill_units = { [[who] who = $who$ ] type = cavalry [[amount] amount = $amount$ ] }
+		}
+		1 = {
+			trigger = { artillery_in_province = ROOT }
+			kill_units = { [[who] who = $who$ ] type = artillery [[amount] amount = $amount$ ] }
+		}
+	}
+}
+
+#On action effect
+grant_manpower_from_besieging_fort_spirit_mil = {
+	if = {
+		limit = {
+			ROOT = { has_country_modifier = spirit_military }
+			FROM = {
+				owner = { war_with = ROOT }
+				NOT = { has_province_modifier = estate_nobles_neighbor_raids_fort }
+				fort_level = 1
+			}
+		}
+		FROM = {
+			add_province_modifier = {
+				name = estate_nobles_neighbor_raids_fort
+				duration = 1825
+			}
+		}
+		ROOT = {
+			export_to_variable = {
+				which = manpower_from_fort
+				value = trigger_value:fort_level
+				who = FROM
+			}
+			while = {
+				limit = { check_variable = { manpower_from_fort = 1 } }
+				subtract_variable = { manpower_from_fort = 1 }
+				add_manpower = 2.5
 			}
 		}
 	}

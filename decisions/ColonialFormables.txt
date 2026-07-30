@@ -478,6 +478,7 @@ country_decisions = {
 				}
 				change_tag = H43
 				hidden_effect = {
+					set_custom_spell_list = { group = cannor_clerical }
 					change_variable = { #Cheshoshi purging eventually ends
 						which = ruinborn_race_tolerance_ai
 						value = 150
@@ -500,12 +501,14 @@ country_decisions = {
 						days = 730
 					}
 				}
+				hidden_effect = { set_custom_spell_list = { group = cannor_clerical } }
 			}
 			if = { #Istranar
 				limit  = {
 					tag = H46
 				}
-				change_tag = H47			
+				change_tag = H47
+				hidden_effect = { set_custom_spell_list = { group = cannor_clerical } }			
 			}
 			if = { #Tiru Moine
 				limit  = {
@@ -617,9 +620,11 @@ country_decisions = {
 					tag = H67 #Rezankand
 					ai = no
 				}
+				set_country_flag = block_ecaris_death_event #Election event is called when reform is set
 				change_government = theocracy
 				add_government_reform = exemplar_state
 				swap_non_generic_missions = yes
+				clr_country_flag = block_ecaris_death_event
 			}
 			else = {
 				country_event = { id = marcher.1 days = 1 }

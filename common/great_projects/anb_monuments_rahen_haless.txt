@@ -1604,6 +1604,10 @@ palace_of_divine_call = {
 			limit = { owner = { is_or_was_tag = { tag = Y09 } } } 
 			owner = { mission_completed = bianfang_city_of_temples }
 		}
+		else_if = {
+			limit = { owner = { is_or_was_tag = { tag = Y00 } } } 
+			owner = { mission_completed = azkare_worthy_tomb }
+		}
 		else = {
 			is_capital = yes
 		}
@@ -1620,6 +1624,10 @@ palace_of_divine_call = {
 		else_if = {
 			limit = { owner = { is_or_was_tag = { tag = Y09 } } } 
 			owner = { mission_completed = bianfang_city_of_temples }
+		}
+		else_if = {
+			limit = { owner = { is_or_was_tag = { tag = Y00 } } } 
+			owner = { mission_completed = azkare_worthy_tomb }
 		}
 		else = {
 			is_capital = yes
@@ -2538,13 +2546,14 @@ godswall_tunnel = {
 
 	#what to do when it's built
 	on_built = {
-		add_canal = godswall_tunnel
+		6560 = { add_canal = godswall_tunnel }
 		set_global_flag = godswall_tunnel_opened
+		FROM = { discover_province = 6821 }
 	}
 
 	#what to do when it's destroyed
 	on_destroyed = {
-		remove_canal = godswall_tunnel
+		6560 = { remove_canal = godswall_tunnel }
 		clr_global_flag = godswall_tunnel_opened
 	}
 
@@ -2658,7 +2667,7 @@ dwarovar_valley_tunnel = {
 	start = 4285
 
 	# date built in real life (so anything built during game time will be there if you start a game after that date)
-	date = 1855.06.20
+	date = 1000.06.20
 
 	#time to build
 	time = { months = 180 }
@@ -2670,39 +2679,40 @@ dwarovar_valley_tunnel = {
 	can_be_moved = no
 
 	#tier that the project starts at when first placed in the game (be that at game start or when built by a country as the game progresses)
-	starting_tier = 3
+	starting_tier = 0
 
 	#project type
 	type = canal
 
 	#can we build it?
 	build_trigger = {
-		FROM = {
-			owns_or_vassal_of = 4285
-			is_subject = no
-			adm_tech = 12
-		}
-		NOT = { 6830 = { has_great_project = { type = valley_dwarovar_tunnel } has_construction = dwarovar_valley_tunnel } }
 	}
 
 	#what to do when it's built
 	on_built = {
-		add_canal = dwarovar_valley_tunnel
-		set_global_flag = dwarovar_valley_tunnel_opened
-		FROM = { discover_province = 6830 }
 	}
 
 	#what to do when it's destroyed
 	on_destroyed = {
-		remove_canal = dwarovar_valley_tunnel
-		clr_global_flag = dwarovar_valley_tunnel_opened
 	}
 
 	#can our country use it?
 	can_use_modifiers_trigger = {}
 
 	#can our country upgrade it?
-	can_upgrade_trigger = { NOT = { 6830 = { has_great_project = { type = valley_dwarovar_tunnel } } } }
+	can_upgrade_trigger = {
+		NOT = { has_construction = any }
+		NOT = { 6830 = { has_construction = great_project } }
+		FROM = { is_subject = no }
+		FROM = { adm_tech = 12 }
+		if = {
+			limit = { has_global_flag = dwarovar_valley_tunnel_opened }
+			custom_trigger_tooltip = {
+				tooltip = someday_i_will_return_and_make_you_free
+				has_province_flag = tunnel_open_first_from_this_side
+			}
+		}
+	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
 	keep_trigger = {}
@@ -2726,8 +2736,6 @@ dwarovar_valley_tunnel = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
-			owner = { accretive_path_gain_chi = { aspect = the_second_ascension category = adm amount = 100 } }
-			owner = { if = { limit = { has_reform = tsukqiao_throne_of_lies_reform } add_legitimacy = 10 } }
 		}
 	}
 
@@ -2736,21 +2744,39 @@ dwarovar_valley_tunnel = {
 		upgrade_time = { months = 120 }
 
 		#cost to upgrade to this level (0 for tier 0)
-		cost_to_upgrade = { factor = 1000 }
+		cost_to_upgrade = {
+			factor = 1000
+			modifier = {
+				factor = 4
+				NOT = { has_global_flag = dwarovar_valley_tunnel_opened }
+			}
+		}
 
 		#what modifiers are added to the province when we have this project here on this tier
-		province_modifiers = {}
+		province_modifiers = {
+			local_friendly_movement_speed = 0.2
+		}
 
 		#what modifiers are added to the provinces in the map area when we have this project here on this tier
 		area_modifier = {}
 
 		#what modifiers are added to the country when we have this project here on this tier
-		country_modifiers = {}
+		country_modifiers = {
+			global_trade_power = 0.02
+		}
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			FROM = { discover_province = 6830 }
 			owner = { accretive_path_gain_chi = { aspect = the_second_ascension category = adm amount = 100 } }
 			owner = { if = { limit = { has_reform = tsukqiao_throne_of_lies_reform } add_legitimacy = 10 } }
+			if = {
+				limit = { NOT = { has_global_flag = dwarovar_valley_tunnel_opened } }
+				custom_tooltip = dwarovar_valley_tunnel_tt
+				1787 = { add_canal = dwarovar_valley_tunnel }
+				set_global_flag = dwarovar_valley_tunnel_opened
+				set_province_flag = tunnel_open_first_from_this_side
+			}
 		}
 	}
 
@@ -2762,13 +2788,17 @@ dwarovar_valley_tunnel = {
 		cost_to_upgrade = { factor = 1000 }
 
 		#what modifiers are added to the province when we have this project here on this tier
-		province_modifiers = {}
+		province_modifiers = {
+			local_friendly_movement_speed = 0.3
+		}
 
 		#what modifiers are added to the provinces in the map area when we have this project here on this tier
 		area_modifier = {}
 
 		#what modifiers are added to the country when we have this project here on this tier
-		country_modifiers = {}
+		country_modifiers = {
+			global_trade_power = 0.03
+		}
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
@@ -2785,13 +2815,17 @@ dwarovar_valley_tunnel = {
 		cost_to_upgrade = { factor = 1000 }
 
 		#what modifiers are added to the province when we have this project here on this tier
-		province_modifiers = {}
+		province_modifiers = {
+			local_friendly_movement_speed = 0.5
+		}
 
 		#what modifiers are added to the provinces in the map area when we have this project here on this tier
 		area_modifier = {}
 
 		#what modifiers are added to the country when we have this project here on this tier
-		country_modifiers = {}
+		country_modifiers = {
+			global_trade_power = 0.05
+		}
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
@@ -2806,7 +2840,7 @@ valley_dwarovar_tunnel = {
 	start = 6830
 
 	# date built in real life (so anything built during game time will be there if you start a game after that date)
-	date = 1855.06.20
+	date = 1000.06.20
 
 	#time to build
 	time = { months = 180 }
@@ -2818,39 +2852,40 @@ valley_dwarovar_tunnel = {
 	can_be_moved = no
 
 	#tier that the project starts at when first placed in the game (be that at game start or when built by a country as the game progresses)
-	starting_tier = 3
+	starting_tier = 0
 
 	#project type
 	type = canal
 
 	#can we build it?
 	build_trigger = {
-		FROM = {
-			owns_or_vassal_of = 6830
-			is_subject = no
-			adm_tech = 12
-		}
-		NOT = { 4285 = { has_great_project = { type = dwarovar_valley_tunnel } has_construction = valley_dwarovar_tunnel } }
 	}
 
 	#what to do when it's built
 	on_built = {
-		add_canal = valley_dwarovar_tunnel
-		set_global_flag = dwarovar_valley_tunnel_opened
-		FROM = { discover_province = 4285 }
 	}
 
 	#what to do when it's destroyed
 	on_destroyed = {
-		remove_canal = valley_dwarovar_tunnel
-		clr_global_flag = dwarovar_valley_tunnel_opened
 	}
 
 	#can our country use it?
 	can_use_modifiers_trigger = {}
 
 	#can our country upgrade it?
-	can_upgrade_trigger = { NOT = { 4285 = { has_great_project = { type = dwarovar_valley_tunnel } } } }
+	can_upgrade_trigger = {
+		NOT = { has_construction = any }
+		NOT = { 4285 = { has_construction = great_project } }
+		FROM = { is_subject = no }
+		FROM = { adm_tech = 12 }
+		if = {
+			limit = { has_global_flag = dwarovar_valley_tunnel_opened }
+			custom_trigger_tooltip = {
+				tooltip = someday_i_will_return_and_make_you_free
+				has_province_flag = tunnel_open_first_from_this_side
+			}
+		}
+	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
 	keep_trigger = {}
@@ -2874,8 +2909,6 @@ valley_dwarovar_tunnel = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
-			owner = { accretive_path_gain_chi = { aspect = the_second_ascension category = adm amount = 100 } }
-			owner = { if = { limit = { has_reform = tsukqiao_throne_of_lies_reform } add_legitimacy = 10 } }
 		}
 	}
 
@@ -2884,21 +2917,39 @@ valley_dwarovar_tunnel = {
 		upgrade_time = { months = 120 }
 
 		#cost to upgrade to this level (0 for tier 0)
-		cost_to_upgrade = { factor = 1000 }
+		cost_to_upgrade = {
+			factor = 1000
+			modifier = {
+				factor = 4
+				NOT = { has_global_flag = dwarovar_valley_tunnel_opened }
+			}
+		}
 
 		#what modifiers are added to the province when we have this project here on this tier
-		province_modifiers = {}
+		province_modifiers = {
+			local_friendly_movement_speed = 0.2
+		}
 
 		#what modifiers are added to the provinces in the map area when we have this project here on this tier
 		area_modifier = {}
 
 		#what modifiers are added to the country when we have this project here on this tier
-		country_modifiers = {}
+		country_modifiers = {
+			global_trade_power = 0.02
+		}
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			FROM = { discover_province = 4285 }
 			owner = { accretive_path_gain_chi = { aspect = the_second_ascension category = adm amount = 100 } }
 			owner = { if = { limit = { has_reform = tsukqiao_throne_of_lies_reform } add_legitimacy = 10 } }
+			if = {
+				limit = { NOT = { has_global_flag = dwarovar_valley_tunnel_opened } }
+				custom_tooltip = dwarovar_valley_tunnel_tt
+				1787 = { add_canal = valley_dwarovar_tunnel }
+				set_global_flag = dwarovar_valley_tunnel_opened
+				set_province_flag = tunnel_open_first_from_this_side
+			}
 		}
 	}
 
@@ -2910,13 +2961,17 @@ valley_dwarovar_tunnel = {
 		cost_to_upgrade = { factor = 1000 }
 
 		#what modifiers are added to the province when we have this project here on this tier
-		province_modifiers = {}
+		province_modifiers = {
+			local_friendly_movement_speed = 0.3
+		}
 
 		#what modifiers are added to the provinces in the map area when we have this project here on this tier
 		area_modifier = {}
 
 		#what modifiers are added to the country when we have this project here on this tier
-		country_modifiers = {}
+		country_modifiers = {
+			global_trade_power = 0.03
+		}
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
@@ -2933,13 +2988,17 @@ valley_dwarovar_tunnel = {
 		cost_to_upgrade = { factor = 1000 }
 
 		#what modifiers are added to the province when we have this project here on this tier
-		province_modifiers = {}
+		province_modifiers = {
+			local_friendly_movement_speed = 0.5
+		}
 
 		#what modifiers are added to the provinces in the map area when we have this project here on this tier
 		area_modifier = {}
 
 		#what modifiers are added to the country when we have this project here on this tier
-		country_modifiers = {}
+		country_modifiers = {
+			global_trade_power = 0.05
+		}
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
@@ -4311,13 +4370,13 @@ nomsyulhan_crossing = {
 
 	#what to do when it's built
 	on_built = {
-		add_canal = nomsyulhan_crossing
+		6562 = { add_canal = nomsyulhan_crossing }
 		set_global_flag = nomsyulhan_crossing_opened
 	}
 
 	#what to do when it's destroyed
 	on_destroyed = {
-		remove_canal = nomsyulhan_crossing
+		6562 = { remove_canal = nomsyulhan_crossing}
 		clr_global_flag = nomsyulhan_crossing_opened
 	}
 
@@ -4424,4 +4483,99 @@ nomsyulhan_crossing = {
 			owner = { if = { limit = { has_reform = tsukqiao_throne_of_lies_reform } add_legitimacy = 10 } }
 		}
 	}
+}
+
+jianxusi = { start = 4811 #jianxusi
+	date = 1444.1.1
+	time = { months = 1 }
+	build_cost = 5000
+	can_be_moved = no
+	move_days_per_unit_distance = 10
+	starting_tier = 1
+
+	type = monument
+	build_trigger = {}
+	on_built = {}
+	on_destroyed = {}
+	can_use_modifiers_trigger = { #also used in divination_1_deposit_divination_effect & divination_1_deposit_divination_sub_effect
+		can_use_monument_jianxusi_trigger = yes
+	}
+	can_upgrade_trigger = { #also used in divination_1_deposit_divination_effect & divination_1_deposit_divination_sub_effect
+		can_use_monument_jianxusi_trigger = yes
+	}
+	keep_trigger = {}
+	tier_0 = { 
+		upgrade_time = { months = 0 } 
+		cost_to_upgrade = { factor = 0 } 
+		province_modifiers = {}
+		area_modifier = {}
+		country_modifiers = {}
+		on_upgraded = {}
+	}
+	tier_1 = {
+		cost_to_upgrade = { factor = 1000 } 
+		upgrade_time = { months = 120 } 
+		province_modifiers = {
+			trade_goods_size = 0.50
+		}
+		area_modifier = {}
+		country_modifiers = {
+			mages_influence_modifier = 0.05
+			global_missionary_strength = 0.005
+		}
+		on_upgraded = {}	
+	}
+	tier_2 = {
+		cost_to_upgrade = { factor = 2500 }
+		upgrade_time = { months = 240 } 
+		province_modifiers = {
+			trade_goods_size = 1
+		}
+		area_modifier = {}
+		country_modifiers = {
+			mages_influence_modifier = 0.05
+			mages_loyalty_modifier = 0.05			
+			global_missionary_strength = 0.01
+		}
+		on_upgraded = {
+			custom_tooltip = monument_jianxusi_tier_2_tooltip
+			#other effect:
+			#The spell Divined Deposits is +33% Local Goods Produced Modifier.
+			#modifier name : jianxusi_modifier_tier_II_for_deposit_divination
+			#changes made in txt below
+			#anb_scripted_effects_for_magic_spells.txt :
+			#divination_1_deposit_divination_sub_effect    add buff to country when cast spell
+		}	
+	}
+	tier_3 = {
+		cost_to_upgrade = { factor = 5000 }
+		upgrade_time = { months = 480 }
+		province_modifiers = {
+			trade_goods_size = 1.5
+		}
+		area_modifier = {}
+		region_modifier = {}
+		country_modifiers = {
+			mages_influence_modifier = 0.10
+			mages_loyalty_modifier = 0.10	
+			mages_estate_experience_mod = 0.10
+			global_missionary_strength = 0.02
+		}
+		on_upgraded = {
+			custom_tooltip = monument_jianxusi_tier_3_tooltip
+			#other effect:
+			#The duration of the spell Divined Deposits is doubled and +33% Local Goods Produced Modifier.
+			#The spell Divined Deposits is +33% Local Goods Produced Modifier.
+			#modifier name : jianxusi_modifier_tier_II_for_deposit_divination
+			#changes made in txt below
+			#anb_scripted_effects_for_magic_spells.txt :
+			#divination_1_deposit_divination_effect    double buff existing time
+			#divination_1_deposit_divination_sub_effect    add buff to country when cast spell
+
+			# As a Special Magical Infrastructure Requirement 
+			#changes made below：
+			#anb_scripted_triggers_magic.txt：
+			#can_upgrade_to_magical_infrastructure_1	can_upgrade_to_magical_infrastructure_2		can_upgrade_to_magical_infrastructure_3		can_upgrade_to_magical_infrastructure_4			
+		}
+	}	
 }
