@@ -1166,9 +1166,8 @@ on_religion_change = {
 		}
 		every_owned_province = {
 			remove_province_modifier = the_defiant_barracks_buff
-			remove_province_modifier = the_defiant_barracks_buff_upgrade
 			remove_province_modifier = the_defiant_regiment_camp_buff
-			remove_province_modifier = the_defiant_regiment_camp_buff_upgrade
+			remove_province_modifier = the_defiant_soldier_households_buff
 		}
 	}
 }
@@ -20138,26 +20137,10 @@ on_province_owner_change = {
 			limit = {
 				has_manpower_building_trigger = yes
 			}
-			if = {
-				limit = {
-					4917 = {
-						has_great_project = {
-							type = thousand_words_assembly
-							tier = 3
-						}
-					}
-					has_building = soldier_households 
-				}
-				add_province_modifier = {
-					name = the_defiant_barracks_buff_upgrade
-					duration = -1
-				}
-			}
-			else = {
-				add_province_modifier = {
-					name = the_defiant_barracks_buff
-					duration = -1
-				}
+			add_province_modifier = {
+				name = the_defiant_barracks_buff
+				hidden = yes
+				duration = -1
 			}
 		}
 		if = {
@@ -20170,26 +20153,26 @@ on_province_owner_change = {
 					}
 				}
 			}
-			if = {
-				limit = { 
-					has_building = soldier_households
-					4917 = {
-						has_great_project = {
-							type = thousand_words_assembly
-							tier = 3
-						}
+			add_province_modifier = {
+				name = the_defiant_regiment_camp_buff
+				hidden = yes
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				has_building = soldier_households
+				4917 = {
+					has_great_project = {
+						type = thousand_words_assembly
+						tier = 3
 					}
 				}
-				add_province_modifier = {
-					name = the_defiant_regiment_camp_buff_upgrade
-					duration = -1
-				}
 			}
-			else = {
-				add_province_modifier = {
-					name = the_defiant_regiment_camp_buff
-					duration = -1
-				}
+			add_province_modifier = {
+				name = the_defiant_soldier_households_buff
+				hidden = yes
+				duration = -1
 			}
 		}
 	}
@@ -20200,9 +20183,8 @@ on_province_owner_change = {
 		PREV = {
 			every_owned_province = {
 				remove_province_modifier = the_defiant_barracks_buff
-				remove_province_modifier = the_defiant_barracks_buff_upgrade
 				remove_province_modifier = the_defiant_regiment_camp_buff
-				remove_province_modifier = the_defiant_regiment_camp_buff_upgrade
+				remove_province_modifier = the_defiant_soldier_households_buff
 			}
 		}
 		if = {
@@ -20228,26 +20210,10 @@ on_province_owner_change = {
 					limit = {
 						has_manpower_building_trigger = yes
 					}
-					if = {
-						limit = {
-							4917 = {
-								has_great_project = {
-									type = thousand_words_assembly
-									tier = 3
-								}
-							}
-							has_building = soldier_households 
-						}
-						add_province_modifier = {
-							name = the_defiant_barracks_buff_upgrade
-							duration = -1
-						}
-					}
-					else = {
-						add_province_modifier = {
-							name = the_defiant_barracks_buff
-							duration = -1
-						}
+					add_province_modifier = {
+						name = the_defiant_barracks_buff
+						hidden = yes
+						duration = -1
 					}
 				}
 				if = {
@@ -20260,26 +20226,26 @@ on_province_owner_change = {
 							}
 						}
 					}
-					if = {
-						limit = { 
-							has_building = soldier_households
-							4917 = {
-								has_great_project = {
-									type = thousand_words_assembly
-									tier = 3
-								}
+					add_province_modifier = {
+						name = the_defiant_regiment_camp_buff
+						hidden = yes
+						duration = -1
+					}
+				}
+				if = {
+					limit = {
+						has_building = soldier_households
+						4917 = {
+							has_great_project = {
+								type = thousand_words_assembly
+								tier = 3
 							}
 						}
-						add_province_modifier = {
-							name = the_defiant_regiment_camp_buff_upgrade
-							duration = -1
-						}
 					}
-					else = {
-						add_province_modifier = {
-							name = the_defiant_regiment_camp_buff
-							duration = -1
-						}
+					add_province_modifier = {
+						name = the_defiant_soldier_households_buff
+						hidden = yes
+						duration = -1
 					}
 				}
 			}
