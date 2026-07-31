@@ -1,3 +1,47 @@
+warlord_of_haless_check = { #Am I the new Warlord of Haless?
+	if = {
+		limit = {
+			capital_scope = { continent = asia NOT = { superregion = forbidden_lands_superregion } } #independent nation with capital in Haless
+			is_subject = no
+			OR = {
+				NOT = { has_saved_global_event_target = warlord_of_haless }
+				AND = {
+					has_saved_global_event_target = warlord_of_haless #in theory this is duplicative of above, but I don't want to chance PDX's trigger-optimization reordering
+					event_target:warlord_of_haless = { NOT = { total_own_and_non_tributary_subject_development = PREV } } #strictly less dev than the new guy
+				}
+			}
+		}
+		save_global_event_target_as = warlord_of_haless
+		country_event = { id = haless.1011 }
+	}
+}
+anti_warlord_of_haless_check = { #Am I no longer the Warlord of Haless?
+	if = {
+		limit = {
+			has_saved_global_event_target = warlord_of_haless
+			tag = event_target:warlord_of_haless #I am the current Warlord
+			OR = { #I am disqualified on one of the following grounds
+				capital_scope = { #My capital is outside Haless
+					NOT = {
+						AND = {
+							continent = asia
+							NOT = { superregion = forbidden_lands_superregion }
+						}
+					}
+				}
+				is_subject = yes #I've been subjugated
+				any_country = { #I'm smaller than someone else
+					capital_scope = { continent = asia NOT = { superregion = forbidden_lands_superregion } }
+					is_subject = no
+					event_target:warlord_of_haless = { NOT = { total_own_and_non_tributary_subject_development = PREV } }
+				}
+			}
+		}
+		clear_global_event_target = warlord_of_haless #We must clear event target in case of subjugation
+		4411 = { province_event = { id = haless.1010 } } #Find a new warlord
+	}
+}
+
 #One Xia accept all Xia races and cultures
 xia_accept_all_xia_cultures = {
     custom_tooltip = xia_accept_all_xia_cultures_tt
