@@ -377,92 +377,41 @@ railskulker_column_4 = {
 			}
 			
 		provinces_to_highlight = {
-			owned_by = ROOT
-			has_terrain = cavern
+			area = skulkers_lair_area
 			NOT = {
-				has_production_building_trigger = yes
+				has_production_or_gold_building_trigger = yes
 				base_production = 3
-				trade_goods = gold
+				owned_by = ROOT
 			}
 		}
 				
-		trigger = {						
-			num_of_owned_provinces_with = {
-				value = 3
-				AND = {
-					has_terrain = cavern
-					base_production = 3
-					has_production_building_trigger = yes
-				}
+		trigger = {
+			skulkers_lair_area = { 
+				type = all
+				has_production_or_gold_building_trigger = yes
+				base_production = 3
+				owned_by = ROOT 
 			}
 		}
 		
 		effect = {
-				4165 = {
-					if = {
-						limit = {
-							NOT = {
-								trade_goods = iron
-								trade_goods = coal
-								trade_goods = copper
-								trade_goods = gold
-								trade_goods = gems
-								trade_goods = damestear
-							}
-						}
-						4165 = { 
-							change_trade_goods = fungi
-							add_permanent_province_modifier = {
-								name = "railskulker_state_backed_food_security"
-								duration = -1
-								}
-							}
+			skulkers_lair_area = {
+				if = {
+					limit = {
+						NOT = {
+							trade_goods = gold
 						}
 					}
-				4212 = {
-					if = {
-						limit = {
-							NOT = {
-								trade_goods = iron
-								trade_goods = coal
-								trade_goods = copper
-								trade_goods = gold
-								trade_goods = gems
-								trade_goods = damestear
-								}
-							}
-						4212 = { 
-							change_trade_goods = fungi
-							add_permanent_province_modifier = {
-								name = "railskulker_state_backed_food_security"
-								duration = -1
-								}
-							}
+
+					change_trade_goods = fungi
+					add_permanent_province_modifier = {
+						name = "railskulker_state_backed_food_security"
+						duration = -1
 						}
-					}	
-				4213 = {
-					if = {
-						limit = {
-							NOT = {
-								trade_goods = iron
-								trade_goods = coal
-								trade_goods = copper
-								trade_goods = gold
-								trade_goods = gems
-								trade_goods = damestear
-								}	
-							}
-						4213 = { 
-							change_trade_goods = fungi
-							add_permanent_province_modifier = {
-								name = "railskulker_state_backed_food_security"
-								duration = -1
-								}
-							}
-						}
-					}
 				}
 			}
+		}
+	}
 	
 	railskulker_searching_for_new_mushrooms = {
 		icon = mission_crystal_cave
