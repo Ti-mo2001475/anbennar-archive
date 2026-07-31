@@ -140,7 +140,10 @@ country_event = {
 	picture = RELIGION_eventPicture
 
 	trigger = {
-		has_personal_deity = the_dame
+		OR = {
+			has_personal_deity = the_dame
+			has_personal_deity = the_dame_upgraded
+		}
 		rc_has_emulant_potential = { deity = dame }
 	}
 
@@ -271,6 +274,7 @@ country_event = {
 	trigger = {
 		OR = {
 			has_personal_deity = esmaryal
+			has_personal_deity = esmaryal_upgraded
 			has_personal_deity = esmaryal_upgraded_themarenn
 		}
 		rc_has_emulant_potential = { deity = esmaryal }
@@ -530,11 +534,22 @@ country_event = {
 	picture = RELIGION_eventPicture
 
 	trigger = {
-		has_personal_deity = nerat
-		rc_has_emulant_potential = { deity = nerat }
+		OR = {
+			AND = {
+				has_personal_deity = nerat
+				rc_has_emulant_potential = { deity = nerat }
+			}
+			has_country_flag = force_favored_RC_13
+		}
 	}
 
 	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = force_favored_RC_13
+		}
+	}
 
 	# Emulate aspect 1
 	option = {
@@ -1053,7 +1068,10 @@ country_event = {
 	picture = RELIGION_eventPicture
 
 	trigger = {
-		has_personal_deity = ara
+		OR = {
+			has_personal_deity = ara
+			has_personal_deity = ara_upgraded
+		}
 		rc_has_emulant_potential = { deity = ara }
 	}
 
@@ -1448,7 +1466,10 @@ country_event = {
 	picture = RELIGION_eventPicture
 
 	trigger = {
-		has_personal_deity = minara
+		OR = {
+			has_personal_deity = minara
+			has_personal_deity = minara_upgraded
+		}
 		rc_has_emulant_potential = { deity = minara }
 	}
 

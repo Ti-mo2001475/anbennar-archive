@@ -788,50 +788,7 @@ country_event = {
 	title = racial_pop_events_half_orcish.12.t
 	desc = { trigger = { ai = yes } desc = racial_pop_events_all.12.ai }
 	desc = { trigger = { ai = no } desc = racial_pop_events_half_orcish.12.d }
-	picture = {
-		trigger = {
-			has_country_modifier = racial_focus_half_orcish
-			NOT = { has_country_modifier = racial_pop_half_orcish_expulsion }
-			NOT = { has_country_modifier = racial_pop_half_orcish_purge }
-		}
-		picture = POP_POLICY_FOCUS_eventPicture
-	}
-	picture = {
-		trigger = {
-			has_country_modifier = racial_pop_half_orcish_purge
-			NOT = { has_country_modifier = racial_focus_half_orcish }
-		}
-		picture = POP_POLICY_PURGE_eventPicture
-	}
-	picture = {
-		trigger = {
-			has_country_modifier = racial_pop_half_orcish_purge
-			has_country_modifier = racial_focus_half_orcish
-		}
-		picture = POP_POLICY_PURGE_FOCUS_eventPicture
-	}
-	picture = {
-		trigger = {
-			has_country_modifier = racial_pop_half_orcish_expulsion
-			NOT = { has_country_modifier = racial_focus_half_orcish }
-		}
-		picture = POP_POLICY_EXPULSION_eventPicture
-	}
-	picture = {
-		trigger = {
-			has_country_modifier = racial_pop_half_orcish_expulsion
-			has_country_modifier = racial_focus_half_orcish
-		}
-		picture = POP_POLICY_EXPULSION_FOCUS_eventPicture
-	}
-	picture = {
-		trigger = {
-			NOT = { has_country_modifier = racial_focus_half_orcish }
-			NOT = { has_country_modifier = racial_pop_half_orcish_expulsion }
-			NOT = { has_country_modifier = racial_pop_half_orcish_purge }
-		}
-		picture = POP_POLICY_NONE_eventPicture
-	}
+	picture = none
 	
 	is_triggered_only = yes
 	
@@ -2355,7 +2312,20 @@ country_event = {
 		
 		#Remove Minority from Origin Province
 		event_target:racial_pop_province_origin = {
-			change_culture = ROOT
+			if = {
+				limit = {
+					owner = {
+						has_country_modifier = half_elven_administration
+						NOT = { primary_culture = farrani_half_elf }
+						NOT = { has_country_modifier = racial_pop_human_purge }
+						NOT = { has_country_modifier = racial_pop_human_expulsion }
+					}
+				}
+				anb_half_elven_culture_becomes_human = { culture_check_scope = owner }
+			}
+			else = {
+				change_culture = ROOT
+			}
 			change_religion = ROOT
 			add_devastation = 15
 			
@@ -2848,7 +2818,20 @@ country_event = {
 			hidden_effect = { remove_racial_majority = { race = half_orcish } } # delete immediately so no minority left
 
 			add_devastation = 25
-			change_culture = ROOT
+			if = {
+				limit = {
+					owner = {
+						has_country_modifier = half_elven_administration
+						NOT = { primary_culture = farrani_half_elf }
+						NOT = { has_country_modifier = racial_pop_human_purge }
+						NOT = { has_country_modifier = racial_pop_human_expulsion }
+					}
+				}
+				anb_half_elven_culture_becomes_human = { culture_check_scope = owner }
+			}
+			else = {
+				change_culture = ROOT
+			}
 			change_religion = ROOT
 			random_list = {
 				1 = {
@@ -3493,7 +3476,20 @@ country_event = {
 			hidden_effect = { remove_racial_majority = { race = half_orcish } } # delete immediately so no minority left
 
 			add_devastation = 15
-			change_culture = ROOT
+			if = {
+				limit = {
+					owner = {
+						has_country_modifier = half_elven_administration
+						NOT = { primary_culture = farrani_half_elf }
+						NOT = { has_country_modifier = racial_pop_human_purge }
+						NOT = { has_country_modifier = racial_pop_human_expulsion }
+					}
+				}
+				anb_half_elven_culture_becomes_human = { culture_check_scope = owner }
+			}
+			else = {
+				change_culture = ROOT
+			}
 			change_religion = ROOT
 			remove_random_development = yes
 			
@@ -3513,7 +3509,20 @@ country_event = {
 			hidden_effect = { remove_racial_majority = { race = half_orcish } } # delete immediately so no minority left
 
 			add_devastation = 30
-			change_culture = ROOT
+			if = {
+				limit = {
+					owner = {
+						has_country_modifier = half_elven_administration
+						NOT = { primary_culture = farrani_half_elf }
+						NOT = { has_country_modifier = racial_pop_human_purge }
+						NOT = { has_country_modifier = racial_pop_human_expulsion }
+					}
+				}
+				anb_half_elven_culture_becomes_human = { culture_check_scope = owner }
+			}
+			else = {
+				change_culture = ROOT
+			}
 			change_religion = ROOT
 			remove_random_development = yes
 			
