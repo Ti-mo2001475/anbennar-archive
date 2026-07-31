@@ -13895,14 +13895,6 @@ startup_1444_effects = {
 			}
 		}
 	}
-
-	yanszin_heartland_group = {
-		limit = { NOT = { province_id = 4851 } }
-		add_province_modifier = {
-			name = thousand_words_assembly_yanszin_buff_1
-			duration = -1
-		}
-	}
 }
 
 on_province_owner_change_effect = {
@@ -19823,6 +19815,289 @@ on_province_owner_change_monuments = {
 		province_event = { id = insyaa_flavour.2003 } #on_secret_of_the_hinuilands_owned needs a 1 day delay
 	}
 	
+	#Port of Two Spirits
+	if = {
+		limit = {
+			owner = { owns = 4774 }
+			4774 = {
+				has_great_project = {
+					type = port_of_two_spirits
+					tier = 2
+				}
+			}
+			province_has_center_of_trade_of_level = 1
+		}
+		if = {
+			limit = {
+				4774 = {
+					has_great_project = {
+						type = port_of_two_spirits
+						tier = 3
+					}
+				}
+			}
+			add_province_modifier = {
+				name = port_of_two_spirits_trade_center_modifier_2
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = port_of_two_spirits_trade_center_modifier_1
+				duration = -1
+			}
+		}
+	}
+	if = {
+		limit = {
+			province_id = 4774
+		}
+		FROM = {
+			every_owned_province = {
+				remove_province_modifier = port_of_two_spirits_trade_center_modifier_1
+				remove_province_modifier = port_of_two_spirits_trade_center_modifier_2
+			}
+		}
+	}
+
+	#Thousand Words Assembly
+	if = {
+		limit = {
+			province_group = yanszin_heartland_group
+			4859 = {
+				has_great_project = {
+					type = thousand_words_assembly
+					tier = 1
+				}
+				owner = {
+					can_use_thousand_words_assembly_scripted_trigger = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				4859 = {
+					has_great_project = {
+						type = thousand_words_assembly
+						tier = 3
+					}
+				}
+			}
+			add_province_modifier = {
+				name = thousand_words_assembly_yanszin_buff_3
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				4859 = {
+					has_great_project = {
+						type = thousand_words_assembly
+						tier = 2
+					}
+				}
+			}
+			add_province_modifier = {
+				name = thousand_words_assembly_yanszin_buff_2
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = thousand_words_assembly_yanszin_buff_1
+				duration = -1
+			}
+		}
+	}
+	if = {
+		limit = {
+			province_id = 4859
+		}
+		FROM = {
+			if = {
+				limit = {
+					OR = {
+						NOT = { is_member_of_yanszin_league_scripted_trigger = yes }
+						ROOT = { owner = { NOT = { is_member_of_yanszin_league_scripted_trigger = yes } } }
+					}
+				}
+				every_owned_province = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_3
+				}
+			}
+		}
+	}
+
+	#The Defiant
+	if = {
+		limit = {
+			owner = { 
+				owns = 4917 
+				can_use_the_defiant_trigger = yes
+			}
+			4917 = {
+				has_great_project = {
+					type = thousand_words_assembly
+					tier = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_manpower_building_trigger = yes
+			}
+			add_province_modifier = {
+				name = the_defiant_barracks_buff
+				hidden = yes
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				has_forcelimit_building_trigger = yes
+				4917 = {
+					has_great_project = {
+						type = thousand_words_assembly
+						tier = 2
+					}
+				}
+			}
+			add_province_modifier = {
+				name = the_defiant_regiment_camp_buff
+				hidden = yes
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				has_building = soldier_households
+				4917 = {
+					has_great_project = {
+						type = thousand_words_assembly
+						tier = 3
+					}
+				}
+			}
+			add_province_modifier = {
+				name = the_defiant_soldier_households_buff
+				hidden = yes
+				duration = -1
+			}
+		}
+	}
+	if = {
+		limit = {
+			province_id = 4917
+		}
+		FROM = {
+			every_owned_province = {
+				remove_province_modifier = the_defiant_barracks_buff
+				remove_province_modifier = the_defiant_regiment_camp_buff
+				remove_province_modifier = the_defiant_soldier_households_buff
+			}
+		}
+		if = {
+			limit = {
+				owner = { 
+					can_use_the_defiant_trigger = yes
+				}
+				4917 = {
+					has_great_project = {
+						type = thousand_words_assembly
+						tier = 1
+					}
+				}
+			}
+			every_owned_province = {
+				if = {
+					limit = {
+						has_manpower_building_trigger = yes
+					}
+					add_province_modifier = {
+						name = the_defiant_barracks_buff
+						hidden = yes
+						duration = -1
+					}
+				}
+				if = {
+					limit = {
+						has_forcelimit_building_trigger = yes
+						4917 = {
+							has_great_project = {
+								type = thousand_words_assembly
+								tier = 2
+							}
+						}
+					}
+					add_province_modifier = {
+						name = the_defiant_regiment_camp_buff
+						hidden = yes
+						duration = -1
+					}
+				}
+				if = {
+					limit = {
+						has_building = soldier_households
+						4917 = {
+							has_great_project = {
+								type = thousand_words_assembly
+								tier = 3
+							}
+						}
+					}
+					add_province_modifier = {
+						name = the_defiant_soldier_households_buff
+						hidden = yes
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	#House of Fire and Water
+	if = {
+		limit = {
+			province_id = 4949
+		}
+		if = {
+			limit = {
+				owner = {
+					can_use_house_of_fire_and_water_trigger = yes
+				}
+				has_great_project = {
+					type = house_of_fire_and_water
+					tier = 2
+				}
+			}
+			if = {
+				limit = {
+					has_great_project = {
+						type = house_of_fire_and_water
+						tier = 3
+					}
+				}
+				add_country_modifier = {
+					name = house_of_fire_and_water_artificery_buff_2
+					duration = -1
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = house_of_fire_and_water_artificery_buff_1
+					duration = -1
+				}
+			}
+		}
+		FROM = {
+			remove_country_modifier = house_of_fire_and_water_artificery_buff_1
+			remove_country_modifier = house_of_fire_and_water_artificery_buff_2
+			disband_mercenary_company = merc_war_alchemists
+		}
+	}
+
 	hinuibee_hive_province_owner_change = yes
 	fluvial_waterworks_province_owner_change = yes
 }
