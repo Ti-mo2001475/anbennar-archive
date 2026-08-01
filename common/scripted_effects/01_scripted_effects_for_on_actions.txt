@@ -11647,6 +11647,17 @@ on_built_tax_building_effect = {
 	}
 	if = {
 		limit = {
+			owner = { has_country_flag = kaino_temple_bonuses_flag }
+			NOT = { development = 4 }
+			culture = kaino
+		}
+		add_province_modifier = {
+			name = kaino_temple_bonuses
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
 			owner = {
 				has_country_flag = A29_temples_give_tax_dev
 			}
@@ -11667,6 +11678,7 @@ on_tax_building_destroyed_effect = {
 	remove_province_modifier = L80_temple_buff
 	remove_province_modifier = A80_expand_the_theatre_temples
 	remove_province_modifier = harpylen_temple_roost
+	remove_province_modifier = kaino_temple_bonuses
 	if = { #busilar
 		limit = {
 			owner = {
@@ -11751,11 +11763,23 @@ on_built_manpower_building_effect = {
 			hidden = yes
 		}
 	}
+	if = {
+		limit = {
+			owner = { has_country_flag = kaino_barracks_bonuses_flag }
+			NOT = { development = 4 }
+			culture = kaino
+		}
+		add_province_modifier = {
+			name = kaino_barracks_bonuses
+			duration = -1
+		}
+	}
 }
 
 on_manpower_building_destroyed_effect = {
 	remove_province_modifier = L80_barrack_buff
 	remove_province_modifier = harpylen_barrack_roost
+	remove_province_modifier = kaino_barracks_bonuses
 }
 
 on_built_production_building_effect = {
