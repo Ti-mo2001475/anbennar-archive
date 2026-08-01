@@ -2314,14 +2314,12 @@ illusion_1_fear_and_loathing_effect = { #Fear and Loathing
 	hidden_effect = {
 		set_variable = { num_revolts_left = 5 } #Don't spawn more than 5 revolts
 		every_war_enemy_country = {
-			limit = { capital_scope = { controlled_by = PREV has_siege = no } } #No gimping self
-
-			while = {
-				limit = { PREV = { check_variable = { num_revolts_left = 1 } } }
-				PREV = { subtract_variable = { num_revolts_left = 1 } }
-				
-				illusion_1_fear_and_loathing_sub_effect = { caster_scope = PREV }
+			limit = {
+				capital_scope = { controlled_by = PREV has_siege = no } #No gimping self
+				PREV = { check_variable = { num_revolts_left = 1 } }
 			}
+			PREV = { subtract_variable = { num_revolts_left = 1 } }
+			illusion_1_fear_and_loathing_sub_effect = { caster_scope = PREV }
 		}
 
 		every_war_enemy_country = {
