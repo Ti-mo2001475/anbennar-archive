@@ -31,7 +31,7 @@ country_event = {
 }
 
 # Rediscovery of Aelantir!
-province_event = {
+country_event = {
 	id = unraveling.0
 	title = unraveling.0.t
 	desc = unraveling.0.d
@@ -39,16 +39,17 @@ province_event = {
 	is_triggered_only = yes
 	fire_only_once = yes
 	trigger = {
-		OR = {
-			continent = north_america
-			continent = south_america
-			continent = new_world
-		}
 		FROM = {
-			capital_scope = {
-				continent = europe
+			OR = {
+				continent = north_america
+				continent = south_america
+				continent = new_world
 			}
 		}
+		capital_scope = {
+			continent = europe
+		}
+		
 	}
 	immediate = {
 		set_global_flag = new_world_discovered
@@ -201,10 +202,9 @@ province_event = {
 	}
 	option = {
 		name = "unraveling.0.a"
-		FROM = {
-			add_prestige = 50
-			add_innovativeness_small_effect = yes
-		}
+		add_prestige = 50
+		add_innovativeness_small_effect = yes
+		
 	}
 
 	after = {
