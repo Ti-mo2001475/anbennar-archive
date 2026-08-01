@@ -354,15 +354,15 @@ col_1 = {
 				OR = {
 					is_part_of_hre = no
 					A29 = {
-						army_size = PREV #todo check works
+						army_size = PREV 
 					}
 				}
 			}
 			emperor = {
 				OR = {
-					tag = A29
+					tag = ROOT
 					A29 = {
-						has_pillaged_capital_against = prev
+						has_pillaged_capital_against = PREV
 					}
 				}
 			}
@@ -382,59 +382,30 @@ col_1 = {
 						is_emperor = yes
 					}
 				}
-				while = { 
-					limit = { 
-						the_borders_region = { 
-							type = any 
-							is_part_of_hre = yes
-							NOT = {
-								owner = {
-									is_emperor = yes
-								}
+				the_borders_region = {
+					limit = {
+						is_part_of_hre = yes
+						NOT = {
+							owner = {
+								is_emperor = yes
 							}
-						} 
-					} 
-					random_province = { 
-						limit = { 
-							region = the_borders_region 
-							is_part_of_hre = yes 
-							NOT = {
-								owner = {
-									is_emperor = yes
-								}
-							}
-						} 
-						set_in_empire = no 
-						A29 = { 
-							add_adm_power = 10 
-							add_dip_power = 10 
-							add_mil_power = 10 
-						} 
+						}
+					}
+					set_in_empire = no 
+					ROOT = { 
+						add_adm_power = 10 
+						add_dip_power = 10 
+						add_mil_power = 10 
 					} 
 				}
 			}
 			else = {
-				while = { 
-					limit = { 
-						the_borders_region = { 
-							type = any 
-							is_part_of_hre = yes 
-							NOT = { 
-								has_province_flag = A29_IA_gain 
-							} 
-						} 
-					} 
-					random_province = { 
-						limit = { 
-							region = the_borders_region 
-							NOT = { 
-								has_province_flag = A29_IA_gain 
-							} 
-						} 
-						set_province_flag = A29_IA_gain 
-						A29 = { 
-							add_imperial_influence = 1 
-						} 
+				the_borders_region = {
+					limit = {
+						is_part_of_hre = yes
+					}
+					ROOT = { 
+						add_imperial_influence = 1 
 					} 
 				}
 			}
@@ -449,7 +420,17 @@ col_1 = {
 			A29_spread_the_word
 		}
 		provinces_to_highlight = {  
-
+			is_capital = yes
+			is_part_of_hre = yes
+			NOT = {
+				religion = ravelian
+			}
+			owner = {
+				OR = {
+					prestige = A29
+					navy_size = A29
+				}
+			}
 		} 
 
 		trigger = {
@@ -593,13 +574,16 @@ col_2 = {
 		effect = {
 			custom_tooltip = A29_nurture_people_tt
 			hidden_effect = {
-				every_owned_province = {
-					limit = {
-						has_tax_building_trigger = yes
-						num_of_times_improved_by_owner = 1
-					}
-					add_prosperity = 25
-					add_base_manpower = 2
+				for = {
+					amount = 5
+					effect = "random_owned_province = {
+						limit = {
+							has_tax_building_trigger = yes
+							num_of_times_improved_by_owner = 1
+						}
+						add_prosperity = 25
+						add_base_manpower = 2
+					}"
 				}
 			}
 		} 
@@ -812,7 +796,6 @@ col_2 = {
 								type = lizardfolk_port
 								tier = 1
 							}
-							is_owned_by_trade_company = yes
 						}
 					}
 				}
@@ -968,8 +951,10 @@ col_2 = {
 					is_capital = yes
 					owner = {
 						NOT = {
-							has_50_opinion_improved_relation = { target = ROOT }
-							religion = ravelian
+							AND = {
+								has_50_opinion_improved_relation = { target = ROOT }
+								religion = ravelian
+							}
 						}
 					}
 				}
@@ -1015,7 +1000,21 @@ col_2 = {
 		icon = spa_new_capital
 		position = 12
 		required_missions = { A29_spread_the_word } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			OR = {
+				region = businor_region
+				region = janama_region
+				region = kheterata_region
+			}
+			NOT = {
+				AND = {
+					religion = ravelian
+					development = 15
+					has_tax_building_trigger = yes
+					has_courthouse_building_trigger = yes
+				}
+			}
+		} 
 
 		trigger = {
 			OR = {
@@ -1105,7 +1104,19 @@ col_2 = {
 			A29_loom_above_the_empire
 			A29_home_is_where_the_heart_is
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			if = {
+				limit = {
+					eoa_is_dismantled = yes
+				}
+				OR = {
+					region = east_dameshead_region
+					region = esmaria_region
+				}
+				NOT = { religion = ravelian }
+			}
+			else = {}
+		} 
 
 		trigger = {
 			OR = {
@@ -1137,9 +1148,7 @@ col_2 = {
 						}
 					}
 				}
-				AND = {
-					tag = Z01 
-				}
+				tag = Z01
 			}
 		} 
 
@@ -1177,10 +1186,11 @@ col_2 = {
 			}
 			OR = {
 				has_country_modifier = A29_narawen_4
-				NOT = {
-					all_province = {
-						is_sea = yes 
-						NOT = {
+				all_province = {
+					OR = {
+						is_sea = no
+						AND = {
+							is_sea = yes
 							has_discovered = ROOT 
 						}
 					}
@@ -1579,7 +1589,19 @@ col_3 = {
 			A29_monsters_two
 			A29_following_narawen
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			owned_by = ROOT
+			OR = {
+				AND = {
+					has_manpower_building_trigger = yes
+					NOT = { has_province_flag = mil_developed_by_owner }
+				}
+				AND = {
+					has_dock_building_trigger = yes
+					NOT = { has_province_flag = dip_developed_by_owner }
+				}
+			}
+		} 
 
 		trigger = {  
 			num_of_owned_provinces_with = {
@@ -2003,7 +2025,8 @@ col_3 = {
 			A29_lions_arsenal
 			A29_leader_of_faith
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = { 
+		} 
 
 		trigger = {
 			calc_true_if = {

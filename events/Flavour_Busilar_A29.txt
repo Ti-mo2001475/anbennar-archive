@@ -627,147 +627,150 @@ country_event = { #will set you free
 
 	option = {
 		name = busilar.14.a
-		every_active_trade_node = {
-			limit = {
-				ROOT = {
-					trading_policy_in_node = {
-						node = PREV 
-						policy = propagate_religion
+		custom_tooltip = A29_will_set_you_free_tt
+		hidden_effect = {
+			every_active_trade_node = {
+				limit = {
+					ROOT = {
+						trading_policy_in_node = {
+							node = PREV 
+							policy = propagate_religion
+						}
+					}
+				}
+				every_trade_node_member_province = {
+					if = {
+						limit = {
+							trade_share = {
+								country = A29 
+								share = 100 
+							}
+						}
+						random = {
+							chance = 50 
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = A29 
+								share = 90 
+							}
+						}
+						random = {
+							chance = 45
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = A29 
+								share = 80
+							}
+						}
+						random = {
+							chance = 40
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = A29 
+								share = 70
+							}
+						}
+						random = {
+							chance = 35
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = A29 
+								share = 60
+							}
+						}
+						random = {
+							chance = 30
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = A29 
+								share = 50
+							}
+						}
+						random = {
+							chance = 25
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = A29 
+								share = 40
+							}
+						}
+						random = {
+							chance = 20
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = A29 
+								share = 30
+							}
+						}
+						random = {
+							chance = 15
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = A29 
+								share = 20
+							}
+						}
+						random = {
+							chance = 10
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = A29 
+								share = 10
+							}
+						}
+						random = {
+							chance = 5
+							change_religion = ravelian 
+						}
 					}
 				}
 			}
-			every_trade_node_member_province = {
-				if = {
-					limit = {
-						trade_share = {
-							country = A29 
-							share = 100 
-						}
+			every_known_country = {
+				limit = {
+					NOT = {
+						total_development = 201 
 					}
-					random = {
-						chance = 50 
-						change_religion = ravelian 
-					}
+					NOT = { religion = ravelian } 
+					has_50_opinion_improved_relation = { target = ROOT }
 				}
-				else_if = {
-					limit = {
-						trade_share = {
-							country = A29 
-							share = 90 
-						}
-					}
-					random = {
-						chance = 45
-						change_religion = ravelian 
-					}
-				}
-				else_if = {
-					limit = {
-						trade_share = {
-							country = A29 
-							share = 80
-						}
-					}
-					random = {
-						chance = 40
-						change_religion = ravelian 
-					}
-				}
-				else_if = {
-					limit = {
-						trade_share = {
-							country = A29 
-							share = 70
-						}
-					}
-					random = {
-						chance = 35
-						change_religion = ravelian 
-					}
-				}
-				else_if = {
-					limit = {
-						trade_share = {
-							country = A29 
-							share = 60
-						}
-					}
-					random = {
-						chance = 30
-						change_religion = ravelian 
-					}
-				}
-				else_if = {
-					limit = {
-						trade_share = {
-							country = A29 
-							share = 50
-						}
-					}
-					random = {
-						chance = 25
-						change_religion = ravelian 
-					}
-				}
-				else_if = {
-					limit = {
-						trade_share = {
-							country = A29 
-							share = 40
-						}
-					}
-					random = {
-						chance = 20
-						change_religion = ravelian 
-					}
-				}
-				else_if = {
-					limit = {
-						trade_share = {
-							country = A29 
-							share = 30
-						}
-					}
-					random = {
-						chance = 15
-						change_religion = ravelian 
-					}
-				}
-				else_if = {
-					limit = {
-						trade_share = {
-							country = A29 
-							share = 20
-						}
-					}
-					random = {
-						chance = 10
-						change_religion = ravelian 
-					}
-				}
-				else_if = {
-					limit = {
-						trade_share = {
-							country = A29 
-							share = 10
-						}
-					}
-					random = {
-						chance = 5
-						change_religion = ravelian 
-					}
-				}
+				change_religion = ravelian 
 			}
-		}
-		every_known_country = {
-			limit = {
-				NOT = {
-					total_development = 201 
-				}
-				NOT = { religion = ravelian } 
-				has_50_opinion_improved_relation = { target = ROOT }
-			}
-			change_religion = ravelian 
 		}
 	}
 }
