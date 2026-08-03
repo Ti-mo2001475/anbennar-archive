@@ -3589,7 +3589,10 @@ necromancy_1_contagion_trigger = { #Contagion
 	siege_magic_trigger = { [[menu] menu = yes defense_trigger = "necromancy_1_contagion_local_trigger = yes" ] }
 }
 necromancy_1_contagion_local_trigger = { # Contagion
-	NOT = { has_province_modifier = necromancy_1_contagion_local_mod }
+	NOT = {
+		has_province_modifier = necromancy_1_contagion_local_mod
+		has_province_modifier = kaino_necromancy_1_contagion_local_mod
+	}
 }
 necromancy_2_speak_with_dead_trigger = { # Speak With Dead
 	has_not_banned_necromancy = yes
@@ -3690,7 +3693,10 @@ has_not_cast_contagion = {
 province_has_contagion = {
 	custom_trigger_tooltip = {
 		tooltip = province_has_contagion
-		has_province_modifier = necromancy_1_contagion_local_mod
+		OR = {
+			has_province_modifier = necromancy_1_contagion_local_mod
+			has_province_modifier = kaino_necromancy_1_contagion_local_mod
+		}
 	}
 }
 province_has_not_contagion = {
