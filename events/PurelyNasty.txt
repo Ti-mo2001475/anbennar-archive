@@ -9,15 +9,17 @@ province_event = {
 	goto = root
 	
 	trigger = {
-		owner = { overextension_percentage = 1.01 }
-		NOT = { has_province_modifier = rebel_sentiment }
-		OR = {
-			had_country_flag = { 
-				flag = separatist_sentiment_cooldown
-				days = 180
+		owner = { 
+			overextension_percentage = 1.01 
+			OR = {
+				had_country_flag = { 
+					flag = separatist_sentiment_cooldown
+					days = 180
+				}
+				NOT = { has_country_flag = separatist_sentiment_cooldown }
 			}
-			NOT = { has_country_flag = separatist_sentiment_cooldown }
 		}
+		NOT = { has_province_modifier = rebel_sentiment }
 		is_colony = no
 		likely_rebels = nationalist_rebels
 	}
