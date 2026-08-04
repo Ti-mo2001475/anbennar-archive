@@ -74,28 +74,28 @@ setup_deathwinds = {
 	if = {
 		limit = { is_year = 1520 }
 		calculate_deathwinds_level = {
-			low_level = 3
+			low_level = 2 #One below the lowest level for rounding
 			high_level = 10
 		}
 	}
 	else_if = {
 		limit = { is_year = 1480 }
 		calculate_deathwinds_level = {
-			low_level = 2
+			low_level = 1 #One below the lowest level for rounding
 			high_level = 8
 		}
 	}
 	else_if = {
 		limit = { is_year = 1450 }
 		calculate_deathwinds_level = {
-			low_level = 1
+			low_level = 0 #One below the lowest level for rounding
 			high_level = 4
 		}
 	}
 	#An easy one to start with
 	else = {
 		calculate_deathwinds_level = {
-			low_level = 1
+			low_level = 0 #One below the lowest level for rounding
 			high_level = 1
 		}
 	}
@@ -114,6 +114,15 @@ calculate_deathwinds_level = {
 	random_variable = { which = deathwinds_var which = deathwinds_rand_var }
 	#Ensure it's at or above the lowest allowed value
 	change_variable = { deathwinds_var = $low_level$ }
+	#Remove any decimals
+	 #Lowest level is actually $low_level$+1 but $low_level$ is set to that so
+	 #rounding up gives an equal chance to give the real lowest level as the other levels.
+	 #If someone does get the lowest possible value, set it to the real lowest level
+	if = {
+		limit = { is_variable_equal = { which = deathwinds_rand_var value = $low_level$ } }
+		change_variable = { deathwinds_var = 1 }
+	}
+	else = { round_variable = { which = deathwinds_var value = 1 } }
 	#If the Deathwinds have been increased in a seperate effect, increase it by that amount
 	change_variable = { which = deathwinds_var which = deathwinds_increase_var }
 
@@ -235,11 +244,11 @@ update_deathwinds_bar = {
 		set_variable = { deathwinds_months_var = 108 } #Set variable to 9 years in months (total Deathwinds cycle time)
 		set_variable = { deathwinds_active_months_var = 24 } #Set variable to 2 years in months (total time Deathwinds are active)
 
-		change_variable = { #Subtract it by the current month to get the months left in total cycle
+		subtract_variable = { #Subtract it by the current month to get the months left in total cycle
 			which = deathwinds_months_var
 			which = aPUI_deathwinds_var
 		}
-		change_variable = { #Subtract it by the current month to get the months left while deathwinds are active
+		subtract_variable = { #Subtract it by the current month to get the months left while deathwinds are active
 			which = deathwinds_active_months_var
 			which = aPUI_deathwinds_var
 		}
