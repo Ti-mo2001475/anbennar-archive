@@ -9032,6 +9032,10 @@ remove_random_manufactory = {
 			trigger = { has_building = mage_tower }
 			remove_building = mage_tower
 		}
+		1 = {
+			trigger = { has_building = automatory }
+			remove_building = automatory
+		}
 	}
 }
 
@@ -14414,12 +14418,36 @@ banbe_anen_quest_for_reehanviza_values = {
  #duration = X : The duration of the modifier (DONT ADD IF IT'S PERMANENT - Permanent ruler mods don't need a duration)
  #extend = yes : Makes it add or extend the modifier (Does not change the tooltip atm)
  #hidden = yes : If the modifier is meant to be hidden (Does not change the tooltip atm)
-add_exceptional_willpower = {
+add_exceptional_willpower_75 = {
 	custom_tooltip = add_exceptional_willpower[[duration]_$duration$]
-	custom_tooltip = add_exceptional_willpower_$years$_mod
+	custom_tooltip = add_exceptional_willpower_75_mod
 	hidden_effect = {
 		add[[extend]_or_extend]_ruler_modifier = {
-			name = exceptional_willpower_$years$
+			name = exceptional_willpower_75
+			[[duration] duration = $duration$ ]
+			[[hidden] hidden = yes ]
+		}
+	}
+}
+
+add_exceptional_willpower_100 = {
+	custom_tooltip = add_exceptional_willpower[[duration]_$duration$]
+	custom_tooltip = add_exceptional_willpower_100_mod
+	hidden_effect = {
+		add[[extend]_or_extend]_ruler_modifier = {
+			name = exceptional_willpower_100
+			[[duration] duration = $duration$ ]
+			[[hidden] hidden = yes ]
+		}
+	}
+}
+
+add_exceptional_willpower_150 = {
+	custom_tooltip = add_exceptional_willpower[[duration]_$duration$]
+	custom_tooltip = add_exceptional_willpower_150_mod
+	hidden_effect = {
+		add[[extend]_or_extend]_ruler_modifier = {
+			name = exceptional_willpower_150
 			[[duration] duration = $duration$ ]
 			[[hidden] hidden = yes ]
 		}
@@ -14471,6 +14499,29 @@ grant_manpower_from_besieging_fort_spirit_mil = {
 				subtract_variable = { manpower_from_fort = 1 }
 				add_manpower = 2.5
 			}
+		}
+	}
+}
+
+V05_syncretic_monasteries_activate_effect = {
+	# this is used in two places, first activation actually does it
+	# specifically we need it for V05_fivefold_compass's V05_syncretic_monastery_oinukhudi to work
+	# so you can also get it there if you didn't do V05_waste_spirits before
+	# yes a req arrow would be the "proper" way to solve this, but this is undesired here for structural reasons
+	if = {
+		limit = { NOT = { has_country_flag = V05_syncretic_monasteries } }
+		custom_tooltip = V05_syncretic_upgrade
+		tooltip = {
+			add_province_modifier = {
+				name = estate_church_V05_interfaith_teachings_2
+				duration = -1
+			}
+		}
+		hidden_effect = {
+			set_country_flag = V05_syncretic_monasteries
+			clr_country_flag = V05_interfaith_dialogue
+			remove_estate_privilege = estate_church_monastic_schism
+			set_estate_privilege = estate_church_monastic_schism
 		}
 	}
 }
