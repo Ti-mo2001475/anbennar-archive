@@ -769,6 +769,21 @@ country_event = {
 	
 	immediate = {
 		hidden_effect = {
+			if = { 
+				limit = {
+					2909 = {
+						owned_by = ROOT
+						has_great_project = {
+							type = ebbusubtu
+							tier = 2
+						}
+					}	
+				}		
+				country_event = {
+					id = bulwar_flavour.61
+					days = 547 
+				}
+			}
 			random_owned_province = {
 				limit = {
 					NOT = { religion = the_jadd }
@@ -2244,7 +2259,7 @@ country_event = {
 		NOT = { has_country_flag = had_umaslu }
     }
 	
-	#Bon appétit
+	#Bon appï¿½tit
 	option = {
 		name = bulwar_flavour.31.a
 		add_country_modifier = { name = bulwar_umaslu duration = 9125 }
@@ -2434,7 +2449,7 @@ country_event = {
 		country_event = { id = bulwar_flavour.35 }
 	}
 	
-	#Ainéthíl Courser - ok choice
+	#Ainï¿½thï¿½l Courser - ok choice
 	option = {
 		name = bulwar_flavour.34.h
 		hidden_effect = { event_target:jockey_origin_6 = { save_event_target_as = jockey_origin } }
@@ -2823,7 +2838,7 @@ country_event = {
 	}
 }
 
-#Burat Kazaš
+#Burat Kazaï¿½
 country_event = {
 	id = bulwar_flavour.42
 	title = bulwar_flavour.42.t
@@ -2844,7 +2859,7 @@ country_event = {
 		name = bulwar_flavour.42.a
 		define_advisor = {
 			type = artist
-			name = "Burat Kazaš"
+			name = "Burat Kazaï¿½"
 			skill = 2
 			culture = kuzarami
 			religion = ROOT
@@ -3247,6 +3262,46 @@ country_event = {
 		name = bulwar_flavour.60.a
 		custom_tooltip =  unlock_whitestone_cult_tooltip
 		set_country_flag = whitestone_cult_unlocked
+	}
+}
+
+#The People of [ROOT.GetName] See the Light!
+country_event = {
+	id = bulwar_flavour.61
+	title = bulwar_flavour.10.t
+	desc = bulwar_flavour.10.d
+	picture = STREET_SPEECH_eventPicture
+	goto = target_province
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		religion = the_jadd
+		NOT = { tag = F78 }
+		any_owned_province = {
+			NOT = { religion = the_jadd }
+			NOT = { has_any_oppressed_pop_trigger = yes }
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					NOT = { religion = the_jadd }
+					NOT = { has_any_oppressed_pop_trigger = yes }
+				}
+				save_event_target_as = target_province
+			}
+		}
+	}
+
+	option = { #Welcome to the arms of truth!
+		name = bulwar_flavour.10.a
+		ai_chance = {
+			factor = 1
+		}
+		event_target:target_province = { change_religion = the_jadd }
 	}
 }
 #OSC Refugees
@@ -4274,7 +4329,7 @@ country_event = {
 				size = 3
 				culture = masnsih
 				religion = old_bulwari_sun_cult
-				leader = "Rimuš"
+				leader = "Rimuï¿½"
 				leader_dynasty = "szal-Ardeth"
 			}
 		}
@@ -4785,7 +4840,7 @@ country_event = {
 		ai_chance = { factor = 50 }
 		define_advisor = {
 			type = natural_scientist
-			name = "Koiní Sušizuir"
+			name = "Koinï¿½ Suï¿½izuir"
 			skill = 2
 			discount = yes
 			culture = sun_elf
@@ -6172,7 +6227,7 @@ country_event = {
 			set_saved_name = {
 				key = evil_magi
 				type = simple
-				name = "Nehša"
+				name = "Nehï¿½a"
 			}
 		}
 	}
@@ -6229,7 +6284,7 @@ province_event = {
 		name = bulwar_flavour.139.a
 		owner = {
 			define_general = {
-				name = "Aldarian Surpašilu"
+				name = "Aldarian Surpaï¿½ilu"
 				fire = 2
 				shock = 5
 				manuever = 5
@@ -6276,7 +6331,7 @@ country_event = {
 
 	trigger = {
 		has_country_flag = aldarian_is_general
-		has_leader = "Aldarian Surpašilu"
+		has_leader = "Aldarian Surpaï¿½ilu"
 		OR = {
 			AND = {
 				religion = bulwari_sun_cult
@@ -6314,7 +6369,7 @@ country_event = {
 	option = {
 		name = bulwar_flavour.141.c
 			define_advisor = {
-				name = "Aldarian Surpašilu"
+				name = "Aldarian Surpaï¿½ilu"
 				type = commandant
 				culture = sun_elf
 				religion = the_jadd
@@ -6328,7 +6383,7 @@ country_event = {
 
 	after = {
 		hidden_effect = {
-			kill_leader = { type = "Aldarian Surpašilu" }
+			kill_leader = { type = "Aldarian Surpaï¿½ilu" }
 			clr_country_flag = aldarian_is_general
 		}
 	}
@@ -6343,7 +6398,7 @@ country_event = {
 	fire_only_once = yes
 	
 	trigger = {
-		has_leader = "Aldarian Surpašilu"
+		has_leader = "Aldarian Surpaï¿½ilu"
 		has_country_flag = aldarian_is_general
 		is_at_war = yes
 		war_with = F46
@@ -6357,7 +6412,7 @@ country_event = {
 		name = bulwar_flavour.142.a
 		custom_tooltip = bulwar_flavour.142.a.tooltip
 		hidden_effect = {
-			kill_leader = { type = "Aldarian Surpašilu" }
+			kill_leader = { type = "Aldarian Surpaï¿½ilu" }
 			clr_country_flag = aldarian_is_general
 		}
 	}
@@ -6384,7 +6439,7 @@ country_event = {
 		name = bulwar_flavour.143.a
 		set_country_flag = aldarian_is_general
 		define_general = {
-			name = "Aldarian Surpašilu"
+			name = "Aldarian Surpaï¿½ilu"
 			fire = 2
 			shock = 5
 			manuever = 5

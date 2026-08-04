@@ -5917,7 +5917,15 @@ estate_church_ebbusubtu_festivities = { #Bulwar
 	influence = 0.10
 	is_valid = {
 		religion = the_jadd
-		has_country_flag = ebbusubtu_clergy_reward_flag
+		limit = {
+			2909 = {
+				owned_by = ROOT
+				has_great_project = {
+					type = ebbusubtu
+					tier = 3
+				}
+			}	
+		}
 	}
 	can_revoke = {
 		always = yes
@@ -5925,23 +5933,19 @@ estate_church_ebbusubtu_festivities = { #Bulwar
 	on_granted = {
 		custom_tooltip = upgrade_jadd_fervor_effects_tt
 		hidden_effect = {
-			set_country_flag = jadd_buff_fervor_actions
 			upgrade_jadd_fervor_effects = yes
 		}	
 	}
 	on_revoked = {
 		custom_tooltip = downgrade_jadd_fervor_effects_tt
-			hidden_effect = {
-				clr_country_flag = jadd_buff_fervor_actions
-				downgrade_jadd_fervor_effects = yes
+		hidden_effect = {
+			downgrade_jadd_fervor_effects = yes
 		}
 	}
 	penalties = {
 	}
 	benefits = {
-	add_adm_power = 50
 	}
-
 	ai_will_do = {
 		factor = 10
 	}
