@@ -1654,6 +1654,9 @@ col_3 = {
 						}
 					}
 				}
+				every_owned_province = {
+					clr_province_flag = dip_developed_by_owner
+				}
 			}
 			complex_dynamic_effect = { #i fucking hate these things, why did I use it, it doesn't even workcomplex_dynamic_effect 
 				first_custom_tooltip = A29_land_and_sea_4_tt
@@ -1799,13 +1802,13 @@ col_3 = {
 
 		trigger = {  
 			government_rank = 3
-			any_owned_province = {
-				OR = {
-					region = businor_region
-					region = kheterata_region
-					region = janama_region
-				}
-				NOT = {
+			NOT = {
+				any_owned_province = {
+					OR = {
+						region = businor_region
+						region = kheterata_region
+						region = janama_region
+					}
 					unrest = 0.01
 				}
 			}
@@ -1879,7 +1882,7 @@ col_3 = {
 			custom_trigger_tooltip = {
 				tooltip = A29_winning_battles_tt 
 				num_of_battles = {
-				amount = 75
+					amount = 75
 				}
 			}
 			all_known_country = {
@@ -2105,9 +2108,11 @@ col_3 = {
 				OR = {
 					AND = {
 						has_been_insulted_by_root = yes
-						has_won_war_against = {
-							who = PREV
-							max_years_since = 20
+						ROOT = {
+							has_won_war_against = {
+								who = PREV
+								max_years_since = 20
+							}
 						}
 					}
 					AND = {
@@ -2229,18 +2234,18 @@ col_4 = {
 		provinces_to_highlight = {
 			OR = {
 				AND = {
+					is_capital_of = U06
 					U06 = {
 						exists = yes
 					}
-					is_capital_of = U06
 				}
 				AND = {
+					is_core = U06
 					NOT = {
 						U06 = {
 							exists = yes
 						}
 					}
-					is_core = U06
 					NOT = {
 						AND = {
 							owned_by = ROOT 
@@ -2457,7 +2462,6 @@ col_4 = {
 		effect = {
 			add_meritocracy = 25
 			custom_tooltip = A29_palace_economy_unlock_tt
-			set_country_flag = A29_palace_economy_unlock
 		} 
 	}
 
@@ -2470,7 +2474,7 @@ col_4 = {
 		}
 		provinces_to_highlight = {
 			region = ardimya_region
-			owned_by = ROOT
+			country_or_non_sovereign_subject_holds = ROOT
 			NOT = {
 				AND = {
 					has_dock_building_trigger = yes 
@@ -2972,22 +2976,23 @@ col_5 = {
 		provinces_to_highlight = {
 			region = bahar_region 
 			OR = {
-				NOT = {
-					province_id = 452 
-					province_id = 526
-					province_id = 536 
-				}
-				NOT = {
-					AND = {
-						num_of_times_improved_by_owner = 5 
-						has_production_or_gold_building_trigger = yes 
-						country_or_non_sovereign_subject_holds = ROOT 
+				OR = {
+					NOT = {
+						province_id = 452 
+						province_id = 526
+						province_id = 536 
+					}
+					NOT = {
+						AND = {
+							num_of_times_improved_by_owner = 5 
+							has_production_or_gold_building_trigger = yes 
+							country_or_non_sovereign_subject_holds = ROOT 
+						}
 					}
 				}
-			}
-
-			NOT = {
-				country_or_non_sovereign_subject_holds = ROOT
+				NOT = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		} 
 
