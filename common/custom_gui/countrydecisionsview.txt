@@ -5614,7 +5614,6 @@ custom_button = {
 			is_bulwari_or_zanlibi_culture = yes
 			culture = exodus_goblin
 			culture = sandfang_gnoll
-			has_country_modifier = mechanim_administration
 		}
 	}
 	frame = {
@@ -5630,7 +5629,6 @@ custom_button = {
 					culture = exodus_goblin
 				}
 				has_estate_privilege = artifice_invention_gravehound
-				has_estate_privilege = artifice_invention_mech_reawakening_procedure
 			}
 		}
 	}
@@ -5665,10 +5663,6 @@ custom_button = {
 					culture = sandfang_gnoll
 					has_country_flag = unlocked_artifice_invention_gravehound
 				}
-				AND = {
-					has_country_modifier = mechanim_administration
-					has_country_flag = unlocked_artifice_invention_mech_reawakening_procedure
-				}
 			}
 		}
 	}
@@ -5702,10 +5696,6 @@ custom_button = {
 				AND = {
 					culture = sandfang_gnoll
 					has_country_flag = unlocked_artifice_invention_gravehound
-				}
-				AND = {
-					has_country_modifier = mechanim_administration
-					has_country_flag = unlocked_artifice_invention_mech_reawakening_procedure
 				}
 			}
 		}
@@ -5902,38 +5892,6 @@ custom_button = {
 					has_estate_privilege = artifice_invention_gravehound
 				}
 				remove_estate_privilege = artifice_invention_gravehound
-			}
-		}
-		else_if = {
-			limit = {
-				has_country_modifier = mechanim_administration
-			}
-			if = {
-				limit = {
-					artifice_can_select_invention_20 = yes
-					NOT = {
-						has_estate_privilege = artifice_invention_mech_reawakening_procedure
-					}
-				}
-				set_estate_privilege = artifice_invention_mech_reawakening_procedure
-			}
-			else_if = {
-				limit = {
-					artifice_can_select_invention_20 = no
-					NOT = {
-						has_estate_privilege = artifice_invention_mech_reawakening_procedure
-					}
-				}
-				custom_tooltip = artifice_cannot_afford_invention
-				tooltip = {
-					set_estate_privilege = artifice_invention_mech_reawakening_procedure
-				}
-			}
-			else_if = {
-				limit = {
-					has_estate_privilege = artifice_invention_mech_reawakening_procedure
-				}
-				remove_estate_privilege = artifice_invention_mech_reawakening_procedure
 			}
 		}
 	}
@@ -7025,7 +6983,7 @@ custom_button = {
 		trigger = {
 			OR = {
 				has_estate_privilege = artifice_invention_eplusplus_compound
-				has_estate_privilege = artifice_invention_mech_pillar_scouts
+				has_estate_privilege = artifice_invention_mech_amphibious_attachements
 			}
 		}
 	}
@@ -7040,7 +6998,7 @@ custom_button = {
 				}
 				AND = {
 					has_country_modifier = mechanim_military
-					has_country_flag = unlocked_artifice_invention_mech_pillar_scouts
+					has_country_flag = unlocked_artifice_invention_mech_amphibious_attachements
 				}
 			}
 		}
@@ -7056,7 +7014,7 @@ custom_button = {
 				}
 				AND = {
 					has_country_modifier = mechanim_military
-					has_country_flag = unlocked_artifice_invention_mech_pillar_scouts
+					has_country_flag = unlocked_artifice_invention_mech_amphibious_attachements
 				}
 			}
 		}
@@ -7100,28 +7058,28 @@ custom_button = {
 				limit = {
 					artifice_can_select_invention_10 = yes
 					NOT = {
-						has_estate_privilege = artifice_invention_mech_pillar_scouts
+						has_estate_privilege = artifice_invention_mech_amphibious_attachements
 					}
 				}
-				set_estate_privilege = artifice_invention_mech_pillar_scouts
+				set_estate_privilege = artifice_invention_mech_amphibious_attachements
 			}
 			else_if = {
 				limit = {
 					artifice_can_select_invention_10 = no
 					NOT = {
-						has_estate_privilege = artifice_invention_mech_pillar_scouts
+						has_estate_privilege = artifice_invention_mech_amphibious_attachements
 					}
 				}
 				custom_tooltip = artifice_cannot_afford_invention
 				tooltip = {
-					set_estate_privilege = artifice_invention_mech_pillar_scouts
+					set_estate_privilege = artifice_invention_mech_amphibious_attachements
 				}
 			}
 			else_if = {
 				limit = {
-					has_estate_privilege = artifice_invention_mech_pillar_scouts
+					has_estate_privilege = artifice_invention_mech_amphibious_attachements
 				}
-				remove_estate_privilege = artifice_invention_mech_pillar_scouts
+				remove_estate_privilege = artifice_invention_mech_amphibious_attachements
 			}
 		}
 	}
@@ -7132,36 +7090,24 @@ custom_button = {
 	tooltip = racial_military_invention_4_tt
 	potential = {
 		has_country_flag = artifice_invention_menu_open_cultural
-		OR = {
-			has_country_modifier = goblin_military
-			has_country_modifier = mechanim_military
-		}
+		has_country_modifier = goblin_military
 	}
 	frame = {
 		number = 3
 		trigger = {
-			OR = {
-				has_estate_privilege = artifice_invention_scrap_mechs
-				has_estate_privilege = artifice_invention_mech_amphibious_attachements
-			}
+			has_estate_privilege = artifice_invention_scrap_mechs
 		}
 	}
 	frame = {
 		number = 2
 		trigger = {
-			OR = {
-				has_country_flag = unlocked_artifice_invention_scrap_mechs
-				has_country_flag = unlocked_artifice_invention_mech_amphibious_attachements
-			}
+			has_country_flag = unlocked_artifice_invention_scrap_mechs
 		}
 	}
 	frame = { number = 1 }
 	trigger = {
 		hidden_trigger = {
-			OR = {
-				has_country_flag = unlocked_artifice_invention_mech_amphibious_attachements
-				has_country_flag = unlocked_artifice_invention_scrap_mechs
-			}
+			has_country_flag = unlocked_artifice_invention_scrap_mechs
 		}
 	}
 	effect = { 
@@ -7195,36 +7141,6 @@ custom_button = {
 					has_estate_privilege = artifice_invention_scrap_mechs
 				}
 				remove_estate_privilege = artifice_invention_scrap_mechs
-			}
-		}
-		else_if = {
-			limit = { has_country_modifier = mechanim_military }
-			if = {
-				limit = {
-					artifice_can_select_invention_10 = yes
-					NOT = {
-						has_estate_privilege = artifice_invention_mech_amphibious_attachements
-					}
-				}
-				set_estate_privilege = artifice_invention_mech_amphibious_attachements
-			}
-			else_if = {
-				limit = {
-					artifice_can_select_invention_10 = no
-					NOT = {
-						has_estate_privilege = artifice_invention_mech_amphibious_attachements
-					}
-				}
-				custom_tooltip = artifice_cannot_afford_invention
-				tooltip = {
-					set_estate_privilege = artifice_invention_mech_amphibious_attachements
-				}
-			}
-			else_if = {
-				limit = {
-					has_estate_privilege = artifice_invention_mech_amphibious_attachements
-				}
-				remove_estate_privilege = artifice_invention_mech_amphibious_attachements
 			}
 		}
 	}
@@ -7309,6 +7225,7 @@ custom_button = {
 				has_estate_privilege = artifice_invention_demonflame_flamethrowers
 				has_estate_privilege = artifice_invention_game_of_khet
 				has_estate_privilege = artifice_invention_voice_vessels
+				has_estate_privilege = artifice_invention_mech_reawakening_procedure
 			}
 		}
 	}
@@ -7389,6 +7306,10 @@ custom_button = {
 					religion = the_hunt
 					has_country_flag = unlocked_artifice_invention_voice_vessels
 				}
+				AND = {
+					religion_group = mechanim_religion
+					has_country_flag = unlocked_artifice_invention_mech_reawakening_procedure
+				}
 			}
 		}
 	}
@@ -7468,6 +7389,10 @@ custom_button = {
 				AND = {
 					religion = the_hunt
 					has_country_flag = unlocked_artifice_invention_voice_vessels
+				}
+				AND = {
+					religion_group = mechanim_religion
+					has_country_flag = unlocked_artifice_invention_mech_reawakening_procedure
 				}
 			}
 		}
@@ -7982,6 +7907,38 @@ custom_button = {
 				remove_estate_privilege = artifice_invention_voice_vessels
 			}
 		}
+		else_if = {
+			limit = {
+				religion_group = mechanim_religion
+			}
+			if = {
+				limit = {
+					artifice_can_select_invention_20 = yes
+					NOT = {
+						has_estate_privilege = artifice_invention_mech_reawakening_procedure
+					}
+				}
+				set_estate_privilege = artifice_invention_mech_reawakening_procedure
+			}
+			else_if = {
+				limit = {
+					artifice_can_select_invention_20 = no
+					NOT = {
+						has_estate_privilege = artifice_invention_mech_reawakening_procedure
+					}
+				}
+				custom_tooltip = artifice_cannot_afford_invention
+				tooltip = {
+					set_estate_privilege = artifice_invention_mech_reawakening_procedure
+				}
+			}
+			else_if = {
+				limit = {
+					has_estate_privilege = artifice_invention_mech_reawakening_procedure
+				}
+				remove_estate_privilege = artifice_invention_mech_reawakening_procedure
+			}
+		}
 	}
 }
 
@@ -7993,6 +7950,7 @@ custom_button = {
 		OR = {
 			religion = ravelian
 			religion_group = bulwari
+			religion_group = mechanim_religion
 		}
 	}
 	frame = {
@@ -8002,6 +7960,7 @@ custom_button = {
 				has_estate_privilege = artifice_invention_god_fragment_decoder
 				has_estate_privilege = artifice_invention_law_books
 				has_estate_privilege = artifice_invention_table_war
+				has_estate_privilege = artifice_invention_mech_pillar_scouts
 			}
 		}
 	}
@@ -8024,6 +7983,10 @@ custom_button = {
 					religion = the_jadd
 					has_country_flag = unlocked_artifice_invention_table_war
 				}
+				AND = {
+					religion_group = mechanim_religion
+					has_country_flag = unlocked_artifice_invention_mech_pillar_scouts
+				}
 			}
 		}
 	}
@@ -8045,6 +8008,10 @@ custom_button = {
 				AND = {
 					religion = the_jadd
 					has_country_flag = unlocked_artifice_invention_table_war
+				}
+				AND = {
+					religion_group = mechanim_religion
+					has_country_flag = unlocked_artifice_invention_mech_pillar_scouts
 				}
 			}
 		}
@@ -8149,6 +8116,36 @@ custom_button = {
 				remove_estate_privilege = artifice_invention_table_war
 			}
 		}
+		else_if = {
+			limit = { religion_group = mechanim_religion }
+			if = {
+				limit = {
+					artifice_can_select_invention_10 = yes
+					NOT = {
+						has_estate_privilege = artifice_invention_mech_pillar_scouts
+					}
+				}
+				set_estate_privilege = artifice_invention_mech_pillar_scouts
+			}
+			else_if = {
+				limit = {
+					artifice_can_select_invention_10 = no
+					NOT = {
+						has_estate_privilege = artifice_invention_mech_pillar_scouts
+					}
+				}
+				custom_tooltip = artifice_cannot_afford_invention
+				tooltip = {
+					set_estate_privilege = artifice_invention_mech_pillar_scouts
+				}
+			}
+			else_if = {
+				limit = {
+					has_estate_privilege = artifice_invention_mech_pillar_scouts
+				}
+				remove_estate_privilege = artifice_invention_mech_pillar_scouts
+			}
+		}
 	}
 }
 
@@ -8160,6 +8157,7 @@ custom_button = {
 		OR = {
 			religion = ravelian
 			religion_group = bulwari
+			religion_group = mechanim_religion
 		}
 	}
 	frame = {
@@ -8168,6 +8166,7 @@ custom_button = {
 			OR = {
 				has_estate_privilege = artifice_invention_antimagic_field_generator
 				has_estate_privilege = artifice_invention_incantation_bowls
+				has_estate_privilege = artifice_invention_mech_terrain_specialization
 			}
 		}
 	}
@@ -8183,6 +8182,10 @@ custom_button = {
 					religion_group = bulwari
 					has_country_flag = unlocked_artifice_invention_incantation_bowls
 				}
+				AND = {
+					religion_group = mechanim_religion
+					has_country_flag = unlocked_artifice_invention_mech_terrain_specialization
+				}
 			}
 		}
 	}
@@ -8197,6 +8200,10 @@ custom_button = {
 				AND = {
 					religion_group = bulwari
 					has_country_flag = unlocked_artifice_invention_incantation_bowls
+				}
+				AND = {
+					religion_group = mechanim_religion
+					has_country_flag = unlocked_artifice_invention_mech_terrain_specialization
 				}
 			}
 		}
@@ -8266,45 +8273,9 @@ custom_button = {
 				remove_estate_privilege = artifice_invention_incantation_bowls
 			}
 		}
-	}
-}
-
-custom_button = {
-	name = religion_invention_4
-	tooltip = religion_invention_4_tt
-	potential = {
-		has_country_flag = artifice_invention_menu_open_cultural
-		has_country_modifier = mechanim_administration
-	}
-	frame = {
-		number = 3
-		trigger = {
-			has_estate_privilege = artifice_invention_mech_terrain_specialization
-		}
-	}
-	frame = {
-		number = 2
-		trigger = {
-			AND = {
-				has_country_modifier = mechanim_administration
-				has_country_flag = unlocked_artifice_invention_mech_terrain_specialization
-			}
-		}
-	}
-	frame = { number = 1 }
-
-	trigger = {
-		hidden_trigger = {
-			AND = {
-				has_country_modifier = mechanim_administration
-				has_country_flag = unlocked_artifice_invention_mech_terrain_specialization
-			}
-		}
-	}
-	effect = { 
-		if = {
+		else_if = {
 			limit = {
-				has_country_modifier = mechanim_administration
+				religion_group = mechanim_religion
 			}
 			if = {
 				limit = {
@@ -8336,6 +8307,34 @@ custom_button = {
 		}
 	}
 }
+
+# custom_button = {
+# 	name = religion_invention_4
+# 	tooltip = religion_invention_4_tt
+# 	potential = {
+# 		has_country_flag = artifice_invention_menu_open_cultural
+# 		has_country_modifier = mechanim_administration
+# 	}
+# 	frame = {
+# 		number = 3
+# 		trigger = {
+# 		}
+# 	}
+# 	frame = {
+# 		number = 2
+# 		trigger = {
+# 		}
+# 	}
+# 	frame = { number = 1 }
+
+# 	trigger = {
+# 		hidden_trigger = {
+			
+# 		}
+# 	}
+#	effect = { 
+#	}
+#}
 
 # custom_button = {
 # 	name = religion_invention_5

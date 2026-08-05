@@ -2177,6 +2177,7 @@ estate_church_one_faith_one_culture = {
 		trigger = {
 			OR = {
 				has_country_flag = estate_church_no_absolutism_cost
+				has_country_modifier = one_faith_one_culture_no_absolutism_cost_religion_modifier
 				has_country_flag = remove_absolutism_from_one_faith_one_culture
 				mission_completed = L03_isagumze_a_god_for_an_empire
 				has_country_flag = Z88_religious_culture_upgrade
@@ -2190,12 +2191,14 @@ estate_church_one_faith_one_culture = {
 			has_absolutism_reduction_for_estate_privileges = yes
 			NOT = {
 				has_country_flag = estate_church_no_absolutism_cost
+				has_country_modifier = one_faith_one_culture_no_absolutism_cost_religion_modifier
 				has_country_flag = remove_absolutism_from_one_faith_one_culture
 				mission_completed = L03_isagumze_a_god_for_an_empire
 				has_country_flag = Z88_religious_culture_upgrade
 				mission_completed = G52_ways_of_west
 			}
-		} modifier = { max_absolutism = 1 }
+		}
+		modifier = { max_absolutism = 1 }
 	}
 	conditional_modifier = { #Eighard
 		trigger = {
@@ -5874,7 +5877,7 @@ estate_church_caretaking_of_the_shirgriis = {
 			every_owned_province = {
 				limit = { province_group = all_starting_shirgrii }
 				if = {
-					limit { has_building = mage_tower }
+					limit = { has_building = mage_tower }
 					add_province_modifier = {
 						name = shirgrii_maintenance_tower
 						duration = -1
