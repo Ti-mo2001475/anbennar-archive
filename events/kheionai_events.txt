@@ -193,12 +193,35 @@ country_event = {
 		}
 		if = {
 			limit = { abjuration_1_ward_trigger = { player = yes } }
-			generic_cast_spell = { school = abjuration level = 1 id = ward }
 			custom_tooltip = tame_cast_ward
+			hidden_effect = {
+				capital_scope = {
+					province_event = { id = kheionai.33 }
+				}
+			}
 		}
 		else = {
 			custom_tooltip = not_enough_mana_tt
 		}
+	}
+}
+
+#cast Ward on capital
+province_event = {
+	id = kheionai.33
+	title = kheionai.33.t
+	desc = kheionai.33.desc
+	picture = MARCHING_PEASANTS_eventPicture
+
+	is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		generic_cast_spell = { school = abjuration level = 1 id = ward }
+	}
+
+	option = {
+		name = kheionai.33.a
 	}
 }
 
