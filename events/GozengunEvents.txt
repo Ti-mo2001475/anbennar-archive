@@ -87,7 +87,7 @@ country_event = { #manul
                     name = "Harimanul 'The Adorable'"
                     skill = 2
                     culture = ashwoven_harimari
-                    religion = Levaajan
+                    religion = levaajan
                     cost_multiplier = 0.5
                 }
             }
@@ -131,9 +131,6 @@ country_event = { # dead man demanding
 
     trigger = {
         capital_scope = {
-            continent = asia
-        }
-        any_owned_province = {
             superregion = gozengun_superregion
         }
         NOT = {
@@ -169,6 +166,7 @@ country_event = { # dead man demanding
                 duration = 1825
             }
         }
+        goto = target_province
     }
 
     option = {
@@ -195,9 +193,7 @@ country_event = { #mercenaries event
     option = {
         name = gozengun.4.a
         trigger = {
-            any_owned_province = {
-                    has_any_human_pop_trigger = yes
-            }
+            fast_owns_num_pops_of_race = { race = human amount = 1 }
             NOT = {
                 has_country_modifier = racial_pop_human_purge
 
@@ -225,12 +221,10 @@ country_event = { #mercenaries event
     option = {
         name = gozengun.4.b
         trigger = {
-            any_owned_province = {
-                    OR = {
-                        has_any_centaur_pop_trigger = yes
-                        has_any_harpy_pop_trigger = yes
-                    }
-            }
+                OR = {
+                    fast_owns_num_pops_of_race = { race = centaur amount = 1 }
+                    fast_owns_num_pops_of_race = { race = harpy amount = 1 }
+                }
             NOT = {
                 OR = {
                     has_country_modifier = racial_pop_centaur_purge
@@ -263,9 +257,7 @@ country_event = { #mercenaries event
     option = {
         name = gozengun.4.c
         trigger = {
-            any_owned_province = {
-                    has_any_hobgoblin_pop_trigger = yes
-            }
+                fast_owns_num_pops_of_race = { race = hobgoblin amount = 1 }
             NOT = {
                 OR = {
                     has_country_modifier = racial_pop_hobgoblin_purge
@@ -295,12 +287,10 @@ country_event = { #mercenaries event
     option = {
         name = gozengun.4.d
         trigger = {
-            any_owned_province = {
-                    OR = {
-                        has_any_ogre_pop_trigger = yes
-                        has_any_troll_pop_trigger = yes
-                    }
-            }
+                OR = {
+                    fast_owns_num_pops_of_race = { race = ogre amount = 1 }
+                    fast_owns_num_pops_of_race = { race = troll amount = 1 }
+                }
             NOT = {
                 OR = {
                     has_country_modifier = racial_pop_ogre_purge
@@ -366,10 +356,10 @@ country_event = { #facestealer rite event
         random = {
             chance = 75
             event_target:facestealer_province = {
-                remove_province_modifier = facestealer_1
-                add_facestealer_history = {size = 2}
+                add_facestealer_effect = yes
             }
         }
+        goto = facestealer_province
     }
 
     option = {
@@ -378,8 +368,7 @@ country_event = { #facestealer rite event
         random = {
             chance = 25
             event_target:facestealer_province = {
-                remove_province_modifier = facestealer_1
-                add_facestealer_history = {size = 2}
+                add_facestealer_effect = yes
             }
         }
         event_target:facestealer_province = {
@@ -389,6 +378,7 @@ country_event = { #facestealer rite event
             }
         }
         add_adm_power = -10
+        goto = facestealer_province
     }
 
     option = {
@@ -409,10 +399,11 @@ country_event = { #facestealer rite event
         random = {
             chance = 50 
             event_target:facestealer_province = {
-                remove_province_modifier = facestealer_1
+                subtract_facestealer_effect = yes
             } 
         }
         add_years_of_income = 0.25  
+        goto = facestealer_province
     }
 }
 
@@ -439,10 +430,10 @@ country_event = { #spirit advisor event
         }
         random_list = {
             75 = {
-                country_event = {id = gozengun.7}
+                country_event = { id = gozengun.7 }
             }
             25 = {
-                country_event = {id = gozengun.8}
+                country_event = { id = gozengun.8 }
             }
         }
     }
@@ -454,9 +445,7 @@ country_event = { #spirit advisor event
                 ruler_has_personality = babbling_buffoon_personality
             }
         }
-        add_legitimacy = -5
-        add_devotion = -5
-        add_republican_tradition = -5
+        add_legitimacy_equivalent = { amount = -5 republican_tradition = -5 }
     }
 
     option = {
@@ -571,9 +560,7 @@ country_event = { #negative spirit advisor
                 duration = 1460
             }
         }
-        add_legitimacy = -10
-        add_devotion = -10
-        add_republican_tradition = -10
+        add_legitimacy_equivalent = { amount = -10 republican_tradition = -10 }
     }
 }
 
@@ -586,6 +573,13 @@ country_event = { #gumiho event
     is_triggered_only = yes
 
     trigger = {
+        gowon_region = {
+            type = all
+            OR = {
+                owned_by = ROOT
+                area = nakseseom_area
+            }
+        }
         NOT = {
             OR = {
                 religion = neokttareum
@@ -596,16 +590,6 @@ country_event = { #gumiho event
                 tag = V05
             }
         }
-        gowon_region = {
-            type = all
-            OR = {
-                owned_by = ROOT
-                province_id = 5419
-                province_id = 3724
-                province_id = 6511
-                province_id = 6512
-            }
-        }
     }
 
     option = {
@@ -613,14 +597,8 @@ country_event = { #gumiho event
         add_prestige = 5
         gowon_region = {
             limit = {
-                owned_by = ROOT
                 NOT = {
-                    OR = {
-                        province_id = 5419
-                        province_id = 3724
-                        province_id = 6511
-                        province_id = 6512
-                    }
+                    area = nakseseom_area
                 }
                 religion = neokttareum
             }
@@ -636,9 +614,7 @@ country_event = { #gumiho event
         name = gozengun.9.b
         add_yearly_manpower = -0.33
         add_prestige = -5
-        add_legitimacy = -5
-        add_devotion = -5
-        add_republican_tradition = -5
+        add_legitimacy_equivalent = { amount = -5 republican_tradition = -5 }
         add_country_modifier = {
             name = gozengun_gumiho_appeased
             duration = 7300
@@ -663,11 +639,11 @@ country_event = { #strange things in the desert
     is_triggered_only = yes
 
     trigger = {
+        capital_scope = {
+            superregion = gozengun_superregion
+        }
         any_owned_province = {
-            AND = {
-                superregion = gozengun_superregion
-                has_terrain = desert
-            }
+            has_terrain = desert
         }
     }
 
@@ -722,5 +698,6 @@ country_event = { #guy who built the things
                 duration = 3650
             }
         }
+        goto = strange_in_desert
     }
 }
