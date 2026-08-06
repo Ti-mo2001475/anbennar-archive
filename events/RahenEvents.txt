@@ -1586,7 +1586,7 @@ country_event = {
 
 	option = {
 		name  = rahen.201.a
-		country_modifier = {
+		add_country_modifier = {
 			name = aided_admin_advisor
 			duration = 3650
 		}
@@ -1595,7 +1595,7 @@ country_event = {
 
 	option = {
 		name = rahen.201.b
-		country_modifier = {
+		add_country_modifier = {
 			name  = ministries_at_work
 			duration = 3650
 		}
@@ -1606,7 +1606,7 @@ country_event = {
 		estate_influence_modifier = {
 			estate = estate_raj_ministries
 			influence = 0.05
-			duration = 2650
+			duration = 3650
 		}
 	}
 
@@ -1624,7 +1624,7 @@ country_event = {
 				ruler_has_personality = reformer_personality
 			}
 			add_adm_power = 50
-			country_modifier = {
+			add_country_modifier = {
 				name = direct_assistance_reformer
 				duration = 3650
 			}
@@ -1633,7 +1633,7 @@ country_event = {
 			limit = {
 				ruler_is_powerful_mage = yes
 			}
-			country_modifier = {
+			add_country_modifier = {
 				name = direct_assistance_mage
 				duration = 3650
 			}
@@ -1673,7 +1673,7 @@ country_event = {
 	option = {
 		name = rahen.202.b
 		add_prestige = -5
-		all_known_country = {
+		every_known_country = {
 			limit = {
 				capital_scope = {
 					region = bomdan_region
@@ -1693,9 +1693,17 @@ country_event = {
 		trigger = {
 			ruler_has_personality = entrepeneur_personality
 		}
-		province_modifier = {
+		every_owned_province = {
+			limit = {
+				OR = {
+					trade_goods = silk
+					trade_goods = cloth
+				}
+			}
+		add_province_modifier = {
 			name = homegrown_sari_industry
 			duration = 3650
+		}
 		}
 		add_prestige = 5
 	}
@@ -1740,9 +1748,17 @@ country_event = {
 	option = {
 		name = rahen.203.b
 		small_decrease_of_harimari_tolerance_effect = yes
-		province_modifier = {
+        every_owned_province = {
+			limit = {
+				OR = {
+					has_harimari_minority = yes
+					has_harimari_majority = yes	
+				}
+			}
+		add_province_modifier = {
 			name = harimari_snubbed
 			duration = 1825
+		}
 		}
 	}
 	
@@ -1750,9 +1766,17 @@ country_event = {
 	option = {
 		name = rahen.203.c
 		small_decrease_of_human_tolerance_effect = yes
-		province_modifier = {
+		every_owned_province = {
+			limit = {
+				OR = {
+					has_human_minority = yes
+					has_human_majority = yes	
+				}
+			}
+		add_province_modifier = {
 			name = human_snubbed
 			duration = 1825
+		}
 		}
 	}
 }
@@ -1780,9 +1804,11 @@ country_event = {
 
 	option = {
 		name  = rahen.204.a
-		country_modifier = {
-			name = refugees_placated
-			duration = 3650
+		add_province_modifier = {
+			every_owned_province = {
+				name = refugees_placated
+				duration = 3650
+			}
 		}
 		add_estate_loyalty = {
 			estate = estate_uppercastes
@@ -1830,9 +1856,11 @@ country_event = {
 
 	option = {
 		name = rahen.204.b
-		country_modifier = {
+		add_province_modifier = {
+			every_owned_province = {
 			name = shamakhadi_refugees_snubbed
 			duration = 3650
+			}
 		}
 	}
 
@@ -1921,9 +1949,11 @@ country_event = {
 	option = {
 		name = rahen.205.b
 		
-		country_modifier = {
+		every_owned_province = {
+			add_province_modifier = {
 			name = strong_companies
 			duration = 1825
+			}
 		}
 		add_estate_loyalty = {
 			estate = estate_uppercastes
@@ -1953,9 +1983,11 @@ country_event = {
 
 	option = {
 		name = rahen.205.c
-		country_modifier = {
+		every_owned_province = {
+			add_province_modifier = {
 			name = unions_pleased
 			duration = 1825
+			}
 		}
 		add_estate_loyalty = {
 			estate = estate_uppercastes
@@ -2027,7 +2059,6 @@ country_event = {
 	title = rahen.206.t
 	desc = rahen.206.d
 	picture = indiangfx_ECONOMY_eventPicture 
-
 	is_triggered_only = yes
 
 	option = {
