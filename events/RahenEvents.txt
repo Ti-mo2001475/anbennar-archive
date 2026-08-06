@@ -1572,10 +1572,16 @@ country_event = {
 	picture = indiangfx_REFORM_eventPicture
 
 	trigger = {
-			employed_advisor = {
-				category = adm
-			}
-			has_estate = estate_raj_ministries
+		employed_advisor = {
+			category = adm
+		}
+		has_estate = estate_raj_ministries
+		NOT = {
+			has_country_modifier = aided_admin_advisor
+			has_country_modifier = ministries_at_work
+			has_country_modifier = direct_assistance_mage
+			has_country_modifier = direct_assistance_reformer
+		}
 	}
 
 	option = {
@@ -1596,6 +1602,11 @@ country_event = {
 		add_estate_loyalty = {
 			estate = estate_raj_ministries
 			loyalty = 10
+		}
+		estate_influence_modifier = {
+			estate = estate_raj_ministries
+			influence = 0.05
+			duration = 2650
 		}
 	}
 
@@ -1647,6 +1658,10 @@ country_event = {
 				trade_goods = cloth
 			}
 		}
+		NOT = {
+			has_country_modifier = foreign_sari_plus_opinion
+			has_country_modifier = homegrown_sari_industry
+		}
 	}
 
 	option = {
@@ -1673,6 +1688,7 @@ country_event = {
 	}
 
 	option = {
+		highlight = yes
 		name = rahen.202.c
 		trigger = {
 			ruler_has_personality = entrepeneur_personality
@@ -1708,6 +1724,10 @@ country_event = {
 					has_human_majority = yes
 				}				
 			}
+		}
+		NOT = {
+			has_country_modifier = harimari_snubbed
+			has_country_modifier = human_snubbed
 		}		
 	}
 
@@ -1751,6 +1771,10 @@ country_event = {
 			NOT = {
 				region = shamakhad_region
 			}
+		}
+		NOT = {
+			has_country_modifier = shamakhadi_refugees_snubbed
+			has_country_modifier = refugees_placated
 		}
 	}
 
@@ -1868,10 +1892,6 @@ country_event = {
 
 	option = {
 		name  = rahen.205.a
-		country_modifier = {
-			name = shut_down_tours
-			duration = 3650
-		}
 		add_prestige = 10
 		add_estate_loyalty = {
 			estate = estate_uppercastes
@@ -1885,14 +1905,22 @@ country_event = {
 			estate = estate_lowercastes
 			loyalty = -5
 		}
+		estate_influence_modifier = {
+			estate = estate_middlecastes
+			estate = estate_lowercastes
+			influence = -5
+			duration = 3650
+		}
+		estate_influence_modifier = {
+			estate = estate_uppercastes
+			influence = 5
+			duration = 3650
+		}
 	}
 
 	option = {
 		name = rahen.205.b
-		country_modifier = {
-			name = reimbursed_company
-			duration = 3650
-		}
+		
 		country_modifier = {
 			name = strong_companies
 			duration = 1825
@@ -1909,15 +1937,22 @@ country_event = {
 			estate = estate_lowercastes
 			loyalty = -5
 		}
+		estate_influence_modifier = {
+			estate = estate_uppercastes
+			estate = estate_lowercastes
+			influence = -5
+			duration = 3650
+		}
+		estate_influence_modifier = {
+			estate = estate_middlecastes
+			influence = 5
+			duration = 3650
+		}
 		add_prepared_months_of_trade_income = -1
 	}
 
 	option = {
 		name = rahen.205.c
-		country_modifier = {
-			name = tour_workers_rights_guaranteed
-			duration = 3650
-		}
 		country_modifier = {
 			name = unions_pleased
 			duration = 1825
@@ -1934,18 +1969,26 @@ country_event = {
 			estate = estate_lowercastes
 			loyalty = 10
 		}
+		estate_influence_modifier = {
+			estate = estate_middlecastes
+			estate = estate_uppercastes
+			influence = -5
+			duration = 3650
+		}
+		estate_influence_modifier = {
+			estate = estate_lowercastes
+			influence = 5
+			duration = 3650
+		}
 	}
 
 	option = {
 		name = rahen.205.e
+		custom_tooltip = riverboat_madness_foreshadow
 		add_legitimacy = 10
 		add_ruler_modifier = {
 			name = destressed_ruler
 			duration = -1
-		}
-		country_modifier = {
-			name = all_parties_removed_from_court
-			duration = 3650
 		}
 		add_estate_loyalty = {
 			estate = estate_uppercastes
@@ -1958,6 +2001,17 @@ country_event = {
 		add_estate_loyalty = {
 			estate = estate_lowercastes
 			loyalty = -5
+		}
+		estate_influence_modifier = {
+			estate = estate_middlecastes
+			estate = estate_lowercastes
+			influence = -5
+			duration = 3650
+		}
+		estate_influence_modifier = {
+			estate = estate_uppercastes
+			influence = -5
+			duration = 3650
 		}
 		hidden_effect = {
 			country_event = {
@@ -1974,16 +2028,10 @@ country_event = {
 	desc = rahen.206.d
 	picture = indiangfx_ECONOMY_eventPicture 
 
-	trigger = {
-
-	}
+	is_triggered_only = yes
 
 	option = {
 		name  = rahen.206.a
-		country_modifier = {
-			name = adventurers_heeded
-			duration = 3650
-		}
 		add_estate_loyalty = {
 			estate = estate_adventurers
 			loyalty = 5
@@ -1992,6 +2040,12 @@ country_event = {
 			estate = estate_mages
 			estate = estate_uppercastes
 			loyalty = -5
+		}
+		estate_influence_modifier = {
+			estate = estate_mages
+			estate = estate_uppercastes
+			influence = -5
+			duration = 3650
 		}
 		all_known_country = {
 			limit = {
@@ -2006,12 +2060,14 @@ country_event = {
 
 	option = {
 		name = rahen.206.b
-		country_modifier = {
-			name = mages_heeded
-		}
 		add_estate_loyalty = {
 			estate = estate_adventurers
 			loyalty = -5
+		}
+		estate_influence_modifier = {
+			estate = estate_adventurers
+			influence = -5
+			duration = 3650
 		}
 		all_known_country = {
 			limit = {
@@ -2035,6 +2091,12 @@ country_event = {
 			estate = estate_mages
 			loyalty = -5
 		}
+		estate_influence_modifier = {
+			estate = estate_uppercastes
+			estate = estate_mages
+			influence = -5
+			duration = 3650
+		}
 		all_known_country = {
 			limit = {
 				religion = new_sun_cult
@@ -2048,6 +2110,7 @@ country_event = {
 
 	option = {
 		name  = rahen.206.e
+		custom_tooltip = camelback_madness_foreshadow
 		country_modifier = {
 			name = noone_heeded
 			duration = 3650
@@ -2061,6 +2124,13 @@ country_event = {
 			estate = estate_mages
 			estate = estate_adventurers
 			loyalty = -5
+		}
+		estate_influence_modifier = {
+			estate = estate_adventurers
+			estate = estate_uppercastes
+			estate = estate_mages
+			influence = -5
+			duration = 3650
 		}
 		add_prestige = 15
 		hidden_effect = {
@@ -2087,9 +2157,7 @@ country_event = {
 	desc = rahen.207.d
 	picture = indiangfx_GOOD_WITH_MONARCH_eventPicture
 
-	trigger = {
-
-	}
+	is_triggered_only = yes
 
 	immediate = {
 		prepare_months_of_trade_income
@@ -2139,11 +2207,11 @@ country_event = {
 		}
 		define_advisor = {
 			type = trader
-			name = "Jaidesh Baljeet"
+			name = "Rujda Devanath"
 			skill = 4
 			culture = rasarhid
 			religion = high_philosophy
-			cost_multiplier = 0.75 #is this a discount of 75% or 25%?
+			cost_multiplier = 0.25
 		}
 	}
 }
