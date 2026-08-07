@@ -1648,7 +1648,6 @@ country_event = {
 	picture = indiangfx_CULTURE_eventPicture
 
 	trigger = {
-		tag = ROOT
 		capital_scope = {
 			superregion = rahen_superregion
 		}
@@ -1717,20 +1716,13 @@ country_event = {
 	picture = indiangfx_BAD_WITH_MONARCH_eventPicture
 
 	trigger = {
-		tag = ROOT
 		capital_scope = {
 			superregion = rahen_superregion
 		}
 		any_owned_province = {
 			AND = {
-				OR = {
-					has_harimari_minority = yes
-					has_harimari_majority = yes	
-				}
-				OR = {
-					has_human_minority = yes
-					has_human_majority = yes
-				}				
+				has_any_human_pop_trigger = yes
+				has_any_harimari_pop_trigger = yes	
 			}
 		}
 		NOT = {
@@ -1750,10 +1742,7 @@ country_event = {
 		small_decrease_of_harimari_tolerance_effect = yes
         every_owned_province = {
 			limit = {
-				OR = {
-					has_harimari_minority = yes
-					has_harimari_majority = yes	
-				}
+				has_any_harimari_pop_trigger = yes
 			}
 		add_province_modifier = {
 			name = harimari_snubbed
@@ -1768,10 +1757,7 @@ country_event = {
 		small_decrease_of_human_tolerance_effect = yes
 		every_owned_province = {
 			limit = {
-				OR = {
-					has_human_minority = yes
-					has_human_majority = yes	
-				}
+			has_any_human_pop_trigger = yes
 			}
 		add_province_modifier = {
 			name = human_snubbed
@@ -1789,7 +1775,6 @@ country_event = {
 
 	trigger = {
 		has_estate = estate_uppercastes
-		tag = ROOT
 		capital_scope = {
 			superregion = rahen_superregion
 			NOT = {
@@ -1804,11 +1789,10 @@ country_event = {
 
 	option = {
 		name  = rahen.204.a
-		add_province_modifier = {
-			every_owned_province = {
-				name = refugees_placated
-				duration = 3650
-			}
+		
+		add_country_modifier_modifier = {
+			name = refugees_placated
+			duration = 3650
 		}
 		add_estate_loyalty = {
 			estate = estate_uppercastes
@@ -1856,11 +1840,9 @@ country_event = {
 
 	option = {
 		name = rahen.204.b
-		add_province_modifier = {
-			every_owned_province = {
+		add_country_modifier_modifier = {
 			name = shamakhadi_refugees_snubbed
 			duration = 3650
-			}
 		}
 	}
 
@@ -1935,6 +1917,10 @@ country_event = {
 		}
 		estate_influence_modifier = {
 			estate = estate_middlecastes
+			influence = -5
+			duration = 3650
+		}
+		estate_influence_modifier = {
 			estate = estate_lowercastes
 			influence = -5
 			duration = 3650
@@ -1969,6 +1955,10 @@ country_event = {
 		}
 		estate_influence_modifier = {
 			estate = estate_uppercastes
+			influence = -5
+			duration = 3650
+		}
+		estate_influence_modifier = {
 			estate = estate_lowercastes
 			influence = -5
 			duration = 3650
@@ -2003,6 +1993,10 @@ country_event = {
 		}
 		estate_influence_modifier = {
 			estate = estate_middlecastes
+			influence = -5
+			duration = 3650
+		}
+		estate_influence_modifier = {
 			estate = estate_uppercastes
 			influence = -5
 			duration = 3650
@@ -2036,6 +2030,10 @@ country_event = {
 		}
 		estate_influence_modifier = {
 			estate = estate_middlecastes
+			influence = -5
+			duration = 3650
+		}
+		estate_influence_modifier = {
 			estate = estate_lowercastes
 			influence = -5
 			duration = 3650
@@ -2069,11 +2067,18 @@ country_event = {
 		}
 		add_estate_loyalty = {
 			estate = estate_mages
+			loyalty = -5
+		}
+		add_estate_loyalty = {
 			estate = estate_uppercastes
 			loyalty = -5
 		}
 		estate_influence_modifier = {
 			estate = estate_mages
+			influence = -5
+			duration = 3650
+		}
+		estate_influence_modifier = {
 			estate = estate_uppercastes
 			influence = -5
 			duration = 3650
@@ -2119,11 +2124,18 @@ country_event = {
 		}
 		add_estate_loyalty = {
 			estate = estate_uppercastes
+			loyalty = -5
+		}
+		add_estate_loyalty = {
 			estate = estate_mages
 			loyalty = -5
 		}
 		estate_influence_modifier = {
 			estate = estate_uppercastes
+			influence = -5
+			duration = 3650
+		}
+		estate_influence_modifier = {
 			estate = estate_mages
 			influence = -5
 			duration = 3650
@@ -2142,23 +2154,33 @@ country_event = {
 	option = {
 		name  = rahen.206.e
 		custom_tooltip = camelback_madness_foreshadow
-		country_modifier = {
-			name = noone_heeded
-			duration = 3650
-		}
 		add_ruler_modifier = {
 			name = destressed_ruler_electric_boogaloo
 			duration = -1
 		}
 		add_estate_loyalty = {
 			estate = estate_uppercastes
+			loyalty = -5
+		}
+		add_estate_loyalty = {
 			estate = estate_mages
+			loyalty = -5
+		}
+		add_estate_loyalty = {
 			estate = estate_adventurers
 			loyalty = -5
 		}
 		estate_influence_modifier = {
 			estate = estate_adventurers
+			influence = -5
+			duration = 3650
+		}
+		estate_influence_modifier = {
 			estate = estate_uppercastes
+			influence = -5
+			duration = 3650
+		}
+		estate_influence_modifier = {
 			estate = estate_mages
 			influence = -5
 			duration = 3650
@@ -2191,7 +2213,7 @@ country_event = {
 	is_triggered_only = yes
 
 	immediate = {
-		prepare_months_of_trade_income
+		prepare_months_of_trade_income = { months = 3 }
 	}
 
 	option = {
@@ -2218,7 +2240,7 @@ country_event = {
 	option = {
 		name = rahen.207.b
 		add_prestige = 10
-		add_prepared_months_of_trade_income = -3
+		remove_prepared_months_of_trade_income = yes
 		add_ruler_modifier = {
 			name = destressed_ruler_third_times_the_charm
 			duration = -1
@@ -2240,7 +2262,7 @@ country_event = {
 			type = trader
 			name = "Rujda Devanath"
 			skill = 4
-			culture = rasarhid
+			culture = sarniryabsad
 			religion = high_philosophy
 			cost_multiplier = 0.25
 		}
