@@ -10,34 +10,34 @@ country_event = { # Shipwrecked Elves
 	picture = DHOW_AT_SEA_eventPicture
 	
 	is_triggered_only = yes
-    fire_only_once = yes
-	trigger = {    
+	fire_only_once = yes
+	trigger = {
 		culture_group = amadian_ruinborn_elf
 		any_owned_province = {
 			region = amadia_region
 			has_port = yes 
 		}
-        NOT = { #Not discovered Alecand or Devand
-            any_known_country = {
-                capital_scope = {
-                    superregion = kheionai_superregion
-                }
-                culture_group = kheionai_ruinborn_elf
-            }
-        }
+		NOT = { #Not discovered Alecand or Devand
+			any_known_country = {
+				capital_scope = {
+					superregion = kheionai_superregion
+				}
+				culture_group = kheionai_ruinborn_elf
+			}
+		}
 		OR = { #Year is at least 1530 or a Kheion has discovered Amadian coast
-            is_year = 1530
-            any_country = {
-                capital_scope = { superregion = kheionai_superregion }
-                culture_group = kheionai_ruinborn_elf
-                save_event_target_as = kheionai_country
-                any_province = {
-                    region = amadia_region
-                    has_port = yes
-                    has_discovered = event_target:kheionai_country
-                }
-            }
-        } 
+			is_year = 1530
+			any_country = {
+				capital_scope = { superregion = kheionai_superregion }
+				culture_group = kheionai_ruinborn_elf
+				save_event_target_as = kheionai_country
+				any_province = {
+					region = amadia_region
+					has_port = yes
+					has_discovered = event_target:kheionai_country
+				}
+			}
+		} 
 	}
 
 	mean_time_to_happen = {
@@ -52,17 +52,17 @@ country_event = { # Shipwrecked Elves
 		name = amadia_flavour.1.a
 
 		add_prestige = 10
-        add_manpower = -0.001
+		add_manpower = -0.001
 
-        hidden_effect = {
+		hidden_effect = {
 			country_event = {
-                id = amadia_flavour.2 # The Blue Ones Return
-                days = 365 # in 1 year
-            }
-        }
+				id = amadia_flavour.2 # The Blue Ones Return
+				days = 365 # in 1 year
+			}
+		}
 	}
 
-    option = { # These elves can't be trusted. Kill them and take their armor and loot!
+	option = { # These elves can't be trusted. Kill them and take their armor and loot!
 		name = amadia_flavour.1.b
 
 		add_treasury = 50
@@ -94,29 +94,29 @@ country_event = { # The Blue Ones Return
 	option = { # Amazing!
 		name = amadia_flavour.2.a
 
-        arpedifer_area = { 
-            discover_country = ROOT # Discover Arpedifer area
-        }
+		arpedifer_area = { 
+			discover_country = ROOT # Discover Arpedifer area
+		}
 		
 		1711 = { # You and owner of Arpedifer discover sea tiles along the Kaydhano sea
 			discover_country = ROOT
-            discover_country = event_target:kheionai_country
+			discover_country = event_target:kheionai_country
 		}
 		1549 = {
 			discover_country = ROOT
-            discover_country = event_target:kheionai_country
+			discover_country = event_target:kheionai_country
 		}
 		1550 = {
 			discover_country = ROOT
-            discover_country = event_target:kheionai_country
+			discover_country = event_target:kheionai_country
 		}
 		1552 = {
 			discover_country = ROOT
-            discover_country = event_target:kheionai_country
+			discover_country = event_target:kheionai_country
 		}
 		1553 = {
 			discover_country = ROOT
-            discover_country = event_target:kheionai_country
+			discover_country = event_target:kheionai_country
 		}
 
 		capital_scope = { # They discover our capital
@@ -130,9 +130,9 @@ country_event = { # The Blue Ones Return
 			}
 			discover_country = event_target:kheionai_country
 		}
-        
+		
 		add_treasury = 100
-        define_advisor = {
+		define_advisor = {
 			type = trader
 			culture = arpebhen
 			religion = kheionism
@@ -149,20 +149,20 @@ country_event = { # Trade with the Kheionai
 	picture = TOLLS_SHIP_CARGO_eventPicture
 	
 	is_triggered_only = yes
-    fire_only_once = yes
-	trigger = {    
+	fire_only_once = yes
+	trigger = {	
 		culture_group = amadian_ruinborn_elf
-        num_of_centers_of_trade = 1
-        any_known_country = {
-            capital_scope = {
-                superregion = kheionai_superregion
-            }
-            culture_group = kheionai_ruinborn_elf
-        }
+		num_of_centers_of_trade = 1
+		any_known_country = {
+			capital_scope = {
+				superregion = kheionai_superregion
+			}
+			culture_group = kheionai_ruinborn_elf
+		}
 		any_owned_province = {
 			OR = {
 				trade_goods = damestear
-                trade_goods = precursor_relics
+				trade_goods = precursor_relics
 				trade_goods = cocoa
 			}
 		}
@@ -171,22 +171,22 @@ country_event = { # Trade with the Kheionai
 	option = { # Trade for knowledge
 		name = amadia_flavour.3.a
 
-        if = {
-            limit = {
-                any_known_country = {
-                    capital_scope = {
-                        superregion = kheionai_superregion
-                    }
-                    institution_difference = {
-                        who = ROOT
-                        value = 1
-                    }
-                }
-            }
-            capital_scope = {
-                add_next_institution_embracement = 25
-            }
-        }
+		if = {
+			limit = {
+				any_known_country = {
+					capital_scope = {
+						superregion = kheionai_superregion
+					}
+						institution_difference = {
+						who = ROOT
+						value = 1
+					}
+				}
+			}
+			capital_scope = {
+				add_next_institution_embracement = 25
+			}
+		}
 
 		add_country_modifier = {
 			name = amadia_trade_for_knowledge
@@ -199,13 +199,13 @@ country_event = { # Trade with the Kheionai
 
 		add_years_of_income = 0.5
 
-        add_country_modifier = {
+		add_country_modifier = {
 			name = amadia_trade_for_gold
 			duration = 3650 # 10 years
 		}
 	}
 
-    option = { # Trade with locals
+	option = { # Trade with locals
 		name = amadia_flavour.3.c
 
 		add_mercantilism = 3
