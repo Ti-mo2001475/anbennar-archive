@@ -2295,6 +2295,13 @@ province_not_immune_to_siege_magic = { #Cannot use FROM and ROOT here
 			NOT = { has_building = ramparts }
 		}
 	}
+	if = {
+		limit = { has_province_modifier = haless_chi_invoke_the_grave_earth_mod }
+		custom_trigger_tooltip = {
+			tooltip = cannot_siege_invoke_the_grave_earth
+			NOT = { has_building = mage_tower }
+		}
+	}
 }
 magical_fortress_proxy_trigger = { #If-limits in scripted triggers don't validate their triggers two layers deep. See has_mana_to_cast_spell for more info
 	owner = { at_least_magic_project_level = { project = magical_fortress level = 3 } }
@@ -2584,6 +2591,7 @@ has_cast_abjuration_war_magic = {
 			has_cast_combat_ward = yes
 			has_cast_mage_armor = yes
 			has_country_modifier = H14_icewardery_magic
+			has_country_modifier = haless_chi_invoke_the_grave_earth_mod
 		}
 	}
 }
@@ -5602,6 +5610,70 @@ enchantment_3_bardic_default_4_subtrigger = {
 		tooltip = bardic_magic_spell_4_unlocked_tt
 		has_country_flag = bardic_magic_spell_4_unlocked
 	}
+}
+
+#Haless
+can_access_haless_chi_magic = {
+	OR = {
+		culture_is_yan = yes
+		culture_group = thidinkai
+		primary_culture = sunrise_elf
+	}
+	NOT = {
+		primary_culture = tamran
+		religion = devouring_path
+		#NOT has Shadowmancy
+	}
+}
+custom_spell_haless_chi_rite_of_upright_nourishment_trigger = {
+	[[player] has_mana_to_cast_magical_tradition_spell = { school = divination level = 1 } ]
+	OR = {
+		is_overall_divination_level_1_minimum = yes
+		is_overall_transmutation_level_1_minimum = yes
+	}
+	custom_trigger_tooltip = {
+		tooltip = haless_chi_rite_of_upright_nourishment_trigger_tt
+		OR = {
+			AND = {
+				national_focus = ADM
+				employed_advisor = { category = ADM }
+			}
+			AND = {
+				national_focus = DIP
+				employed_advisor = { category = DIP }
+			}
+			AND = {
+				national_focus = MIL
+				employed_advisor = { category = MIL }
+			}
+		}
+	}
+	NOT = { has_country_modifier = haless_chi_rite_of_upright_nourishment_tracker_mod }
+}
+custom_spell_haless_chi_harmonize_feng_shui_trigger = {
+	[[player] has_mana_to_cast_magical_tradition_spell = { school = illusion level = 1 } ]
+	OR = {
+		is_overall_divination_level_1_minimum = yes
+		is_overall_transmutation_level_1_minimum = yes
+	}
+	NOT = { has_country_modifier = haless_chi_harmonize_feng_shui_mod }
+}
+custom_spell_haless_chi_invoke_the_grave_earth_trigger = {
+	[[player] has_mana_to_cast_magical_tradition_spell = { school = abjuration level = 1 } ]
+	OR = {
+		is_overall_abjuration_level_1_minimum = yes
+		is_overall_necromancy_level_1_minimum = yes
+	}
+	war_magic_trigger = yes
+	NOT = { has_country_modifier = haless_chi_invoke_the_grave_earth_mod }
+}
+custom_spell_haless_chi_channel_chi_trigger = {
+	[[player] has_mana_to_cast_magical_tradition_spell = { school = conjuration level = 1 } ]
+	OR = {
+		is_overall_conjuration_level_1_minimum = yes
+		is_overall_evocation_level_1_minimum = yes
+	}
+	NOT = { has_country_modifier = haless_chi_channel_chi_mod }
 }
 
 ### STOP.
