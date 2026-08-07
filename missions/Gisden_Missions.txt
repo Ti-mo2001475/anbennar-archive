@@ -1293,8 +1293,8 @@ milcorissia_branching_2 = {
 
 		trigger = { 
 			312 = {
-				has_building = workshop
-				has_building = temple
+				has_production_building_trigger = yes
+				has_tax_building_trigger = yes
 				OR = {
 					base_production = 6
 					base_tax = 6
@@ -1417,26 +1417,11 @@ milcorissia_branching_2 = {
 		}
 
 		effect = { 
-			add_country_modifier = {
-				name = A75_true_heirs_of_milcorissia
-				duration = -1
-			}
-			change_tag = B94
-			hidden_effect = { restore_country_name = yes }
-			hidden_effect = { complete_mission = gisden_dream_of_milcorissia }
-			add_country_modifier = {
-				name = "centralization_modifier"
-				duration = 7300
-			}
 			add_prestige = 25
-			if = {
-				limit = {
-					has_custom_ideas = no
-				}
-				country_event = { id = ideagroups.1 } #Swap Ideas
-			}
-			hidden_effect = { remove_ruler_personality = mage_personality }
+			form_milcorissia = yes
 			hidden_effect = {
+				complete_mission = gisden_dream_of_milcorissia
+				remove_ruler_personality = mage_personality
 				country_event = {
 					id = gisden.22
 					days = 1

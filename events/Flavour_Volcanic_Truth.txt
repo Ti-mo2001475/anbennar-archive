@@ -1,0 +1,756 @@
+namespace = flavour_volcanic_truth
+
+#A Newborn Island
+country_event = {
+	id = flavour_volcanic_truth.1
+	title = flavour_volcanic_truth.1.t
+	desc = flavour_volcanic_truth.1.d
+	picture = FAR_AND_WIDE_eventPicture	
+	goto = newborn_island_province
+	
+	is_triggered_only = yes	
+	trigger = {
+		religion = volcanic_truth
+		any_owned_province = {
+			has_port = yes
+			superregion = kanolowele_superregion
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					superregion = kanolowele_superregion
+					has_port = yes
+				}
+				save_event_target_as = newborn_island_province
+			}
+		}
+	}
+	
+	#Proclaim a month of celebration
+	option = {
+		name = flavour_volcanic_truth.1.a
+		add_stability = 1
+	}
+	
+	#Dedicate this island to Quahopilo
+	option = {
+		name = flavour_volcanic_truth.1.b
+		add_country_modifier = {
+			name = island_dedication_quahopilo
+			duration = 5475
+		}
+	}
+	
+	#Dedicate the island to Muatlaqua
+	option = {
+		name = flavour_volcanic_truth.1.c
+		add_country_modifier = {
+			name = island_dedication_muatlaqua
+			duration = 5475
+		}
+	}
+	
+	#Profit from the mass of pilgrims
+	option = {
+		name = flavour_volcanic_truth.1.e
+		if = {
+			limit = { monthly_income = 21 }
+			add_treasury = 250
+        }
+        else = { add_years_of_income = 1 }
+	}
+}
+
+#Visions of Glory
+country_event = {
+	id = flavour_volcanic_truth.2
+	title = flavour_volcanic_truth.2.t
+	desc = flavour_volcanic_truth.2.d
+	picture = PIETY_eventPicture	
+
+	is_triggered_only = yes	
+	trigger = {
+		religion = volcanic_truth
+		any_owned_province = {
+			superregion = kanolowele_superregion
+		}
+		has_heir = yes
+		NOT = { heir_is_powerful_mage = yes }
+		has_estate = estate_mages
+	}
+	
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					superregion = kanolowele_superregion
+				}
+				save_event_target_as = visions_of_glory_province
+			}
+		}
+	}
+	
+	#Allow it
+	option = {
+		name = flavour_volcanic_truth.2.a
+		random_list = {
+			90 = { kill_heir = {} }
+			10 = { define_powerful_mage = { type = heir } }
+		}
+	}
+	
+	#Forbid it
+	option = {
+		name = flavour_volcanic_truth.2.b
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -5
+		}
+	}
+	
+	#Allow it, with suitable arcane safeguards
+	option = {
+		name = flavour_volcanic_truth.2.c
+		highlight = yes
+		#Trigger: Proficient in Abjuration, not legendary in abjuration
+		trigger = { 
+			is_overall_abjuration_level_1_minimum = yes 
+			NOT = { is_overall_abjuration_level_3 = yes }
+		}
+		add_country_modifier = {
+			name = maintaining_volcanic_spells
+			duration = 3650
+		}
+		random_list = {
+			50 = { kill_heir = {} }
+			50 = { define_powerful_mage = { type = heir } }
+		}
+	}
+	
+	#Allow it, with flawless arcane safeguards
+	option = {
+		name = flavour_volcanic_truth.2.e
+		highlight = yes
+		#trigger: legendary in abjuration
+		trigger = { 
+			is_overall_abjuration_level_3 = yes 
+		}
+		add_country_modifier = {
+			name = maintaining_volcanic_spells
+			duration = 5475
+		}
+		define_powerful_mage = { type = heir }
+	}
+	
+	#Commission the artificers to create suitable protection
+	option = {
+		name = flavour_volcanic_truth.2.f
+		highlight = yes
+		trigger = {
+			has_estate = estate_artificers
+		}
+		add_country_modifier = {
+			name = maintaining_volcanic_artifice
+			duration = 1825
+		}
+		random_list = {
+			50 = { kill_heir = {} }
+			50 = { define_powerful_mage = { type = heir } }
+		}
+	}
+	
+	#The Clergy have rituals that may help, but they are not cheap
+	option = {
+		name = flavour_volcanic_truth.2.g
+		change_estate_land_share = { 
+			estate = estate_church 
+			share = 5 
+		}
+		random_list = {
+			67 = { kill_heir = {} }
+			33 = { define_powerful_mage = { type = heir } }
+		}
+	}
+}
+
+
+#A Gift From the Volcano?
+country_event = {
+	id = flavour_volcanic_truth.3
+	title = flavour_volcanic_truth.3.t
+	desc = flavour_volcanic_truth.3.d
+	picture = DAMESTEAR_CORE_eventPicture
+
+	is_triggered_only = yes	
+	trigger = {
+		religion = volcanic_truth
+		any_owned_province = {
+			superregion = kanolowele_superregion
+		}
+	}
+	
+	goto = volcano_reward_province
+	
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					superregion = kanolowele_superregion
+				}
+				save_event_target_as = volcano_reward_province
+			}
+		}
+	}
+	
+	#We cannot risk it
+	option = {
+		name = flavour_volcanic_truth.3.a
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -10
+		}
+	}
+	
+	#Retrieve it with sorcerous means
+	option = {
+		name = flavour_volcanic_truth.3.b
+		trigger = {
+			OR = {
+				has_estate = estate_mages
+				ruler_is_powerful_mage = yes				
+			}
+			has_mana = { amount = 25 }
+		}
+		change_mana = { amount = -25 }
+		country_event = { 
+			id = flavour_volcanic_truth.4
+			days = 1
+		}
+	}
+	
+	#Have the artificers rig up a contraption to retrieve the rock
+	option = {
+		name = flavour_volcanic_truth.3.c
+		trigger = {
+			has_estate = estate_artificers
+		}
+		change_estate_land_share = {
+			estate = estate_artificers
+			share = 1
+		}
+		country_event = { 
+			id = flavour_volcanic_truth.4
+			days = 1
+		}
+	}
+	
+	#They will not like it, but task the army to find a way to haul it in.
+	option = {
+		name = flavour_volcanic_truth.3.e
+		add_yearly_manpower = -0.2
+
+		country_event = { 
+			id = flavour_volcanic_truth.4
+			days = 1
+		}
+	}
+	
+	#Hire some daring adventurers to retrieve it.
+	option = {
+		name = flavour_volcanic_truth.3.f
+		trigger = {
+			has_estate = estate_adventurers
+		}
+		add_years_of_income = -0.25
+		country_event = { 
+			id = flavour_volcanic_truth.4
+			days = 1
+		}
+	}
+}
+
+
+#Treasures from Fire
+country_event = {
+	id = flavour_volcanic_truth.4
+	title = flavour_volcanic_truth.4.t
+	picture = DAMESTEAR_CORE_eventPicture	
+
+	is_triggered_only = yes	
+	
+	#Choose a random reward
+	
+	immediate = {
+		hidden_effect = {
+			if = { #Different version fires for player vs AI, since reward_10 gives a strong permanent province modifier
+				limit = { ai = no }
+				random_list = {
+					40 = {
+						set_country_flag = volcano_reward_1 #Amethyst Geode
+					}
+					5 = {
+						set_country_flag = volcano_reward_2 #Bones
+					}
+					5 = {
+						set_country_flag = volcano_reward_3 #Volcanic Bronze
+					}
+					10 = {
+						set_country_flag = volcano_reward_4 #Friendly Elemental
+					}
+					5 = {
+						set_country_flag = volcano_reward_5 #Damestear
+					}
+					5 = {
+						set_country_flag = volcano_reward_6 #Precursor Artifact
+					}
+					5 = {
+						set_country_flag = volcano_reward_7 #Fish
+					}
+					5 = {
+						set_country_flag = volcano_reward_8 #Lava Pearls
+					}
+					10 = {
+						set_country_flag = volcano_reward_9 #Gold
+					}
+					5 = {
+						set_country_flag = volcano_reward_10 #Magma Flowers
+					}
+					5 = {
+						set_country_flag = volcano_reward_11 #Poisonous Gas
+					}
+				}
+			}
+			else = {
+				random_list = {
+					0 = {
+						set_country_flag = volcano_reward_1 #Amethyst Geode
+					}
+					5 = {
+						set_country_flag = volcano_reward_2 #Bones
+					}
+					5 = {
+						set_country_flag = volcano_reward_3 #Volcanic Bronze
+					}
+					10 = {
+						set_country_flag = volcano_reward_4 #Friendly Elemental
+					}
+					5 = {
+						set_country_flag = volcano_reward_5 #Damestear
+					}
+					5 = {
+						set_country_flag = volcano_reward_6 #Precursor Artifact
+					}
+					5 = {
+						set_country_flag = volcano_reward_7 #Fish
+					}
+					5 = {
+						set_country_flag = volcano_reward_8 #Lava Pearls
+					}
+					10 = {
+						set_country_flag = volcano_reward_9 #Gold
+					}
+					5 = {
+						set_country_flag = volcano_reward_11 #Poisonous Gas
+					}
+				}
+			}
+		}
+	}
+	
+	goto = volcano_reward_province
+	
+	after = {
+		clr_country_flag = volcano_reward_1
+		clr_country_flag = volcano_reward_2
+		clr_country_flag = volcano_reward_3
+		clr_country_flag = volcano_reward_4
+		clr_country_flag = volcano_reward_5
+		clr_country_flag = volcano_reward_6
+		clr_country_flag = volcano_reward_7
+		clr_country_flag = volcano_reward_8
+		clr_country_flag = volcano_reward_9
+		clr_country_flag = volcano_reward_10
+		clr_country_flag = volcano_reward_11
+	}
+	
+	desc = {
+		trigger = { has_country_flag = volcano_reward_1 }
+		desc = flavour_volcanic_truth.4.d.1
+	}
+	desc = {
+		trigger = { has_country_flag = volcano_reward_2 }
+		desc = flavour_volcanic_truth.4.d.2
+	}
+	desc = {
+		trigger = { has_country_flag = volcano_reward_3 }
+		desc = flavour_volcanic_truth.4.d.3
+	}
+	desc = {
+		trigger = { has_country_flag = volcano_reward_4 }
+		desc = flavour_volcanic_truth.4.d.4
+	}
+	desc = {
+		trigger = { has_country_flag = volcano_reward_5 }
+		desc = flavour_volcanic_truth.4.d.5
+	}
+	desc = {
+		trigger = { has_country_flag = volcano_reward_6 }
+		desc = flavour_volcanic_truth.4.d.6
+	}
+	desc = {
+		trigger = { has_country_flag = volcano_reward_7 }
+		desc = flavour_volcanic_truth.4.d.7
+	}
+	desc = {
+		trigger = { has_country_flag = volcano_reward_8 }
+		desc = flavour_volcanic_truth.4.d.8
+	}
+	desc = {
+		trigger = { has_country_flag = volcano_reward_9 }
+		desc = flavour_volcanic_truth.4.d.9
+	}
+	desc = {
+		trigger = { has_country_flag = volcano_reward_10 }
+		desc = flavour_volcanic_truth.4.d.10
+	}
+	desc = {
+		trigger = { has_country_flag = volcano_reward_11 }
+		desc = flavour_volcanic_truth.4.d.11
+	}
+		
+	#Amethyst Geode
+	#Build a new shrine and have this find displayed prominently!
+	option = {
+		name = flavour_volcanic_truth.4.a
+		trigger = {
+			has_country_flag = volcano_reward_1
+		}
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 10
+		}
+		if = {
+			limit = {
+				event_target:volcano_reward_province = {
+					NOT = { 
+						has_construction = any
+						has_building = temple 
+						has_building = cathedral
+					}
+				}
+			}
+			event_target:volcano_reward_province = {
+				add_building_construction = {
+					building = temple
+					speed = 0.5
+					cost = 0
+				}
+            }
+		}
+		else = {
+			event_target:volcano_reward_province = {
+				add_unrest = -10
+			}
+		}
+	}
+		
+	#If the Magmascryers want it so much, let them pay for it.
+	option = {
+		name = flavour_volcanic_truth.4.b 
+		trigger = {
+			has_country_flag = volcano_reward_1
+		}
+		if = {
+			limit = { monthly_income = 66 }
+			add_treasury = 200
+        }
+        else = { add_years_of_income = 0.25 }
+	}
+	
+	#Bones
+	#Declare them a holy relic
+	option = {
+		name = flavour_volcanic_truth.4.c
+		trigger = {
+			has_country_flag = volcano_reward_2
+		}
+		every_owned_province = {
+			limit = { religion = volcanic_truth }
+			add_unrest = -5
+		}
+		add_war_exhaustion = -5
+	}
+	
+	#Return them respectfully to the fiery depths of the volcano
+	option = {
+		name = flavour_volcanic_truth.4.e
+		trigger = {
+			has_country_flag = volcano_reward_2
+		}
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 10
+		}
+	}
+	
+	#Use them as ingredients for magical rituals
+	option = {
+		name = flavour_volcanic_truth.4.f
+		trigger = {
+			has_country_flag = volcano_reward_2
+		}
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -10
+		}
+		change_mana = { amount = 30 }
+	}
+	
+	#Volcanic Bronze
+	#Equip our most accomplished soldiers with it.
+	option = {
+		name = flavour_volcanic_truth.4.g
+		trigger = {
+			has_country_flag = volcano_reward_3
+		}
+		add_country_modifier = {
+			name = burning_bronze_weapons
+			duration = 3650
+		}
+	}
+	
+	#Our smiths can surely make good use of this metal
+	option = {
+		name = flavour_volcanic_truth.4.h
+		trigger = {
+			has_country_flag = volcano_reward_3
+		}
+		#Province gains modifier Burning Bronze Forges for 10 years, granting +0.1 trade goods produced
+		event_target:volcano_reward_province = {
+			add_province_modifier = {
+				name = burning_bronze_forges
+				duration = 3650
+			}
+		}
+	}
+	
+	#A Friendly Elemental
+	#What a rare opportunity for elemental studies.
+	option = {
+		name = flavour_volcanic_truth.4.i
+		trigger = {
+			has_country_flag = volcano_reward_4
+		}
+		if = {
+			limit = {
+				has_estate = estate_mages
+			}
+			add_country_modifier = {
+				name = volcanic_elemental_research
+				duration = 3650
+			}
+		}
+		else = {
+			change_innovativeness = 5
+		}
+	}
+	
+	#Let it do as it pleases, it is a sign of the gods' blessing.
+	option = {
+		name = flavour_volcanic_truth.4.j
+		trigger = {
+			has_country_flag = volcano_reward_4
+		}
+		add_country_modifier = {
+			name = volcanic_friendly_elemental
+			duration = 7300
+		}
+	}
+	
+	#Damestear
+	#The find of a century! 
+	option = {
+		name = flavour_volcanic_truth.4.k
+		trigger = {
+			has_country_flag = volcano_reward_5
+		}
+		if = {
+			limit = {
+				has_estate = estate_mages
+			}
+			change_mana = { amount = 100 }
+		}
+		else = {
+			add_stability = 1
+		}
+	}
+	
+	#Reserve it for the Artificers
+	option = {
+		name = flavour_volcanic_truth.4.l
+		trigger = {
+			has_country_flag = volcano_reward_5
+			has_estate = estate_artificers
+		}
+		#Country gains modifier Surfeit of Damestear, granting +5 Artificer Capacity for 20 years
+		add_country_modifier = {
+			name = volcanic_surfeit_of_damestear
+			duration = 7300
+		}
+	}
+	
+	option = {
+		name = flavour_volcanic_truth.4.m
+		trigger = {
+			has_country_flag = volcano_reward_5
+		}
+		if = {
+			limit = { monthly_income = 83 }
+			add_treasury = 1000
+        }
+        else = { add_years_of_income = 1 }
+	}
+	
+	#Precursor Artifact
+	#Study it
+	option = {
+		name = flavour_volcanic_truth.4.n
+		trigger = {
+			has_country_flag = volcano_reward_6
+		}
+		change_innovativeness = 5
+	}
+	
+	#Display it
+	option = {
+		name = flavour_volcanic_truth.4.o
+		trigger = {
+			has_country_flag = volcano_reward_6
+		}
+		add_prestige = 5
+		add_splendor = 100
+	}
+	
+	#Fish
+	#What?
+	option = {
+		name = flavour_volcanic_truth.4.p
+		trigger = {
+			has_country_flag = volcano_reward_7
+		}
+		#No effect
+	}
+	
+	#Lava Pearls
+	#A clear sign of divine favor!
+	option = {
+		name = flavour_volcanic_truth.4.q
+		trigger = {
+			has_country_flag = volcano_reward_8
+		}
+		add_country_modifier = {
+			name = lava_pearl_religious_fervor
+			duration = 3650
+		}
+	}
+	
+	#Use them as magical reagents
+	option = {
+		name = flavour_volcanic_truth.4.r
+		trigger = {
+			has_country_flag = volcano_reward_8
+			has_estate = estate_mages
+		}
+		change_mana = { amount = 50 }
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -10
+		}
+	}
+	
+	#Gold
+	#A great boon for the treasury!
+	option = {
+		name = flavour_volcanic_truth.4.s
+		trigger = {
+			has_country_flag = volcano_reward_9
+		}
+		add_treasury = 500
+	}
+	
+	#Magma Flowers
+	#Build a garden filled with these miraculous magma flowers.
+	option = {
+		name = flavour_volcanic_truth.4.u
+		trigger = {
+			has_country_flag = volcano_reward_10
+			NOT = {
+				any_owned_province = {
+					has_province_modifier = lava_flower_garden
+				}
+			}			
+		}
+		event_target:volcano_reward_province = {
+			add_province_modifier = {
+				duration = -1
+				name = lava_flower_garden
+			}
+		}
+	}
+	
+	#Plant them in our existing magma flower garden
+	option = {
+		name = flavour_volcanic_truth.4.v
+		trigger = {
+			has_country_flag = volcano_reward_10
+			any_owned_province = {
+				has_province_modifier = lava_flower_garden
+			}
+		}
+		add_splendor = 100
+	}
+	
+	#Study how they manage to change form like this
+	option = {
+		name = flavour_volcanic_truth.4.w
+		trigger = {
+			has_country_flag = volcano_reward_10
+			has_estate = estate_mages
+		}
+		add_country_modifier = {
+			name = lava_flower_research
+			duration = 3650
+		}
+	}
+	
+	#Auction them off to the highest bidder.
+	option = {
+		name = flavour_volcanic_truth.4.x
+		trigger = {
+			has_country_flag = volcano_reward_10
+		}
+		if = {
+			limit = {
+				monthly_income = 33
+			}
+			add_treasury = 100
+		}
+		else = {
+			add_years_of_income = 0.25
+		}
+	}
+	
+	#Poisonous Gas	
+	option = {
+		name = flavour_volcanic_truth.4.y
+		trigger = {
+			has_country_flag = volcano_reward_11
+		}
+		event_target:volcano_reward_province = {
+			add_devastation = 25
+		}
+	}
+}
