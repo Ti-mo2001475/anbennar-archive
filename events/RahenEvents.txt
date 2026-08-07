@@ -1571,6 +1571,8 @@ country_event = {
 	desc = rahen.201.d
 	picture = indiangfx_REFORM_eventPicture
 
+	is_triggered_only = yes
+
 	trigger = {
 		employed_advisor = {
 			category = adm
@@ -1647,6 +1649,8 @@ country_event = {
 	desc = rahen.202.d
 	picture = indiangfx_CULTURE_eventPicture
 
+	is_triggered_only = yes
+
 	trigger = {
 		capital_scope = {
 			superregion = rahen_superregion
@@ -1679,10 +1683,10 @@ country_event = {
 					region = thidinkai_region
 				}
 			}
-		add_opinion = {
-			who = ROOT
-			modifier = foreign_sari_plus_opinion
-		}
+			add_opinion = {
+				who = ROOT
+				modifier = foreign_sari_plus_opinion
+			}
 		}
 	}
 
@@ -1699,10 +1703,10 @@ country_event = {
 					trade_goods = cloth
 				}
 			}
-		add_province_modifier = {
-			name = homegrown_sari_industry
-			duration = 3650
-		}
+			add_province_modifier = {
+				name = homegrown_sari_industry
+				duration = 3650
+			}
 		}
 		add_prestige = 5
 	}
@@ -1714,16 +1718,18 @@ country_event = {
 	title = rahen.203.t
 	desc = rahen.203.d
 	picture = indiangfx_BAD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
 
 	trigger = {
 		capital_scope = {
 			superregion = rahen_superregion
 		}
 		any_owned_province = {
-			AND = {
-				has_any_human_pop_trigger = yes
-				has_any_harimari_pop_trigger = yes	
-			}
+			has_any_human_pop_trigger = yes
+		}
+		any_owned_province = {
+			has_any_harimari_pop_trigger = yes
 		}
 		NOT = {
 			has_province_modifier = harimari_snubbed
@@ -1744,10 +1750,10 @@ country_event = {
 			limit = {
 				has_any_harimari_pop_trigger = yes
 			}
-		add_province_modifier = {
-			name = harimari_snubbed
-			duration = 1825
-		}
+			add_province_modifier = {
+				name = harimari_snubbed
+				duration = 1825
+			}
 		}
 	}
 	
@@ -1759,10 +1765,10 @@ country_event = {
 			limit = {
 			has_any_human_pop_trigger = yes
 			}
-		add_province_modifier = {
-			name = human_snubbed
-			duration = 1825
-		}
+			add_province_modifier = {
+				name = human_snubbed
+				duration = 1825
+			}
 		}
 	}
 }
@@ -1772,6 +1778,8 @@ country_event = {
 	title = rahen.204.t
 	desc = rahen.204.d
 	picture = indiangfx_COURT_eventPicture
+
+	is_triggered_only = yes
 
 	trigger = {
 		has_estate = estate_uppercastes
@@ -1880,9 +1888,10 @@ country_event = {
 	desc = rahen.205.d
 	picture = indiangfx_DIPLOMACY_eventPicture
 
-	fire_only_once
+	fire_only_once = yes
+	is_triggered_only = yes
 
-	immediate  ={
+	immediate = {
 		prepare_months_of_trade_income = { months = 1}
 	}
 
@@ -1901,7 +1910,7 @@ country_event = {
 	}
 
 	option = {
-		name  = rahen.205.a
+		name = rahen.205.a
 		add_prestige = 10
 		add_estate_loyalty = {
 			estate = estate_uppercastes
@@ -1936,10 +1945,10 @@ country_event = {
 		name = rahen.205.b
 		
 		every_owned_province = {
-		add_province_modifier = {
-		name = strong_companies
-		duration = 1825
-		}
+			add_province_modifier = {
+				name = strong_companies
+				duration = 1825
+			}
 		}
 		add_estate_loyalty = {
 			estate = estate_uppercastes
@@ -1974,8 +1983,8 @@ country_event = {
 	option = {
 		name = rahen.205.c
 		add_country_modifier = {
-		name = unions_pleased
-		duration = 1825
+			name = unions_pleased
+			duration = 1825
 		}
 		add_estate_loyalty = {
 			estate = estate_uppercastes
@@ -2008,7 +2017,7 @@ country_event = {
 
 	option = {
 		name = rahen.205.e
-		custom_tooltip = riverboat_madness_foreshadow
+		custom_tooltip = riverboat_madness_foreshadow_tt
 		add_legitimacy = 10
 		add_ruler_modifier = {
 			name = destressed_ruler
@@ -2055,10 +2064,11 @@ country_event = {
 	title = rahen.206.t
 	desc = rahen.206.d
 	picture = indiangfx_ECONOMY_eventPicture 
+
 	is_triggered_only = yes
 
 	option = {
-		name  = rahen.206.a
+		name = rahen.206.a
 		add_estate_loyalty = {
 			estate = estate_adventurers
 			loyalty = 5
@@ -2085,10 +2095,10 @@ country_event = {
 			limit = {
 				religion = new_sun_cult
 			}
-		add_opinion = {
-			who = ROOT
-			modifier = exemplars_snubbed_1
-		}
+			add_opinion = {
+				who = ROOT
+				modifier = exemplars_snubbed_1
+			}
 		}
 	}
 
@@ -2142,16 +2152,16 @@ country_event = {
 			limit = {
 				religion = new_sun_cult
 			}
-		add_opinion = {
-			who = ROOT
-			modifier = exemplars_heeded_opinion
-		}
+			add_opinion = {
+				who = ROOT
+				modifier = exemplars_heeded_opinion
+			}
 		}
 	}
 
 	option = {
 		name  = rahen.206.e
-		custom_tooltip = camelback_madness_foreshadow
+		custom_tooltip = camelback_madness_foreshadow_tt
 		add_ruler_modifier = {
 			name = destressed_ruler_electric_boogaloo
 			duration = -1
@@ -2194,10 +2204,10 @@ country_event = {
 			limit = {
 				religion = new_sun_cult
 			}
-		add_opinion = {
-			who = ROOT
-			modifier = exemplars_snubbed_3
-		}
+			add_opinion = {
+				who = ROOT
+				modifier = exemplars_snubbed_3
+			}
 		}
 	}
 }
@@ -2215,9 +2225,9 @@ country_event = {
 	}
 
 	option = {
-		name  = rahen.207.a
-		add_prepared_months_of_trade_income = 3
-		all_known_country = {
+		name = rahen.207.a
+		add_prepared_months_of_trade_income = yes
+		every_known_country = {
 			limit = {
 				capital_scope = {
 					region = shamakhad
