@@ -159,7 +159,18 @@ country_event = { #	Orda Aldresia religion conflict
 		emperor = {
 			remove_country_modifier = supporting_orda_aldresia
 		}
-		set_country_flag = broken_oath		
+		set_country_flag = broken_oath
+		if = { # kick them out of the empire so emperor can dec post realm peace
+			limit = {
+				OR = {
+					hre_reform_passed = anbennar_mages_peace
+					hre_reform_passed = anbennar_empower_imperial_diet
+				}
+			}
+			capital_scope = {
+				set_in_empire = no
+			}
+		}
 	}
 
 	option = { # Stay loyal
@@ -1047,7 +1058,7 @@ country_event = { #Legacy of Aldresia
 	id = flavor_orda_aldresia.22
 	title = flavor_orda_aldresia.22.t
 	desc = flavor_orda_aldresia.22.d
-	picture = FEMALE_GENERAL_eventPicture
+	picture = wihgfx_FEMALE_GENERAL_eventPicture
 
 	fire_only_once = yes
 	is_triggered_only = yes
@@ -1074,9 +1085,7 @@ country_event = { #Legacy of Aldresia
 		wexhills_area = {
             add_claim = A77
         }
-		unlock_merc_company = {
-			merc_company = merc_rectorates_finest
-		}
+		set_country_flag = call_of_god
 		add_reform_desire = 1
 		override_country_name = KINGDOM_OF_BASTARDS
 		hidden_effect = {
@@ -2145,7 +2154,7 @@ country_event = { # .46 SPIRIT LOSES DUEL Event
 			}
 			europe = {
 				limit = { is_part_of_hre = yes }
-				add_permanent_claim = A77
+				add_permanent_claim = Z01
 			}
 		}	
 		dismantle_hre = yes
@@ -2176,3 +2185,8 @@ country_event = { # hidden event to eat Anbenncost
 		}
 	}
 }
+
+
+
+
+

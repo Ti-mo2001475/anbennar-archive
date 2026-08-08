@@ -263,6 +263,10 @@ to_devour_chi = {
 						trigger = { NOT = { has_country_flag = devouring_skill_increase_unlocked } }
 						set_country_flag = devouring_skill_increase_unlocked
 					}
+					1 = {
+						trigger = { primary_culture = beikling NOT = { has_country_flag = devouring_rule_their_terror } }
+						set_country_flag = devouring_rule_their_terror
+					}
 				}
 				add_or_extend_ruler_modifier = { name = dvp_devoured_mod duration = 1825 }
 			}
@@ -279,7 +283,10 @@ to_devour_chi = {
 					}
 					OR = {
 						tag = Y01
-						primary_culture = beikling
+						AND = { 
+							primary_culture = beikling
+							has_country_flag = devouring_rule_their_terror
+						}
 						has_country_flag = devouring_life_extension_unlocked
 					}
 				}
@@ -784,6 +791,138 @@ mask_of_might_3 = {
 	}
 
 	modifier = { technology_cost = 0.1 }
+
+	ai_will_do = { factor = 15 }
+}
+
+earn_their_hate = {
+	cost = 200
+
+	potential = {
+		primary_culture = beikling
+	}
+
+	trigger = {
+		any_neighbor_country = {
+			NOT = { alliance_with = ROOT }
+			NOT = { is_subject_of = ROOT }
+			NOT = { truce_with = ROOT }
+			NOT = { overlord_of = ROOT }
+		}
+	}
+
+	effect = { 
+		custom_tooltip = earn_their_hate_effect_TT
+		hidden_effect = {
+			every_neighbor_province = {
+				limit = {
+					owner = {
+						NOT = { alliance_with = ROOT }
+						NOT = { is_subject_of = ROOT }
+						NOT = { truce_with = ROOT }
+						NOT = { overlord_of = ROOT }
+					}
+				}
+				remove_loot = { amount = 100 who = ROOT }
+				owner = {
+					country_event = { id = flavor_beiklings.500 }
+				}
+			}
+			if = {
+				limit = {
+					tag = V23 #Luzhong
+				}
+				add_power_projection = {
+					type = beikling_fame_earned
+					amount = 10
+				}
+			}
+			red_citadel_give_50_chi = yes
+		}
+	}
+
+	modifier = { diplomatic_reputation = -2 }
+
+	ai_will_do = { factor = 15 }
+}
+
+mask_enchantment = {
+	cost = 200
+
+	potential = {
+		primary_culture = beikling
+	}
+
+	trigger = {
+		custom_trigger_tooltip = {
+			tooltip = mask_enchantment_has_power_TT
+			NOT = { has_country_flag = mask_enchantment_effect_flag }
+		}
+	}
+
+	effect = { 
+		custom_tooltip = mask_enchantment_effect_TT
+		hidden_effect = {
+			set_country_flag = mask_enchantment_effect_flag
+			red_citadel_give_50_chi = yes
+		}
+	}
+
+	modifier = { discipline = -0.025 }
+
+	ai_will_do = { factor = 15 }
+}
+
+rule_their_terror = {
+	cost = 200
+
+	potential = {
+		primary_culture = beikling
+		has_country_flag = devouring_rule_their_terror
+	}
+
+	trigger = {
+		any_owned_province = {
+			NOT = {
+				culture = beikling
+			}
+		}
+	}
+
+	effect = { 
+		custom_tooltip = rule_their_terror_effect_TT
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					NOT = { culture = beikling }
+				}
+				remove_province_modifier = ruled_by_terror_itself
+				add_province_modifier = {
+					name = ruled_by_terror_itself
+					duration = 1825
+				}
+			}
+			if = {
+				limit = {
+					tag = V23
+				}
+				every_owned_province = {
+					limit = {
+						NOT = { culture = beikling }
+					}
+					add_nationalism = -5
+				}
+			}
+			else = {
+				add_rebel_progress = {
+					value = -30
+				}
+			}
+			red_citadel_give_50_chi = yes
+		}
+	}
+
+	modifier = { manpower_recovery_speed = -0.1 }
 
 	ai_will_do = { factor = 15 }
 }

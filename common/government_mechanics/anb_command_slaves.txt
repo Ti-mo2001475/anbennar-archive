@@ -1,0 +1,125 @@
+brorc_slave_mechanic = {
+	alert_icon_gfx = GFX_alerticons_government_mechanics
+	alert_icon_index = 17
+	available = {
+		is_subject_of = R62
+	}
+
+	powers = {
+		brorc_slave_resource = {
+			max = 200
+			min = 0
+			default = 40
+			reset_on_new_ruler = no
+			base_monthly_growth = -0.5
+			range_modifier = {
+				start_value = 0
+				end_value = 49.999
+				modifier = {
+					land_forcelimit = 5
+					global_regiment_cost = -0.05
+				}
+			}
+			range_modifier = {
+				start_value = 50
+				end_value = 99.999
+				modifier = {
+					land_forcelimit = 10
+					global_regiment_cost = -0.1
+				}
+			}
+			range_modifier = {
+				start_value = 100
+				end_value = 149.999
+				modifier = {
+					land_forcelimit = 15
+					global_regiment_cost = -0.15
+				}
+			}
+			range_modifier = {
+				start_value = 150
+				end_value = 200
+				modifier = {
+					land_forcelimit = 20
+					global_regiment_cost = -0.2
+				}
+			}
+			on_min_reached = {
+				country_event = { id = the_command.134 }
+				set_government_power = {
+					mechanic_type = brorc_slave_mechanic
+					power_type = brorc_slave_resource
+					value = 30
+				}
+			}
+		}
+	}
+	interactions = {
+		command_brorc_wolf_button = {
+			gui = command_korashi_button_left
+			icon = GFX_russian_rule_dip_button
+			cooldown_years = 10
+			cost_type = brorc_slave_resource
+			cost = 50
+
+			effect = {
+				add_adm_power = 100
+				add_country_modifier = { name = brorc_wolf_command_buff duration = 3650 }
+			}
+
+			ai_chance = { #Default button to press
+				factor = 100
+				modifier = {
+					factor = 0
+					NOT = { has_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 150 } }
+				}
+			}
+		}
+		command_brorc_boar_button = {
+			gui = command_korashi_button
+			icon = GFX_russian_rule_mil_button
+			cooldown_years = 10
+			cost_type = brorc_slave_resource
+			cost = 50
+
+			effect = {
+				add_manpower = 10
+				add_country_modifier = { name = brorc_boar_command_buff duration = 3650 }
+			}
+
+			ai_chance = {
+				factor = 100
+				modifier = {
+					factor = 0
+					OR = {
+						NOT = { has_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 150 } }
+						manpower_percentage = 0.5 #If you're good on manpower already, don't bother
+					}
+				}
+			}
+		}
+		command_brorc_lion_button = {
+			gui = command_korashi_button
+			icon = GFX_russian_rule_adm_button
+			cooldown_years = 10
+			cost_type = brorc_slave_resource
+			cost = 50
+
+			effect = {
+				create_general = { tradition = 100 culture = lion_command }
+				add_country_modifier = { name = brorc_lion_command_buff duration = 3650 }
+			}
+
+			ai_chance = {
+				factor = 100
+				modifier = {
+					factor = 0
+					OR = {
+						NOT = { has_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 150 } }
+						has_commanding_three_star = yes #If you have a good general already, don't bother
+					}
+				}
+			}
+		}
+	}
+}
