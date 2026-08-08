@@ -2953,6 +2953,7 @@ on_main_war_won = {
 
 	if = {
 		limit = {
+			is_or_was_tag = { tag = A29 }
 			empire_of_china_reform_passed = might_mandate_reform
 			FROM = {
 				OR = {
@@ -2962,7 +2963,6 @@ on_main_war_won = {
 			}
 		}
 		add_mandate = 5 
-
 	}
 }
 
@@ -3866,7 +3866,7 @@ on_added_to_trade_company = {
 	# Busilar ^ cooler than that guy 
 	if = {
 		limit = {
-			ROOT = {
+			owner = {
 				mission_completed = A29_consolidate_clove_trade
 			}
 		}
@@ -3917,7 +3917,7 @@ on_removed_from_company = {
 			limit = {
 				province_has_center_of_trade_of_level = 1
 			}
-			ROOT = {
+			owner = {
 				add_mercantilism = -1 
 			}
 		}
@@ -15733,7 +15733,7 @@ on_explore_coast = {
 	FROM = { #busilar
 		if = {
 			limit = {
-				tag = A29
+				is_or_was_tag = { tag = A29 }
 			}
 			if = {
 				limit = {
@@ -24453,7 +24453,13 @@ on_dependency_lost = {
 	#Busilar
 	if = {
 		limit = {
-			tag = A29
+			is_or_was_tag = { tag = A29 }
+			FROM = {
+				OR = {
+					tag = L55 
+					tag = L61 
+				}
+			}
 		}
 		if = {
 			limit = {
@@ -24461,12 +24467,6 @@ on_dependency_lost = {
 					has_trade_modifier = {
 						who = ROOT 
 						key = A29_friendly_traders
-					}
-				}
-				FROM = {
-					OR = {
-						tag = L55 
-						tag = L61 
 					}
 				}
 			}
@@ -24477,15 +24477,7 @@ on_dependency_lost = {
 				}
 			}
 		}
-		if = {
-			limit = {
-				FROM = {
-					OR = {
-						tag = L55 
-						tag = L61 
-					}
-				}
-			}
+		else = {
 			remove_country_modifier = A29_trade_steer
 		}
 	}

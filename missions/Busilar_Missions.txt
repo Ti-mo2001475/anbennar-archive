@@ -376,37 +376,39 @@ col_1 = {
 			}
 			custom_tooltip = A29_the_emperor_tt
 			custom_tooltip = A29_not_the_emperor_tt
-			if = {
-				limit = {
-					NOT = {
-						is_emperor = yes
-					}
-				}
-				the_borders_region = {
+			hidden_effect = {
+				if = {
 					limit = {
-						is_part_of_hre = yes
 						NOT = {
-							owner = {
-								is_emperor = yes
-							}
+							is_emperor = yes
 						}
 					}
-					set_in_empire = no 
-					ROOT = { 
-						add_adm_power = 10 
-						add_dip_power = 10 
-						add_mil_power = 10 
-					} 
-				}
-			}
-			else = {
-				the_borders_region = {
-					limit = {
-						is_part_of_hre = yes
+					the_borders_region = {
+						limit = {
+							is_part_of_hre = yes
+							NOT = {
+								owner = {
+									is_emperor = yes
+								}
+							}
+						}
+						set_in_empire = no 
+						ROOT = { 
+							add_adm_power = 10 
+							add_dip_power = 10 
+							add_mil_power = 10 
+						} 
 					}
-					ROOT = { 
-						add_imperial_influence = 1 
-					} 
+				}
+				else = {
+					the_borders_region = {
+						limit = {
+							is_part_of_hre = yes
+						}
+						ROOT = { 
+							add_imperial_influence = 1 
+						} 
+					}
 				}
 			}
 		} 
@@ -460,9 +462,12 @@ col_1 = {
 					OR = {
 						is_part_of_hre = no
 						religion = ravelian
-						A29 = {
-							prestige = PREV
-							navy_size = PREV
+						custom_trigger_tooltip = {
+							tooltip = A29_bigger_than_you_tt
+							A29 = {
+								prestige = PREV
+								navy_size = PREV
+							}
 						}
 					}
 				}
@@ -1105,17 +1110,12 @@ col_2 = {
 			A29_home_is_where_the_heart_is
 		}
 		provinces_to_highlight = {  
-			if = {
-				limit = {
-					eoa_is_dismantled = yes
-				}
-				OR = {
-					region = east_dameshead_region
-					region = esmaria_region
-				}
-				NOT = { religion = ravelian }
+			eoa_is_dismantled = yes
+			OR = {
+				region = east_dameshead_region
+				region = esmaria_region
 			}
-			else = {}
+			NOT = { religion = ravelian }
 		} 
 
 		trigger = {
@@ -1872,18 +1872,12 @@ col_3 = {
 		} 
 
 		trigger = {  
-			calc_true_if = {
-				amount = 40
-				horashesh_region = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
-				}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = horashesh_region
+				value = 40
 			}
-			custom_trigger_tooltip = {
-				tooltip = A29_winning_battles_tt 
-				num_of_battles = {
-					amount = 75
-				}
+			num_of_battles = {
+				amount = 75
 			}
 			all_known_country = {
 				OR = {
@@ -2175,15 +2169,13 @@ col_4 = {
 
 		effect = { 
 			khenak_area = {
-				if = {
-					limit = {
-						culture = hill_gnoll
-						owned_by = ROOT
-					}
-					change_culture = busilari
-					change_religion = regent_court 
-					add_devastation = 30
+				limit = {
+					culture = hill_gnoll
+					owned_by = ROOT
 				}
+				change_culture = busilari
+				change_religion = regent_court 
+				add_devastation = 30
 			}
 
 			364 = {
@@ -2280,7 +2272,7 @@ col_4 = {
 				U06 = {
 					all_core_province = {
 						owned_by = ROOT 
-						unrest = 0 
+						NOT = { unrest = 0 }
 					}
 				}
 			}
@@ -2488,15 +2480,12 @@ col_4 = {
 			any_owned_province = {
 				has_province_modifier = offcoast_merfolk_allied
 			} 
-			calc_true_if = {
-				amount = 8
-				ardimya_region = {
-					type = ALL 
-					country_or_non_sovereign_subject_holds = ROOT
-					has_dock_building_trigger = yes 
-					has_shipyard_building_trigger = yes
-					base_production = 4 
-				}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 8
+				region = ardimya_region
+				has_dock_building_trigger = yes 
+				has_shipyard_building_trigger = yes
+				base_production = 4
 			}
 		}
 
@@ -2736,7 +2725,9 @@ col_4 = {
 			A29_lions_might
 			A29_plunder_the_pillars
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+
+		} 
 
 		trigger = { 
 			custom_trigger_tooltip = {
@@ -3078,7 +3069,6 @@ col_5 = {
 							ROOT = {
 								has_won_war_against = {
 									who = PREV 
-									max_years_since = 6767
 								} 
 							}
 						}
@@ -3104,7 +3094,6 @@ col_5 = {
 								ROOT = {
 									has_won_war_against = {
 										who = PREV 
-										max_years_since = 6767
 									} 
 								}
 							}
