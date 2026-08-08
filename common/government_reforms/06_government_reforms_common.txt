@@ -1453,7 +1453,7 @@ rectors_in_the_bureau_reform = {
 # 	conditional = {
 # 		allow = { has_dlc = "Cradle of Civilization" }
 # 		custom_attributes = {
-# 			allow_piety_switch_decision = yes	#Enables a decision which gives 1 stabhit, but turns your piety 180°
+# 			allow_piety_switch_decision = yes	#Enables a decision which gives 1 stabhit, but turns your piety 180
 # 		}
 # 	}
 	
@@ -6572,8 +6572,28 @@ bulwar_grand_assembly = {
 	potential = {
 		OR = {
 			primary_culture = sun_elf
+			primary_culture = dawn_elf
+			primary_culture = desert_elf
 			primary_culture = zanlibi
+			primary_culture = ilatani
+			primary_culture = suncrown_gnoll
+			primary_culture = vaikazelhi
 			culture_group = bulwari
+			AND = {
+				OR = {
+					primary_culture = firanyan_harpy
+					primary_culture = siadunan_harpy
+				}
+				OR = {
+					religion_group = bulwari
+					has_country_flag = updating_isolationism_window
+				}
+			}
+		}
+		NOT = {
+			tag = F46
+			tag = F51
+			tag = F99
 		}
 		NOT = { is_adventurer = yes }
 		is_revolutionary = no
@@ -6695,7 +6715,7 @@ madakas_markasi = {
 	}
 }
 
-gods_attoners = {
+gods_atoners = {
 	icon = "soldiers_3"
 	potential = { 
 		culture_group = west_sarhaly
@@ -7459,6 +7479,29 @@ patronise_the_corinite_orders_reform = {
 	}
 }
 
+seafaring_preachers_reform = {
+	icon = "sailors"
+	allow_normal_conversion = yes
+	potential = {
+		religion = uelos_cult
+	}
+	trigger = {
+		religion = uelos_cult
+	}
+	modifiers = {
+		global_missionary_strength = 0.01
+		global_sailors_modifier = 0.1
+		church_influence_modifier = 0.1
+	}
+	custom_attributes = {
+		can_propagate_trade_gov_attribute = yes
+		gain_church_power_from_propagate_trade = yes
+	}
+	ai = {
+		factor = 10
+	}
+}
+
 #yassa
 council_of_fools = {
 	icon = "dutch_republic"
@@ -7468,6 +7511,10 @@ council_of_fools = {
 			has_reform = council_of_fools
 			have_had_reform = council_of_fools
 		}
+	}
+	custom_attributes = {
+		enables_plutocratic_idea_group = yes
+		enables_aristocratic_idea_group = no
 	}
 
 	modifiers = {
@@ -7988,26 +8035,6 @@ badakhan_battle_hymm_of_the_orcish_soul = {
 	}
 }
 
-H14_followers_of_the_princess = {
-	icon = "clergyman" 
-	allow_normal_conversion = no
-	lock_level_when_selected = yes
-	rulers_can_be_generals = yes
-	heirs_can_be_generals = yes
-	potential = {
-		has_country_flag = H14_followers_of_the_princess_flag
-	}
-	modifiers = {
-		native_assimilation = -1
-		church_power_modifier = 0.2
-		missionaries = 1
-		culture_conversion_cost = -0.15
-	}
-	effect = {
-		artifice_magic_switch_to_magic_only_mode = yes
-	}
-}
-
 mission_to_love_the_world_reform = {
 	icon = "godhood"
 	potential = {
@@ -8156,5 +8183,26 @@ new_god_of_halann = {
 
 	ai = {
 		factor = 1
+	}
+}
+
+gov_reform_elven_forebears = {
+	icon = "merchant_ship"
+	potential = {
+		religion = elven_forebears
+		NOT = { has_adventurer_reform = yes }
+	}
+	modifiers = {
+		church_loyalty_modifier = 0.1
+		church_influence_modifier = 0.1
+	}
+	effect = {
+		custom_tooltip = gov_reform_elven_forebears_mechanic_tt
+		tooltip = {
+			add_country_modifier = {
+				name = gov_reform_elven_forebears_mod
+				duration = 3650
+			}
+		}
 	}
 }

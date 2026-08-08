@@ -161,38 +161,62 @@ update_artifice_points = {
 				}
 				change_variable = {
 					which = ArtificePointsDamestear
-					value = 10
+					value = 15
 				}
 			}
 			else_if = {
 				limit = {
 					trading_part = {
 						trade_goods = damestear
-						value = 0.075
+						value = 0.08
 					}
 				}
 				change_variable = {
 					which = ArtificePointsDamestear
-					value = 7
+					value = 12
 				}
 			}
 			else_if = {
 				limit = {
 					trading_part = {
 						trade_goods = damestear
-						value = 0.05
+						value = 0.06
 					}
 				}
 				change_variable = {
 					which = ArtificePointsDamestear
-					value = 5
+					value = 9
 				}
 			}
 			else_if = {
 				limit = {
 					trading_part = {
 						trade_goods = damestear
-						value = 0.025
+						value = 0.04
+					}
+				}
+				change_variable = {
+					which = ArtificePointsDamestear
+					value = 6
+				}
+			}
+			else_if = {
+				limit = {
+					trading_part = {
+						trade_goods = damestear
+						value = 0.02
+					}
+				}
+				change_variable = {
+					which = ArtificePointsDamestear
+					value = 3
+				}
+			}
+			else_if = {
+				limit = {
+					trading_part = {
+						trade_goods = damestear
+						value = 0.01
 					}
 				}
 				change_variable = {
@@ -204,7 +228,7 @@ update_artifice_points = {
 				limit = {
 					trading_part = {
 						trade_goods = damestear
-						value = 0.01
+						value = 0.005
 					}
 				}
 				change_variable = {
@@ -366,7 +390,7 @@ update_artifice_points = {
 				}
 			}
 
-			#Varainé artificer cap from allies/subjects
+			#Varaine artificer cap from allies/subjects
 			if = {
 				limit = {
 					has_government_attribute = is_varaine_alchemical_corps
@@ -2719,7 +2743,7 @@ artifice_research_select_innovation_options_effect = {
 			}
 			1 = { #Society
 				trigger = {
-					has_country_modifier = mechanim_military
+					religion_group = mechanim_religion
 					NOT = {
 						OR = {
 							has_country_flag = research_artifice_invention_mech_pillar_scouts
@@ -4308,7 +4332,7 @@ artifice_research_select_innovation_options_effect = {
 			}
 			1 = { #Society
 				trigger = {
-					has_country_modifier = mechanim_administration
+					religion_group = mechanim_religion
 					NOT = {
 						OR = {
 							has_country_flag = research_artifice_invention_mech_reawakening_procedure
@@ -5059,7 +5083,7 @@ artifice_research_select_innovation_options_effect = {
 			}
 			1 = { #Military
 				trigger = {
-					has_country_modifier = mechanim_administration
+					religion_group = mechanim_religion
 					NOT = {
 						OR = {
 							has_country_flag = research_artifice_invention_mech_terrain_specialization
@@ -7229,6 +7253,7 @@ disable_all_artifice_inventions = {
 		remove_estate_privilege = artifice_invention_plane_of_water_teleporter
 		remove_estate_privilege = artifice_invention_self_cleaning_parchment
 		remove_estate_privilege = artifice_invention_superfast_elevators
+		remove_estate_privilege = artifice_invention_box_of_holding
 		# tier 1 society
 		remove_estate_privilege = artifice_invention_viewcatcher
 		remove_estate_privilege = artifice_invention_sending_stones
@@ -7244,7 +7269,6 @@ disable_all_artifice_inventions = {
 		remove_estate_privilege = artifice_invention_sparkdrive_rifles
 		remove_estate_privilege = artifice_invention_vorpal_bullets
 		remove_estate_privilege = artifice_invention_magic_missile_deployer
-		remove_estate_privilege = artifice_invention_box_of_holding
 		remove_estate_privilege = artifice_invention_ancestral_golems
 		remove_estate_privilege = artifice_invention_antimagic_field_generator
 		remove_estate_privilege = artifice_invention_believable_ruin_bomb
@@ -7649,8 +7673,8 @@ mechanim_automatory_spread = {
 	if = {
 		limit = {
 			check_variable = {
-				which = mechanim_spread_country
-				which = mechanim_spread_per_year
+				which = mechanim_spread_country #Total number of Mechanims we need to spread
+				which = mechanim_spread_per_year #Number of Mechanims we will spread this year
 			}
 		}
 		subtract_variable = {

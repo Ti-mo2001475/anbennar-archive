@@ -1,0 +1,2536 @@
+namespace = flavour_endralliande
+
+country_event = { #election event
+	id = flavour_endralliande.1
+	title = flavour_endralliande.1.t
+	desc = flavour_endralliande.1.d
+	picture = HRE_eventPicture
+	is_triggered_only = yes
+	trigger = {
+		#tag = U52
+		#has_government_mechanic = end_overseas_governorate
+		has_reform = overseas_governorate
+	}
+	option = { #push for re-elections
+		name = flavour_endralliande.1.c
+		trigger = {
+			NOT = { has_country_flag = end_election_on_death }
+		}
+		add_republican_tradition = -20
+		end_add_favor_to_current = yes
+		if = {
+			limit = { has_ruler_flag = end_noble_candidate_ruler }
+			set_country_flag = end_noble_reelect
+		}
+		else_if = {
+			limit = { has_ruler_flag = end_local_candidate_ruler }
+			set_country_flag = end_local_reelect
+		}
+		else_if = {
+			limit = { has_ruler_flag = end_elven_candidate_ruler }
+			set_country_flag = end_elven_reelect
+		}
+		else_if = {
+			limit = { has_ruler_flag = end_mistmancer_candidate_ruler }
+			set_country_flag = end_mistmancer_reelect
+		}
+		else_if = {
+			limit = { has_ruler_flag = end_agrarian_candidate_ruler }
+			set_country_flag = end_agrarian_reelect
+		}
+		else_if = {
+			limit = { has_ruler_flag = end_industrialist_candidate_ruler }
+			set_country_flag = end_industrialist_reelect
+		}
+		else = { set_country_flag = end_imperialist_reelect }
+		country_event = {
+			id = flavour_endralliande.10
+			days = 366
+		}
+	}
+	option = { #do not intervene
+		name = flavour_endralliande.1.a
+		add_republican_tradition = 5
+		random_list = { #a council presides while election is going on
+			25 = {
+				modifier = {
+					factor = 2
+					corruption = 6
+				}
+				define_ruler = {
+					name = "Corrupt Election Council"
+					adm = 0
+					dip = 0
+					mil = 0
+					regency = yes
+				}
+			}
+			25 = {
+				modifier = {
+					factor = 1.5
+					has_country_modifier = end_factionalism_4
+				}
+				define_ruler = {
+					name = "Assembly of the Elite"
+					adm = 0
+					dip = 3
+					mil = 0
+					regency = yes
+				}
+				custom_tooltip = end_assembly_of_the_elite_manuevering
+				hidden_effect = {
+					random = { #check for gov power later
+						chance = 50
+						add_mercantilism = -3
+						reduce_estate_burghers_loyalty_effect = yes
+						change_adm = 2
+						change_mil = 2
+					}
+				}
+			}
+			25 = {
+				modifier = {
+					factor = 2
+					full_idea_group = plutocracy_ideas
+				}
+				modifier = {
+					factor = 2
+					NOT = { has_country_modifier = end_factionalism_2 }
+				}
+				modifier = {
+					factor = 0
+					has_country_modifier = end_factionalism_4
+				}
+				define_ruler = {
+					name = "Congress of the Grand Coalition"
+					adm = 6
+					dip = 6
+					mil = 6
+					regency = yes
+				}
+			}
+			25 = {
+				modifier = {
+					factor = 2
+					is_at_war = yes
+				}
+				define_ruler = {
+					name = "Provisional Government of Endralliande"
+					adm = 3
+					dip = 3
+					mil = 3
+					regency = yes
+				}
+			}
+		}
+		country_event = {
+			id = flavour_endralliande.10
+			days = 366
+		}
+	}
+	option = { #lets back our fave guy
+		name = flavour_endralliande.1.b
+		add_republican_tradition = -15
+		if = {
+			limit = { ruler_has_personality = mage_personality }
+			set_country_flag = end_prev_ruler_mage
+		}
+		define_ruler = { #flavour (doesnt have to taste good!)
+			name = "Corrupt Election Council"
+			adm = 0
+			dip = 0
+			mil = 0
+			regency = yes
+		}
+		country_event = {
+			id = flavour_endralliande.13
+			days = 7
+		}
+		country_event = {
+			id = flavour_endralliande.10
+			days = 366
+		}
+	}
+	after = {
+		clr_country_flag = end_election_on_death
+		random_list = {
+			1 = {
+				country_event = {
+					id = flavour_endralliande.2
+					days = 90
+				}
+				set_country_flag = end_flavour_2_happened
+			}
+			1 = {
+				country_event = {
+					id = flavour_endralliande.3
+					days = 90
+				}
+				set_country_flag = end_flavour_3_happened
+			}
+			1 = {
+				country_event = {
+					id = flavour_endralliande.4
+					days = 90
+				}
+				set_country_flag = end_flavour_4_happened
+			}
+			1 = {
+				country_event = {
+					id = flavour_endralliande.5
+					days = 90
+				}
+				set_country_flag = end_flavour_5_happened
+			}
+			1 = {
+				country_event = {
+					id = flavour_endralliande.6
+					days = 90
+				}
+				set_country_flag = end_flavour_6_happened
+			}
+			1 = {
+				country_event = {
+					id = flavour_endralliande.7
+					days = 90
+				}
+				set_country_flag = end_flavour_7_happened
+			}
+			1 = {
+				country_event = {
+					id = flavour_endralliande.8
+					days = 90
+				}
+				set_country_flag = end_flavour_8_happened
+			}
+			1 = {
+				country_event = {
+					id = flavour_endralliande.9
+					days = 90
+				}
+				set_country_flag = end_flavour_9_happened
+			}
+		}
+		random_list = {
+			1 = {
+				modifier = {
+					factor = 0
+					has_country_flag = end_flavour_2_happened
+				}
+				set_country_flag = end_flavour_2_happened
+				country_event = {
+					id = flavour_endralliande.2
+					days = 180
+				}
+			}
+			1 = {
+				modifier = {
+					factor = 0
+					has_country_flag = end_flavour_3_happened
+				}
+				set_country_flag = end_flavour_3_happened
+				country_event = {
+					id = flavour_endralliande.3
+					days = 180
+				}
+			}
+			1 = {
+				modifier = {
+					factor = 0
+					has_country_flag = end_flavour_4_happened
+				}
+				set_country_flag = end_flavour_4_happened
+				country_event = {
+					id = flavour_endralliande.4
+					days = 180
+				}
+			}
+			1 = {
+				modifier = {
+					factor = 0
+					has_country_flag = end_flavour_5_happened
+				}
+				set_country_flag = end_flavour_5_happened
+				country_event = {
+					id = flavour_endralliande.5
+					days = 180
+				}
+			}
+			1 = {
+				modifier = {
+					factor = 0
+					has_country_flag = end_flavour_6_happened
+				}
+				set_country_flag = end_flavour_6_happened
+				country_event = {
+					id = flavour_endralliande.6
+					days = 180
+				}
+			}
+			1 = {
+				modifier = {
+					factor = 0
+					has_country_flag = end_flavour_7_happened
+				}
+				set_country_flag = end_flavour_7_happened
+				country_event = {
+					id = flavour_endralliande.7
+					days = 180
+				}
+			}
+			1 = {
+				modifier = {
+					factor = 0
+					has_country_flag = end_flavour_8_happened
+				}
+				set_country_flag = end_flavour_8_happened
+				country_event = {
+					id = flavour_endralliande.8
+					days = 180
+				}
+			}
+			1 = {
+				modifier = {
+					factor = 0
+					has_country_flag = end_flavour_9_happened
+				}
+				set_country_flag = end_flavour_9_happened
+				country_event = {
+					id = flavour_endralliande.9
+					days = 180
+				}
+			}
+		}
+		random_list = {
+			1 = {
+				modifier = {
+					factor = 0
+					has_country_flag = end_flavour_2_happened
+				}
+				country_event = {
+					id = flavour_endralliande.2
+					days = 270
+				}
+			}
+			1 = {
+				modifier = {
+					factor = 0
+					has_country_flag = end_flavour_3_happened
+				}
+				country_event = {
+					id = flavour_endralliande.3
+					days = 270
+				}
+			}
+			1 = {
+				modifier = {
+					factor = 0
+					has_country_flag = end_flavour_4_happened
+				}
+				country_event = {
+					id = flavour_endralliande.4
+					days = 270
+				}
+			}
+			1 = {
+				modifier = {
+					factor = 0
+					has_country_flag = end_flavour_5_happened
+				}
+				country_event = {
+					id = flavour_endralliande.5
+					days = 270
+				}
+			}
+			1 = {
+				modifier = {
+					factor = 0
+					has_country_flag = end_flavour_6_happened
+				}
+				country_event = {
+					id = flavour_endralliande.6
+					days = 270
+				}
+			}
+			1 = {
+				modifier = {
+					factor = 0
+					has_country_flag = end_flavour_7_happened
+				}
+				country_event = {
+					id = flavour_endralliande.7
+					days = 270
+				}
+			}
+			1 = {
+				modifier = {
+					factor = 0
+					has_country_flag = end_flavour_8_happened
+				}
+				country_event = {
+					id = flavour_endralliande.8
+					days = 270
+				}
+			}
+			1 = {
+				modifier = {
+					factor = 0
+					has_country_flag = end_flavour_9_happened
+				}
+				country_event = {
+					id = flavour_endralliande.9
+					days = 270
+				}
+			}
+		}
+	}
+}
+ ##campaign season random events
+country_event = { #public debate held
+	id = flavour_endralliande.2
+	title = flavour_endralliande.2.t
+	desc = flavour_endralliande.2.d
+	picture = HRE_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_endralliande.2.a
+		end_random_favor = { amount = 1 }
+	}
+}
+
+country_event = { #public endorsment given
+	id = flavour_endralliande.3
+	title = flavour_endralliande.3.t
+	desc = flavour_endralliande.3.d
+	picture = HRE_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_endralliande.3.a
+		end_random_favor = { amount = 1 }
+	}
+}
+
+country_event = { #massive scandal
+	id = flavour_endralliande.4
+	title = flavour_endralliande.4.t
+	desc = flavour_endralliande.4.d
+	picture = HRE_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_endralliande.4.a
+		if = {
+			limit = { has_country_flag = end_noble_candidate_ruler_previous }
+			subtract_variable = {
+				which = end_noble_candidate_favor
+				value = 1
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = end_local_candidate_ruler_previous }
+			subtract_variable = {
+				which = end_local_candidate_favor
+				value = 1
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = end_elven_candidate_ruler_previous }
+			subtract_variable = {
+				which = end_elven_candidate_favor
+				value = 1
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = end_mistmancer_candidate_ruler_previous }
+			subtract_variable = {
+				which = end_mistmancer_candidate_favor
+				value = 1
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = end_agrarian_candidate_ruler_previous }
+			subtract_variable = {
+				which = end_agrarian_candidate_favor
+				value = 1
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = end_industrialist_candidate_ruler_previous }
+			subtract_variable = {
+				which = end_industrialist_candidate_favor
+				value = 1
+			}
+		}
+		else = {
+			subtract_variable = {
+				which = end_imperialist_candidate_favor
+				value = 1
+			}
+		}
+	}
+}
+
+country_event = { #state revises election law
+	id = flavour_endralliande.5
+	title = flavour_endralliande.5.t
+	desc = flavour_endralliande.5.d
+	picture = HRE_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_endralliande.5.a
+		end_random_favor = { amount = 1 }
+	}
+}
+
+country_event = { #news from abroad
+	id = flavour_endralliande.6
+	title = flavour_endralliande.6.t
+	desc = flavour_endralliande.6.d
+	picture = HRE_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_endralliande.6.a
+		end_current_coalition_random_favor = { amount = 1 }
+		end_opposition_random_favor = { amount = 1 }
+	}
+}
+
+country_event = { #mass hysteria
+	id = flavour_endralliande.7
+	title = flavour_endralliande.7.t
+	desc = flavour_endralliande.7.d
+	picture = HRE_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_endralliande.7.a
+		end_random_favor = { amount = 1 }
+	}
+	option = {
+		name = flavour_endralliande.7.b
+		highlight = yes
+		trigger = {
+			estate_influence = {
+				estate = estate_mages
+				influence = 40
+			}
+		}
+		change_variable = {
+			which = end_mistmancer_candidate_favor
+			value = 1
+		}
+	}
+}
+
+country_event = { #public demonstrations
+	id = flavour_endralliande.8
+	title = flavour_endralliande.8.t
+	desc = flavour_endralliande.8.d
+	picture = HRE_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_endralliande.8.a
+		end_opposition_random_favor = { amount = 2 }
+	}
+}
+
+country_event = { #faction congress held
+	id = flavour_endralliande.9
+	title = flavour_endralliande.9.t
+	desc = flavour_endralliande.9.d
+	picture = HRE_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_endralliande.9.a
+		end_random_favor = {
+			amount = 2
+		}
+	}
+}
+
+country_event = { #votes counted
+	id = flavour_endralliande.10
+	title = flavour_endralliande.10.t
+	desc = flavour_endralliande.10.d
+	picture = HRE_eventPicture
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			#step 1, compare the votes using variable magic! the 0 numbers are for the explanation only
+			set_variable = { which = end_winner_vote_count value = 0 } #this will track highest vote (favor) count
+			set_variable = { which = end_winner_id value = 0 } #this determines which faction it was with highest count
+			#noble = 1, local = 2, elven = 3, mistmancer = 4, agrarian = 5, industrialist = 6, imperialist = 7.
+			set_variable = {
+				which = end_winner_vote_count
+				value = end_noble_candidate_favor
+			}
+			set_variable = {
+				which = end_winner_id
+				value = 1
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = end_local_candidate_favor
+						which = end_winner_vote_count
+					}
+				}
+				set_variable = {
+					which = end_winner_vote_count
+					value = end_local_candidate_favor
+				}
+				set_variable = {
+					which = end_winner_id
+					value = 2
+				}
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = end_elven_candidate_favor
+						which = end_winner_vote_count
+					}
+				}
+				set_variable = {
+					which = end_winner_vote_count
+					value = end_elven_candidate_favor
+				}
+				set_variable = {
+					which = end_winner_id
+					value = 3
+				}
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = end_mistmancer_candidate_favor
+						which = end_winner_vote_count
+					}
+				}
+				set_variable = {
+					which = end_winner_vote_count
+					value = end_mistmancer_candidate_favor
+				}
+				set_variable = {
+					which = end_winner_id
+					value = 4
+				}
+			}
+			if = {
+				limit = { 
+					check_variable = {
+						which = end_agrarian_candidate_favor
+						which = end_winner_vote_count
+					}
+				}
+				set_variable = {
+					which = end_winner_vote_count
+					value = end_agrarian_candidate_favor
+				}
+				set_variable = {
+					which = end_winner_id
+					value = 5
+				}
+			}
+			if = {
+				limit = { 
+					check_variable = {
+						which = end_industrialist_candidate_favor
+						which = end_winner_vote_count
+					}
+				}
+				set_variable = {
+					which = end_winner_vote_count
+					value = end_industrialist_candidate_favor
+				}
+				set_variable = {
+					which = end_winner_id
+					value = 6
+				}
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = end_imperialist_candidate_favor
+						which = end_winner_vote_count
+					}
+				}
+				set_variable = {
+					which = end_winner_vote_count
+					value = end_imperialist_candidate_favor
+				}
+				set_variable = {
+					which = end_winner_id
+					value = 7
+				}
+			}
+			#choose a culture and religion for some of the rulers
+			if = {
+				limit = {
+					is_variable_equal = {
+						which = end_winner_id
+						value = 1
+					}
+					lencenor_region = { culture_group = lencori }
+				}
+				lencenor_region = {
+					limit = { culture_group = lencori }
+					type = random
+					amount = 1
+					save_event_target_as = end_noble_culture_religion_determine 
+				}
+			}
+			if = {
+				limit = {
+					is_variable_equal = {
+						which = end_winner_id
+						value = 3
+					}
+					any_owned_province = { culture_group = elven }
+				}
+				random_owned_province = {
+					limit = { culture_group = elven }
+					save_event_target_as = end_elven_culture_religion_determine
+				}
+			}
+			if = {
+				limit = {
+					is_variable_equal = {
+						which = end_winner_id
+						value = 5
+					}
+					any_owned_province = {
+						OR = {
+							culture_group = lencori
+							culture_group = trollsbayer
+							culture = half_orc
+							culture_group = orcish
+						}
+						OR = {
+							has_building = plantations
+							has_building = farm_estate
+							has_building = textile
+						}
+					}
+				}
+				random_owned_province = {
+					limit = {
+						OR = {
+							culture_group = lencori
+							culture_group = trollsbayer
+							culture = half_orc
+							culture_group = orcish
+						}
+						OR = {
+							has_building = plantations
+							has_building = farm_estate
+							has_building = textile
+						}
+					}
+					save_event_target_as = end_agrarian_culture_religion_determine
+				}
+			}
+		}
+	}
+	option = {
+		name = flavour_endralliande.10.a
+		if = {
+			limit = {
+				is_variable_equal = {
+					which = end_winner_id
+					value = 1
+				}
+			}
+			if = {
+				limit = { 
+					NOT = { has_country_flag = end_noble_reelect }
+				}
+				if = {
+					limit = { has_saved_event_target = event_target:end_noble_culture_religion_determine }
+					define_ruler = {
+						culture = event_target:end_noble_culture_religion_determine
+						religion = event_target:end_noble_culture_religion_determine
+						adm = 1
+						dip = 4
+						mil = 1
+					}
+				}
+				else = { 
+					define_ruler = {
+						culture = high_lorentish
+						religion = ROOT
+						adm = 1
+						dip = 4
+						mil = 1
+					}
+				}
+			}
+			set_ruler_flag = end_noble_candidate_ruler
+			set_country_flag = end_noble_candidate_ruler_previous
+			add_ruler_modifier = {
+				name = end_noble_ruler_modifier
+				duration = -1
+			}
+			add_estate_loyalty_modifier = {
+				estate = estate_nobles
+				desc = end_noble_candidate_ruler_infdesc
+				loyalty = 10
+				duration = 2920
+			}
+			add_estate_influence_modifier = {
+				estate = estate_nobles
+				desc = end_noble_candidate_ruler_infdesc
+				influence = 10
+				duration = 2920
+			}
+		}
+		else_if = {
+			limit = { 
+				is_variable_equal = {
+					which = end_winner_id
+					value = 2
+				}
+			}
+			if = {
+				limit = { NOT = { has_country_flag = end_local_reelect } }
+				define_ruler = {
+					culture = ROOT
+					religion = ROOT
+					adm = 2
+					dip = 2
+					mil = 1
+				}
+			}
+			set_ruler_flag = end_local_candidate_ruler
+			set_country_flag = end_local_candidate_ruler_previous
+			add_ruler_modifier = {
+				name = end_local_ruler_modifier
+				duration = -1
+			}
+			add_estate_loyalty_modifier = {
+				estate = estate_burghers
+				desc = end_local_candidate_ruler_infdesc
+				loyalty = 10
+				duration = 2920
+			}
+			add_estate_influence_modifier = {
+				estate = estate_burghers
+				desc = end_local_candidate_ruler_infdesc
+				influence = 10
+				duration = 2920
+			}
+		}
+		else_if = {
+			limit = { 
+				is_variable_equal = {
+					which = end_winner_id
+					value = 3
+				}
+			}
+			if = {
+				limit = { NOT = { has_country_flag = end_elven_reelect } }
+				if = {
+					limit = { has_saved_event_target = event_target:end_elven_culture_religion_determine }
+					define_ruler = {
+						culture = event_target:end_elven_culture_religion_determine
+						religion = event_target:end_elven_culture_religion_determine
+						adm = 1
+						dip = 1
+						mil = 4
+					}
+				}
+				else = {
+					random_list = {
+						33 = {
+							define_ruler = {
+								culture = star_elf
+								religion = ROOT
+								adm = 1
+								dip = 1
+								mil = 4
+							}
+						}
+						33 = {
+							define_ruler = {
+								culture = dawn_elf
+								religion = ROOT
+								adm = 1
+								dip = 1
+								mil = 4
+							}
+						}
+						33 = {
+							define_ruler = {
+								culture = moon_elf
+								religion = ROOT
+								adm = 1
+								dip = 1
+								mil = 4
+							}
+						}
+						1 = {
+							define_ruler = {
+								culture = sunset_elf
+								religion = godlost
+								adm = 6
+								dip = 6
+								mil = 6
+							}
+						}
+					}
+				}
+				
+				if = {
+					limit = { has_country_flag = end_improved_elven_candidate }
+					change_adm = 1
+					change_mil = 1
+					add_army_tradition = 10
+				}
+				else = { add_army_tradition = 5 }
+			}
+			else = {
+				if = {
+					limit = { has_country_flag = end_improved_elven_candidate }
+					add_army_tradition = 10
+				}
+				else = { add_army_tradition = 5 }
+			}
+			set_ruler_flag = end_elven_candidate_ruler
+			set_country_flag = end_elven_candidate_ruler_previous
+			add_ruler_modifier = {
+				name = end_elven_ruler_modifier
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = { 
+				is_variable_equal = {
+					which = end_winner_id
+					value = 4
+				}
+			}
+			if = {
+				limit = { NOT = { has_country_flag = end_mistmancer_reelect } }
+				define_ruler = {
+					culture = ROOT
+					religion = ROOT
+					adm = 3
+					dip = 2
+					mil = 1
+				}
+			}
+			add_estate_loyalty_modifier = {
+				estate = estate_mages
+				desc = end_mage_candidate_ruler_infdesc
+				loyalty = 10
+				duration = 2920
+			}
+			add_estate_influence_modifier = {
+				estate = estate_mages
+				desc = end_mage_candidate_ruler_infdesc
+				influence = 10
+				duration = 2920
+			}
+			random = {
+				chance = 25
+				add_ruler_personality = mage_personality
+			}
+			set_ruler_flag = end_mistmancer_candidate_ruler
+			set_country_flag = end_mistmancer_candidate_ruler_previous
+			add_ruler_modifier = {
+				name = end_mistmancer_ruler_modifier
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = { 
+				is_variable_equal = {
+					which = end_winner_id
+					value = 5
+				}
+			}
+			if = {
+				limit = { NOT = { has_country_flag = end_agrarian_reelect } }
+				if = {
+					limit = { has_saved_event_target = event_target:end_agrarian_culture_religion_determine }
+					define_ruler = {
+						culture = event_target:end_agrarian_culture_religion_determine
+						religion = event_target:end_agrarian_culture_religion_determine
+						adm = 4
+						dip = 1
+						mil = 1
+					}
+				}
+				else = {
+					define_ruler = {
+						culture = ROOT
+						religion = ROOT
+						adm = 4
+						dip = 1
+						mil = 1
+					}
+				}
+			}
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = 5
+			}
+			add_estate_loyalty = {
+				estate = estate_adventurers
+				loyalty = 5
+			}
+			capital_scope = { remove_random_development = yes }
+			random_owned_province = {
+				limit = {
+					OR = {
+						has_building = plantations
+						has_building = farm_estate
+						trade_goods = slaves
+					}
+				}
+				add_random_development = 1
+			}
+			random_owned_province = {
+				limit = {
+					OR = {
+						has_building = plantations
+						has_building = farm_estate
+						trade_goods = slaves
+					}
+				}
+				add_random_development = 1
+			}
+			#end_change_regional_rivalry = yes
+			set_ruler_flag = end_agrarian_candidate_ruler
+			set_country_flag = end_agrarian_candidate_ruler_previous
+			add_ruler_modifier = {
+				name = end_agrarian_ruler_modifier
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = { 
+				is_variable_equal = {
+					which = end_winner_id
+					value = 6
+				}
+			}
+			if = {
+				limit = { NOT = { has_country_flag = end_industrialist_reelect } }
+				define_ruler = {
+					culture = ROOT
+					adm = 3
+					dip = 1
+					mil = 3
+				}
+			}
+			if = {
+				limit = { has_estate = estate_artificers }
+				add_estate_loyalty_modifier = {
+					estate = estate_artificers
+					desc = end_industrialist_candidate_ruler_infdesc
+					loyalty = 10
+					duration = 2920
+				}
+				add_estate_influence_modifier = {
+					estate = estate_artificers
+					influence = 10
+					duration = 2920
+				}
+			}
+			random_owned_province = {
+				limit = { 
+					NOT = {
+						has_production_building_trigger = yes 
+						has_any_ongoing_construction = yes
+						trade_goods = gold
+					}
+				}
+				add_building_construction = { building = workshop }
+			}
+			#end_change_regional_rivalry = yes
+			set_ruler_flag = end_industrialist_candidate_ruler
+			set_country_flag = end_industrialist_candidate_ruler_previous
+			add_ruler_modifier = {
+				name = end_industrialist_ruler_modifier
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = { 
+				is_variable_equal = {
+					which = end_winner_id
+					value = 7
+				}
+			}
+			if = {
+				limit = { NOT = { has_country_flag = end_imperialist_reelect } }
+				define_ruler = {
+					culture = ROOT
+					adm = 2
+					dip = 4
+					mil = 2
+				}
+			}
+			every_subject_country = {
+				add_liberty_desire = -15 
+				capital_scope = {
+					add_random_development = 2
+				}
+			}
+			set_ruler_flag = end_imperialist_candidate_ruler
+			set_country_flag = end_imperialist_candidate_ruler_previous
+			add_ruler_modifier = {
+				name = end_imperialist_ruler_modifier
+				duration = -1
+			}
+		}
+		country_event = {
+			id = flavour_endralliande.11
+			days = 10
+		}
+	}
+	after = {
+		hidden_effect = {
+			if = {
+				limit = {
+					OR = {
+						has_country_flag = end_noble_reelect
+						has_country_flag = end_local_reelect
+						has_country_flag = end_elven_reelect
+						has_country_flag = end_mistmancer_reelect
+						has_country_flag = end_agrarian_reelect
+						has_country_flag = end_industrialist_reelect
+						has_country_flag = end_imperialist_reelect
+					}
+				}
+				if = {
+					limit = { 
+						AND = {
+							has_ruler_flag = end_noble_candidate_ruler
+							has_country_flag = end_noble_reelect
+						}	
+					}
+					change_adm = 1
+					change_dip = 1
+					change_mil = 1
+				}
+				if = {
+					limit = { 
+						AND = {
+							has_ruler_flag = end_local_candidate_ruler
+							has_country_flag = end_local_reelect
+						}	
+					}
+					change_adm = 1
+					change_dip = 1
+					change_mil = 1
+				}
+				if = {
+					limit = { 
+						AND = {
+							has_ruler_flag = end_elven_candidate_ruler
+							has_country_flag = end_elven_reelect
+						}	
+					}
+					change_adm = 1
+					change_dip = 1
+					change_mil = 1
+				}
+				if = {
+					limit = { 
+						AND = {
+							has_ruler_flag = end_mistmancer_candidate_ruler
+							has_country_flag = end_mistmancer_reelect
+						}	
+					}
+					change_adm = 1
+					change_dip = 1
+					change_mil = 1
+				}
+				if = {
+					limit = { 
+						AND = {
+							has_ruler_flag = end_agrarian_candidate_ruler
+							has_country_flag = end_agrarian_reelect
+						}	
+					}
+					change_adm = 1
+					change_dip = 1
+					change_mil = 1
+				}
+				if = {
+					limit = { 
+						AND = {
+							has_ruler_flag = end_industrialist_candidate_ruler
+							has_country_flag = end_industrialist_reelect
+						}	
+					}
+					change_adm = 1
+					change_dip = 1
+					change_mil = 1
+				}
+				if = {
+					limit = { 
+						AND = {
+							has_ruler_flag = end_imperialist_candidate_ruler
+							has_country_flag = end_imperialist_reelect
+						}	
+					}
+					change_adm = 1
+					change_dip = 1
+					change_mil = 1
+				}
+				clr_country_flag = end_noble_reelect
+				clr_country_flag = end_local_reelect
+				clr_country_flag = end_elven_reelect
+				clr_country_flag = end_mistmancer_reelect
+				clr_country_flag = end_agrarian_reelect
+				clr_country_flag = end_industrialist_reelect
+				clr_country_flag = end_imperialist_reelect
+			}
+			set_variable = {
+				which = end_total_vote_count
+				value = 0
+			}
+			change_variable = {
+				which = end_total_vote_count
+				which = end_noble_candidate_favor
+			}
+			
+			change_variable = {
+				which = end_total_vote_count
+				which = end_local_candidate_favor
+			}
+			
+			change_variable = {
+				which = end_total_vote_count
+				which = end_elven_candidate_favor
+			}
+			
+			change_variable = {
+				which = end_total_vote_count
+				which = end_mistmancer_candidate_favor
+			}
+			
+			change_variable = {
+				which = end_total_vote_count
+				which = end_agrarian_candidate_favor
+			}
+			
+			change_variable = {
+				which = end_total_vote_count
+				which = end_industrialist_candidate_favor
+			}
+			change_variable = {
+				which = end_total_vote_count
+				which = end_imperialist_candidate_favor
+			}
+			clr_country_flag = end_flavour_2_happened
+			clr_country_flag = end_flavour_3_happened
+			clr_country_flag = end_flavour_4_happened
+			clr_country_flag = end_flavour_5_happened
+			clr_country_flag = end_flavour_6_happened
+			clr_country_flag = end_flavour_7_happened
+			clr_country_flag = end_flavour_8_happened
+			clr_country_flag = end_flavour_9_happened
+		}
+	}
+}
+
+country_event = { #prompt to form a coalition or not
+	id = flavour_endralliande.11
+	title = flavour_endralliande.11.t
+	desc = flavour_endralliande.11.d
+	picture = HRE_eventPicture
+	is_triggered_only = yes
+	option = { #lets
+		name = flavour_endralliande.11.a
+		trigger = {	
+			custom_trigger_tooltip = {
+				tooltip = end_can_form_coalition_tt
+				has_country_flag = end_can_form_coalition 
+			}
+		}
+		custom_tooltip = end_flavour_11_shownumber_tt #show total count anyway
+		country_event = {
+			id = flavour_endralliande.12
+			days = 30
+		}
+	}
+	option = { #current leader sucks, lets form a united opposition!
+		name = flavour_endralliande.11.b
+		highlight = yes
+		trigger = { #determine if you can even get a majority with opposition
+			custom_trigger_tooltip = {
+				tooltip = end_can_form_coalition_tt
+				has_country_flag = end_can_form_coalition 
+			}
+			variable_arithmetic_trigger = {
+				custom_tooltip = end_flavour_11_coalitionpossible_tt
+				divide_variable = {
+					which = end_total_vote_count
+					value = 2
+				}
+				check_variable = {
+					which = end_total_vote_count
+					which = end_winner_vote_count
+				}
+			}
+		}
+		custom_tooltip = end_flavour_11_foropposition_shownumber_tt
+		define_ruler = {
+			max_random_adm = 6
+		}
+		clr_country_flag = end_noble_candidate_ruler_previous
+		clr_country_flag = end_local_candidate_ruler_previous
+		clr_country_flag = end_elven_candidate_ruler_previous
+		clr_country_flag = end_mistmancer_candidate_ruler_previous
+		clr_country_flag = end_agrarian_candidate_ruler_previous
+		clr_country_flag = end_industrialist_candidate_ruler_previous
+		clr_country_flag = end_imperialist_candidate_ruler_previous
+		hidden_effect = {
+			random_list = {
+				1 = {
+					set_ruler_flag = end_noble_candidate_ruler
+					set_country_flag = end_noble_candidate_ruler_previous
+					add_ruler_modifier = {
+						name = end_noble_ruler_modifier
+						duration = -1
+					}
+				}
+				1 = {
+					set_ruler_flag = end_local_candidate_ruler
+					set_country_flag = end_local_candidate_ruler_previous
+					add_ruler_modifier = {
+						name = end_local_ruler_modifier
+						duration = -1
+					}
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						NOT = { has_country_flag = end_elven_unlocked }
+					}
+					set_ruler_flag = end_elven_candidate_ruler
+					set_country_flag = end_elven_candidate_ruler_previous
+					add_ruler_modifier = {
+						name = end_elven_ruler_modifier
+						duration = -1
+					}
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						NOT = { has_country_flag = end_mistmancer_unlocked }
+					}
+					set_ruler_flag = end_mistmancer_candidate_ruler
+					set_country_flag = end_mistmancer_candidate_ruler_previous
+					add_ruler_modifier = {
+						name = end_mistmancer_ruler_modifier
+						duration = -1
+					}
+					random = {
+						chance = 20
+						add_ruler_personality = mage_personality
+					}
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						NOT = { has_country_flag = end_agrarian_unlocked }
+					}
+					set_ruler_flag = end_agrarian_candidate_ruler
+					set_country_flag = end_agrarian_candidate_ruler_previous
+					add_ruler_modifier = {
+						name = end_agrarian_ruler_modifier
+						duration = -1
+					}
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						NOT = { has_country_flag = end_industrialist_unlocked }
+					}
+					set_ruler_flag = end_industrialist_candidate_ruler
+					set_country_flag = end_industrialist_candidate_ruler_previous
+					add_ruler_modifier = {
+						name = end_industrialist_ruler_modifier
+						duration = -1
+					}
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						NOT = { has_country_flag = end_imperialist_unlocked }
+					}
+					set_ruler_flag = end_imperialist_candidate_ruler
+					set_country_flag = end_imperialist_candidate_ruler_previous
+					add_ruler_modifier = {
+						name = end_imperialist_ruler_modifier
+						duration = -1
+					}
+				}
+			}
+		}
+		country_event = {
+			id = flavour_endralliande.12
+			days = 10
+		}
+	}
+	option = { #nah i'd win
+		name = flavour_endralliande.11.c
+		if = {
+			limit = {
+				variable_arithmetic_trigger = {
+					divide_variable = {
+						which = end_total_vote_count
+						value = 2
+					}
+					check_variable = {
+						which = end_winner_vote_count
+						which = end_total_vote_count
+					}
+				}
+			}
+			custom_tooltip = end_flavour_11_majority_tt
+			add_stability = 1
+			add_government_power = {
+				mechanic_type = end_foreign_influence_mechanic
+				power_type = end_foreign_influence_power
+				value = -10
+			}
+			end_decrease_factionalism = yes
+		}
+		else = {
+			custom_tooltip = end_flavour_11_nomajority_tt
+			add_stability = -1
+			add_republican_tradition = -10
+			add_estate_loyalty = {
+				estate = all
+				loyalty = -10
+			}
+			end_increase_factionalism = yes
+		}
+	}
+}
+
+country_event = { #make a coalition
+	id = flavour_endralliande.12
+	title = flavour_endralliande.12.t
+	desc = flavour_endralliande.12.d
+	picture = HRE_eventPicture
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = { has_country_flag = end_can_form_coalition3 }
+			set_country_flag = end_coalition_third_member_choose
+		}
+		if = {
+			limit = { has_country_flag = end_can_form_coaliton2 }
+			set_country_flag = end_coalition_second_member_choose
+		}
+	}
+
+	option = { #finish coalition creation/nevermind don't want a coalition
+		name = flavour_endralliande.12.i
+		highlight = yes
+		set_country_flag = end_flavour_12_fin
+		if = {
+			limit = {
+				OR = {
+					has_ruler_flag = end_noble_candidate_in_coalition
+					has_ruler_flag = end_local_candidate_in_coalition
+					has_ruler_flag = end_elven_candidate_in_coalition
+					has_ruler_flag = end_mistmancer_candidate_in_coalition
+					has_ruler_flag = end_agrarian_candidate_in_coalition
+					has_ruler_flag = end_industrialist_candidate_in_coalition
+					has_ruler_flag = end_imperialist_candidate_in_coalition
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						variable_arithmetic_trigger = {
+							divide_variable = {
+								which = end_total_vote_count
+								which = end_winner_vote_count
+							}
+							NOT = {
+								check_variable = {
+									which = end_total_vote_count
+									value = 2
+								}
+							}
+						}
+					}
+					custom_tooltip = end_refund_rt_from_totalvotes #refund republic tradition based on total votes
+					divide_variable = {
+						which = end_winner_vote_count
+						which = end_total_vote_count
+					}
+					multiply_variable = { #reports total percentage
+						which = end_winner_vote_count
+						value = 100
+					}
+					if = {
+						limit = {
+							check_variable = {
+								which = end_winner_vote_count
+								value = 50
+							}
+						}
+						add_republican_tradition = 10
+					}
+					else_if = {
+						limit = {
+							check_variable = {
+								which = end_winner_vote_count
+								value = 60
+							}
+						}
+						add_republican_tradition = 15
+					}
+					else_if = {
+						limit = { 
+							check_variable = {
+								which = end_winner_vote_count
+								value = 70
+							}
+						}
+						add_republican_tradition = 20
+					}
+				}
+			}
+		}
+	}
+	option = { #get the noble faction in
+		name = flavour_endralliande.12.a
+		trigger = {  
+			NOT = { 
+				has_ruler_flag = end_noble_candidate_ruler
+				has_ruler_flag = end_noble_candidate_in_coalition
+			} 
+		}
+		set_ruler_flag = end_noble_candidate_in_coalition
+		add_estate_nobles_loyalty_effect = yes
+		change_adm = 1
+		change_variable = {
+			which = end_winner_vote_count
+			which = end_noble_candidate_favor
+		}
+		end_increase_factionalism = yes
+	}
+	option = { #get the local faction in
+		name = flavour_endralliande.12.b
+		trigger = { 
+			NOT = { 
+				has_ruler_flag = end_local_candidate_ruler 
+				has_ruler_flag = end_local_candidate_in_coalition
+			} 
+		}
+		set_ruler_flag = end_local_candidate_in_coalition
+		add_estate_burghers_loyalty_effect = yes
+		change_dip = 1
+		change_variable = {
+			which = end_winner_vote_count
+			which = end_local_candidate_favor
+		}
+		end_increase_factionalism = yes
+	}
+	option = { #get the elven faction in
+		name = flavour_endralliande.12.c
+		trigger = { 
+			NOT = { 
+				has_ruler_flag = end_elven_candidate_ruler
+				has_ruler_flag = end_elven_candidate_in_coalition
+			} 
+		}
+		set_ruler_flag = end_elven_candidate_in_coalition
+		add_army_tradition = 5
+		change_mil = 1
+		change_variable = {
+			which = end_winner_vote_count
+			which = end_elven_candidate_favor
+		}
+		end_increase_factionalism = yes
+	}
+	option = { #get the mistmancer faction in
+		name = flavour_endralliande.12.e
+		trigger = { 
+			NOT = { 
+				has_ruler_flag = end_mistmancer_candidate_ruler 
+				has_ruler_flag = end_mistmancer_candidate_in_coalition
+			} 
+		}
+		set_ruler_flag = end_mistmancer_candidate_in_coalition
+		random_list = {
+			1 = {}
+			6 = { change_dip = 1 }
+			1 = { change_dip = 2 }
+		}
+		add_estate_mages_loyalty_effect = yes
+		change_variable = {
+			which = end_winner_vote_count
+			which = end_mistmancer_candidate_favor
+		}
+		end_increase_factionalism = yes
+	}
+	option = { #get the agrarian faction in
+		name = flavour_endralliande.12.f
+		trigger = { 
+			NOT = { 
+				has_ruler_flag = end_agrarian_candidate_ruler 
+				has_ruler_flag = end_agrarian_candidate_in_coalition
+			} 
+		}
+		set_ruler_flag = end_agrarian_candidate_in_coalition
+		change_dip = -1	
+		random_list = {
+			50 = { change_adm = 1 }
+			50 = { change_adm = 2 }
+		}
+		add_estate_church_loyalty_effect = yes
+		add_estate_adventurers_loyalty_effect = yes
+		change_variable = {
+			which = end_winner_vote_count
+			which = end_agrarian_candidate_favor
+		}
+		end_increase_factionalism = yes
+	}
+	option = { #get the industrialist faction in
+		name = flavour_endralliande.12.g
+		trigger = { 
+			NOT = { 
+				has_ruler_flag = end_industrialist_candidate_ruler 
+				has_ruler_flag = end_industrialist_candidate_in_coalition
+			} 
+		}
+		set_ruler_flag = end_industrialist_candidate_in_coalition
+		change_dip = -1
+		change_adm = 1
+		random = {
+			chance = 50
+			change_mil = 1
+		}
+		if = {
+			limit = { has_estate = estate_artificers }
+			add_estate_artificers_loyalty_effect = yes
+		}
+		change_variable = {
+			which = end_winner_vote_count
+			which = end_industrialist_candidate_favor
+		}
+		end_increase_factionalism = yes
+	}
+	option = { #get the imperialist faction in
+		name = flavour_endralliande.12.h
+		trigger = { 
+			NOT = { 
+				has_ruler_flag = end_imperialist_candidate_ruler 
+				has_ruler_flag = end_imperialist_candidate_in_coalition
+			} 
+		}
+		set_ruler_flag = end_imperialist_candidate_in_coalition
+		change_adm = -1
+		change_dip = 1
+		random = {
+			chance = 50
+			change_mil = 1
+		}
+		end_increase_factionalism = yes
+	}
+	after = { #fire event again and again for second and third members, if MT conditions met
+		if = {
+			limit = {
+				NOT = { has_country_flag = end_flavour_12_fin }
+				has_country_flag = end_coalition_third_member_choose
+			}
+			clr_country_flag = end_coalition_third_member_choose
+			country_event = {
+				id = flavour_endralliande.12
+				days = 10
+			}
+		}
+		else_if = {
+			limit = { 
+				NOT = { has_country_flag = end_flavour_12_fin }
+				has_country_flag = end_coalition_second_member_choose
+			}
+			clr_country_flag = end_coalition_second_member_choose
+			country_event = {
+				id = flavour_endralliande.12
+				days = 10
+			}
+		}
+		else = {
+			clr_country_flag = end_coalition_third_member_choose
+			clr_country_flag = end_coalition_second_member_choose
+			clr_country_flag = end_flavour_12_fin
+			set_variable = {
+				which = end_noble_candidate_favor
+				value = 0
+			}
+			set_variable = {
+				which = end_local_candidate_favor
+				value = 0
+			}
+			set_variable = {
+				which = end_elven_candidate_favor
+				value = 0
+			}
+			set_variable = {
+				which = end_mistmancer_candidate_favor
+				value = 0
+			}
+			set_variable = {
+				which = end_agrarian_candidate_favor
+				value = 0
+			}
+			set_variable = {
+				which = end_industrialist_candidate_favor
+				value = 0
+			}
+			set_variable = {
+				which = end_imperialist_candidate_favor
+				value = 0
+			}
+		}
+	}
+}
+
+country_event = { #backing our favorite candidate
+	id = flavour_endralliande.13
+	title = flavour_endralliande.13.t
+	desc = flavour_endralliande.13.d
+	picture = HRE_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_endralliande.13.a
+		change_variable = {
+			which = end_noble_candidate_favor
+			value = 2
+		}
+		add_years_of_income = -0.5
+		add_corruption = 1
+		add_republican_tradition = -10
+		if = {
+			limit = {
+				estate_loyalty = {
+					estate = estate_nobles
+					loyalty = 50
+				}
+			}
+			custom_tooltip = end_nobles_happy_with_choice_tt
+			add_years_of_income = 1
+		}
+
+	}
+	option = {
+		name = flavour_endralliande.13.b
+		change_variable = {
+			which = end_local_candidate_favor
+			value = 2
+		}
+		add_years_of_income = -0.5
+		add_corruption = 1
+		add_republican_tradition = -10
+		if = {
+			limit = {
+				republican_tradition = 90
+				stability = 1
+			}
+			custom_tooltip = end_local_happy_with_choice_tt
+			give_estate_land_share_small = {
+				estate = crown
+			}
+		}
+	}
+	option = {
+		name = flavour_endralliande.13.c
+		change_variable = {
+			which = end_elven_candidate_favor
+			value = 2
+		}
+		add_years_of_income = -0.5
+		add_corruption = 1
+		add_republican_tradition = -10
+		if = {
+			limit = {
+				army_tradition = 40
+				army_size_percentage = 0.75
+			}
+			custom_tooltip = end_elven_happy_with_choice_tt
+			add_mil_power = 50
+			add_manpower = 5
+		}
+	}
+	option = {
+		name = flavour_endralliande.13.e
+		change_variable = {
+			which = end_mistmancer_candidate_favor
+			value = 2
+		}
+		add_years_of_income = -0.5
+		add_corruption = 1
+		add_republican_tradition = -10
+		if = {
+			limit = {
+				estate_influence = {
+					estate = estate_mages
+					influence = 40
+				}
+				has_country_flag = end_prev_ruler_mage
+			}
+			custom_tooltip = end_mistmancer_happy_with_choice_tt
+			clr_country_flag = end_prev_ruler_mage
+			define_ruler = { #mage council replaces current corrupt election council (temp)
+				name = "Combined Magister-Mistmancer Convention"
+				adm = 6
+				dip = 4
+				mil = 4
+				regency = yes
+			}
+			change_variable = {
+				which = mag_mana
+				value = 100
+			}
+		}
+	}
+	option = {
+		name = flavour_endralliande.13.f
+		change_variable = {
+			which = end_agrarian_candidate_favor
+			value = 2
+		}
+		add_years_of_income = -0.5
+		add_corruption = 1
+		add_republican_tradition = -10
+		if = {
+			limit = {
+				estate_loyalty = {
+					estate = estate_church
+					loyalty = 50
+				}
+				trade_goods_produced_amount = {
+					trade_goods = grain
+					amount = 150
+				}
+			}
+			custom_tooltip = end_agrarian_happy_with_choice_tt
+			add_corruption = -1
+			add_years_of_income = 0.5
+			add_adm_power = 33
+		}
+	}
+	option = {
+		name = flavour_endralliande.13.g
+		change_variable = {
+			which = end_industrialist_candidate_favor
+			value = 2
+		}
+		add_years_of_income = -0.5
+		add_corruption = 1
+		add_republican_tradition = -10
+		if = {
+			limit = {
+				estate_loyalty = {
+					estate = estate_artificers
+					loyalty = 50
+				}
+				OR = {
+					is_ahead_of_time_in_technology = { tech = adm }
+					is_ahead_of_time_in_technology = { tech = dip }
+					is_ahead_of_time_in_technology = { tech = mil }
+				}
+			}
+			custom_tooltip = end_industrialist_happy_with_choice_tt
+			add_estate_artificers_loyalty_effect = yes
+			define_random_adm_advisor_effect = yes
+			define_random_dip_advisor_effect = yes
+			define_random_mil_advisor_effect = yes
+		}
+	}
+	option = {
+		name = flavour_endralliande.13.h
+		add_years_of_income = -0.5
+		add_corruption = 1
+		add_republican_tradition = -10
+		change_variable = {
+			which = end_imperialist_candidate_favor
+			value = 2
+		}
+		if = {
+			limit = { all_subject_country = { NOT = { liberty_desire = 50 } } }
+			custom_tooltip = end_imperialist_happy_with_choice_tt
+			add_years_of_trade_income = { 
+				years = 1 
+			}
+			change_variable = {
+				which = end_imperialist_candidate_favor
+				value = 1
+			}
+			add_government_power = {
+				mechanic_type = end_foreign_influence_mechanic
+				power_type = end_foreign_influence_power
+				value = 5
+			}
+		}
+	}
+}
+
+country_event = { #utilize the factions / assemble the grand congress
+	id = flavour_endralliande.14
+	title = flavour_endralliande.14.t
+	desc = flavour_endralliande.14.d
+	picture = HRE_eventPicture
+	is_triggered_only = yes
+
+	immediate = {
+		#setup for mistmancer coalition ability
+		if = {
+			limit = { damestear = 2 }
+			random_owned_province = {
+				limit = { trade_goods = damestear }
+				save_event_target_as = end_mistmancer_coalition_province_1
+			}
+			random_owned_province = {
+				limit = {
+					trade_goods = damestear
+					NOT = { has_saved_event_target = end_mistmancer_coalition_province_1 }
+				}
+				save_event_target_as = end_mistmancer_coalition_province_2
+			}
+		}
+		else_if = {
+			limit = { damestear = 1 }
+			random_owned_province = {
+				limit = { trade_goods = damestear }
+				save_event_target_as = end_mistmancer_coalition_province_1
+			}
+		}
+	}
+
+	option = {
+		name = flavour_endralliande.14.a
+		trigger = {
+			OR = {
+				has_ruler_flag = end_noble_candidate_ruler
+				has_ruler_flag = end_noble_candidate_in_coalition
+			}
+		}
+		if = {
+			limit = {
+				has_ruler_flag = end_noble_candidate_ruler
+			}
+			add_prestige = 25
+			add_adm_power = 50
+			add_mil_power = 50
+			add_dip_power = 50
+			reduce_stability_or_adm_power = yes
+			add_government_power = {
+				mechanic_type = end_foreign_influence_mechanic
+				power_type = end_foreign_influence_power
+				value = 5
+			}
+		}
+		else = {
+			every_owned_province = {
+				limit = { province_has_center_of_trade_of_level = 2 }
+				add_random_development = 1
+			}
+			add_government_power = {
+				mechanic_type = end_foreign_influence_mechanic
+				power_type = end_foreign_influence_power
+				value = 5
+			}
+		}
+	}
+	option = {
+		name = flavour_endralliande.14.b
+		trigger = {
+			OR = {
+				has_ruler_flag = end_local_candidate_ruler
+				has_ruler_flag = end_local_candidate_in_coalition
+			}
+		}
+		if = {
+			limit = {
+				has_ruler_flag = end_local_candidate_ruler
+			}
+			add_stability_or_adm_power = yes
+			add_prestige = -20
+			add_government_power = {
+				mechanic_type = end_foreign_influence_mechanic
+				power_type = end_foreign_influence_power
+				value = -5
+			}
+		}
+		else = {
+			add_government_power = {
+				mechanic_type = end_foreign_influence_mechanic
+				power_type = end_foreign_influence_power
+				value = -10
+			}
+		}
+	}
+	option = {
+		name = flavour_endralliande.14.c
+		trigger = {
+			OR = {
+				has_ruler_flag = end_elven_candidate_ruler
+				has_ruler_flag = end_elven_candidate_in_coalition
+			}
+		}
+		if = {
+			limit = {
+				has_ruler_flag = end_elven_candidate_ruler
+			}
+			add_army_professionalism = 0.03
+			add_yearly_manpower = -1
+			add_government_power = {
+				mechanic_type = end_foreign_influence_mechanic
+				power_type = end_foreign_influence_power
+				value = -5
+			}
+		}
+		else = {
+			add_army_professionalism = 0.01
+			if = {
+				limit = {
+					army_tradition = 60
+				}
+				create_general = {
+					tradition = 100
+				}
+			}
+			else_if = {
+				limit = { army_tradition = 40 }
+				create_general = {
+					tradition = 80
+				}
+			}
+			else_if = {
+				limit = { army_tradition = 20 }
+				create_general = {
+					tradition = 60
+				}
+			}
+			else = {
+				create_general = {
+					tradition = 40
+				}
+			}
+		}
+	}
+	option = {
+		name = flavour_endralliande.14.e
+		trigger = {
+			OR = {
+				has_ruler_flag = end_mistmancer_candidate_ruler
+				has_ruler_flag = end_mistmancer_candidate_in_coalition
+			}
+		}
+		if = {
+			limit = {
+				has_ruler_flag = end_mistmancer_candidate_ruler
+			}
+			custom_tooltip = end_mistmancer_ruling_ability_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = { has_building = mage_tower }
+					add_province_modifier = {
+						name = end_mistmancer_ruling_ability
+						duration = 1825
+					}
+				}
+				every_owned_province = {
+					limit = {
+						has_port = no
+						NOT = { has_building = mage_tower }
+					}
+					add_province_modifier = {
+						name = end_mistmancer_ruler_inland_modifier
+						duration = 1825
+					}
+				}
+			}
+		}
+		else = {
+			custom_tooltip = end_mistmancer_coalition_ability_tt
+			if = {
+				limit = { has_saved_event_target = end_mistmancer_coalition_province_1  }
+				event_target:end_mistmancer_coalition_province_1 = {
+					if = {
+						limit = { NOT = { has_province_modifier = damestear_rich_deposit } }
+						add_province_modifier = {
+							name = damestear_rich_deposit
+							duration = -1
+						}
+					}
+					else = {
+						add_province_modifier = {
+							name = influential_guild_members
+							duration = 1825
+						}
+					}
+				}
+				every_owned_province = {
+					limit = { trade_goods = damestear }
+					add_base_production = 1
+				}
+			}
+			if = {
+				limit = { has_saved_event_target = end_mistmancer_coalition_province_2 }
+				event_target:end_mistmancer_coalition_province_2 = {
+					if = {
+						limit = { NOT = { has_province_modifier = damestear_rich_deposit } }
+						add_province_modifier = {
+							name = damestear_rich_deposit
+							duration = -1
+						}
+					}
+					else = {
+						add_province_modifier = {
+							name = influential_guild_members
+							duration = 1825
+						}
+					}
+				}
+			}
+			else = {
+				change_mana = { amount = 30 }
+			}
+		}
+	}
+	option = {
+		name = flavour_endralliande.14.f
+		trigger = {
+			OR = {
+				has_ruler_flag = end_agrarian_candidate_ruler
+				has_ruler_flag = end_agrarian_candidate_in_coalition
+			}
+		}
+		if = {
+			limit = {
+				has_ruler_flag = end_agrarian_candidate_ruler
+				
+			}
+			if = {
+				limit = { has_country_modifier = orcish_slaves_in_colonies }
+				random_owned_province = {
+					limit = { NOT = { has_orcish_minority_trigger = yes } }
+					add_orcish_minority_size_effect = yes
+				}
+				random_owned_province = {
+					limit = { NOT = { has_orcish_minority_trigger = yes } }
+					add_orcish_minority_size_effect = yes
+				}
+				random_owned_province = {
+					limit = { NOT = { has_orcish_minority_trigger = yes } }
+					add_orcish_minority_size_effect = yes
+				}
+			}
+			custom_tooltip = end_agrarian_ruler_modifier_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							has_building = farm_estate
+							has_building = plantations
+						}
+					}
+					add_province_modifier = {
+						name = end_agrarian_ruler_ability
+						duration = 1825
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = anb_abolished_slavery_flag }
+					any_owned_province = { trade_goods = slaves }
+				}
+				custom_tooltip = end_agrarian_ruler_modifier_2_tt
+				hidden_effect = {
+					every_owned_province = {
+						limit = { trade_goods = slaves }
+						add_province_modifier = {
+							name = end_agrarian_ruler_modifier_2
+							duration = 1825
+						}
+					}
+				}
+			}
+			add_government_power = {
+				mechanic_type = end_foreign_influence_mechanic
+				power_type = end_foreign_influence_power
+				value = 5
+			}
+		}
+		else = {
+			custom_tooltip = end_agrarian_coalition_ability_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							has_orcish_majority_trigger = yes
+							has_large_orcish_minority_trigger = yes
+						}
+					}
+					random = {
+						chance = 15
+						add_random_development = 1
+					}
+				}
+			}
+			add_government_power = {
+				mechanic_type = end_foreign_influence_mechanic
+				power_type = end_foreign_influence_power
+				value = -5
+			}
+		}
+	}
+	option = {
+		name = flavour_endralliande.14.g
+		trigger = {
+			OR = {
+				has_ruler_flag = end_industrialist_candidate_ruler
+				has_ruler_flag = end_industrialist_candidate_in_coalition
+			}
+		}
+		if = {
+			limit = { has_ruler_flag = end_industrialist_candidate_ruler }
+			if = {
+				limit = {
+					NOT = {
+						check_variable = {
+							which = ArtificeUpkeep
+							value = 100
+						}
+					}
+				}
+				if = {
+					limit = { any_owned_province = { trade_goods = wool } }
+					random_owned_province = {
+						limit = { trade_goods = wool }
+						add_base_production = 2
+						random = {
+							chance = 25
+							change_trade_goods = cloth
+						}
+					}
+				}
+				else = {
+					random_owned_province = { add_base_production = 2 }
+					random_owned_province = { add_base_production = 2 }
+					random_owned_province = { add_base_production = 2 }
+				}
+				if = {
+					limit = { 
+						any_owned_province = { 
+							trade_goods = iron 
+							enlightenment = 100
+						}
+					}
+					random_owned_province = {
+						limit = { trade_goods = iron }
+						add_base_production = 2
+						random = {
+							chance = 5
+							change_trade_goods = coal
+						}
+					}
+				}
+				else = {
+					random_owned_province = { add_base_production = 2 }
+					random_owned_province = { add_base_production = 2 }
+					random_owned_province = { add_base_production = 2 }
+				}
+				if = {
+					limit = { any_owned_province = { trade_goods = coal } }
+					random_owned_province = {
+						limit = { trade_goods = coal }
+						add_base_production = 2
+					}
+				}
+			}
+			else = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							has_building = weapons
+							has_building = furnace
+							has_building = mills
+						}
+					}
+					add_province_modifier = {
+						name = end_industrialist_ruler_ability
+						duration = 1825
+					}
+				}
+				every_owned_province = {
+					limit = {
+						OR = {
+							trade_goods = mithril
+							trade_goods = iron
+							trade_goods = copper
+							trade_goods = coal
+							trade_goods = precursor_relics
+						}
+					}
+					add_province_modifier = {
+						name = end_industrialist_ruler_ability_2
+						duration = 1825
+					}
+				}
+			}	
+		}
+		else = {
+			hidden_effect = {
+				export_to_variable = {
+					which = current_tax_income_end
+					value = monthly_income
+				}
+				export_to_variable = {
+					which = tax_income_share
+					value = trigger_value:tax_income_percentage
+				}
+				multiply_variable = {
+					which = current_tax_income_end
+					which = tax_income_share
+				}
+				multiply_variable = {
+					which = current_tax_income_end
+					value = 12
+				}
+				multiply_variable = {
+					which = current_tax_income_end
+					value = -1
+				}
+				round_variable = {
+					which = current_tax_income_end
+					value = 0
+				}
+			}
+			custom_tooltip = end_industrialist_coalition_ability_tt
+			hidden_effect = {
+				var_effect = { effect = add_treasury var = current_tax_income_end sign = - }
+			}
+			custom_tooltip = end_lose_tax_1_year_tt
+			add_years_of_owned_provinces_production_income = { years = 2 }
+			add_government_power = {
+				mechanic_type = end_foreign_influence_mechanic
+				power_type = end_foreign_influence_power
+				value = -5
+			}
+		}
+	}
+	option = {
+		name = flavour_endralliande.14.h
+		trigger = {
+			OR = {
+				has_ruler_flag = end_imperialist_candidate_ruler
+				has_ruler_flag = end_imperialist_candidate_in_coalition
+			}
+		}
+		if = {
+			limit = { has_ruler_flag = end_imperialist_candidate_ruler }
+			custom_tooltip = end_imperialist_ruling_ability_tt
+			if = {
+				limit = { 
+					OR = {
+						is_hegemon_of_type = naval_hegemon 
+						is_hegemon_of_type = economic_hegemon
+					}
+				}
+				add_power_projection = {
+					type = mission_rewards_power_projection
+					amount = 25
+				}
+			}
+			else = {
+				add_power_projection_mission = { amount = 10 }
+			}
+			if = {
+				limit = { any_owned_province = { is_owned_by_trade_company = yes } }
+				custom_tooltip = end_imperialist_ruling_modifier_tt
+				tooltip = {
+					random_owned_province = {
+						limit = { is_owned_by_trade_company = yes }
+						add_province_modifier = {
+							name = end_imperialist_ruler_ability
+							duration = 1825
+						}
+					}
+				}
+				hidden_effect = {
+					every_owned_province = {
+						limit = { is_owned_by_trade_company = yes }
+						add_province_modifier = {
+							name = end_imperialist_ruler_ability
+							duration = 1825
+						}
+					}	
+				}
+			}
+			add_government_power = {
+				mechanic_type = end_foreign_influence_mechanic
+				power_type = end_foreign_influence_power
+				value = 5
+			}
+		}
+		else = {
+			custom_tooltip = end_imperialist_coalition_ability_tt
+			tooltip = {
+				add_province_modifier = {
+					name = end_imperialist_coalition_ability
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				set_variable = {
+					which = end_trade_company_govcost
+					value = 5
+				}
+				while = {
+					limit = {
+						check_variable = {
+							which = end_trade_company_govcost
+							value = 0
+						}
+						any_owned_province = {
+							is_owned_by_trade_company = yes
+							NOT = {
+								has_province_modifier = end_imperialist_coalition_ability
+							}
+						}
+					}
+					random_owned_province = {
+						limit = {
+							is_owned_by_trade_company = yes
+						}
+						add_province_modifier = {
+							name = end_imperialist_coalition_ability
+							duration = -1
+						}
+					}
+					subtract_variable = {
+						which = end_trade_company_govcost
+						value = 1
+					}
+				}
+			}
+		}
+	}
+}
+
+country_event = { #foreign domination looms
+	id = flavour_endralliande.15
+	title = flavour_endralliande.15.t
+	desc = flavour_endralliande.15.d
+	picture = HRE_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_endralliande.15.a
+		custom_tooltip = end_impending_subjugation_tooltip_tt
+		set_country_flag = end_sovereignty_crisis_active
+		country_event = {
+			id = flavour_endralliande.16
+			days = 1825
+		}
+	}
+}
+
+country_event = { #results of foreign influence
+	id = flavour_endralliande.16
+	title = flavour_endralliande.16.t
+	desc = flavour_endralliande.16.d
+	picture = HRE_eventPicture
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_government_power = {
+							mechanic_type = end_foreign_influence_mechanic
+							power_type = end_foreign_influence_power
+							value = 90
+						}
+						any_known_country = {
+							capital_scope = {
+								region = lencenor_region
+							}
+						}
+					}
+				}
+				set_country_flag = end_saved
+			}
+			else = {
+				random_country = {
+					limit = {
+						capital_scope = {
+							region = lencenor_region
+						}
+						NOT = {
+							any_known_country = {
+								capital_scope = {
+									region = lencenor_region
+								}
+								total_development = PREV
+							}
+						}
+					}
+					save_event_target_as = end_lencori_overlord
+				}
+			}
+		}
+	}
+	option = {
+		name = flavour_endralliande.16.a
+		trigger = { has_country_flag = end_saved }
+		change_government_reform_progress = 5
+		clr_country_flag = end_saved
+		clr_country_flag = end_sovereignty_crisis_active
+	}
+	option = {
+		name = flavour_endralliande.16.b
+		trigger = { NOT = { has_country_flag = end_saved } }
+		if = {
+			limit = {
+				event_target:end_lencori_overlord = {
+					total_development = ROOT
+				}
+			}
+			event_target:end_lencori_overlord = {
+				create_subject = {
+					subject_type = private_enterprise
+					subject = ROOT
+				}
+			}
+			set_country_flag = end_restore_color_when_independent
+			change_country_color = { country = event_target:end_lencori_overlord }
+		}
+		else = {
+			event_target:end_lencori_overlord = {
+				create_subject = {
+					subject_type = personal_union
+					subject = ROOT
+				}
+			}
+		}
+		clr_country_flag = end_sovereignty_crisis_active
+	}
+}

@@ -1742,43 +1742,6 @@ S23_increase_legacy = {
 	}
 }
 
-aldarian_scripted_effect = {
-	if = { #Aldarian event chain
-		limit = {
-			unit_owner = {
-				has_country_flag = aldarian_is_general
-				is_at_war = yes
-				NOT = {
-					has_country_modifier = aldarian_battle_cooldown
-				}
-			}
-			general_with_name = "Aldarian Surpašilu"
-		}
-		unit_owner = {
-			change_variable = {
-				which = aldarian_battles_won 
-				value = 1
-			}
-			add_country_modifier = {
-				name = aldarian_battle_cooldown
-				duration = 5
-				hidden = yes
-			}
-			if = {
-				limit = {
-					check_variable = {
-						which = aldarian_battles_won
-						value = 2
-					}
-				}
-				country_event = {
-					id = bulwar_flavour.140
-				}
-			}
-		}
-	}
-}
-
 #Tiboktsamo
 L53_rank_up_kolovadoy = {
 	if = {
@@ -3605,6 +3568,10 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 				culture = guryadagga
 				free = yes
 			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = ardimyan
+				free = yes
+			}
 		}
 	]
 	[[halfling]
@@ -3630,6 +3597,10 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 				culture = amezatany
 				free = yes
 			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = vyoronsi
+				free = yes
+			}
 		}
 	]
 	[[irsukuba]
@@ -3651,6 +3622,14 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 				culture = echenka
 				free = yes
 			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = zovanwe
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = kuivendi
+				free = yes
+			}
 		}
 	]
 	[[vurebindu]
@@ -3662,6 +3641,18 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 			}
 			anb_add_accepted_culture_or_dip_power = {
 				culture = kuivanhi
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = kudenta
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = gomzumu
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = egilshibi
 				free = yes
 			}
 		}
@@ -3691,6 +3682,10 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 			}
 			anb_add_accepted_culture_or_dip_power = {
 				culture = korosheshi
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = asbaiwix
 				free = yes
 			}
 		}
@@ -3726,6 +3721,10 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 				culture = kaino
 				free = yes
 			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = mukarron
+				free = yes
+			}
 		}
 	]
 	[[gnollish]
@@ -3749,6 +3748,18 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 			}
 			anb_add_accepted_culture_or_dip_power = {
 				culture = seascourge_gnoll
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = sorrowmane_gnoll
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = suncrown_gnoll
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = khetfeaster_gnoll
 				free = yes
 			}
 		}
@@ -3790,6 +3801,18 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 			}
 			anb_add_accepted_culture_or_dip_power = {
 				culture = kuzarami
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = bulwari_half_elf
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = itrahuresi
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = abtazari
 				free = yes
 			}
 		}
@@ -3845,6 +3868,10 @@ anb_sarhal_cultural_union = { #Might need an update if there's new cultures in t
 			}
 			anb_add_accepted_culture_or_dip_power = {
 				culture = far_akasi
+				free = yes
+			}
+			anb_add_accepted_culture_or_dip_power = {
+				culture = enigrax
 				free = yes
 			}
 		}
@@ -4602,28 +4629,30 @@ planetouched_land_share_equalizer_effect = {
 }
 
 define_planetouched_general = {
-	define_general = {
-		[[name] name = "$name$"]
-		[[fire] fire = $fire$]
-		[[shock] shock = $shock$]
-		[[manuever] manuever = $manuever$]
-		[[siege] siege = $siege$]
-		trait = planetouched_commander_personality
-		[[female] female = $female$]
+	if = {
+		limit = { mission_completed = kaino_adaru_3 }
+		define_general = {
+			[[name] name = "$name$"]
+			fire = $fire$
+			shock = 7
+			manuever = $manuever$
+			siege = $siege$
+			trait = planetouched_commander_personality
+			[[female] female = $female$]
+		}
+	}
+	else = {
+		define_general = {
+			[[name] name = "$name$"]
+			fire = $fire$
+			shock = $shock$
+			manuever = $manuever$
+			siege = $siege$
+			trait = planetouched_commander_personality
+			[[female] female = $female$]
+		}
 	}
 	set_country_flag = have_had_planetouched_general
-}
-
-define_planetouched_admiral = {
-	define_admiral = {
-		[[name] name = "$name$"]
-		[[fire] fire = $fire$]
-		[[shock] shock = $shock$]
-		[[manuever] manuever = $manuever$]
-		[[siege] siege = $siege$]
-		trait = planetouched_commander_personality
-		[[female] female = $female$]
-	}
 }
 
 define_planetouched_ruler_to_general = {

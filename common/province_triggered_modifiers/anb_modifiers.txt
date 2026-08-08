@@ -3700,29 +3700,6 @@ ravenhill_war_2 = {
 	}
 }
 
-kheios_deathwind_manager = {
-	potential = {
-		always = yes
-	}
-	trigger = {
-		hidden_trigger = {
-			had_province_flag = {
-				flag = deathwinds_flag
-				days = 2
-			}
-		}
-	}
-
-	on_activation = {
-		province_event = {
-			id = kheionai.1
-			days = 3650
-		}
-		clr_province_flag = deathwinds_flag
-		remove_province_triggered_modifier = kheios_deathwind_manager
-	}
-}
-
 krakazol_drinking_ptm = {
 	potential = { I20 = { exists = yes } }
 
@@ -6541,7 +6518,7 @@ khadisrapur_artificers_ptm = {
 #Xanzerbexis Brainmarrow Pact
 A49_brainmarrow_pact_tm = {
 	potential = {
-		owner = { has_country_flag = A49_enable_brainmarrow_pact }
+		owner = { tag = A49 }
 	}
 	trigger = {
 		owner = {
@@ -7075,15 +7052,7 @@ rite_of_conception_randomization_ptm = {
 				random_list = {
 					1 = { country_event = { id = magic_spell.800 days = 240 random = 60 } }
 					1 = { country_event = { id = magic_spell.801 days = 240 random = 60 } }
-					1 = {
-						trigger = {
-							NOT = {
-								has_country_flag = tughayasa_reward
-								has_country_flag = tughayasa_reward_primary
-							}
-						}
-						country_event = { id = magic_spell.802 days = 240 random = 60 }
-					}
+					1 = { country_event = { id = magic_spell.802 days = 240 random = 60 } }
 				}
 			}
 		}
@@ -7524,7 +7493,7 @@ ptm_foundationism_shepherds = {
 		NOT = { has_active_triggered_province_modifier = ptm_foundationism_shepherds }
 	}
 
-	on_activation = { #I wonder if you will lose some dev if you convert multiple province in same day
+	on_activation = {
 		owner = { country_event = { id = insyaa_flavour.1002 } }
 		remove_province_triggered_modifier = ptm_foundationism_shepherds
 	}
@@ -7541,6 +7510,7 @@ ptm_add_random_dev = {
 
 	trigger = {
 		always = yes
+		NOT = { has_active_triggered_province_modifier = ptm_add_random_dev }
 	}
 
 	on_activation = {
@@ -7664,7 +7634,6 @@ A80_second_small_war_checker = {
 						value = 75
 					}
 				}
-				
 			}
 			event_target:small_war_target = {
 				war_score_against = {
@@ -7851,3 +7820,77 @@ B54_ptm_morgurax_tracker = {
 	}
 }
 
+hallow_randomization_ptm = {
+	potential = { always = yes }
+	hidden = yes 
+
+	trigger = { always = yes }
+
+	on_activation = {
+		owner = {
+			trigger_switch = {
+				on_trigger = government_rank
+				3 = {
+					pick_random_provinces = {
+						3 = yes
+						scope = random_owned_province
+						global_trigger = "has_tax_building_trigger = yes"
+						event_target_name = hallow_target
+					}
+					do_same_event_target_effect = {
+						3 = yes
+						event_target_name = hallow_target
+						effect = "upgrade_tax_building = yes"
+					}
+				}
+				2 = {
+					pick_random_provinces = {
+						2 = yes
+						scope = random_owned_province
+						global_trigger = "has_tax_building_trigger = yes"
+						event_target_name = hallow_target
+					}
+					do_same_event_target_effect = {
+						2 = yes
+						event_target_name = hallow_target
+						effect = "upgrade_tax_building = yes"
+					}
+				}
+				1 = {
+					pick_random_provinces = {
+						1 = yes
+						scope = random_owned_province
+						global_trigger = "has_tax_building_trigger = yes"
+						event_target_name = hallow_target
+					}
+					do_same_event_target_effect = {
+						1 = yes
+						event_target_name = hallow_target
+						effect = "upgrade_tax_building = yes"
+					}
+				}
+			}
+		}
+		remove_province_triggered_modifier = hallow_randomization_ptm
+	}
+}
+
+rioqay_diu_random_ptm = {
+	# this exist to ensure the deity chosen is actually random
+	# the deity screen is apparently not a good source for randomness
+	hidden = yes
+	trigger = {
+		always = yes
+	}
+	potential = {
+		always = yes
+	}
+	on_activation = {
+		owner = {
+			country_event = {
+				id = amadia.3
+			}
+		}
+		remove_province_triggered_modifier = rioqay_diu_random_ptm
+	}
+}
