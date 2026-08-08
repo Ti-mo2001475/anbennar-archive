@@ -1,5 +1,25 @@
 image: alpine:latest
 
+# Several different things combine to make keeping this validation logic in CI
+# untenable for Anbennar right now
+# 1. Gitlab requires that any user who initiates a gitlab-hosted CI job is
+# "verified", which for some can require submitting their phone number or credit
+# card details
+# 2. If a user fails this check, it produces a "failed job" marker that confuses
+# contributors, **no matter if the job would even qualify for the workflow
+# rules** (so even the initial-phase "only run CI for maintainer merges"
+# produces these confusing "failed job" markers)
+# 3. One way we could get around the verification requirement would be to
+# qualify for an open source project, but that is not currently possible since
+# we don't publish under an OSI license.
+# 4. Another way could be to simply buy some CI minutes for the project, but
+# this doesn't remove the requirement for contributors to be verified
+#
+# Links:
+# - https://docs.gitlab.com/security/identity_verification/
+# - https://docs.gitlab.com/ci/debugging/#error-identity-verification-is-required-in-order-to-run-ci-jobs
+# - https://about.gitlab.com/solutions/open-source/join/
+
 variables:
     GIT_DEPTH: "1"
     GIT_FETCH_EXTRA_FLAGS: --quiet --no-tags
@@ -13,7 +33,7 @@ workflow:
         - if: ($CI_COMMIT_BRANCH == "new-master" || $CI_COMMIT_BRANCH == "steam" || $CI_COMMIT_BRANCH == "GitlabPRPipeline") && $CI_PIPELINE_SOURCE == "push" && $CI_PROJECT_PATH == "anbennar/anbennar-eu4-dev"
         - when: never
 
-validate:
+.validate: # "." is special syntax to disable the job
     script:
         - git fetch --filter=blob:none --no-tags --depth=1 origin "$CI_COMMIT_BEFORE_SHA"
         - |

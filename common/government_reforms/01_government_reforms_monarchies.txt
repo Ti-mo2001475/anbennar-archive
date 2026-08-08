@@ -4721,6 +4721,7 @@ great_ogre_horde = {
 		queen = no
 		royal_marriage = no
 		disables_regular_estates = yes
+		is_monstrous_horde = yes
 		locked_T1_reform = yes
 	}
 }
@@ -5343,7 +5344,7 @@ hobgoblin_stratocracy_reform = {
 	lock_level_when_selected = yes
 	potential = {
 		culture_group = hobgoblin
-		NOT = { religion = eagle_worship }
+		NOT = { religion = banbe_anen }
 	}
 	valid_for_nation_designer = yes
 	nation_designer_cost = 0
@@ -8169,7 +8170,7 @@ imperial_nobility_reform = {
 # 	}
 # }
 
- nobles_of_the_wand_reform = {
+nobles_of_the_wand_reform = {
  	icon = "commander_king_reform"
  	allow_normal_conversion = yes
  	potential = {
@@ -8188,10 +8189,15 @@ imperial_nobility_reform = {
  		advisor_cost = -0.1
  		monthly_favor_modifier = 0.1
  	}
+	custom_attributes = {
+		increased_mage_chance_ruler = yes
+		increased_mage_chance_consort = yes
+		increased_mage_chance_heir = yes
+	}
  	ai = {
  		factor = 1
  	}
- }
+}
 
 #Anbennar
 dwarovar_old_clans_reform = {
@@ -8253,7 +8259,11 @@ magical_elite_reform = {
 		mages_loyalty_modifier = 0.1
 		mages_influence_modifier = 0.05
 	}
-
+	custom_attributes = {
+		increased_mage_chance_ruler = yes
+		increased_mage_chance_consort = yes
+		increased_mage_chance_heir = yes
+	}
 	ai = {
 		factor = 1
 		modifier = {
@@ -12436,6 +12446,49 @@ harpy_matriarchy_reform = {
 		queen = no
 		disabled_expelling_human = yes
 		disabled_purging_human = yes
+		is_harpy_matriarchy = yes
+		locked_T1_reform = yes
+	}
+	conditional = {
+		allow = { has_dlc = "Rights of Man" }
+		has_harem = yes
+	}
+}
+
+harpy_matriarchy_tribal_reform = {
+	lock_level_when_selected = yes
+	allow_normal_conversion = yes
+	icon = "harpy_matriarchy"
+	potential = {
+		ruler_is_harpy = yes
+	}
+	valid_for_nation_designer = yes
+	nation_designer_cost = 20
+	nation_designer_trigger = {
+		OR = {
+			ruler_culture = firanyan_harpy
+			ruler_culture = siadunan_harpy
+			ruler_culture = stonewing_harpy
+			ruler_culture = nzeri_harpy
+			ruler_culture = nuzenapu_harpy
+			ruler_culture = nuraryi_harpy
+		}
+	}
+	legacy_equivalent = ottoman_government_legacy
+
+	modifiers = {
+		legitimacy = 0.5
+		stability_cost_modifier = -0.10
+		can_fabricate_for_vassals = yes
+		block_introduce_heir = yes
+	}
+
+	custom_attributes = {
+		queen = no
+		disabled_expelling_human = yes
+		disabled_purging_human = yes
+		is_monstrous_horde = yes
+		is_harpy_matriarchy = yes
 		locked_T1_reform = yes
 	}
 	conditional = {
@@ -12482,6 +12535,7 @@ harpy_matriarchy_ayarallen_early_gov_mechanic_reform = {
 		queen = no
 		disabled_expelling_human = yes
 		disabled_purging_human = yes
+		is_harpy_matriarchy = yes
 		locked_T1_reform = yes
 	}
 	conditional = {
@@ -13189,6 +13243,7 @@ harpy_queendom_reform = {
 		queen = no
 		disabled_expelling_human = yes
 		disabled_purging_human = yes
+		is_harpy_matriarchy = yes
 		locked_T1_reform = yes
 	}
 	conditional = {
@@ -15830,6 +15885,9 @@ endhuvi_erudite_court_reform = {
 		all_estate_loyalty_equilibrium = 0.05
 		diplomatic_reputation = 1
 		advisor_cost = -0.1
+	}
+	custom_attributes = {
+		increased_mage_chance_heir = yes
 	}
 	effect = {
 		custom_tooltip = endhuvi_erudite_court_reform_tt
