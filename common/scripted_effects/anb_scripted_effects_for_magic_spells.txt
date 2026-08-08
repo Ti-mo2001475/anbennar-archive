@@ -4541,16 +4541,24 @@ divination_1_rite_of_upright_nourishment_effect = {
 	}
 	custom_tooltip = haless_chi_rite_of_upright_nourishment_effect_tt
 }
-transmutation_1_harmonize_feng_shui_effect = {
-	add_country_modifier = { name = haless_chi_harmonize_feng_shui_mod duration = 1825 }
+illusion_1_manipulate_feng_shui_effect = {
+	if = {
+		limit = { is_at_war = yes }
+		custom_tooltip = haless_chi_manipulate_feng_shui_yes_war
+		hidden_effect = { every_war_enemy_country = { add_war_exhaustion = 5 } }
+	}
+	else = {
+		custom_tooltip = haless_chi_manipulate_feng_shui_no_war
+		hidden_effect = { every_owned_province = { add_devastation = -5 add_prosperity = 50 } }
+	}
 }
 abjuration_1_invoke_the_grave_earth_effect = {
-	add_country_modifier = { name = haless_chi_invoke_the_grave_earth_mod duration = 3650 }
+	add_country_modifier = { name = haless_chi_invoke_the_grave_earth_mod duration = 1825 }
 	custom_tooltip = haless_chi_invoke_the_grave_earth_effect
 	hidden_effect = {
 		every_owned_province = {
 			limit = { has_building = mage_tower }
-			add_province_modifier = { name = haless_chi_invoke_the_grave_earth_local_mod duration = 3650 }
+			add_province_modifier = { name = haless_chi_invoke_the_grave_earth_local_mod duration = 1825 }
 		}
 	}
 }
