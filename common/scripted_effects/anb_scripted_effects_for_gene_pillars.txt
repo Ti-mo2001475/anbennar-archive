@@ -541,75 +541,6 @@ gene_pillar_generic_then_specific_event = {
 				limit = { has_country_flag = gene_pillars_exploration_events_double_speed }
 				multiply_variable = { GenePillarsSpeed = 0.5 }
 			}
-			### Add Speed modifiers above here ###
-
-			# NOTE TO FUTURE DEVELOPERS: This speed variable is currently capped at 6 and 24 as the minimum and maximum
-			# DO NOT increase this max of 24, since this may cause a queued event that is left over from a failed expedition
-			# to fire for another expedition the player starts on the same gene pillar
-			
-			round_variable = { which = GenePillarsSpeed value = 0 }
-			if = { # clamp speed at minimum of 6 months
-				limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 6 } } }
-				set_variable = { GenePillarsSpeed = 6 }
-			}
-			else_if = { # clamp speed at maximum of 24 months
-				limit = { check_variable = { which = GenePillarsSpeed value = 24 } }
-				set_variable = { GenePillarsSpeed = 24 }
-			}
-
-			if = { # base speed x = 12
-				limit = { is_variable_equal = { which = GenePillarsSpeed value = 12 } }
-				aPUI_gene_pillar_root_is_exploring_event_target_province_trigger = yes
-			}
-			# calculate speed
-			set_variable = { GenePillarsSpeed = 12 } # base speed of 12 months
-
-			if = { # delay 90-180 days
-				limit = { has_country_flag = gene_pillars_exploration_next_event_small_delay }
-				random_list = {
-					1 = { change_variable = { GenePillarsSpeed = 3 } }
-					1 = { change_variable = { GenePillarsSpeed = 4 } }
-					1 = { change_variable = { GenePillarsSpeed = 5 } }
-					1 = { change_variable = { GenePillarsSpeed = 6 } }
-				}
-				clr_country_flag = gene_pillars_exploration_next_event_small_delay
-			}
-			else_if = { # delay 180-270 days
-				limit = { has_country_flag = gene_pillars_exploration_next_event_medium_delay }
-				random_list = {
-					1 = { change_variable = { GenePillarsSpeed = 6 } }
-					1 = { change_variable = { GenePillarsSpeed = 7 } }
-					1 = { change_variable = { GenePillarsSpeed = 8 } }
-					1 = { change_variable = { GenePillarsSpeed = 9 } }
-				}
-				clr_country_flag = gene_pillars_exploration_next_event_medium_delay
-			}
-			else_if = { # delay 270-360 days
-				limit = { has_country_flag = gene_pillars_exploration_next_event_large_delay }
-				random_list = {
-					1 = { change_variable = { GenePillarsSpeed = 9 } }
-					1 = { change_variable = { GenePillarsSpeed = 10 } }
-					1 = { change_variable = { GenePillarsSpeed = 11 } }
-					1 = { change_variable = { GenePillarsSpeed = 12 } }
-				}
-				clr_country_flag = gene_pillars_exploration_next_event_large_delay
-			}
-
-			### Add Speed modifiers below here ###
-
-			if = { # 25% increased speed privilege
-				limit = {
-					OR = {
-						has_estate_privilege = artifice_invention_pillar_scouts
-						has_estate_privilege = artifice_invention_mech_pillar_scouts
-					}
-				}
-				multiply_variable = { GenePillarsSpeed = 0.75 }
-			}
-			if = { # double speed
-				limit = { has_country_flag = gene_pillars_exploration_events_double_speed }
-				multiply_variable = { GenePillarsSpeed = 0.5 }
-			}
 			if = {
 				limit = { has_country_flag = A29_faster_genepillar_expedition }
 				multiply_variable = { GenePillarsSpeed = 0.75 }
@@ -703,6 +634,38 @@ gene_pillar_generic_then_specific_event = {
 							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 14 } }
 								country_event = { id = gene_pillars.1000 days = 213 } #Generic event handler
 								country_event = { id = gene_pillars.$specific_event$ days = 426 } #Next event in chain
+							}
+						}
+						if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 12 } } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 10 } }
+								country_event = { id = gene_pillars.1000 days = 152 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 304 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 11 } }
+								country_event = { id = gene_pillars.1000 days = 167 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 334 } #Next event in chain
+							}
+						}
+					}
+					if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 10 } } }
+						if = { limit = { check_variable = { which = GenePillarsSpeed value = 8 } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 8 } }
+								country_event = { id = gene_pillars.1000 days = 122 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 244 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 9 } }
+								country_event = { id = gene_pillars.1000 days = 137 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 274 } #Next event in chain
+							}
+						}
+						if = { limit = { NOT = { check_variable = { which = GenePillarsSpeed value = 8 } } }
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 6 } }
+								country_event = { id = gene_pillars.1000 days = 91 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 182 } #Next event in chain
+							}
+							if = { limit = { is_variable_equal = { which = GenePillarsSpeed value = 7 } }
+								country_event = { id = gene_pillars.1000 days = 107 } #Generic event handler
+								country_event = { id = gene_pillars.$specific_event$ days = 214 } #Next event in chain
 							}
 						}
 					}
