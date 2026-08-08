@@ -1,0 +1,79 @@
+lakefed_authority_mechanic = {
+	alert_icon_gfx = GFX_alerticons_government_mechanics
+	alert_icon_index = 37
+
+	available = {
+		has_reform = lake_republic_presidency
+	}
+
+	powers = {
+		lakefed_authority_power = {
+			# gui = sri_baginda
+			max = 100
+			min = 0
+			default = 0
+			reset_on_new_ruler = no
+			is_good = yes
+			show_before_interactions = yes
+			scaled_modifier = {
+				modifier = {
+					development_cost = -0.1
+					global_manpower = 7500
+					dip_advisor_cost = -0.15
+
+				}
+			}
+
+			range_modifier = {
+				trigger = { has_global_flag = lake_cohesion_5 }
+				modifier = { monthly_lakefed_authority_power = 3.75 }
+			}
+
+			range_modifier = {
+				trigger = { has_global_flag = lake_cohesion_4 }
+				modifier = { monthly_lakefed_authority_power = 3 }
+			}
+
+			range_modifier = {
+				trigger = { has_global_flag = lake_cohesion_3 }
+				modifier = { monthly_lakefed_authority_power = 2.25 }
+			}
+
+			range_modifier = {
+				trigger = { has_global_flag = lake_cohesion_2 }
+				modifier = { monthly_lakefed_authority_power = 1.5 }
+			}
+
+			range_modifier = {
+				trigger = { has_global_flag = lake_cohesion_1 }
+				modifier = { monthly_lakefed_authority_power = 0.75 }
+			}
+
+			range_modifier = {
+				trigger = {
+					any_known_country = {
+						has_reform = lake_republic
+						has_opinion = {
+							who = ROOT
+							value = 100
+						}
+					}
+				}
+				modifier = { monthly_lakefed_authority_power = 0.1 }
+			}
+
+			range_modifier = {
+				trigger = { has_disaster = lake_federation_crisis }
+				modifier = { monthly_lakefed_authority_power = -2 }
+			}
+
+			range_modifier = {
+				trigger = {
+					
+				 }
+				modifier = { monthly_lakefed_authority_power = -2 }
+			}
+		}
+	}
+	interactions = { }
+}
