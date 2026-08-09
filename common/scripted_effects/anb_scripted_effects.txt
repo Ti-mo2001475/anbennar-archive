@@ -10528,6 +10528,121 @@ jadd_holy_order_reformed = {
 		var_effect = { effect = add_mil_power var = mil_order_refund sign = + }
 	}
 }
+jadd_holy_order_deformed = {
+	export_to_variable = { which = holyOrderCost value = modifier:establish_order_cost who = ROOT }
+	multiply_variable = { which = holyOrderCost value = 50 }
+	change_variable = { which = holyOrderCost value = 50 }
+	set_variable = { which = adm_order_refund value = 0 }
+	set_variable = { which = dip_order_refund value = 0 }
+	set_variable = { which = mil_order_refund value = 0 }
+	every_owned_province = {
+		limit = {
+			holy_order = lightbringers_order_upgraded
+		}
+		set_province_flag = lightbringers_order_upgraded_was_here
+	}
+	every_owned_province = {
+		limit = {
+			holy_order = jasienes_daughters_order_upgraded
+		}
+		set_province_flag = jasienes_daughters_upgraded_was_here
+	}
+	every_owned_province = {
+		limit = {
+			holy_order = militant_jadd_order_upgraded
+		}
+		set_province_flag = militant_jadd_order_upgraded_was_here
+	}
+	clr_country_flag = the_jadd_holy_order_reformed
+	every_owned_province = {
+		limit = {
+			has_province_flag = lightbringers_order_upgraded_was_here
+		}
+		every_province_in_state = {
+			clr_province_flag = lightbringers_order_upgraded_was_here
+		}
+		holy_order = lightbringers_order
+		owner = { change_variable = { which = adm_order_refund which = holyOrderCost } }
+	}
+	every_owned_province = {
+		limit = {
+			has_province_flag = jasienes_daughters_upgraded_was_here
+		}
+		every_province_in_state = {
+			clr_province_flag = jasienes_daughters_upgraded_was_here
+		}
+		holy_order = jasienes_daughters_order
+		owner = { change_variable = { which = dip_order_refund which = holyOrderCost } }
+	}
+	every_owned_province = {
+		limit = {
+			has_province_flag = militant_jadd_order_upgraded_was_here
+		}
+		every_province_in_state = {
+			clr_province_flag = militant_jadd_order_upgraded_was_here
+		}
+		holy_order = militant_jadd_order
+		owner = { change_variable = { which = mil_order_refund which = holyOrderCost } }
+	}
+	if = { #just in case establish_order_cost exceeds -100% which would start giving free power
+		limit = { NOT = { check_variable = { which = holyOrderCost value = 0 } } }
+		multiply_variable = { which = adm_order_refund value = -1 }
+		multiply_variable = { which = dip_order_refund value = -1 }
+		multiply_variable = { which = mil_order_refund value = -1 }
+		var_effect = { effect = add_adm_power var = adm_order_refund sign = - }
+		var_effect = { effect = add_dip_power var = dip_order_refund sign = - }
+		var_effect = { effect = add_mil_power var = mil_order_refund sign = - }
+	}
+	else = {
+		var_effect = { effect = add_adm_power var = adm_order_refund sign = + }
+		var_effect = { effect = add_dip_power var = dip_order_refund sign = + }
+		var_effect = { effect = add_mil_power var = mil_order_refund sign = + }
+	}
+}
+upgrade_jadd_fervor_effects = {
+	if = {
+		limit = { has_active_fervor = fervor_trade }
+ 		remove_active_fervor = fervor_trade
+		add_active_fervor = fervor_trade_buffed
+	}
+	if = {
+		limit = { has_active_fervor = fervor_war }
+		remove_active_fervor = fervor_war
+		add_active_fervor = fervor_war_buffed
+	}
+	if = {
+		limit = { has_active_fervor = fervor_stability }
+		remove_active_fervor = fervor_stability
+		add_active_fervor = fervor_stability_buffed
+	}
+	if = {
+		limit = { has_active_fervor = fervor_diplomacy }
+		remove_active_fervor = fervor_diplomacy
+		add_active_fervor = fervor_diplomacy_buffed
+	}
+}
+downgrade_jadd_fervor_effects = {
+	if = {
+		limit = { has_active_fervor = fervor_trade_buffed }
+ 		remove_active_fervor = fervor_trade_buffed
+		add_active_fervor = fervor_trade
+	}
+	if = {
+		limit = { has_active_fervor = fervor_war_buffed }
+		remove_active_fervor = fervor_war_buffed
+		add_active_fervor = fervor_war
+	}
+	if = {
+		limit = { has_active_fervor = fervor_stability_buffed }
+		remove_active_fervor = fervor_stability_buffed
+		add_active_fervor = fervor_stability
+	}
+	if = {
+		limit = { has_active_fervor = fervor_diplomacy_buffed }
+		remove_active_fervor = fervor_diplomacy_buffed
+		add_active_fervor = fervor_diplomacy
+	}
+}
 every_country_in_hre = {
 	custom_tooltip = every_country_in_hre
 	tooltip = { emperor = { $effect$ } }
