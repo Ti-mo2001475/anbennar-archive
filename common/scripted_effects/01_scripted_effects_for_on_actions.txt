@@ -2227,6 +2227,14 @@ anb_scripted_effects_for_ruler_death  = {
 		country_event = { id = flavor_chaingrasper.101 }
 	}
 
+	# Parusahan Saya
+	if = {
+		limit = {
+			has_country_flag = hemantsen_flag
+		}
+		country_event = { id = flavor_parusahan_saya.14 }
+	}
+
 	magic_on_ruler_death = yes #For lichdom etc.
 }
 
@@ -17976,6 +17984,13 @@ on_province_owner_change_effect = {
 		}
 	}
 	
+	if = {	#vanilla MTTH made triggered_only
+		limit = {
+			owner = { has_reform = free_city }
+			NOT = { has_dlc = "Common Sense" }
+		}
+		owner = { country_event = { id = 9900 days = 180 } }
+	}
 } #on_province_owner_change_effect bottom
 
 on_primary_culture_changed_effect = {
