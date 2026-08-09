@@ -736,7 +736,7 @@ country_event = {
 	desc = flavor_parusahan_saya.14.d
 	picture = LOOMING_DEATH_eventPicture
 
-	hidden = yes
+	hidden = no
 	is_triggered_only = yes
 	fire_only_once = yes
 
@@ -746,6 +746,7 @@ country_event = {
 			limit = {
 				has_ruler = "Hemantsen I"
 			}
+			clr_country_flag = hemantsen_flag
 			kill_ruler = yes
 		}
 	}
@@ -978,6 +979,48 @@ country_event = {
 				"
 			}
 		}
+	}
+}
+
+# The Third Harimraj
+country_event = {
+	id = flavor_parusahan_saya.20
+	title = flavor_parusahan_saya.20.t
+	desc = flavor_parusahan_saya.20.d
+	picture = ELEPHANT_KING_eventPicture
+
+	hidden = no
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = flavor_parusahan_saya.20.a
+
+		add_ruler_modifier = {
+			name = R54_dawn_of_the_second_philosopher_king
+		}
+		
+		custom_tooltip = R54_the_third_harimraj_tt2
+		hidden_effect = {
+			add_power_projection = {
+				type = 10_permanent_power_projection
+				amount = 10
+			}
+		}
+
+		custom_tooltip = ARB_golden_age_renewal_tt
+		hidden_effect = {
+			if = {
+				limit = { has_had_golden_age = yes } 
+				reset_golden_age = yes 
+			}
+			else_if = {
+				limit = { in_golden_age = yes } 
+				extend_golden_age = 600
+			}
+		}
+
+		custom_tooltip = R54_the_third_harimraj_tt3
 	}
 }
 
@@ -1271,7 +1314,7 @@ country_event = {
 			add_ruler_personality = reformist_personality
 			add_ruler_personality = incorruptible_personality
 		}
-		set_ruler_flag = hemantsen_flag
+		set_country_flag = hemantsen_flag
 		
 		define_consort = {
 			name = "Rani Jira"

@@ -1648,6 +1648,8 @@ clear_mages_organization_effect = { #Because on_granted fires before the privile
 		remove_estate_privilege = estate_mages_organization_acolytes
 		remove_estate_privilege = estate_mages_organization_hydromancers_guild
 		remove_estate_privilege = estate_mages_organization_decimated_shamans
+		remove_estate_privilege = estate_mages_kaino_dao_nako_magecraft
+		remove_estate_privilege = estate_mages_kaino_shadow_lich_chosen
 	}
 }
 
@@ -9030,6 +9032,10 @@ remove_random_manufactory = {
 			trigger = { has_building = mage_tower }
 			remove_building = mage_tower
 		}
+		1 = {
+			trigger = { has_building = automatory }
+			remove_building = automatory
+		}
 	}
 }
 
@@ -10520,6 +10526,121 @@ jadd_holy_order_reformed = {
 		var_effect = { effect = add_adm_power var = adm_order_refund sign = + }
 		var_effect = { effect = add_dip_power var = dip_order_refund sign = + }
 		var_effect = { effect = add_mil_power var = mil_order_refund sign = + }
+	}
+}
+jadd_holy_order_deformed = {
+	export_to_variable = { which = holyOrderCost value = modifier:establish_order_cost who = ROOT }
+	multiply_variable = { which = holyOrderCost value = 50 }
+	change_variable = { which = holyOrderCost value = 50 }
+	set_variable = { which = adm_order_refund value = 0 }
+	set_variable = { which = dip_order_refund value = 0 }
+	set_variable = { which = mil_order_refund value = 0 }
+	every_owned_province = {
+		limit = {
+			holy_order = lightbringers_order_upgraded
+		}
+		set_province_flag = lightbringers_order_upgraded_was_here
+	}
+	every_owned_province = {
+		limit = {
+			holy_order = jasienes_daughters_order_upgraded
+		}
+		set_province_flag = jasienes_daughters_upgraded_was_here
+	}
+	every_owned_province = {
+		limit = {
+			holy_order = militant_jadd_order_upgraded
+		}
+		set_province_flag = militant_jadd_order_upgraded_was_here
+	}
+	clr_country_flag = the_jadd_holy_order_reformed
+	every_owned_province = {
+		limit = {
+			has_province_flag = lightbringers_order_upgraded_was_here
+		}
+		every_province_in_state = {
+			clr_province_flag = lightbringers_order_upgraded_was_here
+		}
+		holy_order = lightbringers_order
+		owner = { change_variable = { which = adm_order_refund which = holyOrderCost } }
+	}
+	every_owned_province = {
+		limit = {
+			has_province_flag = jasienes_daughters_upgraded_was_here
+		}
+		every_province_in_state = {
+			clr_province_flag = jasienes_daughters_upgraded_was_here
+		}
+		holy_order = jasienes_daughters_order
+		owner = { change_variable = { which = dip_order_refund which = holyOrderCost } }
+	}
+	every_owned_province = {
+		limit = {
+			has_province_flag = militant_jadd_order_upgraded_was_here
+		}
+		every_province_in_state = {
+			clr_province_flag = militant_jadd_order_upgraded_was_here
+		}
+		holy_order = militant_jadd_order
+		owner = { change_variable = { which = mil_order_refund which = holyOrderCost } }
+	}
+	if = { #just in case establish_order_cost exceeds -100% which would start giving free power
+		limit = { NOT = { check_variable = { which = holyOrderCost value = 0 } } }
+		multiply_variable = { which = adm_order_refund value = -1 }
+		multiply_variable = { which = dip_order_refund value = -1 }
+		multiply_variable = { which = mil_order_refund value = -1 }
+		var_effect = { effect = add_adm_power var = adm_order_refund sign = - }
+		var_effect = { effect = add_dip_power var = dip_order_refund sign = - }
+		var_effect = { effect = add_mil_power var = mil_order_refund sign = - }
+	}
+	else = {
+		var_effect = { effect = add_adm_power var = adm_order_refund sign = + }
+		var_effect = { effect = add_dip_power var = dip_order_refund sign = + }
+		var_effect = { effect = add_mil_power var = mil_order_refund sign = + }
+	}
+}
+upgrade_jadd_fervor_effects = {
+	if = {
+		limit = { has_active_fervor = fervor_trade }
+ 		remove_active_fervor = fervor_trade
+		add_active_fervor = fervor_trade_buffed
+	}
+	if = {
+		limit = { has_active_fervor = fervor_war }
+		remove_active_fervor = fervor_war
+		add_active_fervor = fervor_war_buffed
+	}
+	if = {
+		limit = { has_active_fervor = fervor_stability }
+		remove_active_fervor = fervor_stability
+		add_active_fervor = fervor_stability_buffed
+	}
+	if = {
+		limit = { has_active_fervor = fervor_diplomacy }
+		remove_active_fervor = fervor_diplomacy
+		add_active_fervor = fervor_diplomacy_buffed
+	}
+}
+downgrade_jadd_fervor_effects = {
+	if = {
+		limit = { has_active_fervor = fervor_trade_buffed }
+ 		remove_active_fervor = fervor_trade_buffed
+		add_active_fervor = fervor_trade
+	}
+	if = {
+		limit = { has_active_fervor = fervor_war_buffed }
+		remove_active_fervor = fervor_war_buffed
+		add_active_fervor = fervor_war
+	}
+	if = {
+		limit = { has_active_fervor = fervor_stability_buffed }
+		remove_active_fervor = fervor_stability_buffed
+		add_active_fervor = fervor_stability
+	}
+	if = {
+		limit = { has_active_fervor = fervor_diplomacy_buffed }
+		remove_active_fervor = fervor_diplomacy_buffed
+		add_active_fervor = fervor_diplomacy
 	}
 }
 every_country_in_hre = {
@@ -14412,12 +14533,36 @@ banbe_anen_quest_for_reehanviza_values = {
  #duration = X : The duration of the modifier (DONT ADD IF IT'S PERMANENT - Permanent ruler mods don't need a duration)
  #extend = yes : Makes it add or extend the modifier (Does not change the tooltip atm)
  #hidden = yes : If the modifier is meant to be hidden (Does not change the tooltip atm)
-add_exceptional_willpower = {
+add_exceptional_willpower_75 = {
 	custom_tooltip = add_exceptional_willpower[[duration]_$duration$]
-	custom_tooltip = add_exceptional_willpower_$years$_mod
+	custom_tooltip = add_exceptional_willpower_75_mod
 	hidden_effect = {
 		add[[extend]_or_extend]_ruler_modifier = {
-			name = exceptional_willpower_$years$
+			name = exceptional_willpower_75
+			[[duration] duration = $duration$ ]
+			[[hidden] hidden = yes ]
+		}
+	}
+}
+
+add_exceptional_willpower_100 = {
+	custom_tooltip = add_exceptional_willpower[[duration]_$duration$]
+	custom_tooltip = add_exceptional_willpower_100_mod
+	hidden_effect = {
+		add[[extend]_or_extend]_ruler_modifier = {
+			name = exceptional_willpower_100
+			[[duration] duration = $duration$ ]
+			[[hidden] hidden = yes ]
+		}
+	}
+}
+
+add_exceptional_willpower_150 = {
+	custom_tooltip = add_exceptional_willpower[[duration]_$duration$]
+	custom_tooltip = add_exceptional_willpower_150_mod
+	hidden_effect = {
+		add[[extend]_or_extend]_ruler_modifier = {
+			name = exceptional_willpower_150
 			[[duration] duration = $duration$ ]
 			[[hidden] hidden = yes ]
 		}
@@ -14437,6 +14582,61 @@ kill_land_units = {
 		1 = {
 			trigger = { artillery_in_province = ROOT }
 			kill_units = { [[who] who = $who$ ] type = artillery [[amount] amount = $amount$ ] }
+		}
+	}
+}
+
+#On action effect
+grant_manpower_from_besieging_fort_spirit_mil = {
+	if = {
+		limit = {
+			ROOT = { has_country_modifier = spirit_military }
+			FROM = {
+				owner = { war_with = ROOT }
+				NOT = { has_province_modifier = estate_nobles_neighbor_raids_fort }
+				fort_level = 1
+			}
+		}
+		FROM = {
+			add_province_modifier = {
+				name = estate_nobles_neighbor_raids_fort
+				duration = 1825
+			}
+		}
+		ROOT = {
+			export_to_variable = {
+				which = manpower_from_fort
+				value = trigger_value:fort_level
+				who = FROM
+			}
+			while = {
+				limit = { check_variable = { manpower_from_fort = 1 } }
+				subtract_variable = { manpower_from_fort = 1 }
+				add_manpower = 2.5
+			}
+		}
+	}
+}
+
+V05_syncretic_monasteries_activate_effect = {
+	# this is used in two places, first activation actually does it
+	# specifically we need it for V05_fivefold_compass's V05_syncretic_monastery_oinukhudi to work
+	# so you can also get it there if you didn't do V05_waste_spirits before
+	# yes a req arrow would be the "proper" way to solve this, but this is undesired here for structural reasons
+	if = {
+		limit = { NOT = { has_country_flag = V05_syncretic_monasteries } }
+		custom_tooltip = V05_syncretic_upgrade
+		tooltip = {
+			add_province_modifier = {
+				name = estate_church_V05_interfaith_teachings_2
+				duration = -1
+			}
+		}
+		hidden_effect = {
+			set_country_flag = V05_syncretic_monasteries
+			clr_country_flag = V05_interfaith_dialogue
+			remove_estate_privilege = estate_church_monastic_schism
+			set_estate_privilege = estate_church_monastic_schism
 		}
 	}
 }
