@@ -1499,8 +1499,8 @@ on_war_won = {
 			value = 1
 		}
 		if = {
-			limit = { has_country_flag = imperial_ban_goody_rewards}
-			clr_country_flag = imperial_ban_goody_rewards
+			limit = { FROM = { has_country_flag = imperial_ban_goody_rewards } }
+			FROM = { clr_country_flag = imperial_ban_goody_rewards }
 			add_adm_power = 150
 			add_mil_power = 150
 			add_dip_power = 150
@@ -7772,7 +7772,10 @@ on_annexed = {
 		if = {
 			limit = { has_saved_global_event_target = warlord_of_haless }
 			if = {
-				limit = { tag = event_target:warlord_of_haless }
+				limit = {
+					tag = event_target:warlord_of_haless
+					NOT = { has_global_flag = delay_warlord_of_haless } #Prevents errors in sundering
+				}
 				clear_global_event_target = warlord_of_haless
 				4411 = { province_event = { id = haless.1010 } } #Find a new warlord
 			}
@@ -8350,6 +8353,8 @@ on_colonial_pulse = {
 		125 = anb_colonial.11
 
 		1000 = flavor_grombar.27
+
+		100 = kheionai_flavour.32
 
 		15000 = 0
 	}
@@ -10552,22 +10557,6 @@ on_bi_yearly_pulse = {
 		100 = { country_event = { id = flavour_bosancovac.015 } }
 	}
 
-	if = { #Rinta Seekers - Light up the Night Sky
-		limit = {
-			has_country_flag = enabled_light_up_the_night_sky_decision
-			is_incident_active = incident_rinta_light_up_the_night_sky
-			religion = rinta_seekers
-			ai = yes
-			NOT = { has_global_flag = rinta_disable_stealing_funds_flag }
-		}
-		rinta_invest_in_telescope = { level = 0_5 }
-		random_known_country = {
-			limit = { is_incident_active = incident_rinta_light_up_the_night_sky }
-			country_event = {
-				id = rinta_seeker_events.520 #Astronomical Center Funds Stolen
-			}
-		}
-	}
 	artifice_mechanim_inventions_scripted_effect = yes
 }
 
@@ -13229,6 +13218,8 @@ on_four_year_pulse_3 = {
 		100 = taychend_flavour.32 # caergarae does surf
 		100 = taychend_flavour.33 # (OTTO, TAKA CODED) sarihaddhu tribes migrate
 		100 = taychend_flavour.34 # chend. + sari tribes quarrel
+		200 = taychend_flavour.43 # Tea Markets of Root.GetName
+		100 = taychend_flavour.44 # Devandi Slaves Rise in Revolt (Taychendi version)
 
 		#Taychendi Empire Vainglory Events
 		100 = taychendi_empire_events.100 #Border Warlods Attack Neighbour
@@ -13402,6 +13393,12 @@ on_four_year_pulse_4 = {
 		50 = rahen.22
 		50 = rahen.23
 		25 = rahen.24
+		100 = rahen.201 
+		
+		100 = rahen.202
+		100 = rahen.203
+		100 = rahen.204
+		25 = rahen.205
 		100 = haless.1 #Harimari Roam Further Afield
 		50 = haless.2 #Roaming Spirits
 		50 = haless.3 #Expert Travelers
@@ -15297,6 +15294,15 @@ on_five_year_pulse_3 = {
 		100 = kheionai_flavour.26
 		100 = kheionai_flavour.27
 		100 = kheionai_flavour.28
+		200 = kheionai_flavour.33
+		100 = kheionai_flavour.34
+		100 = kheionai_flavour.35
+	}
+
+	# Amadia Flavour Events
+	random_events = {
+		100 = amadia_flavour.1
+		100 = amadia_flavour.3
 	}
 
 	#Half-ruinborn false pops growth
@@ -15636,6 +15642,18 @@ on_five_year_pulse_4 = {
 			13 = {}
 		}
 	}
+
+	# Gozengun flavor events
+	random_events = {
+			50 = gozengun.1 #seal event
+			200 = gozengun.2 #manul event
+			30 = gozengun.3 #deadman demanding
+			100 = gozengun.4 #gozengooner mercenaries
+			200 = gozengun.5 #facestealer rite
+			150 = gozengun.6 #spirit advisor
+			150 = gozengun.9 #gumiho event
+			200 = gozengun.10 #desert structures
+		}
 }
 
 # El Dorado
@@ -16088,6 +16106,15 @@ on_fetishist_cult_change = {
 		# }
 		# clr_country_flag = lost_ancestral_lands
 	# }
+	if = {
+		limit = {
+			has_adopted_cult = ardimya_cult
+			ruler_has_planetouched_personality = yes
+			6063 = { owned_by = ROOT }
+			6063 = { has_great_project = { type = genie_palace_of_jinnakah tier = 3 } }
+		}
+		country_event = { id = ardimya.101 }
+	}
 }
 
 # country
@@ -20811,6 +20838,58 @@ on_explorer_recruited = {
 			marine_infantry = S81
 			marine_infantry = S81
 			marine_infantry = S81
+		}
+	}
+	if = {
+		limit = {
+			has_country_modifier = feiten_pioneering_spirit_0
+			NOT = { has_country_modifier = feiten_pioneering_spirit_5 }
+		}
+		if = {
+			limit = {
+				has_country_modifier = feiten_pioneering_spirit_4
+			}
+			add_country_modifier = {
+				name = feiten_pioneering_spirit_5
+				duration = 7300
+			}
+			remove_country_modifier = feiten_pioneering_spirit_4
+		}
+		else_if = {
+			limit = {
+				has_country_modifier = feiten_pioneering_spirit_3
+			}
+			add_country_modifier = {
+				name = feiten_pioneering_spirit_4
+				duration = 7300
+			}
+			remove_country_modifier = feiten_pioneering_spirit_3
+		}
+		else_if = {
+			limit = {
+				has_country_modifier = feiten_pioneering_spirit_2
+			}
+			add_country_modifier = {
+				name = feiten_pioneering_spirit_3
+				duration = 7300
+			}
+			remove_country_modifier = feiten_pioneering_spirit_2
+		}
+		else_if = {
+			limit = {
+				has_country_modifier = feiten_pioneering_spirit_1
+			}
+			add_country_modifier = {
+				name = feiten_pioneering_spirit_2
+				duration = 7300
+			}
+			remove_country_modifier = feiten_pioneering_spirit_1
+		}
+		else = {
+			add_country_modifier = {
+				name = feiten_pioneering_spirit_1
+				duration = 7300
+			}
 		}
 	}
 }
@@ -28782,6 +28861,13 @@ on_institution_embracement = {
 		}
 		country_event = { id = flavour_karakhanbar.14 }
 	}
+	if = {
+		limit = {
+			owns = 5941 #nazhni
+			has_institution = global_trade
+		}
+		5941 = { province_event = { id = sarhalevents.38 days = 3650 } }
+	}
 }
 
 on_national_focus_change = {
@@ -30063,9 +30149,9 @@ on_new_age = {
 		}
 		every_owned_province = {
 			limit = { culture = ROOT } 
-			change_culture = orvitzyen_goblin
+			change_culture = promised_goblin
 		}
-		change_primary_culture = orvitzyen_goblin
+		change_primary_culture = promised_goblin
 		set_country_flag = formed_escanni_goblin_nation_flag
 		override_country_name = B42_ORVITZYEN
 		
