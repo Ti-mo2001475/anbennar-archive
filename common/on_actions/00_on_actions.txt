@@ -7772,7 +7772,10 @@ on_annexed = {
 		if = {
 			limit = { has_saved_global_event_target = warlord_of_haless }
 			if = {
-				limit = { tag = event_target:warlord_of_haless }
+				limit = {
+					tag = event_target:warlord_of_haless
+					NOT = { has_global_flag = delay_warlord_of_haless } #Prevents errors in sundering
+				}
 				clear_global_event_target = warlord_of_haless
 				4411 = { province_event = { id = haless.1010 } } #Find a new warlord
 			}
