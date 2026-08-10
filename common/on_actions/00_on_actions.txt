@@ -1499,8 +1499,8 @@ on_war_won = {
 			value = 1
 		}
 		if = {
-			limit = { has_country_flag = imperial_ban_goody_rewards}
-			clr_country_flag = imperial_ban_goody_rewards
+			limit = { FROM = { has_country_flag = imperial_ban_goody_rewards } }
+			FROM = { clr_country_flag = imperial_ban_goody_rewards }
 			add_adm_power = 150
 			add_mil_power = 150
 			add_dip_power = 150
@@ -7772,7 +7772,10 @@ on_annexed = {
 		if = {
 			limit = { has_saved_global_event_target = warlord_of_haless }
 			if = {
-				limit = { tag = event_target:warlord_of_haless }
+				limit = {
+					tag = event_target:warlord_of_haless
+					NOT = { has_global_flag = delay_warlord_of_haless } #Prevents errors in sundering
+				}
 				clear_global_event_target = warlord_of_haless
 				4411 = { province_event = { id = haless.1010 } } #Find a new warlord
 			}
@@ -13390,6 +13393,12 @@ on_four_year_pulse_4 = {
 		50 = rahen.22
 		50 = rahen.23
 		25 = rahen.24
+		100 = rahen.201 
+		
+		100 = rahen.202
+		100 = rahen.203
+		100 = rahen.204
+		25 = rahen.205
 		100 = haless.1 #Harimari Roam Further Afield
 		50 = haless.2 #Roaming Spirits
 		50 = haless.3 #Expert Travelers
@@ -30137,9 +30146,9 @@ on_new_age = {
 		}
 		every_owned_province = {
 			limit = { culture = ROOT } 
-			change_culture = orvitzyen_goblin
+			change_culture = promised_goblin
 		}
-		change_primary_culture = orvitzyen_goblin
+		change_primary_culture = promised_goblin
 		set_country_flag = formed_escanni_goblin_nation_flag
 		override_country_name = B42_ORVITZYEN
 		
