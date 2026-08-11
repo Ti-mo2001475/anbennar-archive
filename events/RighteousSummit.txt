@@ -1,7 +1,7 @@
 
 namespace = xia_summit
 
-province_event = { #Righteous Summits are held every 10 years, so long as the Xia persists
+country_event = { #Righteous Summits are held every 10 years, so long as the Xia persists
 	id = xia_summit.0
 	title = xia_summit.0.t
 	desc = xia_summit.0.d
@@ -10,23 +10,44 @@ province_event = { #Righteous Summits are held every 10 years, so long as the Xi
 	is_triggered_only = yes
 	hidden = yes
 
-	trigger = { owner = { has_government_attribute = is_in_xia } }
-	after = { province_event = { id = xia_summit.0 days = 3650 random = 365 } } #Random day
-
-	option = { #Righteous Summit, no parliament
-		name = xia_summit.0.a
-		ai_chance = { factor = 1 }
-		trigger = { owner = { NOT = { has_reform = xia_parliament_reform } } }
-
-		owner = { country_event = { id = xia_summit.1 } }
+	trigger = {
+		had_global_flag = { flag = xia_summit_cadence days = 3650 }
+		4559 = { owner = { has_government_attribute = is_in_xia } } #The Xia still exists
 	}
 
-	option = { #Righteous Summit, yes parliament
-		name = xia_summit.0.b
-		ai_chance = { factor = 1 }
-		trigger = { owner = { has_reform = xia_parliament_reform } }
+	immediate = {
+		4559 = { province_event = { id = xia_summit.100 } }
+	}
 
-		owner = { country_event = { id = xia_summit.3 } }
+	option = { name = xia_summit.0.a }
+}
+
+province_event = { #Righteous Summit handler B - fires the correct summit, is a separate event so it can be forcibly fired in 1450
+	id = xia_summit.100
+	title = xia_summit.0.t
+	desc = xia_summit.0.d
+	picture = BUDDHISM_GOOD_eventPicture
+
+	is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		set_global_flag = xia_summit_cadence #reset cooldown
+
+		owner = {
+			if = {
+				limit = { has_government_attribute = is_in_xia }
+				if = {
+					limit = { has_reform = xia_parliament_reform }
+					country_event = { id = xia_summit.3 } #Righteous Summit, yes parliament
+				}
+				else = { country_event = { id = xia_summit.1 } } #Righteous Summit, no parliament
+			}
+		}
+	}
+
+	option = { 
+		name = xia_summit.0.a
 	}
 }
 
