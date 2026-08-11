@@ -19945,6 +19945,47 @@ on_province_owner_change_monuments = {
 				remove_province_modifier = port_of_two_spirits_trade_center_modifier_2
 			}
 		}
+		if = {
+			limit = {
+				owner = {
+					NOT = { tag = Y65 }
+					NOT = { religion = devouring_path }
+				}
+				4774 = {
+					has_great_project = {
+						type = port_of_two_spirits
+						tier = 2
+					}
+				}
+			}
+			owner = {
+				every_owned_province = {
+					limit = {
+						province_has_center_of_trade_of_level = 1
+					}
+					if = {
+						limit = {
+							4774 = {
+								has_great_project = {
+									type = port_of_two_spirits
+									tier = 3
+								}
+							}
+						}
+						add_province_modifier = {
+							name = port_of_two_spirits_trade_center_modifier_2
+							duration = -1
+						}
+					}
+					else = {
+						add_province_modifier = {
+							name = port_of_two_spirits_trade_center_modifier_1
+							duration = -1
+						}
+					}
+				}
+			}
+		}
 	}
 
 	#Thousand Words Assembly
@@ -20013,6 +20054,60 @@ on_province_owner_change_monuments = {
 					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
 					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
 					remove_province_modifier = thousand_words_assembly_yanszin_buff_3
+				}
+			}
+		}
+		if = {
+			limit = {
+				4859 = {
+					has_great_project = {
+						type = thousand_words_assembly
+						tier = 1
+					}
+					owner = {
+						can_use_thousand_words_assembly_scripted_trigger = yes
+					}
+				}
+			}
+			owner = {
+				every_owned_province = {
+					limit = {
+						province_group = yanszin_heartland_group
+					}
+					if = {
+						limit = {
+							4859 = {
+								has_great_project = {
+									type = thousand_words_assembly
+									tier = 3
+								}
+							}
+						}
+						add_province_modifier = {
+							name = thousand_words_assembly_yanszin_buff_3
+							duration = -1
+						}
+					}
+					else_if = {
+						limit = {
+							4859 = {
+								has_great_project = {
+									type = thousand_words_assembly
+									tier = 2
+								}
+							}
+						}
+						add_province_modifier = {
+							name = thousand_words_assembly_yanszin_buff_2
+							duration = -1
+						}
+					}
+					else = {
+						add_province_modifier = {
+							name = thousand_words_assembly_yanszin_buff_1
+							duration = -1
+						}
+					}
 				}
 			}
 		}
