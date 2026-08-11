@@ -2218,6 +2218,14 @@ anb_scripted_effects_for_ruler_death  = {
 		country_event = { id = flavor_chaingrasper.101 }
 	}
 
+	# Parusahan Saya
+	if = {
+		limit = {
+			has_country_flag = hemantsen_flag
+		}
+		country_event = { id = flavor_parusahan_saya.14 }
+	}
+
 	magic_on_ruler_death = yes #For lichdom etc.
 }
 
@@ -7224,14 +7232,13 @@ on_war_declaration_effect = {
 	if = {
 		limit = {
 			tag = A77
-			mission_completed = reign_in_the_knight_errants
-			mission_completed = reign_in_the_knight_errants
+			mission_completed = forms_eight_to_three
 			is_in_war = {
 				attacker_leader = ROOT
 				casus_belli = cb_imperial_ban
 			}
 		}
-		A77 = {
+		FROM = {
 			set_country_flag = imperial_ban_goody_rewards
 		}
 	}
@@ -13790,6 +13797,10 @@ startup_1444_effects = {
 			limit = { tag = Z60 }
 			country_event = { id = tsukqiao.1 days = 7 } #Save primary culture
 			ban_necromancy = { country = yes }
+			country_event = {
+				id = nuraryi.1
+				days = 180
+			}
 		}
 		
 		#Pachpalka initialization
@@ -17892,6 +17903,13 @@ on_province_owner_change_effect = {
 		}
 	}
 	
+	if = {	#vanilla MTTH made triggered_only
+		limit = {
+			owner = { has_reform = free_city }
+			NOT = { has_dlc = "Common Sense" }
+		}
+		owner = { country_event = { id = 9900 days = 180 } }
+	}
 } #on_province_owner_change_effect bottom
 
 on_primary_culture_changed_effect = {

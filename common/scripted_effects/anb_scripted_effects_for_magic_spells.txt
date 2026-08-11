@@ -660,6 +660,7 @@ remove_harmful_siege_magic = { #Remove siege magic that's bad after you siege do
 	remove_province_modifier = enchantment_3_dominate_to_surrender_siege_mod
 	remove_province_modifier = transmutation_1_mass_enlarge_local_mod
 	remove_province_modifier = necromancy_1_contagion_local_mod
+	remove_province_modifier = kaino_necromancy_1_contagion_local_mod
 }
 
 ai_magic_siege_pulse = {
@@ -2600,10 +2601,13 @@ necromancy_1_steal_vitality_sub_effect = { # Steal Vitality sub-effect (not need
 					trade_goods = slaves
 				}
 			}
-			add_province_modifier = { name = necromancy_1_steal_vitality_local_mod duration = $days$ }
 			if = {
 				limit = { owner = { has_country_flag = kaino_steal_vitality_moderation } }
 				add_base_production = -1
+				add_province_modifier = { name = kaino_necromancy_1_steal_vitality_local_mod duration = $days$ }
+			}
+			else = {
+				add_province_modifier = { name = necromancy_1_steal_vitality_local_mod duration = $days$ }
 			}
 		}
 		add_country_modifier = { name = necromancy_1_steal_vitality_cooldown_mod duration = $days$ hidden = yes }
@@ -2613,15 +2617,15 @@ necromancy_1_steal_vitality_sub_effect = { # Steal Vitality sub-effect (not need
 necromancy_1_contagion_effect = { # Contagion
 	increase_witch_king_points_medium = { level = necromancy_level_1_minimum }
 	PREV = {
-		add_devastation = 20
 		custom_tooltip = change_siege_negative_tt
 		hidden_effect = { change_siege = -1 }
 		if = { 
-			limit = { has_country_flag = kaino_contagion_adze_swarm }
-			add_devastation = 80
+			limit = { PREV = { has_country_flag = kaino_contagion_adze_swarm } }
+			add_devastation = 100
 			add_province_modifier = { name = kaino_necromancy_1_contagion_local_mod duration = 730 }
 		}
 		else = {
+			add_devastation = 20
 			add_province_modifier = { name = necromancy_1_contagion_local_mod duration = 730 }
 		}
 	}
