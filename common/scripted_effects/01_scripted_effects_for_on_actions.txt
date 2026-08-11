@@ -11719,12 +11719,34 @@ on_built_manpower_building_effect = {
 			duration = -1
 		}
 	}
+
+	#The Defiant
+	if = {
+		limit = {
+			owner = { 
+				owns = 4917 
+				can_use_the_defiant_trigger = yes
+			}
+			4917 = {
+				has_great_project = {
+					type = thousand_words_assembly
+					tier = 1
+				}
+			}
+		}
+		add_province_modifier = {
+			name = the_defiant_barracks_buff
+			hidden = yes
+			duration = -1
+		}
+	}
 }
 
 on_manpower_building_destroyed_effect = {
 	remove_province_modifier = L80_barrack_buff
 	remove_province_modifier = harpylen_barrack_roost
 	remove_province_modifier = kaino_barracks_bonuses
+	remove_province_modifier = the_defiant_barracks_buff
 }
 
 on_built_production_building_effect = {
@@ -12093,8 +12115,31 @@ on_built_forcelimit_building_effect = {
 		}
 		FROM = { S45_add_momentum = { value = 1 action = building } }
 	}
+
+	#The Defiant
+	if = {
+		limit = {
+			owner = { 
+				owns = 4917 
+				can_use_the_defiant_trigger = yes
+			}
+			4917 = {
+				has_great_project = {
+					type = thousand_words_assembly
+					tier = 2
+				}
+			}
+		}
+		add_province_modifier = {
+			name = the_defiant_regiment_camp_buff
+			hidden = yes
+			duration = -1
+		}
+	}
 }
-on_forcelimit_building_destroyed_effect = {}
+on_forcelimit_building_destroyed_effect = {
+	remove_country_modifier = the_defiant_regiment_camp_buff
+}
 
 on_built_courthouse_building_effect = {
 	if = {
@@ -19906,6 +19951,7 @@ on_province_owner_change_monuments = {
 	if = {
 		limit = {
 			province_group = yanszin_heartland_group
+			owner = { owns = 4859 }
 			4859 = {
 				has_great_project = {
 					type = thousand_words_assembly
@@ -19959,8 +20005,8 @@ on_province_owner_change_monuments = {
 			if = {
 				limit = {
 					OR = {
-						NOT = { is_member_of_yanszin_league_scripted_trigger = yes }
-						ROOT = { owner = { NOT = { is_member_of_yanszin_league_scripted_trigger = yes } } }
+						NOT = { has_country_flag = is_member_of_yanszin_league_flag }
+						ROOT = { owner = { NOT = { has_country_flag = is_member_of_yanszin_league_flag } } }
 					}
 				}
 				every_owned_province = {
@@ -19981,7 +20027,7 @@ on_province_owner_change_monuments = {
 			}
 			4917 = {
 				has_great_project = {
-					type = thousand_words_assembly
+					type = the_defiant
 					tier = 1
 				}
 			}
@@ -20001,7 +20047,7 @@ on_province_owner_change_monuments = {
 				has_forcelimit_building_trigger = yes
 				4917 = {
 					has_great_project = {
-						type = thousand_words_assembly
+						type = the_defiant
 						tier = 2
 					}
 				}
@@ -20017,7 +20063,7 @@ on_province_owner_change_monuments = {
 				has_building = soldier_households
 				4917 = {
 					has_great_project = {
-						type = thousand_words_assembly
+						type = the_defiant
 						tier = 3
 					}
 				}
@@ -20047,52 +20093,54 @@ on_province_owner_change_monuments = {
 				}
 				4917 = {
 					has_great_project = {
-						type = thousand_words_assembly
+						type = the_defiant
 						tier = 1
 					}
 				}
 			}
-			every_owned_province = {
-				if = {
-					limit = {
-						has_manpower_building_trigger = yes
-					}
-					add_province_modifier = {
-						name = the_defiant_barracks_buff
-						hidden = yes
-						duration = -1
-					}
-				}
-				if = {
-					limit = {
-						has_forcelimit_building_trigger = yes
-						4917 = {
-							has_great_project = {
-								type = thousand_words_assembly
-								tier = 2
-							}
+			owner = {
+				every_owned_province = {
+					if = {
+						limit = {
+							has_manpower_building_trigger = yes
+						}
+						add_province_modifier = {
+							name = the_defiant_barracks_buff
+							hidden = yes
+							duration = -1
 						}
 					}
-					add_province_modifier = {
-						name = the_defiant_regiment_camp_buff
-						hidden = yes
-						duration = -1
-					}
-				}
-				if = {
-					limit = {
-						has_building = soldier_households
-						4917 = {
-							has_great_project = {
-								type = thousand_words_assembly
-								tier = 3
+					if = {
+						limit = {
+							has_forcelimit_building_trigger = yes
+							4917 = {
+								has_great_project = {
+									type = the_defiant
+									tier = 2
+								}
 							}
 						}
+						add_province_modifier = {
+							name = the_defiant_regiment_camp_buff
+							hidden = yes
+							duration = -1
+						}
 					}
-					add_province_modifier = {
-						name = the_defiant_soldier_households_buff
-						hidden = yes
-						duration = -1
+					if = {
+						limit = {
+							has_building = soldier_households
+							4917 = {
+								has_great_project = {
+									type = the_defiant
+									tier = 3
+								}
+							}
+						}
+						add_province_modifier = {
+							name = the_defiant_soldier_households_buff
+							hidden = yes
+							duration = -1
+						}
 					}
 				}
 			}
@@ -20121,22 +20169,29 @@ on_province_owner_change_monuments = {
 						tier = 3
 					}
 				}
-				add_country_modifier = {
-					name = house_of_fire_and_water_artificery_buff_2
-					duration = -1
+				owner = {
+					add_country_modifier = {
+						name = house_of_fire_and_water_artificery_buff_2
+						duration = -1
+					}
 				}
 			}
 			else = {
-				add_country_modifier = {
-					name = house_of_fire_and_water_artificery_buff_1
-					duration = -1
+				owner = {
+					add_country_modifier = {
+						name = house_of_fire_and_water_artificery_buff_1
+						duration = -1
+					}
 				}
 			}
 		}
 		FROM = {
 			remove_country_modifier = house_of_fire_and_water_artificery_buff_1
 			remove_country_modifier = house_of_fire_and_water_artificery_buff_2
-			disband_mercenary_company = merc_war_alchemists
+			random_hired_mercenary_company = {
+				limit = { template = merc_war_alchemists }
+				disband_mercenary_company = merc_war_alchemists
+			}
 		}
 	}
 

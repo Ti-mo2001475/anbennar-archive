@@ -1113,7 +1113,6 @@ on_religion_change = {
 	#Port of Two Spirits
 	if = {
 		limit = {
-			NOT = { religion = mystic_accord }
 			owns = 4774
 			4774 = {
 				has_great_project = {
@@ -1124,41 +1123,47 @@ on_religion_change = {
 		}
 		if = {
 			limit = {
-				4774 = {
-					has_great_project = {
-						type = port_of_two_spirits
-						tier = 3
+				NOT = { religion = mystic_accord }
+			}
+			if = {
+				limit = {
+					4774 = {
+						has_great_project = {
+							type = port_of_two_spirits
+							tier = 3
+						}
+					}
+				}
+				every_owned_province = {
+					limit = { province_has_center_of_trade_of_level = 1 }
+					add_province_modifier = {
+						name = port_of_two_spirits_trade_center_modifier_2
+						duration = -1
 					}
 				}
 			}
-			every_owned_province = {
-				limit = { province_has_center_of_trade_of_level = 1 }
-				add_province_modifier = {
-					name = port_of_two_spirits_trade_center_modifier_2
-					duration = -1
+			else = {
+				every_owned_province = {
+					limit = { province_has_center_of_trade_of_level = 1 }
+					add_province_modifier = {
+						name = port_of_two_spirits_trade_center_modifier_1
+						duration = -1
+					}
 				}
 			}
 		}
 		else = {
 			every_owned_province = {
-				limit = { province_has_center_of_trade_of_level = 1 }
-				add_province_modifier = {
-					name = port_of_two_spirits_trade_center_modifier_1
-					duration = -1
-				}
+				remove_province_modifier = port_of_two_spirits_trade_center_modifier_1
+				remove_province_modifier = port_of_two_spirits_trade_center_modifier_2
 			}
-		}
-	}
-	else = {
-		every_owned_province = {
-			remove_province_modifier = port_of_two_spirits_trade_center_modifier_1
-			remove_province_modifier = port_of_two_spirits_trade_center_modifier_2
 		}
 	}
 
 	#The Defiant
 	if = {
 		limit = {
+			owns = 4917
 			OR = {
 				religion = devouring_path
 				religion = black_doctrine
@@ -21684,18 +21689,6 @@ on_center_of_trade_downgrade = {
 		}
 		clr_province_flag = bazaar_upgraded_center
 		change_culture = variable:origin_culture
-	}
-
-	if = { #Port of Two Spirits
-		limit = {
-			NOT = { province_has_center_of_trade_of_level = 1 }
-			OR = {
-				has_province_modifier = port_of_two_spirits_trade_center_modifier_1
-				has_province_modifier = port_of_two_spirits_trade_center_modifier_2
-			}
-		}
-		remove_province_modifier = port_of_two_spirits_trade_center_modifier_1
-		remove_province_modifier = port_of_two_spirits_trade_center_modifier_2
 	}
 }
 

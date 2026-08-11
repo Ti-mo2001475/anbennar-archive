@@ -6152,24 +6152,12 @@ land_units_in_province = {
 	}
 }
 
-is_member_of_yanszin_league_scripted_trigger = {
-	custom_trigger_tooltip = {
-		tooltip = is_member_of_yanszin_league_TT
-		OR = {
-			is_or_was_tag = { tag = Y10 }
-			is_or_was_tag = { tag = Y04 }
-			is_or_was_tag = { tag = Y08 }
-			is_or_was_tag = { tag = Y07 }
-			is_or_was_tag = { tag = Y06 }
-			is_or_was_tag = { tag = Z59 }
-			is_or_was_tag = { tag = V22 }
-		}
-	}
-}
-
 can_use_thousand_words_assembly_scripted_trigger = {
 	OR = {
-		is_member_of_yanszin_league_scripted_trigger = yes
+		custom_trigger_tooltip = {
+			tooltip = is_member_of_yanszin_league_TT
+			has_country_flag = is_member_of_yanszin_league_flag
+		}
 		full_idea_group = trade_ideas
 	}
 	OR = {
@@ -6190,26 +6178,24 @@ can_use_the_defiant_trigger = {
 }
 
 can_use_house_of_fire_and_water_trigger = {
-	owner = {
-		capital_scope = {
-			OR = {
-				superregion = yanshen_superregion
-				region = xianjie_region
-			}
-		}
+	capital_scope = {
 		OR = {
-			culture_group = yan
-			primary_culture = serene_harimari
-			primary_culture = pezarangi_harpy
-			primary_culture = semifire_harpy
-			primary_culture = dragon_command
-			primary_culture = sunrise_elf
-			primary_culture = goldscale_kobold
+			superregion = yanshen_superregion
+			region = xianjie_region
 		}
-		OR = {
-			has_estate = estate_mages
-			has_estate = estate_artificers
-		}
+	}
+	OR = {
+		culture_group = yan
+		primary_culture = serene_harimari
+		primary_culture = pezarangi_harpy
+		primary_culture = semifire_harpy
+		primary_culture = dragon_command
+		primary_culture = sunrise_elf
+		primary_culture = goldscale_kobold
+	}
+	OR = {
+		has_estate = estate_mages
+		has_estate = estate_artificers
 	}
 	has_owner_accepted_culture = yes
 }

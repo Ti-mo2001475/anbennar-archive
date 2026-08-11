@@ -1446,10 +1446,6 @@ palace_of_divine_call = {
 			}
 			development = 30
 		}
-		else_if = {
-			limit = { owner = { is_or_was_tag = { tag = Y00 } } } 
-			owner = { mission_completed = azkare_worthy_tomb }
-		}
 		else = {
 			development = 20
 		}
@@ -4410,6 +4406,9 @@ port_of_two_spirits = {
 
 	can_be_moved = no
 
+	time = { months = 1 }
+	build_cost = 5000
+
 	starting_tier = 0
 
 	#project type
@@ -4495,11 +4494,9 @@ port_of_two_spirits = {
 		}
 
 		on_upgraded = {
-			4774 = {
-				add_base_tax = 1
-				add_base_production = 1
-				add_base_manpower = 1
-			}
+			add_base_tax = 1
+			add_base_production = 1
+			add_base_manpower = 1
 			owner = { accretive_path_gain_chi = { aspect = the_second_ascension category = adm amount = 100 } }
 			owner = { if = { limit = { has_reform = tsukqiao_throne_of_lies_reform } add_legitimacy = 10 } }
 		}
@@ -4550,11 +4547,9 @@ port_of_two_spirits = {
 		}
 
 		on_upgraded = {
-			4774 = {
-				add_base_tax = 1
-				add_base_production = 1
-				add_base_manpower = 1
-			}
+			add_base_tax = 1
+			add_base_production = 1
+			add_base_manpower = 1
 			if = {
 				limit = {
 					owner = { NOT = { religion = mystic_accord } }
@@ -4607,14 +4602,12 @@ port_of_two_spirits = {
 		}
 
 		on_upgraded = {
-			4774 = {
-				add_base_tax = 1
-				add_base_production = 1
-				add_base_manpower = 1
-				add_permanent_province_modifier = {
-					name = JY_LF_port
-					duration = -1
-				}
+			add_base_tax = 1
+			add_base_production = 1
+			add_base_manpower = 1
+			add_permanent_province_modifier = {
+				name = JY_LF_port
+				duration = -1
 			}
 			4963 = { remove_province_modifier = JY_LF_port }
 			if = {
@@ -4623,14 +4616,14 @@ port_of_two_spirits = {
 				}
 				custom_tooltip = port_of_two_spirits_trade_center_modifier_2_TT
 				hidden_effect = {
-					every_owned_province = {
-						remove_province_modifier = port_of_two_spirits_trade_center_modifier_1	
-					}
-					every_owned_province = {
-						limit = { province_has_center_of_trade_of_level = 1 }
-						add_province_modifier = {
-							name = port_of_two_spirits_trade_center_modifier_2
-							duration = -1
+					owner = {
+						every_owned_province = {
+							limit = { province_has_center_of_trade_of_level = 1 }
+							remove_province_modifier = port_of_two_spirits_trade_center_modifier_1
+							add_province_modifier = {
+								name = port_of_two_spirits_trade_center_modifier_2
+								duration = -1
+							}
 						}
 					}
 				}
@@ -4653,6 +4646,9 @@ thousand_words_assembly = {
 	date = 1444.1.1
 
 	can_be_moved = no
+
+	time = { months = 1 }
+	build_cost = 5000
 
 	starting_tier = 1
 
@@ -4702,25 +4698,25 @@ thousand_words_assembly = {
 				}
 				4844 = {
 					trade_share = {
-						country = ROOT
+						country = PREV
 						share = 60
 					}
 				}
 				4925 = {
 					trade_share = {
-						country = ROOT
+						country = PREV
 						share = 60
 					}
 				}
 				4879 = {
 					trade_share = {
-						country = ROOT
+						country = PREV
 						share = 60
 					}
 				}
 				4859 = {
 					trade_share = {
-						country = ROOT
+						country = PREV
 						share = 60
 					}
 				}
@@ -4804,61 +4800,7 @@ thousand_words_assembly = {
 		on_upgraded = {
 			custom_tooltip = thousand_words_assembly_yanszin_buff_1_TT
 			hidden_effect = {
-				4851 = {
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_1
-						duration = -1
-					}
-				}
-				4933 = {
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_1
-						duration = -1
-					}
-				}
-				4855 = {
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_1
-						duration = -1
-					}
-				}
-				4859 = {
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_1
-						duration = -1
-					}
-				}
-				4950 = {
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_1
-						duration = -1
-					}
-				}
-				4858 = {
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_1
-						duration = -1
-					}
-				}
-				4861 = {
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_1
-						duration = -1
-					}
-				}
-				4854 = {
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_1
-						duration = -1
-					}
-				}
-				4853 = {
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_1
-						duration = -1
-					}
-				}
-				4849 = {
+				yanszin_heartland_group = {
 					add_province_modifier = {
 						name = thousand_words_assembly_yanszin_buff_1
 						duration = -1
@@ -4900,70 +4842,7 @@ thousand_words_assembly = {
 			custom_tooltip = thousand_words_assembly_agendas_merchant_1_TT
 			custom_tooltip = thousand_words_assembly_yanszin_buff_2_TT
 			hidden_effect = {
-				4851 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_2
-						duration = -1
-					}
-				}
-				4933 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_2
-						duration = -1
-					}
-				}
-				4855 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_2
-						duration = -1
-					}
-				}
-				4859 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_2
-						duration = -1
-					}
-				}
-				4950 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_2
-						duration = -1
-					}
-				}
-				4858 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_2
-						duration = -1
-					}
-				}
-				4861 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_2
-						duration = -1
-					}
-				}
-				4854 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_2
-						duration = -1
-					}
-				}
-				4853 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_2
-						duration = -1
-					}
-				}
-				4849 = {
+				yanszin_heartland_group = {
 					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
 					add_province_modifier = {
 						name = thousand_words_assembly_yanszin_buff_2
@@ -5007,70 +4886,7 @@ thousand_words_assembly = {
 			custom_tooltip = thousand_words_assembly_agendas_merchant_2_TT
 			custom_tooltip = thousand_words_assembly_yanszin_buff_3_TT
 			hidden_effect = {
-				4851 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_3
-						duration = -1
-					}
-				}
-				4933 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_3
-						duration = -1
-					}
-				}
-				4855 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_3
-						duration = -1
-					}
-				}
-				4859 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_3
-						duration = -1
-					}
-				}
-				4950 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_3
-						duration = -1
-					}
-				}
-				4858 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_3
-						duration = -1
-					}
-				}
-				4861 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_3
-						duration = -1
-					}
-				}
-				4854 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_3
-						duration = -1
-					}
-				}
-				4853 = {
-					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_3
-						duration = -1
-					}
-				}
-				4849 = {
+				yanszin_heartland_group = {
 					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
 					add_province_modifier = {
 						name = thousand_words_assembly_yanszin_buff_3
@@ -5091,6 +4907,9 @@ the_defiant = {
 	date = 1444.1.1
 
 	can_be_moved = no
+
+	time = { months = 1 }
+	build_cost = 5000
 
 	starting_tier = 1
 
@@ -5177,14 +4996,16 @@ the_defiant = {
 		on_upgraded = {
 			custom_tooltip = the_defiant_barracks_TT
 			hidden_effect = {
-				every_owned_province = {
-					limit = {
-						has_manpower_building_trigger = yes
-					}
-					add_province_modifier = {
-						name = the_defiant_barracks_buff
-				hidden = yes
-						duration = -1
+				owner = {
+					every_owned_province = {
+						limit = {
+							has_manpower_building_trigger = yes
+						}
+						add_province_modifier = {
+							name = the_defiant_barracks_buff
+							hidden = yes
+							duration = -1
+						}
 					}
 				}
 			}
@@ -5223,14 +5044,16 @@ the_defiant = {
 			custom_tooltip = the_defiant_barracks_TT
 			custom_tooltip = the_defiant_regiment_camps_TT
 			hidden_effect = {
-				every_owned_province = {
-					limit = {
-						has_forcelimit_building_trigger = yes
-					}
-					add_province_modifier = {
-						name = the_defiant_barracks_buff
-				hidden = yes
-						duration = -1
+				owner = {
+					every_owned_province = {
+						limit = {
+							has_forcelimit_building_trigger = yes
+						}
+						add_province_modifier = {
+							name = the_defiant_barracks_buff
+							hidden = yes
+							duration = -1
+						}
 					}
 				}
 			}
@@ -5271,15 +5094,17 @@ the_defiant = {
 			custom_tooltip = the_defiant_regiment_camps_TT
 			custom_tooltip = the_defiant_soldier_household_TT
 			hidden_effect = {
-				every_owned_province = {
-					limit = {
-						has_building = soldier_households
-					}
-					remove_province_modifier = the_defiant_regiment_camp_buff
-					add_province_modifier = {
-						name = the_defiant_regiment_camp_buff
-				hidden = yes_upgrade
-						duration = -1
+				owner = {
+					every_owned_province = {
+						limit = {
+							has_building = soldier_households
+						}
+						remove_province_modifier = the_defiant_regiment_camp_buff
+						add_province_modifier = {
+							name = the_defiant_regiment_camp_buff
+							hidden = yes
+							duration = -1
+						}
 					}
 				}
 			}
@@ -5297,6 +5122,9 @@ house_of_fire_and_water = {
 
 	can_be_moved = no
 
+	time = { months = 1 }
+	build_cost = 5000
+
 	starting_tier = 1
 
 	#project type
@@ -5313,11 +5141,11 @@ house_of_fire_and_water = {
 	}
 
 	can_use_modifiers_trigger = {
-		can_use_house_of_fire_and_water_trigger = yes
+		owner = { can_use_house_of_fire_and_water_trigger = yes }
 	}
 
 	can_upgrade_trigger = {
-		can_use_house_of_fire_and_water_trigger = yes
+		owner = { can_use_house_of_fire_and_water_trigger = yes }
 	}
 
 	keep_trigger = {}
