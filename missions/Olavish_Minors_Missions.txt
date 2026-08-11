@@ -983,7 +983,10 @@ naugsvol_1 = {
 			OR = {
 				has_no_ongoing_construction = no
 				Not = {
-					base_production = 5
+					OR = {
+						base_production = 5
+						has_state_edict = edict_centralization_effort
+					}
 				}
 			}
 		}
@@ -992,8 +995,9 @@ naugsvol_1 = {
 			982 = { #Naugsvol
 				base_production = 5
 				has_no_ongoing_construction = yes
+				has_state_edict = edict_centralization_effort
 			}
-			treasury = 50
+			has_adm_advisor = yes
 		}
 
 		effect = {
@@ -1003,18 +1007,21 @@ naugsvol_1 = {
 						has_building = workshop
 					}
 				}
-				add_treasury = 50
+				add_treasury = 100
 			} else = {
 				982 = { #Naugsvol
 					add_building_construction = {
 						building = workshop
-						cost = 0.5
+						cost = 0
 						speed = 1
 					}
 				}
 			}
 			982 = { #Naugsvol
-				change_trade_goods = livestock
+				add_province_modifier = {
+					name = naugsvol_large_cattle_pastures
+					duration = 3650
+				}
 			}
 		}
 	}
@@ -1097,6 +1104,10 @@ naugsvol_1 = {
 					name = naugsvol_beastly_infrastructure
 					duration = -1
 				}
+			}
+			add_country_modifier = {
+				name = naugsvol_herders_of_north
+				duration = -1
 			}
 		}
 	}
@@ -1249,7 +1260,6 @@ naugsvol_2 = {
 				base_manpower = 5
 			}
 			army_professionalism = 0.05
-			treasury = 100
 		}
 
 		effect = {
@@ -1259,12 +1269,12 @@ naugsvol_2 = {
 						has_building = barracks
 					}
 				}
-				add_treasury = 50
+				add_treasury = 100
 			} else = {
 				981 = { #Silvrborg
 					add_building_construction = {
 						building = barracks
-						cost = 0.5
+						cost = 0
 						speed = 1
 					}
 				}
@@ -1275,12 +1285,12 @@ naugsvol_2 = {
 						has_building = barracks
 					}
 				}
-				add_treasury = 50
+				add_treasury = 100
 			} else = {
 				983 = { #Baldersby
 					add_building_construction = {
 						building = barracks
-						cost = 0.5
+						cost = 0
 						speed = 1
 					}
 				}
@@ -1403,7 +1413,7 @@ redgarhavn_2 = {
 		}
 
 		trigger = {
-			navy_size = Z08 #Bjarnrik
+			num_of_galley = 10
 			has_spy_network_in = {
 				who = Z08 #Bjarnrik
 				value = 30
