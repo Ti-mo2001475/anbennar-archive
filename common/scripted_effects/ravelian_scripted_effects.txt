@@ -575,3 +575,19 @@ spawn_ravelian_society_random_province = {
 		}
 	}
 }
+
+force_spawn_ravelianism_early = {
+	# hidden helper events need time to resolve
+	hidden_effect = {
+		if = {
+			limit = { NOT = { has_global_flag = ravelian_lodges_have_spawned } }
+			8 = { province_event = { id = ravelian.1000 } }
+		}
+		if = {
+			limit = { NOT = { has_global_flag = ravelians_have_god_fragment } }
+			8 = { province_event = { id = ravelian.1001 days = 1 } }
+		}
+		# ravelian.10 or a custom one
+		country_event = { id = $spawn_event$ days = 2 }
+	}
+}
