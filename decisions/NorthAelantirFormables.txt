@@ -1260,4 +1260,47 @@ country_decisions = {
 		ai_importance = 400
 	}
 
+	epednar_nation = { 
+		major = yes
+
+		potential = {
+			primary_culture = epednar
+			   
+			NOT = { exists = U89 }
+			NOT = { has_country_flag = formed_great_epednar_host_flag }
+
+			normal_or_historical_nations = yes
+			was_never_end_game_tag_trigger = yes
+		}
+
+		provinces_to_highlight = {
+			superregion = ynn_superregion
+			NOT = { owned_by = ROOT }
+		}
+
+		allow = {
+			NOT = { government = native }
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			num_of_cities = 60
+		}
+
+		effect = {
+			change_tag = U89
+			add_prestige = 50
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			#if = {
+			#	limit = {
+			#		has_custom_ideas = no
+			#	}
+			#	country_event = { id = ideagroups.1 } #Swap Ideas
+			#}
+			set_country_flag = formed_end_game_tag_flag
+			set_country_flag = formed_great_epednar_host_flag
+		}
+	}
+
 }
