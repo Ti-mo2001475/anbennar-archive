@@ -568,61 +568,68 @@ country_event = {
 			has_country_modifier = L22_court_in_jagab_faru
 		}
 	}
-
-	option = { #Sigilan
-		name = binwarji.101.a
-		ai_chance = { factor = 10 }
-		trigger = { has_country_modifier = L22_court_in_sigilan }
-		L22_court_of_fangaula_events_fire = { province = 5813 }
+	immediate = {
+		trigger_switch = {
+			on_trigger = has_country_modifier
+			L22_court_in_sigilan = { 5813 = { save_event_target_as = L22_court_of_fangaula_city } }
+			L22_court_in_zitan_tomon = { 5802 = { save_event_target_as = L22_court_of_fangaula_city } }
+			L22_court_in_woloso = { 5741 = { save_event_target_as = L22_court_of_fangaula_city } }
+			L22_court_in_jiridese_so = { 5779 = { save_event_target_as = L22_court_of_fangaula_city } }
+			L22_court_in_sinjetaso = { 5745 = { save_event_target_as = L22_court_of_fangaula_city } }
+			L22_court_in_izini = { 5724 = { save_event_target_as = L22_court_of_fangaula_city } }
+			L22_court_in_kunolo = { 5710 = { save_event_target_as = L22_court_of_fangaula_city } }
+			L22_court_in_jagab_faru = { 5680 = { save_event_target_as = L22_court_of_fangaula_city } }
+		}
 	}
 
-	option = { #Zitan Tomon
+	option = {
 		name = binwarji.101.a
 		ai_chance = { factor = 10 }
-		trigger = { has_country_modifier = L22_court_in_zitan_tomon }
-		L22_court_of_fangaula_events_fire = { province = 5802 }
-	}
 
-	option = { #Woloso
-		name = binwarji.101.a
-		ai_chance = { factor = 10 }
-		trigger = { has_country_modifier = L22_court_in_woloso }
-		L22_court_of_fangaula_events_fire = { province = 5741 }
-	}
-
-	option = { #Jiridese So
-		name = binwarji.101.a
-		ai_chance = { factor = 10 }
-		trigger = { has_country_modifier = L22_court_in_jiridese_so }
-		L22_court_of_fangaula_events_fire = { province = 5779 }
-	}
-
-	option = { #Sinjetaso
-		name = binwarji.101.a
-		ai_chance = { factor = 10 }
-		trigger = { has_country_modifier = L22_court_in_sinjetaso }
-		L22_court_of_fangaula_events_fire = { province = 5745 }
-	}
-
-	option = { #Izini
-		name = binwarji.101.a
-		ai_chance = { factor = 10 }
-		trigger = { has_country_modifier = L22_court_in_izini }
-		L22_court_of_fangaula_events_fire = { province = 5724 }
-	}
-
-	option = { #Kunolo
-		name = binwarji.101.a
-		ai_chance = { factor = 10 }
-		trigger = { has_country_modifier = L22_court_in_kunolo }
-		L22_court_of_fangaula_events_fire = { province = 5710 }
-	}
-
-	option = { #Jagab Faru
-		name = binwarji.101.a
-		ai_chance = { factor = 10 }
-		trigger = { has_country_modifier = L22_court_in_jagab_faru }
-		L22_court_of_fangaula_events_fire = { province = 5680 }
+		event_target:L22_court_of_fangaula_city = {
+			random_list = {
+				1 = {
+					province_event = { id = binwarji.102 }
+				}
+				1 = {
+					trigger = {
+						owner = { has_advisor = yes }
+					}
+					province_event = { id = binwarji.103 }
+				}
+				1 = {
+					province_event = { id = binwarji.104 }
+				}
+				1 = {
+					trigger = {
+						owner = {
+							OR = {
+								gems = 1
+								any_subject_country = { gems = 1 }
+							}
+						}
+					}
+					province_event = { id = binwarji.105 }
+				}
+				1 = {
+					province_event = { id = binwarji.106 }
+				}
+				1 = {
+					trigger = {
+						owner = {
+							num_of_provinces_owned_or_owned_by_subjects_with = {
+								value = 2
+								OR = {
+									trade_goods = livestock
+									trade_goods = grain
+								}
+							}
+						}
+					}
+					province_event = { id = binwarji.107 }
+				}
+			}
+		}
 	}
 }
 
