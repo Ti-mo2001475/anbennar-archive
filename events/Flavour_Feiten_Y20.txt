@@ -11481,6 +11481,196 @@ country_event = {
 	}
 }
 
+#Stormwall Discovery Event
+country_event = {
+	id = flavor_feiten.315
+	title = flavor_feiten.315.t
+	desc = flavor_feiten.315.desc
+	picture = AIRSHIP_SKYPORT_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_feiten.315.a
+		yanacotlele_region = { discover_country = ROOT }
+		barrier_islands_region = { discover_country = ROOT }
+		yanacotlele_region = { add_claim = ROOT }
+		6936 = { add_claim = ROOT }
+	}
+}
+
+#Spirit Energy post rending
+country_event = {
+	id = flavor_feiten.316
+	title = flavor_feiten.316.t
+	desc = flavor_feiten.316.desc
+	picture = HIGH_TEMPLE_IN_DISTANCE_eventPicture
+
+	is_triggered_only = yes
+	
+
+	option = { #Investigate Pillar
+		name = flavor_feiten.316.a
+		add_treasury = -7500
+		add_manpower = -7.5
+		6950 = { remove_province_modifier = feiten_shuimu_gene_pillar_extraction }
+		hidden_effect = {
+			country_event = {
+				id = flavor_feiten.317
+				days = 365
+				random = 365
+			}
+		}
+	}
+}
+
+#Insyaan Expedition Report
+country_event = {
+	id = flavor_feiten.317
+	title = flavor_feiten.317.t
+	desc = flavor_feiten.317.desc
+	picture = GENE_PILLAR_SPIRIT_eventPicture
+
+	is_triggered_only = yes
+	
+
+	option = {
+		name = flavor_feiten.317.a
+		add_treasury = -7500
+		add_manpower = -7.5
+		hidden_effect = {
+			if = {
+				limit = {
+					OR = {
+						rending_has_happened = yes
+						rending_is_over = yes
+					}
+				}
+				country_event = {
+					id = flavor_feiten.318 #Post/During Rending
+					days = 365
+					random = 365
+				}
+			}
+			else_if = {
+				limit = {
+					rending_has_not_happened = yes
+				}
+				country_event = {
+					id = flavor_feiten.319 #Pre Rending
+					days = 365
+					random = 365
+				}
+			}
+		}
+	}
+}
+
+#Post/During Rending Stabilisation
+country_event = {
+	id = flavor_feiten.318
+	title = flavor_feiten.318.t
+	desc = flavor_feiten.318.desc
+	picture = HIGH_TEMPLE_IN_DISTANCE_eventPicture
+
+	is_triggered_only = yes
+	
+
+	option = {
+		name = flavor_feiten.318.a
+		4879 = {
+			add_province_modifier = {
+				name = feiten_stabilising_temple
+				duration = 1825
+			}
+		}
+		country_event = {
+			id = flavor_feiten.320
+			days = 1825
+		}
+	}
+}
+
+#Pre Rending (Currently not avalible but SHOULD be when Insyaa gets a unique opener) and the cooler effect
+country_event = {
+	id = flavor_feiten.319
+	title = flavor_feiten.319.t
+	desc = flavor_feiten.319.desc
+	picture = GREAT_SPIRIT_YANHE_PLAIN_eventPicture
+
+	is_triggered_only = yes
+	
+
+	option = {
+		name = flavor_feiten.319.a
+		custom_tooltip = feiten_starts_rending_huszien_sealed
+		4879 = {
+			add_province_modifier = {
+				name = feiten_stabilising_temple
+				duration = 1825
+			}
+		}
+		country_event = {
+			id = flavor_feiten.320
+			days = 1825
+		}
+		hidden_effect = {
+			set_country_flag = feiten_cool_rending_activities
+		}
+	}
+}
+
+#Energy Stabilised
+country_event = {
+	id = flavor_feiten.320
+	title = flavor_feiten.320.t
+	desc = flavor_feiten.320.desc
+	picture = AIRSHIP_SKYPORT_eventPicture
+
+	is_triggered_only = yes
+	
+
+	option = {
+		name = flavor_feiten.320.a
+		6950 = {
+			change_trade_goods = precursor_relics
+			add_province_modifier = {
+				name = feiten_shuimu_gene_pillar_extraction
+				duration = -1
+			}
+			add_province_triggered_modifier = feiten_skyport_handler_mod
+		}
+		hidden_effect = {
+			set_country_flag = Y20_finished_unique_collection_pillar
+		}
+	}
+}
+
+#spirit Energy Pre Rending
+country_event = {
+	id = flavor_feiten.321
+	title = flavor_feiten.321.t
+	desc = flavor_feiten.321.desc
+	picture = HIGH_TEMPLE_IN_DISTANCE_eventPicture
+
+	is_triggered_only = yes
+	
+
+	option = { #Investigate Pillar
+		name = flavor_feiten.321.a
+		add_treasury = -7500
+		add_manpower = -7.5
+		6950 = { remove_province_modifier = feiten_shuimu_gene_pillar_extraction }
+		hidden_effect = {
+			country_event = {
+				id = flavor_feiten.317
+				days = 365
+				random = 365
+			}
+		}
+	}
+}
+
 # DEBUG
 country_event = {
 	id = flavor_feiten.1000
