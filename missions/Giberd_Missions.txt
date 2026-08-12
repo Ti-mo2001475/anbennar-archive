@@ -1945,6 +1945,28 @@ giberd_ryalanar_conquest = {
 		}
 		position = 14
 		provinces_to_highlight = {
+			region = esmaria_region
+			owned_by = ROOT
+			NOT = {
+				AND = {
+					is_prosperous = yes
+					has_state_edict = edict_advancement_effort
+					any_province_in_state = {
+						has_building = university
+					}
+					any_province_in_state = {
+						OR = {
+							has_building = cathedral
+							AND = {
+								has_building = temple
+								owner = {
+									treasury = 2000
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		trigger = {
 			is_at_war = no
@@ -3079,12 +3101,7 @@ giberd_artificer = {
 				first_custom_tooltip = giberd_understanding_the_fragment_limit_early_tt
 				first_limit = "NOT = { is_religion_enabled = ravelian }"
 				first_effect = "custom_tooltip = giberd_understanding_the_fragment_effect_early_tt
-					hidden_effect = {
-						8 = {
-							province_event = { id = ravelian.1001 }
-						}
-						country_event = { id = flavor_giberd.60 days = 1 }
-					}
+					force_spawn_ravelianism_early = { spawn_event = flavor_giberd.60 }
 					add_or_extend_country_modifier = {
 						name = artificers_busy_all
 						duration = 3650
