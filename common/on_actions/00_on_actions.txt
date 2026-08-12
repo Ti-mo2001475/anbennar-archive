@@ -28624,6 +28624,22 @@ on_colonial_nation_established = {
 		}
 		change_religion = chahinanito
 	}
+	#Raja Colonies
+	FROM = {
+		if = {
+			limit = { #If colony established by Raj countries, Umsadhri event
+				OR = {
+					has_government_attribute = is_raja
+					overlord = { has_government_attribute = is_raja }
+				}				
+			}
+			country_event = {
+				id = rahenraj.6000
+				days = 180
+			}
+			ROOT = { set_country_flag = raja_possible_umsadhri_flag }
+		}
+	}
 }
 
 on_colonist_boosting_colony = {

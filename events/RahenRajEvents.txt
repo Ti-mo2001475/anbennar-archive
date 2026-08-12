@@ -3378,3 +3378,186 @@ country_event = { #The Raj's Strongest Soldier (The Sweetest of gifts, from a pe
 		}
 	}
 }
+
+country_event = { #Umsadhri subject event 
+	id = rahenraj.6000 #The numbering in this file confuses me. I guess we'll just keep 6000s as any colony-esque events for future?
+	title = rahenraj.6000.t
+	desc = {
+		trigger = { is_subject_of_type = daimyo_vassal }
+		desc = "rahenraj.6000.d3"
+	}
+	desc = {
+		trigger = { is_the_raja = yes }
+		desc = "rahenraj.6000.d1"
+	}
+	desc = { 
+		trigger = {
+			OR = {
+				is_subject_of_type = great_daimyo_vassal
+				is_subject_of_type = vizier_vassal
+			}			
+		}
+		desc = "rahenraj.6000.d2"
+	}
+	picture = COLONIZATION_eventPicture
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = { NOT = { is_subject_of_type = daimyo_vassal } }
+				random_subject_country = {
+					limit = { 
+						is_colonial_nation = yes
+						NOT = { is_subject_of_type = umsadhri_vassal }
+						has_country_flag = raja_possible_umsadhri_flag
+					}
+					save_event_target_as = raja_possible_umsadhri
+				}
+			}
+			else = {
+				event_target:raj_raja_global_target = {
+					random_subject_country = {
+						limit = { 
+							is_colonial_nation = yes
+							NOT = { is_subject_of_type = umsadhri_vassal }
+						}
+						save_event_target_as = raja_possible_umsadhri
+					}
+				}
+			}
+		}
+	}
+
+	option = { #Love da Raj
+		name = "rahenraj.6000.a"
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 0.25
+				NOT = { is_subject_of_type = daimyo_vassal }
+			}
+		}
+		trigger = { is_not_the_raja = yes }
+		event_target:raj_raja_global_target = {
+			create_subject = {
+				subject_type = umsadhri_vassal
+				subject = event_target:raja_possible_umsadhri
+			}
+			add_opinion = {
+				who = ROOT
+				modifier = raj_granted_colonial_subject
+			}
+		}
+		event_target:raja_possible_umsadhri = {
+			change_government = monarchy
+			add_government_reform = umsadhri_reform
+		}
+		add_liberty_desire = -25
+		event_target:raj_raja_global_target = {
+			add_country_modifier = {
+				name = raj_umsadhri_granted
+				duration = 3650
+			}
+		}
+		###TODO: BONUS OBJECTIVE
+	}
+
+	option = { #Raj is cool but I like my colony
+		name = "rahenraj.6000.b"
+		ai_chance = {
+			factor = 60
+		}
+		trigger = {
+			NOT = { 
+				is_subject_of_type = daimyo_vassal 
+			}
+			is_not_the_raja = yes
+		}
+		highlight = yes
+		add_prestige = 10
+		hidden_effect = {
+			event_target:raja_possible_umsadhri = { clr_country_flag = raja_possible_umsadhri_flag }
+		}
+	}
+
+	option = { #Fuck you Raj I like my colony
+		ai_chance = {
+			factor = 40
+		}
+		name = "rahenraj.6000.c"
+		trigger = { 
+			NOT = { 
+				is_subject_of_type = daimyo_vassal
+			}
+			is_not_the_raja = yes
+		}
+		highlight = yes
+		add_liberty_desire = 25
+		event_target:raj_raja_global_target = {
+			add_country_modifier = {
+				name = raj_umsadhri_denied
+				duration = 3650
+			}
+		}
+		hidden_effect = {
+			event_target:raja_possible_umsadhri = { clr_country_flag = raja_possible_umsadhri_flag }
+		}
+	}
+
+	option = { #Fuck you Raj but I lose my colony :(
+		name = "rahenraj.6000.e"
+		ai_chance = {
+			factor = 2.5
+		}
+		trigger = { 
+			is_subject_of_type = daimyo_vassal  
+			is_not_the_raja = yes 
+		}
+		highlight = yes
+		add_liberty_desire = 50
+		event_target:raj_raja_global_target = {
+			create_subject = {
+				subject_type = umsadhri_vassal
+				subject = event_target:raja_possible_umsadhri
+			}
+			add_opinion = {
+				who = ROOT
+				modifier = raj_stolen_colonial_subject
+			}
+			reverse_add_opinion = {
+				who = ROOT
+				modifier = raj_stolen_colonial_subject
+			}
+			add_country_modifier = {
+				name = raj_umsadhri_stolen
+				duration = 3650
+			}
+		}
+		event_target:raja_possible_umsadhri = {
+			change_government = monarchy
+			add_government_reform = umsadhri_reform
+		}
+	}
+
+	option = { #We is the raj
+		name = "rahenraj.6000.f"
+		ai_chance = {
+			factor = 100
+		}
+		trigger = { is_the_raja = yes }
+		highlight = yes
+		create_subject = {
+			subject_type = umsadhri_vassal
+			subject = event_target:raja_possible_umsadhri
+		}
+		event_target:raja_possible_umsadhri = {
+			change_government = monarchy
+			add_government_reform = umsadhri_reform
+		}
+		add_country_modifier = {
+			name = raj_umsadhri_founded
+			duration = 3650
+		}
+	}
+}
