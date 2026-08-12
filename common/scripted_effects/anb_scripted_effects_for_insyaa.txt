@@ -27,6 +27,12 @@ open_stormwall = {
 					days = 3650
 				}
 			}
+			Y20 = { #Feiten discovery event
+				country_event = {
+					id = flavor_feiten.315
+					days = 365
+				}
+			}
 			set_global_flag = stormwall_first_opening #Please dont clear it
 		}
 	}
@@ -1849,6 +1855,20 @@ bonelake_casualties_to_buffs = {
 			}
 		}
 	}
+}
+deepest_add_ruler_traits = {
+	hidden_effect = {
+		if = { limit = { ruler_has_max_personalities = yes }
+			remove_random_bad_ruler_personality = yes
+			remove_random_bad_ruler_personality = yes
+		}
+		else_if = { limit = { num_of_ruler_traits = { amount = 2 } }
+			remove_random_bad_ruler_personality = yes
+		}
+	}
+	add_ruler_personality = scholar_personality
+	add_ruler_personality = free_thinker_personality
+	set_ruler_flag = deepest_ruler_option_taken
 }
 
 speaking_memory_add_memory_from_dragon_province = {

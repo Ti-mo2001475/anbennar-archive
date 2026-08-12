@@ -1,0 +1,159 @@
+end_foreign_influence_mechanic = {
+	alert_icon_gfx = GFX_alerticons_government_mechanics
+	alert_icon_index = 10
+	available = {
+		has_reform = overseas_governorate
+	}
+
+	powers = {
+		end_foreign_influence_power = {
+			gui = prussian_militarization_gov_mech_3_power
+			show_before_interactions = yes
+			max = 100
+			base_monthly_growth = 0.05
+			development_scaled_monthly_growth = -0.001
+			is_good = no
+			scaled_modifier = {
+				modifier = {
+					trade_efficiency = 0.2
+					global_trade_power = 0.2
+					idea_cost = -0.1
+
+					global_autonomy = 0.1
+					max_absolutism = -20
+					mercantilism_cost = 1
+				}
+			}
+			on_max_reached = {
+				if = {
+					limit = { 
+						#NOT = { mission_completed = end_bride_of_lencenor } 
+						NOT = { has_country_flag = end_sovereignty_crisis_active }
+						any_known_country = {
+							capital_scope = {
+								region = lencenor_region
+							}
+						}
+					}
+					custom_tooltip = end_maximum_influence_tooltip_tt
+					hidden_effect = { country_event = { id = flavour_endralliande.15 } }
+				}
+				else_if = {
+					limit = { has_country_flag = end_sovereignty_crisis_active }
+					custom_tooltip = end_sovereingty_crisis_active_tt
+				}
+			}
+		}
+	}
+	
+	interactions = {
+		end_increase_trade_tariffs = {
+			gui = prussian_militarization_gov_mech_3_interaction
+			icon = GFX_prussian_militarization_march_divided_fight_united
+			trigger = {
+				if = {
+					limit = {
+						NOT = { has_country_modifier = end_increase_trade_tariffs_modifier }
+					}
+					adm_power_cost = 50
+				}
+				NOT = { has_country_modifier = end_empower_westport_modifier }
+			}
+			cooldown_years = 2
+			effect = {
+				if = {
+					limit = { NOT = { has_country_modifier = end_increase_trade_tariffs_modifier } }
+					add_government_power = {
+						mechanic_type = end_foreign_influence_mechanic
+						power_type = end_foreign_influence_power
+						value = -5
+					}
+					add_country_modifier = {
+						name = end_increase_trade_tariffs_modifier
+						duration = -1
+					}
+					custom_tooltip = end_add_trade_tariffs_province_tt
+					hidden_effect = {
+						every_owned_province = {
+							limit = { province_has_center_of_trade_of_level = 1 }
+							add_province_modifier = {
+								name = end_increase_trade_tariffs_modifier_local
+								duration = -1
+							}
+						}
+					}
+					adm_power_cost = 50
+				}
+				else = {
+					remove_country_modifier = end_increase_trade_tariffs_modifier
+					custom_tooltip = end_remove_trade_tariffs_province_tt
+					hidden_effect = { every_owned_province = { remove_province_modifier = end_increase_trade_tariffs_modifier_local }	}
+				}
+			}
+			ai_chance = {
+				factor = 1
+			}
+		}
+		
+		end_utilize_factions = {
+			gui = prussian_militarization_gov_mech_3_interaction
+			icon = GFX_prussian_militarization_rewrite_military_manual
+			trigger = {
+				dip_power_cost = 50
+			}
+			cooldown_years = 5
+			effect = {
+				country_event = { id = flavour_endralliande.14 }
+				dip_power_cost = 50
+			}
+			ai_chance = {
+				factor = 1
+			}
+		}
+		
+		end_empower_westport = {
+			gui = prussian_militarization_gov_mech_3_interaction
+			icon = GFX_prussian_militarization_upgrade	
+			trigger = {
+				if = {
+					limit = { NOT = { has_country_modifier = end_empower_westport_modifier } }
+					dip_power_cost = 25
+					mil_power_cost = 25
+				}
+				NOT = { has_country_modifier = end_increase_trade_tariffs_modifier }
+			}
+			cooldown_years = 5
+			effect = { 
+				if = {
+					limit = {
+						NOT = { has_country_modifier = end_empower_westport_modifier }
+					}
+					mil_power_cost = 25
+					dip_power_cost = 25
+					add_country_modifier = {
+						name = end_empower_westport_modifier
+						duration = -1
+					}
+					custom_tooltip = end_empower_westport_local_modifier_tt
+					hidden_effect = {
+						every_owned_province = {
+							limit = { province_has_center_of_trade_of_level = 1 }
+							add_province_modifier = {
+								name = end_empower_westport_modifier_local
+								duration = -1
+							}
+						}
+					}
+				}
+				else = {
+					remove_country_modifier = end_empower_westport_modifier
+					custom_tooltip = end_remove_empower_westport_local_modifier_tt
+					hidden_effect = { every_owned_province = { remove_province_modifier = end_empower_westport_modifier_local } }
+				}
+			}
+			ai_chance = {
+				factor = 1
+			}
+		}
+	}
+}

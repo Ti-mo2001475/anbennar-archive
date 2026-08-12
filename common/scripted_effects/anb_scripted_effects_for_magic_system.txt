@@ -639,6 +639,10 @@ magic_advancement_abort_all_effect = { #Indiscriminate. Assumes nothing about yo
 			remove_country_modifier = celliande_cling_light
 			remove_country_modifier = celliande_darkness_light
 		}
+
+		#Kaino
+		clr_country_flag = kaino_project_apotheosis_of_mercy_project	
+		clr_country_flag = kaino_project_romantic_date_kyaa_project
 	}
 }
 magic_advancement_clr_type_flags = {
@@ -2156,19 +2160,22 @@ magic_level_up_all_ruler_schools = {
 
 estate_action_RECRUIT_WAR_WIZARD = {
 	if = {
-		limit = { exactly_magic_project_level = { project = battlemage_academy level = 3 } }
-		add_mil_power = -40
-	}
-	else_if = {
-		limit = { exactly_magic_project_level = { project = battlemage_academy level = 2 } }
-		add_mil_power = -60
-	}
-	else_if = {
-		limit = { exactly_magic_project_level = { project = battlemage_academy level = 1 } }
-		add_mil_power = -80
-	}
-	else = {
-		add_mil_power = -100
+		limit = { NOT = { has_country_modifier = magocracy_knight_heir } }
+		if = {
+			limit = { exactly_magic_project_level = { project = battlemage_academy level = 3 } }
+			add_mil_power = -40
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = battlemage_academy level = 2 } }
+			add_mil_power = -60
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = battlemage_academy level = 1 } }
+			add_mil_power = -80
+		}
+		else = {
+			add_mil_power = -100
+		}
 	}
 	create_war_wizard = yes
 }
