@@ -546,6 +546,7 @@ estate_church_clerical_ministers = {
 				NOT = { religion = the_jadd }
 				NOT = { religion = weeping_mother }
 				NOT = { religion = ashentree_pact }
+				NOT = { religion = banbe_anen }
 				#NOT = { religion = reformed }
 			}
 			if = {
@@ -654,6 +655,7 @@ estate_church_clerical_ministers = {
 				religion = the_jadd
 				religion = weeping_mother
 				religion = ashentree_pact
+				religion = banbe_anen
 			}
 		}
 		modifier = {
@@ -2175,6 +2177,7 @@ estate_church_one_faith_one_culture = {
 		trigger = {
 			OR = {
 				has_country_flag = estate_church_no_absolutism_cost
+				has_country_modifier = one_faith_one_culture_no_absolutism_cost_religion_modifier
 				has_country_flag = remove_absolutism_from_one_faith_one_culture
 				mission_completed = L03_isagumze_a_god_for_an_empire
 				has_country_flag = Z88_religious_culture_upgrade
@@ -2188,12 +2191,14 @@ estate_church_one_faith_one_culture = {
 			has_absolutism_reduction_for_estate_privileges = yes
 			NOT = {
 				has_country_flag = estate_church_no_absolutism_cost
+				has_country_modifier = one_faith_one_culture_no_absolutism_cost_religion_modifier
 				has_country_flag = remove_absolutism_from_one_faith_one_culture
 				mission_completed = L03_isagumze_a_god_for_an_empire
 				has_country_flag = Z88_religious_culture_upgrade
 				mission_completed = G52_ways_of_west
 			}
-		} modifier = { max_absolutism = 1 }
+		}
+		modifier = { max_absolutism = 1 }
 	}
 	conditional_modifier = { #Eighard
 		trigger = {
@@ -3777,7 +3782,7 @@ estate_church_monastic_schism = {
 					OR = {
 						religion_group = supreme_spirit
 						religion = sudomegi
-						religion = eagle_worship
+						religion = banbe_anen
 						religion = irdaeos_worship
 						religion = kalyin_worshippers
 						religion = neokttareum
@@ -3813,7 +3818,7 @@ estate_church_monastic_schism = {
 							owner = { has_country_flag = V05_syncretic_monastery_irdaeos }
 						}
 						AND = { 
-							religion = eagle_worship
+							religion = banbe_anen
 							owner = { has_country_flag = V05_syncretic_monastery_eagle }
 						}
 					}
@@ -5872,7 +5877,7 @@ estate_church_caretaking_of_the_shirgriis = {
 			every_owned_province = {
 				limit = { province_group = all_starting_shirgrii }
 				if = {
-					limit { has_building = mage_tower }
+					limit = { has_building = mage_tower }
 					add_province_modifier = {
 						name = shirgrii_maintenance_tower
 						duration = -1
@@ -5905,5 +5910,44 @@ estate_church_caretaking_of_the_shirgriis = {
 		relation_with_same_religion = 10
 		reverse_relation_with_same_religion = 10
 		same_religion_advisor_cost = -0.05
+	}
+}
+
+estate_church_ebbusubtu_festivities = { #Bulwar
+	icon = privilege_seek_support_of_clergy
+	max_absolutism = 0
+	loyalty = 0.05
+	influence = 0.10
+	is_valid = {
+		religion = the_jadd
+		2909 = {
+			owned_by = ROOT
+			has_great_project = {
+				type = ebbusubtu
+				tier = 3
+			}
+		}	
+	}
+	can_revoke = {
+		always = yes
+	}
+	on_granted = {
+		custom_tooltip = upgrade_jadd_fervor_effects_tt
+		hidden_effect = {
+			upgrade_jadd_fervor_effects = yes
+		}	
+	}
+	on_revoked = {
+		custom_tooltip = downgrade_jadd_fervor_effects_tt
+		hidden_effect = {
+			downgrade_jadd_fervor_effects = yes
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 10
 	}
 }

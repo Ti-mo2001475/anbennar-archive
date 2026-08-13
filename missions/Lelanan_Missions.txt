@@ -680,7 +680,10 @@ Lelanan_2 = {
 			if = {
 				limit = { has_ruler_flag = l36_kyola_ruler }
 				hidden_effect = {
-					add_or_extend_ruler_modifier = { name = exceptional_willpower_150 duration = 9125 } 
+					add_exceptional_willpower_150 = {
+						extend = yes
+						duration = 9125 #25 years
+					}
 				}
 				custom_tooltip = L36_Kyola_ruler_yes_willpower_tt
 			}
@@ -791,6 +794,9 @@ Lelanan_3 = {
 				unlock_merc_company = {
 					merc_company = merc_lelanan_daughters_of_lel_upgraded_1
 					free_merc = yes
+				}
+				lock_merc_company = {
+					merc_company = merc_lelanan_daughters_of_lel
 				}
 			}
 			random_hired_mercenary_company = {
@@ -1010,6 +1016,9 @@ Lelanan_3 = {
 					merc_company = merc_lelanan_daughters_of_lel_upgraded_2
 					free_merc = yes
 				}
+				lock_merc_company = {
+					merc_company = merc_lelanan_daughters_of_lel_upgraded_1
+				}
 			}
 			random_hired_mercenary_company = {
 				limit = { template = merc_lelanan_daughters_of_lel_upgraded_1 }
@@ -1030,7 +1039,10 @@ Lelanan_3 = {
 				limit = { has_ruler_flag = l36_kyola_ruler }
 				hidden_effect = {
 					increase_ruler_adm_effect = yes
-					add_or_extend_ruler_modifier = { name = exceptional_willpower_150 duration = 9125 }
+					add_exceptional_willpower_150 = {
+						extend = yes
+						duration = 9125 #25 years
+					}
 				}
 				custom_tooltip = L36_Kyola_ruler_yes_adm_willpower_tt
 			}
@@ -1201,7 +1213,7 @@ Lelanan_4 = {
 				}
 				AND = {
 					province_id = 6599 #Lelanan
-					NOT = { has_building = temple }
+					NOT = { has_tax_building_trigger = yes }
 				}
 			}
 		}
@@ -1212,7 +1224,7 @@ Lelanan_4 = {
 				value = 6
 				province_group = shrine_provinces
 			}
-			6599 = { has_building = temple } #Lelanan
+			6599 = { has_tax_building_trigger = yes } #Lelanan
 		}
 
 		effect = {

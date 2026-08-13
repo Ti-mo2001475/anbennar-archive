@@ -677,7 +677,8 @@ country_event = {
 	picture = COURT_eventPicture
 	
 	is_triggered_only = yes
-	trigger = { 
+	trigger = {
+		NOT = { government = republic } #also iclude theocracies
 		has_estate = estate_adeen
 		has_country_flag = adeen_enabled
 		NOT = {
@@ -945,32 +946,57 @@ country_event = {
 		always = yes
 	}
 
+	immediate = {
+		hidden_effect = {
+			capital_scope = {
+				spawn_rebels = {
+					type = adeen_coupists
+					culture = suhratbi
+					size = 2
+					should_take_capital = yes
+				}
+			}
+			random_owned_province = {
+				limit = { is_capital = no }
+				spawn_rebels = {
+					type = adeen_coupists
+					culture = suhratbi
+					size = 2
+				}
+			}
+			if = {
+				limit = { ai = no }
+				random_owned_province = {
+					limit = { is_capital = no }
+					spawn_rebels = {
+						type = adeen_coupists
+						culture = suhratbi
+						size = 2
+					}
+				}
+				random_owned_province = {
+					limit = { is_capital = no }
+					spawn_rebels = {
+						type = adeen_coupists
+						culture = suhratbi
+						size = 2
+					}
+				}
+			}
+			add_stability = -3
+			add_prestige = -20
+		}
+	}
+
 	option = {
 		name = estate_adeen.100.a
-		capital_scope = {
-			spawn_rebels = {
-				type = adeen_coupists
-				culture = suhratbi
-				size = 2
-				should_take_capital = yes
-			}
-		}
-		random_owned_province = {
-			limit = { is_capital = no }
-			spawn_rebels = {
-				type = adeen_coupists
-				culture = suhratbi
-				size = 2
-			}
-		}
-		if = {
-			limit = { ai = no }
-			random_owned_province = {
-				limit = { is_capital = no }
+		tooltip = {
+			capital_scope = {
 				spawn_rebels = {
 					type = adeen_coupists
 					culture = suhratbi
 					size = 2
+					should_take_capital = yes
 				}
 			}
 			random_owned_province = {
@@ -981,9 +1007,28 @@ country_event = {
 					size = 2
 				}
 			}
+			if = {
+				limit = { ai = no }
+				random_owned_province = {
+					limit = { is_capital = no }
+					spawn_rebels = {
+						type = adeen_coupists
+						culture = suhratbi
+						size = 2
+					}
+				}
+				random_owned_province = {
+					limit = { is_capital = no }
+					spawn_rebels = {
+						type = adeen_coupists
+						culture = suhratbi
+						size = 2
+					}
+				}
+			}
+			add_stability = -3
+			add_prestige = -20
 		}
-		add_stability = -3
-		add_prestige = -20
 	}
 }
 

@@ -583,7 +583,7 @@ country_event = { # warlords flock to RULER's banner
 		}
 	}
 
-	option = { # take those with reknown
+	option = { # take those with renown
 		name = taychend_flavour.8.a
 		
 		add_manpower = 5
@@ -1488,7 +1488,7 @@ country_event = { # powerful relic found
 		NOT = {
 			has_country_modifier = tf_event_relic_lord_ruler
 			has_country_modifier = tf_event_relic_lord_subordinate
-			ruler_has_personality = immortal_personality
+			ruler_is_immortal = yes
 		}
 	}
 
@@ -2658,3 +2658,184 @@ country_event = { #The Offer at Gena
 }
 
 #Wolf's Gambit moved to flavor_ameion.6 -Ditto
+
+#################################################### Interconnectivity Events ####################################################
+
+country_event = { # Tea Markets of Root.GetName
+	id = taychend_flavour.43
+	title = taychend_flavour.43.t
+	desc = taychend_flavour.43.d
+	picture = northamericagfx_MERCHANTS_TALKING_eventPicture
+	
+	is_triggered_only = yes
+	trigger = {
+		culture_group = taychendi_ruinborn_elf
+		num_of_centers_of_trade = 1
+		tea = 4
+	}
+
+	mean_time_to_happen = {
+		days = 1
+		modifier = {
+			factor = 1.2
+			culture = advakhalla
+		}
+		modifier = {
+			factor = 2.0
+			tea = 8
+		}
+	}
+	
+	option = { # More slaves for plantations
+		name = taychend_flavour.43.a
+		trigger = {
+			OR = {
+				religion = gods_of_the_taychend
+				religion = gods_of_the_taychend_reformed
+			}
+		}
+
+		every_owned_province = {
+			limit = {
+				trade_goods = tea 
+			}
+			add_province_modifier = {
+				name = taychendi_tea_plantations
+				duration = 3650 # 10 years
+			}
+		}
+	}
+
+	option = { # Kill the slavers
+		name = taychend_flavour.43.b
+		trigger = {
+			OR = {
+				religion = oren_nayiru
+				religion = oren_nayiru_reformed
+			}
+		}
+
+		add_mercantilism = 5
+		add_country_modifier = {
+			name = taychendi_executed_foreign_slavers
+			duration = 3650 # 10 years
+		}
+	}
+
+	option = { # Pay us in gold
+		name = taychend_flavour.43.c
+
+		add_mercantilism = 5
+		add_years_of_trade_income = {
+			years = 2
+			custom_tooltip = YEARS_OF_TRADE_INCOME_2
+		}
+	}
+}
+
+country_event = { # Devandi Slaves Rise in Revolt (Taychendi version)
+	id = taychend_flavour.44
+	title = taychend_flavour.44.t
+	desc = taychend_flavour.44.d
+	picture = northamericagfx_LIBERUM_VETO_eventPicture
+	
+	is_triggered_only = yes
+	trigger = {
+		culture_group = taychendi_ruinborn_elf
+		capital_scope = { 
+			superregion = taychend_superregion
+		}
+		NOT = { 
+			any_owned_province = { 
+				has_province_modifier = kheionai_recent_slave_revolt
+			} 
+		}
+		any_owned_province = { # Slave province not in Alecand
+			OR = {
+				superregion = kheionai_superregion
+				superregion = taychend_superregion
+			}
+			NOT = { region = alecand_region }
+			trade_goods = slaves 
+		}
+		OR = { # Any bordering nation or province is of Devandic religious group
+			any_neighbor_country = {
+				religion_group = devandi
+			}
+			any_neighbor_province = {
+				religion_group = devandi
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+		modifier = {
+			factor = 0.25
+			NOT = {
+				any_neighbor_country = {
+					religion_group = devandi
+				}
+			}
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					OR = {
+						superregion = kheionai_superregion
+						superregion = taychend_superregion
+					}
+					NOT = { region = alecand_region }
+					trade_goods = slaves 
+				}
+				save_event_target_as = event_province
+			}
+		}
+	}
+	goto = event_province
+	
+	option = { # Buy domestic next time.
+		name = taychend_flavour.44.a
+
+		event_target:event_province = {
+			add_devastation = 10
+			add_base_production = -1
+			add_base_manpower = -1
+			spawn_rebels = {
+				type = particularist_rebels
+				size = 2
+				win = yes
+			}
+			add_province_modifier = {
+				name = kheionai_recent_slave_revolt
+				duration = 3650 # 10 years
+			}
+		}
+	}
+
+	option = { # Huzzah!
+		name = taychend_flavour.44.b
+		highlight = yes
+		trigger = {
+			OR = {
+				religion = oren_nayiru
+				religion = oren_nayiru_reformed
+			}
+		}
+
+		add_prestige = 5
+		event_target:event_province = {
+			add_devastation = 5
+			add_base_manpower = 2
+			change_trade_goods = random
+			remove_building = tradecompany
+			if = {
+				limit = { has_province_modifier = slave_entrepot }
+				remove_province_modifier = slave_entrepot
+			}
+		}
+	}
+}

@@ -1453,7 +1453,7 @@ rectors_in_the_bureau_reform = {
 # 	conditional = {
 # 		allow = { has_dlc = "Cradle of Civilization" }
 # 		custom_attributes = {
-# 			allow_piety_switch_decision = yes	#Enables a decision which gives 1 stabhit, but turns your piety 180deg
+# 			allow_piety_switch_decision = yes	#Enables a decision which gives 1 stabhit, but turns your piety 180
 # 		}
 # 	}
 	
@@ -6572,8 +6572,28 @@ bulwar_grand_assembly = {
 	potential = {
 		OR = {
 			primary_culture = sun_elf
+			primary_culture = dawn_elf
+			primary_culture = desert_elf
 			primary_culture = zanlibi
+			primary_culture = ilatani
+			primary_culture = suncrown_gnoll
+			primary_culture = vaikazelhi
 			culture_group = bulwari
+			AND = {
+				OR = {
+					primary_culture = firanyan_harpy
+					primary_culture = siadunan_harpy
+				}
+				OR = {
+					religion_group = bulwari
+					has_country_flag = updating_isolationism_window
+				}
+			}
+		}
+		NOT = {
+			tag = F46
+			tag = F51
+			tag = F99
 		}
 		NOT = { is_adventurer = yes }
 		is_revolutionary = no
@@ -6695,7 +6715,7 @@ madakas_markasi = {
 	}
 }
 
-gods_attoners = {
+gods_atoners = {
 	icon = "soldiers_3"
 	potential = { 
 		culture_group = west_sarhaly
@@ -7492,6 +7512,10 @@ council_of_fools = {
 			have_had_reform = council_of_fools
 		}
 	}
+	custom_attributes = {
+		enables_plutocratic_idea_group = yes
+		enables_aristocratic_idea_group = no
+	}
 
 	modifiers = {
 		innovativeness_gain = 0.25
@@ -8159,5 +8183,58 @@ new_god_of_halann = {
 
 	ai = {
 		factor = 1
+	}
+}
+#T4 Jadd
+the_nature_of_the_struggle = {
+	icon = "mandala_system"
+	allow_normal_conversion = yes
+	lock_level_when_selected = no
+	potential = {
+		religion = the_jadd
+	}
+	trigger = {
+		religion = the_jadd
+		
+	}
+	modifiers = {
+		monthly_fervor_increase = 1
+		tolerance_own = 1
+		global_prosperity_growth = 2
+	}
+	custom_attributes = {
+		jadd_holy_order_upgrade = yes
+	}
+	effect = { 
+		hidden_effect = { 
+			jadd_holy_order_reformed = yes
+		}
+	}	
+	removed_effect = {
+		hidden_effect = {	
+			jadd_holy_order_deformed = yes  
+		}
+	}	
+}
+
+#Elven forebearers reform
+gov_reform_elven_forebears = {
+	icon = "merchant_ship"
+	potential = {
+		religion = elven_forebears
+		NOT = { has_adventurer_reform = yes }
+	}
+	modifiers = {
+		church_loyalty_modifier = 0.1
+		church_influence_modifier = 0.1
+	}
+	effect = {
+		custom_tooltip = gov_reform_elven_forebears_mechanic_tt
+		tooltip = {
+			add_country_modifier = {
+				name = gov_reform_elven_forebears_mod
+				duration = 3650
+			}
+		}
 	}
 }

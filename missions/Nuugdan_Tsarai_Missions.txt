@@ -1,0 +1,655 @@
+col4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = { tag = Y91 } 
+
+	y91_infiltrate_the_frontier = {
+		icon = mission_asian_city
+		position = 1
+		provinces_to_highlight = {
+			is_capital = yes
+			OR = {
+				owner = {
+					owns = 4979 #damaogong
+					NOT = {
+						has_spy_network_from = { 
+							who = ROOT 
+							value = 30 
+						} 
+					}
+				}
+				owner = {
+					owns = 4925 #jiantsiang
+					NOT = {
+						has_spy_network_from = { 
+							who = ROOT 
+							value = 30 
+						} 
+					}
+				}
+			}
+		} 
+
+		trigger = {
+			4979 = { #damaogong
+				owner = {
+					has_spy_network_from = { 
+						who = ROOT 
+						value = 30 
+					}
+				}
+			}
+			4925 = { #jiantsiang
+				owner = {
+					has_spy_network_from = { 
+						who = ROOT 
+						value = 30 
+					}
+				}
+			}
+		} 
+
+		effect = {
+			4979 = { #damaogong
+				owner = {
+					add_spy_network_in = {
+						who = PREV
+						value = -30
+					}
+					add_country_modifier = {
+						name = Y91_neglected_fortifications
+						duration = 7300
+					}
+				}
+			} 
+			4925 = { #jiantsiang
+				owner = {
+					add_spy_network_in = {
+						who = PREV
+						value = -30
+					}
+					add_country_modifier = {
+						name = Y91_neglected_fortifications
+						duration = 7300
+					}
+				}
+			}
+
+			yiguan_area = {
+				type = all
+				add_claim = ROOT
+			}
+			jiantsiang_area = {
+				type = all
+				add_claim = ROOT
+			}
+			jianzhong_area = {
+				type = all
+				add_claim = ROOT
+			}
+			4916 = { #shangbu
+				add_claim = ROOT
+			}
+			4979 = { #damaogong
+				add_claim = ROOT
+			}
+		} 
+	}
+
+	Y91_terror_over_yanshen = {
+		icon = mission_conquer_50_development
+		position = 2
+		required_missions = {
+			y91_infiltrate_the_frontier
+			y91_conquest_of_the_tribes
+		}
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					OR = {
+						area = jianzhong_area
+						area = xuanbing_area
+					}
+					NOT = {
+						is_core = ROOT
+						province_id = 4910 #heikhai
+					}
+				}
+				owned_by = Y14
+				AND = {
+					OR = {
+						area = jianzhong_area
+						area = xuanbing_area
+					}
+					province_has_current_tech_fort_trigger = yes
+				}
+			}
+		}
+
+		trigger = {
+			Y14 = { #zhiqian
+				exists = no
+			}
+			jianzhong_area = {
+				type = all
+				is_core = ROOT
+				custom_trigger_tooltip = {
+					tooltip = Y91_no_fort_tt
+					NOT = {
+						province_has_current_tech_fort_trigger = yes
+					}
+				}
+			}
+			4916 = { #shangbu
+				is_core = ROOT
+				custom_trigger_tooltip = {
+					tooltip = Y91_no_fort_prov_tt
+					NOT = {
+						province_has_current_tech_fort_trigger = yes
+					}
+				}
+			}
+			4979 = { #damaogong
+				is_core = ROOT
+				custom_trigger_tooltip = {
+					tooltip = Y91_no_fort_prov_tt
+					NOT = {
+						province_has_current_tech_fort_trigger = yes
+					}
+				}
+			}
+		}
+
+		effect = {  
+			country_event = {
+				id = flavor_nuugdan_tsarai.1
+			}
+		} 
+	}
+
+	y91_advance_on_tianlou = {
+		icon = mission_steppe_warriors
+		position = 3
+		required_missions = {
+			y91_defeat_gowon
+			Y91_terror_over_yanshen
+		}
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					OR = {
+						area = linghui_area
+						area = beikyuan_area
+					}
+					NOT = {
+						owned_by = ROOT
+					}
+				}
+				owned_by = Y17
+				AND = {
+					province_id = 4871 #tianlou
+					NOT = {
+						owner = {
+							has_been_insulted_by_root = yes
+						}
+						owned_by = ROOT
+					}
+				}
+			}
+		} 
+
+		trigger = {
+			Y17 = {
+				exists = no
+			}
+			linghui_area = {
+				owned_by = ROOT
+			}
+			beikyuan_area = {
+				owned_by = ROOT
+			}
+			4871 = { #tianlou
+				OR = {
+					owned_by = ROOT
+					owner = {
+						has_been_insulted_by_root = yes
+					}
+				}
+			}
+		} 
+
+		effect = {  
+			north_yanshen_region = {
+				add_claim = ROOT
+			}
+			4871 = { #tianlou
+				add_claim = ROOT
+			}
+			add_country_modifier = {
+				name = Y91_nightmare_of_yanshen
+				duration = 5475
+			}
+		} 
+	}
+
+	y91_crush_the_pearl_of_yanshen = {
+		icon = mission_city_of_the_world's_desire
+		position = 4
+		required_missions = { 
+			y91_advance_on_tianlou 
+			shuvuush_break_realms
+		} 
+		provinces_to_highlight = {
+			province_id = 4871 #tianlou
+			NOT = {
+				AND = {
+					NOT = { unrest = 0 }
+					is_core = ROOT
+				}
+			}
+		} 
+
+		trigger = {
+			4871 = {
+				is_core = ROOT
+				NOT = { unrest = 0 }
+			}
+		} 
+
+		effect = {
+			country_event = {
+				id = flavor_nuugdan_tsarai.4
+			}
+		} 
+	}
+
+	y91_imperial_foundations = {
+		icon = mission_faceless_queen
+		position = 5
+		required_missions = {
+			y91_crush_the_pearl_of_yanshen
+			Y91_court_the_warlords
+		}
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					region = north_yanshen_region
+					NOT = {
+						AND = {
+							OR = {
+								has_province_modifier = autonomy_decreased
+								NOT = { local_autonomy = 25 }
+							}
+							owned_by = ROOT
+						}
+						owner = {
+							is_subject_of = ROOT
+						}
+					}
+				}
+				AND = {
+					OR = {
+						province_id = 4979 #damaogong
+						province_id = 4925 #jiantsiang
+						province_id = 4871 #tianlou
+						province_id = 4914 #gushibi
+						province_id = 4868 #jiangdu
+						province_id = 4930 #lanjincun
+					}
+					NOT = {
+						has_tax_building_trigger = yes
+					}
+				}
+			}
+		} 
+
+		trigger = {
+			north_yanshen_region = {
+				type = all
+				OR = {
+					AND = {
+						owned_by = ROOT
+						OR = {
+							has_province_modifier = autonomy_decreased
+							NOT = { local_autonomy = 25 }
+						}
+					}
+					owner = {
+						is_subject_of = ROOT
+					}
+				}
+			}
+			all_subject_country = {
+				OR = {
+					NOT = {
+						capital_scope = {
+							superregion = yanshen_superregion
+						}
+					}
+					trust = { who = ROOT value = 80 }
+				}
+			}
+			4979 = { #damaogong
+				has_tax_building_trigger = yes
+			}
+			4871 = { #tianlou
+				has_tax_building_trigger = yes
+			}
+			4914 = { #gushibi
+				has_tax_building_trigger = yes
+			}
+			4868 = { #jiangdu
+				has_tax_building_trigger = yes
+			}
+			4930 = { #lanjincun
+				has_tax_building_trigger = yes
+			}
+			4925 = { #jiantsiang
+				has_tax_building_trigger = yes
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = Y91_integration_and_governance
+				duration = 10950
+			}
+			if = {
+				limit = {
+					Y13 = {
+						is_subject_of = ROOT
+					}
+				}
+				custom_tooltip = Y91_annex_tt
+				hidden_effect = {
+					Y13 = {
+						ROOT = {
+							export_to_variable = { which = JiangduVassalDev value = total_development who = PREV }
+						}
+						every_owned_province = {
+							add_core = ROOT
+							cede_province = ROOT
+						}
+					}
+					multiply_variable = { which = JiangduVassalDev value = 4 }
+					var_effect = { effect = add_dip_power var = JiangduVassalDev sign = - }
+				}
+			}
+		}
+	}
+}
+col5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = { tag = Y91 } 
+
+	y91_conquest_of_the_tribes = {
+		icon = mission_manchu_warrior
+		position = 1
+		provinces_to_highlight = {
+			OR = {
+				area = zhunmudi_area
+				area = choogiaza_area
+				area = yunghuun_area
+				area = kheizavho_area
+				area = baztazhad_area
+				province_id = 5404 #Gorgonzul
+			}
+			NOT = {
+				owned_by = ROOT
+			}
+		} 
+
+		trigger = {
+			V25 = {
+				exists = no
+			}
+			zhunmudi_area = {
+				type = all
+				owned_by = ROOT
+			}
+			choogiaza_area = {
+				type = all
+				owned_by = ROOT
+			}
+			yunghuun_area = {
+				type = all
+				owned_by = ROOT
+			}
+			kheizavho_area = {
+				type = all
+				owned_by = ROOT
+			}
+			baztazhad_area = {
+				type = all
+				owned_by = ROOT
+			}
+			5404 = { #Gorgonzul
+				owned_by = ROOT
+			}
+		} 
+
+		effect = {  
+			add_mil_power = 100
+			capital_scope = {
+				cavalry = ROOT
+			}
+			capital_scope = {
+				cavalry = ROOT
+			}
+			capital_scope = {
+				cavalry = ROOT
+			}
+		} 
+	}
+
+	y91_defeat_gowon = {
+		icon = mission_tribute_tax
+		position = 2
+		required_missions = { y91_conquest_of_the_tribes } 
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					is_capital = yes
+					owned_by = Y93
+					NOT = {
+						ROOT = {
+							war_score_against = {
+								who = Y93 #Danggun
+								value = 90
+							}
+						}
+					}
+				}
+				AND = {
+					OR = {
+						area = zunkazhad_area
+						area = zirariik_area
+					}
+					NOT = {
+						owned_by = ROOT
+					}
+				}
+			}
+		} 
+
+		trigger = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = y91_defeat_gowon_war_tt
+					AND = {
+						4910 = { #heikhai
+							owner = {
+								capital_scope = {
+									region = gowon_region
+								}
+								war_score_against = {
+									who = ROOT
+									value = -90
+								}
+							}
+						}
+						4909 = { #jikpo
+							owner = {
+								capital_scope = {
+									region = gowon_region
+								}
+								war_score_against = {
+									who = ROOT
+									value = -90
+								}
+							}
+						}
+						4908 = { #migyuangag
+							owner = {
+								capital_scope = {
+									region = gowon_region
+								}
+								war_score_against = {
+									who = ROOT
+									value = -90
+								}
+							}
+						}
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = y91_defeat_gowon_alt_tt
+					AND = {
+						zunkazhad_area = {
+							type = all
+							owned_by = ROOT
+						}
+						zirariik_area = {
+							type = all
+							owned_by = ROOT
+						}
+						NOT = {
+							AND = {
+								4910 = { #heikhai
+									owner = {
+										capital_scope = {
+											region = gowon_region
+										}
+									}
+								}
+								4909 = { #jikpo
+									owner = {
+										capital_scope = {
+											region = gowon_region
+										}
+									}
+								}
+								4908 = { #migyuangag
+									owner = {
+										capital_scope = {
+											region = gowon_region
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		effect = {  
+			if = {
+				limit = {
+					zunkazhad_area = {
+						owned_by = ROOT
+					}
+					zirariik_area = {
+						owned_by = ROOT
+					}
+				}
+				country_event = {
+					id = flavor_nuugdan_tsarai.3
+				}
+			}
+			else = {
+				country_event = {
+					id = flavor_nuugdan_tsarai.2
+				}
+			}
+		} 
+	}
+
+	Y91_court_the_warlords = {
+		icon = mission_noble_council
+		position = 4
+		required_missions = { y91_defeat_gowon } 
+		provinces_to_highlight = {
+			is_core = Y13
+			NOT = {
+				owned_by = ROOT
+				AND = {
+					owned_by = Y13
+					Y13 = {
+						has_opinion = {
+							who = ROOT
+							value = 100
+						}
+						alliance_with = ROOT
+						trust = { who = ROOT value = 75 }
+					}
+				}
+			}
+		} 
+
+		trigger = {
+			OR = {
+				AND = {
+					alliance_with = Y13
+					Y13 = {
+						all_core_province = {
+							owned_by = Y13
+						}
+						has_opinion = {
+							who = ROOT
+							value = 100
+						}
+						trust = { who = ROOT value = 75 }
+					}
+				}
+				AND = {
+					num_of_owned_provinces_with = {
+						value = 7
+						is_core = Y13
+					}
+					4868 = { #jiangdu
+						owned_by = ROOT
+					}
+					4930 = { #lanjincun
+						owned_by = ROOT
+					}
+				}
+				
+			}
+		} 
+
+		effect = {
+			custom_tooltip = Y91_court_warlords_event_tt
+			hidden_effect = {
+				if = {
+					limit = {
+						alliance_with = Y13
+					}
+					country_event = {
+						id = flavor_nuugdan_tsarai.5
+					}
+				}
+				else = {
+					country_event = {
+						id = flavor_nuugdan_tsarai.6
+					}
+				}
+			}
+		}
+	}
+}
