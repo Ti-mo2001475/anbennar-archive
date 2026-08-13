@@ -490,7 +490,7 @@ country_event = {
 		name = rinta_seeker_events.22.c
 		increase_rinta_seekers_isolation_level = yes
 		add_prestige = 10
-		add_legitimacy = 10
+		add_legitimacy_equivalent = { amount = 10 republican_tradition = 3 }
 	}
 }
 
@@ -582,7 +582,7 @@ country_event = {
 	option = {
 		name = rinta_seeker_events.41.d
 		add_prestige = 10
-		add_legitimacy = 10
+		add_legitimacy_equivalent = { amount = 10 republican_tradition = 3 }
 	}
 }
 
@@ -660,7 +660,7 @@ country_event = {
 	option = {
 		name = rinta_seeker_events.43.a
 		add_prestige = -10
-		add_legitimacy = -10
+		add_legitimacy_equivalent = { amount = -10 republican_tradition = -3 }
 	}
 
 	option = {
@@ -1016,7 +1016,7 @@ country_event = {
 
 	option = {
 		name = rinta_seeker_events.101.b
-		add_legitimacy = 10
+		add_legitimacy_equivalent = { amount = -10 republican_tradition = -3 }
 		add_prestige = -10
 	}
 }
@@ -1040,7 +1040,7 @@ country_event = {
 		name = rinta_seeker_events.102.a
 		change_innovativeness = -5
 		add_adm_power = 75
-		add_legitimacy = 10
+		add_legitimacy_equivalent = { amount = 10 republican_tradition = 3 }
 	}
 
 	option = {
@@ -1052,7 +1052,7 @@ country_event = {
 	option = {
 		name = rinta_seeker_events.102.c
 		add_ruler_personality = scholar_personality
-		add_legitimacy = -15
+		add_legitimacy_equivalent = { amount = -15 republican_tradition = -5 }
 		add_corruption = 1
 	}
 }
@@ -1247,7 +1247,7 @@ country_event = {
 	option = {
 		name = rinta_seeker_events.203.a
 		goto = rinta_tar2
-		add_legitimacy = 10
+		add_legitimacy_equivalent = { amount = 10 republican_tradition = 3 }
 		random_list = {
 			8 = {
 				if = {
@@ -2865,7 +2865,7 @@ country_event = {
 	option = {
 		name = rinta_seeker_events.256.b
 		add_prestige = 30
-		add_legitimacy = 10
+		add_legitimacy_equivalent = { amount = 10 republican_tradition = 3 }
 		add_country_modifier = {
 			name = rinta_helping_hand_den
 			duration = 5475
@@ -4204,7 +4204,7 @@ country_event = { #Adeeni Land
 	option = {
 		name = rinta_seeker_events.309.a
 		add_years_of_income = -1.5
-		add_legitimacy = -20
+		add_legitimacy_equivalent = { amount = -20 republican_tradition = -6 }
 
 		ai_chance = { factor = 1 }
 	}
@@ -4343,6 +4343,10 @@ country_event = { #Start of ending
 				add_army_tradition = 64
 				add_army_professionalism = 0.23
 				remove_country_modifier = restructuring_administration
+				remove_opinion = {
+					who = ROOT
+					modifier = released_vassal
+				}
 			}
 			random_owned_province = {
 				limit = {
@@ -4412,7 +4416,6 @@ country_event = { #Start of ending
 		hidden_effect = {
 			clr_global_flag = incident_rinta_rise_of_the_adeen_ongoing_flag
 		}
-		end_incident = incident_rinta_rise_of_the_adeen
 		every_country = {
 			limit = {
 				is_incident_active = incident_rinta_rise_of_the_adeen
@@ -4420,11 +4423,12 @@ country_event = { #Start of ending
 			set_estate_privilege = estate_adeen_relations_with_adeen
 			end_incident = incident_rinta_rise_of_the_adeen
 		}
+		end_incident = incident_rinta_rise_of_the_adeen
 		ai_chance = { factor = 0 }
 	}
 	option = {
 		name = rinta_seeker_events.310.c
-		
+		ai_chance = { factor = 0 }
 		hidden_effect = {
 			rinta_seeker_adeen_revolt = yes
 			S78 = {
@@ -6090,6 +6094,7 @@ country_event = {
 		if = {
 			limit = { rinta_has_invested_level_in_telescope = { level = 0_5 } }
 			rinta_reduce_investment_in_telescope = { level = 0_5 }
+
 		}
 	}
 }
@@ -6227,7 +6232,7 @@ country_event = {
 }
 
 country_event = {
-	id = rinta_seeker_events.524 #The Gods Aren�t Dead
+	id = rinta_seeker_events.524 #The Gods Aren't Dead
 	title = rinta_seeker_events.524.t
 	desc = rinta_seeker_events.524.desc
 	picture = ELVEN_CONSTELLATION_eventPicture
@@ -6495,12 +6500,14 @@ country_event = {
 	}
 
 	immediate = {
-		random_owned_province = {
-			limit = {
-				religion = rinta_seekers
-				has_building = temple
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					religion = rinta_seekers
+					has_building = temple
+				}
+				save_event_target_as = rinta_church_target
 			}
-			save_event_target_as = rinta_church_target
 		}
 	}
 
@@ -7592,7 +7599,7 @@ country_event = {
 			}
 		}
 		add_prestige = -10
-		add_legitimacy = -10
+		add_legitimacy_equivalent = { amount = -10 republican_tradition = -3 }
 		merfolk_subtract_opinion_effect_large = yes
 	}
 }
@@ -8189,14 +8196,14 @@ country_event = {
 			duration = -1
 		}
 		tooltip = {
-			4580 = {
+			4580 = { #Khabtei Teleni
 				owner = {
 					country_event = {
 						id = rinta_seeker_events.627
 					}
 				}
 			}
-			5646 = {
+			5646 = { #Shangra
 				owner = {
 					country_event = {
 						id = rinta_seeker_events.627
@@ -8219,7 +8226,7 @@ country_event = {
 						}
 					}
 				}
-				5710 = {
+				5710 = { #Kunolo
 					owner = {
 						country_event = {
 							id = rinta_seeker_events.627
@@ -8228,7 +8235,7 @@ country_event = {
 				}
 			}
 			else = {
-				5823 = {
+				5823 = { #Lelajik
 					owner = {
 						country_event = {
 							id = rinta_seeker_events.627
@@ -8245,7 +8252,7 @@ country_event = {
 						}
 					}
 				}
-				5847 = {
+				5847 = { #Bivuzena
 					owner = {
 						country_event = {
 							id = rinta_seeker_events.627
@@ -8254,7 +8261,7 @@ country_event = {
 				}
 			}
 			else = {
-				5574 = {
+				5574 = { #Kaziradoka
 					owner = {
 						country_event = {
 							id = rinta_seeker_events.627
@@ -8271,7 +8278,7 @@ country_event = {
 						}
 					}
 				}
-				6717 = {
+				6717 = { #Fetengoni
 					owner = {
 						country_event = {
 							id = rinta_seeker_events.627
@@ -8280,7 +8287,7 @@ country_event = {
 				}
 			}
 			else = {
-				4774 = {
+				4774 = { #Kuta
 					owner = {
 						country_event = {
 							id = rinta_seeker_events.627
@@ -8487,21 +8494,21 @@ country_event = {
 
 	option = {
 		name = rinta_seeker_events.628.a
-		4580 = {
+		4580 = { #Khabtei Teleni
 			owner = {
 				country_event = {
 					id = rinta_seeker_events.627
 				}
 			}
 		}
-		5646 = {
+		5646 = { #Shangra
 			owner = {
 				country_event = {
 					id = rinta_seeker_events.627
 				}
 			}
 		}
-		5802 = {
+		5802 = { #Zitan Tomon
 			owner = {
 				country_event = {
 					id = rinta_seeker_events.627
@@ -8517,7 +8524,7 @@ country_event = {
 					}
 				}
 			}
-			5710 = {
+			5710 = { #Kunolo
 				owner = {
 					country_event = {
 						id = rinta_seeker_events.627
@@ -8526,7 +8533,7 @@ country_event = {
 			}
 		}
 		else = {
-			5823 = {
+			5823 = { #Lelajik
 				owner = {
 					country_event = {
 						id = rinta_seeker_events.627
@@ -8543,7 +8550,7 @@ country_event = {
 					}
 				}
 			}
-			5847 = {
+			5847 = { #Bivuzena
 				owner = {
 					country_event = {
 						id = rinta_seeker_events.627
@@ -8552,7 +8559,7 @@ country_event = {
 			}
 		}
 		else = {
-			5574 = {
+			5574 = { #Kaziradoka
 				owner = {
 					country_event = {
 						id = rinta_seeker_events.627
@@ -8569,7 +8576,7 @@ country_event = {
 					}
 				}
 			}
-			6717 = {
+			6717 = { #Fetengoni
 				owner = {
 					country_event = {
 						id = rinta_seeker_events.627
@@ -8578,7 +8585,7 @@ country_event = {
 			}
 		}
 		else = {
-			4774 = {
+			4774 = { #Kuta
 				owner = {
 					country_event = {
 						id = rinta_seeker_events.627

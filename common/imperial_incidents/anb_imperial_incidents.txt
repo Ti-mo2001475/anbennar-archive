@@ -3,10 +3,10 @@ incident_witch_prince = {
 	default_option = 0
 	
 	can_stop = {
-		OR = {
-			NOT = { exists = event_target:imperial_witch_king }
-			event_target:imperial_witch_king = { is_part_of_hre = no }
-			event_target:imperial_witch_king = {
+		event_target:imperial_witch_king = {
+			OR = {
+				exists = no
+				is_part_of_hre = no
 				is_not_evil = yes
 			}
 		}
@@ -611,9 +611,11 @@ incident_grand_duchy = {
 	default_option = 1
 	
 	can_stop = {
-		OR = {
-			NOT = { exists = event_target:grand_duchy_incident_target }
-			event_target:grand_duchy_incident_target = { is_part_of_hre = no }
+		event_target:grand_duchy_incident_target = {
+			OR = {
+				exists = no
+				is_part_of_hre = no
+			}
 		}
 		NOT = {
 			any_country = {
@@ -1128,7 +1130,7 @@ incident_salt_and_silence = {
 	default_option = 2
 
 	can_stop = {
-		NOT = { exists = event_target:salt_and_silence_giant }
+		event_target:salt_and_silence_giant = { exists = no }
 	}
 	
 	0 = { # Call for Obediance

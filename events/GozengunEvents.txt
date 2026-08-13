@@ -1,0 +1,719 @@
+Namespace = gozengun
+
+country_event = { #Seal event
+    id = gozengun.1
+    title = gozengun.1.t
+    desc = gozengun.1.desc
+    picture = FAR_AND_WIDE_eventPicture
+
+    is_triggered_only = yes 
+
+    trigger = {
+        owns = 5009
+        owns = 5334
+        owns = 5335
+    }
+
+    option = {
+        name = gozengun.1.a
+        gozengun_lake_kokesal = {
+            add_province_modifier = {
+            name = gozengun_seal_modifier_good
+            duration = 1825
+            }
+        }
+    }
+
+    option = {
+        name = gozengun.1.b
+        add_prestige = 3
+        add_sailors = 1
+        gozengun_lake_kokesal = {
+            add_province_modifier = {
+                name = gozengun_seal_modifier_bad
+                duration = 1825
+            }
+        }
+    }
+
+    option = {
+        name = gozengun.1.c
+        add_years_of_income = 0.1
+        add_prestige = -5
+        add_sailors = -1
+    }
+
+    option = {
+        name = gozengun.1.d
+        trigger = {
+            OR = {
+                ruler_has_personality = scholar_personality
+                ruler_has_personality = free_thinker_personality
+            } 
+        }
+        add_prestige = 5
+        change_innovativeness = 1
+        highlight = yes
+    }
+}
+
+country_event = { #manul
+    id = gozengun.2
+    title = gozengun.2.t
+    desc = gozengun.2.desc
+    picture = PIETY_eventPicture
+
+    is_triggered_only = yes
+
+    trigger = {
+        capital_scope = {
+            superregion = gozengun_superregion
+        }
+    }
+
+    option = {
+        name = gozengun.2.a
+        add_prestige = 5
+    }
+
+    option = {
+        name = gozengun.2.b
+        random_list = {
+            80 = {
+                add_manpower = 0.001
+            }
+            20 = {
+                define_advisor = {
+                    type = army_reformer
+                    name = "Harimanul 'The Adorable'"
+                    skill = 2
+                    culture = ashwoven_harimari
+                    religion = levaajan
+                    cost_multiplier = 0.5
+                }
+            }
+        }
+    }
+
+    option  = {
+        name = gozengun.2.c
+        trigger = {
+            OR = {
+                ruler_has_personality = malevolent_personality
+                ruler_has_personality = cruel_personality
+            }
+        }
+        add_treasury = 30
+        highlight = yes
+    }
+
+    option = {
+        name = gozengun.2.d
+        trigger = {
+            OR = {
+                ruler_has_personality = kind_hearted_personality
+                ruler_has_personality = benevolent_personality
+            }
+        }
+        add_prestige = 5
+        add_legitimacy_equivalent = { amount = 5 republican_tradition = 5 }
+        add_splendor = 2
+        highlight = yes
+    }
+}
+
+country_event = { # dead man demanding
+    id = gozengun.3
+    title = gozengun.3.t
+    desc = gozengun.3.desc
+    picture = FARMING_eventPicture
+
+    is_triggered_only = yes
+
+    trigger = {
+        capital_scope = {
+            superregion = gozengun_superregion
+        }
+        NOT = {
+            has_country_modifier = gozengun_dead_man_will
+        }
+    }
+
+    immediate = {
+        hidden_effect = {
+			random_owned_province = {
+				limit = {
+                    superregion = gozengun_superregion
+                }
+                save_event_target_as = target_province
+			}
+		}
+    }
+
+    option = {
+        name = gozengun.3.a
+        add_country_modifier = {
+            name = gozengun_dead_man_will
+            duration = 3650
+        }
+        add_prestige = -10
+    }
+
+    option = {
+        name = gozengun.3.b
+        event_target:target_province = {
+            add_province_modifier = {
+                name = gozengun_dead_man_family
+                duration = 1825
+            }
+        }
+        goto = target_province
+    }
+
+    option = {
+        name = gozengun.3.c
+        add_years_of_income = 0.5
+        add_stability = -1
+    }
+}
+
+country_event = { #mercenaries event
+    id = gozengun.4
+    title = gozengun.4.t
+    desc = gozengun.4.desc
+    picture = MULTI_RACIAL_MERC_eventPicture
+
+    is_triggered_only = yes
+
+    trigger = {
+        capital_scope = {
+            continent = asia
+        }
+        any_owned_province = {
+                superregion = gozengun_superregion
+        }
+        NOT = {
+            has_country_modifier = gozengun_boring_guys
+            has_country_modifier = gozengun_centaur_mercenaries
+            has_country_modifier = gozengun_eagle_hobgoblin_mercenaries
+            has_country_modifier = gozengun_soulseeker_mercenaries
+        }
+    }
+
+    option = {
+        name = gozengun.4.a
+        trigger = {
+            fast_owns_num_pops_of_race = { race = human amount = 1 }
+            NOT = {
+                has_country_modifier = racial_pop_human_purge
+
+            }
+        }
+        add_country_modifier = {
+            name = gozengun_boring_guys
+            duration = 3650
+        }
+        add_years_of_income = -0.5
+        if = {
+            limit = {
+                NOT = {
+                    OR = {
+                        ruler_has_personality = fierce_negotiator_personality
+                        mercenary_ideas = 5
+                    }
+                }
+            }
+            add_army_professionalism = -0.02
+        }
+        small_increase_of_human_tolerance_effect = yes
+    }
+
+    option = {
+        name = gozengun.4.b
+        trigger = {
+                OR = {
+                    fast_owns_num_pops_of_race = { race = centaur amount = 1 }
+                    fast_owns_num_pops_of_race = { race = harpy amount = 1 }
+                }
+            NOT = {
+                OR = {
+                    has_country_modifier = racial_pop_centaur_purge
+                    culture_group = centaur
+                    has_country_modifier = racial_pop_harpy_purge
+                    culture_group = harpy
+                }
+            }
+        }
+        add_country_modifier = {
+            name = gozengun_centaur_mercenaries
+            duration = 3650
+        }
+        add_years_of_income = -0.5
+        if = {
+            limit = {
+                NOT = {
+                    OR = {
+                        ruler_has_personality = fierce_negotiator_personality
+                        mercenary_ideas = 5
+                    }
+                }
+            }
+            add_army_professionalism = -0.02
+        }
+        small_increase_of_centaur_tolerance_effect = yes
+        small_increase_of_harpy_tolerance_effect = yes
+    }
+
+    option = {
+        name = gozengun.4.c
+        trigger = {
+                fast_owns_num_pops_of_race = { race = hobgoblin amount = 1 }
+            NOT = {
+                OR = {
+                    has_country_modifier = racial_pop_hobgoblin_purge
+                    culture_group = hobgoblin
+                }
+            }
+        }
+        add_country_modifier = {
+            name = gozengun_eagle_hobgoblin_mercenaries
+            duration = 3650
+        }
+        add_years_of_income = -0.5
+        if = {
+            limit = {
+                NOT = {
+                    OR = {
+                        ruler_has_personality = fierce_negotiator_personality
+                        mercenary_ideas = 5
+                    }
+                }
+            }
+            add_army_professionalism = -0.02
+        }
+        small_increase_of_hobgoblin_tolerance_effect = yes
+    }
+
+    option = {
+        name = gozengun.4.d
+        trigger = {
+                OR = {
+                    fast_owns_num_pops_of_race = { race = ogre amount = 1 }
+                    fast_owns_num_pops_of_race = { race = troll amount = 1 }
+                }
+            NOT = {
+                OR = {
+                    has_country_modifier = racial_pop_ogre_purge
+                    culture_group = ogre
+                    has_country_modifier = racial_pop_troll_purge
+                    culture_group = giantkind
+                }
+            }
+        }
+        add_country_modifier = {
+            name = gozengun_soulseeker_mercenaries
+            duration = 3650
+        }
+        add_years_of_income = -0.5
+        if = {
+            limit = {
+                NOT = {
+                    OR = {
+                        ruler_has_personality = fierce_negotiator_personality
+                        mercenary_ideas = 5
+                    }
+                }
+            }
+            add_army_professionalism = -0.02
+        }
+        small_increase_of_ogre_tolerance_effect = yes
+        small_increase_of_troll_tolerance_effect = yes
+    }
+    
+    option = {
+        name = gozengun.4.e
+    }
+}
+
+country_event = { #facestealer rite event
+    id = gozengun.5
+    title = gozengun.5.t
+    desc = gozengun.5.desc
+    picture = LOOMING_DEATH_eventPicture
+
+    is_triggered_only = yes
+
+    trigger = {
+        culture_group = khantaar
+        any_owned_province = {
+            has_province_modifier = facestealer_1
+        }
+    }
+
+    immediate = {
+        hidden_effect = {
+            random_owned_province = {
+                limit = {
+                    has_province_modifier = facestealer_1
+                }
+                save_event_target_as = facestealer_province
+            }
+        }
+    }
+
+    option = {
+        name = gozengun.5.a
+        random = {
+            chance = 75
+            event_target:facestealer_province = {
+                add_facestealer_effect = yes
+            }
+        }
+        goto = facestealer_province
+    }
+
+    option = {
+        name = gozengun.5.b
+        add_yearly_manpower = -0.25
+        random = {
+            chance = 25
+            event_target:facestealer_province = {
+                add_facestealer_effect = yes
+            }
+        }
+        event_target:facestealer_province = {
+            add_province_modifier = {
+                name = gozengun_facestealer_rites1
+                duration = 1325
+            }
+        }
+        add_adm_power = -10
+        goto = facestealer_province
+    }
+
+    option = {
+        name = gozengun.5.c
+        trigger = {
+            OR = {
+                ruler_has_personality = malevolent_personality
+                ruler_has_personality = cruel_personality
+            }
+        }
+        add_yearly_manpower = -0.25
+        event_target:facestealer_province = {
+            add_province_modifier = {
+            name = gozengun_facestealer_rites2
+            duration = 1325
+            }
+        }
+        random = {
+            chance = 50 
+            event_target:facestealer_province = {
+                subtract_facestealer_effect = yes
+            } 
+        }
+        add_years_of_income = 0.25  
+        goto = facestealer_province
+        highlight = yes
+    }
+}
+
+country_event = { #spirit advisor event
+    id = gozengun.6
+    title = gozengun.6.t
+    desc = gozengun.6.desc
+    picture = PRIEST_PHANTOM_eventPicture
+
+    is_triggered_only = yes
+
+    trigger = {
+        capital_scope = {
+            superregion = gozengun_superregion
+        }
+    }
+
+    option = {
+        name = gozengun.6.a
+        trigger = {
+            NOT = {
+                ruler_has_personality = babbling_buffoon_personality
+            }
+        }
+        random_list = {
+            75 = {
+                country_event = { id = gozengun.7 }
+            }
+            25 = {
+                country_event = { id = gozengun.8 }
+            }
+        }
+    }
+
+    option = {
+        name = gozengun.6.b
+        trigger = {
+            NOT = {
+                ruler_has_personality = babbling_buffoon_personality
+            }
+        }
+        add_legitimacy_equivalent = { amount = -5 republican_tradition = -5 }
+    }
+
+    option = {
+        name = gozengun.6.c
+        trigger = {
+            religion = devouring_path
+        }
+        add_church_power = 25
+        highlight = yes
+    }
+
+    option = {
+        name = gozengun.6.d
+        trigger = {
+            ruler_has_personality = babbling_buffoon_personality
+        }
+        add_prestige = -4
+        highlight = yes
+    }
+}
+
+country_event = { #positive spirit advisor
+    id = gozengun.7
+    title = gozengun.7.t
+    desc = gozengun.7.desc
+    picture = ADVISOR_eventPicture
+
+    is_triggered_only = yes
+
+    option = {
+        name = gozengun.7.a
+        custom_tooltip = gozengun.7.tt
+        hidden_effect = {
+            random_list = {
+                1 = {
+                    define_advisor = {
+                        culture = eagle_command
+                        female = yes
+                        religion = banbe_anen
+                        type = inquisitor
+                        skill = 3
+                        cost_multiplier = 0.5
+                    }
+                }
+                1 = {
+                    define_advisor = {
+                        culture = nuzenapu_harpy
+                        female = yes
+                        religion = banbe_anen
+                        type = natural_scientist
+                        skill = 3
+                        cost_multiplier = 0.5
+                    }
+                }
+                1 = {
+                    define_advisor = {
+                        culture = ashwoven_harimari
+                        religion = high_philosophy
+                        type = statesman
+                        skill = 3
+                        cost_multiplier = 0.5
+                    }
+                }
+                1 = {
+                    define_advisor = {
+                        culture = hill_troll
+                        religion = un_khudai
+                        type = spymaster
+                        skill = 3
+                        cost_multiplier = 0.5
+                    }
+                }
+                1 = {
+                    define_advisor = {
+                        culture = runsukhi
+                        religion = levaajan
+                        type = army_organiser
+                        skill = 3
+                        cost_multiplier = 0.5
+                    }
+                }
+                1 = {
+                define_advisor = {
+                        culture = soulseeker_ogre
+                        religion = sudomegi
+                        type = fortification_expert
+                        skill = 3
+                        cost_multiplier = 0.5
+                    }
+               }
+            }
+        }
+        add_splendor = 2
+    }
+}
+
+country_event = { #negative spirit advisor
+    id = gozengun.8
+    title = gozengun.8.t
+    desc = gozengun.8.desc
+    picture = ACCUSATION_eventPicture
+
+    is_triggered_only = yes
+
+    option = {
+        name = gozengun.8.a
+        add_country_modifier = {
+            name = gozengun_bad_advisor
+            duration = 1460
+        }
+        capital_scope = {
+            add_province_modifier = {
+                name = gozengun_bad_advisor_capital
+                duration = 1460
+            }
+        }
+        add_legitimacy_equivalent = { amount = -10 republican_tradition = -10 }
+    }
+}
+
+country_event = { #gumiho event
+    id = gozengun.9
+    title = gozengun.9.t
+    desc = gozengun.9.desc
+    picture = easterngfx_COUNTRY_COLLAPSE_eventPicture
+ 
+    is_triggered_only = yes
+
+    trigger = {
+        gowon_region = {
+            type = all
+            OR = {
+                owned_by = ROOT
+                area = nakseseom_area
+            }
+        }
+        NOT = {
+            OR = {
+                religion = neokttareum
+                any_owned_province = {
+                    has_province_modifier = gozengun_gumiho_piss_off
+                }
+                has_country_modifier = gozengun_gumiho_appeased
+                tag = V05
+            }
+        }
+    }
+
+    option = {
+        name = gozengun.9.a
+        add_prestige = 5
+        gowon_region = {
+            limit = {
+                NOT = {
+                    area = nakseseom_area
+                }
+                religion = neokttareum
+            }
+            add_province_modifier = {
+                name = gozengun_gumiho_piss_off
+                duration = 7300 
+            }
+            add_local_autonomy = 10
+        }
+    }
+
+    option = {
+        name = gozengun.9.b
+        add_yearly_manpower = -0.33
+        add_prestige = -5
+        add_legitimacy_equivalent = { amount = -5 republican_tradition = -5 }
+        add_country_modifier = {
+            name = gozengun_gumiho_appeased
+            duration = 7300
+        }
+    }
+
+    option = {
+        name = gozengun.9.c
+        trigger = {
+            religion = devouring_path
+        }
+        add_church_power = 50
+        highlight = yes
+    }
+}
+
+country_event = { #strange things in the desert
+    id = gozengun.10
+    title = gozengun.10.t
+    desc = gozengun.10.desc
+    picture = ANB_GLOBAL_TRADE_eventPicture
+
+    is_triggered_only = yes
+
+    trigger = {
+        capital_scope = {
+            superregion = gozengun_superregion
+        }
+        any_owned_province = {
+            superregion = gozengun_superregion
+            has_terrain = desert
+        }
+    }
+
+    option = {
+        name = gozengun.10.a
+        country_event = { id = gozengun.11 days = 60}
+        add_adm_power = -20
+        add_mil_power = -20
+    }
+
+    option = {
+        name = gozengun.10.b
+    }
+
+    option = {
+        name = gozengun.10.c
+        trigger = {
+            ruler_has_personality = obsessive_perfectionist_personality
+        }
+        add_yearly_manpower = -0.5
+        add_treasury = 200
+        highlight = yes
+    }
+}
+
+country_event = { #guy who built the things
+    id = gozengun.11
+    title = gozengun.11.t
+    desc = gozengun.11.desc
+    picture = EKLUZAGNU_eventPicture
+
+    is_triggered_only = yes
+
+    immediate = {
+        hidden_effect = {
+            random_owned_province = {
+                limit = {
+                    superregion = gozengun_superregion
+                    has_terrain = desert
+                }
+                save_event_target_as = strange_in_desert
+            }
+        }
+    }
+
+    option = {
+        name = gozengun.11.a
+        add_splendor = 5
+        add_prestige = 5
+        event_target:strange_in_desert = {
+            add_province_modifier = {
+                name = gozengun_desert_structures
+                duration = 3650
+            }
+        }
+        goto = strange_in_desert
+    }
+}
