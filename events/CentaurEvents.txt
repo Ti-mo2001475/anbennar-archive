@@ -87,7 +87,10 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_country_modifier = centaur_administration
+		OR = {
+			has_reform = centaur_horde
+			has_reform = I55_centaur_horde
+		}
 		is_subject = no
 		is_at_war = no
 		NOT = { num_of_subjects = 10 }
@@ -99,7 +102,7 @@ country_event = {
 				}
 			}
 			OR = {
-				has_reform =  centaur_horde
+				has_reform = centaur_horde
 				has_reform = I55_centaur_horde
 			}
 			NOT = { truce_with = ROOT }
@@ -173,6 +176,7 @@ country_event = {
 		every_country = {
 			limit = {
 				culture_group = centaur
+				NOT = { culture = zhadshai_centaur }
 			}
 			add_country_modifier = {
 				name = centaur_horde_1
