@@ -3568,33 +3568,43 @@ fast_heir_is_ruinborn = {
 
 monstrous_culture = {
 	OR = {
-		culture_group = kobold
+		AND = {
+			culture_group = kobold
+			NOT = { culture = goldscale_kobold }
+			NOT = { culture = yawasichya_kobold }
+			NOT = { culture = jatukyu_kobold }
+			NOT = { culture = unitsan_kobold }
+			NOT = { culture = sirimadsik_kobold }
+		}
 		culture_group = orcish
-		culture_group = gnollish
-		culture_group = goblin
-		culture_group = harpy
+		AND = {
+			culture_group = gnollish
+			NOT = { culture = dovesworn_gnoll }
+		}
+		AND = {
+			culture_group = goblin
+			NOT = { culture = city_goblin }
+		}
+		AND = {
+			culture_group = harpy
+			NOT = { culture = nzeri_harpy }
+			NOT = { culture = semifire_harpy }
+			NOT = { culture = jarnklo_harpy }
+			NOT = { culture = pezarangi_harpy }
+		}
 		culture_group = giantkind
 		culture_group = hobgoblin
 		culture_group = centaur
-		culture_group = ogre
+		AND = {
+			culture_group = ogre
+			NOT = { culture = skyfall_ogre }
+			NOT = { culture = seacrest_ogre }
+		}
 		culture_group = degenerated_elf
-		culture_group = lizardfolk
-	}
-	NOT = {
-		culture = pezarangi_harpy
-		culture = jarnklo_harpy
-		culture = goldscale_kobold
-		culture = cyazizeta_lizardfolk
-		culture = nzeri_harpy
-		culture = skyfall_ogre
-		culture = seacrest_ogre
-		culture = yawasichya_kobold
-		culture = jatukyu_kobold
-		culture = unitsan_kobold
-		culture = sirimadsik_kobold
-		culture = semifire_harpy
-		culture = dovesworn_gnoll
-		culture = city_goblin
+		AND = {
+			culture_group = lizardfolk
+			NOT = { culture = cyazizeta_lizardfolk }
+		}
 	}
 }
 
