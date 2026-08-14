@@ -4774,6 +4774,29 @@ increase_gold_discovery = {
 
 remove_dev_from_building = {
 	if = {
+		# If this bonus came from both Economic ideas and government- or tag-specific modifiers, remove twice
+		limit = {
+			FROM = {
+				AND = {
+					full_idea_group = economic_ideas
+					OR = {
+						has_country_modifier = G58_coastal_utopia_modifier
+						has_government_attribute = add_dev_from_manufactories
+					}
+				}
+			}
+			gained_dev_from_eco_building = { building = $building$ }
+		}
+		add_base_$type$ = -$value$
+		if = {
+			limit = {
+				NOT = { base_$type$ = 1 }
+			}
+			set_base_$type$ = 1
+		}
+		# Fall through to remove a second time and to clear the `built_eco_dev_$building$` flag
+	}
+	if = {
 		limit = {
 			FROM = { 
 				OR = {
