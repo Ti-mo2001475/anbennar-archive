@@ -996,7 +996,7 @@ reveria_2 = {
                 area = coddorran_heights_area
             }
             OR = {
-                culture_group = kobold
+                culture_is_kobold = yes
                 NOT = {
                     AND = {
                         OR = {
@@ -1013,11 +1013,11 @@ reveria_2 = {
 			mil_power = 100
 			dragon_coast_region = {
 				type = ALL
-				NOT = { culture_group = kobold }
+				NOT = { culture_is_kobold = yes }
 			}
 			coddorran_heights_area = {
 				type = ALL
-				NOT = { culture_group = kobold }
+				NOT = { culture_is_kobold = yes }
 			}
 			OR = {
 				advisor = inquisitor
@@ -1459,14 +1459,20 @@ reveria_3 = {
 		required_missions = { A05_shattered_agreements } 
 		provinces_to_highlight = { 
 			owned_by = ROOT 
-			culture_group = gnomish
+			OR = {
+				culture = cliff_gnome
+				culture = creek_gnome
+			}
 			NOT = { has_trade_building_trigger = yes }
 		} 
 
 		trigger = {
 			num_of_owned_provinces_with = {
 				value = 4
-				culture_group = gnomish
+				OR = {
+					culture = cliff_gnome
+					culture = creek_gnome
+				}
 				has_trade_building_trigger = yes
 			}
 			has_country_modifier = racial_focus_gnomish
@@ -1496,7 +1502,11 @@ reveria_3 = {
 		required_missions = { A05_citzenship_for_gnomes } 
         provinces_to_highlight = {  
             owned_by = ROOT
-            culture_group = gnomish
+            OR = {
+				culture = cliff_gnome
+				culture = creek_gnome
+				culture = imperial_gnome
+			}
             NOT = {
                 AND = {
                     has_manpower_building_trigger = yes
@@ -1512,12 +1522,20 @@ reveria_3 = {
 			mil_power = 200
 			num_of_owned_provinces_with = {
 				value = 5
-				culture_group = gnomish
+				OR = {
+					culture = cliff_gnome
+					culture = creek_gnome
+					culture = imperial_gnome
+				}
 				has_manpower_building_trigger = yes
 			}
 			num_of_owned_provinces_with = {
 				value = 5
-				culture_group = gnomish
+				OR = {
+					culture = cliff_gnome
+					culture = creek_gnome
+					culture = imperial_gnome
+				}
 				has_dock_building_trigger = yes
 			}
 			OR = {
