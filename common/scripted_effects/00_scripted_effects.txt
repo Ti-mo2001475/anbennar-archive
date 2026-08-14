@@ -4799,6 +4799,23 @@ remove_dev_from_building = {
 
 add_dev_from_building = {
 	if = {
+		# If this bonus comes from both Economic ideas and government- or tag-specific modifiers, apply twice
+		limit = {
+			FROM = {
+				AND = {
+					full_idea_group = economic_ideas
+					OR = {
+						has_country_modifier = G58_coastal_utopia_modifier
+						has_government_attribute = add_dev_from_manufactories
+					}
+				}
+			}
+			NOT = { gained_dev_from_eco_building = { building = $building$ } }
+		}
+		add_base_$type$ = $value$
+		# Fall through to apply a second time and to set the `built_eco_dev_$building$` flag
+	}
+	if = {
 		limit = {
 			FROM = { 
 				OR = {
