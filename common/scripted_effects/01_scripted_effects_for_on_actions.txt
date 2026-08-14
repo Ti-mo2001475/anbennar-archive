@@ -2218,6 +2218,14 @@ anb_scripted_effects_for_ruler_death  = {
 		country_event = { id = flavor_chaingrasper.101 }
 	}
 
+	# Parusahan Saya
+	if = {
+		limit = {
+			has_country_flag = hemantsen_flag
+		}
+		country_event = { id = flavor_parusahan_saya.14 }
+	}
+
 	magic_on_ruler_death = yes #For lichdom etc.
 }
 
@@ -7224,14 +7232,13 @@ on_war_declaration_effect = {
 	if = {
 		limit = {
 			tag = A77
-			mission_completed = reign_in_the_knight_errants
-			mission_completed = reign_in_the_knight_errants
+			mission_completed = forms_eight_to_three
 			is_in_war = {
 				attacker_leader = ROOT
 				casus_belli = cb_imperial_ban
 			}
 		}
-		A77 = {
+		FROM = {
 			set_country_flag = imperial_ban_goody_rewards
 		}
 	}
@@ -8584,7 +8591,7 @@ on_province_culture_change_effect = {
 	if = {
 		limit = { 
 			has_province_modifier = 333_lizardfolk_reclamation 
-			culture_group = lizardfolk
+			culture_is_lizardfolk = yes
 		}
 		remove_province_modifier = 333_lizardfolk_reclamation
 		add_base_tax = 1
@@ -8603,7 +8610,7 @@ on_province_culture_change_effect = {
 	if = {
 		limit = { 
 			has_province_modifier = 333_lizardfolk_reclamation_but_for_halflings
-			culture_group = lizardfolk
+			culture_is_lizardfolk = yes
 		}
 		remove_province_modifier = 333_lizardfolk_reclamation_but_for_halflings
 		change_culture = itayzemby_lizardfolk
@@ -8888,7 +8895,7 @@ on_colony_finished_effect = {
 			owner = { 
 				is_part_of_hre = yes 
 				has_country_modifier = honderaak_incident_colonization 
-				NOT = { culture_group = gnollish } 
+				NOT = { culture_is_gnollish = yes } 
 			}
 		}
 		random_list = {
@@ -11605,6 +11612,17 @@ on_built_tax_building_effect = {
 			duration = -1
 		}
 	}
+	if = {
+		limit = {
+			owner = { has_country_flag = kaino_temple_bonuses_flag }
+			NOT = { development = 4 }
+			culture = kaino
+		}
+		add_province_modifier = {
+			name = kaino_temple_bonuses
+			duration = -1
+		}
+	}
 }
 
 on_tax_building_destroyed_effect = {
@@ -11614,6 +11632,7 @@ on_tax_building_destroyed_effect = {
 	remove_province_modifier = L80_temple_buff
 	remove_province_modifier = A80_expand_the_theatre_temples
 	remove_province_modifier = harpylen_temple_roost
+	remove_province_modifier = kaino_temple_bonuses
 }
 
 on_built_manpower_building_effect = {	
@@ -11689,11 +11708,23 @@ on_built_manpower_building_effect = {
 			hidden = yes
 		}
 	}
+	if = {
+		limit = {
+			owner = { has_country_flag = kaino_barracks_bonuses_flag }
+			NOT = { development = 4 }
+			culture = kaino
+		}
+		add_province_modifier = {
+			name = kaino_barracks_bonuses
+			duration = -1
+		}
+	}
 }
 
 on_manpower_building_destroyed_effect = {
 	remove_province_modifier = L80_barrack_buff
 	remove_province_modifier = harpylen_barrack_roost
+	remove_province_modifier = kaino_barracks_bonuses
 }
 
 on_built_production_building_effect = {
@@ -13483,7 +13514,7 @@ startup_1444_effects = {
 			country_event = { id = mechanim.1 }
 		}
 
-		if = { limit = { culture_group = harpy }
+		if = { limit = { culture_is_harpy = yes }
 			harpy_roost_se_setup = yes
 
 			if = {
@@ -13766,6 +13797,10 @@ startup_1444_effects = {
 			limit = { tag = Z60 }
 			country_event = { id = tsukqiao.1 days = 7 } #Save primary culture
 			ban_necromancy = { country = yes }
+			country_event = {
+				id = nuraryi.1
+				days = 180
+			}
 		}
 		
 		#Pachpalka initialization
@@ -15936,7 +15971,7 @@ on_province_owner_change_effect = {
 			if = {
 				limit = {
 					owner = { has_estate_privilege = estate_monstrous_tribes_gozlamoir_system }
-					NOT = { culture_group = centaur }
+					NOT = { culture_is_centaur = yes }
 				}
 				add_noncentaur_nomadic_zone_of_control_modifier = yes
 			}
@@ -17868,6 +17903,13 @@ on_province_owner_change_effect = {
 		}
 	}
 	
+	if = {	#vanilla MTTH made triggered_only
+		limit = {
+			owner = { has_reform = free_city }
+			NOT = { has_dlc = "Common Sense" }
+		}
+		owner = { country_event = { id = 9900 days = 180 } }
+	}
 } #on_province_owner_change_effect bottom
 
 on_primary_culture_changed_effect = {
