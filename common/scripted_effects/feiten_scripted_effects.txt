@@ -493,6 +493,13 @@ feiten_update_skypost_duty = {
 			value = 10
 		}
 	}
+	if = {
+		limit = { has_country_modifier = feiten_stormwall_merchant_fleet }
+		change_variable = {
+			which = feitenSkypostDutyEff
+			value = 5
+		}
+	}
 }
 
 feiten_update_skypost_trade_modifiers = {
@@ -3340,4 +3347,35 @@ feiten_invention_swap = {
 			}
 		}
 	}
+}
+
+feiten_add_insyaan_trade_centre = {
+	random_owned_province = {
+		limit = {
+			NOT = { has_province_modifier = feiten_insyaan_trade_centre } 
+			OR = {
+				province_has_center_of_trade_of_level = 2
+				AND = {
+					OR = {
+						has_province_modifier = ponquimetzto_toll
+						has_province_modifier = pauhnextli_toll
+						has_province_modifier = palimeli_toll
+					}
+					num_free_building_slots = 0
+				}
+			}
+			if = {
+				limit = { has_dlc = "Leviathan" }
+				num_of_times_expanded_infrastructure = 1
+			}
+			else = {
+				development = 15
+			}
+			has_trade_building_trigger = yes
+		}
+		add_province_modifier = {
+			name = feiten_insyaan_trade_centre
+			duration = -1
+		}
+	} 
 }
