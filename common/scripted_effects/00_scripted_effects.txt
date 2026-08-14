@@ -4777,7 +4777,10 @@ remove_dev_from_building = {
 	if = {
 		limit = {
 			FROM = {
-				full_idea_group = economic_ideas
+				OR = {
+					full_idea_group = economic_ideas
+					has_country_modifier = G58_coastal_utopia_modifier
+				}
 			}
 			gained_dev_from_eco_building = { building = $building$ }
 		}
@@ -4790,24 +4793,6 @@ remove_dev_from_building = {
 		}
 		hidden_effect = {
 			clr_province_flag = built_eco_dev_$building$
-		}
-	}
-	if = {
-		limit = {
-			FROM = {
-				has_country_modifier = G58_coastal_utopia_modifier
-			}
-			gained_dev_from_coastal_utopia_building = { building = $building$ }
-		}
-		add_base_$type$ = -$value$
-		if = {
-			limit = {
-				NOT = { base_$type$ = 1 }
-			}
-			set_base_$type$ = 1
-		}
-		hidden_effect = {
-			clr_province_flag = built_coastal_utopia_dev_$building$
 		}
 	}
 	if = {
@@ -4835,25 +4820,16 @@ add_dev_from_building = {
 	if = {
 		limit = {
 			FROM = {
-				full_idea_group = economic_ideas
+				OR = {
+					full_idea_group = economic_ideas
+					has_country_modifier = G58_coastal_utopia_modifier
+				}
 			}
 			NOT = { gained_dev_from_eco_building = { building = $building$ } }
 		}
 		add_base_$type$ = $value$
 		hidden_effect = {
 			set_province_flag = built_eco_dev_$building$
-		}
-	}
-	if = {
-		limit = {
-			FROM = {
-				has_country_modifier = G58_coastal_utopia_modifier
-			}
-			NOT = { gained_dev_from_coastal_utopia_building = { building = $building$ } }
-		}
-		add_base_$type$ = $value$
-		hidden_effect = {
-			set_province_flag = built_coastal_utopia_dev_$building$
 		}
 	}
 	if = {
