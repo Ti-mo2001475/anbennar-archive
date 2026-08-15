@@ -1833,6 +1833,17 @@ country_event = {
 	picture = BIG_STAR_IN_SKY_eventPicture
 		 
 	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = { has_country_flag = khugra_war_of_colours_karassk_rules_red_party }
+				L68 = { save_event_target_as = red_party }
+			} else = {
+				L96 = { save_event_target_as = red_party }
+			}
+		}
+	}
 		
 	option = { #green party
 		trigger = {
@@ -1855,38 +1866,52 @@ country_event = {
 				}
 				cede_province = L71
 			}
+			L71 = {
+				country_event = { id = flavour_khugra.5 }
+			}
 			remove_estate_privilege = estate_burghers_war_of_colours_treacherous_gold
 		}
 		if = {
 			limit = { 
 				has_estate_privilege = estate_nobility_war_of_colours_defeated_red 
-				exists = L96
-				NOT = { has_country_flag = khugra_war_of_colours_karassk_rules_red_party }
+				exists = event_target:red_party
 			}
 			every_owned_province = {
 				limit = {
-					is_permanent_claim = L96
+					is_permanent_claim = event_target:red_party
 				}
-				cede_province = L96
+				cede_province = event_target:red_party
 			}
-			remove_estate_privilege = estate_nobility_war_of_colours_defeated_red
-		}
-		if = {
-			limit = { 
-				has_estate_privilege = estate_nobility_war_of_colours_defeated_red 
-				exists = L68
-				has_country_flag = khugra_war_of_colours_karassk_rules_red_party
-			}
-			every_owned_province = {
-				limit = {
-					is_permanent_claim = L68
-				}
-				cede_province = L68
+			event_target:red_party = {
+				country_event = { id = flavour_khugra.5 }
 			}
 			remove_estate_privilege = estate_nobility_war_of_colours_defeated_red
 		}
 		set_country_flag = khugra_war_of_colours_culminates
-		ai_chance = { factor = 1 }
+
+		ai_chance = { 
+			factor = 1 
+			modifier = {
+				factor = 2
+				has_opinion = {
+					who = L95
+					value = 100
+				}
+			}
+
+			modifier = {
+				factor = 2
+				marriage_with = L95
+			}
+
+			modifier = {
+				factor = 0.5
+				OR = {
+					is_rival = L95
+					is_enemy = L95
+				}
+			}
+		}
 	}
 	option = { #golden party
 		trigger = {
@@ -1909,79 +1934,68 @@ country_event = {
 				}
 				cede_province = L95
 			}
+			L95 = {
+				country_event = { id = flavour_khugra.5 }
+			}
 			remove_estate_privilege = estate_church_war_of_colours_imperial_green
 		}
 		if = {
 			limit = { 
 				has_estate_privilege = estate_nobility_war_of_colours_defeated_red 
-				exists = L96
-				NOT = { has_country_flag = khugra_war_of_colours_karassk_rules_red_party }
+				exists = event_target:red_party
 			}
 			every_owned_province = {
 				limit = {
-					is_permanent_claim = L96
+					is_permanent_claim = event_target:red_party
 				}
-				cede_province = L96
+				cede_province = event_target:red_party
 			}
-			remove_estate_privilege = estate_nobility_war_of_colours_defeated_red
-		}
-		if = {
-			limit = { 
-				has_estate_privilege = estate_nobility_war_of_colours_defeated_red 
-				exists = L68
-				has_country_flag = khugra_war_of_colours_karassk_rules_red_party
-			}
-			every_owned_province = {
-				limit = {
-					is_permanent_claim = L68
-				}
-				cede_province = L68
+			event_target:red_party = {
+				country_event = { id = flavour_khugra.5 }
 			}
 			remove_estate_privilege = estate_nobility_war_of_colours_defeated_red
 		}
 		set_country_flag = khugra_war_of_colours_culminates
-		ai_chance = { factor = 1 }
+
+		ai_chance = { 
+			factor = 1 
+			modifier = {
+				factor = 2
+				has_opinion = {
+					who = L71
+					value = 100
+				}
+			}
+
+			modifier = {
+				factor = 2
+				marriage_with = L71
+			}
+
+			modifier = {
+				factor = 0.5
+				OR = {
+					is_rival = L71
+					is_enemy = L71
+				}
+			}
+		}
 	}
 	option = { #red party
 		trigger = {
-			OR = {
-				AND = {
-					exists = L96
-					OR = {
-						L96 = { owns = 5898 }
-						ai = no
-					}
-					NOT = { has_country_flag = khugra_war_of_colours_karassk_rules_red_party }
-				}
-				AND = {
-					exists = L68
-					OR = {
-						L68 = { owns = 5898 }
-						ai = no
-					}
-					has_country_flag = khugra_war_of_colours_karassk_rules_red_party
+			AND = {
+				exists = event_target:red_party
+				OR = {
+					event_target:red_party = { owns = 5898 }
+					ai = no
 				}
 			}
 			has_estate_privilege = estate_nobility_war_of_colours_defeated_red
 		}
 		name = flavour_khugra.49.c
-		if = {
-			limit = { 
-				NOT = { has_country_flag = khugra_war_of_colours_karassk_rules_red_party }
-			}
-			L96 = {
-				vassalize = L70
-				country_event = { id = flavour_khugra.4 }
-			}
-		}
-		if = {
-			limit = { 
-				has_country_flag = khugra_war_of_colours_karassk_rules_red_party
-			}
-			L68 = {
-				vassalize = L70
-				country_event = { id = flavour_khugra.4 }
-			}
+		event_target:red_party = {
+			vassalize = L70
+			country_event = { id = flavour_khugra.4 }
 		}
 		if = {
 			limit = { 
@@ -1993,6 +2007,9 @@ country_event = {
 					is_permanent_claim = L95
 				}
 				cede_province = L95
+			}
+			L95 = {
+				country_event = { id = flavour_khugra.5 }
 			}
 			remove_estate_privilege = estate_church_war_of_colours_imperial_green
 		}
@@ -2007,10 +2024,35 @@ country_event = {
 				}
 				cede_province = L71
 			}
+			L71 = {
+				country_event = { id = flavour_khugra.5 }
+			}
 			remove_estate_privilege = estate_burghers_war_of_colours_treacherous_gold
 		}
 		set_country_flag = khugra_war_of_colours_culminates
-		ai_chance = { factor = 1 }
+		ai_chance = { 
+			factor = 1 
+			modifier = {
+				factor = 2
+				has_opinion = {
+					who = event_target:red_party
+					value = 100
+				}
+			}
+
+			modifier = {
+				factor = 2
+				marriage_with = event_target:red_party
+			}
+
+			modifier = {
+				factor = 0.5
+				OR = {
+					is_rival = event_target:red_party
+					is_enemy = event_target:red_party
+				}
+			}
+		}
 	}
 	option = { #remain independent
 		trigger = {
