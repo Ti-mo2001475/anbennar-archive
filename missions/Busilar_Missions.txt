@@ -201,14 +201,14 @@ col_1 = {
 			while = {
 				limit = { 
 					check_variable = {
-						which = A29_rav_dev_clicks
+						which = busilar_rav_dev_clicks
 						value = 1
 					}
 				}
 				change_innovativeness = 0.5
 				change_variable = {
-					which = A29_rav_dev_clicks
-					value = -1
+					which = busilar_rav_dev_clicks
+					value = -0.5
 				}
 			}
 			hidden_effect = {
@@ -1163,11 +1163,18 @@ col_2 = {
 		icon = pontifical_universities
 		position = 15
 		required_missions = { A29_lions_might } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				AND = {
+					has_building = cathedral 
+					has_building = university 
+				}
+			}
+		} 
 
 		trigger = {
 			has_country_modifier = holy_research 
-
 			num_of_owned_provinces_with = {
 				value = 50 
 				has_building = cathedral 
@@ -1658,11 +1665,11 @@ col_3 = {
 					clr_province_flag = dip_developed_by_owner
 				}
 			}
-			complex_dynamic_effect = { #i fucking hate these things, why did I use it, it doesn't even workcomplex_dynamic_effect 
+			complex_dynamic_effect = { #i fucking hate these things, why did I use it, it doesn't even work
 				first_custom_tooltip = A29_land_and_sea_4_tt
 				first_limit = "
-				barracks = 5
-				dock = 5
+                num_of_owned_provinces_with = { has_manpower_building_trigger = yes value = 5 }
+                num_of_owned_provinces_with = { has_dock_building_trigger = yes value = 5 }
 				"
 				first_effect = "
 				add_country_modifier = {
@@ -1676,11 +1683,11 @@ col_3 = {
 					which = A29_dock_value
 				}
 				NOT = {
-					barracks = 5
-					dock = 5
+					num_of_owned_provinces_with = { has_manpower_building_trigger = yes value = 5 }
+                	num_of_owned_provinces_with = { has_dock_building_trigger = yes value = 5 }
 				}
-				barracks = 3
-				dock = 3
+				num_of_owned_provinces_with = { has_manpower_building_trigger = yes value = 3 }
+                num_of_owned_provinces_with = { has_dock_building_trigger = yes value = 3 }
 				"
 				second_effect = "
 				add_country_modifier = {
@@ -1688,7 +1695,8 @@ col_3 = {
 					duration = -1
 				}"
 				third_custom_tooltip = A29_land_and_sea_2_tt
-				third_limit = "check_variable = {
+				third_limit = "
+					check_variable = {
 						which = A29_dock_value
 						which = A29_barracks_value
 					}
@@ -2177,7 +2185,6 @@ col_4 = {
 				change_religion = regent_court 
 				add_devastation = 30
 			}
-
 			364 = {
 				if = {
 					limit = {
@@ -2190,6 +2197,7 @@ col_4 = {
 				}
 			}
 			hidden_effect = {
+				set_global_flag = A29_no_honderaak_2
 				random_owned_province = {
 					limit = {
 						OR = {
@@ -2212,11 +2220,9 @@ col_4 = {
 				}
 				else = { emperor = { country_event = { id = flavor_honderaak.4 days = 1825 } } }
 			}
-
-			custom_tooltip = A29_gnolls_more_like_bolls_tt
-
+			custom_tooltip = A29_gnolls_revolt_tt
 			large_decrease_of_gnollish_tolerance_effect = yes
-		 } 
+		} 
 	}
 
 	A29_restore_the_union = {
@@ -2491,39 +2497,23 @@ col_4 = {
 
 		effect = {
 			custom_tooltip = A29_ardimya_investment
-			while = {
+			every_owned_province = {
 				limit = {
-					NOT = {
-						num_of_owned_provinces_with = {
-							value = 15
-							has_province_modifier = A29_ardimyan_investments
-						}
-					}
-					ardimya_region = {
-						type = any
-						country_or_non_sovereign_subject_holds = ROOT
-						has_dock_building_trigger = yes 
-						has_shipyard_building_trigger = yes 
-						base_production = 4 
-						NOT = {
-							has_province_flag = A29_ardimyan_investments_count
-						}
+					region = ardimya_region
+					has_dock_building_trigger = yes 
+					has_shipyard_building_trigger = yes
+					base_production = 4
+				}
+				ROOT = {
+					change_variable = {
+						which = A29_ardi_count
+						value = 1
 					}
 				}
-				random_province = {
-					limit = {
-						country_or_non_sovereign_subject_holds = ROOT
-						has_dock_building_trigger = yes 
-						has_shipyard_building_trigger = yes 
-						base_production = 4 
-						NOT = {
-							has_province_flag = A29_ardimyan_investments_count
-						}
-						region = ardimya_region
-					}
-					set_province_flag = A29_ardimyan_investments_count
-				}
-				random_owned_province = {
+			}
+			for_variable_amount = {
+				variable = A29_ardi_count
+				effect = "random_owned_province = {
 					limit = {
 						region = businor_region
 						NOT = {
@@ -2535,7 +2525,7 @@ col_4 = {
 						name = A29_ardimyan_investments
 						duration = -1
 					}
-				}
+				}"
 			}
 			ringlet_isles_region = { add_permanent_claim = ROOT } 
 			bedaphire_area = { add_permanent_claim = ROOT }
@@ -2726,7 +2716,7 @@ col_4 = {
 			A29_plunder_the_pillars
 		}
 		provinces_to_highlight = {  
-
+			has_any_holohana = yes
 		} 
 
 		trigger = { 
@@ -3510,26 +3500,22 @@ col_5 = {
 					development = 15 
 				}
 			}
-
 			num_of_owned_provinces_with = {
 				value = 25 
-				has_any_mechanim_pop_trigger = yes 
+				fast_has_pop_of_race = { race = mechanim }
 			}
 		} 
 
 		effect = {
-			custom_tooltip = A29_mechsploitation_tt 
+			custom_tooltip = A29_mechanim_exploitation_tt 
 			hidden_effect = {
 				every_owned_province = {
 					limit = {
 						OR = {
 							has_building = automatory 
-
 							any_neighbor_province = {
-								AND = {
-									has_building = automatory 
-									owned_by = ROOT 
-								}
+								has_building = automatory 
+								owned_by = ROOT 
 							}
 						}
 					}
@@ -3537,7 +3523,6 @@ col_5 = {
 						name = A29_robot_work_for_free
 						duration = -1 
 					}
-
 				}
 			}
 			define_advisor = {

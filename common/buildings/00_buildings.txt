@@ -4670,7 +4670,7 @@ automatory = {
 			}
 			every_neighbor_province = {
 				limit = {
-					owned_by = FROM 
+					owner = { mission_completed = A29_new_labour }
 				}
 				add_province_modifier = {
 					name = A29_robot_work_for_free 
@@ -4687,6 +4687,30 @@ automatory = {
 			anb_manufactory_discount_remove = yes
 		}
 		anbennar_building_effect = yes
+		if = {
+			limit = {
+				owner = { mission_completed = A29_new_labour }
+				NOT = {
+					any_neighbor_province = {
+						owner = { mission_completed = A29_new_labour }
+						has_building = automatory
+					}
+				}
+			}
+			remove_province_modifier = A29_robot_work_for_free
+			every_neighbor_province = {
+				limit = {
+					owner = { mission_completed = A29_new_labour }
+					NOT = {
+						any_neighbor_province = {
+							owner = { mission_completed = A29_new_labour }
+							has_building = automatory
+						}
+					}
+				}
+				remove_province_modifier = A29_robot_work_for_free
+			}
+		}
 	}
 
 	on_construction_started = {  #Fires when you start the construction,  ROOT - Province FROM - Country that started 1.35
