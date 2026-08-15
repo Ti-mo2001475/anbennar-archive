@@ -3,6 +3,7 @@ warlord_of_haless_check = { #Am I the new Warlord of Haless?
 		limit = {
 			capital_scope = { continent = asia NOT = { superregion = forbidden_lands_superregion } } #independent nation with capital in Haless
 			is_subject = no
+			NOT = { has_global_flag = delay_warlord_of_haless } #Prevents errors in sundering
 			OR = {
 				NOT = { has_saved_global_event_target = warlord_of_haless }
 				AND = {
@@ -20,6 +21,7 @@ anti_warlord_of_haless_check = { #Am I no longer the Warlord of Haless?
 		limit = {
 			has_saved_global_event_target = warlord_of_haless
 			tag = event_target:warlord_of_haless #I am the current Warlord
+			NOT = { has_global_flag = delay_warlord_of_haless } #Prevents errors in sundering
 			OR = { #I am disqualified on one of the following grounds
 				capital_scope = { #My capital is outside Haless
 					NOT = {
