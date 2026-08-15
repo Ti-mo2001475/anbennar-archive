@@ -202,7 +202,7 @@ col_1 = {
 				limit = { 
 					check_variable = {
 						which = busilar_rav_dev_clicks
-						value = 1
+						value = 0.5
 					}
 				}
 				change_innovativeness = 0.5
@@ -2247,7 +2247,7 @@ col_4 = {
 					NOT = {
 						AND = {
 							owned_by = ROOT 
-							unrest = 0 
+							NOT = { unrest = 0 }
 						}
 					}
 				}
@@ -2497,17 +2497,19 @@ col_4 = {
 
 		effect = {
 			custom_tooltip = A29_ardimya_investment
-			every_owned_province = {
-				limit = {
-					region = ardimya_region
-					has_dock_building_trigger = yes 
-					has_shipyard_building_trigger = yes
-					base_production = 4
-				}
-				ROOT = {
-					change_variable = {
-						which = A29_ardi_count
-						value = 1
+			hidden_effect = {
+				every_owned_or_subject_province = {
+					limit = {
+						region = ardimya_region
+						has_dock_building_trigger = yes 
+						has_shipyard_building_trigger = yes
+						base_production = 4
+					}
+					ROOT = {
+						change_variable = {
+							which = A29_ardi_count
+							value = 1
+						}
 					}
 				}
 			}
