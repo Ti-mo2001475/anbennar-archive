@@ -1402,10 +1402,10 @@ declarewar = {
 				has_country_flag = J84_lizardfolk_expedition_flag
 				FROM = {
 					OR = {
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 						num_of_owned_provinces_with = {
 							value = 10
-							culture_group = lizardfolk
+							culture_is_lizardfolk = yes
 						}
 					}
 				}
@@ -4443,6 +4443,42 @@ insultaction = {
 			dragon_turtle_change_friendship = { dragon_turtle = kealakys_ever_hungry amount = -5 }
 		}
 		else = { dragon_turtle_change_friendship = { dragon_turtle = kealakys_ever_hungry amount = -3 } }
+		
+		# Bardic Magic
+		if = {
+			limit = {
+				has_country_modifier = enchantment_1_aria_of_affection_spell_mod
+				OR = {
+					reverse_has_opinion_modifier = {
+						who = FROM
+						modifier = scornfully_insulted
+					}
+					NOT = { has_dlc = "Dharma" }
+				}
+			}
+			FROM = {
+				remove_opinion = {
+					who = ROOT
+					modifier = scornfully_insulted
+				}
+				remove_opinion = {
+					who = ROOT
+					modifier = insulted
+				}
+				add_opinion = {
+					who = ROOT
+					modifier = enchantment_bardic_aria_of_affection_reverse_insult
+				}
+				add_favors = {
+					who = ROOT
+					amount = 20
+				}
+				country_event = { # This will lose some trust and check trust threshold
+					id = magic_spell.406
+					days = 1825 # 5 years
+				}
+			}
+		}
 	}
 }
 

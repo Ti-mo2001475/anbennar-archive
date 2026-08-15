@@ -706,7 +706,7 @@ settled_horde = {
 	valid_for_nation_designer = yes
 	nation_designer_cost = 0
 	nation_designer_trigger = {
-	OR = {
+		OR = {
 			culture_group = giantkind
 			culture_group = ogre
 			culture_group = kobold
@@ -1158,8 +1158,7 @@ ogre_horde = {
 	raze_province = yes
 	nation_designer_cost = 0
 	nation_designer_trigger = {
-		culture_group = ogre
-		NOT = { primary_culture = horned_ogre }
+		is_western_ogre_primary_culture = yes
 	}
 
 	lock_level_when_selected = yes
@@ -2406,13 +2405,10 @@ tribe_becomes_monarchy_reform = {
 		if = {
 			limit = {
 				OR = {
-					culture_group = kobold
+					is_cannorian_kobold_primary_culture = yes
+					primary_culture = darkscale_kobold
 					culture_group = goblin
 					culture_group = gnomish
-				}
-				NOT = {
-					primary_culture = goldscale_kobold
-					primary_culture_insyaa_kobold = yes
 				}
 				NOT = { 
 					has_country_flag = artificery_unlocked
@@ -2556,13 +2552,10 @@ tribe_becomes_republic_reform = {
 		if = {
 			limit = {
 				OR = {
-					culture_group = kobold
+					is_cannorian_kobold_primary_culture = yes
+					primary_culture = darkscale_kobold
 					culture_group = goblin
 					culture_group = gnomish
-				}
-				NOT = {
-					primary_culture = goldscale_kobold
-					primary_culture_insyaa_kobold = yes
 				}
 				NOT = { 
 					has_country_flag = artificery_unlocked
@@ -2732,13 +2725,10 @@ tribe_becomes_theocracy_reform = {
 		if = {
 			limit = {
 				OR = {
-					culture_group = kobold
+					is_cannorian_kobold_primary_culture = yes
+					primary_culture = darkscale_kobold
 					culture_group = goblin
 					culture_group = gnomish
-				}
-				NOT = {
-					primary_culture = goldscale_kobold
-					primary_culture_insyaa_kobold = yes
 				}
 				NOT = { 
 					has_country_flag = artificery_unlocked
@@ -3754,7 +3744,7 @@ crocodilian_unity = {
 			effect = "
 			random_owned_province = {
 				limit = {
-					culture_group = lizardfolk
+					culture_is_lizardfolk = yes
 					NOT = { culture = ashhana_lizardfolk }
 				}
 				change_culture = ashhana_lizardfolk
