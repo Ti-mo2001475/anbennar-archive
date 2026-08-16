@@ -31,9 +31,7 @@ country_event = {
 		name = monstrous.0.a
 		if = { #Lizardfolk handler
 			limit = {
-				culture_group = lizardfolk
-				NOT = { primary_culture = ashhana_lizardfolk }
-				NOT = { tag = S34 } #Cunning River Eel
+				is_mainline_lizardfolk_culture = yes
 			}
 			random_list = { #change this if/when the global handler is put in another pulse. It is intended here to be 1 event every 3 years
 				1 = { country_event = { id = monstrous.200 } }
@@ -42,7 +40,7 @@ country_event = {
 		}
 		else_if = { #Harpy handler
 			limit = {
-				culture_group = harpy
+				culture_is_harpy = yes
 			}
 			country_event = { id = monstrous.399 }
 		}
@@ -368,15 +366,13 @@ country_event = { #Selects the event to end demonsterization
 	option = {
 		if = {
 			limit = { #Lizardfolk
-				culture_group = lizardfolk
-				NOT = { primary_culture = ashhana_lizardfolk }
-				NOT = { tag = S34 }
+				is_mainline_lizardfolk_culture = yes
 			}
 			country_event = { id = monstrous.216 }
 		}
 		else_if = {
 			limit = { #Harpies
-				culture_group = harpy
+				culture_is_harpy = yes
 			}
 			country_event = { id = monstrous.311 }
 		}
@@ -430,7 +426,7 @@ country_event = {
 	option = {
 		if = {
 			limit = { #Harpies
-				culture_group = harpy
+				culture_is_harpy = yes
 			}
 			country_event = { id = monstrous.310 }
 		}
@@ -601,7 +597,7 @@ country_event = {
 					}
 					AND = {
 						religion = rinta_seekers
-						NOT = { ROOT = { culture_group = lizardfolk } }
+						NOT = { ROOT = { culture_is_lizardfolk = yes } }
 					}
 					AND = {
 						religion = yudunyovi
@@ -828,7 +824,7 @@ country_event = {
 						}
 						AND = {
 							religion = rinta_seekers
-							NOT = { ROOT = { culture_group = lizardfolk } }
+							NOT = { ROOT = { culture_is_lizardfolk = yes } }
 						}
 						AND = {
 							religion = yudunyovi
@@ -858,7 +854,7 @@ country_event = {
 						}
 						AND = {
 							religion = rinta_seekers
-							NOT = { ROOT = { culture_group = lizardfolk } }
+							NOT = { ROOT = { culture_is_lizardfolk = yes } }
 						}
 						AND = {
 							religion = yudunyovi
@@ -1394,7 +1390,7 @@ country_event = {
 						}
 						AND = {
 							religion = rinta_seekers
-							NOT = { ROOT = { culture_group = lizardfolk } }
+							NOT = { ROOT = { culture_is_lizardfolk = yes } }
 						}
 						AND = {
 							religion = yudunyovi
@@ -1902,7 +1898,7 @@ country_event = {
 							}
 							AND = {
 								religion = rinta_seekers
-								NOT = { ROOT = { culture_group = lizardfolk } }
+								NOT = { ROOT = { culture_is_lizardfolk = yes } }
 							}
 							AND = {
 								religion = yudunyovi
@@ -1937,7 +1933,7 @@ country_event = {
 							}
 							AND = {
 								religion = rinta_seekers
-								NOT = { ROOT = { culture_group = lizardfolk } }
+								NOT = { ROOT = { culture_is_lizardfolk = yes } }
 							}
 							AND = {
 								religion = yudunyovi
@@ -1972,7 +1968,7 @@ country_event = {
 							}
 							AND = {
 								religion = rinta_seekers
-								NOT = { ROOT = { culture_group = lizardfolk } }
+								NOT = { ROOT = { culture_is_lizardfolk = yes } }
 							}
 							AND = {
 								religion = yudunyovi
@@ -2395,11 +2391,11 @@ country_event = {
 					country_event = { id = monstrous.212 }
 				}
 				1 = { #Our Favourite Foreigner (repeatable)
-					trigger = { any_known_country = { NOT = { culture_group = lizardfolk } } }
+					trigger = { any_known_country = { NOT = { culture_is_lizardfolk = yes } } }
 					country_event = { id = monstrous.213 }
 				}
 				1 = { #Formal Diplomatic Recognition (repeatable)
-					trigger = { any_known_country = { NOT = { culture_group = lizardfolk } total_development = 100 } }
+					trigger = { any_known_country = { NOT = { culture_is_lizardfolk = yes } total_development = 100 } }
 					country_event = { id = monstrous.214 }
 				}
 			}
@@ -2881,7 +2877,7 @@ country_event = { #Legacy of Karassk
 						culture_group = baashidi
 						capital_scope = { region = horashesh_region }
 					}
-					NOT = { culture_group = lizardfolk }
+					NOT = { culture_is_lizardfolk = yes }
 				}
 				add_opinion = {
 					who = ROOT
@@ -2918,7 +2914,7 @@ country_event = { #Legacy of Karassk
 						culture_group = baashidi
 						capital_scope = { region = horashesh_region }
 					}
-					NOT = { culture_group = lizardfolk }
+					NOT = { culture_is_lizardfolk = yes }
 				}
 				add_opinion = {
 					who = ROOT
@@ -2952,7 +2948,7 @@ country_event = { #Legacy of Karassk
 						culture_group = baashidi
 						capital_scope = { region = horashesh_region }
 					}
-					NOT = { culture_group = lizardfolk }
+					NOT = { culture_is_lizardfolk = yes }
 				}
 				add_opinion = {
 					who = ROOT
@@ -2989,7 +2985,7 @@ country_event = { #Legacy of Karassk
 						culture_group = baashidi
 						capital_scope = { region = horashesh_region }
 					}
-					NOT = { culture_group = lizardfolk }
+					NOT = { culture_is_lizardfolk = yes }
 				}
 				add_opinion = {
 					who = ROOT
@@ -3052,7 +3048,7 @@ country_event = { #Our Favourite Foreigner (repeatable)
 	immediate = {
 		hidden_effect = {
 			random_known_country = {
-				limit = { NOT = { culture_group = lizardfolk } }
+				limit = { NOT = { culture_is_lizardfolk = yes } }
 				save_event_target_as = target_country
 			}
 		}
@@ -3089,7 +3085,7 @@ country_event = { #Formal Diplomatic Recognition (repeatable)
 	immediate = {
 		hidden_effect = {
 			random_known_country = {
-				limit = { NOT = { culture_group = lizardfolk } total_development = 100 }
+				limit = { NOT = { culture_is_lizardfolk = yes } total_development = 100 }
 				save_event_target_as = target_country
 			}
 		}
@@ -3295,7 +3291,7 @@ country_event = { #On Clipped Wings
 		hidden_effect = {
 			random_neighbor_country = {
 				limit = {
-					NOT = { culture_group = harpy }
+					NOT = { culture_is_harpy = yes }
 					low_tolerance_harpy_race_trigger = yes
 				}
 				save_event_target_as = harpy_enemies
@@ -3728,7 +3724,7 @@ country_event = { #The Harpy Host
 				limit = {
 					NOT = {
 						has_country_modifier = monstrous_nation
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				save_event_target_as = target_country
