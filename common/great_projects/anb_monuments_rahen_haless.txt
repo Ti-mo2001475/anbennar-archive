@@ -1510,7 +1510,13 @@ palace_of_divine_call = {
 		on_upgraded = {
 			if = {
 				limit = {
-					owner = { tag = Z66 }
+					OR = {
+						tag = Y09
+						AND = {
+							tag = Z66
+							was_tag = Y09
+						}
+					}
 				}
 				custom_tooltip = palace_of_divine_call_eunuch_assassination_prevention_TT
 			}
@@ -4830,11 +4836,13 @@ thousand_words_assembly = {
 		on_upgraded = {
 			custom_tooltip = thousand_words_assembly_yanszin_buff_1_TT
 			hidden_effect = {
-				every_owned_province = {
-					limit = { province_group = yanszin_heartlands }
-					add_province_modifier = {
-						name = thousand_words_assembly_yanszin_buff_1
-						duration = -1
+				owner = {
+					every_owned_province = {
+						limit = { province_group = yanszin_heartland_group }
+						add_province_modifier = {
+							name = thousand_words_assembly_yanszin_buff_1
+							duration = -1
+						}
 					}
 				}
 			}
@@ -4876,7 +4884,7 @@ thousand_words_assembly = {
 				owner = {
 					every_owned_province = {
 						limit = {
-							has_province_modifier = thousand_words_assembly_yanszin_buff_1
+							limit = { province_group = yanszin_heartland_group }
 						}
 						remove_province_modifier = thousand_words_assembly_yanszin_buff_1
 						add_province_modifier = {
@@ -4925,7 +4933,7 @@ thousand_words_assembly = {
 				owner = {
 					every_owned_province = {
 						limit = {
-							has_province_modifier = thousand_words_assembly_yanszin_buff_2
+							limit = { province_group = yanszin_heartland_group }
 						}
 						remove_province_modifier = thousand_words_assembly_yanszin_buff_2
 						add_province_modifier = {
