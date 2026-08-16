@@ -790,9 +790,19 @@ has_any_ardimyan_legacy = {
 }
 
 can_use_imperial_arena_scripted_trigger = {
-	owner = { religion = fangaulan_pantheon }
-	culture_group = west_sarhaly
-	has_owner_accepted_culture = yes
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = imperial_arena_build_bypass_flag
+			}
+		}
+		always = yes
+	}
+	else = {
+		owner = { religion = fangaulan_pantheon }
+		culture_group = west_sarhaly
+		has_owner_accepted_culture = yes
+	}
 }
 
 can_use_aur_kes_akasik = {
