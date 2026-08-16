@@ -868,7 +868,7 @@ country_event = {
 		has_estate = estate_ahati
 		any_owned_province = {
 			OR = {
-				culture_group = gnollish
+				culture_is_gnollish = yes
 				has_gnollish_minority_trigger = yes
 			}
 		}
@@ -879,7 +879,7 @@ country_event = {
 			random_owned_province = {
 				limit = {
 					OR = {
-						culture_group = gnollish
+						culture_is_gnollish = yes
 						has_gnollish_minority_trigger = yes
 					}
 				}
@@ -893,7 +893,7 @@ country_event = {
 	option = {
 		name = ahati_events.41.a
 		if = {
-			limit = { event_target:event_province = { culture_group = gnollish } }
+			limit = { event_target:event_province = { culture_is_gnollish = yes } }
 			add_mil_power = -50
 			add_yearly_manpower = -0.25
 			add_estate_loyalty = { estate = estate_ahati loyalty = -10 }
@@ -908,12 +908,12 @@ country_event = {
 	#let them
 	option = {
 		name = ahati_events.41.b
-		trigger = { NOT = { culture_group = gnollish } }
+		trigger = { NOT = { culture_is_gnollish = yes } }
 		add_mandate = -2
 		medium_decrease_of_gnollish_tolerance_effect = yes
 		event_target:event_province = {
 			if = {
-				limit = { culture_group = gnollish }
+				limit = { culture_is_gnollish = yes }
 				change_culture = hapremiti
 				if = {
 					limit = { religion_group = gnollish }
@@ -929,7 +929,7 @@ country_event = {
 	#try to work it out
 	option = {
 		name = ahati_events.41.c
-		trigger = { culture_group = gnollish }
+		trigger = { culture_is_gnollish = yes }
 		highlight = yes
 		add_mandate = -2
 		add_dip_power = -75
@@ -1234,6 +1234,9 @@ country_event = {
 				estate_influence = { estate = estate_ahati influence = 40 }
 			}
 		}
+		NOT = {
+			is_or_was_tag = { tag = A29 }
+		}
 	}
 
 	immediate = {
@@ -1319,6 +1322,14 @@ country_event = {
 		466 = { add_core = U04 } #aakheta
 		464 = { add_core = U04 } #hapkes
 		467 = { add_core = U04 } #puhuu
+		if = {
+			limit = {
+				has_global_flag = A29_ahati_a_mad_i
+			}
+			kheterata_region = {
+				add_core = U04 
+			} #Kheterata
+		}
 
 		hidden_effect = { 
 			if = {
@@ -2500,6 +2511,16 @@ country_event = {
 				add_dip_power = 100
 				add_mil_power = 100
 
+				if = {
+					limit = {
+						has_global_flag = A29_ahati_a_mad_i
+					}
+					add_country_modifier = {
+						name = A29_ahati_a_stab_i
+						duration = -1 
+					}
+				}
+
 				##troops
 				#initial army
 				if = {
@@ -3154,6 +3175,16 @@ country_event = {
 			}
 			466 = { # Aakheta
 				change_religion = nirakhetist
+			}
+		}
+		if = {
+			limit = {
+				is_or_was_tag = {
+					tag = A29 
+				}
+			}
+			country_event = {
+				id = busilar.18 
 			}
 		}
 		ai_chance = { factor = 100 }
