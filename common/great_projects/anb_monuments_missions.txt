@@ -701,6 +701,7 @@ elikhander_pyramid = {
 
 	#what to do when it's built
 	on_built = {
+		show_ambient_object = pyramids_of_elikhand
 	}
 
 	#what to do when it's destroyed
@@ -901,7 +902,6 @@ elikhander_orbs = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		FROM = { ruler_is_powerful_mage = yes }
 		OR = {
 			religion_group = khetist
 			religion = dalcabba
@@ -913,7 +913,6 @@ elikhander_orbs = {
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		FROM = { ruler_is_powerful_mage = yes }
 		OR = {
 			religion_group = khetist
 			religion = dalcabba
@@ -975,11 +974,23 @@ elikhander_orbs = {
 
 		#what modifiers are added to the country when we have this project here on this tier
 		country_modifiers = {
-			all_power_cost = -0.01
+			mages_mana_regen = 0.05
 		}
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+		}
+
+		conditional_modifier = {
+			trigger = {
+				custom_trigger_tooltip = {
+					tooltip = elikhander_orb_magical_infrastructure_tt
+					owner = { at_least_magical_infrastructure_level_2 = yes }
+				}
+			}
+			modifier = {
+				mages_mana_regen = 0.05
+			}
 		}
 	}
 
@@ -1004,12 +1015,24 @@ elikhander_orbs = {
 
 		#what modifiers are added to the country when we have this project here on this tier
 		country_modifiers = {
-			all_power_cost = -0.025
+			mages_mana_regen = 0.06
 			mages_loyalty_modifier = 0.05
 		}
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+		}
+
+		conditional_modifier = {
+			trigger = {
+				custom_trigger_tooltip = {
+					tooltip = elikhander_orb_magical_infrastructure_tt
+					owner = { at_least_magical_infrastructure_level_2 = yes }
+				}
+			}
+			modifier = {
+				mages_mana_regen = 0.06
+			}
 		}
 	}
 
@@ -1034,12 +1057,24 @@ elikhander_orbs = {
 
 		#what modifiers are added to the country when we have this project here on this tier
 		country_modifiers = {
-			all_power_cost = -0.05
+			mages_mana_regen = 0.075
 			mages_loyalty_modifier = 0.1
 		}
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+		}
+
+		conditional_modifier = {
+			trigger = {
+				custom_trigger_tooltip = {
+					tooltip = elikhander_orb_magical_infrastructure_tt
+					owner = { at_least_magical_infrastructure_level_2 = yes }
+				}
+			}
+			modifier = {
+				mages_mana_regen = 0.075
+			}
 		}
 	}
 }

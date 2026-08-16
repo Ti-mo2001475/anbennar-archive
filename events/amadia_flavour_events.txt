@@ -1,0 +1,214 @@
+# amadia flavour events
+namespace = amadia_flavour
+
+########################### AMADIA FLAVOUR EVENTS ############################
+
+country_event = { # Shipwrecked Elves
+	id = amadia_flavour.1
+	title = amadia_flavour.1.t
+	desc = amadia_flavour.1.d
+	picture = DHOW_AT_SEA_eventPicture
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	trigger = {
+		culture_group = amadian_ruinborn_elf
+		any_owned_province = {
+			region = amadia_region
+			has_port = yes 
+		}
+		NOT = { #Not discovered Alecand or Devand
+			any_known_country = {
+				capital_scope = {
+					superregion = kheionai_superregion
+				}
+				culture_group = kheionai_ruinborn_elf
+			}
+		}
+		OR = { #Year is at least 1530 or a Kheion has discovered Amadian coast
+			is_year = 1530
+			any_country = {
+				capital_scope = { superregion = kheionai_superregion }
+				culture_group = kheionai_ruinborn_elf
+				amadia_region = {
+					has_discovered = PREV
+					has_port = yes
+				}
+			}
+		} 
+	}
+
+	mean_time_to_happen = {
+		days = 1
+		modifier = {
+			factor = 5.0
+			is_year = 1530
+		}
+	}
+	
+	option = { # Help them repair the ship and send them home with one navigator to guide them.
+		name = amadia_flavour.1.a
+
+		add_prestige = 10
+		add_manpower = -0.001
+
+		hidden_effect = {
+			country_event = {
+				id = amadia_flavour.2 # The Blue Ones Return
+				days = 365 # in 1 year
+			}
+		}
+	}
+
+	option = { # These elves can't be trusted. Kill them and take their armor and loot!
+		name = amadia_flavour.1.b
+
+		add_treasury = 50
+		add_country_modifier = {
+			name = amadia_steel_armors
+			duration = 3650 # 10 years
+		}
+	}
+}
+
+country_event = { # The Blue Ones Return
+	id = amadia_flavour.2
+	title = amadia_flavour.2.t
+	desc = amadia_flavour.2.d
+	picture = indiangfx_SHIP_SAILING_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			2728 = { 
+				owner = { 
+					save_event_target_as = kheionai_country
+				} 
+			}
+		}
+	}
+
+	option = { # Amazing!
+		name = amadia_flavour.2.a
+
+		arpedifer_area = { 
+			discover_country = ROOT # Discover Arpedifer area
+		}
+		
+		1711 = { # You and owner of Arpedifer discover sea tiles along the Kaydhano sea
+			discover_country = ROOT
+			discover_country = event_target:kheionai_country
+		}
+		1549 = {
+			discover_country = ROOT
+			discover_country = event_target:kheionai_country
+		}
+		1550 = {
+			discover_country = ROOT
+			discover_country = event_target:kheionai_country
+		}
+		1552 = {
+			discover_country = ROOT
+			discover_country = event_target:kheionai_country
+		}
+		1553 = {
+			discover_country = ROOT
+			discover_country = event_target:kheionai_country
+		}
+
+		capital_scope = { # They discover our capital
+			discover_country = event_target:kheionai_country
+		}
+
+		random_owned_province = { # And province where their ship was wrecked
+			limit = {
+				region = amadia_region
+				has_port = yes
+			}
+			discover_country = event_target:kheionai_country
+		}
+		
+		add_treasury = 100
+		define_advisor = {
+			type = trader
+			culture = arpebhen
+			religion = kheionism
+			skill = 2
+			cost_multiplier = 0.5
+		}
+	}
+}
+
+country_event = { # Trade with the Kheionai
+	id = amadia_flavour.3
+	title = amadia_flavour.3.t
+	desc = amadia_flavour.3.d
+	picture = TOLLS_SHIP_CARGO_eventPicture
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	trigger = {	
+		culture_group = amadian_ruinborn_elf
+		num_of_centers_of_trade = 1
+		any_known_country = {
+			capital_scope = {
+				superregion = kheionai_superregion
+			}
+			culture_group = kheionai_ruinborn_elf
+		}
+		OR = {
+			damestear = 1
+			precursor_relics = 1
+			cocoa = 1
+		}
+	}
+	
+	option = { # Trade for knowledge
+		name = amadia_flavour.3.a
+
+		if = {
+			limit = {
+				any_known_country = {
+					capital_scope = {
+						superregion = kheionai_superregion
+					}
+						institution_difference = {
+						who = ROOT
+						value = 1
+					}
+				}
+			}
+			capital_scope = {
+				add_next_institution_embracement = 25
+			}
+		}
+
+		add_country_modifier = {
+			name = amadia_trade_for_knowledge
+			duration = 3650 # 10 years
+		}
+	}
+
+	option = { # Trade for gold
+		name = amadia_flavour.3.b
+
+		add_years_of_income = 0.5
+
+		add_country_modifier = {
+			name = amadia_trade_for_gold
+			duration = 3650 # 10 years
+		}
+	}
+
+	option = { # Trade with locals
+		name = amadia_flavour.3.c
+
+		add_mercantilism = 3
+
+		add_country_modifier = {
+			name = amadia_trade_with_locals
+			duration = 3650 # 10 years
+		}
+	}
+}

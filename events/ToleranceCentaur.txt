@@ -524,11 +524,11 @@ country_event = {
 			if = {
 				limit = {
 					any_owned_province = {
-						culture_group = centaur
+						culture_is_centaur = yes
 					}
 				}
 				random_owned_province = {
-					limit = { culture_group = centaur }
+					limit = { culture_is_centaur = yes }
 					save_event_target_as = centaur_advisor_culture_province
 				}
 				set_country_flag = centaur_advisor_culture_set
@@ -1396,6 +1396,14 @@ country_event = {
 	picture = DEATH_OF_HEIR_eventPicture
 
 	is_triggered_only = yes
+	immediate = {
+		random_owned_province = {
+			limit = {
+				is_in_capital_area = yes 
+			}
+			save_event_target_as = centaur_rebel_province
+		}
+	}
 
 	# Shouldn't have tried to ride the Centaur >:(
 	option = {
@@ -1467,6 +1475,7 @@ country_event = {
 	# Punish Nobles. Enshrine Protections for Centaurs.
 	option = {
 		name = centaur_tolerance_events.12.c
+		goto = centaur_rebel_province
 		ai_chance = {
 			factor = 100
 			modifier = {
@@ -1484,10 +1493,7 @@ country_event = {
 			duration = 3650
 			desc = centaur_punished_aristocracy_for_centaur_abuse
 		}
-		random_owned_province = {
-			limit = {
-				is_in_capital_area = yes 
-			}
+		event_target:centaur_rebel_province = {
 			spawn_rebels = {
 				type = noble_rebels
 				size = 2
