@@ -33,16 +33,16 @@ country_event = {
 			set_province_flag = aPUI_deathwinds_flag
 			set_aPUI_cap = { name = deathwinds amount = 108 } #9 years in months (9*12=108)
 			change_aPUI_var_provincial = { name = deathwinds amount = 95 } #Next deathwind is 13 months away (108-13=95)
-			set_variable = { deathwinds_months_var = 13 } #Set to time left until next Deathwind, 13 months
-			# set_variable = { deathwinds_active_months_var = -71 } #Can ignore. Won't be shown while negative anyway
 			
 			#Define variables to appropriate values for UI tooltips
 			set_variable = { deathwinds_warded_var = -1 }
 			set_variable = { deathwinds_var = -1 }
 			set_variable = { deathwinds_rand_var = -1 }
-			set_variable = { deathwinds_previous_var = 8 }
+			set_variable = { deathwinds_previous_var = 8 } #Lore!
 			set_variable = { deathwinds_high_level_var = 4 }
 			set_variable = { deathwinds_low_level_var = 1 }
+			set_variable = { deathwinds_months_var = 13 } #Time left until next Deathwind, 13 months
+			set_variable = { deathwinds_active_months_var = -71 }
 		}
 		hidden_effect = {
 			#Do the first storm on Jan 1st 1446
@@ -489,8 +489,8 @@ province_event = {
 
 	option = {
 		name = kheionai.3.b
-		trigger = { has_not_full_deathwinds_system = yes }
-		disable_deathwind_events = yes
+		trigger = { owner = { has_not_full_deathwinds_system = yes } }
+		owner = { disable_deathwind_events = yes }
 	}
 }
 

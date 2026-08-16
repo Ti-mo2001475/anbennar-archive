@@ -3926,8 +3926,9 @@ merc_ostavranan = {
 	artillery_weight = 0
 	sprites = { green_orc_sprite_pack } 
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
 		}
 		has_unlocked_merc_company = { merc_company = merc_ostavranan } 
 	}
@@ -3951,12 +3952,6 @@ merc_lelanan_daughters_of_lel = {
 
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel }
-		NOT = { 
-			OR = {
-				has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel_upgraded_1 }
-				has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel_upgraded_2 }
-			}
-		}
 	}
 
 	cost_modifier = 0.5
@@ -3979,7 +3974,6 @@ merc_lelanan_daughters_of_lel_upgraded_1 = {
 
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel_upgraded_1 }
-		NOT = { has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel_upgraded_2 } }
 	}
 
 	cost_modifier = 0.5

@@ -1,0 +1,1000 @@
+
+
+namespace = flavour_kaino
+
+#Adze Looms, lose ironwood weapons modifier because adze poisoned all of em
+country_event = {
+	id = flavour_kaino.1
+	title = flavour_kaino.1.t
+	desc = flavour_kaino.1.d
+	picture = ANSHANTI_FIREARMS_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_country_flag = kaino_flag_cured_adze_poisoning }
+	}
+
+	option = {
+		name = flavour_kaino.1.a
+		remove_country_modifier = kaino_ironwood_weapons
+		add_country_modifier = {
+			name = kaino_adze_poisoning 
+			duration = -1
+		}
+	}
+}
+
+#That Faint Buzzing, all leaders of Maymunah found dead from adze poisoning
+country_event = {
+	id = flavour_kaino.2
+	title = flavour_kaino.2.t
+	desc = flavour_kaino.2.d
+	picture = AFRICAN_KING_MEDIATING_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.2.a
+		5751 = { add_nationalism = -20 }
+		5755 = { add_nationalism = -20 }
+		5757 = { add_nationalism = -20 }
+	}
+}
+
+#Free of Sin, Full of Flames, We're gonna kick Fangaula's ass, but also there's more people sick huh
+country_event = {
+	id = flavour_kaino.3
+	title = flavour_kaino.3.t
+	desc = flavour_kaino.3.d
+	picture = AFRICAN_BAD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.3.a
+		add_country_modifier = {
+			name = kaino_curious_disease
+			duration = -1
+		}
+		set_country_flag = kaino_can_begin_adze_pandemic
+		set_country_flag = kaino_can_click_decision_for_cure
+		hidden_effect = {
+			country_event = { id = flavour_kaino.13 days = 15000 }	#~500 months
+		}
+	}
+}
+
+#Safety in Death, Kaino talks bollocks about suffering
+country_event = {
+	id = flavour_kaino.4
+	title = flavour_kaino.4.t
+	desc = flavour_kaino.4.d
+	picture = AFRICAN_SOCIAL_GATHERING_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.4.a
+		set_country_flag = kaino_servants_to_the_suffering_dead
+		add_country_modifier = {
+			name = kaino_modifier_servants_to_the_suffering_dead
+			duration = 3650
+		}
+	}
+}
+
+
+#Kaino Koalition, fires when you have undead army
+country_event = {
+	id = flavour_kaino.6
+	title = flavour_kaino.6.t
+	desc = flavour_kaino.6.d
+	picture = UNDEAD_ARMY_eventPicture
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = flavour_kaino.6.a
+		#you gonna get dec'd on
+		country_event = {
+			id = flavour_kaino.7
+			days = 365
+		}
+	} 
+}
+
+#Kaino Koalition Fires
+country_event = {
+	id = flavour_kaino.7
+	title = flavour_kaino.7.t
+	desc = flavour_kaino.7.d
+	picture = MOSSI_CAVALRY_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		every_known_country = {
+			limit = { 
+				capital_scope = {
+					superregion = fangaula_superregion
+				}
+				NOT = {
+					is_subject_of = ROOT
+				}
+			}
+			set_country_flag = kaino_koalition_member
+		}
+	}
+	option = {
+		name = flavour_kaino.7.a
+		custom_tooltip = kaino_koalition_will_fire_tt
+		add_country_modifier = {
+			name = kaino_koalition_temp_bonus
+			duration = 1825
+		}
+		hidden_effect = {
+			add_ae_for_known_countries_with_limit = {
+				limit = "
+					has_country_flag = kaino_koalition_member
+					NOT = { is_subject = yes }
+				"
+				value = 60
+				apply_calc = no
+				effect = "
+					set_ai_attitude = { attitude = attitude_outraged who = ROOT }
+					form_coalition_against = ROOT
+				"
+			}
+			random_known_country = {
+				limit = { 
+					capital_scope = {
+						superregion = fangaula_superregion
+					}
+					has_country_flag = kaino_koalition_member
+					coalition_target = ROOT
+				}
+				declare_war_with_cb = {
+					casus_belli = cb_super_badboy
+					who = ROOT
+				}
+			}
+		}
+	}
+	after = {
+		hidden_effect = {
+			set_country_flag = kaino_koalition_fired
+		}	
+	}
+}
+
+country_event = { #kaino kills your ruler ad heir
+	id = flavour_kaino.8
+	title = flavour_kaino.8.t
+	desc = flavour_kaino.8.d
+	picture = SONGHAI_RULER_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.8.a
+		kill_ruler = yes
+		kill_heir = { }
+		add_manpower = 0.002
+		define_ruler = {
+			name = "Aya"
+   			dynasty = "Ebele"
+    		adm = 3
+    		dip = 5
+    		mil = 2
+    		age = 16
+    		claim = 95
+		}
+		add_ruler_personality = silver_tongue_personality
+		define_powerful_mage = { type = ruler necromancy = 2 enchantment = 1 }
+		add_exceptional_willpower = { years = 75 }
+		hidden_effect = {
+			country_event = {
+				id = flavour_kaino.9
+				days = 3650
+			}
+		}
+	}
+}
+
+country_event = { #kaino be like nobody understands me
+	id = flavour_kaino.9
+	title = flavour_kaino.9.t
+	desc = flavour_kaino.9.d
+	picture = NZINGHA_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.9.a
+		add_prestige = 10
+		country_event = {
+			id = flavour_kaino.10
+			days = 1825
+		}
+	}
+}
+
+country_event = {
+	id = flavour_kaino.10 #kaino says ai rabu u
+	title = flavour_kaino.10.t
+	desc = flavour_kaino.10.d
+	picture = NZINGHA_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.10.a
+		hidden_effect = { set_country_flag = kaino_unlock_romantic_skeleton_part_of_MT }
+		swap_non_generic_missions = yes
+		clr_country_flag = kaino_not_allowed_lichdom_yet
+		add_country_modifier = {
+			name = kaino_aya_pursuing_lichdom
+			duration = 3650
+		}
+	}
+}
+
+country_event = {
+	id = flavour_kaino.11 #kaino pledges to kill everything including you
+	title = flavour_kaino.11.t
+	desc = flavour_kaino.11.d
+	picture = LOOMING_DEATH_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.11.a
+		add_country_modifier = {
+			name = kaino_kainos_pledge
+			duration = -1
+		}
+	}
+}
+
+country_event = {
+	id = flavour_kaino.12 #adze pandemic cure adze poisoning decision event
+	title = flavour_kaino.12.t
+	desc = flavour_kaino.12.d
+	picture = northamericagfx_COUNTRY_COLLAPSE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.12.a
+		custom_tooltip = kaino_carrion_call_adze_tt
+		hidden_effect = {
+			add_country_modifier = {
+				name = kaino_carrion_call_adze
+				duration = -1
+			}
+			remove_country_modifier = kaino_steward_of_kainos_vestiges
+			set_country_flag = kaino_skull_is_fake
+			country_event = { id = flavour_kaino.13 days = 132 }	#~5 months
+		}
+	}
+}
+
+country_event = {
+	id = flavour_kaino.13 #adze pandemic first event
+	title = flavour_kaino.13.t
+	desc = flavour_kaino.13.d
+	picture = muslimgfx_FAMINE_eventPicture
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	immediate = {
+		hidden_effect = {
+			country_event = { id = flavour_kaino.14 days = 600 }	#disaster should be around 50 progress
+		}
+	}
+
+	option = {
+		name = flavour_kaino.13.a
+		capital_scope = {
+			add_base_tax = -1
+			add_base_production = -1
+			add_base_manpower = -1
+			add_devastation = 25
+		}
+	}
+}
+
+country_event = {
+	id = flavour_kaino.14 #adze pandemic second event
+	title = flavour_kaino.14.t
+	desc = flavour_kaino.14.d
+	picture = muslimgfx_KING_SICK_IN_BED_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			country_event = { id = flavour_kaino.15 days = 600 }	#disaster should be around 90 progress
+		}
+	}
+
+	option = {
+		name = flavour_kaino.14.a
+		kill_ruler = yes
+	}
+}
+
+country_event = {
+	id = flavour_kaino.15 #adze pandemic third event, Kaino shows up
+	title = flavour_kaino.15.t
+	desc = flavour_kaino.15.d
+	picture = northamericagfx_DEATH_OF_HEIR_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = flavour_kaino.15.a
+		set_country_flag = kaino_flag_cured_adze_poisoning
+		remove_country_modifier = kaino_adze_poisoning
+		remove_country_modifier = kaino_curious_disease
+		remove_country_modifier = kaino_carrion_call_adze
+		change_adm = 1
+		change_dip = 1
+		change_mil = 1
+		every_owned_province = {
+			add_devastation = -100
+		}
+	}
+}
+
+
+#kaino magic events
+
+
+#apotheosis of mercy
+country_event = {
+	id = flavour_kaino.30 
+	title = flavour_kaino.30.t
+	desc = flavour_kaino.30.d
+	picture = MUSLIM_PAGAN_DISPUTE_eventPicture
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = flavour_kaino.30.a
+		horashesh_region = {
+			add_permanent_claim = ROOT
+		}
+		custom_tooltip = kaino_project_apotheosis_of_mercy_horashesh_tt
+		add_country_modifier = {
+			name = kaino_temporary_apotheosis_bonus
+			duration = 1825
+		}
+	}
+}
+
+country_event = {
+	id = flavour_kaino.31 
+	title = flavour_kaino.31.t
+	desc = flavour_kaino.31.d
+	picture = MALI_RULER_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.31.a
+		
+	}
+	option = { #Good job!
+		name = flavour_kaino.31.b
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 30
+				region = horashesh_region
+			}
+		}
+		highlight = yes
+		increase_magic_experience = { amount = 300 }
+		custom_tooltip = kaino_nationalism_hora
+		hidden_effect = {
+			every_owned_province = {
+				limit = { region = horashesh_region }
+				add_nationalism = -10
+			}
+		}
+	}
+}
+
+country_event = {
+	id = flavour_kaino.32 
+	title = flavour_kaino.32.t
+	desc = flavour_kaino.32.d
+	picture = FIREBALL_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = { set_country_flag = in_magic_progress_event }
+
+	option = {
+		name = flavour_kaino.32.a
+		custom_tooltip = kaino_gain_institution
+		tooltip = { add_next_institution_embracement = 100 }
+		hidden_effect = {
+			every_owned_province = {
+				limit = { kaino_province_trigger = yes }
+				add_next_institution_embracement = 100
+			}
+		}
+		set_estate_privilege = estate_mages_kaino_bringers_of_mercy
+	}
+	after = {
+		clr_country_flag = in_magic_progress_event
+		hidden_effect = {
+			country_event = {
+				id = flavour_kaino.41
+			}
+		}
+	}
+}
+
+country_event = {
+	id = flavour_kaino.33 
+	title = flavour_kaino.33.t
+	desc = flavour_kaino.33.d
+	picture = NOMAD_AFRICANS_TRAVELLING_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.33.a
+		gol_region = { add_permanent_claim = ROOT }
+		gazraak_region = { add_permanent_claim = ROOT }
+		custom_tooltip = kaino_project_apotheosis_of_mercy_gnolls_tt
+		add_country_modifier = {
+			name = kaino_temporary_apotheosis_bonus
+			duration = 1825
+		}
+	}
+}
+
+country_event = {
+	id = flavour_kaino.34 
+	title = flavour_kaino.34.t
+	desc = flavour_kaino.34.d
+	picture = MALI_RULER_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.34.a
+	}
+
+	option = { #Good job!
+		name = flavour_kaino.34.b
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 30
+				OR = {
+					region = gol_region
+					region = gazraak_region
+				}
+			}
+		}
+		highlight = yes
+		increase_magic_experience = { amount = 300 }
+		custom_tooltip = kaino_nationalism_gol
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						region = gol_region
+						region = gazraak_region
+					}
+				}
+				add_nationalism = -10
+			}
+		}
+	}		
+}
+
+country_event = {
+	id = flavour_kaino.35 
+	title = flavour_kaino.35.t
+	desc = flavour_kaino.35.d
+	picture = APOSTLE_eventPicture
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	immediate = { set_country_flag = in_magic_progress_event }
+
+	option = {
+		name = flavour_kaino.35.a
+		custom_tooltip = kaino_gain_institution
+		tooltip = { add_next_institution_embracement = 100 }
+		hidden_effect = {
+			every_owned_province = {
+				limit = { kaino_province_trigger = yes }
+				add_next_institution_embracement = 100
+			}
+		}
+	}
+	after = {
+		clr_country_flag = in_magic_progress_event
+		hidden_effect = {
+			country_event = {
+				id = flavour_kaino.41
+			}
+		}
+	}
+}
+
+country_event = {
+	id = flavour_kaino.36 
+	title = flavour_kaino.36.t
+	desc = flavour_kaino.36.d
+	picture = SAHARA_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.36.a
+		kheterata_region = { add_permanent_claim = ROOT }
+		khetapera_region = { add_permanent_claim = ROOT }
+		custom_tooltip = kaino_project_apotheosis_of_mercy_kheterata_tt
+		add_country_modifier = {
+			name = kaino_temporary_apotheosis_bonus
+			duration = 1825
+		}
+	}
+}
+
+country_event = {
+	id = flavour_kaino.37 
+	title = flavour_kaino.37.t
+	desc = flavour_kaino.37.d
+	picture = MALI_RULER_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.37.a
+	}
+	option = { #Good job!
+		name = flavour_kaino.37.b
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 30
+				OR = {
+					region = kheterata_region
+					region = khetapera_region
+				}
+			 }
+		}
+		highlight = yes
+		increase_magic_experience = { amount = 300 }
+		custom_tooltip = kaino_nationalism_khet
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						region = kheterata_region
+						region = khetapera_region
+					}
+				}
+				add_nationalism = -10
+			}
+		}
+	}
+}
+
+country_event = {
+	id = flavour_kaino.38 
+	title = flavour_kaino.38.t
+	desc = flavour_kaino.38.d
+	picture = muslimgfx_COUNTRY_COLLAPSE_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = { set_country_flag = in_magic_progress_event }
+
+	option = {
+		name = flavour_kaino.38.a
+		change_variable = { magic_projects_completed = 1 }
+		custom_tooltip = kaino_gain_institution
+		tooltip = { add_next_institution_embracement = 100 }
+		hidden_effect = {
+			every_owned_province = {
+				limit = { kaino_province_trigger = yes }
+				add_next_institution_embracement = 100
+			}
+		}
+	}
+	after = {
+		clr_country_flag = in_magic_progress_event 
+		hidden_effect = {
+			country_event = {
+				id = flavour_kaino.41
+			}
+		}
+	}
+}
+
+country_event = {
+	id = flavour_kaino.41 #bringers of mercy hidden event
+	title = flavour_kaino.41.t
+	desc = flavour_kaino.41.d
+	picture = FEUDALISM_eventPicture
+	
+	is_triggered_only = yes
+	hidden = yes
+
+	option = {
+		name = flavour_kaino.41.a
+		if = {
+			limit = { exactly_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 3 } }
+			every_owned_province = {
+				limit = { kaino_province_trigger = yes }
+				add_permanent_province_modifier = {
+					name = kaino_mercy_granted_lvl_3
+					duration = -1
+				}
+				remove_province_modifier = kaino_mercy_granted_lvl_2
+				remove_province_modifier = kaino_mercy_granted_lvl_1
+			}
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 2 } }
+			every_owned_province = {
+				limit = { kaino_province_trigger = yes }
+				add_permanent_province_modifier = {
+					name = kaino_mercy_granted_lvl_2
+					duration = -1
+				}
+				remove_province_modifier = kaino_mercy_granted_lvl_1
+			}
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 1 } }
+			every_owned_province = {
+				limit = { kaino_province_trigger = yes }
+				add_permanent_province_modifier = {
+					name = kaino_mercy_granted_lvl_1
+					duration = -1
+				}
+			}
+		}
+		if = {
+			limit = { has_country_flag = kaino_temple_bonuses_flag }
+			every_owned_province = {
+				limit = {
+					NOT = { development = 4 }
+					culture = kaino
+					has_tax_building_trigger = yes
+				}
+				add_province_modifier = {
+					name = kaino_temple_bonuses
+					duration = -1
+				}
+			}
+		}
+		if = {
+			limit = { has_country_flag = kaino_barracks_bonuses_flag }
+			every_owned_province = {
+				limit = {
+					NOT = { development = 4 }
+					culture = kaino
+					has_manpower_building_trigger = yes
+				}
+				add_province_modifier = {
+					name = kaino_barracks_bonuses
+					duration = -1
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	id = flavour_kaino.42 
+	title = flavour_kaino.42.t
+	desc = flavour_kaino.42.d
+	picture = FARMING_WIFE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.42.a
+		add_prestige = -1
+	}
+}
+country_event = {
+	id = flavour_kaino.43 
+	title = flavour_kaino.43.t
+	desc = flavour_kaino.43.d
+	picture = MAGE_MOON_ALTER_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.43.a
+		add_prestige = 10
+	}
+}
+country_event = {
+	id = flavour_kaino.44 
+	title = flavour_kaino.44.t
+	desc = flavour_kaino.44.d
+	picture = AFRICAN_MARRIAGE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.44.a
+		set_country_flag = kaino_successfully_rizzed_up_the_skelly_boi
+		shadow_swamp_region = { add_permanent_claim = ROOT }
+	}
+}
+
+#stab kaino
+country_event = {
+	id = flavour_kaino.50
+	title = flavour_kaino.50.t
+	desc = flavour_kaino.50.d
+	picture = PRIEST_PHANTOM_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.50.a
+		country_event = {
+			id = flavour_kaino.51
+		}
+		clr_country_flag = kaino_barracks_bonuses_flag
+		clr_country_flag = kaino_temple_bonuses_flag
+	}
+}
+
+#stab kaino - denial
+country_event = {
+	id = flavour_kaino.51
+	title = flavour_kaino.51.t
+	desc = flavour_kaino.51.d
+	picture = northamericagfx_DEATH_OF_HEIR_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.51.a
+		remove_country_modifier = kaino_bones_into_ploughshares
+		5813 = { remove_province_modifier = kaino_monument_to_fangaulas_befoulment }
+		country_event = {
+			id = flavour_kaino.52
+		}		
+	}
+}
+
+#stab kaino - anger
+country_event = {
+	id = flavour_kaino.52
+	title = flavour_kaino.52.t
+	desc = flavour_kaino.52.d
+	picture = northamericagfx_DEATH_OF_HEIR_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.52.a
+		remove_country_modifier = kaino_the_cleanse
+		tooltip = { remove_province_modifier = kaino_temple_bonuses }
+		hidden_effect = {
+			every_owned_province = { remove_province_modifier = kaino_temple_bonuses }
+		}
+		country_event = {
+			id = flavour_kaino.53
+		}
+	}
+}
+
+#stab kaino - bargaining
+country_event = {
+	id = flavour_kaino.53
+	title = flavour_kaino.53.t
+	desc = flavour_kaino.53.d
+	picture = northamericagfx_DEATH_OF_HEIR_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.53.a
+		remove_country_modifier = kaino_justification
+		tooltip = { remove_province_modifier = kaino_barracks_bonuses }
+		hidden_effect = {
+			every_owned_province = { remove_province_modifier = kaino_barracks_bonuses }
+		}
+		country_event = {
+			id = flavour_kaino.54
+		}
+	}
+}
+
+#stab kaino - depression
+country_event = {
+	id = flavour_kaino.54
+	title = flavour_kaino.54.t
+	desc = flavour_kaino.54.d
+	picture = northamericagfx_DEATH_OF_HEIR_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.54.a
+		remove_country_modifier = kaino_kainos_pledge
+		tooltip = { remove_province_modifier = kaino_mercy_granted_lvl_3 }
+		hidden_effect = {
+			every_owned_province = { remove_province_modifier = kaino_mercy_granted_lvl_3 }
+		}
+		country_event = {
+			id = flavour_kaino.55
+		}
+	}
+}
+
+#stab kaino - acceptance
+country_event = {
+	id = flavour_kaino.55
+	title = flavour_kaino.55.t
+	desc = flavour_kaino.55.d
+	picture = northamericagfx_DEATH_OF_HEIR_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.55.a
+		remove_country_modifier = kaino_necromancy_3_chronophage_mod
+		remove_government_reform = kainos_kingdom_reform
+		country_event = {
+			id = flavour_kaino.56
+		}
+	}
+}
+
+#the end - thanks for playing!
+country_event = {
+	id = flavour_kaino.56
+	title = flavour_kaino.56.t
+	desc = flavour_kaino.56.d
+	picture = BIG_STAR_IN_SKY_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.56.a
+		kill_a_lich_effect = yes
+		clear_racial_military = yes
+		tooltip = {
+			add_country_modifier = {
+				name = human_military
+				duration = -1
+			}
+		}
+		hidden_effect = {
+			add_country_modifier = {
+				name = human_military
+				duration = -1
+				hidden = yes
+			}
+			racial_mil_military_change_to_human_units = yes
+		}
+		capital_scope = {
+			build_to_forcelimit = {
+				infantry = 0.4
+				cavalry = 0.1
+				artillery = 0.2
+			}
+		}
+		define_ruler = {
+			adm = 6
+			dip = 6
+			mil = 2			
+		}
+		country_event = {
+			id = flavour_kaino.57
+		}
+	}
+}
+
+country_event = {
+	id = flavour_kaino.57
+	title = flavour_kaino.57.t
+	desc = flavour_kaino.57.d
+	picture = BIG_STAR_IN_SKY_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.57.a
+		change_primary_culture = aya
+		set_ruler_culture = aya
+		if = {
+			limit = { has_heir = yes }
+			set_heir_culture = aya
+		}
+		custom_tooltip = kaino_to_aya_tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = { culture = kaino }
+				change_culture = aya
+			}
+			every_known_country = {
+				remove_opinion = {
+					who = ROOT
+					modifier = aggressive_expansion
+				}
+			}
+		}
+		artifice_magic_switch_to_artificery_only_mode = yes		
+		add_country_modifier = {
+			name = kaino_ayas_legacy
+			duration = -1
+		}
+	}
+}
+
+
+country_event = { #this event should never fire, just a debug option if the disaster fires
+	id = flavour_kaino.100
+	title = flavour_kaino.100.t
+	desc = flavour_kaino.100.d
+	picture = FEUDALISM_eventPicture
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = flavour_kaino.100.a
+		set_country_flag = kaino_flag_cured_adze_poisoning
+	}
+}
+
+
+country_event = { #this event should never fire, follow on as the ending event for the disaster
+	id = flavour_kaino.101
+	title = flavour_kaino.101.t
+	desc = flavour_kaino.101.d
+	picture = FEUDALISM_eventPicture
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = flavour_kaino.101.a
+		remove_country_modifier = kaino_adze_poisoning
+		remove_country_modifier = kaino_curious_disease
+		remove_country_modifier = kaino_carrion_call_adze
+	}
+}
+
+#debug events
+#debug to add spell discount
+country_event = {
+	id = flavour_kaino.102
+	title = flavour_kaino.102.t
+	desc = flavour_kaino.102.d
+	picture = FEUDALISM_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.102.a
+		make_spell_half_off = {
+			school = necromancy
+			level = 0
+			id = fangaula_kaino_1
+			duration = -1
+		}
+	}
+}

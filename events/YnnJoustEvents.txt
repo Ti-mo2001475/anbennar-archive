@@ -2,16 +2,17 @@
 namespace = ynn_joust_events
 
 #Joust Start
-country_event = {
+province_event = {
 	id = ynn_joust_events.1
 	title = ynn_joust_events.1.t
 	desc = ynn_joust_events.1.d
 	picture = TOURNAMENT_eventPicture
 
 	is_triggered_only = yes
+	hidden = yes
 
 	trigger = {
-		has_regency = no
+		ynn_joust_event_trigger = yes
 	}
 
 	immediate = {
@@ -21,16 +22,13 @@ country_event = {
 					id = ynn_joust_events.13
 				}
 			}
-		}
-		if = {
-			limit = {
-				has_ruler_flag = G26_partaking_joust
+			event_target:ynn_joust_opponent_2 = {
+				country_event = {
+					id = ynn_joust_events.13
+				}
 			}
-			set_country_flag = G26_joust_participant_flag # This is for their monarch dying
-			event_target:ynn_joust_opponent_1 = {
-				set_country_flag = G26_joust_participant_flag # This is for their monarch dying
-			}
-		}
+			set_variable = { ynn_joust_round = 0 }
+		}		
 	}
 
 	option = {
@@ -42,7 +40,7 @@ country_event = {
 	}
 
 	after = {
-		country_event = {
+		province_event = {
 			id = ynn_joust_events.2
 			days = 2
 		}
@@ -56,7 +54,14 @@ country_event = {
 	picture = TOURNAMENT_eventPicture
 
 	is_triggered_only = yes
-
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = { has_ruler_flag = G26_partaking_joust }
+				set_country_flag = G26_joust_participant_flag # This is for their monarch dying
+			}
+		}
+	}
 	option = {
 		name = ynn_joust_events.1.a
 		ai_chance = {
@@ -66,7 +71,7 @@ country_event = {
 }
 
 #Power is set, hidden event doing stuff
-country_event = {
+province_event = {
 	id = ynn_joust_events.2
 	title = ynn_joust_events.2.t
 	desc = ynn_joust_events.2.d
@@ -76,7 +81,7 @@ country_event = {
 	hidden = yes
 
 	trigger = {
-		has_regency = no
+		ynn_joust_event_trigger = yes
 	}
 
 	option = {
@@ -86,154 +91,43 @@ country_event = {
 		}
 		
 		hidden_effect = {
-			if = {
-				limit = {
-					NOT = {
-						has_ruler_flag = tilts_begun
-					}
-				}
-				set_variable = {
-					which = firstJoustPower
-					value = 0
-				}
-		
-				set_variable = {
-					which = secondJoustPower
-					value = 0
-				}
+			change_variable = { ynn_joust_round = 1 }
+			###	participant Joust Power	###
+			event_target:ynn_joust_opponent_2 = {	#yes, partecipant n2 power is named "firstjoustpower". blame sus :>
+				if = {
+					limit = { NOT = { has_ruler_flag = tilts_begun } }
+					set_variable = { which = firstJoustPower value = 0 }
+					if = { limit = { mil = 6 } change_variable = { which = firstJoustPower value = 10 } }
+					else_if = {	limit = { mil = 5 }	change_variable = {	which = firstJoustPower	value = 8 }	}
+					else_if = {	limit = { mil = 4 }	change_variable = {	which = firstJoustPower	value = 6 }	}
+					else_if = {	limit = { mil = 3 } change_variable = {	which = firstJoustPower	value = 2 }	}
+					else_if = {	limit = { mil = 2 } subtract_variable = { which = firstJoustPower value = 2	} }
+					else_if = {	limit = { mil = 1 } subtract_variable = { which = firstJoustPower value = 4 } }
+					else_if = {	limit = { mil = 0 }	subtract_variable = { which = firstJoustPower value = 6	} }
 				
-				###	participant Joust Power	###
+					if = { limit = { ruler_age = 60	} subtract_variable = {	which = firstJoustPower	value = 3 }	}
+					else_if = {	limit = { ruler_age = 50 } subtract_variable = { which = firstJoustPower value = 2 } }
+					else_if = {	limit = { ruler_age = 40 } subtract_variable = { which = firstJoustPower value = 1 } }
 				
-				if = { limit = { mil = 6 } change_variable = { which = firstJoustPower value = 10 } }
-				else_if = {	limit = { mil = 5 }	change_variable = {	which = firstJoustPower	value = 8 }	}
-				else_if = {	limit = { mil = 4 }	change_variable = {	which = firstJoustPower	value = 6 }	}
-				else_if = {	limit = { mil = 3 } change_variable = {	which = firstJoustPower	value = 2 }	}
-				else_if = {	limit = { mil = 2 } subtract_variable = { which = firstJoustPower value = 2	} }
-				else_if = {	limit = { mil = 1 } subtract_variable = { which = firstJoustPower value = 4 } }
-				else_if = {	limit = { mil = 0 }	subtract_variable = { which = firstJoustPower value = 6	} }
-			
-				if = { limit = { ruler_age = 60	} subtract_variable = {	which = firstJoustPower	value = 3 }	}
-				else_if = {	limit = { ruler_age = 50 } subtract_variable = { which = firstJoustPower value = 2 } }
-				else_if = {	limit = { ruler_age = 40 } subtract_variable = { which = firstJoustPower value = 1 } }
-			
-				if = { limit = { ruler_has_personality = bold_fighter_personality }	change_variable = {	which = firstJoustPower	value = 4 } }
-				if = { limit = { ruler_has_personality = strict_personality } change_variable = { which = firstJoustPower value = 4	} }
-				if = { limit = { ruler_has_personality = martial_educator_personality }	change_variable = {	which = firstJoustPower	value = 4 }	}
-				if = { limit = { ruler_has_personality = tactical_genius_personality } change_variable = { which = firstJoustPower value = 4 } }
-				if = { limit = { ruler_is_powerful_mage = yes } change_variable = {	which = firstJoustPower	value = 5 }	}
-				if = { limit = { ruler_has_personality = great_conqueror_personality } change_variable = { which = firstJoustPower value = 7 } }
-				if = { limit = { ruler_has_personality = mythical_conqueror_personality } change_variable = { which = firstJoustPower value = 10 } }
-				if = { limit = { ruler_has_personality = conqueror_personality } change_variable = { which = firstJoustPower value = 4 } }
-				if = { limit = { ruler_has_personality = craven_personality } subtract_variable = {	which = firstJoustPower	value = 4 }	}
-				if = { limit = { has_ruler_flag = G26_exp_1 } change_variable = { which = firstJoustPower value = 2 } }
-				else_if = { limit = { has_ruler_flag = G26_exp_2 } change_variable = { which = firstJoustPower value = 4 } }
-				else_if = { limit = { has_ruler_flag = G26_exp_3 } change_variable = { which = firstJoustPower value = 6 } }
-				else_if = { limit = { has_ruler_flag = G26_exp_4 } change_variable = { which = firstJoustPower value = 8 } }
-				else_if = { limit = { has_ruler_flag = G26_exp_5 } change_variable = { which = firstJoustPower value = 10 } }
-				else_if = { limit = { has_ruler_flag = G26_exp_6 } change_variable = { which = firstJoustPower value = 12 } }
-				else_if = { limit = { has_ruler_flag = G26_exp_7 } change_variable = { which = firstJoustPower value = 14 } }
-				else_if = { limit = { has_ruler_flag = G26_exp_8 } change_variable = { which = firstJoustPower value = 16 } }
-				else_if = { limit = { has_ruler_flag = G26_exp_9 } change_variable = { which = firstJoustPower value = 18 } }
-				else_if = { limit = { has_ruler_flag = G26_exp_10 } change_variable = { which = firstJoustPower value = 20 } }
-
-				if = { limit = { OR = {	tag = G35 was_tag = G35	} }	
-					if = { 
-						limit = {
-							OR = {	#Scaled on the battle modifiers each lance gives
-								has_country_modifier = G35_lance_1_1
-								has_country_modifier = G35_lance_1_3
-							}
-						}
-						change_variable = {
-							which = firstJoustPower
-							value = 1
-						}
-					}
-					else_if = {
-						limit = {
-							OR = {
-								has_country_modifier = G35_lance_2_1
-								has_country_modifier = G35_lance_2_3
-								has_country_modifier = G35_lance_1_2
-							}
-						}
-						change_variable = {
-							which = firstJoustPower
-							value = 2
-						}
-					}
-					else_if = {
-						limit = {
-							OR = {
-								has_country_modifier = G35_lance_3_1
-								has_country_modifier = G35_lance_3_3
-								has_country_modifier = G35_lance_2_2
-								has_country_modifier = G35_lance_3_2
-							}
-						}
-						change_variable = {
-							which = firstJoustPower
-							value = 3
-						}
-					}
-					else_if = {
-						limit = {
-							OR = {
-								has_country_modifier = G35_lance_4_1
-								has_country_modifier = G35_lance_4_3
-							}
-						}
-						change_variable = {
-							which = firstJoustPower
-							value = 4
-						}
-					}
-					else_if = {
-						limit = {
-							has_country_modifier = G35_lance_4_2
-						}
-						change_variable = {
-							which = firstJoustPower
-							value = 5
-						}
-					}
-				}
-			
-				event_target:ynn_joust_opponent_1 = {
-					
-					###	participant Joust Power	###
-					
-					if = { limit = { mil = 6 } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 10 } } }
-					else_if = {	limit = { mil = 5 }	event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 8 } } }
-					else_if = {	limit = { mil = 4 }	event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 6 } } }
-					else_if = {	limit = { mil = 3 } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 2 } } }
-					else_if = {	limit = { mil = 2 } event_target:ynn_joust_opponent_2 = { subtract_variable = { which = secondJoustPower value = 2 } } }
-					else_if = {	limit = { mil = 1 } event_target:ynn_joust_opponent_2 = { subtract_variable = { which = secondJoustPower value = 4 } } }
-					else_if = {	limit = { mil = 0 }	event_target:ynn_joust_opponent_2 = { subtract_variable = { which = secondJoustPower value = 6 } } }
-				
-					if = { limit = { ruler_age = 60	} event_target:ynn_joust_opponent_2 = { subtract_variable = { which = secondJoustPower value = 3 } }	}
-					else_if = {	limit = { ruler_age = 50 } event_target:ynn_joust_opponent_2 = { subtract_variable = { which = secondJoustPower value = 2 } } }
-					else_if = {	limit = { ruler_age = 40 } event_target:ynn_joust_opponent_2 = { subtract_variable = { which = secondJoustPower value = 1 } } }
-				
-					if = { limit = { ruler_has_personality = bold_fighter_personality }	event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 4	} } }
-					if = { limit = { ruler_has_personality = strict_personality } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 4	} } }
-					if = { limit = { ruler_has_personality = martial_educator_personality }	event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 4	} } }
-					if = { limit = { ruler_has_personality = tactical_genius_personality } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 4	} } }
-					if = { limit = { ruler_is_powerful_mage = yes } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 5	} } }
-					if = { limit = { ruler_has_personality = great_conqueror_personality } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 7	} } }
-					if = { limit = { ruler_has_personality = mythical_conqueror_personality } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 10	} } }
-					if = { limit = { ruler_has_personality = conqueror_personality } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 4 } } }
-					if = { limit = { ruler_has_personality = craven_personality } event_target:ynn_joust_opponent_2 = { subtract_variable = {	which = secondJoustPower	value = 4 }	} }
-					if = { limit = { has_ruler_flag = G26_exp_1 } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 2 } } }
-					else_if = { limit = { has_ruler_flag = G26_exp_2 } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 4 } } }
-					else_if = { limit = { has_ruler_flag = G26_exp_3 } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 6 } } }
-					else_if = { limit = { has_ruler_flag = G26_exp_4 } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 8 } } }
-					else_if = { limit = { has_ruler_flag = G26_exp_5 } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 10 } } }
-					else_if = { limit = { has_ruler_flag = G26_exp_6 } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 12 } } }
-					else_if = { limit = { has_ruler_flag = G26_exp_7 } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 14 } } }
-					else_if = { limit = { has_ruler_flag = G26_exp_8 } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 16 } } }
-					else_if = { limit = { has_ruler_flag = G26_exp_9 } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 18 } } }
-					else_if = { limit = { has_ruler_flag = G26_exp_10 } event_target:ynn_joust_opponent_2 = { change_variable = { which = secondJoustPower value = 20 } } }
+					if = { limit = { ruler_has_personality = bold_fighter_personality }	change_variable = {	which = firstJoustPower	value = 4 } }
+					if = { limit = { ruler_has_personality = strict_personality } change_variable = { which = firstJoustPower value = 4	} }
+					if = { limit = { ruler_has_personality = martial_educator_personality }	change_variable = {	which = firstJoustPower	value = 4 }	}
+					if = { limit = { ruler_has_personality = tactical_genius_personality } change_variable = { which = firstJoustPower value = 4 } }
+					if = { limit = { ruler_is_powerful_mage = yes } change_variable = {	which = firstJoustPower	value = 5 }	}
+					if = { limit = { ruler_has_personality = great_conqueror_personality } change_variable = { which = firstJoustPower value = 7 } }
+					if = { limit = { ruler_has_personality = mythical_conqueror_personality } change_variable = { which = firstJoustPower value = 10 } }
+					if = { limit = { ruler_has_personality = conqueror_personality } change_variable = { which = firstJoustPower value = 4 } }
+					if = { limit = { ruler_has_personality = craven_personality } subtract_variable = {	which = firstJoustPower	value = 4 }	}
+					if = { limit = { has_ruler_flag = G26_exp_1 } change_variable = { which = firstJoustPower value = 2 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_2 } change_variable = { which = firstJoustPower value = 4 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_3 } change_variable = { which = firstJoustPower value = 6 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_4 } change_variable = { which = firstJoustPower value = 8 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_5 } change_variable = { which = firstJoustPower value = 10 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_6 } change_variable = { which = firstJoustPower value = 12 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_7 } change_variable = { which = firstJoustPower value = 14 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_8 } change_variable = { which = firstJoustPower value = 16 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_9 } change_variable = { which = firstJoustPower value = 18 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_10 } change_variable = { which = firstJoustPower value = 20 } }
 
 					if = { limit = { OR = {	tag = G35 was_tag = G35	} }	
 						if = { 
@@ -243,12 +137,7 @@ country_event = {
 									has_country_modifier = G35_lance_1_3
 								}
 							}
-							event_target:ynn_joust_opponent_2 = {
-								change_variable = {
-									which = secondJoustPower
-									value = 1
-								}
-							}
+							change_variable = { which = firstJoustPower value = 1 }
 						}
 						else_if = {
 							limit = {
@@ -258,12 +147,7 @@ country_event = {
 									has_country_modifier = G35_lance_1_2
 								}
 							}
-							event_target:ynn_joust_opponent_2 = {
-								change_variable = {
-									which = secondJoustPower
-									value = 2
-								}
-							}
+							change_variable = { which = firstJoustPower value = 2 }
 						}
 						else_if = {
 							limit = {
@@ -274,12 +158,7 @@ country_event = {
 									has_country_modifier = G35_lance_3_2
 								}
 							}
-							event_target:ynn_joust_opponent_2 = {
-								change_variable = {
-									which = secondJoustPower
-									value = 3
-								}
-							}
+							change_variable = { which = firstJoustPower value = 3 }
 						}
 						else_if = {
 							limit = {
@@ -288,84 +167,114 @@ country_event = {
 									has_country_modifier = G35_lance_4_3
 								}
 							}
-							event_target:ynn_joust_opponent_2 = {
-								change_variable = {
-									which = secondJoustPower
-									value = 4
-								}
-							}
+							change_variable = { which = firstJoustPower value = 4 }
 						}
 						else_if = {
 							limit = {
 								has_country_modifier = G35_lance_4_2
 							}
-							event_target:ynn_joust_opponent_2 = {
-								change_variable = {
-									which = secondJoustPower
-									value = 5
-								}
-							}
+							change_variable = { which = firstJoustPower value = 5 }
 						}
 					}
+					ROOT = { set_variable = { which = firstJoustPower which = PREV } }
+				}
+			}
+			
+			event_target:ynn_joust_opponent_1 = {
+				if = {
+					limit = { NOT = { has_ruler_flag = tilts_begun } }
+					set_variable = { which = secondJoustPower value = 0 }
+					if = { limit = { mil = 6 } change_variable = { which = secondJoustPower value = 10 } }
+					else_if = {	limit = { mil = 5 }	change_variable = { which = secondJoustPower value = 8 } }
+					else_if = {	limit = { mil = 4 }	change_variable = { which = secondJoustPower value = 6 } }
+					else_if = {	limit = { mil = 3 } change_variable = { which = secondJoustPower value = 2 } }
+					else_if = {	limit = { mil = 2 } subtract_variable = { which = secondJoustPower value = 2 } }
+					else_if = {	limit = { mil = 1 } subtract_variable = { which = secondJoustPower value = 4 } }
+					else_if = {	limit = { mil = 0 }	subtract_variable = { which = secondJoustPower value = 6 } }
+				
+					if = { limit = { ruler_age = 60	} subtract_variable = { which = secondJoustPower value = 3 } }
+					else_if = {	limit = { ruler_age = 50 } subtract_variable = { which = secondJoustPower value = 2 } }
+					else_if = {	limit = { ruler_age = 40 } subtract_variable = { which = secondJoustPower value = 1 } }
+				
+					if = { limit = { ruler_has_personality = bold_fighter_personality }	change_variable = { which = secondJoustPower value = 4	} }
+					if = { limit = { ruler_has_personality = strict_personality } change_variable = { which = secondJoustPower value = 4 } }
+					if = { limit = { ruler_has_personality = martial_educator_personality }	change_variable = { which = secondJoustPower value = 4	} }
+					if = { limit = { ruler_has_personality = tactical_genius_personality } change_variable = { which = secondJoustPower value = 4 } }
+					if = { limit = { ruler_is_powerful_mage = yes } change_variable = { which = secondJoustPower value = 5 } }
+					if = { limit = { ruler_has_personality = great_conqueror_personality } change_variable = { which = secondJoustPower value = 7 } }
+					if = { limit = { ruler_has_personality = mythical_conqueror_personality } change_variable = { which = secondJoustPower value = 10 } }
+					if = { limit = { ruler_has_personality = conqueror_personality } change_variable = { which = secondJoustPower value = 4 } }
+					if = { limit = { ruler_has_personality = craven_personality } subtract_variable = {	which = secondJoustPower value = 4 } }
+					if = { limit = { has_ruler_flag = G26_exp_1 } change_variable = { which = secondJoustPower value = 2 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_2 } change_variable = { which = secondJoustPower value = 4 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_3 } change_variable = { which = secondJoustPower value = 6 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_4 } change_variable = { which = secondJoustPower value = 8 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_5 } change_variable = { which = secondJoustPower value = 10 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_6 } change_variable = { which = secondJoustPower value = 12 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_7 } change_variable = { which = secondJoustPower value = 14 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_8 } change_variable = { which = secondJoustPower value = 16 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_9 } change_variable = { which = secondJoustPower value = 18 } }
+					else_if = { limit = { has_ruler_flag = G26_exp_10 } change_variable = { which = secondJoustPower value = 20 } }
+
+					if = { limit = { OR = {	tag = G35 was_tag = G35	} }	
+						if = { 
+							limit = {
+								OR = {	#Scaled on the battle modifiers each lance gives
+									has_country_modifier = G35_lance_1_1
+									has_country_modifier = G35_lance_1_3
+								}
+							}
+							change_variable = { which = secondJoustPower value = 1 }
+						}
+						else_if = {
+							limit = {
+								OR = {
+									has_country_modifier = G35_lance_2_1
+									has_country_modifier = G35_lance_2_3
+									has_country_modifier = G35_lance_1_2
+								}
+							}
+							change_variable = { which = secondJoustPower value = 2 }
+						}
+						else_if = {
+							limit = {
+								OR = {
+									has_country_modifier = G35_lance_3_1
+									has_country_modifier = G35_lance_3_3
+									has_country_modifier = G35_lance_2_2
+									has_country_modifier = G35_lance_3_2
+								}
+							}
+							change_variable = { which = secondJoustPower value = 3 }
+						}
+						else_if = {
+							limit = {
+								OR = {
+									has_country_modifier = G35_lance_4_1
+									has_country_modifier = G35_lance_4_3
+								}
+							}
+							change_variable = { which = secondJoustPower value = 4 }
+						}
+						else_if = {
+							limit = { has_country_modifier = G35_lance_4_2 }
+							change_variable = { which = secondJoustPower value = 5 }
+						}
+					}
+					ROOT = { set_variable = { which = secondJoustPower which = PREV } }
 				}
 			}
 	
 			if = {
 				limit = {
-					NOT = {
-						check_variable = {
-							which = firstJoustPower
-							value = 1
-						}
-					}
-					check_variable = {
-						which = secondJoustPower
-						value = 1
-					}
-				}
-				event_target:ynn_joust_opponent_1 = {
-					save_global_event_target_as = ynn_joust_winner
-				}
-				event_target:ynn_joust_opponent_2 = {
-					save_global_event_target_as = ynn_joust_loser
-					country_event = {
-						id = ynn_joust_events.4
-						days = 2
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					NOT = {
-						check_variable = {
-							which = secondJoustPower
-							value = 1
-						}
-					}
-					check_variable = {
-						which = firstJoustPower
-						value = 1
-					}
-				}
-				event_target:ynn_joust_opponent_2 = {
-					save_global_event_target_as = ynn_joust_winner
-				}
-				event_target:ynn_joust_opponent_1 = {
-					save_global_event_target_as = ynn_joust_loser
-					country_event = {
-						id = ynn_joust_events.4
-						days = 2
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					NOT = {
-						AND = {
+					OR = {	#one of the 2 is down
+						NOT = {
 							check_variable = {
 								which = firstJoustPower
 								value = 1
 							}
+						}
+						NOT = {	
 							check_variable = {
 								which = secondJoustPower
 								value = 1
@@ -375,29 +284,33 @@ country_event = {
 				}
 				random_list = {
 					1 = {
-						event_target:ynn_joust_opponent_2 = {
-							save_global_event_target_as = ynn_joust_winner
-						}
-						event_target:ynn_joust_opponent_1 = {
-							save_global_event_target_as = ynn_joust_loser
-							country_event = {
-								id = ynn_joust_events.4
-								days = 2
+						trigger = {
+							NOT = {
+								check_variable = {
+									which = secondJoustPower
+									value = 1
+								}
 							}
 						}
+						event_target:ynn_joust_opponent_2 = { save_event_target_as = ynn_joust_winner }
+						event_target:ynn_joust_opponent_1 = { save_event_target_as = ynn_joust_loser }
 					}
 					1 = {
-						event_target:ynn_joust_opponent_1 = {
-							save_global_event_target_as = ynn_joust_winner
-						}
-						event_target:ynn_joust_opponent_2 = {
-							save_global_event_target_as = ynn_joust_loser
-							country_event = {
-								id = ynn_joust_events.4
-								days = 2
+						trigger = {
+							NOT = {
+								check_variable = {
+									which = firstJoustPower
+									value = 1
+								}
 							}
 						}
+						event_target:ynn_joust_opponent_1 = { save_event_target_as = ynn_joust_winner }
+						event_target:ynn_joust_opponent_2 = { save_event_target_as = ynn_joust_loser }
 					}
+				}
+				province_event = {
+					id = ynn_joust_events.4
+					days = 2
 				}
 			}
 			else_if = {
@@ -425,23 +338,9 @@ country_event = {
 				}
 			}
 			else = {
-				if = {
-					limit = {
-						has_country_flag = amacimst_hosting_joust
-					}
-					country_event = {
-						id = flavour_amacimst.69
-					}
-				}
-				else = {
-					random_known_country = {
-						limit = {
-							has_country_flag = amacimst_hosting_joust
-						}
-						country_event = {
-							id = flavour_amacimst.69
-						}
-					}
+				random_country = {
+					limit = { has_country_flag = amacimst_hosting_joust }
+					country_event = { id = flavour_amacimst.69 }
 				}
 			}
 		}
@@ -471,7 +370,7 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_regency = no
+		ynn_joust_event_trigger = yes
 	}
 
 	option = {	# Full force ahead
@@ -560,158 +459,37 @@ country_event = {
 			}
 			modifier = {
 				factor = 0.3
-				NOT = {
-					ruler_has_personality = bold_fighter_personality
-					ruler_has_personality = righteous_personality
-					ruler_has_personality = fertile_personality
-					ruler_has_personality = zealot_personality
-					ruler_has_personality = entrepreneur_personality
-					ruler_has_personality = industrious_personality
-					ruler_has_personality = expansionist_personality
-					ruler_has_personality = conqueror_personality
-					ruler_has_personality = strict_personality
-					ruler_has_personality = inspiring_leader_personality
-					ruler_has_personality = martial_educator_personality
-					ruler_has_personality = fierce_negotiator_personality
-					ruler_has_personality = embezzler_personality
-					ruler_has_personality = sinner_personality
-					ruler_has_personality = greedy_personality
-					ruler_has_personality = cruel_personality
-					ruler_has_personality = naive_personality
-					ruler_has_personality = malevolent_personality
-					ruler_has_personality = great_conqueror_personality
-					ruler_has_personality = mythical_conqueror_personality
-				}
+				ynn_joust_charge_affinity = no
 			}
 		}
 		custom_tooltip = ynn_joust_v2_tt
 		if = {
 			limit = {
-				OR = {
-					ruler_has_personality = bold_fighter_personality
-					ruler_has_personality = righteous_personality
-					ruler_has_personality = fertile_personality
-					ruler_has_personality = zealot_personality
-					ruler_has_personality = entrepreneur_personality
-					ruler_has_personality = industrious_personality
-					ruler_has_personality = expansionist_personality
-					ruler_has_personality = conqueror_personality
-					ruler_has_personality = strict_personality
-					ruler_has_personality = inspiring_leader_personality
-					ruler_has_personality = martial_educator_personality
-					ruler_has_personality = fierce_negotiator_personality
-					ruler_has_personality = embezzler_personality
-					ruler_has_personality = sinner_personality
-					ruler_has_personality = greedy_personality
-					ruler_has_personality = cruel_personality
-					ruler_has_personality = naive_personality
-					ruler_has_personality = malevolent_personality
-					ruler_has_personality = great_conqueror_personality
-					ruler_has_personality = mythical_conqueror_personality
-				}
+				ynn_joust_charge_affinity = yes
 			}
 			custom_tooltip = ynn_joust_ruler_affinity_tt
 		}
 		if = {
 			limit = {
-				tag = event_target:ynn_joust_opponent_1
-			}
-			if = {
-				limit = {
-					event_target:ynn_joust_opponent_2 = {
-						OR = {
-							ruler_has_personality = bold_fighter_personality
-							ruler_has_personality = righteous_personality
-							ruler_has_personality = fertile_personality
-							ruler_has_personality = zealot_personality
-							ruler_has_personality = entrepreneur_personality
-							ruler_has_personality = industrious_personality
-							ruler_has_personality = expansionist_personality
-							ruler_has_personality = conqueror_personality
-							ruler_has_personality = strict_personality
-							ruler_has_personality = inspiring_leader_personality
-							ruler_has_personality = martial_educator_personality
-							ruler_has_personality = fierce_negotiator_personality
-							ruler_has_personality = embezzler_personality
-							ruler_has_personality = sinner_personality
-							ruler_has_personality = greedy_personality
-							ruler_has_personality = cruel_personality
-							ruler_has_personality = naive_personality
-							ruler_has_personality = malevolent_personality
-							ruler_has_personality = great_conqueror_personality
-							ruler_has_personality = mythical_conqueror_personality
-						}
-					}
+				OR = {
+					event_target:ynn_joust_opponent_1 = { NOT = { tag = ROOT } ynn_joust_charge_affinity = yes }
+					event_target:ynn_joust_opponent_2 = { NOT = { tag = ROOT } ynn_joust_charge_affinity = yes }
 				}
-				custom_tooltip = ynn_joust_enemy_ruler_affinity_tt
 			}
-		}
-		else_if = {
-			limit = {
-				tag = event_target:ynn_joust_opponent_2
-			}
-			if = {
-				limit = {
-					event_target:ynn_joust_opponent_1 = {
-						OR = {
-							ruler_has_personality = bold_fighter_personality
-							ruler_has_personality = righteous_personality
-							ruler_has_personality = fertile_personality
-							ruler_has_personality = zealot_personality
-							ruler_has_personality = entrepreneur_personality
-							ruler_has_personality = industrious_personality
-							ruler_has_personality = expansionist_personality
-							ruler_has_personality = conqueror_personality
-							ruler_has_personality = strict_personality
-							ruler_has_personality = inspiring_leader_personality
-							ruler_has_personality = martial_educator_personality
-							ruler_has_personality = fierce_negotiator_personality
-							ruler_has_personality = embezzler_personality
-							ruler_has_personality = sinner_personality
-							ruler_has_personality = greedy_personality
-							ruler_has_personality = cruel_personality
-							ruler_has_personality = naive_personality
-							ruler_has_personality = malevolent_personality
-							ruler_has_personality = great_conqueror_personality
-							ruler_has_personality = mythical_conqueror_personality
-						}
-					}
-				}
-				custom_tooltip = ynn_joust_enemy_ruler_affinity_tt
-			}
+			custom_tooltip = ynn_joust_enemy_ruler_affinity_tt
 		}
 		hidden_effect = {
 			clear_joust_flags_effect = yes
 			if = {
 				limit = {
-					OR = {
-						ruler_has_personality = bold_fighter_personality
-						ruler_has_personality = righteous_personality
-						ruler_has_personality = fertile_personality
-						ruler_has_personality = zealot_personality
-						ruler_has_personality = entrepreneur_personality
-						ruler_has_personality = industrious_personality
-						ruler_has_personality = expansionist_personality
-						ruler_has_personality = conqueror_personality
-						ruler_has_personality = strict_personality
-						ruler_has_personality = inspiring_leader_personality
-						ruler_has_personality = martial_educator_personality
-						ruler_has_personality = fierce_negotiator_personality
-						ruler_has_personality = embezzler_personality
-						ruler_has_personality = sinner_personality
-						ruler_has_personality = greedy_personality
-						ruler_has_personality = cruel_personality
-						ruler_has_personality = naive_personality
-						ruler_has_personality = malevolent_personality
-						ruler_has_personality = great_conqueror_personality
-						ruler_has_personality = mythical_conqueror_personality
-					}
+					ynn_joust_charge_affinity = yes
 				}
 				if = {
 					limit = {
 						tag = event_target:ynn_joust_opponent_1
 					}
-					event_target:ynn_joust_opponent_2 = {
+					custom_tooltip = ynn_joust_ruler_affinity_tt
+					1171 = {
 						change_variable = {
 							which = secondJoustPower
 							value = 2
@@ -723,9 +501,11 @@ country_event = {
 						tag = event_target:ynn_joust_opponent_2
 					}
 					custom_tooltip = ynn_joust_ruler_affinity_tt
-					change_variable = {
-						which = firstJoustPower
-						value = 2
+					1171 = {
+						change_variable = {
+							which = firstJoustPower
+							value = 2
+						}
 					}
 				}
 			}
@@ -795,129 +575,33 @@ country_event = {
 			}
 			modifier = {
 				factor = 0.3
-				NOT = {
-					ruler_has_personality = just_personality
-					ruler_has_personality = obsessive_perfectionist_personality
-					ruler_has_personality = craven_personality
-					ruler_has_personality = infertile_personality
-					ruler_has_personality = navigator_personality
-					ruler_has_personality = incorruptible_personality
-					ruler_has_personality = lawgiver_personality
-					ruler_has_personality = pious_personality
-					ruler_has_personality = benevolent_personality
-					ruler_has_personality = secretive_personality
-					ruler_has_personality = careful_personality
-					ruler_has_personality = calm_personality
-					ruler_has_personality = kind_hearted_personality
-					ruler_has_personality = tolerant_personality
-				}
+				ynn_joust_defense_affinity = no
 			}
 		}
 		custom_tooltip = ynn_joust_v2_tt
 		if = {
-			limit = {
-				OR = {
-					ruler_has_personality = just_personality
-					ruler_has_personality = tolerant_personality
-					ruler_has_personality = kind_hearted_personality
-					ruler_has_personality = calm_personality
-					ruler_has_personality = careful_personality
-					ruler_has_personality = secretive_personality
-					ruler_has_personality = benevolent_personality
-					ruler_has_personality = pious_personality
-					ruler_has_personality = lawgiver_personality
-					ruler_has_personality = incorruptible_personality
-					ruler_has_personality = navigator_personality
-					ruler_has_personality = infertile_personality
-					ruler_has_personality = craven_personality
-					ruler_has_personality = obsessive_perfectionist_personality
-				}
-			}
+			limit = { ynn_joust_defense_affinity = yes }
 			custom_tooltip = ynn_joust_ruler_affinity_tt
 		}
 		if = {
 			limit = {
-				tag = event_target:ynn_joust_opponent_1
-			}
-			if = {
-				limit = {
-					event_target:ynn_joust_opponent_2 = {
-						OR = {
-							ruler_has_personality = just_personality
-							ruler_has_personality = tolerant_personality
-							ruler_has_personality = kind_hearted_personality
-							ruler_has_personality = calm_personality
-							ruler_has_personality = careful_personality
-							ruler_has_personality = secretive_personality
-							ruler_has_personality = benevolent_personality
-							ruler_has_personality = pious_personality
-							ruler_has_personality = lawgiver_personality
-							ruler_has_personality = incorruptible_personality
-							ruler_has_personality = navigator_personality
-							ruler_has_personality = infertile_personality
-							ruler_has_personality = craven_personality
-							ruler_has_personality = obsessive_perfectionist_personality
-						}
-					}
+				OR = {
+					event_target:ynn_joust_opponent_1 = { NOT = { tag = ROOT } ynn_joust_defense_affinity = yes }
+					event_target:ynn_joust_opponent_2 = { NOT = { tag = ROOT } ynn_joust_defense_affinity = yes }
 				}
-				custom_tooltip = ynn_joust_enemy_ruler_affinity_tt
 			}
-		}
-		else_if = {
-			limit = {
-				tag = event_target:ynn_joust_opponent_2
-			}
-			if = {
-				limit = {
-					event_target:ynn_joust_opponent_1 = {
-						OR = {
-							ruler_has_personality = just_personality
-							ruler_has_personality = tolerant_personality
-							ruler_has_personality = kind_hearted_personality
-							ruler_has_personality = calm_personality
-							ruler_has_personality = careful_personality
-							ruler_has_personality = secretive_personality
-							ruler_has_personality = benevolent_personality
-							ruler_has_personality = pious_personality
-							ruler_has_personality = lawgiver_personality
-							ruler_has_personality = incorruptible_personality
-							ruler_has_personality = navigator_personality
-							ruler_has_personality = infertile_personality
-							ruler_has_personality = craven_personality
-							ruler_has_personality = obsessive_perfectionist_personality
-						}
-					}
-				}
-				custom_tooltip = ynn_joust_enemy_ruler_affinity_tt
-			}
+			custom_tooltip = ynn_joust_enemy_ruler_affinity_tt
 		}
 		hidden_effect = {
 			clear_joust_flags_effect = yes
 			if = {
-				limit = {
-					OR = {
-						ruler_has_personality = just_personality
-						ruler_has_personality = tolerant_personality
-						ruler_has_personality = kind_hearted_personality
-						ruler_has_personality = calm_personality
-						ruler_has_personality = careful_personality
-						ruler_has_personality = secretive_personality
-						ruler_has_personality = benevolent_personality
-						ruler_has_personality = pious_personality
-						ruler_has_personality = lawgiver_personality
-						ruler_has_personality = incorruptible_personality
-						ruler_has_personality = navigator_personality
-						ruler_has_personality = infertile_personality
-						ruler_has_personality = craven_personality
-						ruler_has_personality = obsessive_perfectionist_personality
-					}
-				}
+				limit = { ynn_joust_defense_affinity = yes }
 				if = {
 					limit = {
 						tag = event_target:ynn_joust_opponent_1
 					}
 					custom_tooltip = ynn_joust_ruler_affinity_tt
-					event_target:ynn_joust_opponent_2 = {
+					1171 = {
 						change_variable = {
 							which = secondJoustPower
 							value = 2
@@ -929,9 +613,11 @@ country_event = {
 						tag = event_target:ynn_joust_opponent_2
 					}
 					custom_tooltip = ynn_joust_ruler_affinity_tt
-					change_variable = {
-						which = firstJoustPower
-						value = 2
+					1171 = {
+						change_variable = {
+							which = firstJoustPower
+							value = 2
+						}
 					}
 				}
 			}
@@ -1001,128 +687,33 @@ country_event = {
 			}
 			modifier = {
 				factor = 0.3
-				NOT = {
-					ruler_has_personality = free_thinker_personality
-					ruler_has_personality = well_connected_personality
-					ruler_has_personality = intricate_web_weaver_personality
-					ruler_has_personality = well_advised_personality
-					ruler_has_personality = midas_touched_personality
-					ruler_has_personality = scholar_personality
-					ruler_has_personality = architectural_visionary_personality
-					ruler_has_personality = charismatic_negotiator_personality
-					ruler_has_personality = silver_tongue_personality
-					ruler_has_personality = tactical_genius_personality
-					ruler_has_personality = babbling_buffoon_personality
-					ruler_has_personality = drunkard_personality
-					ruler_has_personality = loose_lips_personality
-					ruler_has_personality = reformist_personality
-				}
+				ynn_joust_wack_affinity = no
 			}
 		}
 		custom_tooltip = ynn_joust_v2_tt
 		if = {
-			limit = {
-				OR = {
-					ruler_has_personality = free_thinker_personality
-					ruler_has_personality = well_connected_personality
-					ruler_has_personality = intricate_web_weaver_personality
-					ruler_has_personality = well_advised_personality
-					ruler_has_personality = midas_touched_personality
-					ruler_has_personality = scholar_personality
-					ruler_has_personality = architectural_visionary_personality
-					ruler_has_personality = charismatic_negotiator_personality
-					ruler_has_personality = silver_tongue_personality
-					ruler_has_personality = tactical_genius_personality
-					ruler_has_personality = babbling_buffoon_personality
-					ruler_has_personality = drunkard_personality
-					ruler_has_personality = loose_lips_personality
-					ruler_has_personality = reformist_personality
-				}
-			}
+			limit = { ynn_joust_wack_affinity = yes }
 			custom_tooltip = ynn_joust_ruler_affinity_tt
 		}
 		if = {
 			limit = {
-				tag = event_target:ynn_joust_opponent_1
-			}
-			if = {
-				limit = {
-					event_target:ynn_joust_opponent_2 = {
-						OR = {
-							ruler_has_personality = free_thinker_personality
-							ruler_has_personality = well_connected_personality
-							ruler_has_personality = intricate_web_weaver_personality
-							ruler_has_personality = well_advised_personality
-							ruler_has_personality = midas_touched_personality
-							ruler_has_personality = scholar_personality
-							ruler_has_personality = architectural_visionary_personality
-							ruler_has_personality = charismatic_negotiator_personality
-							ruler_has_personality = silver_tongue_personality
-							ruler_has_personality = tactical_genius_personality
-							ruler_has_personality = babbling_buffoon_personality
-							ruler_has_personality = drunkard_personality
-							ruler_has_personality = loose_lips_personality
-							ruler_has_personality = reformist_personality
-						}
-					}
+				OR = {
+					event_target:ynn_joust_opponent_1 = { NOT = { tag = ROOT } ynn_joust_wack_affinity = yes }
+					event_target:ynn_joust_opponent_2 = { NOT = { tag = ROOT } ynn_joust_wack_affinity = yes }
 				}
-				custom_tooltip = ynn_joust_enemy_ruler_affinity_tt
 			}
-		}
-		else_if = {
-			limit = {
-				tag = event_target:ynn_joust_opponent_2
-			}
-			if = {
-				limit = {
-					event_target:ynn_joust_opponent_1 = {
-						OR = {
-							ruler_has_personality = free_thinker_personality
-							ruler_has_personality = well_connected_personality
-							ruler_has_personality = intricate_web_weaver_personality
-							ruler_has_personality = well_advised_personality
-							ruler_has_personality = midas_touched_personality
-							ruler_has_personality = scholar_personality
-							ruler_has_personality = architectural_visionary_personality
-							ruler_has_personality = charismatic_negotiator_personality
-							ruler_has_personality = silver_tongue_personality
-							ruler_has_personality = tactical_genius_personality
-							ruler_has_personality = babbling_buffoon_personality
-							ruler_has_personality = drunkard_personality
-							ruler_has_personality = loose_lips_personality
-							ruler_has_personality = reformist_personality
-						}
-					}
-				}
-				custom_tooltip = ynn_joust_enemy_ruler_affinity_tt
-			}
+			custom_tooltip = ynn_joust_enemy_ruler_affinity_tt
 		}
 		hidden_effect = {
 			clear_joust_flags_effect = yes
 			if = {
-				limit = {
-					OR = {
-						ruler_has_personality = free_thinker_personality
-						ruler_has_personality = well_connected_personality
-						ruler_has_personality = intricate_web_weaver_personality
-						ruler_has_personality = well_advised_personality
-						ruler_has_personality = midas_touched_personality
-						ruler_has_personality = scholar_personality
-						ruler_has_personality = architectural_visionary_personality
-						ruler_has_personality = charismatic_negotiator_personality
-						ruler_has_personality = silver_tongue_personality
-						ruler_has_personality = tactical_genius_personality
-						ruler_has_personality = babbling_buffoon_personality
-						ruler_has_personality = drunkard_personality
-						ruler_has_personality = loose_lips_personality
-						ruler_has_personality = reformist_personality
-					}
-				}
+				limit = { ynn_joust_wack_affinity = yes }
 				if = {
 					limit = {
 						tag = event_target:ynn_joust_opponent_1
 					}
-					event_target:ynn_joust_opponent_2 = {
+					custom_tooltip = ynn_joust_ruler_affinity_tt
+					1171 = {
 						change_variable = {
 							which = secondJoustPower
 							value = 2
@@ -1134,9 +725,11 @@ country_event = {
 						tag = event_target:ynn_joust_opponent_2
 					}
 					custom_tooltip = ynn_joust_ruler_affinity_tt
-					change_variable = {
-						which = firstJoustPower
-						value = 2
+					1171 = {
+						change_variable = {
+							which = firstJoustPower
+							value = 2
+						}
 					}
 				}
 			}
@@ -1145,295 +738,211 @@ country_event = {
 	}
 
 	after = {
+		set_ruler_flag = tilts_begun
 		if = {
 			limit = {
 				tag = event_target:ynn_joust_opponent_2
+				event_target:ynn_joust_opponent_1 = { ai = yes }
 			}
-			event_target:ynn_joust_opponent_2 = {
-				if = {
-					limit = {
-						NOT = {
-							has_ruler_flag = ynn_tilt1
-						}
-					}
-					set_ruler_flag = ynn_tilt1
-				}
-				else_if = {
-					limit = {
-						has_ruler_flag = ynn_tilt1
-					}
-					set_ruler_flag = ynn_tilt2
-					clr_ruler_flag = ynn_tilt1
-				}
-				else_if = {
-					limit = {
-						has_ruler_flag = ynn_tilt2
-					}
-					set_ruler_flag = ynn_tilt3
-					clr_ruler_flag = ynn_tilt2
-				}
-				else_if = {
-					limit = {
-						has_ruler_flag = ynn_tilt3
-					}
-					set_ruler_flag = ynn_tilt4
-					clr_ruler_flag = ynn_tilt3
-				}
-				else_if = {
-					limit = {
-						has_ruler_flag = ynn_tilt4
-					}
-					set_ruler_flag = ynn_tilt5
-					clr_ruler_flag = ynn_tilt4
-				}
-				else_if = {
-					limit = {
-						has_ruler_flag = ynn_tilt5
-					}
-					set_ruler_flag = ynn_tilt6
-					clr_ruler_flag = ynn_tilt5
-				}
-				else_if = {
-					limit = {
-						has_ruler_flag = ynn_tilt6
-					}
-					set_ruler_flag = ynn_tilt7
-					clr_ruler_flag = ynn_tilt5
-				}
-				else_if = {
-					limit = {
-						has_ruler_flag = ynn_tilt7
-					}
-					set_ruler_flag = ynn_tilt8
-					clr_ruler_flag = ynn_tilt7
-				}
-				else_if = {
-					limit = {
-						has_ruler_flag = ynn_tilt8
-					}
-					set_ruler_flag = ynn_tilt9
-					clr_ruler_flag = ynn_tilt8
-				}
-				else_if = {
-					limit = {
-						has_ruler_flag = ynn_tilt9
-					}
-					set_ruler_flag = ynn_tilt10
-					clr_ruler_flag = ynn_tilt9
-				}
-				country_event = {
+			1171 = {
+				province_event = {
 					id = ynn_joust_events.2
 					days = 5
 				}
 			}
 		}
+		else_if = {
+			limit = {
+				tag = event_target:ynn_joust_opponent_1
+				event_target:ynn_joust_opponent_2 = { ai = yes }
+			}
+			1171 = {
+				province_event = {
+					id = ynn_joust_events.2
+					days = 5
+				}
+			}
+		}
+		else_if = {
+			limit = { tag = event_target:ynn_joust_opponent_2 }
+			1171 = {
+				province_event = {
+					id = ynn_joust_events.2
+					days = 60
+				}
+			}
+		}
 		if = {
 			limit = {
-				event_target:ynn_joust_opponent_1 = {
-					OR = {
-						has_ruler_flag = ynn_joust_attack
-						has_ruler_flag = ynn_joust_defend
-						has_ruler_flag = ynn_joust_unpredictable
-					}
-				}
-				event_target:ynn_joust_opponent_2 = {
-					OR = {
-						has_ruler_flag = ynn_joust_attack
-						has_ruler_flag = ynn_joust_defend
-						has_ruler_flag = ynn_joust_unpredictable
-					}
-				}
-			}
-			event_target:ynn_joust_opponent_1 = {
-				set_ruler_flag = tilts_begun
-			}
-			event_target:ynn_joust_opponent_2 = {
-				set_ruler_flag = tilts_begun
+				event_target:ynn_joust_opponent_1 = { has_ruler_flag = tilts_begun }
+				event_target:ynn_joust_opponent_2 = { has_ruler_flag = tilts_begun }				
 			}
 			if = {
 				limit = {
-					has_ruler_flag = ynn_joust_attack
+					event_target:ynn_joust_opponent_2 = { has_ruler_flag = ynn_joust_attack }
 				}
 				if = {
 					limit = {
-						event_target:ynn_joust_opponent_1 = {
-							has_ruler_flag = ynn_joust_attack
+						event_target:ynn_joust_opponent_1 = { has_ruler_flag = ynn_joust_attack }
+					}
+					1171 = {
+						subtract_variable = {
+							which = firstJoustPower
+							value = 4
+						}
+						subtract_variable = {
+							which = secondJoustPower
+							value = 4
 						}
 					}
-					subtract_variable = {
-						which = firstJoustPower
-						value = 4
-					}
-					subtract_variable = {
-						which = secondJoustPower
-						value = 4
-					}
-					set_ruler_flag = ynn_joust_even
-					event_target:ynn_joust_opponent_1 = {
-						set_ruler_flag = ynn_joust_even
-					}
+					event_target:ynn_joust_opponent_2 = { set_ruler_flag = ynn_joust_even }
+					event_target:ynn_joust_opponent_1 = { set_ruler_flag = ynn_joust_even }
 				}
 				else_if = {
 					limit = {
-						event_target:ynn_joust_opponent_1 = {
-							has_ruler_flag = ynn_joust_unpredictable
+						event_target:ynn_joust_opponent_1 = { has_ruler_flag = ynn_joust_unpredictable }
+					}
+					1171 = {
+						change_variable = {
+							which = firstJoustPower
+							value = 2
+						}
+						subtract_variable = {
+							which = secondJoustPower
+							value = 7
 						}
 					}
-					change_variable = {
-						which = firstJoustPower
-						value = 2
-					}
-					subtract_variable = {
-						which = secondJoustPower
-						value = 7
-					}
-					set_ruler_flag = ynn_joust_win
-					event_target:ynn_joust_opponent_1 = {
-						set_ruler_flag = ynn_joust_loss
-					}
+					event_target:ynn_joust_opponent_2 = { set_ruler_flag = ynn_joust_win }
+					event_target:ynn_joust_opponent_1 = { set_ruler_flag = ynn_joust_loss }
 				}
 				else_if = {
 					limit = {
-						event_target:ynn_joust_opponent_1 = {
-							has_ruler_flag = ynn_joust_defend
+						event_target:ynn_joust_opponent_1 = { has_ruler_flag = ynn_joust_defend }
+					}
+					1171 = {
+						subtract_variable = {
+							which = firstJoustPower
+							value = 7
+						}
+						change_variable = {
+							which = secondJoustPower
+							value = 2
 						}
 					}
-					subtract_variable = {
-						which = firstJoustPower
-						value = 7
-					}
-					change_variable = {
-						which = secondJoustPower
-						value = 2
-					}
-					set_ruler_flag = ynn_joust_loss
-					event_target:ynn_joust_opponent_1 = {
-						set_ruler_flag = ynn_joust_win
-					}
+					event_target:ynn_joust_opponent_2 = { set_ruler_flag = ynn_joust_loss }
+					event_target:ynn_joust_opponent_1 = { set_ruler_flag = ynn_joust_win }
 				}
 			}
 			else_if = {
 				limit = {
-					has_ruler_flag = ynn_joust_defend
+					event_target:ynn_joust_opponent_2 = { has_ruler_flag = ynn_joust_defend }
 				}
 				if = {
 					limit = {
-						event_target:ynn_joust_opponent_1 = {
-							has_ruler_flag = ynn_joust_defend
+						event_target:ynn_joust_opponent_1 = { has_ruler_flag = ynn_joust_defend }
+					}
+					1171 = {
+						subtract_variable = {
+							which = firstJoustPower
+							value = 3
+						}
+						subtract_variable = {
+							which = secondJoustPower
+							value = 3
 						}
 					}
-					subtract_variable = {
-						which = firstJoustPower
-						value = 3
-					}
-					subtract_variable = {
-						which = secondJoustPower
-						value = 3
-					}
-					set_ruler_flag = ynn_joust_even
-					event_target:ynn_joust_opponent_1 = {
-						set_ruler_flag = ynn_joust_even
-					}
+					event_target:ynn_joust_opponent_2 = { set_ruler_flag = ynn_joust_even }
+					event_target:ynn_joust_opponent_1 = { set_ruler_flag = ynn_joust_even }
 				}
 				else_if = {
 					limit = {
-						event_target:ynn_joust_opponent_1 = {
-							has_ruler_flag = ynn_joust_unpredictable
+						event_target:ynn_joust_opponent_1 = { has_ruler_flag = ynn_joust_unpredictable }
+					}
+					1171 = {
+						change_variable = {
+							which = secondJoustPower
+							value = 2
+						}
+						subtract_variable = {
+							which = firstJoustPower
+							value = 7
 						}
 					}
-					change_variable = {
-						which = secondJoustPower
-						value = 2
-					}
-					subtract_variable = {
-						which = firstJoustPower
-						value = 7
-					}
-					set_ruler_flag = ynn_joust_loss
-					event_target:ynn_joust_opponent_1 = {
-						set_ruler_flag = ynn_joust_win
-					}
+					event_target:ynn_joust_opponent_2 = { set_ruler_flag = ynn_joust_loss }
+					event_target:ynn_joust_opponent_1 = { set_ruler_flag = ynn_joust_win }
 				}
 				else_if = {
 					limit = {
-						event_target:ynn_joust_opponent_1 = {
-							has_ruler_flag = ynn_joust_attack
+						event_target:ynn_joust_opponent_1 = { has_ruler_flag = ynn_joust_attack }
+					}
+					1171 = {
+						subtract_variable = {
+							which = secondJoustPower
+							value = 7
+						}
+						change_variable = {
+							which = firstJoustPower
+							value = 2
 						}
 					}
-					subtract_variable = {
-						which = secondJoustPower
-						value = 7
-					}
-					change_variable = {
-						which = firstJoustPower
-						value = 2
-					}
-					set_ruler_flag = ynn_joust_win
-					event_target:ynn_joust_opponent_1 = {
-						set_ruler_flag = ynn_joust_loss
-					}
+					event_target:ynn_joust_opponent_2 = { set_ruler_flag = ynn_joust_win }
+					event_target:ynn_joust_opponent_1 = { set_ruler_flag = ynn_joust_loss }
 				}
 			}
 			else_if = {
 				limit = {
-					has_ruler_flag = ynn_joust_unpredictable
+					event_target:ynn_joust_opponent_2 = { has_ruler_flag = ynn_joust_unpredictable }
 				}
 				if = {
 					limit = {
-						event_target:ynn_joust_opponent_1 = {
-							has_ruler_flag = ynn_joust_unpredictable
+						event_target:ynn_joust_opponent_1 = { has_ruler_flag = ynn_joust_unpredictable }
+					}
+					1171 = {
+						subtract_variable = {
+							which = firstJoustPower
+							value = 3
+						}
+						subtract_variable = {
+							which = secondJoustPower
+							value = 3
 						}
 					}
-					subtract_variable = {
-						which = firstJoustPower
-						value = 3
-					}
-					subtract_variable = {
-						which = secondJoustPower
-						value = 3
-					}
-					set_ruler_flag = ynn_joust_even
-					event_target:ynn_joust_opponent_1 = {
-						set_ruler_flag = ynn_joust_even
-					}
+					event_target:ynn_joust_opponent_2 = { set_ruler_flag = ynn_joust_even }
+					event_target:ynn_joust_opponent_1 = { set_ruler_flag = ynn_joust_even }
 				}
 				else_if = {
 					limit = {
-						event_target:ynn_joust_opponent_1 = {
-							has_ruler_flag = ynn_joust_defend
+						event_target:ynn_joust_opponent_1 = { has_ruler_flag = ynn_joust_defend }
+					}
+					1171 = {
+						change_variable = {
+							which = firstJoustPower
+							value = 2
+						}
+						subtract_variable = {
+							which = secondJoustPower
+							value = 7
 						}
 					}
-					change_variable = {
-						which = firstJoustPower
-						value = 2
-					}
-					subtract_variable = {
-						which = secondJoustPower
-						value = 7
-					}
-					set_ruler_flag = ynn_joust_win
-					event_target:ynn_joust_opponent_1 = {
-						set_ruler_flag = ynn_joust_loss
-					}
+					event_target:ynn_joust_opponent_2 = { set_ruler_flag = ynn_joust_win }
+					event_target:ynn_joust_opponent_1 = { set_ruler_flag = ynn_joust_loss }
 				}
 				else_if = {
 					limit = {
-						event_target:ynn_joust_opponent_1 = {
-							has_ruler_flag = ynn_joust_attack
+						event_target:ynn_joust_opponent_1 = { has_ruler_flag = ynn_joust_attack }
+					}
+					1171 = {
+						subtract_variable = {
+							which = firstJoustPower
+							value = 7
+						}
+						change_variable = {
+							which = secondJoustPower
+							value = 2
 						}
 					}
-					subtract_variable = {
-						which = firstJoustPower
-						value = 7
-					}
-					change_variable = {
-						which = secondJoustPower
-						value = 2
-					}
-					set_ruler_flag = ynn_joust_loss
-					event_target:ynn_joust_opponent_1 = {
-						set_ruler_flag = ynn_joust_win
-					}
+					event_target:ynn_joust_opponent_2 = { set_ruler_flag = ynn_joust_loss }
+					event_target:ynn_joust_opponent_1 = { set_ruler_flag = ynn_joust_win }
 				}
 			}
 		}
@@ -1441,7 +950,7 @@ country_event = {
 }
 
 #The joust ends and you lose
-country_event = {
+province_event = {
 	id = ynn_joust_events.4
 	title = ynn_joust_events.4.t
 	desc = ynn_joust_events.4.d
@@ -1451,7 +960,7 @@ country_event = {
 	hidden = yes
 
 	trigger = {
-		has_regency = no
+		ynn_joust_event_trigger = yes
 	}
 
 	option = {
@@ -1459,79 +968,23 @@ country_event = {
 		ai_chance = {
 			factor = 1
 		}
+		event_target:ynn_joust_opponent_1 = { clear_joust_flags_effect = yes }
+		event_target:ynn_joust_opponent_2 = { clear_joust_flags_effect = yes }
 		if = {
 			limit = {
-				event_target:ynn_joust_opponent_1 = {
-					tag = event_target:ynn_joust_winner
-				}
+				event_target:ynn_joust_winner = { tag = event_target:ynn_joust_opponent_1 }
 			}
-			event_target:ynn_joust_opponent_2 = {
-				clr_ruler_flag = ynn_tilt10
-				clear_joust_flags_effect = yes
-				clr_ruler_flag = ynn_tilt1
-				clr_ruler_flag = ynn_tilt2
-				clr_ruler_flag = ynn_tilt3
-				clr_ruler_flag = ynn_tilt4
-				clr_ruler_flag = ynn_tilt5
-				clr_ruler_flag = ynn_tilt6
-				clr_ruler_flag = ynn_tilt7
-				clr_ruler_flag = ynn_tilt8
-				clr_ruler_flag = ynn_tilt9
-				clr_ruler_flag = ynn_tilt10
-				ynn_joust_death_check_effect = {
-					OneJoustWin = yes
-					HasNum = event_target:ynn_joust_opponent_2
-				}
+			event_target:ynn_joust_loser = {
+				ynn_joust_death_check_effect = { var = secondJoustPower }
 			}
-			clr_ruler_flag = ynn_tilt10
-			clear_joust_flags_effect = yes
-			clr_ruler_flag = ynn_tilt1
-			clr_ruler_flag = ynn_tilt2
-			clr_ruler_flag = ynn_tilt3
-			clr_ruler_flag = ynn_tilt4
-			clr_ruler_flag = ynn_tilt5
-			clr_ruler_flag = ynn_tilt6
-			clr_ruler_flag = ynn_tilt7
-			clr_ruler_flag = ynn_tilt8
-			clr_ruler_flag = ynn_tilt9
-			clr_ruler_flag = ynn_tilt10
 		}
 		else_if = {
 			limit = {
-				event_target:ynn_joust_opponent_2 = {
-					tag = event_target:ynn_joust_winner
-				}
+				event_target:ynn_joust_winner = { tag = event_target:ynn_joust_opponent_2 }
 			}
-			event_target:ynn_joust_opponent_1 = {
-				clr_ruler_flag = ynn_tilt10
-				clear_joust_flags_effect = yes
-				clr_ruler_flag = ynn_tilt1
-				clr_ruler_flag = ynn_tilt2
-				clr_ruler_flag = ynn_tilt3
-				clr_ruler_flag = ynn_tilt4
-				clr_ruler_flag = ynn_tilt5
-				clr_ruler_flag = ynn_tilt6
-				clr_ruler_flag = ynn_tilt7
-				clr_ruler_flag = ynn_tilt8
-				clr_ruler_flag = ynn_tilt9
-				clr_ruler_flag = ynn_tilt10
-				ynn_joust_death_check_effect = {
-					TwoJoustWin = yes
-					HasNum = event_target:ynn_joust_opponent_2
-				}
-			}
-			clr_ruler_flag = ynn_tilt10
-			clear_joust_flags_effect = yes
-			clr_ruler_flag = ynn_tilt1
-			clr_ruler_flag = ynn_tilt2
-			clr_ruler_flag = ynn_tilt3
-			clr_ruler_flag = ynn_tilt4
-			clr_ruler_flag = ynn_tilt5
-			clr_ruler_flag = ynn_tilt6
-			clr_ruler_flag = ynn_tilt7
-			clr_ruler_flag = ynn_tilt8
-			clr_ruler_flag = ynn_tilt9
-			clr_ruler_flag = ynn_tilt10
+			event_target:ynn_joust_loser = {
+				ynn_joust_death_check_effect = { var = firstJoustPower }
+			}			
 		}
 
 		if = {
@@ -1543,10 +996,19 @@ country_event = {
 					}
 				}
 			}
-			ynn_joust_end_effect = {
-				JOUSTWINNER = event_target:ynn_joust_winner
-				JOUSTLOSER = ROOT
-				ynnhonour = yes
+			event_target:ynn_joust_winner = {
+				clr_ruler_flag = tilts_begun
+				country_event = {
+					id = ynn_events.112
+					days = 5
+				}
+			}
+			event_target:ynn_joust_loser = {
+				clr_ruler_flag = tilts_begun
+				country_event = {
+					id = ynn_events.113
+					days = 5
+				}
 			}
 		}
 		else_if = {
@@ -1555,10 +1017,19 @@ country_event = {
 					has_ruler_flag = G26_partaking_joust
 				}
 			}
-			ynn_joust_end_effect = {
-				JOUSTWINNER = event_target:ynn_joust_winner
-				JOUSTLOSER = ROOT
-				G26Joust = yes
+			event_target:ynn_joust_winner = {
+				clr_ruler_flag = tilts_begun
+				country_event = {
+					id = flavour_amacimst.150
+					days = 5
+				}
+			}
+			event_target:ynn_joust_loser = {
+				clr_ruler_flag = tilts_begun
+				country_event = {
+					id = flavour_amacimst.151
+					days = 5
+				}
 			}
 		}
 	}

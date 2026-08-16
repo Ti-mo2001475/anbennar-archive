@@ -159,7 +159,7 @@ province_event = {
 	id = diggy.13
 	title = diggy.13.t
 	desc = diggy.13.d
-	picture = FEMALE_GENERAL_eventPicture
+	picture = wihgfx_FEMALE_GENERAL_eventPicture
 	goto = root
 
 	is_triggered_only = yes
@@ -7258,7 +7258,7 @@ country_event = {
 	id = diggy.518
 	title = diggy.518.t
 	desc = diggy.518.d
-	picture = CONQUEST__eventPicture
+	picture = CONQUEST_eventPicture
 	
 	mean_time_to_happen = {
 		years = 10
@@ -7705,7 +7705,7 @@ country_event = {
 	id = diggy.525
 	title = diggy.525.t
 	desc = diggy.525.d
-	picture = SIERRA_DE_LA_PLATA
+	picture = SIERRA_DE_LA_PLATA_eventPicture
 	
 	mean_time_to_happen = {
 		years = 10
@@ -13400,20 +13400,32 @@ country_event = { #The People do not Yearn for the Mines
 	option = { #Work in the mines!
 		name = diggy.769.a
 		ai_chance = { factor = 100 }
-		every_owned_province = {
-			limit = {
-				continent = serpentspine
-				OR = {
-					trade_goods = iron
-					trade_goods = copper
-					trade_goods = gold
-					trade_goods = mithril
+		custom_tooltip = dwarovar_more_mines_province_tt
+		tooltip = {
+			5690 = {
+				add_local_autonomy = -5
+				add_province_modifier = {
+					name = dwarovar_more_mines_province
+					duration = 3650 #10 years
 				}
 			}
-			add_local_autonomy = -5
-			add_province_modifier = {
-				name = dwarovar_more_mines_province
-				duration = 3650 #10 years
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					continent = serpentspine
+					OR = {
+						trade_goods = iron
+						trade_goods = copper
+						trade_goods = gold
+						trade_goods = mithril
+					}
+				}
+				add_local_autonomy = -5
+				add_province_modifier = {
+					name = dwarovar_more_mines_province
+					duration = 3650 #10 years
+				}
 			}
 		}
 		add_country_modifier = {

@@ -236,12 +236,15 @@ thunderborn_2 = {
 				limit = { NOT = { army_tradition = 60 }  } 
 				add_mil_power = -100
 			}
-			add_power_projection = {
-				type = thunderborn_force_reckoned_with
-				amount = 10
-			}
+			custom_tooltip = I49_reckoned_with_pp_tooltip
 			custom_tooltip = I49_reckoned_with_seperatism_tooltip
-			hidden_effect = { every_owned_or_non_tributary_subject_province = { add_nationalism = -5 }  } 
+			hidden_effect = { 
+				every_owned_or_non_tributary_subject_province = { add_nationalism = -5 }  
+				add_power_projection = {
+					type = thunderborn_force_reckoned_with
+					amount = 10
+				}
+			} 
 		}
 	}
 }
@@ -299,27 +302,48 @@ thunderborn_3 = {
 		}
 
 		effect = {
-			custom_tooltip = I49_false_claimant_effect_tooltip
-			hidden_effect = {
-				if = {
-					limit = {
-						I80 = { has_been_insulted_by_root = yes } 
-						army_size_percentage = 0.85
-						total_development = 30
-					}
+			if = {
+				limit = {
+					I80 = { has_been_insulted_by_root = yes } 
+					army_size_percentage = 0.85
+					total_development = 30
+				}
+				custom_tooltip = I49_false_claimant_effect_tooltip_1_yes
+				hidden_effect = {
 					kalgazuur_area = { add_permanent_claim = I49 } 
 					add_country_modifier = {
 						name = "I49_against_false_king"
 						duration = 1825
 					}
 				}
-				else = {
+			}
+			else = {
+				custom_tooltip = I49_false_claimant_effect_tooltip_1_no
+			}
+			if = {
+				limit = {
+					NOT = {
+						exists = I80
+					}
+					5195 = {
+						owned_by = I49
+						OR = {
+							anb_has_been_razed = yes
+							is_core = I49
+						}
+					}
+				}
+				custom_tooltip = I49_false_claimant_effect_tooltip_2_yes
+				hidden_effect = {
 					add_estate_loyalty = {
 						estate = estate_monstrous_tribes
 						loyalty = 10
 					}
 					add_prestige = 20
 				}
+			}
+			else = {
+				custom_tooltip = I49_false_claimant_effect_tooltip_2_no
 			}
 		}
 	}
@@ -581,40 +605,52 @@ thunderborn_3 = {
 				tooltip = I49_to_be_true_province_tooltip
 				calc_true_if = {
 					amount = 4
-					AND = {
-						5195 = {
-							owned_by = I49
-							has_tax_building_trigger = yes
+					OR = {
+						AND = {
+							5195 = {
+								owned_by = I49
+								has_tax_building_trigger = yes
+							}
 						}
 					}
-					AND = {
-						5184 = {
-							owned_by = I49
-							has_tax_building_trigger = yes
+					OR = {
+						AND = {
+							5184 = {
+								owned_by = I49
+								has_tax_building_trigger = yes
+							}
 						}
 					}
-					AND = {
-						5179 = {
-							owned_by = I49
-							has_tax_building_trigger = yes
+					OR = {
+						AND = {
+							5179 = {
+								owned_by = I49
+								has_tax_building_trigger = yes
+							}
 						}
 					}
-					AND = {
-						5161 = {
-							owned_by = I49
-							has_tax_building_trigger = yes
+					OR = {
+						AND = {
+							5161 = {
+								owned_by = I49
+								has_tax_building_trigger = yes
+							}
 						}
 					}
-					AND = {
-						5081 = {
-							owned_by = I49
-							has_tax_building_trigger = yes
+					OR = {
+						AND = {
+							5081 = {
+								owned_by = I49
+								has_tax_building_trigger = yes
+							}
 						}
 					}
-					AND = {
-						5152 = {
-							owned_by = I49
-							has_tax_building_trigger = yes
+					OR = {
+						AND = {
+							5152 = {
+								owned_by = I49
+								has_tax_building_trigger = yes
+							}
 						}
 					}
 				}

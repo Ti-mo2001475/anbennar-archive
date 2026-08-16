@@ -8,7 +8,7 @@
 # Nor do they support setting provinces (like cede province) or third party countries (like annull treaties) as targets.
 # FROM = The dude that receive it THIS = The dude that launch
 # Example:
-po_dissolve_command = {
+po_dissolve_warlord = {
 	# The following strings need localization: 
 	#		"make_dummy_desc" (uses text processing, supporting bracket notation) ("[FROM.GetName] becomes a [THIS.GetName] Dummy")
 	#		"CB_ALLOWED_make_dummy" (uses plain localization) ("Enforced Dumbness")
@@ -45,6 +45,9 @@ po_dissolve_command = {
 		if = {
 			limit = { FROM = { tag = R62 } }
 			country_event = { id = the_command.99 }
+		}
+		else = {
+			country_event = { id = haless.1015 }
 		}
 	}
 	ai_weight = { # Defaults to always evaluate to 0

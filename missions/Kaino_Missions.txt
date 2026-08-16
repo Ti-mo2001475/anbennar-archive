@@ -1,0 +1,1819 @@
+#bokiya branch
+kaino_bokiya_missions_1 = { 
+	slot = 1
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { is_or_was_tag = { tag = L15 } }
+
+	kaino_bokiya_1 = {
+		icon = mission_invade_kanem
+		position = 1
+		required_missions = {
+		}
+
+		provinces_to_highlight = {
+			is_capital_of = L18
+			exists = L18
+		}
+
+		trigger = {
+			L18 = {
+				OR = {
+					exists = no
+					AND = {
+						has_opinion = {
+							who = ROOT
+							value = 150
+						}
+						NOT = { liberty_desire = 15 }
+					}
+				}
+			}
+		}
+
+		effect = {
+			5739 = {
+				change_trade_goods = iron
+				add_permanent_province_modifier = {
+					name = ironwood_trees
+					duration = -1
+				}
+			}
+			set_estate_privilege = estate_planetouched_scattered_jelli_wanderers
+		}
+	}
+	kaino_bokiya_3 = {
+		icon = mission_horde_religion
+		position = 3
+		required_missions = {
+			kaino_bokiya_2
+		}
+
+		provinces_to_highlight = {
+		}
+
+		trigger = {
+			num_of_estate_privileges = {
+				estate = estate_planetouched
+				value = 4
+			}
+			estate_loyalty = {
+				estate = estate_planetouched
+				loyalty = 50
+			}
+		}
+
+		effect = {
+			change_variable = { which = planetouched_agenda_good_var value = 5 }
+			custom_tooltip = kaino_less_plane_priv_tt
+		}
+	}
+}
+
+kaino_bokiya_missions_2 = { 
+	slot = 2
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { is_or_was_tag = { tag = L15 } }
+	
+	kaino_bokiya_2 = {
+		icon = mission_jaguar_knights
+		# icon = mission_mesoamerican_divine_monarch
+		# icon = mission_mesoamerican_leader_expedition
+		position = 2
+		required_missions = { 
+			kaino_bokiya_1
+			kaino_3_1
+		}
+
+		provinces_to_highlight = {
+		}
+
+		trigger = {
+			has_estate_privilege = estate_planetouched_scattered_property
+			every_estate_loyalty = { loyalty = 40 }
+		}
+
+		effect = {
+			define_planetouched_general = { fire = 3 shock = 4 manuever = 2 siege = 3 }
+			change_variable = { which = planetouched_agenda_good_var value = 1 }
+			set_country_flag = recently_done_planetouched_agenda
+		}
+	}
+}
+
+kaino_damisi_missions_1 = { 
+	slot = 1
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { is_or_was_tag = { tag = S97 } }
+
+	# kaino_damisi_1 = {
+	# 	icon = mission_jaguar_knights
+	# 	position = 1
+	# 	required_missions = {
+	# 	}
+
+	# 	provinces_to_highlight = {
+	# 	}
+
+	# 	trigger = {
+
+	# 	}
+
+	# 	effect = {
+	# 	}
+	# }
+	# kaino_damisi_3 = {
+	# 	icon = mission_horde_religion
+	# 	position = 3
+	# 	required_missions = {
+	# 		kaino_damisi_2
+	# 	}
+
+	# 	provinces_to_highlight = {
+	# 	}
+
+	# 	trigger = {
+	# 	}
+
+	# 	effect = {
+	# 	}
+	# }
+}
+kaino_damisi_missions_2 = { 
+	slot = 2
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { is_or_was_tag = { tag = S97 } }
+	
+	# kaino_damisi_2 = {
+	# 	icon = mission_jaguar_knights
+	# 	position = 2
+	# 	required_missions = { 
+	# 		kaino_damisi_1
+	# 		kaino_3_1
+	# 	}
+
+	# 	provinces_to_highlight = {
+	# 	}
+
+	# 	trigger = {
+	# 	}
+
+	# 	effect = {
+	# 	}
+	# }
+}
+
+kaino_adaru_missions_1 = { 
+	slot = 1
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { is_or_was_tag = { tag = L19 } }
+
+	kaino_adaru_1 = {
+		icon = mission_mayan_conquest
+		position = 1
+		required_missions = {
+		}
+
+		provinces_to_highlight = {
+			is_capital_of = L14
+		}
+
+		trigger = {
+			has_cast_invisibility = yes
+			OR = {
+				has_spy_network_in = {
+					who = L14
+					value = 20
+				}
+				owns = 5760
+			}
+			capital_scope = {
+				num_of_units_in_province = {
+					amount = 6
+					type = infantry
+					who = ROOT
+				}
+			}
+		}
+
+		effect = {
+			5760 = {
+				infantry = ROOT
+				infantry = ROOT
+				infantry = ROOT
+				infantry = ROOT
+				infantry = ROOT
+				infantry = ROOT
+				infantry = ROOT
+			}
+			negetu_area = { add_permanent_claim = ROOT }
+			falenfenw_area = { add_permanent_claim = ROOT }
+			5754 = { add_permanent_claim = ROOT }
+		}
+	}
+	kaino_adaru_3 = {
+		icon = mission_horde_religion
+		position = 3
+		required_missions = {
+			kaino_adaru_2
+		}
+
+		provinces_to_highlight = {
+		}
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = kaino_skulls_fake
+				has_country_flag = kaino_skull_is_fake
+			}
+			estate_loyalty = {
+				estate = estate_mages
+				loyalty = 50
+			}
+			estate_influence = {
+				estate = estate_mages
+				influence = 50
+			}
+			is_estate_evocation_level_1_minimum = yes
+		}
+
+		effect = {
+			custom_tooltip = kaino_broken_effect
+		}
+	}
+}
+kaino_adaru_missions_2 = { 
+	slot = 2
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { is_or_was_tag = { tag = L19 } }
+	
+	kaino_adaru_2 = {
+		icon = mission_jaguar_knights
+		position = 2
+		required_missions = { 
+			kaino_adaru_1
+			kaino_3_1
+		}
+
+		provinces_to_highlight = {
+			is_capital = yes
+			owner = {
+				culture = kaino
+				NOT = {
+					truce_with = ROOT
+					war_with = ROOT
+				}
+			}
+		}
+
+		trigger = {
+			all_known_country = {
+				OR = {
+					NOT = { culture = kaino }
+					truce_with = ROOT
+					war_with = ROOT
+				}
+			}
+			has_estate_privilege = estate_adventurers_heroes_in_the_army
+		}
+
+		effect = {
+			define_planetouched_general = { fire = 2 shock = 3 manuever = 5 siege = 1 }
+			define_planetouched_general = { fire = 1 shock = 5 manuever = 2 siege = 0 }
+			define_planetouched_general = { fire = 2 shock = 2 manuever = 4 siege = 2 }
+			define_planetouched_general = { fire = 4 shock = 3 manuever = 1 siege = 0 }
+			add_estate_loyalty = {
+				estate = estate_planetouched
+				loyalty = 20
+			}
+			add_country_modifier = {
+				name = adaru_generals
+				duration = 18250
+			}
+		}
+	}
+}
+
+kaino_maikirow_missions_1 = { 
+	slot = 1
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { is_or_was_tag = { tag = L20 } }
+
+	kaino_maikirow_1 = {
+		icon = mission_son_back_to_the_roots
+		position = 1
+		required_missions = {
+		}
+
+		provinces_to_highlight = {
+			province_id = 5811
+		}
+
+		trigger = {
+			OR = {
+				is_subject = no
+				AND = {
+					has_spy_network_in = {
+						who = L22
+						value = 20
+					}
+					5811 = {
+						num_of_units_in_province = {
+							amount = 4
+							type = infantry
+							who = ROOT
+						}
+					}
+				}
+			}
+		}
+
+		effect = {
+			add_treasury = 50
+			add_liberty_desire = 30
+			custom_tooltip = kaino_more_disaster_binji
+		}
+	}
+	kaino_maikirow_3 = {
+		icon = mission_horde_religion
+		position = 3
+		required_missions = {
+			kaino_maikirow_2
+		}
+		provinces_to_highlight = {
+			province_id = 6315
+		}
+
+		trigger = {
+			has_mana = { amount = 100 }
+			6315 = {
+				num_of_units_in_province = {
+					amount = 15
+					who = ROOT
+				}
+			}
+		}
+
+		effect = {
+			change_mana = { amount = -100 }
+			6315 = {
+				add_siberian_construction = 500
+				change_trade_goods = iron
+				add_permanent_province_modifier = {
+					name = ironwood_trees
+					duration = -1
+				}
+				add_permanent_province_modifier = {
+					name = kaino_lewd_cave
+					duration = -1
+				}
+			}
+		}
+	}
+}
+kaino_maikirow_missions_2 = { 
+	slot = 2
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { is_or_was_tag = { tag = L20 } }
+	
+	kaino_maikirow_2 = {
+		icon = mission_jaguar_knights
+		position = 2
+		required_missions = { 
+			kaino_maikirow_1
+			kaino_3_1
+		}
+
+		trigger = {
+			is_subject = no
+			is_at_war = no
+			num_of_allies = 2
+		}
+
+		effect = {
+			custom_tooltip = kaino_claims_on_kaino_tt
+			hidden_effect = {
+				dao_nako_region = {
+					limit = { culture = kaino }
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+}
+
+kaino_mausarjirad_missions_1 = { 
+	slot = 1
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { is_or_was_tag = { tag = L18 } }
+
+	# kaino_mausarjirad_1 = {
+	# 	icon = mission_invade_kanem
+	# 	position = 1
+	# 	required_missions = {
+	# 	}
+
+	# 	provinces_to_highlight = {
+	# 	}
+
+	# 	trigger = {
+	# 	}
+
+	# 	effect = {
+	# 		5739 = {
+	# 			change_trade_goods = iron
+	# 			add_permanent_province_modifier = {
+	# 				name = ironwood_trees
+	# 				duration = -1
+	# 			}
+	# 		}
+	# 	}
+	# }
+	# kaino_mausarjirad_3 = {
+	# 	icon = mission_horde_religion
+	# 	position = 3
+	# 	required_missions = {
+	# 		kaino_mausarjirad_2
+	# 	}
+
+	# 	provinces_to_highlight = {
+	# 	}
+
+	# 	trigger = {
+	# 	}
+
+	# 	effect = {
+	# 	}
+	# }
+}
+kaino_mausarjirad_missions_2 = { 
+	slot = 2
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { is_or_was_tag = { tag = L18 } }
+	
+	# kaino_mausarjirad_2 = {
+	# 	icon = mission_jaguar_knights
+	# 	# icon = mission_mesoamerican_divine_monarch
+	# 	# icon = mission_mesoamerican_leader_expedition
+	# 	position = 2
+	# 	required_missions = { 
+	# 		kaino_3_1
+	# 		kaino_mausarjirad_1
+	# 	}
+
+	# 	provinces_to_highlight = {
+	# 	}
+
+	# 	trigger = {
+	# 	}
+
+	# 	effect = {
+	# 	}
+	# }
+}
+
+
+kaino_3_missions = { 
+	slot = 3
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { primary_culture = kaino }
+
+	kaino_3_1 = {
+		icon = mission_eagle_knight
+		position = 1
+		required_missions = { 
+		}
+
+		provinces_to_highlight = { 
+			has_province_modifier = ironwood_trees
+		}
+
+		trigger = {
+			army_size_percentage = 0.9
+			dao_nako_region = {
+				any_province = {
+					AND = {
+						num_of_units_in_province = {
+							who = ROOT
+							amount = 4
+						}
+						has_province_modifier = ironwood_trees
+					}
+				}
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = kaino_ironwood_weapons
+				duration = 9125
+			}
+			5721 = { add_permanent_claim = ROOT }
+			5724 = { add_permanent_claim = ROOT }
+			5749 = { add_permanent_claim = ROOT }
+			5760 = { add_permanent_claim = ROOT }
+			5779 = { add_permanent_claim = ROOT }
+			5808 = { add_permanent_claim = ROOT }
+			5810 = { add_permanent_claim = ROOT }
+			6308 = { add_permanent_claim = ROOT }
+			6316 = { add_permanent_claim = ROOT }
+
+			hidden_effect = {
+				country_event = {
+					id = flavour_kaino.1
+					days = 7300
+				}
+			}
+		}
+	}
+
+	kaino_3_2 = {
+		icon = mission_marriage
+		position = 2
+		required_missions = { 
+			kaino_3_1
+			kaino_4_1
+		}
+
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					OR = {
+						province_id = 5751
+						province_id = 5755
+						province_id = 5757
+					}
+					NOT = { owned_by = ROOT }
+				}
+				AND = {
+					owned_by = ROOT
+					religion = genie_cult
+				}
+			}
+		}
+
+		trigger = {
+			owns = 5751
+			owns = 5755
+			owns = 5757
+			NOT = {
+				any_owned_province = { religion = genie_cult }
+			}
+		}
+		effect = {
+			add_church_power = 50
+			add_treasury = 50
+			country_event = {
+				id = flavour_kaino.2
+			}
+			custom_tooltip = kaino_3_2_tt
+			hidden_effect = {
+				dao_nako_region = {
+					limit = { culture = kaino }
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+
+	kaino_3_3 = {
+		icon = mission_establish_the_black_guard
+		position = 3
+		required_missions = { 
+			kaino_3_2
+		}
+
+		provinces_to_highlight = {
+			
+		}
+
+		trigger = {
+			ROOT = {
+				tag = L49
+			}
+			stability = 1
+		}
+
+		effect = {
+			country_event = {
+				id = flavour_kaino.3
+			}
+		}
+	}
+
+	kaino_3_4 = {
+		icon = mission_head_on_spike
+		position = 4
+		required_missions = {
+			kaino_3_3
+			kaino_4_3
+		}
+
+		provinces_to_highlight = {
+		}
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = kaino_cured_poison_tt
+				has_country_flag = kaino_flag_cured_adze_poisoning
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = kaino_his_magic_healing
+				duration = 9125
+			}
+			if = {
+				limit = {
+					is_lacking_institutions = yes
+				}
+				capital_scope = {
+					add_next_institution_embracement = 100
+					every_neighbor_province = {
+						add_next_institution_embracement = 100
+					}
+				}
+			}
+			else = {
+				capital_scope = {
+					add_building = cathedral
+				}
+			}
+			remove_estate_privilege = estate_mages_kaino_dao_nako_magecraft
+			set_estate_privilege = estate_mages_kaino_shadow_lich_chosen
+			set_country_flag = anb_on_action_tracking_exploit_dev_flag
+			set_country_flag = kaino_has_arrived
+			
+			clr_country_flag = kaino_can_begin_adze_pandemic
+			hidden_effect = { 
+				set_country_flag = kaino_unlock_first_part_of_MT
+				set_variable = {
+                    which = kaino_exploit_counter
+                    value = 0
+            	}
+			}
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+
+kaino_4_missions = { 
+	slot = 4
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { primary_culture = kaino }
+
+	kaino_4_1 = {
+		icon = mission_jungle_pilgrim
+		position = 1
+		required_missions = { 
+		}
+
+		provinces_to_highlight = {  
+			owner = {
+				culture = ndurubu
+			}
+		}
+
+		trigger = {
+			OR = {
+				any_ally = {
+					culture = ndurubu
+					has_opinion = {
+						who = ROOT
+						value = 150
+					}
+				}
+				all_known_country = {
+					OR = {
+						NOT = { culture = ndurubu }
+						is_rival = ROOT
+					}
+				}
+				all_known_country = {
+					NOT = { culture = ndurubu }
+				}
+			}
+		}
+
+		effect = {
+			add_manpower = 3
+			custom_tooltip = ndurubu_allies_tt
+			hidden_effect = {
+				if = {
+					limit = {
+						any_ally = {
+							culture = ndurubu
+						}
+					}
+					random_ally = {
+						limit = {
+							culture = ndurubu
+							has_opinion = {
+								who = ROOT
+								value = 150
+							}
+						}
+						add_historical_friend = ROOT
+						add_trust = {
+							who = ROOT
+							value = 10
+						}
+						add_favors = {
+							who = ROOT
+							amount = 20
+						}
+					}
+				}
+			}			
+		}
+	}
+	
+	kaino_4_2 = {
+		icon = mission_hydra
+		position = 2
+		required_missions = { 
+			kaino_4_1
+			kaino_5_1
+		}
+
+		provinces_to_highlight = {  
+		}
+
+		trigger = {
+			is_estate_any_school_level_1_minimum = yes
+			has_cast_summon_familiars = yes
+		}
+
+		effect = {
+			custom_tooltip = kaino_ironwood_magic_regeneration_tt
+			for = {
+				amount = 10
+				effect = "
+					random_owned_province = {
+						limit = { 
+							has_province_modifier = ironwood_trees
+							NOT = { has_province_flag = kaino_mana_given }
+						}
+						set_province_flag = kaino_mana_given
+						owner = { change_mana = { amount = 25 } }
+					}
+				"
+			}
+			add_country_modifier = {
+				name = kaino_ironwood_magic_regeneration
+				duration = 9125
+			}
+			every_owned_province = { clr_province_flag = kaino_mana_given }
+		}
+	}
+
+	kaino_4_3 = {
+		icon = mission_magical_forest
+		position = 3
+		required_missions = {
+			kaino_4_2
+			kaino_3_2
+		}
+
+		provinces_to_highlight = {  
+			OR = {
+				province_id = 5779 #all the former Kaino capitals
+				province_id = 5768
+				province_id = 5739
+				province_id = 5754
+				province_id = 5743
+			}
+			NOT = {
+				AND = {
+					owned_by = ROOT
+					is_core = ROOT
+				}
+			}
+		}
+
+		trigger = {
+			owns_core_province = 5779 #all the former Kaino capitals
+			owns_core_province = 5768
+			owns_core_province = 5739
+			owns_core_province = 5754
+			owns_core_province = 5743
+		}
+
+		effect = {
+			add_prestige = 50
+			add_country_modifier = {
+				name = kaino_steward_of_kainos_vestiges
+				duration = -1
+			}
+		}
+	}
+}
+
+kaino_5_missions = { 
+	slot = 5
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { primary_culture = kaino }
+
+	kaino_5_1 = {
+		icon = mission_seize_the_dragon_throne
+		position = 1
+		required_missions = { 
+		}
+
+		provinces_to_highlight = {  
+		}
+
+		trigger = {
+			court_mage = 1
+			num_of_estate_privileges = {
+				estate = estate_mages
+				value = 3
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = kaino_artefacts_magic
+				duration = 9125
+			}
+		}
+	}
+}
+
+##################
+######Part 2######
+##################
+
+kaino_1b_missions = { 
+	slot = 1
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { primary_culture = kaino has_country_flag = kaino_unlock_first_part_of_MT }
+
+	kaino_1_5 = {
+		icon = mission_burning_castle
+		position = 5
+		required_missions = {
+			kaino_3_4
+		}
+
+		provinces_to_highlight = {
+			province_id = 5813 #sigilan
+		}
+
+		trigger = {
+			owns = 5813 #sigilan
+			has_estate_privilege = estate_mages_reduced_research_regulations
+			church_power = 100
+			NOT = { exists = L22 } #binwarji 
+		}
+
+		effect = {
+			add_church_power = -100
+			5813 = {
+				set_base_tax = 1
+				set_base_production = 1
+				set_base_manpower = 1
+				add_province_modifier = {
+					name = kaino_monument_to_fangaulas_befoulment
+					duration = -1
+				}
+			}
+		}
+	}
+
+	kaino_1_9 = {
+		icon = crush_heretic_strongholds
+		position = 9
+		required_missions = {
+			kaino_2_8
+		}
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			superregion = fangaula_superregion
+			has_great_project = {
+				type = any
+			}	
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				has_great_project = {
+					type = any
+					tier = 2
+				}
+				value = 2
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = kaino_justification
+				duration = -1
+			}
+		}
+	}
+
+	kaino_1_10 = {
+		icon = mission_burning_separation
+		position = 10
+		required_missions = {
+			kaino_1_9
+			kaino_2_9
+		}
+
+		provinces_to_highlight = {
+			OR = {
+				province_group = mothers_sorrow_group
+				province_id = 5483 #muhaqaar
+			}
+			NOT = { 
+				AND = {
+					owned_by = ROOT 
+					OR = {
+						anb_has_been_exploited = yes
+						anb_has_been_razed = yes
+						NOT = { development = 4 }
+					}
+				}
+			}
+		}
+
+		trigger = {
+			mothers_sorrow_group = {
+				type = all
+				owned_by = ROOT
+				OR = {
+					anb_has_been_exploited = yes
+					anb_has_been_razed = yes
+					NOT = { development = 4 }
+				}
+			}
+			5483 = { #muhaqaar
+				owned_by = ROOT
+				OR = {
+					anb_has_been_exploited = yes
+					anb_has_been_razed = yes
+					NOT = { development = 4 }
+				}
+			}
+		}
+		effect = {
+			custom_tooltip = kaino_murder_the_sorrow_tt
+			hidden_effect = {
+				mothers_sorrow_group = {
+					set_base_tax = 1
+					set_base_production = 1
+					set_base_manpower = 1
+				}
+			}
+			
+			dismantle_empire_of_china = yes
+			hidden_effect = {
+				set_global_flag = khet_dead
+			}
+			5483 = {
+				destroy_great_project = {
+					type = tower_of_muhaqaar
+				}
+			}
+			give_magical_infrastructure_perm_bypass = yes
+			change_mana = { amount = 400 }
+		}
+	}
+}
+
+kaino_2b_missions = { 
+	slot = 2
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { primary_culture = kaino has_country_flag = kaino_unlock_first_part_of_MT }
+	kaino_2_5 = {
+		icon = mission_mage_general
+		position = 5
+		required_missions = {
+			kaino_3_4
+		}
+
+		provinces_to_highlight = {  
+		}
+
+		trigger = {
+			treasury = 300
+			overextension_percentage = 0
+			war_exhaustion = 0
+			all_known_country = {
+				OR = {
+					NOT = { army_size = ROOT }
+					NOT = {
+						capital_scope = { superregion = fangaula_superregion }
+					}
+				}
+			}
+		}
+
+		effect = {
+			custom_tooltip = unlock_kainos_grasp_tt
+			set_country_flag = kaino_grasp_holy_order_flag
+			add_treasury = -300
+			if = {
+				limit = {
+					capital_scope = {
+						NOT = { has_building = mage_tower }
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						building = mage_tower
+						speed = 0.5
+						cost = 0
+					}
+				}
+			}
+			else = {
+				random_owned_province = {
+					limit = {
+						NOT = { has_building = mage_tower }
+					}
+					add_building_construction = {
+						building = mage_tower
+						speed = 0.5
+						cost = 0
+					}
+				}
+			}
+		}
+	}
+	
+	kaino_2_6 = {
+		icon = mission_three_death
+		position = 6
+		required_missions = { 
+			kaino_1_5
+			kaino_2_5
+			kaino_3_5
+		}
+
+		provinces_to_highlight = {
+		}
+
+		trigger = {
+			check_variable = {
+				which = kaino_exploit_counter
+				value = 20
+			}
+			at_least_magical_infrastructure_level_1 = yes
+		}
+
+		effect = {
+			custom_tooltip = kaino_exploiting_development_tt
+			set_country_flag = kaino_free_them_of_woe #gives them 25 gold and 1 mana per exploit
+		}
+	}
+	
+	kaino_2_8 = {
+		icon = mission_beyond_the_urals
+		position = 8
+		required_missions = {
+			kaino_3_7
+		}
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			superregion = fangaula_superregion
+			development = 4
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 30
+				superregion = fangaula_superregion
+				NOT = { development = 4 }
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = kaino_bones_into_ploughshares
+				duration = -1
+			}
+		}
+	}
+
+	kaino_2_9 = {
+		icon = mission_fire_of_london
+		position = 9
+		required_missions = {
+			kaino_2_8
+			kaino_3_8
+		}
+
+		provinces_to_highlight = {
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 15
+				has_tax_building_trigger = yes
+				NOT = { development = 4 }
+			}
+		}
+
+		effect = {
+			custom_tooltip = kaino_temple_bonuses_tt
+			hidden_effect = {
+				set_country_flag = kaino_temple_bonuses_flag
+				every_owned_province = {
+					limit = {
+						has_tax_building_trigger = yes
+						NOT = { development = 4 }
+					}
+					add_province_modifier = {
+						name = kaino_temple_bonuses
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	kaino_2_11 = {
+		icon = mission_homeless_children
+		position = 11
+		required_missions = {
+			kaino_1_10
+			kaino_3_10
+		}
+
+		provinces_to_highlight = {
+		}
+
+		trigger = {
+			at_least_magical_infrastructure_level_3 = yes
+			has_cast_chronophage = yes
+			at_least_magic_project_level = { project = army_of_the_dead level = 3 }
+		}
+
+		effect = {
+			custom_tooltip = kaino_chronophage_bonuses_tt
+			set_country_flag = kaino_super_duper_chronophage #buffing chronophage
+		}
+	}
+}
+
+kaino_3b_missions = { 
+	slot = 3
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { primary_culture = kaino has_country_flag = kaino_unlock_first_part_of_MT }
+
+	kaino_3_5 = {
+		icon = mission_blood_sacrifice
+		position = 5
+		required_missions = {
+			kaino_3_4
+		}
+
+		provinces_to_highlight = {  
+		}
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = advancing_army_of_the_dead_tt
+				is_advancing_army_of_the_dead = yes				
+			}
+			has_institution = renaissance
+		}
+
+		effect = {
+			country_event = {
+				id = flavour_kaino.4
+			}
+			custom_tooltip = kaino_3_5_tt
+			hidden_effect = {
+				fangaula_superregion = {
+					limit = { culture_group = west_sarhaly }
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+
+	kaino_3_6 = {
+		icon = mission_skeleton_army
+		position = 6
+		required_missions = {
+			kaino_3_5
+			kaino_4_5
+		}
+
+		provinces_to_highlight = {
+			culture = tamajoba
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+
+		trigger = {
+			has_country_modifier = undead_military
+			any_owned_province = { culture = tamajoba }
+		}
+
+		effect = {
+			add_treasury = 500
+			custom_tooltip = tamajoba_soldiers_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = { culture = tamajoba }
+					set_base_tax = 1
+					set_base_production = 1
+					set_base_manpower = 1
+					infantry = ROOT
+					infantry = ROOT
+					infantry = ROOT
+					infantry = ROOT
+					infantry = ROOT
+				}
+			}
+			
+		}
+	}
+
+	kaino_3_7 = {
+		icon = mission_fire_acolyte
+		position = 7
+		required_missions = {
+			kaino_4_6
+			kaino_3_6
+			kaino_2_6
+		}
+
+		provinces_to_highlight = {  
+			superregion = fangaula_superregion
+			NOT = {
+				owned_by = ROOT
+				owner = {
+					truce_with = ROOT
+				}
+			}
+			owner = {
+				OR = {
+					culture_group = west_sarhaly
+					culture = windhowler_gnoll
+				}
+			}
+		}
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = kaino_3_7_ttt
+				all_known_country = {
+					OR = {
+						truce_with = ROOT
+						AND = {
+							NOT = { culture_group = west_sarhaly }
+							NOT = { culture = windhowler_gnoll }
+						}
+					}
+				}
+			}
+			num_of_owned_provinces_with = {
+				value = 70
+				culture_group = west_sarhaly
+			}
+			is_at_war = no
+			custom_trigger_tooltip = {
+				tooltip = kaino_koalition_fired_tt
+				has_country_flag = kaino_koalition_fired
+			}
+		}
+
+		effect = {
+			change_government = theocracy
+			add_government_reform = kainos_kingdom_reform
+			custom_tooltip = kaino_spell_now_half_off_tt
+			make_spell_half_off = {
+				school = necromancy
+				level = 0
+				id = fangaula_kaino_1
+				duration = -1
+			}
+			hidden_effect = {
+				set_country_flag = anb_on_action_tracking_raze_flag
+				set_variable = {
+					which = nbProvincesRazed
+					value = 0
+				}
+				country_event = {
+					id = flavour_kaino.8
+					days = 1825
+				}
+			}
+		}
+	}
+
+	kaino_3_8 = {
+		icon = mission_dark_ritual
+		position = 8
+		required_missions = {
+			kaino_3_7
+		}
+
+		provinces_to_highlight = {
+		}
+
+		trigger = {
+			check_variable = {
+				which = kaino_casted_drain_life
+				value = 25
+			}
+		}
+
+		effect = {
+			custom_tooltip = kaino_apotheosis_of_mercy_unlocked_tt
+			set_country_flag = kaino_unlock_apotheosis_of_mercy_magical_project
+		}
+	}
+
+	kaino_3_9 = {
+		icon = mission_mal_subjugate_zaf
+		position = 9
+		required_missions = {
+			kaino_3_8
+		}
+
+		provinces_to_highlight = {  
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 15
+				has_manpower_building_trigger = yes
+				NOT = { development = 4 }
+			}
+		}
+
+		effect = {
+			custom_tooltip = kaino_barracks_bonuses_tt
+			hidden_effect = {
+				set_country_flag = kaino_barracks_bonuses_flag
+				every_owned_province = {
+					limit = {
+						has_manpower_building_trigger = yes
+						NOT = { development = 4 }
+					}
+					add_province_modifier = {
+						name = kaino_barracks_bonuses
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	kaino_3_10 = {
+		icon = mission_ghost_town
+		position = 10
+		required_missions = {
+			kaino_2_9
+			kaino_3_9
+			kaino_4_9
+		}
+
+		provinces_to_highlight = {  
+			superregion = fangaula_superregion
+			OR = {
+				NOT = { owned_by = ROOT }
+				development = 4
+				NOT = { holy_order = kainos_grasp_holy_order }
+			}
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 80
+				superregion = fangaula_superregion
+				holy_order = kainos_grasp_holy_order
+				NOT = { development = 4 }
+			}
+		}
+
+		effect = {
+			set_government_rank = 3
+			add_country_modifier = {
+				name = kaino_building_slot
+				duration = -1
+			}
+			fangaula_uncolonised_starting_provinces = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				decolonize = yes
+				custom_tooltip = kaino_3_10_tt
+				hidden_effect = {
+					add_permanent_province_modifier = {
+						name = cant_colonize
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	kaino_3_12 = {
+		icon = mission_gone_with_the_old
+		position = 12
+		required_missions = {
+			kaino_2_11
+			kaino_4_11
+		}
+
+		provinces_to_highlight = { 
+			province_id = 6690 #sprigi twani
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = kaino_rizzed_up_the_skelly_boi_tt
+				has_country_flag = kaino_successfully_rizzed_up_the_skelly_boi
+			}
+			adm = 6
+			dip = 6
+			mil = 6
+			owns = 6690
+		}
+
+		effect = {
+			country_event = {
+				id = flavour_kaino.50
+			}
+		}
+	}
+}
+
+kaino_4b_missions = { 
+	slot = 4
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { primary_culture = kaino has_country_flag = kaino_unlock_first_part_of_MT }
+	kaino_4_5 = {
+		icon = mission_empowerment
+		position = 5
+		required_missions = {
+			kaino_3_4
+		}
+
+		provinces_to_highlight = {  
+		}
+
+		trigger = {
+			is_estate_necromancy_level_2_minimum = yes
+			has_cast_steal_vitality = yes
+		}
+
+		effect = {
+			custom_tooltip = kaino_steal_life_tt
+			set_country_flag = kaino_steal_vitality_moderation
+		}
+	}
+
+	kaino_4_6 = {
+		icon = mission_necromancy
+		position = 6
+		required_missions = { 
+			kaino_4_5
+			kaino_5_5
+		}
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				holy_order = kainos_grasp_holy_order
+			}
+		} 
+
+		trigger = {  
+			num_of_owned_provinces_with = {
+				value = 40
+				holy_order = kainos_grasp_holy_order
+			}
+		}
+
+		effect = {
+			custom_tooltip = kaino_unlock_drain_life_spell_tt
+			hidden_effect = {
+				# set_country_flag = kaino_drain_life_spell_unlocked
+				set_variable = { kaino_casted_drain_life = 0 }
+				set_custom_spell_list = { group = fangaula subgroup = kaino }
+			}
+			
+		}
+	}
+
+	kaino_4_8 = {
+		icon = mission_burning_man
+		position = 8
+		required_missions = {
+			kaino_3_7
+		}
+
+		provinces_to_highlight = { 
+			owned_by = ROOT
+			NOT = {
+				is_core = ROOT
+				anb_has_been_razed = yes
+			}
+			development = 4
+		}
+
+		trigger = {
+			check_variable = { nbProvincesRazed = 20 }
+			has_country_modifier = racial_pop_halfling_purge
+			has_country_modifier = racial_pop_gnollish_purge
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = kaino_the_cleanse
+				duration = -1
+			}
+		}
+	}
+
+	kaino_4_9 = {
+		icon = mission_hanged_tree
+		position = 9
+		required_missions = {
+			kaino_3_8
+			kaino_4_8
+		}
+
+		provinces_to_highlight = {
+			superregion = fangaula_superregion
+			owned_by = ROOT
+			NOT = { culture = kaino }
+			development = 4
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				superregion = fangaula_superregion
+				value = 80
+				OR = {
+					culture = kaino
+					NOT = { development = 4 }
+				}
+			}
+		}
+
+		effect = {
+			custom_tooltip = kaino_all_shall_take_the_name_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = { superregion = fangaula_superregion }
+					change_culture = kaino
+				}
+			}
+			add_country_modifier = {
+				name = kaino_all_shall_take_the_name
+				duration = -1
+			}
+		}
+	}
+
+	kaino_4_11 = {
+		icon = mission_delighted_mage
+		position = 11
+		required_missions = {
+			kaino_3_10
+			kaino_5_10
+		}
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = { 
+				NOT = { culture = kaino }
+				development = 4
+			}
+		}
+
+		trigger = {
+			exactly_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 3 }
+			num_of_owned_provinces_with = {
+				culture = kaino
+				NOT = { development = 4 }
+				value = 200
+			}
+		}
+
+		effect = {
+			custom_tooltip = kaino_4_11_tt
+			hidden_effect = {
+				every_known_country = {
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -100
+					}
+				}
+				east_sarhal_superregion = {
+					limit = {
+						NOT = { region = shadow_swamp_region }
+					}
+					add_permanent_claim = ROOT
+				}
+				taneyas_superregion = { add_permanent_claim = ROOT }
+				north_salahad_superregion = { add_permanent_claim = ROOT }
+				djinnakah_superregion = { add_permanent_claim = ROOT }
+				bulwar_superregion = { add_permanent_claim = ROOT }
+				south_salahad_superregion = { add_permanent_claim = ROOT }			
+			}
+			add_country_modifier = {
+				name = kaino_marching_to_salvation
+				duration = -1
+			}
+		}
+	}
+}
+
+kaino_5b_missions = { 
+	slot = 5
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { primary_culture = kaino has_country_flag = kaino_unlock_first_part_of_MT }
+
+	kaino_5_5 = {
+		icon = mission_destroyed_city
+		position = 5
+		required_missions = {
+			kaino_3_4
+		}
+		provinces_to_highlight = {
+			region = dao_nako_region
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				region = dao_nako_region
+				value = 35
+			}
+			if = {
+				limit = {
+					calc_true_if = {
+						dao_nako_region = {
+							type = all
+							is_empty = yes
+						}
+						amount = 3
+					}
+				}
+				calc_true_if = {
+					dao_nako_region = {
+						type = all
+						is_empty = yes
+						native_size = 0
+					}
+					amount = 3
+				}
+			}
+		}
+
+		effect = {
+			custom_tooltip = kaino_buff_contagion_tt
+			set_country_flag = kaino_contagion_adze_swarm #buffs contagion spell
+		}
+	}
+}
+
+
+####
+#super secret skeleton dating missions
+####
+
+kaino_5c_missions = { 
+	slot = 5
+	generic = no
+	ai = yes 
+	has_country_shield = yes
+	potential = { primary_culture = kaino has_country_flag = kaino_unlock_romantic_skeleton_part_of_MT }
+
+	kaino_5_8 = {
+		icon = mission_skull
+		position = 8
+		required_missions = {
+			kaino_3_7
+		}
+
+		provinces_to_highlight = { 
+		}
+
+		trigger = {
+			ruler_is_lich = yes
+		}
+
+		effect = {
+			country_event = {
+				id = flavour_kaino.11
+			}
+		}
+	}
+
+	kaino_5_9 = {
+		icon = mission_dancing_with_dead
+		position = 9
+		required_missions = {
+			kaino_5_8
+		}
+
+		provinces_to_highlight = { 
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				has_building = mage_tower
+				value = 10
+			}
+			at_least_magical_infrastructure_level_2 = yes
+		}
+
+		effect = {
+			custom_tooltip = kaino_speak_with_the_dead_unlock_buff_tt
+			set_country_flag = kaino_speak_with_the_dead_buff #buffs speak with the dead spell
+			remove_random_bad_ruler_personality = yes
+			if = {
+				limit = { has_country_modifier = witch_king_skill_modifier }
+				add_country_modifier = {
+					name = kaino_aya_is_too_smart
+					duration = -1
+				}
+			}
+			else = { custom_tooltip = kaino_5_9_tt }
+		}
+	}
+
+	kaino_5_10 = {
+		icon = mission_pray_light
+		position = 10
+		required_missions = {
+			kaino_5_9
+			kaino_4_9
+		}
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { 
+				AND = {
+					culture = kaino 
+					NOT = { development = 4 }
+				}
+			}
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				culture = kaino
+				NOT = { development = 4 }
+				value = 100
+			}
+		}
+
+		effect = {
+			custom_tooltip = kaino_romantic_date_tt
+			set_country_flag = kaino_unlock_romantic_date_kyaa_magical_project
+		}
+	}
+}

@@ -4629,14 +4629,28 @@ planetouched_land_share_equalizer_effect = {
 }
 
 define_planetouched_general = {
-	define_general = {
-		[[name] name = "$name$"]
-		fire = $fire$
-		shock = $shock$
-		manuever = $manuever$
-		siege = $siege$
-		trait = planetouched_commander_personality
-		[[female] female = $female$]
+	if = {
+		limit = { mission_completed = kaino_adaru_3 }
+		define_general = {
+			[[name] name = "$name$"]
+			fire = $fire$
+			shock = 7
+			manuever = $manuever$
+			siege = $siege$
+			trait = planetouched_commander_personality
+			[[female] female = $female$]
+		}
+	}
+	else = {
+		define_general = {
+			[[name] name = "$name$"]
+			fire = $fire$
+			shock = $shock$
+			manuever = $manuever$
+			siege = $siege$
+			trait = planetouched_commander_personality
+			[[female] female = $female$]
+		}
 	}
 	set_country_flag = have_had_planetouched_general
 }

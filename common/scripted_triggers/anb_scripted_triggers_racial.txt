@@ -814,6 +814,7 @@ ruler_is_human = {
 			ruler_culture = tefori
 			ruler_culture = ilatani
 			ruler_culture = nariandi
+			ruler_culture = milcori
 			#Escanni
 			ruler_culture = black_castanorian
 			ruler_culture = castanorian
@@ -1011,6 +1012,7 @@ ruler_is_human = {
 			ruler_culture = mantimatu
 			ruler_culture = ndurubu
 			ruler_culture = kaino
+			ruler_culture = aya
 			ruler_culture = tamajoba
 			ruler_culture = taafi
 			ruler_culture = jiromji
@@ -1801,6 +1803,7 @@ consort_is_human = {
 			consort_culture = tefori
 			consort_culture = ilatani
 			consort_culture = nariandi
+			consort_culture = milcori
 			#Escanni
 			consort_culture = black_castanorian
 			consort_culture = castanorian
@@ -1998,6 +2001,7 @@ consort_is_human = {
 			consort_culture = mantimatu
 			consort_culture = ndurubu
 			consort_culture = kaino
+			consort_culture = aya
 			consort_culture = tamajoba
 			consort_culture = taafi
 			consort_culture = jiromji
@@ -2750,6 +2754,7 @@ heir_is_human = {
 			heir_culture = tefori
 			heir_culture = ilatani
 			heir_culture = nariandi
+			heir_culture = milcori
 			#Escanni
 			heir_culture = black_castanorian
 			heir_culture = castanorian
@@ -2947,6 +2952,7 @@ heir_is_human = {
 			heir_culture = mantimatu
 			heir_culture = ndurubu
 			heir_culture = kaino
+			heir_culture = aya
 			heir_culture = tamajoba
 			heir_culture = taafi
 			heir_culture = jiromji
@@ -4346,6 +4352,7 @@ has_human_advisor = {
 			employed_advisor = { culture = fiadionni }
 			employed_advisor = { culture = gliosine }
 			employed_advisor = { culture = arthaman }
+			employed_advisor = { culture = milcori }
 			employed_advisor = { culture = gawedi }
 			employed_advisor = { culture = old_alenic }
 			employed_advisor = { culture = blue_reachman }
@@ -4532,6 +4539,7 @@ has_human_advisor = {
 			employed_advisor = { culture = jiromji }
 			employed_advisor = { culture = binwarji }
 			employed_advisor = { culture = mukarron }
+			employed_advisor = { culture = aya }
 			employed_advisor = { culture = zuvunwa }
 			employed_advisor = { culture = kuivanhi }
 			employed_advisor = { culture = kudenta }
@@ -4620,6 +4628,7 @@ has_human_advisor_of_category = {
 			employed_advisor = { category = $category$ culture = arbarani }
 			employed_advisor = { category = $category$ culture = esmari }
 			employed_advisor = { category = $category$ culture = arannese }
+			employed_advisor = { category = $category$ culture = milcori }
 			employed_advisor = { category = $category$ culture = nathalairey }
 			employed_advisor = { category = $category$ culture = uelairey }
 			employed_advisor = { category = $category$ culture = aldresian }
@@ -4813,6 +4822,7 @@ has_human_advisor_of_category = {
 			employed_advisor = { category = $category$ culture = mantimatu }
 			employed_advisor = { category = $category$ culture = ndurubu }
 			employed_advisor = { category = $category$ culture = kaino }
+			employed_advisor = { category = $category$ culture = aya }
 			employed_advisor = { category = $category$ culture = tamajoba }
 			employed_advisor = { category = $category$ culture = taafi }
 			employed_advisor = { category = $category$ culture = jiromji }
@@ -5584,6 +5594,7 @@ has_human_accepted_culture = {
 		accepted_culture = tefori
 		accepted_culture = ilatani
 		accepted_culture = nariandi
+		accepted_culture = milcori
 		#Escanni
 		accepted_culture = black_castanorian
 		accepted_culture = castanorian
@@ -5781,6 +5792,7 @@ has_human_accepted_culture = {
 		accepted_culture = mantimatu
 		accepted_culture = ndurubu
 		accepted_culture = kaino
+		accepted_culture = aya
 		accepted_culture = tamajoba
 		accepted_culture = taafi
 		accepted_culture = jiromji
@@ -11286,6 +11298,24 @@ is_long_lived_consort = {
 
 is_long_lived_country = {} #literally just for magic rework to pass arguments
 
+
+# "Long-Livedness" is a rather complex topic, because of how frequently the term is bandied about without care.
+# For a long time, harimari and kobolds were all referred to as "long-lived" despite the code not acknowledging them as such.
+# Instead, these races are "uncapped lifespan", a term that is not used outside of these belowtriggers
+# These triggers, in turn, are used only in the death calculations and nowhere else. It appears they only exist to unite kobold and harimari lifespan curves.
+
+# By comparison, being "truly long-lived" as elves, dwawrves, gnomes, and for a time half-elves were, comes with major gameplay consequences
+# You trigger the Elder Pact, and you get hit with study speed malus.
+# Therefore, this confusion of terminologies has resulted in a great big mess.
+
+# The normalization of nomenclature demands us to acknowledge the following:
+# Only elves, dwarves, and gnomes are now considered "long-lived"
+# Half-elves, kobolds, and harimari might be referred to as "uncapped lifespan"
+# However, half-elves do not share the mortality curve of kobolds and harimari (they have their own code), and are therefore not a part of the trigger
+# This makes the below trigger inaccurate for uses such as in mission triggers or other logic
+
+# All other species are "normal lifespan"
+
 #No tooltip, only use in hidden triggers or custom tooltips.
 is_uncapped_lifespan_ruler = {
 	OR = {
@@ -11680,6 +11710,7 @@ ruler_is_businori_human = {
 			ruler_culture = busilari
 			ruler_culture = tefori
 			ruler_culture = ilatani
+			ruler_culture = milcori
 		}
 	}
 }
@@ -11691,6 +11722,7 @@ consort_is_businori_human = {
 			consort_culture = busilari
 			consort_culture = tefori
 			consort_culture = ilatani
+			consort_culture = milcori
 		}
 	}
 }

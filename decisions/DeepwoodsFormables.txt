@@ -230,11 +230,11 @@ country_decisions = {
 	deepwoods_orc_reform_karakhanbar = {
 		major = yes
 		potential = {
-			culture_is_orcish = yes
-			NOT = { exists = Z54 }
-			NOT = { exists = I46 }
 			capital_scope = { superregion = deepwoods_superregion }
 			has_global_flag = emerald_orcs_enabled
+			NOT = { exists = Z54 }
+			NOT = { exists = I46 }
+			culture_is_orcish = yes		
 		}
 		provinces_to_highlight = {
 			superregion = deepwoods_superregion
@@ -257,25 +257,13 @@ country_decisions = {
 			has_regency = no
 		}
 		effect = {
-			change_tag = Z54
-			hidden_effect = {
-				restore_country_name = yes
-				set_country_flag = formed_end_game_tag_flag
-			}
-
-			# Karakhanbar Comment Out
-			#swap_non_generic_missions = yes
-			custom_tooltip = karakhanbar_is_commented_out
-
-			remove_non_electors_emperors_from_empire_effect = yes
+			karakhanbar_formation_effect = yes
+			add_prestige = 25
 			increase_government_rank_scripted_effect = { rank = 2 }
 			add_country_modifier = {
 				name = "centralization_modifier"
 				duration = 7300
 			}
-			add_prestige = 25
-			country_event = { id = ideagroups.1 } #Swap Ideas
-			lock_racial_admin = yes
 			set_country_flag = green_orc_war_of_the_black_trees_won
 		}
 		ai_will_do = {
@@ -286,11 +274,11 @@ country_decisions = {
 	deepwoods_orc_reform_tugund_darakh = {
 		major = yes
 		potential = {
-			culture_is_orcish = yes
-			NOT = { exists = Z54 }
-			NOT = { exists = I46 }
 			capital_scope = { superregion = deepwoods_superregion }
 			has_global_flag = emerald_orcs_enabled
+			NOT = { exists = Z54 }
+			NOT = { exists = I46 }
+			culture_is_orcish = yes
 		}
 		provinces_to_highlight = {
 			province_group = deepwoods_feytouched_gladeways
@@ -313,30 +301,12 @@ country_decisions = {
 			has_regency = no
 		}
 		effect = {
-			change_tag = I46
-			hidden_effect = {
-				restore_country_name = yes
-				set_country_flag = formed_end_game_tag_flag
-			}
-			swap_non_generic_missions = yes
-			remove_non_electors_emperors_from_empire_effect = yes
+			tugund_darakh_formation_effect = yes
+			add_prestige = 25
 			increase_government_rank_scripted_effect = { rank = 2 }
 			add_country_modifier = {
 				name = "centralization_modifier"
 				duration = 7300
-			}
-			add_prestige = 25
-			country_event = { id = ideagroups.1 } #Swap Ideas
-			lock_racial_admin = yes
-			primary_and_ruler_culture_change = { race = orcish new_culture = emerald_orc }
-			set_ruler_religion = ashentree_pact
-			change_religion = ashentree_pact
-			every_owned_province = {
-				if = {
-					limit = { culture = green_orc }
-					change_culture = emerald_orc
-					change_religion = ashentree_pact
-				}
 			}
 		}
 		ai_will_do = {
