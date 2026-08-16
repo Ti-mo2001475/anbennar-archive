@@ -10373,6 +10373,17 @@ on_mercenary_recruited_effect = {
 		clr_country_flag = recruited_merc_company
 		set_country_flag = recruited_merc_company	#flag to check for when you last hired mercs
 	}
+	if = { #Sunhungak Spiritbinders Merc Company
+		limit = { mercenary_company = merc_sunhungak_spiritbinders }
+		FROM = {
+			country_event = { id = shuvuush.1002 }
+			set_country_flag = sunhungak_spiritbinders_hired
+		}
+		V32 = { #Sunhungak
+			add_treasury = 50 #Adding it here in case anotehr person hires it while Sunhungak still has the event open
+			country_event = { id = shuvuush.1002 }
+		}
+	}
 }
 
 on_parliament_debate_reset_effect = {
