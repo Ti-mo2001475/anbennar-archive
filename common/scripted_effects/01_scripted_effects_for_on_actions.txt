@@ -7830,6 +7830,7 @@ on_war_declaration_effect = {
 					}
 				}
 			}
+			clr_country_flag = thunderborn_attacking_filustkhuga
 		}
 		else_if = {
 			limit = {
@@ -7852,6 +7853,7 @@ on_war_declaration_effect = {
 					}
 				}
 			}
+			clr_country_flag = thunderborn_attacking_irdukhuga
 		}
 		else_if = {
 			limit = {
@@ -7874,6 +7876,7 @@ on_war_declaration_effect = {
 					}
 				}
 			}
+			clr_country_flag = thunderborn_attacking_maslekhuga
 		}
 		else = {
 			clr_country_flag = thunderborn_attacking_filustkhuga
@@ -12492,15 +12495,19 @@ on_capital_moved_effect = {
 	}
 	if = {
 		limit = { 
-			tag = I49
-			mission_completed = I49_to_wander_with_purpose
+			owner = {
+				tag = I49
+				mission_completed = I49_to_wander_with_purpose
+			}
 			current_age = age_of_discovery
 		}
-		add_adm_power = 25
-		add_dip_power = 25
-		add_mil_power = 25
-		capital_scope = {
-			add_random_development = 1
+		owner = {
+			add_adm_power = 25
+			add_dip_power = 25
+			add_mil_power = 25
+			capital_scope = {
+				add_random_development = 1
+			}
 		}
 	}
 }
@@ -20228,7 +20235,8 @@ on_consort_death_effects = {
 				id = flavour_thunderborn.12
 			}
 		}
-		else = {
+		if = {
+			limit = { tag = J56 }
 			country_event = {
 				id = flavour_thunderborn.13
 			}

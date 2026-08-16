@@ -28,7 +28,6 @@ thunderborn_1 = {
 			}
 			capital_scope = {
 				development = 7
-				has_any_ongoing_construction = no
 			}
 			treasury = 100
 		}
@@ -45,6 +44,7 @@ thunderborn_1 = {
 		position = 3
 		required_missions = { I49_to_wander_with_purpose } 
 		provinces_to_highlight = {
+			region = east_forbidden_plains_region
 			NOT = {
 				ROOT = {
 					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
@@ -53,7 +53,9 @@ thunderborn_1 = {
 					}
 				}
 			}
-			region = east_forbidden_plains_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
 		}
 
 		trigger = {
@@ -101,11 +103,9 @@ thunderborn_1 = {
 		position = 4
 		required_missions = { I49_edge_of_the_endless_plain } 
 		provinces_to_highlight = {
-			AND = {
-				is_in_capital_area = yes
-				owned_by = ROOT
-				NOT = { has_state_edict = edict_centralization_effort } 
-			}
+			is_in_capital_area = yes
+			owned_by = ROOT
+			NOT = { has_state_edict = edict_centralization_effort } 
 		}
 
 		trigger = {
@@ -207,12 +207,7 @@ thunderborn_2 = {
 		}
 		provinces_to_highlight = {
 			NOT = {
-				ROOT = {
-					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-						value = 5
-						superregion = forbidden_lands_superregion
-					}
-				}
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 			superregion = forbidden_lands_superregion
 		}
@@ -366,20 +361,18 @@ thunderborn_3 = {
 
 		trigger = {
 			treasury = 50
-			calc_true_if = {
-				all_owned_or_subject_province = {
-					trade_goods = iron
-					OR = {
-						region = nuzurbokh_region
-						region = east_forbidden_plains_region
-					}
-					OR = {
-						development = 7
-						has_tax_building_trigger = yes
-					}
-					has_any_ongoing_construction = no
+			num_of_provinces_owned_or_owned_by_subjects_with = {
+				value = 2
+				trade_goods = iron
+				OR = {
+					region = nuzurbokh_region
+					region = east_forbidden_plains_region
 				}
-				amount = 2
+				OR = {
+					development = 7
+					has_tax_building_trigger = yes
+				}
+				has_any_ongoing_construction = no
 			}
 		}
 
@@ -525,133 +518,32 @@ thunderborn_3 = {
 		}
 		provinces_to_highlight = {
 			OR = {
-				AND = {
-					province_id = 5195
-					5195 = {
-						OR = {
-							NOT = { owned_by = ROOT } 
-							AND = {
-								owned_by = ROOT
-								NOT = { has_tax_building_trigger = yes } 
-							}
-						}
-					}
-				}
-				AND = {
-					province_id = 5184
-					5184 = {
-						OR = {
-							NOT = { owned_by = ROOT } 
-							AND = {
-								owned_by = ROOT
-								NOT = { has_tax_building_trigger = yes } 
-							}
-						}
-					}
-				}
-				AND = {
-					province_id = 5179
-					5179 = {
-						OR = {
-							NOT = { owned_by = ROOT } 
-							AND = {
-								owned_by = ROOT
-								NOT = { has_tax_building_trigger = yes } 
-							}
-						}
-					}
-				}
-				AND = {
-					province_id = 5161
-					5161 = {
-						OR = {
-							NOT = { owned_by = ROOT } 
-							AND = {
-								owned_by = ROOT
-								NOT = { has_tax_building_trigger = yes } 
-							}
-						}
-					}
-				}
-				AND = {
-					province_id = 5081
-					5081 = {
-						OR = {
-							NOT = { owned_by = ROOT } 
-							AND = {
-								owned_by = ROOT
-								NOT = { has_tax_building_trigger = yes } 
-							}
-						}
-					}
-				}
-				AND = {
-					province_id = 5152
-					5152 = {
-						OR = {
-							NOT = { owned_by = ROOT } 
-							AND = {
-								owned_by = ROOT
-								NOT = { has_tax_building_trigger = yes } 
-							}
-						}
-					}
-				}
+				province_id = 5195
+				province_id = 5184
+				province_id = 5179
+				province_id = 5161
+				province_id = 5081
+				province_id = 5152
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				has_tax_building_trigger = no
 			}
 		}
 
 		trigger = {
 			custom_trigger_tooltip = {
 				tooltip = I49_to_be_true_province_tooltip
-				calc_true_if = {
-					amount = 4
+				num_of_owned_provinces_with = {
+					value = 4
+					has_tax_building_trigger = yes
 					OR = {
-						AND = {
-							5195 = {
-								owned_by = I49
-								has_tax_building_trigger = yes
-							}
-						}
-					}
-					OR = {
-						AND = {
-							5184 = {
-								owned_by = I49
-								has_tax_building_trigger = yes
-							}
-						}
-					}
-					OR = {
-						AND = {
-							5179 = {
-								owned_by = I49
-								has_tax_building_trigger = yes
-							}
-						}
-					}
-					OR = {
-						AND = {
-							5161 = {
-								owned_by = I49
-								has_tax_building_trigger = yes
-							}
-						}
-					}
-					OR = {
-						AND = {
-							5081 = {
-								owned_by = I49
-								has_tax_building_trigger = yes
-							}
-						}
-					}
-					OR = {
-						AND = {
-							5152 = {
-								owned_by = I49
-								has_tax_building_trigger = yes
-							}
-						}
+						province_id = 5195
+						province_id = 5184
+						province_id = 5179
+						province_id = 5161
+						province_id = 5081
+						province_id = 5152
 					}
 				}
 			}
@@ -753,31 +645,9 @@ thunderborn_4 = {
 		provinces_to_highlight = {  } 
 
 		trigger = {
-			custom_trigger_tooltip = {
-				tooltip = I49_to_be_conduit_magic_tooltip
-				OR = {
-					OR = {
-						is_overall_abjuration_level_2 = yes
-						is_overall_conjuration_level_2 = yes
-						is_overall_divination_level_2 = yes
-						is_overall_enchantment_level_2 = yes
-						is_overall_evocation_level_2 = yes
-						is_overall_illusion_level_2 = yes
-						is_overall_necromancy_level_2 = yes
-						is_overall_transmutation_level_2 = yes
-					}
-					calc_true_if = {
-						is_overall_abjuration_level_1 = yes
-						is_overall_conjuration_level_1 = yes
-						is_overall_divination_level_1 = yes
-						is_overall_enchantment_level_1 = yes
-						is_overall_evocation_level_1 = yes
-						is_overall_illusion_level_1 = yes
-						is_overall_necromancy_level_1 = yes
-						is_overall_transmutation_level_1 = yes
-						amount = 2
-					}
-				}
+			OR = {
+				is_overall_num_school_level_1 = { amount = 2 }
+				is_overall_num_school_level_2 = { amount = 1 }
 			}
 			is_overall_advancing_magic = yes
 			check_variable = {
@@ -866,19 +736,7 @@ thunderborn_5 = {
 		trigger = {
 			NOT = { exists = I80 } 
 			capital_scope = { has_port = yes } 
-			custom_trigger_tooltip = {
-				tooltip = I49_edge_endless_sea_magic_tooltip
-				OR = {
-					is_overall_abjuration_level_1 = yes
-					is_overall_conjuration_level_1 = yes
-					is_overall_divination_level_1 = yes
-					is_overall_enchantment_level_1 = yes
-					is_overall_evocation_level_1 = yes
-					is_overall_illusion_level_1 = yes
-					is_overall_necromancy_level_1 = yes
-					is_overall_transmutation_level_1 = yes
-				}
-			}
+			is_overall_num_school_level_1 = { amount = 1 }
 			OR = {
 				court_mage = 1
 				has_adm_advisor_2 = yes
@@ -893,21 +751,21 @@ thunderborn_5 = {
 		position = 4
 		required_missions = { I49_edge_of_the_endless_sea } 
 		provinces_to_highlight = {
+			province_id = 5188
 			NOT = {
-				ROOT = { capital = 5188 } 
-				5188 = {
+				AND = {
+					is_capital_of = ROOT
 					num_of_units_in_province = {
 						amount = 10
 						who = ROOT
 					}
 				}
 			}
-			province_id = 5188
 		}
 
 		trigger = {
 			5188 = {
-				is_capital = yes
+				is_capital_of = ROOT
 				num_of_units_in_province = {
 					amount = 10
 					who = I49
@@ -959,22 +817,17 @@ thunderborn_5 = {
 			change_mana = { amount = -25 } 
 			custom_tooltip = I49_cover_thunder_devastation_ae_tooltip
 			hidden_effect = {
-				5259 = {
-					add_devastation = 50
-					owner = {
-						add_opinion = {
-							who = ROOT
-							modifier = aggressive_expansion
-							multiplier = 25
+				if = {
+					limit = {
+						5259 = {
+							NOT = {
+								country_or_subject_holds = ROOT
+							}
 						}
-						set_country_flag = I49_cover_thunder_ae_flag
 					}
-				}
-				5261 = {
-					add_devastation = 50
-					owner = {
-						if = {
-							limit = { NOT = { has_country_flag = I49_cover_thunder_ae_flag }  } 
+					5259 = {
+						add_devastation = 50
+						owner = {
 							add_opinion = {
 								who = ROOT
 								modifier = aggressive_expansion
@@ -984,11 +837,37 @@ thunderborn_5 = {
 						}
 					}
 				}
-				5262 = {
-					add_devastation = 50
-					owner = {
-						if = {
-							limit = { NOT = { has_country_flag = I49_cover_thunder_ae_flag }  } 
+				if = {
+					limit = {
+						5261 = {
+							NOT = {
+								country_or_subject_holds = ROOT
+							}
+						}
+					}
+					5261 = {
+						add_devastation = 50
+						owner = {
+							add_opinion = {
+								who = ROOT
+								modifier = aggressive_expansion
+								multiplier = 25
+							}
+							set_country_flag = I49_cover_thunder_ae_flag
+						}
+					}
+				}
+				if = {
+					limit = {
+						5262 = {
+							NOT = {
+								country_or_subject_holds = ROOT
+							}
+						}
+					}
+					5262 = {
+						add_devastation = 50
+						owner = {
 							add_opinion = {
 								who = ROOT
 								modifier = aggressive_expansion
