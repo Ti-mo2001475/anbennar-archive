@@ -3096,21 +3096,6 @@ tree_of_tales = {
 	type = monument
 
 	build_trigger = {
-		if = {
-			limit = {
-				owner = {
-					has_country_flag = tree_of_tales_free_use 
-				}
-			}
-			custom_trigger_tooltip = {
-				tooltip = great_project_mt_enabled
-				always = yes
-			}
-		}
-		else = {
-			religion_group = tanibic_religion
-			has_owner_religion = yes
-		}
 	}
 
 	on_built = {
@@ -3295,11 +3280,6 @@ dendugma_monastery = {
 	type = monument
 
 	build_trigger = {
-		owner = {
-				religion = fangaulan_pantheon
-		}
-		culture_group = west_sarhaly
-		has_owner_accepted_culture = yes
 	}
 
 	on_built = {
@@ -3309,19 +3289,39 @@ dendugma_monastery = {
 	}
 
 	can_use_modifiers_trigger = {
-		owner = {
-				religion = fangaulan_pantheon
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = dendugma_build_bypass_flag
+				}
+			}
+			always = yes
 		}
-		culture_group = west_sarhaly
-		has_owner_accepted_culture = yes
+		else = {
+			owner = {
+				religion = fangaulan_pantheon
+			}
+			culture_group = west_sarhaly
+			has_owner_accepted_culture = yes
+		}
 	}
 
 	can_upgrade_trigger = {
-		owner = {
-				religion = fangaulan_pantheon
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = dendugma_build_bypass_flag
+				}
+			}
+			always = yes
 		}
-		culture_group = west_sarhaly
-		has_owner_accepted_culture = yes
+		else = {
+			owner = {
+				religion = fangaulan_pantheon
+			}
+			culture_group = west_sarhaly
+			has_owner_accepted_culture = yes
+		}
 	}
 
 	keep_trigger = {
@@ -3542,7 +3542,6 @@ imperial_arena = {
 	type = monument
 
 	build_trigger = {
-		can_use_imperial_arena_scripted_trigger = yes
 	}
 
 	on_built = {

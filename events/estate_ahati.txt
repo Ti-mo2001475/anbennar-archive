@@ -1234,6 +1234,9 @@ country_event = {
 				estate_influence = { estate = estate_ahati influence = 40 }
 			}
 		}
+		NOT = {
+			is_or_was_tag = { tag = A29 }
+		}
 	}
 
 	immediate = {
@@ -1319,6 +1322,14 @@ country_event = {
 		466 = { add_core = U04 } #aakheta
 		464 = { add_core = U04 } #hapkes
 		467 = { add_core = U04 } #puhuu
+		if = {
+			limit = {
+				has_global_flag = A29_ahati_a_mad_i
+			}
+			kheterata_region = {
+				add_core = U04 
+			} #Kheterata
+		}
 
 		hidden_effect = { 
 			if = {
@@ -2500,6 +2511,16 @@ country_event = {
 				add_dip_power = 100
 				add_mil_power = 100
 
+				if = {
+					limit = {
+						has_global_flag = A29_ahati_a_mad_i
+					}
+					add_country_modifier = {
+						name = A29_ahati_a_stab_i
+						duration = -1 
+					}
+				}
+
 				##troops
 				#initial army
 				if = {
@@ -3154,6 +3175,16 @@ country_event = {
 			}
 			466 = { # Aakheta
 				change_religion = nirakhetist
+			}
+		}
+		if = {
+			limit = {
+				is_or_was_tag = {
+					tag = A29 
+				}
+			}
+			country_event = {
+				id = busilar.18 
 			}
 		}
 		ai_chance = { factor = 100 }
