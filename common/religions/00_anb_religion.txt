@@ -430,6 +430,7 @@ cannorian = {
 						name = "sanction_for_artificer_tax"
 						duration = 7300
 					}
+					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 13 }
 				}
 				ai_will_do = {
 					factor = 1
@@ -504,6 +505,7 @@ cannorian = {
 							25 = { change_mil = 1 }
 						}
 					}
+					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 50 }
 				}
 				ai_will_do = {
 					factor = 1
@@ -547,6 +549,7 @@ cannorian = {
 						}
 						S91_upgrade_ardimyan_rite_centre = yes
 					}
+					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 13 }
 				}
 				ai_will_do = {
 					factor = 1
@@ -570,6 +573,7 @@ cannorian = {
 						name = "papal_blessing"
 						duration = 7300
 					}
+					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 13 }
 				}
 				ai_will_do = {
 					factor = 1
@@ -590,6 +594,7 @@ cannorian = {
 				}
 				effect = {
 					add_stability = 1
+					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 25 } 
 				}
 				ai_will_do = {
 					factor = 1
@@ -607,13 +612,23 @@ cannorian = {
 				allow = {
 				#	is_at_war = yes
 					NOT = { war_with = Z97 }
-					NOT = { has_country_modifier = warrior_automata }
+					NOT = { 
+						has_country_modifier = warrior_automata 
+					}
 				}
 				effect = {
+					if = {
+						limit = {
+							has_country_flag = A29_warrior_automata_buff
+						}
+						custom_tooltip = A29_warrior_automata_buff_effect_tt 
+						warrior_automata_A29 = yes
+					}
 					add_country_modifier = {
 						name = "warrior_automata"
 						duration = 7300
 					}
+					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 13 }
 				}
 				ai_will_do = {
 					factor = 0.5
@@ -637,6 +652,7 @@ cannorian = {
 						name = "holy_research"
 						duration = 7300
 					}
+					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 13 } 
 				}
 				ai_will_do = {
 					factor = 1
@@ -657,6 +673,7 @@ cannorian = {
 				}
 				effect = {
 					add_mercantilism = 1
+					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 13 }
 				}
 				ai_will_do = {
 					factor = 1
@@ -4272,6 +4289,31 @@ aelantiri = {
 		province = {
 			local_institution_spread = 0.2
 		}
+
+		uses_church_power = yes				
+		aspects = {
+			hawk_gazes
+			hawk_gazes_balanced
+			hawk_gazes_dominant
+			glowing_eyes
+			glowing_eyes_balanced
+			glowing_eyes_dominant
+			travel_wastes
+			travel_wastes_balanced
+			travel_wastes_dominant
+			nurture_bear
+			nurture_bear_balanced
+			nurture_bear_dominant
+			hermit_defiler
+			hermit_defiler_balanced
+			hermit_defiler_dominant
+			spirit_defiance
+			spirit_defiance_balanced
+			spirit_defiance_dominant
+		}
+		aspects_name = KINBOND_ASPECTS
+
+
 		on_convert = {
 			change_religion = kinbond
 
@@ -6832,13 +6874,12 @@ raheni = {
 			}
 			if = {
 				limit = {
-					NOT = {
-						calc_true_if = {
-							all_province = {
-								religion = suhans_praxis
-								is_reformation_center = yes
+					4411 = {
+						NOT = {
+							check_variable = {
+								which = reformation_center_count
+								value = 3
 							}
-							amount = 3
 						}
 					}
 				}
@@ -6851,8 +6892,14 @@ raheni = {
 						}
 						change_religion = suhans_praxis
 						add_reform_center = suhans_praxis
-						
 						set_province_flag = had_reformation_center
+
+						4411 = {
+							change_variable = {
+								which = reformation_center_count
+								value = 1
+							}
+						}
 					}
 				}
 				custom_tooltip = CENTER_OF_REFORMATION_POSSIBLE

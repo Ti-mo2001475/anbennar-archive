@@ -3785,7 +3785,7 @@ province_event = { #The Sands Shift!
 	is_triggered_only = yes
 
 	immediate = {
-		province_event = { id = haless.1001 days = 3650 } #Self-queues so it happens every 10 years
+		add_province_triggered_modifier = shifting_sands_handler_ptm #Self-queues so it happens every 10 years, PTM to avoid stack depth issues
 		khaashalg_region = {
 			type = random
 			amount = 1
@@ -3842,7 +3842,7 @@ province_event = { #The Sands Shift!
 		add_permanent_province_modifier = { name = haless_khantaari_treasure duration = 7300 }
 		custom_tooltip = haless_khantaari_treasure_desc
 		custom_tooltip = SEPERATOR_TOOLTIP
-		province_event = { id = haless.1003 days = 7301 }
+		province_event = { id = haless.1004 days = 7302 } #for some reason, + 1 day doesn't work
 	}
 }
 
@@ -3853,10 +3853,6 @@ province_event = { #The Lone and Level Sands
 	picture = SIERRA_DE_LA_PLATA_eventPicture
 
 	is_triggered_only = yes
-	trigger = {
-		NOT = { has_province_modifier = haless_khantaari_treasure }
-		NOT = { has_province_flag = MT_spawned_trade_good } #In case an MT up here wants to change trade goods and not use the "Khantaari Treasures" modifier
-	}
 
 	option = {
 		name = haless.1003.a
@@ -3868,6 +3864,33 @@ province_event = { #The Lone and Level Sands
 			remove_province_modifier = haless_old_manufactory
 			add_manufactory = yes
 		}
+	}
+}
+
+province_event = { #The Lone and Level Sands handler
+	id = haless.1004
+	title = haless.1003.t
+	desc = haless.1003.d
+	picture = SIERRA_DE_LA_PLATA_eventPicture
+
+	is_triggered_only = yes
+	hidden = yes
+
+	trigger = {
+		NOT = { has_province_flag = MT_spawned_trade_good } #In case an MT up here wants to change trade goods and not use the "Khantaari Treasures" modifier
+		NOT = { has_province_flag = summoned_damestear } #Tearfall and so on, we remove the modifier and other flags so should revert to the original trade good
+	}
+
+	immediate = {
+		if = {
+			limit = { has_province_modifier = haless_khantaari_treasure }
+			add_province_triggered_modifier = shifting_sands_reversion_ptm #check again in 3 years, PTM avoids queue depth issues
+		}
+		else = { province_event = { id = haless.1003 } }
+	}
+
+	option = {
+		name  haless.1003.a
 	}
 }
 
@@ -4098,6 +4121,9 @@ country_event = { #Sunder the Warlord
 	title = haless.1015.t
 	desc = haless.1015.desc
 	picture = CONQUEST_eventPicture
+	goto = sunder_target_capital
+
+	immediate = { hidden_effect = { event_target:sunder_target = { capital_scope = { save_event_target_as = sunder_target_capital } } } }
 
 	is_triggered_only = yes
 	major = yes
@@ -4106,37 +4132,37 @@ country_event = { #Sunder the Warlord
 		name = haless.1015.a
 
 		if = {
-			limit = { event_target:warlord_of_haless = { total_own_and_non_tributary_subject_development = 1000 } }
+			limit = { event_target:sunder_target = { total_own_and_non_tributary_subject_development = 1000 } }
 			add_adm_power = 100
 			add_dip_power = 100
 			add_mil_power = 100
 		}
 
 		if = {
-			limit = { event_target:warlord_of_haless = { total_own_and_non_tributary_subject_development = 3000 } }
+			limit = { event_target:sunder_target = { total_own_and_non_tributary_subject_development = 3000 } }
 			add_treasury = 3000
 		}
 		else_if = {
-			limit = { event_target:warlord_of_haless = { total_own_and_non_tributary_subject_development = 2500 } }
+			limit = { event_target:sunder_target = { total_own_and_non_tributary_subject_development = 2500 } }
 			add_treasury = 2500
 		}
 		else_if = {
-			limit = { event_target:warlord_of_haless = { total_own_and_non_tributary_subject_development = 2000 } }
+			limit = { event_target:sunder_target = { total_own_and_non_tributary_subject_development = 2000 } }
 			add_treasury = 2000
 		}
 		else_if = {
-			limit = { event_target:warlord_of_haless = { total_own_and_non_tributary_subject_development = 1500 } }
+			limit = { event_target:sunder_target = { total_own_and_non_tributary_subject_development = 1500 } }
 			add_treasury = 1500
 		}
 		else_if = {
-			limit = { event_target:warlord_of_haless = { total_own_and_non_tributary_subject_development = 1000 } }
+			limit = { event_target:sunder_target = { total_own_and_non_tributary_subject_development = 1000 } }
 			add_treasury = 1000
 		}
 
 		custom_tooltip = dissolve_warlord_tt
 		hidden_effect = {
 			set_global_flag = delay_warlord_of_haless #so there aren't lots of event pop-ups
-			event_target:warlord_of_haless = {
+			event_target:sunder_target = {
 				release_all_subjects = yes #Make all subjects independent, first
 
 				#Give back as many cores as possible
@@ -4145,14 +4171,14 @@ country_event = { #Sunder the Warlord
 					limit = {
 						any_owned_province = {
 							is_capital = no #release_all_cores doesn't work on capital
-							any_core_country = { NOT = { tag = event_target:warlord_of_haless } }
+							any_core_country = { NOT = { tag = event_target:sunder_target } }
 						}
 					}
 					release_all_cores = yes #This has to be run several times because it's buggy
 				}
 				capital_scope = {
 					if = {
-						limit = { any_core_country = { NOT = { tag = event_target:warlord_of_haless } } }
+						limit = { any_core_country = { NOT = { tag = event_target:sunder_target } } }
 						random_core_country = { save_event_target_as = to_cede_target }
 						cede_province = event_target:to_cede_target
 					}
@@ -4160,10 +4186,13 @@ country_event = { #Sunder the Warlord
 
 				every_owned_province = { cede_province = previous_owner } #you're now down to starting territory or less
 				while = {
-					limit = { exists = yes }
+					limit = {
+						exists = yes
+						any_neighbor_country = { exists = yes } #You have a neighbor to cede provinces to
+					}
 					random_neighbor_country = {
 						every_neighbor_province = { #Must be done this way to prevent CTDs
-							limit = { owned_by = event_target:warlord_of_haless }
+							limit = { owned_by = event_target:sunder_target }
 							set_province_flag = to_cede_province
 						}
 						save_event_target_as = to_cede_target

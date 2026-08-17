@@ -1,0 +1,1352 @@
+
+namespace = busilar
+
+country_event = {
+	id = busilar.1
+	title = busilar.1.t
+	desc = busilar.1.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.1.a
+		custom_tooltip = A29_ravioli_societoli_tt
+		for = {
+			amount = 5
+			effect = "
+				random_owned_province = {
+					limit = { 
+						region = businor_region 
+						NOT = {
+							has_province_modifier = ravelian_society
+						}
+					}
+					add_permanent_province_modifier = {
+						name = ravelian_society 
+						duration = -1 
+					}
+					add_province_modifier = {
+						name = A29_development_society
+						duration = -1
+					}
+				}
+			"
+		}
+		kalavend_region = {
+			add_permanent_claim = ROOT
+		}
+	}
+}
+
+country_event = {
+	id = busilar.2
+	title = busilar.2.t
+	desc = busilar.2.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			country_event = {
+				id = busilar.21 
+				days = 1 
+			}
+		}
+	}
+
+	option = {
+		name = busilar.2.a
+		custom_tooltip = A29_planetouched_unlock_tt
+		change_variable = { which = planetouched_agenda_good_var value = 1 }
+		set_country_flag = recently_done_planetouched_agenda
+		set_country_flag = has_planetouched_estate
+		fahvanosy_region = {
+			add_permanent_claim = ROOT
+		}
+		dao_nako_region = {
+			add_permanent_claim = ROOT
+		}
+	}
+	option = {
+		name = busilar.2.b
+		custom_tooltip = A29_planetouched_unlock_tt
+		change_variable = { which = planetouched_agenda_bad_var value = 1 }
+		set_country_flag = recently_done_against_planetouched_agenda
+		set_country_flag = has_planetouched_estate
+		fahvanosy_region = {
+			add_permanent_claim = ROOT
+		}
+		dao_nako_region = {
+			add_permanent_claim = ROOT
+		}
+	}
+}
+
+#secrets of the ancients 
+country_event = {
+	id = busilar.3
+	title = busilar.3.t
+	desc = busilar.3.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.3.a
+		set_country_flag = artificery_needed
+		unlock_artificery = yes
+	}
+}
+
+country_event = {
+	id = busilar.4
+	title = busilar.4.t
+	desc = busilar.4.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.4.a
+		custom_tooltip = A29_missionary_strength_tt
+		set_country_flag = A29_truth_set_us_free
+		Z97 = {
+			force_remove_rival = ROOT
+			add_historical_friend_mutual = { tag = ROOT }
+		}
+		hidden_effect = {
+			country_event = {
+				id = busilar.5
+				days = 365
+			}
+		}
+	}
+}
+
+country_event = { #truth and consquences
+	id = busilar.5
+	title = busilar.5.t
+	desc = busilar.5.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.5.a
+		every_owned_province = {
+			limit = {
+				continent = africa
+			}
+			add_province_modifier = {
+				name = A29_offer_tolerance
+				duration = 18250
+			}
+		}
+		custom_tooltip = A29_truth_conq_tt
+		hidden_effect = {
+			change_variable = {
+				which = A29_assimilation
+				value = 1
+			}
+		}
+	}
+	option = {
+		name = busilar.5.b
+		every_owned_province = {
+			limit = {
+				continent = africa
+			}
+			add_province_modifier = {
+				name = A29_demand_conversion
+				duration = 18250
+			}
+		}
+	}
+}
+
+country_event = { #making amends
+	id = busilar.6
+	title = busilar.6.t
+	desc = busilar.6.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.6.a
+		hidden_effect = {
+			anb_add_accepted_culture_or_dip_power = { culture = tefori free = yes }
+		}
+		custom_tooltip = A29_we_ate_the_island_tt
+		isle_of_tef_area = {
+			add_nationalism = -15
+		}
+		akasik_region = {
+			add_permanent_claim = ROOT
+		}
+	}
+}
+
+country_event = { #event about vassalising crathanor
+	id = busilar.7
+	title = busilar.7.t
+	desc = busilar.7.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.7.a
+		if = { 
+			limit = { NOT = { U17 = { total_development = 150 } } U17 = { alliance_with = A29 } }
+			U17 = {
+				country_event = {
+					id = busilar.20 
+				}
+			}
+		}
+		else_if = {
+			limit = { U17 = { NOT = { overlord = { is_or_was_tag = { tag = A29 } } } is_subject = yes } }
+			add_casus_belli = {
+				type = cb_vassalize_mission 
+				target = U17 
+			}
+		}
+		else_if = {
+			limit = { U17 = { is_subject = yes } }
+			add_historical_friend_mutual = {
+				tag = U17 
+			}
+		}
+		else_if = {
+			limit = { NOT = { exists = U17 } }
+			U17 = {
+				every_core_province = {
+					add_nationalism = -30
+				}
+			}
+		}
+		else_if = {
+			limit = { U17 = { total_development = 150 } }
+			add_casus_belli = {
+				type = cb_vassalize_mission 
+				target = U17 
+			}
+		}
+	}
+}
+
+country_event = { #fate of the stonewings
+	id = busilar.8
+	title = busilar.8.t
+	desc = busilar.8.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes 
+
+	option = {
+		name = busilar.8.a
+		set_country_flag = A29_one_dove
+		custom_tooltip = A29_harpy_harpy_harpy_tt
+		hidden_effect = {
+			akasik_region = {
+				limit = {
+					has_terrain = mountain 
+				}
+				change_culture = stonewing_harpy
+				change_religion = mother_akasik 
+				add_permanent_province_modifier = {
+					name = A29_definetly_a_harpy_roost
+					duration = -1 
+				} 
+			}
+		}
+
+		hidden_effect = {
+			change_variable = {
+				which = A29_assimilation
+				value = 1
+			}
+		}
+	}
+
+	option = {
+		name = busilar.8.b 
+		custom_tooltip = A29_no_harpy_im_sad_tt
+		hidden_effect = {
+			akasik_region = {
+				limit = {
+					has_terrain = mountain
+				}
+				change_culture = busilari
+				change_religion = ROOT 
+				add_base_tax = 1
+			}
+		}
+	}
+}
+
+country_event = { #the khet and busilar
+	id = busilar.9
+	title = busilar.9.t 
+	desc = busilar.9.d 
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.9.a
+		mothers_sorrow_group = {
+			add_local_autonomy = 50
+		}
+		hidden_effect = {
+			change_variable = {
+				which = A29_assimilation
+				value = 1
+			}
+		}
+	}
+	option = {
+		name = busilar.b.a
+		mothers_sorrow_group = {
+			add_devastation = 15
+		}
+	}
+}
+
+country_event = { #the stewards from far away
+	id = busilar.10
+	title = busilar.10.t
+	desc = busilar.10.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes 
+
+	option = {
+		name = busilar.10.a
+		country_event = {
+			id = busilar.17 
+			days = 700 
+		}
+		set_country_flag = ahati_disaster_start
+		set_global_flag = A29_ahati_a_mad_i
+	}
+}
+
+country_event = { #HARPYHARPYHARPYHARPYHARPY
+	id = busilar.11
+	title = busilar.11.t
+	desc = busilar.11.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.11.a
+		trigger = {
+			has_country_flag = A29_one_dove
+		}
+		bedaphire_area = { 
+			cede_province = L55 
+			add_core = L55
+		}
+		irkan_eparta_area = {
+			cede_province = L55 
+			add_core = L55
+		}
+		L55 = {
+			change_religion = ravelian  
+		}
+		1343 = {
+			add_trade_modifier = {
+				who = ROOT  
+				duration = -1 
+				power = 50 
+				key = A29_friendly_traders
+			}
+		}
+		create_subject = {
+			subject_type = vassal 
+			subject = L55 
+		}
+		add_country_modifier = {
+			name = A29_trade_steer
+			duration = -1
+		}
+	}
+
+	option = {
+		name = busilar.11.b
+		trigger = {
+			NOT = {
+				has_country_flag = A29_one_dove 
+			}
+		}
+		L61 = {
+			change_religion = ravelian
+		}
+		1343 = {
+			add_trade_modifier = {
+				who = ROOT  
+				duration = -1 
+				power = 50 
+				key = A29_friendly_traders
+			}
+		} 
+		bedaphire_area = {
+			cede_province = L61
+			add_core = L61
+		}
+		irkan_eparta_area = {
+			cede_province = L61
+			add_core = L61
+		}
+		create_subject = {
+			subject_type = vassal 
+			subject = L61
+		}
+		add_country_modifier = {
+			name = A29_trade_steer
+			duration = -1
+		}
+	}
+}
+
+country_event = { #The Nature of Busilar
+	id = busilar.12
+	title = busilar.12.t
+	desc = busilar.12.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.12.a
+		if = {
+			limit = {
+				check_variable = {
+					which = A29_assimilation
+					value = 4
+				}
+			}
+			every_owned_province = {
+				limit = {
+					continent = africa 
+				}
+				change_religion = ravelian 
+			}
+			add_country_modifier = {
+				name = A29_sarhaly_in_spirit
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					which = A29_assimilation
+					value = 3
+				}
+			}
+			every_owned_province = {
+				limit = {
+					continent = africa 
+				}
+				change_religion = ravelian 
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					which = A29_assimilation
+					value = 2
+				}
+			}
+			custom_tooltip = A29_2_assim_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						continent = africa
+					}
+					random_list = {
+						2 = {
+							spawn_rebels = {
+								size = 1
+							}	
+						}
+						1 = {
+						}
+					}
+				}
+			}
+			set_country_flag = A29_oops_we_are_racist
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					which = A29_assimilation
+					value = 1
+				}
+			}
+			custom_tooltip = A29_1_assim_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						continent = africa
+					}
+					random_list = {
+						2 = {
+							spawn_rebels = {
+								size = 2
+							}	
+						}
+						1 = {
+						}
+					}
+				}
+			}
+			set_country_flag = A29_oops_we_are_racist
+		}
+		else = {
+			custom_tooltip = A29_0_assim_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						continent = africa
+					}
+					random_list = {
+						3 = {
+							spawn_rebels = {
+								size = 3
+							}	
+						}
+						1 = {
+						}
+					}
+				}
+			}
+			set_country_flag = A29_oops_we_are_racist
+		}
+	}
+}
+
+country_event = { #The Lions Triumph
+	id = busilar.13
+	title = busilar.13.t
+	desc = busilar.13.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.13.a
+		set_global_flag = A29_we_so_pog 
+		custom_tooltip = A29_busilar_is_so_cool_tt
+		hidden_effect = {
+			if = {
+				limit = { 
+					is_hegemon_of_type = economic_hegemon
+				}
+				add_country_modifier = {
+					name = pashaine_naval_hegemon_half
+					duration = -1
+				}
+				add_country_modifier = {
+					name = pashaine_military_hegemon_half
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					is_hegemon_of_type = naval_hegemon
+				}
+				add_country_modifier = {
+					name = pashaine_economic_hegemon_half
+					duration = -1
+				}
+				add_country_modifier = {
+					name = pashaine_military_hegemon_half
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					is_hegemon_of_type = military_hegemon
+				}
+				add_country_modifier = {
+					name = pashaine_economic_hegemon_half
+					duration = -1
+				}
+				add_country_modifier = {
+					name = pashaine_naval_hegemon_half
+					duration = -1
+				}
+			}
+		}
+	}
+}
+
+country_event = { #will set you free
+	id = busilar.14
+	title = busilar.14.t
+	desc = busilar.14.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.14.a
+		custom_tooltip = A29_will_set_you_free_tt
+		hidden_effect = {
+			every_active_trade_node = {
+				limit = {
+					ROOT = {
+						trading_policy_in_node = {
+							node = PREV 
+							policy = propagate_religion
+						}
+					}
+				}
+				every_trade_node_member_province = {
+					if = {
+						limit = {
+							trade_share = {
+								country = ROOT
+								share = 100 
+							}
+						}
+						random = {
+							chance = 50 
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = ROOT
+								share = 90 
+							}
+						}
+						random = {
+							chance = 45
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = ROOT
+								share = 80
+							}
+						}
+						random = {
+							chance = 40
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = ROOT
+								share = 70
+							}
+						}
+						random = {
+							chance = 35
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = ROOT
+								share = 60
+							}
+						}
+						random = {
+							chance = 30
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = ROOT
+								share = 50
+							}
+						}
+						random = {
+							chance = 25
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = ROOT
+								share = 40
+							}
+						}
+						random = {
+							chance = 20
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = ROOT
+								share = 30
+							}
+						}
+						random = {
+							chance = 15
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = ROOT
+								share = 20
+							}
+						}
+						random = {
+							chance = 10
+							change_religion = ravelian 
+						}
+					}
+					else_if = {
+						limit = {
+							trade_share = {
+								country = ROOT
+								share = 10
+							}
+						}
+						random = {
+							chance = 5
+							change_religion = ravelian 
+						}
+					}
+				}
+			}
+			every_known_country = {
+				limit = {
+					NOT = {
+						total_development = 201 
+					}
+					NOT = { religion = ravelian } 
+					has_50_opinion_improved_relation = { target = ROOT }
+				}
+				change_religion = ravelian 
+			}
+		}
+	}
+}
+
+country_event = { #guiding the world
+	id = busilar.15
+	title = busilar.15.t
+	desc = busilar.15.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.15.a
+		if = {
+			limit = {
+				tag = Z01 
+			}
+			transfer_papal_controller = Z01
+			lock_curia = Z01
+		}
+		else = {
+			transfer_papal_controller = A29
+			lock_curia = A29 #crashes on ROOT
+		}
+		custom_tooltip = A29_propogate_tt
+		set_country_flag = 25_trade_power_for_propogate_religion
+	}
+}
+
+country_event = { #event for wex rival verne
+	id = busilar.16
+	title = busilar.16.t
+	desc = busilar.16.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.16.a
+		ai_chance = {
+			factor = 100
+		}
+		add_rival = A33
+		A33 = {
+			add_historical_rival_mutual = { tag = A30 } 
+		}
+	}
+	option = {
+		name = busilar.16.b
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+country_event = { #ahati time
+	id = busilar.17
+	title = busilar.17.t
+	desc = busilar.17.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.17.a
+		add_disaster_progress = {
+			disaster = ahati_disaster
+			value = 100 
+		}
+	}
+}
+
+country_event = { #we beat aakheta 
+	id = busilar.18 
+	title = busilar.18.t 
+	desc = busilar.18.d 
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes 
+
+	option = {
+		name = busilar.18.a 
+		set_country_flag = A29_might_mandate_unlock 
+		extend_country_modifier = {
+			name = mandate_steward_victory
+			duration = 18250
+		}
+	}
+}
+
+country_event = {
+	id = busilar.19 
+	title = busilar.19.t
+	desc = busilar.19.d 
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes 
+
+	option = {
+		name = busilar.19.a
+		custom_tooltip = A29_rebellion_crushed_tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					continent = africa 
+				}
+				add_local_autonomy = -100 
+				add_nationalism = -30 
+				add_province_modifier = {
+					name = A29_rebellion_crushed
+					duration = 18250 
+				}
+			}
+		}
+	}
+}
+
+country_event = { #crathanor gets this 
+	id = busilar.20 
+	title = busilar.20.t
+	desc = busilar.20.d 
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes 
+
+	option = {
+		name = busilar.20.a 
+		A29 = {
+			create_subject = {
+				subject_type = vassal
+				subject = U17 
+			}
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+
+	option = {
+		name = busilar.20.b 
+	}
+}
+
+country_event = { #planetouched 
+	id = busilar.21 
+	title = busilar.21.t
+	desc = busilar.21.A29
+	picture = SONGHAI_RULER_eventPicture
+
+	hidden = yes
+	is_triggered_only = yes 
+
+	option = {
+		name = busilar.21.a
+		set_estate_privilege = estate_planetouched_organization_scattered
+	}
+}
+
+country_event = { #hidden empire event 
+	id = busilar.50 
+	title = busilar.50.t
+	desc = busilar.50.d 
+	picture = SONGHAI_RULER_eventPicture
+
+	hidden = yes 
+	is_triggered_only = yes 
+
+	option = {
+		name = busilar.50.a 
+		set_hre_religion = ravelian 
+		set_hre_religion_locked = yes 
+	}
+}
+
+country_event = { #hidden for dev 
+	id = busilar.90
+	title = busilar.90.t
+	desc = busilar.90.d 
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes 
+	hidden = yes 
+	trigger = {
+		has_country_modifier = A29_investment_development
+	}
+	option = {
+		name = busilar.90.a 
+		FROM = {
+			area = {
+				limit = {
+					is_owned_by_trade_company = yes 
+					NOT = {
+						has_province_flag = A29_invested
+					}
+				} 
+				add_base_production = 1
+				set_province_flag = A29_invested
+			}
+		}
+	}
+}
+
+
+country_event = { #handler for palace eco
+	id = busilar.100
+	title = busilar.100.t
+	desc = busilar.100.d
+	picture = SONGHAI_RULER_eventPicture
+	hidden = yes
+	is_triggered_only = yes
+	trigger = {
+		is_or_was_tag = { tag = A29 }
+		empire_of_china_reform_passed = palace_economy_reform
+	}
+
+	option = {
+		name = busilar.100.a
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = grain
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = livestock
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = fish
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = wool
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = salt
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = naval_supplies
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = copper
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = iron
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = cloth
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = wine
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = glass
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = paper
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = chinaware
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = spices
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = tea
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = coffee
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = cotton
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = sugar
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = tobacco
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = cocoa
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = silk
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = dyes
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = fur
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = ivory
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = slaves
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = incense
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = tropical_wood
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = gems
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = coal
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = cloves
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = damestear
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+		if = {
+			limit = {
+				trading_bonus = {
+					trade_goods = precursor_relics
+					value = yes
+				}
+			}
+			add_mandate = 0.5
+			add_meritocracy = 0.05
+		}
+	}
+}
+
+country_event = { #narawens wake 1
+	id = busilar.30
+	title = busilar.30.t
+	desc = busilar.30.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.30.a
+		remove_country_modifier = A29_narawen_1
+		add_country_modifier = {
+			name = A29_narawen_2
+			duration = -1
+		}
+	}
+}
+
+country_event = { #narawens wake 2
+	id = busilar.31
+	title = busilar.31.t
+	desc = busilar.31.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.30.a
+		remove_country_modifier = A29_narawen_2
+		add_country_modifier = {
+			name = A29_narawen_3
+			duration = -1
+		}	
+	}
+}
+
+country_event = { #narawens wake 3
+	id = busilar.32
+	title = busilar.32.t
+	desc = busilar.32.d
+	picture = SONGHAI_RULER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.32.a
+		remove_country_modifier = A29_narawen_3
+		add_country_modifier = {
+			name = A29_narawen_4
+			duration = -1
+		}
+	}
+}
+
+country_event = { #making amends
+	id = busilar.1001
+	title = busilar.1001.t
+	desc = busilar.1001.d
+	picture = SONGHAI_RULER_eventPicture
+	hidden = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = busilar.6.a
+		hinuifire_upgrade = yes
+	}
+}
