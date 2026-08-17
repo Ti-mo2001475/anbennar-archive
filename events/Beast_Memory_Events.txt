@@ -513,3 +513,197 @@ country_event = {
         add_devotion = 10
 	}
 }
+
+
+#What Doesn’t Kill You…
+country_event = {
+	id = beast_memory.21
+	title = beast_memory.21.t
+	desc = beast_memory.21.d
+	picture = MARAVI_FURNACE_eventPicture
+
+	trigger = {
+        has_ruler_modifier = ruler_is_mongoose_shifter
+        NOT = { 
+            has_ruler_flag = had_mongoose_assassination_event_flag
+            has_country_modifier = beast_memory_cracking_down
+            has_country_modifier = beast_memory_divine_right
+            has_country_modifier = beast_memory_lawful_rule
+        }
+        OR = {
+            government = monarchy
+            government = tribal
+        }
+	}
+
+    immediate = {
+        hidden_effect = {
+            set_ruler_flag = had_mongoose_assassination_event_flag
+        }
+    }
+
+	option = {
+		name = beast_memory.21.a
+        ai_chance = { factor = 50 }
+        add_legitimacy = 10
+        add_prestige = 10
+        add_ruler_modifier = {
+            name = beast_memory_survived_assassination
+            duration = -1
+        }
+	}
+
+    option = {
+		name = beast_memory.21.b
+        ai_chance = { factor = 50 }
+        add_legitimacy = 10
+        add_yearly_manpower = 0.25
+        add_country_modifier = {
+            name = beast_memory_cracking_down
+            duration = 3650
+        }
+	}
+
+    option = {
+		name = beast_memory.21.c
+        highlight = yes
+        trigger = {
+            personality = zealot_personality
+        }
+        ai_chance = { factor = 100 }
+        add_legitimacy = 10
+        add_country_modifier = {
+            name = beast_memory_divine_right
+            duration = 3650
+        }
+	}
+
+    option = {
+		name = beast_memory.21.e
+        highlight = yes
+        trigger = {
+            personality = just_personality
+        }
+        ai_chance = { factor = 100 }
+        add_legitimacy = 10
+        add_country_modifier = {
+            name = beast_memory_lawful_rule
+            duration = 3650
+        }
+	}
+}
+
+#A wild kind of madness
+country_event = {
+	id = beast_memory.22
+	title = beast_memory.22.t
+	desc = beast_memory.22.d
+	picture = TRIBES_MEETING_eventPicture
+
+	trigger = {
+        culture_group = inyaswarosa
+        NOT = { 
+            has_country_modifier = had_mongoose_assassination_event
+        }
+	}
+
+    immediate = {
+        hidden_effect = {
+            add_country_modifier = {
+                name = had_mongoose_assassination_event
+                duration = 5475
+                hidden = yes
+            }
+            random_owned_province = {
+                save_event_target_as = beast_memory_wild_shifter_target
+            }
+        }
+    }
+
+	option = {
+		name = beast_memory.22.a
+        ai_chance = { factor = 50 }
+        add_yearly_manpower = 0.25
+        if = {
+            trigger = {
+                OR = {
+                    religion = sky_domain
+                    religion = beast_memory
+                }
+            }
+            add_church_power = 25
+        }
+        add_ruler_modifier = {
+            name = beast_memory_survived_assassination
+            duration = -1
+        }
+	}
+
+    option = {
+		name = beast_memory.22.b
+        ai_chance = { factor = 50 }
+        add_treasury = -50
+        event_target:beast_memory_wild_shifter_target = {
+            add_province_modifier = {
+                name = beast_memory_mad_shapeshifter
+                duration = 365
+            }
+        }
+        random_list = {
+            50 = {
+                add_treasury = 10
+            }
+            50 = {
+                add_treasury = 555
+            }
+        }
+	}
+
+    option = {
+		name = beast_memory.22.c
+        highlight = yes
+        trigger = {
+            personality = zealot_personality
+        }
+        ai_chance = { factor = 100 }
+        add_treasury = -50
+        event_target:beast_memory_wild_shifter_target = {
+            add_province_modifier = {
+                name = beast_memory_beast_judgement
+                duration = 365
+            }
+        }
+        random_list = {
+            25 = {
+                add_treasury = 10
+            }
+            75 = {
+                add_treasury = 555
+            }
+        }
+	}
+
+    option = {
+		name = beast_memory.22.d
+        highlight = yes
+        trigger = {
+            personality = kind_hearted_personality
+        }
+        ai_chance = { factor = 100 }
+        add_treasury = -50
+        event_target:beast_memory_wild_shifter_target = {
+            add_province_modifier = {
+                name = beast_memory_lost_guidance
+                duration = 365
+            }
+        }
+        random_list = {
+            25 = {
+                add_treasury = 10
+            }
+            75 = {
+                add_treasury = 555
+            }
+        }
+	}
+}
