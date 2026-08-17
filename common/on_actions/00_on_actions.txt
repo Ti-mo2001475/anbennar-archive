@@ -259,6 +259,8 @@ on_startup = {
 		#Kuenan Nirokyu Starting Event
 		flavour_banbe_anen.103
 
+		
+		
 		anb_settings.1			#Settings - /!\ keep it at the bottom of the list
 	}
 
@@ -2950,6 +2952,20 @@ on_main_war_won = {
 		limit = { has_reform = mechanim_self_reflection }
 		add_church_power = 50
 	}
+
+	if = {
+		limit = {
+			is_or_was_tag = { tag = A29 }
+			empire_of_china_reform_passed = might_mandate_reform
+			FROM = {
+				OR = {
+					is_rival = ROOT
+					is_great_power = yes  
+				}
+			}
+		}
+		add_mandate = 5 
+	}
 }
 
 # country
@@ -3768,6 +3784,19 @@ on_battle_won_country = {
 		}
 	}
 
+	if = {
+		limit = {
+			has_country_flag = A29_oops_we_are_racist
+			NOT = {
+				has_spawned_rebels = nationalist_rebels
+			}
+		}
+		country_event = {
+			id = busilar.19 
+		}
+		clr_country_flag = A29_oops_we_are_racist
+	}
+
 	#Beikling Mask Enchantment
 	if = {
 		limit = {
@@ -3836,6 +3865,23 @@ on_added_to_trade_company = {
 			Y15_calculate_gov_mechanic_ship_trade_power_buff = yes
 		}
 	}
+	# Busilar ^ cooler than that guy 
+	if = {
+		limit = {
+			owner = {
+				mission_completed = A29_consolidate_clove_trade
+			}
+		}
+		add_base_production = 1 
+		if = {
+			limit = {
+				province_has_center_of_trade_of_level = 1
+			}
+			owner = {
+				add_mercantilism = 1 
+			}
+		}
+	}
 }
 
 # province
@@ -3859,6 +3905,23 @@ on_removed_from_company = {
 				has_government_attribute = is_beikdugang_plutocracy
 			}
 			Y15_calculate_gov_mechanic_ship_trade_power_buff = yes
+		}
+	}
+	# Busilar ^ cooler than that guy 
+	if = {
+		limit = {
+			owner = {
+				mission_completed = A29_consolidate_clove_trade
+			}
+		}
+		add_base_production = -1 
+		if ={
+			limit = {
+				province_has_center_of_trade_of_level = 1
+			}
+			owner = {
+				add_mercantilism = -1 
+			}
 		}
 	}
 }
@@ -7602,6 +7665,8 @@ on_annexed = {
 		if = {
 			limit = {
 				tag = A49
+				NOT = { ROOT = { tag = A29 } }
+				NOT = { has_global_flag = A29_no_honderaak_2 }
 				OR = {
 					364 = { owner = { NOT = { culture_group = gnollish } is_part_of_hre = no } }
 					6513 = { owner = { NOT = { culture_group = gnollish } is_part_of_hre = no } }
@@ -9034,6 +9099,7 @@ on_yearly_pulse = {
 		flavour_gor_vazumbrog.781 # GV endless ledger pulse
 		centaur.2 #centaur ai scripted wars
 		centaur.100 #KU zeal decrease
+		busilar.100 #busilar palace eco
 
 		#BINSPLOSION
 		binsplosion_events.4
@@ -15655,7 +15721,7 @@ on_five_year_pulse_4 = {
 
 # El Dorado
 on_explore_coast = {
-	# Only triggers with a 2% chance, defined in defines.lua EXPLORE_COAST_EVENT_CHANCE
+	# triggers with a 100% chance, defined in defines.lua EXPLORE_COAST_EVENT_CHANCE
 	random_events = {
 		10 = exploration_events.1
 		10 = exploration_events.2
@@ -15672,9 +15738,83 @@ on_explore_coast = {
 		10 = exploration_events.13
 		10 = exploration_events.14
 		10 = exploration_events.15
+		7350 = 0 
 	}
-	events = {
-		unraveling.0
+	random = {
+  		chance = 2
+ 		FROM = {
+			country_event = {
+				id = unraveling.0
+			}
+		}
+	}
+
+	FROM = { #busilar
+		if = {
+			limit = {
+				is_or_was_tag = { tag = A29 }
+			}
+			if = {
+				limit = {
+					has_country_modifier = A29_narawen_1
+				}
+				change_variable = {
+					which = A29_tiles_discovered
+					value = 1
+				}
+				if = {
+					limit = {
+						check_variable = {
+							which = A29_tiles_discovered
+							value = 100 
+						}
+					}
+					country_event = {
+						id = busilar.30
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = A29_narawen_2
+				}
+				change_variable = {
+					which = A29_tiles_discovered
+					value = 1
+				}
+				if = {
+					limit = {
+						check_variable = {
+							which = A29_tiles_discovered
+							value = 200
+						}
+					}
+					country_event = {
+						id = busilar.31
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = A29_narawen_3
+				}
+				change_variable = {
+					which = A29_tiles_discovered
+					value = 1
+				}
+				if = {
+					limit = {
+						check_variable = {
+							which = A29_tiles_discovered
+							value = 300
+						}
+					}
+					country_event = {
+						id = busilar.32
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -17815,6 +17955,28 @@ on_province_owner_change = {
             duration = -1
         }
     }
+
+	# Busilar 
+	if = {
+		limit = {
+			owner = { mission_completed = A29_new_labour }
+			OR = {
+				has_building = automatory 
+				any_neighbor_province = {
+					has_building = automatory 
+					owner = {
+						is_or_was_tag = {
+							tag = A29 
+						}
+					}
+				}
+			}
+		}
+		add_province_modifier = {
+			name = A29_robot_work_for_free
+			duration = -1 
+		}
+	}
 
 	#Nuugdan Tsarai eunuch conquest help
 	if = {
@@ -21423,7 +21585,12 @@ on_reform_changed = {
 	}
 }
 
-on_trade_company_investment = {
+on_trade_company_investment = { 
+	FROM = {
+		country_event = {
+			id = busilar.90
+		}
+	}
 }
 
 on_center_of_trade_upgrade = {
@@ -24405,6 +24572,38 @@ on_dependency_lost = {
 		remove_country_modifier = abandoned_city_overlord_1
 		remove_country_modifier = abandoned_city_overlord_2
 		remove_country_modifier = abandoned_city_overlord_3
+	}
+
+	#Busilar
+	if = {
+		limit = {
+			is_or_was_tag = { tag = A29 }
+			FROM = {
+				OR = {
+					tag = L55 
+					tag = L61 
+				}
+			}
+		}
+		if = {
+			limit = {
+				1343 = {
+					has_trade_modifier = {
+						who = ROOT 
+						key = A29_friendly_traders
+					}
+				}
+			}
+			1343 = {
+				remove_trade_modifier = {
+					who = ROOT 
+					key = A29_strong_merchants
+				}
+			}
+		}
+		else = {
+			remove_country_modifier = A29_trade_steer
+		}
 	}
 
 	#PUT NEW EFFECT ABOVE THIS
@@ -28358,7 +28557,7 @@ on_estate_removed = {
 ##scope = colony province, FROM = owner country or province if there's a minority expulsion source, fires when the colony is created 1.35
 on_colony_established = {
 	if = {
-		# Helper events since on_explore_coast and on_conquistador_empty don't fire without El Dorado
+		#Helper events since on_explore_coast and on_conquistador_empty don't fire without El Dorado
 		limit = {
 			NOT = { has_dlc = "El Dorado" }
 			owner = { capital_scope = { continent = europe } }
@@ -31491,6 +31690,14 @@ on_adm_tech_taken = { #ROOT - Country, executed after on_tech_taken!
 		}
 		clr_country_flag = no_demonsterization_events_till_tech_7
 	}
+
+	if = {
+		limit = { #busilar
+			has_country_flag = A29_adm_tech
+		}
+		add_adm_power = 100 
+		clr_country_flag = A29_adm_tech
+	}
 }
 
 on_dip_tech_taken = { #ROOT - Country, executed after on_tech_taken!
@@ -31511,6 +31718,15 @@ on_dip_tech_taken = { #ROOT - Country, executed after on_tech_taken!
 	}
 	#Dragon Turtle
 	FROM = { dragon_turtle_change_friendship = { dragon_turtle = kalei amount = 6 } }
+
+	if = {
+		limit = {
+			has_country_flag = A29_dip_tech
+		}
+		add_dip_power = 100 
+		clr_country_flag = A29_dip_tech
+	}
+
 }
 
 on_mil_tech_taken = { #ROOT - Country, executed after on_tech_taken!
@@ -31542,6 +31758,15 @@ on_mil_tech_taken = { #ROOT - Country, executed after on_tech_taken!
 
 		S45_add_momentum = { value = 10 action = tech }
 	}
+
+	if = {
+		limit = {
+			has_country_flag = A29_mil_tech
+		}
+		add_mil_power = 100 
+		clr_country_flag = A29_mil_tech
+	}
+
 }
 
 on_barrage = { #ROOT - barraging country, FROM - barraged province
