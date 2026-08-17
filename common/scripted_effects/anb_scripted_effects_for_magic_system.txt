@@ -2160,19 +2160,22 @@ magic_level_up_all_ruler_schools = {
 
 estate_action_RECRUIT_WAR_WIZARD = {
 	if = {
-		limit = { exactly_magic_project_level = { project = battlemage_academy level = 3 } }
-		add_mil_power = -40
-	}
-	else_if = {
-		limit = { exactly_magic_project_level = { project = battlemage_academy level = 2 } }
-		add_mil_power = -60
-	}
-	else_if = {
-		limit = { exactly_magic_project_level = { project = battlemage_academy level = 1 } }
-		add_mil_power = -80
-	}
-	else = {
-		add_mil_power = -100
+		limit = { NOT = { has_country_modifier = magocracy_knight_heir } }
+		if = {
+			limit = { exactly_magic_project_level = { project = battlemage_academy level = 3 } }
+			add_mil_power = -40
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = battlemage_academy level = 2 } }
+			add_mil_power = -60
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = battlemage_academy level = 1 } }
+			add_mil_power = -80
+		}
+		else = {
+			add_mil_power = -100
+		}
 	}
 	create_war_wizard = yes
 }
