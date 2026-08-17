@@ -4773,14 +4773,11 @@ increase_gold_discovery = {
 }
 
 remove_dev_from_building = {
-	# Check for each source separately so as to handle removal of stacked bonuses
+	# Check for each type of source separately so as to handle removal of stacked bonuses
 	if = {
 		limit = {
 			FROM = {
-				OR = {
-					full_idea_group = economic_ideas
-					has_country_modifier = G58_coastal_utopia_modifier
-				}
+				full_idea_group = economic_ideas
 			}
 			gained_dev_from_eco_building = { building = $building$ }
 		}
@@ -4798,9 +4795,12 @@ remove_dev_from_building = {
 	if = {
 		limit = {
 			FROM = {
-				has_government_attribute = add_dev_from_manufactories
+				OR = {
+					has_government_attribute = add_dev_from_manufactories
+					has_country_modifier = G58_coastal_utopia_modifier
+				}
 			}
-			gained_dev_from_gov_building = { building = $building$ }
+			gained_dev_from_special_building = { building = $building$ }
 		}
 		add_base_$type$ = -$value$
 		if = {
@@ -4810,20 +4810,18 @@ remove_dev_from_building = {
 			set_base_$type$ = 1
 		}
 		hidden_effect = {
-			clr_province_flag = built_gov_dev_$building$
+			clr_province_flag = built_special_dev_$building$
 		}
 	}
 }
 
 add_dev_from_building = {
-	# Each source of this bonus gets its own `if` clause, province flag, and scripted trigger to enable stacking
+	# Comes from econ ideas or from limited-availability sources (like missions & special goverment types)
+	# Eco ideas stacks with the limited sources, but the limited sources don't stack with each other
 	if = {
 		limit = {
 			FROM = {
-				OR = {
-					full_idea_group = economic_ideas
-					has_country_modifier = G58_coastal_utopia_modifier
-				}
+				full_idea_group = economic_ideas
 			}
 			NOT = { gained_dev_from_eco_building = { building = $building$ } }
 		}
@@ -4835,14 +4833,16 @@ add_dev_from_building = {
 	if = {
 		limit = {
 			FROM = {
-				# Right now this only comes from Apparatus System. If it gets added to other gov types they won't stack with each other
-				has_government_attribute = add_dev_from_manufactories
+				OR = {
+					has_government_attribute = add_dev_from_manufactories
+					has_country_modifier = G58_coastal_utopia_modifier
+				}
 			}
-			NOT = { gained_dev_from_gov_building = { building = $building$ } }
+			NOT = { gained_dev_from_special_building = { building = $building$ } }
 		}
 		add_base_$type$ = $value$
 		hidden_effect = {
-			set_province_flag = built_gov_dev_$building$
+			set_province_flag = built_special_dev_$building$
 		}
 	}
 }
