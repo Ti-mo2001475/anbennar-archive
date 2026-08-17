@@ -4747,6 +4747,31 @@ anb_manufactory_discount_remove = {
 }
 
 anb_on_development_effect = {
+	#Kheionai gos ref
+	if = {
+		limit = {
+			owner = { has_reform = xechtari_above_all }
+			region = alecand_region
+			NOT = { culture = eltibhar }
+			province_group = kheionai_capital_provinces
+		}
+		random = {
+			chance = 25
+			add_base_$development$ = 1
+		}
+	}
+	else_if = {
+		limit = {
+			owner = { has_reform = xechtari_above_all }
+			region = alecand_region
+			NOT = { culture = eltibhar }
+			NOT = { province_group = kheionai_capital_provinces }
+		}
+		random_list = {
+			chance = 15
+			add_base_$development$ = 1
+		}
+	}
 	if = {
 		limit = { has_province_modifier = jaddari_blessed_land }
 		random = {
@@ -14889,6 +14914,88 @@ kinbond_aspect_replacement = {
 	}
 }
 
+grant_random_advisor_gov_rank = {
+    if = {
+        limit = { government_rank = 1 }
+		random_list = {
+			1 = { define_advisor = { type = philosopher skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = natural_scientist skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = artist skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = treasurer skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = theologian skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = master_of_mint skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = inquisitor skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = statesman skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = naval_reformer skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = trader skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = spymaster skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = colonial_governor skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = diplomat skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = navigator skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = army_reformer skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = army_organiser skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = commandant skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = quartermaster skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = recruitmaster skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = fortification_expert skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = grand_captain skill = 1 cost_multiplier = 0.75 } }
+			1 = { define_advisor = { type = court_mage skill = 1 cost_multiplier = 0.75 } }
+		}
+    }
+    else_if = {
+        limit = { government_rank = 2 }
+		random_list = {
+			1 = { define_advisor = { type = philosopher skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = natural_scientist skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = artist skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = treasurer skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = theologian skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = master_of_mint skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = inquisitor skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = statesman skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = naval_reformer skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = trader skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = spymaster skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = colonial_governor skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = diplomat skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = navigator skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = army_reformer skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = army_organiser skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = commandant skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = quartermaster skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = recruitmaster skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = fortification_expert skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = grand_captain skill = 2 cost_multiplier = 0.5 } }
+			1 = { define_advisor = { type = court_mage skill = 2 cost_multiplier = 0.5 } }
+		}
+    }
+    else = {
+		random_list = {
+			1 = { define_advisor = { type = philosopher skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = natural_scientist skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = artist skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = treasurer skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = theologian skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = master_of_mint skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = inquisitor skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = statesman skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = naval_reformer skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = trader skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = spymaster skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = colonial_governor skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = diplomat skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = navigator skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = army_reformer skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = army_organiser skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = commandant skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = quartermaster skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = recruitmaster skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = fortification_expert skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = grand_captain skill = 3 cost_multiplier = 0.25 } }
+			1 = { define_advisor = { type = court_mage skill = 3 cost_multiplier = 0.25 } }
+		}
+    }
+}
 
 
 
