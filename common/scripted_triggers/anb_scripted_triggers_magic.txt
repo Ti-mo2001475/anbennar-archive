@@ -3419,9 +3419,15 @@ illusion_1_bread_and_circuses_trigger = { # Bread and Circuses
 		limit = { has_government_attribute = blocked_call_diet }
 		NOT = { has_government_attribute = blocked_call_diet }
 	}
-	OR = {
-		NOT = { has_any_active_estate_agenda = yes } #Needs a NOT or it won't work as a NOT
-		can_auto_complete_active_agenda = yes
+	if = {
+		limit = { has_reform = U39_kavalali_theo_democracy }
+		has_active_debate = yes
+	}
+	else = {
+		OR = {
+			NOT = { has_any_active_estate_agenda = yes } #Needs a NOT or it won't work as a NOT
+			can_auto_complete_active_agenda = yes
+		}
 	}
 	[[player] #The ai will not be in a state where this can apply
 		if = {
