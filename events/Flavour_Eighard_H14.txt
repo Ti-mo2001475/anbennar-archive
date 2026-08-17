@@ -655,12 +655,6 @@ country_event = { #Iaochari
 				duration = 365
 			}
 		}
-		hidden_effect = {
-			set_country_flag = H14_hibernal_level_2
-			capital_scope = {
-				add_province_triggered_modifier = H14_war_for_domandrod_one_ptm
-			}
-		}
 		custom_tooltip = hibernal_requisitions_tt
 		domandrod_region = {
 			limit = {
@@ -752,6 +746,12 @@ country_event = { #Iaochari
 			add_church_power = 150
 		}
 		set_country_flag = H14_gloam_knight_disabled
+		hidden_effect = {
+			set_country_flag = H14_hibernal_level_2
+			capital_scope = {
+				add_province_triggered_modifier = H14_war_for_domandrod_one_ptm
+			}
+		}
 	}
 }
 
@@ -1143,6 +1143,30 @@ country_event = {
 		deepwoods_superregion = {
 			discover_country = ROOT
 		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						capital_scope = { superregion = deepwoods_superregion }
+						num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+							value = 5
+							superregion = deepwoods_superregion
+						}
+					}
+				}
+				set_country_flag = H14_stop_fighting_please
+			}
+			every_country = {
+				limit = {
+					has_country_flag = H14_stop_fighting_please # so that they can actually join the coalition later
+					ai = yes
+				}
+				every_war_enemy_country = {
+					limit = { ai = yes }
+					white_peace = PREV
+				}
+			}
+		}
 		every_country = {
 			limit = {
 				capital_scope = { superregion = deepwoods_superregion }
@@ -1228,6 +1252,13 @@ country_event = {
 					casus_belli = cb_super_badboy
 					who = ROOT
 				}
+				every_country = {
+                    limit = {
+                        ai = yes
+                        has_country_flag = H14_stop_fighting_please
+                    }
+                    join_all_offensive_wars_of = PREV
+                }
 			}
 		}
 		else = {
@@ -1239,6 +1270,13 @@ country_event = {
 					casus_belli = cb_super_badboy
 					who = ROOT
 				}
+				every_country = {
+                    limit = {
+                        ai = yes
+                        has_country_flag = H14_stop_fighting_please
+                    }
+                    join_all_offensive_wars_of = PREV
+                }
 			}
 		}
 		hidden_effect = { #Prevents the event not firing for subjects w/ capitals in deepwoods when you win
@@ -1719,8 +1757,8 @@ country_event = { #GOTCHYA
 
 country_event = { #election event for Followers of the Princess
 	id = flavour_eighard.44
-	desc = flavour_eighard.44.d
-	title = flavour_eighard.44.t
+	desc = theocracy.1.d
+	title = theocracy.1.t
 	picture = RELIGION_eventPicture
 
 	is_triggered_only = yes
