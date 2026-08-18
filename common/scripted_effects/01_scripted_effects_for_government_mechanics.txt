@@ -716,3 +716,24 @@ sponsored_adventurers_building_reform_effect = {
 		set_province_flag = reform_from_$type$_building
 	}
 }
+
+xechtari_above_all_check_effect = {
+	remove_province_modifier = xechtari_above_all_mod
+
+	if = {
+		limit = {
+			region = alecand_region
+			NOT = { culture = eltibhar }
+			owner = {
+				has_reform = xechtari_above_all
+				all_owned_province = {
+					region = alecand_region
+				}
+			}
+		}
+		add_province_modifier = {
+			name = xechtari_above_all_mod
+			duration = -1
+		}
+	}
+}
