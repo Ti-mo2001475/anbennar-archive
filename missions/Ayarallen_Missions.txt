@@ -226,6 +226,24 @@ F27_column1 = {
 			custom_tooltip = F27_fledgling_upgrade_tt
 			set_country_flag = F27_roost_upgrade
 			set_country_flag = harpy_roost_upgrade
+			hidden_effect = {
+				every_owned_province = {
+					limit = { harpy_roost_st_has_any_roost = yes }
+					if = {
+						limit = { harpy_roost_st_has_non_fledgling_roost = yes }
+						add_province_modifier = {
+							name = F27_roost_upgrade_two
+							duration = -1
+						}
+					}
+					else = {
+						add_province_modifier = {
+							name = F27_roost_upgrade_one
+							duration = -1
+						}
+					}
+				}
+			}
 		} 
 	}
 }

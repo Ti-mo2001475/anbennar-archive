@@ -3977,7 +3977,7 @@ province_event = {
 	option = {
 		name = spirits.166.b
 		trigger = {
-			has_estate = estate_adventurers
+			owner = { has_estate = estate_adventurers }
 		}
 		ai_chance = {
 			factor = 1
@@ -11544,9 +11544,9 @@ province_event = {	#Temple Corrupted
 		owner = {
 			hidden_effect = {
 				if = { #Temple Corruption Flavor Events
-					limit = { NOT = { check_variable = { which = devouring_path_flavor_counter value = 4 } } }
+					limit = { NOT = { check_variable = { which = devouring_path_flavor_counter value = 11 } } }
 					if = {
-						limit = { check_variable = { which = devouring_path_flavor_counter value = 3 } }
+						limit = { check_variable = { which = devouring_path_flavor_counter value = 10 } }
 						if = {
 							limit = {
 								NOT = { has_global_flag = rending_happened }
@@ -11556,11 +11556,24 @@ province_event = {	#Temple Corrupted
 								}
 							}
 							change_variable = { which = devouring_path_flavor_counter value = 1 }
-							country_event = { id = spirits.614 days = 365 }
+							country_event = { id = spirits.614 days = 365 } #Arrival Imminent
 						}
 					}
 					else_if = {
-						limit = { check_variable = { which = devouring_path_flavor_counter value = 2 } }
+						limit = { check_variable = { which = devouring_path_flavor_counter value = 9 } }
+						if = {
+							limit = {
+								num_of_owned_provinces_with = {
+									value = 12
+									has_province_modifier = corrupted_temple_complex
+								}
+							}
+							change_variable = { which = devouring_path_flavor_counter value = 1 }
+							country_event = { id = spirits.623 days = 365 } #The Old Hobgoblin Report
+						}
+					}
+					else_if = {
+						limit = { check_variable = { which = devouring_path_flavor_counter value = 8 } }
 						if = {
 							limit = {
 								num_of_owned_provinces_with = {
@@ -11619,17 +11632,54 @@ province_event = {	#Temple Corrupted
 						}
 					}
 					else_if = {
-						limit = { check_variable = { which = devouring_path_flavor_counter value = 1 } }
+						limit = { check_variable = { which = devouring_path_flavor_counter value = 7 } }
 						if = {
 							limit = {
 								num_of_owned_provinces_with = {
-									value = 5
+									value = 8
 									has_province_modifier = corrupted_temple_complex
 								}
 							}
-							country_event = { id = spirits.615 days = 365 }
+							country_event = { id = spirits.615 days = 365 } #Memories from the Attic/Shirgrii
 							change_variable = { which = devouring_path_flavor_counter value = 1 }
 						}
+					}
+					else_if = {
+						limit = { check_variable = { which = devouring_path_flavor_counter value = 6 } }
+						if = {
+							limit = {
+								num_of_owned_provinces_with = {
+									value = 7
+									has_province_modifier = corrupted_temple_complex
+								}
+							}
+							country_event = { id = spirits.622 days = 365 } #From the Wilderness
+							change_variable = { which = devouring_path_flavor_counter value = 1 }
+						}
+					}
+					else_if = {
+						limit = { check_variable = { which = devouring_path_flavor_counter value = 5 } }
+						if = {
+							limit = {
+								num_of_owned_provinces_with = {
+									value = 6
+									has_province_modifier = corrupted_temple_complex
+								}
+							}
+							country_event = { id = spirits.621 days = 365 } #The Manor Overlooking From.GetName
+							change_variable = { which = devouring_path_flavor_counter value = 1 }
+						}
+
+						#Clear flags from previous event
+						clr_country_flag = selected_616_a
+						clr_country_flag = selected_616_b
+						clr_country_flag = selected_616_c
+						clr_country_flag = selected_616_d
+					}
+					else_if = {
+						limit = { check_variable = { which = devouring_path_flavor_counter value = 1 } }
+						ROOT = { province_event = { id = spirits.616 days = 365 } } #Scenes From a Devouring Path
+						change_variable = { which = devouring_path_flavor_counter value = 1 }
 					}
 					else = {
 						change_variable = { which = devouring_path_flavor_counter value = 1 }
@@ -11932,6 +11982,219 @@ country_event = { #A Restless Night
 	}
 }
 
+province_event = { #Scenes From a Devouring Path
+	id = spirits.616
+	title = spirits.616.t
+	desc = {
+		trigger = { check_variable = { devouring_path_flavor_counter = 2 } }
+		desc = spirits.616.desc2
+	}
+	desc = spirits.616.desc1
+	picture = 3_SONS_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = spirits.616.a
+		trigger = { owner = { NOT = { has_country_flag = selected_616_a } } }
+
+		owner = {
+			set_country_flag = selected_616_a
+			country_event_with_insight = { id = spirits.617 insight_tooltip = spirits_616_a_tt }
+		}
+	}
+	option = {
+		name = spirits.616.b
+		trigger = { owner = { NOT = { has_country_flag = selected_616_b } } }
+
+		owner = {
+			set_country_flag = selected_616_b
+			country_event_with_insight = { id = spirits.618 insight_tooltip = spirits_616_b_tt }
+		}
+	}
+	option = {
+		name = spirits.616.c
+		trigger = { owner = { NOT = { has_country_flag = selected_616_c } } }
+
+		owner = {
+			set_country_flag = selected_616_c
+			country_event_with_insight = { id = spirits.619 insight_tooltip = spirits_616_c_tt }
+		}
+	}
+	option = {
+		name = spirits.616.d
+		trigger = { owner = { NOT = { has_country_flag = selected_616_d } } }
+
+		owner = {
+			set_country_flag = selected_616_d
+			country_event_with_insight = { id = spirits.620 insight_tooltip = spirits_616_d_tt }
+		}
+	}
+}
+country_event = { #The Innards of [From.GetName]
+	id = spirits.617
+	title = spirits.617.t
+	desc = spirits.617.d
+	picture = SONGHAI_RULER_eventPicture
+	goto = FROM
+
+	is_triggered_only = yes
+
+	option = {
+		name = spirits.617.a
+		
+		dvp_gain_ae_with_accretive_and_transmutative_paths = { value = -5 }
+		add_country_modifier = { name = dvp_rites_respected duration = 3650 }
+		custom_tooltip = spirits_617_tt
+	}
+}
+country_event = { #The Duel of [From.GetName]
+	id = spirits.618
+	title = spirits.618.t
+	desc = spirits.618.d
+	picture = southamericagfx_LAND_MILITARY_eventPicture
+	goto = FROM
+
+	is_triggered_only = yes
+
+	option = {
+		name = spirits.618.a
+
+		dvp_gain_ae_with_accretive_and_transmutative_paths = { value = -5 }
+		add_country_modifier = { name = dvp_yaorenjun_cunning duration = 7300 }
+		custom_tooltip = spirits_618_tt
+	}
+}
+country_event = { #The Polemic of [From.GetName]
+	id = spirits.619
+	title = spirits.619.t
+	desc = spirits.619.d
+	picture = DESCARTES_eventPicture
+	goto = FROM
+
+	is_triggered_only = yes
+
+	option = {
+		name = spirits.619.a
+
+		dvp_gain_ae_with_accretive_and_transmutative_paths = { value = -5 }
+		hidden_effect = { every_neighbor_country = { add_spy_network_from = { who = ROOT value = 25 } } } #Ugly tooltip
+		custom_tooltip = spirits_619_tt
+	}
+}
+country_event = { #“Are You Yan?”
+	id = spirits.620
+	title = spirits.620.t
+	desc = spirits.620.d
+	picture = northamericagfx_OVEREXTENSION_eventPicture
+
+	is_triggered_only = yes
+	major = yes
+	major_trigger = {
+		has_saved_global_event_target = warlord_of_haless
+		tag = event_target:warlord_of_haless
+	}
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = { has_saved_global_event_target = warlord_of_haless }
+				event_target:warlord_of_haless = { capital_scope = { save_event_target_as = target_province } }
+			}
+			else = { FROM = { save_event_target_as = target_province } }
+		}
+	}
+
+	option = {
+		name = spirits.620.a
+		goto = target_province
+
+		if = {
+			limit = { has_saved_global_event_target = warlord_of_haless }
+			event_target:warlord_of_haless = {
+				if = {
+					limit = { religion = devouring_path }
+					add_stability_or_adm_power = yes
+				}
+				else = { reduce_stability_or_adm_power = yes }
+			}
+		}
+		else = { add_stability_or_adm_power = yes }
+		custom_tooltip = spirits_620_tt
+	}
+}
+country_event = { #The Manor Overlooking [From.GetName]
+	id = spirits.621
+	title = spirits.621.t
+	desc = spirits.621.d
+	picture = BUDDHISM_MONASTERY_eventPicture
+	goto = FROM
+
+	is_triggered_only = yes
+
+	option = {
+		name = spirits.621.a
+
+		add_splendor = -200
+		FROM = { add_province_modifier = { name = dvp_temple_hospice duration = -1 } }
+	}
+}
+country_event = { #From the Wilderness
+	id = spirits.622
+	title = spirits.622.t
+	desc = spirits.622.d
+	picture = AFRICAN_EXPLORER_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = spirits.622.a
+		goto = FROM
+
+		FROM = { add_province_modifier = { name = dvp_harboring_opposition duration = 7300 } }
+	}
+
+	option = {
+		name = spirits.622.b
+
+		add_manpower = -0.001
+		add_country_modifier = { name = dvp_opposition_exiled duration = 7300 }
+	}
+}
+country_event = { #The Old Hobgoblin Report, 1337
+	id = spirits.623
+	title = spirits.623.t
+	desc = spirits.623.d
+	picture = PRESTOR_JOHN_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = spirits.623.a
+
+		custom_tooltip = dvp_every_corrupted_temple_gains_tt
+		tooltip = { add_province_modifier = { name = dvp_consuming_temple duration = 10950 } }
+		hidden_effect = {
+			every_owned_province = {
+				limit = { has_province_modifier = corrupted_temple_complex }
+				add_province_modifier = { name = dvp_consuming_temple duration = 10950 }
+			}
+		}
+	}
+
+	option = {
+		name = spirits.623.b
+
+		custom_tooltip = dvp_every_corrupted_temple_gains_tt
+		tooltip = { add_province_modifier = { name = dvp_consuming_culture duration = 10950 } }
+		hidden_effect = {
+			every_owned_province = {
+				limit = { has_province_modifier = corrupted_temple_complex }
+				add_province_modifier = { name = dvp_consuming_culture duration = 10950 }
+			}
+		}
+	}
+}
+
 country_event = { #Choose temple to delve
 	id = spirits.640
 	title = spirits.640.t
@@ -12214,6 +12477,24 @@ country_event = {
 			}
 		}
 		6153 = { add_permanent_province_modifier = { name = ai_cinulau_blocker duration = 5475 hidden = yes } }
+		if = {
+			limit = {
+				has_country_flag = feiten_cool_rending_activities
+			}
+			add_country_modifier = {
+				name = huszien_suppressed_modifier
+				duration = -1
+			}
+			hidden_effect = { #copied from spirits.732
+				huszien_spirit_area = {
+					remove_province_modifier = rending_unhindered_spirits
+					add_permanent_province_modifier = { name = spirit_region_warded duration = -1 }
+				}
+				set_global_flag = huszien_suppressed
+				set_global_flag = disable_huszien
+				spirit_end_rending_if_applicable = yes
+			}
+		}
 	}
 }
 
@@ -16969,8 +17250,7 @@ province_event = { # Liufang spawn
 
 		P67 = {
 			event_target:spawn_province = {
-				create_colony = 1000
-				add_core = P67
+				adventurer_spawnable_create_province_for_prev = yes
 				change_culture = guyan
 				change_religion = high_philosophy
 			}
@@ -16994,8 +17274,7 @@ province_event = { # Liufang spawn
 
 		P67 = {
 			event_target:spawn_province = {
-				create_colony = 1000
-				add_core = P67
+				adventurer_spawnable_create_province_for_prev = yes
 				change_culture = guyan
 				change_religion = high_philosophy
 			}
