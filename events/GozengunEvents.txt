@@ -53,6 +53,7 @@ country_event = { #Seal event
         }
         add_prestige = 5
         change_innovativeness = 1
+        highlight = yes
     }
 }
 
@@ -103,6 +104,7 @@ country_event = { #manul
             }
         }
         add_treasury = 30
+        highlight = yes
     }
 
     option = {
@@ -114,10 +116,9 @@ country_event = { #manul
             }
         }
         add_prestige = 5
-        add_legitimacy = 5
-        add_republican_tradition = 5
-        add_devotion = 5
+        add_legitimacy_equivalent = { amount = 5 republican_tradition = 5 }
         add_splendor = 2
+        highlight = yes
     }
 }
 
@@ -185,8 +186,17 @@ country_event = { #mercenaries event
     is_triggered_only = yes
 
     trigger = {
+        capital_scope = {
+            continent = asia
+        }
         any_owned_province = {
                 superregion = gozengun_superregion
+        }
+        NOT = {
+            has_country_modifier = gozengun_boring_guys
+            has_country_modifier = gozengun_centaur_mercenaries
+            has_country_modifier = gozengun_eagle_hobgoblin_mercenaries
+            has_country_modifier = gozengun_soulseeker_mercenaries
         }
     }
 
@@ -404,6 +414,7 @@ country_event = { #facestealer rite event
         }
         add_years_of_income = 0.25  
         goto = facestealer_province
+        highlight = yes
     }
 }
 
@@ -454,6 +465,7 @@ country_event = { #spirit advisor event
             religion = devouring_path
         }
         add_church_power = 25
+        highlight = yes
     }
 
     option = {
@@ -462,6 +474,7 @@ country_event = { #spirit advisor event
             ruler_has_personality = babbling_buffoon_personality
         }
         add_prestige = -4
+        highlight = yes
     }
 }
 
@@ -627,6 +640,7 @@ country_event = { #gumiho event
             religion = devouring_path
         }
         add_church_power = 50
+        highlight = yes
     }
 }
 
@@ -666,6 +680,7 @@ country_event = { #strange things in the desert
         }
         add_yearly_manpower = -0.5
         add_treasury = 200
+        highlight = yes
     }
 }
 

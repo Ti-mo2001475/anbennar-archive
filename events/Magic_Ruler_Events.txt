@@ -387,21 +387,27 @@ country_event = { # War Magic Death - Early Game
 		}
 		highlight = yes
 
-		change_mana = { amount = -25 }
 
-		random_list = {
-			3 = {
-				modifier = {
-					factor = 1.67
-					is_ruler_abjuration_level_2 = yes
-				}
-				modifier = {
-					factor = 3
-					is_ruler_abjuration_level_3 = yes
-				}
+		if = { #if you still have mana
+			limit = { has_mana = { amount = 25 } }
+			change_mana = { amount = -25 }
+			random_list = {
+				3 = {
+					modifier = {
+						factor = 1.67
+						is_ruler_abjuration_level_2 = yes
+					}
+					modifier = {
+						factor = 3
+						is_ruler_abjuration_level_3 = yes
+					}
 
+				}
+				1 = { kill_ruler = yes }
 			}
-			1 = { kill_ruler = yes }
+		}
+		else = { #if you are suspiciously out of mana between receiving the event and picking the option
+			kill_ruler = yes
 		}
 	}
 }
@@ -445,11 +451,17 @@ country_event = { # War Magic Death - Black Damestear
 			has_mana = { amount = 25 }
 		}
 		highlight = yes
+		if = { #if you still have mana
+			limit = { has_mana = { amount = 25 } }
 
-		change_mana = { amount = -25 }
+			change_mana = { amount = -25 }
 
-		random = {
-			chance = 50
+			random = {
+				chance = 50
+				kill_ruler = yes
+			}
+		}
+		else = {
 			kill_ruler = yes
 		}
 	}
