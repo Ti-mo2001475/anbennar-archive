@@ -199,6 +199,8 @@ aPUI_gene_pillars_setup_calculate_health = {
 	if = { limit = { gene_pillars_setup_has_specific_class_in_party = { class = fighter_B } } change_variable = { which = temp value = 1 } }
 	if = { limit = { gene_pillars_setup_has_specific_class_in_party = { class = fighter_C } } change_variable = { which = temp value = -1 } }
 
+	if = { limit = { owner = { mission_completed = A29_plunder_the_pillars } } change_variable = { which = temp value = 1 } }
+
 	# Add things that would affect party starting health here
 
 	#gene_pillars_check_extra_hp_at_start = {
@@ -539,6 +541,10 @@ gene_pillar_generic_then_specific_event = {
 				limit = { has_country_flag = gene_pillars_exploration_events_double_speed }
 				multiply_variable = { GenePillarsSpeed = 0.5 }
 			}
+			if = {
+				limit = { has_country_flag = A29_faster_genepillar_expedition }
+				multiply_variable = { GenePillarsSpeed = 0.75 }
+			}
 
 			### Add Speed modifiers above here ###
 
@@ -665,7 +671,6 @@ gene_pillar_generic_then_specific_event = {
 					}
 				}
 			}
-
 			# This is just so the initial event doesn't advance the progress bar
 			[[advance]
 				gene_pillars_advance_progress_bar = yes
