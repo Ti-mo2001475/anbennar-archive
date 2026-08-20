@@ -3019,11 +3019,21 @@ pashaine_3_post_unity = {
 			has_commanding_three_star = yes 
 		} 
 
-		effect = {  
+		effect = {
 			businor_region = { add_permanent_claim = ROOT }
 			the_borders_region = { add_permanent_claim = ROOT }
 			custom_tooltip = pashaine_lose_separatism_tt
 			hidden_effect = {
+				if = {
+					limit = {
+						any_subject_country = {
+							has_country_modifier = colony_inspired_by_revolution
+						}
+					}
+					every_subject_country = {
+						remove_country_modifier = colony_inspired_by_revolution
+					}
+				}
 				every_owned_province = {
 					limit = { has_province_flag = was_part_of_hre }
 					add_nationalism = -100
