@@ -613,11 +613,17 @@ country_decisions = {
 					has_country_flag = formed_yanshen_flag
 					has_country_flag = formed_liang_flag
 					has_country_flag = formed_di_yichan_flag
-					primary_culture = szitu
-					primary_culture = pinghoi
-					primary_culture = haiwai
 				}
 			}
+			OR = {
+				primary_culture = jiangyang
+				primary_culture = gangim
+				primary_culture = jiangszun
+				primary_culture = beikling
+				primary_culture = naamjyut
+				primary_culture = szitu
+				primary_culture = kuldaakin
+			}			
 			normal_or_historical_nations = yes
 			was_never_end_game_tag_trigger = yes
 		}
@@ -667,10 +673,10 @@ country_decisions = {
 			if = {
 				limit = {
 					NOT = {
-						capital = 4871
 						OR = {
 							primary_culture = naamjyut
 							primary_culture = gangim
+							primary_culture = szitu
 						}
 					}
 				}
@@ -680,9 +686,6 @@ country_decisions = {
 			}
 			else_if = {
 				limit = {
-					NOT = {
-						capital = 4871
-					}
 					primary_culture = naamjyut
 				}
 				capital_scope = {
@@ -691,10 +694,10 @@ country_decisions = {
 			}
 			else_if = {
 				limit = {
-					NOT = {
-						capital = 4871
+					OR = {
+						primary_culture = gangim
+						primary_culture = szitu
 					}
-					primary_culture = gangim
 				}
 				capital_scope = {
 					change_province_name = "Chiaubeng"
@@ -709,13 +712,18 @@ country_decisions = {
 				override_country_name = DAAIFAI
 			}
 			else_if = {
-				limit = { primary_culture = gangim }
+				limit = { 
+					OR = {
+						primary_culture = gangim
+						primary_culture = szitu
+					}
+				 }
 				override_country_name = DUAHUI
 			}
-			if = {
-				limit = { NOT = { has_reform = eunuch_dynasty_reform } }
-				add_government_reform = yan_empire_reform
-			}
+			#if = {
+			#	limit = { NOT = { has_reform = eunuch_dynasty_reform } }
+			add_government_reform = yan_empire_reform
+			#}
 			yanshen_superregion = {
 				add_permanent_claim = ROOT
 			}
