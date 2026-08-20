@@ -1543,7 +1543,6 @@ cb_crush_the_revolution = {
 
 	prerequisites_self = {
 		is_revolutionary = no
-		is_revolution_target = no
 		is_free_or_tributary_trigger = yes
 	}
 
@@ -1570,15 +1569,11 @@ cb_spread_the_revolution = {
 	valid_for_subject = no
 
 	prerequisites_self = {
+		is_revolutionary = yes
 		OR = {
+			ai = no
+			capital_scope = { continent = europe }
 			is_revolution_target = yes
-			AND = {
-				is_revolutionary = yes
-				OR = {
-					ai = no
-					capital_scope = { continent = europe }
-				}
-			}
 		}
 	}
 
