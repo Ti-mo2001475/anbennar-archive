@@ -11095,16 +11095,25 @@ xechtari_above_all = {
 	effect = {
 		custom_tooltip = xechtari_above_all_tt
 		hidden_effect = {
+			if = {
+				limit = { all_owned_province = { region = alecand_region } }
+				set_country_flag = xechtari_only_owns_alecand
+			}
+			else = {
+				clr_country_flag = xechtari_only_owns_alecand
+			}
+
 			every_owned_province = {
 				limit = { region = alecand_region }
 				xechtari_above_all_check_effect = yes
 			}
 		}
-		removed_effect = {
-			every_owned_province = {
-				limit = { region = alecand_region }
-				xechtari_above_all_check_effect = yes
-			}
+	}
+	removed_effect = {
+		clr_country_flag = xechtari_only_owns_alecand
+		every_owned_province = {
+			limit = { region = alecand_region }
+			xechtari_above_all_check_effect = yes
 		}
 	}
 }

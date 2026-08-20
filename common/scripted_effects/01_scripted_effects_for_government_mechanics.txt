@@ -718,22 +718,85 @@ sponsored_adventurers_building_reform_effect = {
 }
 
 xechtari_above_all_check_effect = {
-	remove_province_modifier = xechtari_above_all_mod
+	if = {
+		limit = { region = alecand_region }
 
+		if = {
+			limit = {
+				NOT = { culture = eltibhar }
+				owner = {
+					has_reform = xechtari_above_all
+					has_country_flag = xechtari_only_owns_alecand
+				}
+			}
+			add_province_modifier = {
+				name = xechtari_above_all_mod
+				duration = -1
+			}
+		}
+		else = {
+			remove_province_modifier = xechtari_above_all_mod
+		}
+	}
+	else = {
+		if = {
+			limit = { owner = { exists = yes } }
+			owner = {
+				if = {
+					limit = {
+						has_reform = xechtari_above_all
+						has_country_flag = xechtari_only_owns_alecand
+					}
+					every_owned_province = {
+						limit = { region = alecand_region }
+						remove_province_modifier = xechtari_above_all_mod
+					}
+					clr_country_flag = xechtari_only_owns_alecand
+				}
+			}
+		}
+		if = {
+			limit = { FROM = { exists = yes } }
+			FROM = {
+				if = {
+					limit = {
+						has_reform = xechtari_above_all
+						NOT = { has_country_flag = xechtari_only_owns_alecand }
+						all_owned_province = { region = alecand_region }
+					}
+					every_owned_province = {
+						limit = {
+							region = alecand_region
+							NOT = { culture = eltibhar }
+						}
+						add_province_modifier = {
+							name = xechtari_above_all_mod
+							duration = -1
+						}
+					}
+					set_country_flag = xechtari_only_owns_alecand
+				}
+			}
+		}
+	}
+}
+
+xechtari_above_all_culture_check_effect = {
 	if = {
 		limit = {
 			region = alecand_region
 			NOT = { culture = eltibhar }
 			owner = {
 				has_reform = xechtari_above_all
-				all_owned_province = {
-					region = alecand_region
-				}
+				has_country_flag = xechtari_only_owns_alecand
 			}
 		}
 		add_province_modifier = {
 			name = xechtari_above_all_mod
 			duration = -1
 		}
+	}
+	else = {
+		remove_province_modifier = xechtari_above_all_mod
 	}
 }

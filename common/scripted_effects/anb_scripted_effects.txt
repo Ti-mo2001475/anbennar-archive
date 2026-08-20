@@ -4753,23 +4753,19 @@ anb_on_development_effect = {
 			owner = { has_reform = xechtari_above_all }
 			region = alecand_region
 			NOT = { culture = eltibhar }
-			province_group = kheionai_capital_provinces
 		}
-		random = {
-			chance = 25
-			add_base_$development$ = 1
+		if = {
+			limit = { province_group = alecandi_capital_provinces }
+			random = {
+				chance = 25
+				add_base_$development$ = 1
+			}
 		}
-	}
-	else_if = {
-		limit = {
-			owner = { has_reform = xechtari_above_all }
-			region = alecand_region
-			NOT = { culture = eltibhar }
-			NOT = { province_group = kheionai_capital_provinces }
-		}
-		random_list = {
-			chance = 15
-			add_base_$development$ = 1
+		else = {
+			random = {
+				chance = 15
+				add_base_$development$ = 1
+			}
 		}
 	}
 	if = {
