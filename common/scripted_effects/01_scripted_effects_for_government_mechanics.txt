@@ -719,6 +719,7 @@ sponsored_adventurers_building_reform_effect = {
 
 xechtari_above_all_check_effect = {
 	if = {
+		# IF This province is in Alecand just recheck it individually.
 		limit = { region = alecand_region }
 
 		if = {
@@ -739,9 +740,11 @@ xechtari_above_all_check_effect = {
 		}
 	}
 	else = {
-		if = {
-			limit = { owner = { exists = yes } }
-			owner = {
+		# Province outside Alecand changed hands this can flip the 'Alecand-only' status for owner or FROM, so recheck both.
+		# Owner gained land outside Alecand: no longer Alecand-only, strip the flag and mods.
+		owner = {
+			if = {
+				limit = { exists = yes }
 				if = {
 					limit = {
 						has_reform = xechtari_above_all
@@ -755,9 +758,11 @@ xechtari_above_all_check_effect = {
 				}
 			}
 		}
-		if = {
-			limit = { FROM = { exists = yes } }
-			FROM = {
+
+		# FROM lost its last province outside Alecand: now Alecand-only, set the flag and mods.
+		FROM = {
+			if = {
+				limit = { exists = yes }
 				if = {
 					limit = {
 						has_reform = xechtari_above_all
@@ -781,6 +786,7 @@ xechtari_above_all_check_effect = {
 	}
 }
 
+# culture check for on_action
 xechtari_above_all_culture_check_effect = {
 	if = {
 		limit = {
@@ -798,5 +804,38 @@ xechtari_above_all_culture_check_effect = {
 	}
 	else = {
 		remove_province_modifier = xechtari_above_all_mod
+	}
+}
+
+three_branches_focus_bonus = {
+	hidden_effect = {
+		if = {
+			limit = { has_reform = three_branches }
+			remove_country_modifier = three_branches_legislative_mod
+			remove_country_modifier = three_branches_judicial_mod
+			remove_country_modifier = three_branches_executive_mod
+
+			trigger_switch = {
+				on_trigger = national_focus
+				ADM = {
+					add_country_modifier = {
+						name = three_branches_legislative_mod
+						duration = -1
+					}
+				}
+				DIP = {
+					add_country_modifier = {
+						name = three_branches_judicial_mod
+						duration = -1
+					}
+				}
+				MIL = {
+					add_country_modifier = {
+						name = three_branches_executive_mod
+						duration = -1
+					}
+				}
+			}
+		}
 	}
 }

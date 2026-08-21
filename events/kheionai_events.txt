@@ -185,44 +185,6 @@ country_event = {
 		trigger = { has_not_full_deathwinds_system = yes }
 		disable_deathwind_events = yes
 	}
-
-	option = {
-		name = kheionai.3.c
-		trigger = {
-			has_reform = tame_the_storm
-		}
-		if = {
-			limit = { abjuration_1_ward_trigger = { player = yes } }
-			custom_tooltip = tame_cast_ward
-			hidden_effect = {
-				capital_scope = {
-					province_event = { id = kheionai.33 }
-				}
-			}
-		}
-		else = {
-			custom_tooltip = not_enough_mana_tt
-		}
-	}
-}
-
-#cast Ward on capital
-province_event = {
-	id = kheionai.33
-	title = kheionai.33.t
-	desc = kheionai.33.desc
-	picture = MARCHING_PEASANTS_eventPicture
-
-	is_triggered_only = yes
-	hidden = yes
-
-	immediate = {
-		generic_cast_spell = { school = abjuration level = 1 id = ward }
-	}
-
-	option = {
-		name = kheionai.33.a
-	}
 }
 
 #Deathwinds start event
@@ -489,38 +451,7 @@ country_event = {
 					has_province_modifier = windward_level_10
 					AND = {
 						has_province_modifier = windward_level_4
-						OR = {
-							has_building = mage_tower
-							has_province_modifier = abjuration_1_ward_mod_1
-							has_province_modifier = abjuration_1_ward_mod_2
-							has_province_modifier = abjuration_1_ward_mod_3
-						}
-					}
-					AND = {
-						has_province_modifier = windward_level_3
-						OR = {
-							has_province_modifier = abjuration_1_ward_mod_2
-							has_province_modifier = abjuration_1_ward_mod_3
-							AND = {
-								has_building = mage_tower
-								has_province_modifier = abjuration_1_ward_mod_1
-							}
-						}
-					}
-					AND = {
-						has_province_modifier = windward_level_2
-						OR = {
-							has_province_modifier = abjuration_1_ward_mod_3
-							AND = {
-								has_building = mage_tower
-								has_province_modifier = abjuration_1_ward_mod_2
-							}
-						}
-					}
-					AND = {
-						has_province_modifier = windward_level_1
 						has_building = mage_tower
-						has_province_modifier = abjuration_1_ward_mod_3
 					}
 				}
 			}
@@ -529,8 +460,7 @@ country_event = {
 				duration = 1825
 			}
 		}
-	}
-}
+	}}
 
 #1444 Deathwinds intro event
 country_event = {

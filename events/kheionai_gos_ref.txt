@@ -19,7 +19,6 @@ country_event = {
 			type = "Daftaterodegis"
 		}
         set_saved_name = { key = consort_male_name type = leader }
-        # set_ruler_flag = is_gay
     }
     after = {
 		hidden_effect = {
@@ -39,7 +38,6 @@ country_event = {
 			change_mil = 2
             male = yes
         }
-        # set_consort_flag = is_gay
         create_general_with_current_tradition = {
             add_fire = 1
             add_shock = 2
@@ -49,7 +47,6 @@ country_event = {
         }
     }
 }
-
 
 #If general die new duunvir rise
 country_event = {
@@ -84,61 +81,4 @@ country_event = {
             id = duumvirate.1
         }
 	}
-}
-
-#Гос реформа
-country_event = {
-    id = duumvirate.2121
-    title = duumvirate.2121.t
-    desc = duumvirate.2121.d
-    picture = COURT_eventPicture
-    
-    is_triggered_only = yes
-    hidden = yes 
-
-    # ADM focus
-    option = {
-        name = duumvirate.2121.a
-        trigger = {
-            national_focus = ADM
-        }
-        ai_chance = { factor = 100 }
-        add_country_modifier = {
-            name = three_branches_legislative_mod
-            duration = -1
-        }
-		remove_country_modifier = three_branches_judicial_mod
-		remove_country_modifier = three_branches_executive_mod
-    }
-
-    #DIp focus
-    option = {
-        name = duumvirate.2121.b
-        trigger = {
-        	national_focus = DIP
-        }
-        ai_chance = { factor = 100 }
-        add_country_modifier = {
-            name = three_branches_judicial_mod
-            duration = -1
-        }
-		remove_country_modifier = three_branches_executive_mod
-		remove_country_modifier = three_branches_legislative_mod
-    }
-
-    # Mil Focus
-    option = {
-        name = duumvirate.2121.m
-        trigger = {
-        	national_focus = MIL
-        }
-        ai_chance = { factor = 100 }
-
-        add_country_modifier = {
-            name = three_branches_executive_mod
-            duration = -1
-        }
-		remove_country_modifier = three_branches_legislative_mod
-		remove_country_modifier = three_branches_judicial_mod
-    }
 }
