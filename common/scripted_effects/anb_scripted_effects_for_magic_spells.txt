@@ -2312,33 +2312,17 @@ illusion_1_fear_and_loathing_effect = { #Fear and Loathing
 	}
 
 	custom_tooltip = spell_sabotage_effect_tt #All war enemies and rivals get
-	tooltip = { add_country_modifier = { name = illusion_1_fear_and_loathing_sabotage_mod duration = 3650 } }
+	tooltip = { add_country_modifier = { name = illusion_1_fear_and_loathing_sabotage_mod duration = 1825 } }
 
 	hidden_effect = {
-		set_variable = { war_enemy_dev = 150 } #Always spawn at least one revolt
-		set_variable = { num_revolts_left = 8 } #Don't spawn more than 8 revolts
+		set_variable = { num_revolts_left = 5 } #Don't spawn more than 5 revolts
 		every_war_enemy_country = {
-			limit = { capital_scope = { controlled_by = PREV has_siege = no } } #No gimping self
-
-			PREV = {
-				export_to_variable = { which = temp_dev_check value = total_development who = PREV }
-				change_variable = { which = war_enemy_dev which = temp_dev_check }
+			limit = {
+				capital_scope = { controlled_by = PREV has_siege = no } #No gimping self
+				PREV = { check_variable = { num_revolts_left = 1 } }
 			}
-
-			while = {
-				limit = {
-					PREV = {
-						check_variable = { war_enemy_dev = 150 }
-						check_variable = { num_revolts_left = 1 }
-					}
-				}
-				PREV = {
-					subtract_variable = { war_enemy_dev = 150 }
-					subtract_variable = { num_revolts_left = 1 }
-				}
-				
-				illusion_1_fear_and_loathing_sub_effect = { caster_scope = PREV }
-			}
+			PREV = { subtract_variable = { num_revolts_left = 1 } }
+			illusion_1_fear_and_loathing_sub_effect = { caster_scope = PREV }
 		}
 
 		every_war_enemy_country = {
@@ -2353,22 +2337,52 @@ illusion_1_fear_and_loathing_effect = { #Fear and Loathing
 	add_country_modifier = { name = illusion_1_fear_and_loathing_cooldown_mod duration = 1825 hidden = yes } #Sorry no spamming rebels
 }
 illusion_1_fear_and_loathing_sub_effect = { #Fear and Loathing sub-effect that spawns rebels
-	if = { #Orenvalyam overwrite
-		limit = {
-			$caster_scope$ = { has_country_flag = U39_fear_and_loathing_buff_flag }
-			total_development = 300
-		}
-		capital_scope = { anti_tax_rebels = 3 }
-	}
-	else_if = { # kimanis overwrite
+	if = { # kimanis overwrite
 		limit = { $caster_scope$ = { has_country_flag = G61_spell_effect_razzle } }
-		capital_scope = { kimanis_wine_cultists = 1 }
+		capital_scope = { kimanis_wine_cultists = 2 }
 	}
-	else = { capital_scope = { anti_tax_rebels = 1 } }
-
-	if = { #Invention for everyone with mixed
-		limit = { $caster_scope$ = { has_estate_privilege = artifice_invention_sonic_amplifiers } }
-		capital_scope = { anti_tax_rebels = 1 }
+	else_if = { #size 1000 = mage rebels led by war wizard
+		limit = { total_development = 1000 }
+		if = { #Orenvalyam triples size
+			limit = { $caster_scope$ = { has_country_flag = U39_fear_and_loathing_buff_flag } }
+			capital_scope = { spawn_war_wizard_rebels = { type = mage_rebels size = 3 } }
+		}
+		else_if = { #Invention for everyone with mixed
+			limit = { $caster_scope$ = { has_estate_privilege = artifice_invention_sonic_amplifiers } }
+			capital_scope = { spawn_war_wizard_rebels = { type = mage_rebels size = 2 } }
+		}
+		else = { capital_scope = { spawn_war_wizard_rebels = { type = mage_rebels size = 1 } } }
+	}
+	else_if = { #size 600 = pretender
+		limit = { total_development = 600 }
+		if = { #Orenvalyam triples size
+			limit = { $caster_scope$ = { has_country_flag = U39_fear_and_loathing_buff_flag } }
+			capital_scope = { pretender_rebels = 3 }
+		}
+		else_if = { #Invention for everyone with mixed
+			limit = { $caster_scope$ = { has_estate_privilege = artifice_invention_sonic_amplifiers } }
+			capital_scope = { pretender_rebels = 2 }
+		}
+		else = { capital_scope = { pretender_rebels = 1 } }
+	}
+	else_if = { #size 300 = leadered peasants
+		limit = { total_development = 300 }
+		if = { #Orenvalyam triples size
+			limit = { $caster_scope$ = { has_country_flag = U39_fear_and_loathing_buff_flag } }
+			capital_scope = { leadered_peasant_rebels = 3 }
+		}
+		else_if = { #Invention for everyone with mixed
+			limit = { $caster_scope$ = { has_estate_privilege = artifice_invention_sonic_amplifiers } }
+			capital_scope = { leadered_peasant_rebels = 2 }
+		}
+		else = { capital_scope = { leadered_peasant_rebels = 1 } }
+	}
+	else = { #else - anti-tax peasants
+		if = { #Invention for everyone with mixed
+			limit = { $caster_scope$ = { has_estate_privilege = artifice_invention_sonic_amplifiers } }
+			capital_scope = { anti_tax_rebels = 2 }
+		}
+		else = { capital_scope = { anti_tax_rebels = 1 } }
 	}
 }
 illusion_1_bread_and_circuses_effect = { # Bread and Circuses
@@ -2645,46 +2659,7 @@ necromancy_1_contagion_effect = { # Contagion
 	}
 }
 necromancy_2_speak_with_dead_effect = { # Speak With Dead
-	tooltip = {
-		random_list = {
-			1 = {
-				trigger = {
-					OR = {
-						NOT = { adm = 5 }
-						AND = {
-							ruler_is_immortal = yes
-							NOT = { adm = 6 }
-						}
-					}
-				}
-				change_adm = 1
-			}
-			1 = {
-				trigger = {
-					OR = {
-						NOT = { dip = 5 }
-						AND = {
-							ruler_is_immortal = yes
-							NOT = { dip = 6 }
-						}
-					}
-				}
-				change_dip = 1
-			}
-			1 = {
-				trigger = {
-					OR = {
-						NOT = { mil = 5 }
-						AND = {
-							ruler_is_immortal = yes
-							NOT = { mil = 6 }
-						}
-					}
-				}
-				change_mil = 1
-			}
-		}
-	}
+	tooltip = { add_random_ruler_skill = yes }
 
 	custom_tooltip = SEPERATOR_TOOLTIP
 	if = {
@@ -2734,165 +2709,33 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 		randnum_effect = {
 			max = 6
 			case6 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { adm = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { adm = 6 }
-							}
-						}
-					}
-					change_adm = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { dip = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { dip = 6 }
-							}
-						}
-					}
-					change_dip = 1
-				}
+				if = { limit = { NOT = { adm = 6 } } change_adm = 1 }
+				else_if = { limit = { NOT = { dip = 6 } } change_dip = 1 }
 				else = { change_mil = 1 }
 			"
 			case5 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { adm = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { adm = 6 }
-							}
-						}
-					}
-					change_adm = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { mil = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { mil = 6 }
-							}
-						}
-					}
-					change_mil = 1
-				}
+				if = { limit = { NOT = { adm = 6 } } change_adm = 1 }
+				else_if = { limit = { NOT = { mil = 6 } } change_mil = 1 }
 				else = { change_dip = 1 }
 			"
 			case4 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { dip = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { dip = 6 }
-							}
-						}
-					}
-					change_dip = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { mil = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { mil = 6 }
-							}
-						}
-					}
-					change_mil = 1
-				}
+				if = { limit = { NOT = { dip = 6 } } change_dip = 1 }
+				else_if = { limit = { NOT = { mil = 6 } } change_mil = 1 }
 				else = { change_adm = 1 }
 			"
 			case3 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { dip = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { dip = 6 }
-							}
-						}
-					}
-					change_dip = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { adm = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { adm = 6 }
-							}
-						}
-					}
-					change_adm = 1
-				}
+				if = { limit = { NOT = { dip = 6 } } change_dip = 1 }
+				else_if = { limit = { NOT = { adm = 6 } } change_adm = 1 }
 				else = { change_mil = 1 }
 			"
 			case2 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { mil = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { mil = 6 }
-							}
-						}
-					}
-					change_mil = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { adm = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { adm = 6 }
-							}
-						}
-					}
-					change_adm = 1
-				}
+				if = { limit = { NOT = { mil = 6 } } change_mil = 1 }
+				else_if = { limit = { NOT = { adm = 6 } } change_adm = 1 }
 				else = { change_dip = 1 }
 			"
 			case1 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { mil = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { mil = 6 }
-							}
-						}
-					}
-					change_mil = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { dip = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { dip = 6 }
-							}
-						}
-					}
-					change_dip = 1
-				}
+				if = { limit = { NOT = { mil = 6 } } change_mil = 1 }
+				else_if = { limit = { NOT = { dip = 6 } } change_dip = 1 }
 				else = { change_adm = 1 }
 			"
 		}
@@ -2900,8 +2743,8 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 }
 add_necromancy_2_speak_with_dead_cost = {
 	if = {
-		limit = { has_country_flag = necromancy_2_speak_with_dead_cost_05 }
-		add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod_05 duration = $duration$ }
+		limit = { has_country_flag = necromancy_2_speak_with_dead_cost_0 }
+		add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod_0 duration = $duration$ }
 	}
 	else = {
 		add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = $duration$ }
@@ -2931,7 +2774,8 @@ necromancy_3_chronophage_effect = { # Chronophage
 		limit = { has_country_flag = kaino_super_duper_chronophage }
 		add_country_modifier = { name = kaino_necromancy_3_chronophage_mod duration = 18250 } #50 years mwahahahaa
 	}
-	else = {
+	if = {
+		limit = { NOT = {has_country_flag = kaino_super_duper_chronophage } }
 		add_country_modifier = { name = necromancy_3_chronophage_mod duration = 365 } #1 year
 		custom_tooltip = necromancy_3_chronophage_spell_effect_tt
 		country_event = { id = magic_spell.700 days = 366 }
@@ -3215,11 +3059,17 @@ transmutation_2_reshape_terrain_effect = { # Reshape Terrain
 	}
 }
 transmutation_3_rite_of_conception_effect = { # Rite of Conception
-	custom_tooltip = transmutation_3_rite_of_conception_effect_tt
-	hidden_effect = { 
-		add_country_modifier = { name = transmutation_3_rite_of_conception_cooldown_mod duration = 301 hidden = yes }
-		capital_scope = { add_province_triggered_modifier = rite_of_conception_randomization_ptm }
+	if = {
+		limit = { government = theocracy }
+		country_event = { id = magic_spell.808 days = 300 }
+		custom_tooltip = transmutation_3_rite_of_conception_effect_2_tt
 	}
+	if = {
+		limit = { NOT = { government = theocracy } }
+		custom_tooltip = transmutation_3_rite_of_conception_effect_tt
+		hidden_effect = { capital_scope = { add_province_triggered_modifier = rite_of_conception_randomization_ptm } }
+	}
+	add_country_modifier = { name = transmutation_3_rite_of_conception_cooldown_mod duration = 301 hidden = yes }
 }
 
 
