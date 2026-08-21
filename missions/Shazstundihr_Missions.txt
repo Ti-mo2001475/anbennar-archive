@@ -107,8 +107,8 @@ marble_1_tng = {
 				}
 				development = 15
 				has_production_building_trigger = yes
+				has_tax_building_trigger = yes
 				NOT = { has_construction = any }
-				NOT = { has_tax_building_trigger = yes }
 			}
 		}
 	
@@ -126,13 +126,20 @@ marble_1_tng = {
 					}
 					development = 15
 					has_production_building_trigger = yes
+					has_tax_building_trigger = yes
 					NOT = { has_construction = any }
 					NOT = { has_building  = temple }
 				}
-				add_building_construction = {
-					building = temple
-					speed = 0.5
-					cost = 0
+				if = {
+					limit = {
+						has_building = counting_house
+					}
+					add_base_production = 2
+				}
+				else = {
+					upgrade_building = {
+						production = yes
+					}
 				}
 			}
 			
@@ -196,7 +203,7 @@ marble_1_tng = {
 			521 = {
 				trade_share = {
 					country = I11
-					share = 45
+					share = 40
 				}
 			}
 			num_of_light_ship = 10
@@ -235,7 +242,7 @@ marble_1_tng = {
 			565 = {
 				trade_share = {
 					country = ROOT
-					share = 65
+					share = 45
 				}
 			}
 		}
@@ -244,7 +251,7 @@ marble_1_tng = {
 			565 = {
 				add_province_modifier = {
 					name = "shaz_greatest_little_port"
-					duration = 7300
+					duration = -1
 				}
 			}
 		}
@@ -588,6 +595,49 @@ marble_2_tng = {
 				religion = ROOT
 				discount = yes
 			}
+			custom_tooltip = shaz_marble_trade_effect_tt
+			hidden_effect = {
+				516 = {
+					if = {
+						limit = {
+							owned_by = I11
+						}
+						add_base_production = 1
+					}
+				}
+				521 = {
+					if = {
+						limit = {
+							owned_by = I11
+						}
+						add_base_production = 1
+					}
+				}
+				526 = {
+					if = {
+						limit = {
+							owned_by = I11
+						}
+						add_base_production = 1
+					}
+				}
+				536 = {
+					if = {
+						limit = {
+							owned_by = I11
+						}
+						add_base_production = 1
+					}
+				}
+				547 = {
+					if = {
+						limit = {
+							owned_by = I11
+						}
+						add_base_production = 1
+					}
+				}
+			}
 		}
 	}
 	
@@ -744,7 +794,7 @@ marble_3_tng = {
 			}
 			add_country_modifier = {
 				name = shaz_diplo_guide
-				duration = 5475
+				duration = 9125
 			}
 		}
 	}
@@ -764,7 +814,7 @@ marble_3_tng = {
         trigger = {
             stability = 2
             2942 = {
-                has_dwarven_hold_4 = yes
+                has_dwarven_hold_3 = yes
             }
             employed_advisor = {
                 category = ADM
@@ -1035,7 +1085,7 @@ marble_3_tng = {
 					limit = { has_human_majority_trigger = yes }
 					add_province_modifier = {
 						name = "shaz_herd_free"
-						duration = 5475
+						duration = 9125
 					}
 				}
 			}
@@ -1126,7 +1176,7 @@ marble_3_tng = {
 			601 = {
 				add_province_modifier = {
 					name = "shaz_marble_in_bulwar"
-					duration = 7300
+					duration = -1
 				}
 			}
 			sareyand_area = {
@@ -1222,7 +1272,7 @@ marble_3_tng = {
 			}
 			add_country_modifier = {
 				name = "shaz_spread_ideas"
-				duration = 7300
+				duration = -1
 			}
 		}
 	}
@@ -1238,7 +1288,7 @@ marble_3_tng = {
 			province_id = 2942
 			NOT = {
 				AND = {
-					has_dwarven_hold_8 = yes
+					has_dwarven_hold_6 = yes
 					num_of_buildings_in_province = 8
 				}
 			}
@@ -1269,7 +1319,7 @@ marble_3_tng = {
 		
 		trigger = {
 			2942 = {
-				has_dwarven_hold_10 = yes
+				has_dwarven_hold_7 = yes
 			}
 			num_of_owned_provinces_with = {
 				value = 100
@@ -1732,7 +1782,7 @@ marble_4_tng = {
 			}
 			add_country_modifier = {
 				name = "shaz_consolidating_harpys"
-				duration = 5475
+				duration = 9125
 			}
 		}
 	}
@@ -1757,7 +1807,10 @@ marble_4_tng = {
 			}
 			if = {
 				limit = { has_dlc = "Cradle of Civilization" } 
-				army_professionalism = 0.3
+				OR = {
+					army_professionalism = 0.2
+					army_tradition = 60
+				}
 			}
 			else = {
 				army_tradition = 60
@@ -1807,10 +1860,10 @@ marble_5_tng = {
 		}
 		
 		effect = {
-			add_treasury = -200
+			add_treasury = -100
 			add_country_modifier = {
 				name = "shaz_new_bases"
-				duration = 7300
+				duration = 9125
 			}
 		}
 	}
@@ -1876,7 +1929,7 @@ marble_5_tng = {
 		effect = {
 			add_country_modifier = {
 				name = "shaz_fortifying_border"
-				duration = 7300
+				duration = 9125
 			}
 			siffiraeri_area = {
 				limit = {
@@ -2007,6 +2060,10 @@ marble_5_tng = {
 				estate = estate_mages
 				loyalty = 10
 			}
+			change_mana = {
+				amount = 50
+			}
+			make_all_spell_half_off = { next_cast = yes }
 		}
 	}
 	
@@ -2053,6 +2110,13 @@ marble_5_tng = {
 				religion = ROOT
 				discount = yes
 			}
+			set_country_flag = shaz_lazzaward_usage
+			hidden_effect = {
+				country_event = {
+					id = shaz_events.40
+				}
+			}
+			custom_tooltip = shaz_lazzaward_magi_clans_tt
 		}
 	}
 	
@@ -2075,7 +2139,10 @@ marble_5_tng = {
 				influence = 50
 			}
 			614 = {
-				has_building = university
+				OR = {
+					has_building = university
+					development = 35
+				}
 			}
 		}
 		
