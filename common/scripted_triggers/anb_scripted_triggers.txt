@@ -40,6 +40,8 @@ has_mages_special_organization_privilege = { #For tag-unique orgs
 		has_estate_privilege = estate_mages_organization_acolytes
 		has_estate_privilege = estate_mages_organization_hydromancers_guild
 		has_estate_privilege = estate_mages_organization_decimated_shamans
+		has_estate_privilege = estate_mages_kaino_dao_nako_magecraft
+		has_estate_privilege = estate_mages_kaino_shadow_lich_chosen
 	}
 }
 
@@ -2313,11 +2315,13 @@ province_with_arable_goods = {
 		trade_goods = grain
 		trade_goods = wine
 		trade_goods = spices
+
 		trade_goods = tea
 		trade_goods = coffee
 		trade_goods = cocoa
 		trade_goods = cotton
 		trade_goods = sugar
+		
 		trade_goods = tobacco
 		trade_goods = cloves
 		trade_goods = incense
@@ -2480,6 +2484,7 @@ damestear_can_spawn = {
 			province_group = hold_province
 			has_terrain = cavern
 			has_terrain = dwarven_road
+			has_province_modifier = haless_khantaari_treasure
 		}
 	}
 }
@@ -2531,6 +2536,7 @@ has_multiple_manufactory_trigger = {
 			has_building = impressment_offices
 			has_building = state_house
 			has_building = mage_tower
+			has_building = automatory
 		}
 	}
 }
@@ -2726,12 +2732,6 @@ is_monstrous_horde = {
 	custom_trigger_tooltip = {
 		tooltip = is_monstrous_horde
 		has_government_attribute = is_monstrous_horde
-		NOT = {
-			AND = {
-				has_government_attribute = is_harpy_matriarchy
-				NOT = { government = tribal }
-			}
-		}
 	}
 }
 is_a_hold = {
@@ -3527,7 +3527,7 @@ crown_land_faction_balancer_trigger = {
 		has_government_attribute = is_pirate_republic_reform
 		AND = {
 			has_government_attribute = disables_regular_estates
-			NOT = { has_government_attribute = is_hobgoblin_stratocracy }
+			NOT = { has_reform = hobgoblin_stratocracy_reform }
 		}
 	}
 }
@@ -5021,7 +5021,10 @@ nimsnoms_theatre_is_active = {
 	owner = {
 		OR = {
 			culture_group = lencori
-			culture_group = halfling
+			AND = {
+                culture_group = halfling # for speed
+                is_cannorian_halfling_primary_culture = yes
+            }
 			culture_group = gnomish
 		}
 		high_tolerance_gnomish_race_trigger = yes
@@ -5083,6 +5086,7 @@ has_any_manufactory_construction = { #Province Scope
 		has_construction = impressment_offices
 		has_construction = state_house
 		has_construction = mage_tower
+		has_construction = automatory
 	}
 }
 
@@ -6073,38 +6077,6 @@ has_any_state_edict = {
 	}
 }
 
-every_estates_loyalty_influence = { #Tooltip only works on 5 year intervals currently
-	custom_trigger_tooltip = {
-		tooltip = every_estate_$which$_$amount$_TT
-		if = { limit = { has_estate = estate_nobles } estate_$which$ = { estate = estate_nobles $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_church } estate_$which$ = { estate = estate_church $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_burghers } estate_$which$ = { estate = estate_burghers $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_adventurers } estate_$which$ = { estate = estate_adventurers $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_mages } estate_$which$ = { estate = estate_mages $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_artificers } estate_$which$ = { estate = estate_artificers $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_planetouched } estate_$which$ = { estate = estate_planetouched $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_eunuchs_anb } estate_$which$ = { estate = estate_eunuchs_anb $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_cossacks } estate_$which$ = { estate = estate_cossacks $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_nomadic_tribes } estate_$which$ = { estate = estate_nomadic_tribes $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_adeen } estate_$which$ = { estate = estate_adeen $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_uppercastes } estate_$which$ = { estate = estate_uppercastes $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_middlecastes } estate_$which$ = { estate = estate_middlecastes $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_lowercastes } estate_$which$ = { estate = estate_lowercastes $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_raj_ministries } estate_$which$ = { estate = estate_raj_ministries $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_monstrous_tribes } estate_$which$ = { estate = estate_monstrous_tribes $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_vampires } estate_$which$ = { estate = estate_vampires $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_castonath_patricians } estate_$which$ = { estate = estate_castonath_patricians $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_wolf_command } estate_$which$ = { estate = estate_wolf_command $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_boar_command } estate_$which$ = { estate = estate_boar_command $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_lion_command } estate_$which$ = { estate = estate_lion_command $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_dragon_command } estate_$which$ = { estate = estate_dragon_command $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_elephant_command } estate_$which$ = { estate = estate_elephant_command $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_tiger_command } estate_$which$ = { estate = estate_tiger_command $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_gerunanin } estate_$which$ = { estate = estate_gerunanin $which$ = $amount$ } }
-		if = { limit = { has_estate = estate_ahati } estate_$which$ = { estate = estate_ahati $which$ = $amount$ } }
-	}
-}
-
 banbe_anen_quest_for_reehanviza_mastery_trigger = {
 	OR = {
 		check_variable = {
@@ -6126,5 +6098,12 @@ land_units_in_province = {
 		infantry_in_province = $effect$
 		cavalry_in_province = $effect$
 		artillery_in_province = $effect$
+	}
+}
+
+can_see_theocratic_heir_stats_trigger = {
+	OR = {
+		has_government_attribute = can_see_theocratic_heir_stats
+		has_country_modifier = homunculus_attendant
 	}
 }

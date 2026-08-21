@@ -99,6 +99,12 @@ country_event = {
 	
 	is_triggered_only = yes
 
+	immediate = {
+		hidden_effect = {
+			gene_pillars_get_random_insyaa_invention_flag = yes
+		}
+	}
+
 	#Give invention
 	option = {
 		name = gene_pillars.0.a
@@ -883,7 +889,7 @@ country_event = {
 		gene_pillars_add_loot_effect = { amount = 15 }
 	}
 	option = {
-		name = gene_pillars.104.d
+		name = gene_pillars.104.e
 		trigger = {
 			OR = {
 				gene_pillars_has_archetype_in_party = { archetype = ranger }
@@ -8117,10 +8123,10 @@ country_event = {
 		name = gene_pillars.536.d
 		trigger = {
 			OR = {
-				culture_group = halfling
-				culture_group = goblin
-				culture_group = gnomish
-				culture_group = kobold
+				culture_is_halfling = yes
+				culture_is_goblin = yes
+				culture_is_gnomish = yes
+				culture_is_kobold = yes
 			}
 		}
 		highlight = yes
@@ -11528,9 +11534,9 @@ country_event = {
 		trigger = {
 			ROOT = {
 				OR = {
-					culture_group = goblin
-					culture_group = kobold
-					culture_group = halfling
+					culture_is_goblin = yes
+					culture_is_kobold = yes
+					culture_is_halfling = yes
 				}
 			}
 		}
@@ -12109,7 +12115,7 @@ country_event = {
 			ROOT = {
 				OR = {
 					culture_group = ogre
-					culture_group = troll
+					culture_group = giantkind
 				}
 			}
 		}
@@ -12986,7 +12992,7 @@ country_event = {
 			gene_pillars_has_fighter_in_party = yes
 			gene_pillars_is_at_least_party_level = { level = 2 }
 			OR = {
-				culture_group = troll
+				culture_group = giantkind
 				culture_group = ogre
 			}
 		}
@@ -16383,13 +16389,13 @@ country_event = {
 	picture = GENE_PILLAR_SPIRIT_eventPicture
 	
 	is_triggered_only = yes
+	trigger = { # Make sure you are still exploring i.e. the party hasn't been wiped
+		aPUI_gene_pillar_root_is_exploring_event_target_province_trigger = yes
+	}
 	hidden = yes
 
 	option = {
 		name = gene_pillars.1000.a
-		trigger = {
-			aPUI_gene_pillar_root_is_exploring_event_target_province_trigger = yes
-		}
 		random_list = {
 			100 = { # Again, again, again, again...
 				country_event = { id = gene_pillars.1002 }
@@ -16545,13 +16551,6 @@ country_event = {
 				country_event = { id = gene_pillars.1059 }
 			}
 		}
-	}
-	option = {
-		name = gene_pillars.1000.b
-		trigger = {
-			aPUI_gene_pillar_root_is_exploring_event_target_province_trigger = no
-		}
-		gene_pillar_fail_expedition = yes
 	}
 }
 
@@ -16938,8 +16937,8 @@ country_event = {
 				exactly_magic_project_level = { project = orb_of_omniscience level = 1 }
 			}
 			gene_pillars_generic_loot_or_trap_repeat = {
-				success_factor = 825
-				fail_factor = 175
+				success_factor = 820
+				fail_factor = 180
 				party_loot = 20
 				party_xp = 20
 			}
@@ -16960,8 +16959,8 @@ country_event = {
 				exactly_magic_project_level = { project = orb_of_omniscience level = 3 }
 			}
 			gene_pillars_generic_loot_or_trap_repeat = {
-				success_factor = 875
-				fail_factor = 125
+				success_factor = 870
+				fail_factor = 130
 				party_loot = 20
 				party_xp = 20
 			}
@@ -17013,8 +17012,8 @@ country_event = {
 				exactly_magic_project_level = { project = orb_of_omniscience level = 3 }
 			}
 			gene_pillars_generic_loot_or_trap_repeat = {
-				success_factor = 975
-				fail_factor = 25
+				success_factor = 970
+				fail_factor = 30
 				party_loot = 20
 				party_xp = 20
 			}
@@ -17043,8 +17042,8 @@ country_event = {
 				exactly_magic_project_level = { project = orb_of_omniscience level = 1 }
 			}
 			gene_pillars_generic_loot_or_trap_repeat = {
-				success_factor = 825
-				fail_factor = 175
+				success_factor = 820
+				fail_factor = 180
 				party_loot = 5
 				party_xp = 60
 			}
@@ -17065,8 +17064,8 @@ country_event = {
 				exactly_magic_project_level = { project = orb_of_omniscience level = 3 }
 			}
 			gene_pillars_generic_loot_or_trap_repeat = {
-				success_factor = 875
-				fail_factor = 125
+				success_factor = 870
+				fail_factor = 130
 				party_loot = 5
 				party_xp = 60
 			}
@@ -17096,8 +17095,8 @@ country_event = {
 				exactly_magic_project_level = { project = orb_of_omniscience level = 1 }
 			}
 			gene_pillars_generic_loot_or_trap_repeat = {
-				success_factor = 925
-				fail_factor = 75
+				success_factor = 920
+				fail_factor = 80
 				party_loot = 5
 				party_xp = 60
 			}
@@ -17118,8 +17117,8 @@ country_event = {
 				exactly_magic_project_level = { project = orb_of_omniscience level = 3 }
 			}
 			gene_pillars_generic_loot_or_trap_repeat = {
-				success_factor = 975
-				fail_factor = 25
+				success_factor = 970
+				fail_factor = 30
 				party_loot = 5
 				party_xp = 60
 			}
@@ -18816,7 +18815,7 @@ country_event = {
 	}
 
 	option = {
-		name = gene_pillars.1053.333_colony_romutha
+		name = gene_pillars.1053.c
 		trigger = {
 			gene_pillars_has_archetype_in_party = { archetype = artificer }
 		}

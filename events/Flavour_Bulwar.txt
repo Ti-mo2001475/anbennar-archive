@@ -769,6 +769,21 @@ country_event = {
 	
 	immediate = {
 		hidden_effect = {
+			if = { 
+				limit = {
+					2909 = {
+						owned_by = ROOT
+						has_great_project = {
+							type = ebbusubtu
+							tier = 2
+						}
+					}	
+				}		
+				country_event = {
+					id = bulwar_flavour.61
+					days = 547 
+				}
+			}
 			random_owned_province = {
 				limit = {
 					NOT = { religion = the_jadd }
@@ -1310,7 +1325,7 @@ country_event = {
         name = bulwar_flavour.20.c
         ai_chance = { factor = 20 }
 		hidden_effect = { 601 = { change_variable = { cons_prog = -0.125 } } }
-		tooltip = { 601 = { add_construction_progress = 0.-25 } }
+		tooltip = { 601 = { add_construction_progress = -0.25 } }
 		#601 = { add_construction_progress = -0.25 }
     }
     option = { 
@@ -3249,6 +3264,47 @@ country_event = {
 		set_country_flag = whitestone_cult_unlocked
 	}
 }
+
+#The People of [ROOT.GetName] See the Light!
+country_event = {
+	id = bulwar_flavour.61
+	title = bulwar_flavour.10.t
+	desc = bulwar_flavour.10.d
+	picture = STREET_SPEECH_eventPicture
+	goto = target_province
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		religion = the_jadd
+		NOT = { tag = F78 }
+		any_owned_province = {
+			NOT = { religion = the_jadd }
+			NOT = { has_any_oppressed_pop_trigger = yes }
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					NOT = { religion = the_jadd }
+					NOT = { has_any_oppressed_pop_trigger = yes }
+				}
+				save_event_target_as = target_province
+			}
+		}
+	}
+
+	option = { #Welcome to the arms of truth!
+		name = bulwar_flavour.10.a
+		ai_chance = {
+			factor = 1
+		}
+		event_target:target_province = { change_religion = the_jadd }
+	}
+}
+
 #OSC Refugees
 country_event = {
 	id = bulwar_flavour.62
@@ -4974,22 +5030,22 @@ country_event = {
 		add_treasury = -50
 		random_owned_province = {
 			limit = {	
-			trade_goods = wool
-			region = harpy_hills_region
-			NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
-			OR = {
-				culture = gelkar
+				trade_goods = wool
+				region = harpy_hills_region
+				NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
 				OR = {
-					AND = {
-						culture_group = harpy
-						has_human_minority_trigger = yes
-					}
-					AND = {
-						culture_group = goblin
-						has_human_minority_trigger = yes
+					culture = gelkar
+					OR = {
+						AND = {
+							culture_group = harpy
+							has_human_minority_trigger = yes
+						}
+						AND = {
+							culture_group = goblin
+							has_human_minority_trigger = yes
+						}
 					}
 				}
-			}
 			}
 			add_province_modifier = {
 				name = bulwar_gelkar_goat_shearing
@@ -5020,22 +5076,22 @@ country_event = {
 				40 = {
 					random_owned_province = {
 						limit = {	
-						trade_goods = wool
-						region = harpy_hills_region
-						NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
-						OR = {
-							culture = gelkar
+							trade_goods = wool
+							region = harpy_hills_region
+							NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
 							OR = {
-								AND = {
-									culture_group = harpy
-									has_human_minority_trigger = yes
-								}
-								AND = {
-									culture_group = goblin
-									has_human_minority_trigger = yes
+								culture = gelkar
+								OR = {
+									AND = {
+										culture_group = harpy
+										has_human_minority_trigger = yes
+									}
+									AND = {
+										culture_group = goblin
+										has_human_minority_trigger = yes
+									}
 								}
 							}
-						}
 						}
 						add_province_modifier = {
 							name = bulwar_gelkar_goat_shearing
@@ -5047,22 +5103,22 @@ country_event = {
 					add_prestige = 10
 					random_owned_province = {
 						limit = {	
-						trade_goods = wool
-						region = harpy_hills_region
-						NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
-						OR = {
-							culture = gelkar
+							trade_goods = wool
+							region = harpy_hills_region
+							NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
 							OR = {
-								AND = {
-									culture_group = harpy
-									has_human_minority_trigger = yes
-								}
-								AND = {
-									culture_group = goblin
-									has_human_minority_trigger = yes
+								culture = gelkar
+								OR = {
+									AND = {
+										culture_group = harpy
+										has_human_minority_trigger = yes
+									}
+									AND = {
+										culture_group = goblin
+										has_human_minority_trigger = yes
+									}
 								}
 							}
-						}
 						}
 						add_province_modifier = {
 							name = bulwar_gelkar_goat_shearing
@@ -5098,22 +5154,22 @@ country_event = {
 				80 = {
 					random_owned_province = {
 						limit = {	
-						trade_goods = wool
-						region = harpy_hills_region
-						NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
-						OR = {
-							culture = gelkar
+							trade_goods = wool
+							region = harpy_hills_region
+							NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
 							OR = {
-								AND = {
-									culture_group = harpy
-									has_human_minority_trigger = yes
-								}
-								AND = {
-									culture_group = goblin
-									has_human_minority_trigger = yes
+								culture = gelkar
+								OR = {
+									AND = {
+										culture_group = harpy
+										has_human_minority_trigger = yes
+									}
+									AND = {
+										culture_group = goblin
+										has_human_minority_trigger = yes
+									}
 								}
 							}
-						}
 						}
 						add_province_modifier = {
 							name = bulwar_gelkar_goat_shearing
@@ -5125,22 +5181,22 @@ country_event = {
 					add_prestige = 10
 					random_owned_province = {
 						limit = {	
-						trade_goods = wool
-						region = harpy_hills_region
-						NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
-						OR = {
-							culture = gelkar
+							trade_goods = wool
+							region = harpy_hills_region
+							NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
 							OR = {
-								AND = {
-									culture_group = harpy
-									has_human_minority_trigger = yes
-								}
-								AND = {
-									culture_group = goblin
-									has_human_minority_trigger = yes
+								culture = gelkar
+								OR = {
+									AND = {
+										culture_group = harpy
+										has_human_minority_trigger = yes
+									}
+									AND = {
+										culture_group = goblin
+										has_human_minority_trigger = yes
+									}
 								}
 							}
-						}
 						}
 						add_province_modifier = {
 							name = bulwar_gelkar_goat_shearing
@@ -5182,22 +5238,22 @@ country_event = {
 				95 = {
 					random_owned_province = {
 						limit = {	
-						trade_goods = wool
-						region = harpy_hills_region
-						NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
-						OR = {
-							culture = gelkar
+							trade_goods = wool
+							region = harpy_hills_region
+							NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
 							OR = {
-								AND = {
-									culture_group = harpy
-									has_human_minority_trigger = yes
-								}
-								AND = {
-									culture_group = goblin
-									has_human_minority_trigger = yes
+								culture = gelkar
+								OR = {
+									AND = {
+										culture_group = harpy
+										has_human_minority_trigger = yes
+									}
+									AND = {
+										culture_group = goblin
+										has_human_minority_trigger = yes
+									}
 								}
 							}
-						}
 						}
 						add_province_modifier = {
 							name = bulwar_gelkar_goat_shearing
@@ -5209,22 +5265,22 @@ country_event = {
 					add_prestige = 10
 					random_owned_province = {
 						limit = {	
-						trade_goods = wool
-						region = harpy_hills_region
-						NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
-						OR = {
-							culture = gelkar
+							trade_goods = wool
+							region = harpy_hills_region
+							NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
 							OR = {
-								AND = {
-									culture_group = harpy
-									has_human_minority_trigger = yes
-								}
-								AND = {
-									culture_group = goblin
-									has_human_minority_trigger = yes
+								culture = gelkar
+								OR = {
+									AND = {
+										culture_group = harpy
+										has_human_minority_trigger = yes
+									}
+									AND = {
+										culture_group = goblin
+										has_human_minority_trigger = yes
+									}
 								}
 							}
-						}
 						}
 						add_province_modifier = {
 							name = bulwar_gelkar_goat_shearing
@@ -6561,7 +6617,7 @@ country_event = { #True Heir of Jexis
 	id = bulwar_flavour.150
 	title = bulwar_flavour.150.t
 	desc = bulwar_flavour.150.d
-	picture = sultan_and_merchant
+	picture = SULTAN_AND_MERCHANT_eventPicture
 	
 	fire_only_once = yes
 	is_triggered_only = yes
@@ -6582,6 +6638,8 @@ country_event = { #True Heir of Jexis
 		emperor = {
 			country_event = {
 				id = bulwar_flavour.151
+				days = 12
+				random = 31
 			}
 		}
 	}
@@ -6610,6 +6668,8 @@ country_event = { #A Most Notable Emissary
 		F51 = {
 			country_event = {
 				id = bulwar_flavour.152
+				days = 12
+				random = 31
 			}
 			add_opinion = {
 				who = ROOT
@@ -6628,6 +6688,8 @@ country_event = { #A Most Notable Emissary
 		F51 = {
 			country_event = {
 				id = bulwar_flavour.153
+				days = 12
+				random = 31
 			}
 			add_opinion = {
 				who = ROOT

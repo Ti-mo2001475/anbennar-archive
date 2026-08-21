@@ -3581,6 +3581,110 @@ tlokopinaztica_order = {
 	localization = molten_eternity_order
 }
 
+kainos_grasp_holy_order = {
+    icon = GFX_holy_order_kainos_grasp
+    trigger = {
+        has_country_flag = kaino_grasp_holy_order_flag
+    }
+
+    color = { 61 179 26 }
+    cost = 100
+    cost_type = dip_power
+    
+    modifier = {
+        mages_mana_regen = 0.01
+    }
+    per_province_effect = {
+    }
+
+    per_province_abandon_effect = {
+    }
+
+    ai_priority = {
+        factor = 0
+    }
+    localization = kainos_grasp_localisation
+}
+
+
+
+
+#kinbond
+
+arrowsent_holy_order = {
+    icon = GFX_holy_orders_button
+    trigger = {
+        religion = kinbond
+    }
+    color = { 300 100 100 }
+    cost = 100
+    cost_type = adm_power
+    per_province_effect = {
+        add_base_tax = 1
+        hidden_effect = {
+            owner = {
+                change_variable = { arrowsentvariable = 1}
+                country_event = { id = kinbond.1 }
+            }
+        }
+        
+    }
+    per_province_abandon_effect = {
+        add_base_tax = -1
+        hidden_effect = {
+            owner = {
+                change_variable = { arrowsentvariable = -1}
+                country_event = { id = kinbond.1 }
+            }
+        }
+    }
+    modifier = {
+        local_friendly_movement_speed = 0.1
+
+    }
+    ai_priority = {
+        factor = 1
+    }
+    localization = holy_order
+}
+
+forestguard_holy_order = {
+    icon = GFX_holy_orders_button
+    trigger = {
+        religion = kinbond
+    }
+    color = { 100 200 100 }
+    cost = 100
+    cost_type = mil_power
+    per_province_effect = {
+        add_base_manpower = 1
+        hidden_effect = {
+
+            owner = {
+                change_variable = { forestguardvariable = 1 }
+                country_event = { id =  kinbond.1 }
+            }
+
+        }
+    }
+    per_province_abandon_effect = {
+        add_base_manpower = -1
+        hidden_effect = {
+            owner = {
+                change_variable = { forestguardvariable = -1}
+                country_event = { id = kinbond.1 }
+            }
+        }
+    }
+    modifier = {
+        local_build_cost = -0.1
+    }
+    ai_priority = {
+        factor = 0
+    }
+    localization = holy_order
+}
+
 #A holy order you can set a province to so it loses it's current holy order, a workaround of the fact that there's no remove_holy_order effect
 no_holy_order = {
     icon = GFX_holy_orders_button

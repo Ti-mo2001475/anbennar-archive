@@ -1842,6 +1842,94 @@ country_event = {
     }
 }
 
+province_event = {
+    id = sarhalevents.38
+    title = sarhalevents.38.t
+    desc = sarhalevents.38.d
+    picture = NOT_DISCIPLINED_SOLDIERS_eventPicture
+
+    is_triggered_only = yes
+
+    option = {
+        name = sarhalevents.38.a
+        owner = {
+            add_treasury = -300
+            unlock_merc_company = { merc_company = merc_far_suns }
+            hidden_effect = {
+                country_event = {
+                    id = sarhalevents.39
+                    days = 3650
+                }
+            }
+        }
+        ai_chance = {
+            factor = 80
+            modifier = {
+                factor = 0
+                NOT = { owner = { treasury = 200 } }
+            }
+        }
+    }
+    option = {
+        name = sarhalevents.38.b
+        add_devastation = 5
+        ai_chance = { factor = 20 }
+    }
+}
+country_event = {
+    id = sarhalevents.39
+    title = sarhalevents.39.t
+    desc = sarhalevents.39.d
+    picture = 4_Rajput_Estate_eventPicture
+
+    is_triggered_only = yes
+    immediate = {
+        hidden_effect = {
+            random_owned_province = { save_event_target_as = taychendi_holiday_resort }
+            every_owned_province = {
+                limit = {
+                    NOT = { development = event_target:taychendi_holiday_resort }
+                }
+                save_event_target_as = taychendi_holiday_resort
+            }
+        }
+    }
+
+    option = {
+        name = sarhalevents.39.a
+        lock_merc_company = { merc_company = merc_far_suns }
+        FROM = { gods_of_the_taychend_reformed_rebels = 2 }
+        add_stability = 1
+        add_legitimacy_equivalent = { amount = 15 republican_tradition = 7.5 }
+        ai_chance = { factor = 20 }
+    }
+    option = {
+        goto = taychendi_holiday_resort
+        custom_tooltip = cheaper_elite_far_suns_tt
+        hidden_effect = {
+            lock_merc_company = { merc_company = merc_far_suns }
+            unlock_merc_company = { merc_company = merc_far_suns_elite }
+            random_hired_mercenary_company = {
+                limit = { template = merc_far_suns }
+                disband_mercenary_company = THIS
+            }            
+        }
+        event_target:taychendi_holiday_resort = {
+            change_religion = gods_of_the_taychend_reformed #taychend could be still unreformed, but unreformed hero cults has weird mechanics
+            change_culture = larankarha                     #that I'd rather not have out of taychend. could be ON, but in that case the mercs could be exiles.
+            add_province_modifier = {
+                name = taychendi_holiday_resort
+                duration = -1
+            }
+        }
+        add_country_modifier = {
+            name = sarhal_estates_hate_taychendi
+            duration = 5475
+        }
+        ai_chance = { factor = 80 }
+    }
+}
+
 ########
 #Lizard Monuments Events
 ########
@@ -2106,6 +2194,9 @@ country_event = {
         clr_country_flag = shifter_no_open_descion_while_event_open
     }
 }
+
+
+
 
 
 #1000+ events Sarhal broadcasts 

@@ -2639,9 +2639,14 @@ gained_development_from_building = {
 	has_province_flag = built_dev_$building$
 }
 
-#1.35
+#1.35 [Eco ideas finisher]
 gained_dev_from_eco_building = {
 	has_province_flag = built_eco_dev_$building$
+}
+
+# Limited sources of this ability stack with eco finisher but not with each other
+gained_dev_from_special_building = {
+	has_province_flag = built_special_dev_$building$
 }
 
 gained_development_from_any_building = {
@@ -2938,6 +2943,7 @@ is_not_free_merc_company = {
 		NOT = { mercenary_company = merc_ostavranan }
 		NOT = { mercenary_company = merc_elemental_animals }
 		NOT = { mercenary_company = merc_spiritfire_elementals }
+		NOT = { mercenary_company = merc_far_suns_elite }
 	}
 }
 
@@ -2945,7 +2951,7 @@ has_free_mercs_trait = {
 	OR = {
 		# has_country_modifier = dan_sca_merc_contract
 		has_idea = seasoned_veterans
-		mission_completed = reign_in_the_knight_errants 
+		mission_completed = reign_in_the_knights_errant 
 		has_government_attribute = mercs_do_not_cost_army_professionalism
 		# has_country_flag = fra_free_mercs_bargain_sale_flag
 	}
@@ -2955,7 +2961,7 @@ has_not_free_mercs_trait = {
 	NOT = { has_country_modifier = dan_sca_merc_contract }
 	NOT = { has_idea = seasoned_veterans } #1.35
 	NOT = { has_government_attribute = mercs_do_not_cost_army_professionalism }
-	NOT = { mission_completed = reign_in_the_knight_errants }
+	NOT = { mission_completed = reign_in_the_knights_errant }
 	NOT = { has_country_flag = fra_free_mercs_bargain_sale_flag } #1.35
 }
 
@@ -3874,6 +3880,13 @@ every_estate_loyalty = {
 		limit = { has_estate = estate_artificers }
 		estate_loyalty = {
 			estate = estate_artificers
+			loyalty = $loyalty$
+		}
+	}
+	if = {
+		limit = { has_estate = estate_planetouched }
+		estate_loyalty = {
+			estate = estate_planetouched
 			loyalty = $loyalty$
 		}
 	}
@@ -5329,16 +5342,8 @@ neighbor_is_ahead_in_institution = {
 }
 
 eligible_for_gov_tribal_reform_monster_non_horde = {
-	OR = {
-		culture_group = orcish
-		culture_group = goblin
-		culture_group = harpy
-		culture_group = ogre
-		culture_group = giantkind
-		culture_group = kobold
-		culture_group = gnollish
-		##culture_group = centaur
-	}
+	monstrous_culture = yes
+	NOT = { culture_is_centaur = yes }
 	is_tribal = yes
 	NOT = { has_reform = ogre_horde }
 	NOT = { has_reform = emerald_horde }
@@ -5349,10 +5354,8 @@ eligible_for_gov_tribal_reform_monster_non_horde = {
 
 eligble_for_harpy_harem_events = {
 	OR = {
-		has_reform = harpy_matriarchy_reform
-		has_reform = harpy_matriarchy_ayarallen_early_gov_mechanic_reform
+		has_government_attribute = is_harpy_matriarchy
 		has_reform = siadan_harpy_empire
-		has_reform = harpy_queendom_reform
 		has_reform = naleni_thalassocracy_reform
 	}
 }

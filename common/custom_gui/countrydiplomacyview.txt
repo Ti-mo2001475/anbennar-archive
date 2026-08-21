@@ -708,7 +708,7 @@ custom_button = { #raja_make_senapti
 					tooltip = make_senapti_trigger_tooltip
 					OR = {
 						AND = {
-							FROM = { culture_group = harimari }
+							FROM = { culture_is_harimari = yes }
 							fast_ruler_is_harimari = yes # ROOT
 						}
 						AND = {
@@ -1277,6 +1277,119 @@ custom_button = { #vampire_blood_invitation_action #Friendly version
 	}
 }
 
+# Mages
+custom_window = {
+	name = custom_diplomacy_mages_container
+	potential = {
+		FROM = { custdip_estates_mages_potential = yes }
+	}
+}
+custom_button = { # Bardic Magic - Bardic Exchange
+	name = bardic_exchange_action
+	tooltip = bardic_exchange_action_tt
+	potential = {
+		FROM = {
+			has_custom_spell_list_of_group = { group = bardic }
+		}
+	}
+	trigger = {
+		FROM = {
+			has_country_modifier = enchantment_0_bardic_inspiration_spell_mod
+		}
+		# Scope to ROOT so the tooltip is clearer who it's referring to
+		# Have this trigger on its own so you can see immediately if they have access
+		# to bardic magic
+		ROOT = {
+			has_custom_spell_list_of_group = { group = bardic }
+		}
+		ROOT = {
+			has_90_opinion_improved_relation = {
+				target = FROM
+			}
+			trust = {
+				who = FROM
+				value = 60
+			}
+			owes_favors = { #placeholder I think this is the right way
+				who = FROM
+				value = 20
+			}
+		}
+	}
+	effect = {
+		FROM = {
+			# Bardic magic unlock
+			if = {
+				limit = {
+					ROOT = {
+						is_vyzemby_primary_culture = yes
+					}
+					NOT = { has_country_flag = bardic_magic_spell_2_unlocked }
+				}
+				# Unlock Aria of Affection
+				custom_tooltip = bardic_exchange_action_spend_20_favours_tt
+				hidden_effect = {
+					add_favors = {
+						who = ROOT
+						amount = -20
+					}
+				}
+				set_country_flag = bardic_magic_spell_2_unlocked
+				custom_tooltip = bardic_exchange_action_halfling_tt
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						culture_group = harafic_ruinborn_elf
+					}
+					NOT = { has_country_flag = bardic_magic_spell_3_unlocked }
+				}
+				# Unlock Hymn of History
+				custom_tooltip = bardic_exchange_action_spend_20_favours_tt
+				hidden_effect = {
+					add_favors = {
+						who = ROOT
+						amount = -20
+					}
+				}
+				set_country_flag = bardic_magic_spell_3_unlocked
+				custom_tooltip = bardic_exchange_action_harafic_tt
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						religion = skaldhyrric_faith
+					}
+					NOT = { has_country_flag = bardic_magic_spell_4_unlocked }
+				}
+				# Unlock Elegy of Exhaustion
+				custom_tooltip = bardic_exchange_action_spend_20_favours_tt
+				hidden_effect = {
+					add_favors = {
+						who = ROOT
+						amount = -20
+					}
+				}
+				set_country_flag = bardic_magic_spell_4_unlocked
+				custom_tooltip = bardic_exchange_action_skaldyrric_tt
+			}
+			# If you've already unlocked their spell, get a neat modifier
+			else = {
+				custom_tooltip = bardic_exchange_action_spend_10_favours_tt
+				hidden_effect = {
+					add_favors = {
+						who = ROOT
+						amount = -10
+					}
+				}
+				add_country_modifier = {
+					name = multicultural_melody_mod
+					duration = 7300 # 20 years
+				}
+			}
+		}
+	}
+}
 
 
 #####
@@ -3124,12 +3237,22 @@ custom_button = { # U39_assassination_action
 					}
 				}
 			}
+			if = {
+				limit = { has_country_flag = U39_assassination_ongoing }
+				custom_trigger_tooltip = {
+					tooltip = U39_ass_ongoing_tt
+					NOT = { has_country_flag = U39_assassination_ongoing }
+				}
+			}
 		}
 	}
 	effect = {
 		hidden_effect = {
 			set_country_flag = orenvalyam_assassination_target_flag
 			FROM = {
+				clr_country_flag = U39_assassination_success_flag
+				clr_country_flag = U39_assassination_fail_flag
+				set_country_flag = U39_assassination_ongoing
 				tooltip = { country_event = { id = orenvalyam_events.400 days = 1 } }
 				hidden_effect = { capital_scope = { add_province_triggered_modifier = orenvalyam_randomness_ptm } }
 			}
@@ -3334,7 +3457,7 @@ custom_button = { #Establish Hezoggdoum
 		FROM = {
 			add_country_modifier = {
 				name = A80_bureaucratic_integration
-				duration = 3650
+				duration = 1825
 			}
 			if = {
 				limit = { has_country_flag = daccasded_not_portnamm }

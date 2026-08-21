@@ -159,7 +159,7 @@ province_event = {
 	id = diggy.13
 	title = diggy.13.t
 	desc = diggy.13.d
-	picture = FEMALE_GENERAL_eventPicture
+	picture = wihgfx_FEMALE_GENERAL_eventPicture
 	goto = root
 
 	is_triggered_only = yes
@@ -6132,7 +6132,7 @@ country_event = {
 
 	immediate = { 
 		hidden_effect = { 
-			random_owned_province = { limit = { OR = { culture_group = orcish has_orcish_minority_trigger = yes } } save_event_target_as = event_province }
+			random_owned_province = { limit = { OR = { culture_is_orcish = yes has_orcish_minority_trigger = yes } } save_event_target_as = event_province }
 			random_known_country = { limit = { capital_scope = { superregion = escann_superregion } NOT = { culture_group = orcish culture_group = goblin } } save_event_target_as = event_country } 
 		} 
 	}
@@ -6145,7 +6145,7 @@ country_event = {
 		large_decrease_of_orcish_tolerance_effect = yes
 		event_target:event_province = {
 			if = {
-				limit = { culture_group = orcish }
+				limit = { culture_is_orcish = yes }
 				change_culture = ROOT
 				change_religion = ROOT 
 			}
@@ -6153,7 +6153,7 @@ country_event = {
 		}
 		event_target:event_country = {
 			random_owned_province = {
-				limit = { superregion = escann_superregion NOT = { culture_group = orcish } }
+				limit = { superregion = escann_superregion NOT = { culture_is_orcish = yes } }
 				add_orcish_minority_size_effect = yes
 			}
 		}
@@ -7258,7 +7258,7 @@ country_event = {
 	id = diggy.518
 	title = diggy.518.t
 	desc = diggy.518.d
-	picture = CONQUEST__eventPicture
+	picture = CONQUEST_eventPicture
 	
 	mean_time_to_happen = {
 		years = 10
@@ -7705,7 +7705,7 @@ country_event = {
 	id = diggy.525
 	title = diggy.525.t
 	desc = diggy.525.d
-	picture = SIERRA_DE_LA_PLATA
+	picture = SIERRA_DE_LA_PLATA_eventPicture
 	
 	mean_time_to_happen = {
 		years = 10
@@ -9816,8 +9816,8 @@ country_event = {
 		name = diggy.576.b
 		trigger = {
 			OR = {
-				culture_group = goblin
-				culture_group = kobold
+				culture_is_goblin = yes
+				culture_is_kobold = yes
 			}
 		}
 		highlight = yes
@@ -9881,15 +9881,15 @@ country_event = {
 			add_base_manpower = 1
 			if = {
 				limit = { 
-					ROOT = { culture_group = dwarven high_tolerance_goblin_race_trigger = yes } #you disgust me
-					NOT = { culture_group = goblin }
+					ROOT = { culture_is_dwarven = yes high_tolerance_goblin_race_trigger = yes } #you disgust me
+					NOT = { culture_is_goblin = yes }
 				}
 				add_goblin_minority_size_effect = yes
 			}
 			else_if = {
 				limit = { 
-					ROOT = { culture_group = goblin high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
-					NOT = { culture_group = dwarven }
+					ROOT = { culture_is_goblin = yes high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
+					NOT = { culture_is_dwarven = yes }
 				}
 				add_dwarven_minority_size_effect = yes
 			}
@@ -9900,15 +9900,15 @@ country_event = {
 			add_base_manpower = 1
 			if = {
 				limit = { 
-					ROOT = { culture_group = dwarven high_tolerance_goblin_race_trigger = yes } #you disgust me
-					NOT = { culture_group = goblin }
+					ROOT = { culture_is_dwarven = yes high_tolerance_goblin_race_trigger = yes } #you disgust me
+					NOT = { culture_is_goblin = yes }
 				}
 				add_goblin_minority_size_effect = yes
 			}
 			else_if = {
 				limit = { 
-					ROOT = { culture_group = goblin high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
-					NOT = { culture_group = dwarven }
+					ROOT = { culture_is_goblin = yes high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
+					NOT = { culture_is_dwarven = yes }
 				}
 				add_dwarven_minority_size_effect = yes
 			}
@@ -9919,15 +9919,15 @@ country_event = {
 			add_base_manpower = 1
 			if = {
 				limit = { 
-					ROOT = { culture_group = dwarven high_tolerance_goblin_race_trigger = yes } #you disgust me
-					NOT = { culture_group = goblin }
+					ROOT = { culture_is_dwarven = yes high_tolerance_goblin_race_trigger = yes } #you disgust me
+					NOT = { culture_is_goblin = yes }
 				}
 				add_goblin_minority_size_effect = yes
 			}
 			else_if = {
 				limit = { 
-					ROOT = { culture_group = goblin high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
-					NOT = { culture_group = dwarven }
+					ROOT = { culture_is_goblin = yes high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
+					NOT = { culture_is_dwarven = yes }
 				}
 				add_dwarven_minority_size_effect = yes
 			}
@@ -10879,8 +10879,8 @@ country_event = {
 		highlight = yes
 		trigger = { 
 			OR = {
-			culture_group = goblin 
-			culture_group = kobold 
+				culture_is_goblin = yes
+				culture_is_kobold = yes
 			}
 		}
 		event_target:event_province = { 
@@ -11862,9 +11862,9 @@ country_event = {
 	trigger = {
 		capital_scope = { continent = serpentspine }
 		OR = {
-			culture_group = dwarven
-			culture_group = goblin
-			culture_group = orcish
+			culture_is_dwarven = yes
+			culture_is_goblin = yes
+			culture_is_orcish = yes
 		}
 		any_owned_province = {
 			is_city = yes
@@ -12007,17 +12007,17 @@ country_event = {
 						is_city = yes
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin	
+							culture_is_dwarven = yes
+							culture_is_goblin = yes	
 						}
 						OR = {
 							AND = {
 								has_dwarven_minority_trigger = yes
-								ROOT = { NOT = { has_country_modifier = racial_pop_dwarven_purge has_country_modifier = racial_pop_dwarven_expulsion culture_group = dwarven } }
+								ROOT = { NOT = { has_country_modifier = racial_pop_dwarven_purge has_country_modifier = racial_pop_dwarven_expulsion culture_is_dwarven = yes } }
 							}
 							AND = {
 								has_goblin_minority_trigger = yes
-								ROOT = { NOT = { has_country_modifier = racial_pop_goblin_purge has_country_modifier = racial_pop_goblin_expulsion culture_group = goblin } }
+								ROOT = { NOT = { has_country_modifier = racial_pop_goblin_purge has_country_modifier = racial_pop_goblin_expulsion culture_is_goblin = yes } }
 							}
 							AND = {
 								has_orcish_minority_trigger = yes
@@ -12031,17 +12031,17 @@ country_event = {
 						is_city = yes
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin	
+							culture_is_dwarven = yes
+							culture_is_goblin = yes	
 						}
 						OR = {
 							AND = {
 								has_dwarven_minority_trigger = yes
-								ROOT = { NOT = { has_country_modifier = racial_pop_dwarven_purge has_country_modifier = racial_pop_dwarven_expulsion culture_group = dwarven } }
+								ROOT = { NOT = { has_country_modifier = racial_pop_dwarven_purge has_country_modifier = racial_pop_dwarven_expulsion culture_is_dwarven = yes } }
 							}
 							AND = {
 								has_goblin_minority_trigger = yes
-								ROOT = { NOT = { has_country_modifier = racial_pop_goblin_purge has_country_modifier = racial_pop_goblin_expulsion culture_group = goblin } }
+								ROOT = { NOT = { has_country_modifier = racial_pop_goblin_purge has_country_modifier = racial_pop_goblin_expulsion culture_is_goblin = yes } }
 							}
 							AND = {
 								has_orcish_minority_trigger = yes
@@ -12060,9 +12060,9 @@ country_event = {
 					any_owned_province = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -12084,9 +12084,9 @@ country_event = {
 					limit = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -12114,9 +12114,9 @@ country_event = {
 					any_owned_province = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -12138,9 +12138,9 @@ country_event = {
 					limit = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -12168,9 +12168,9 @@ country_event = {
 					any_owned_province = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -12193,9 +12193,9 @@ country_event = {
 					limit = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -13400,20 +13400,32 @@ country_event = { #The People do not Yearn for the Mines
 	option = { #Work in the mines!
 		name = diggy.769.a
 		ai_chance = { factor = 100 }
-		every_owned_province = {
-			limit = {
-				continent = serpentspine
-				OR = {
-					trade_goods = iron
-					trade_goods = copper
-					trade_goods = gold
-					trade_goods = mithril
+		custom_tooltip = dwarovar_more_mines_province_tt
+		tooltip = {
+			5690 = {
+				add_local_autonomy = -5
+				add_province_modifier = {
+					name = dwarovar_more_mines_province
+					duration = 3650 #10 years
 				}
 			}
-			add_local_autonomy = -5
-			add_province_modifier = {
-				name = dwarovar_more_mines_province
-				duration = 3650 #10 years
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					continent = serpentspine
+					OR = {
+						trade_goods = iron
+						trade_goods = copper
+						trade_goods = gold
+						trade_goods = mithril
+					}
+				}
+				add_local_autonomy = -5
+				add_province_modifier = {
+					name = dwarovar_more_mines_province
+					duration = 3650 #10 years
+				}
 			}
 		}
 		add_country_modifier = {
@@ -13534,5 +13546,309 @@ province_event = {
 			}
 		}
 		ai_chance = { factor = 10 }
+	}
+}
+
+country_event = { #Imported Labor
+	id = diggy.900
+	title = diggy.900.t
+	desc = diggy.900.d
+	picture = CAVE_eventPicture
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = { has_country_flag = dig_imported }
+		
+		capital_scope = {
+			continent = serpentspine
+			OR = {
+				has_terrain = dwarven_hold
+				has_terrain = dwarven_hold_surface
+			}
+		}
+		any_owned_province = { has_construction = digging_deeper }
+		OR = {
+            low_tolerance_goblin_race_trigger = yes
+            low_tolerance_kobold_race_trigger = yes
+        }
+        culture_group = dwarven
+        any_owned_province = {
+			is_city = yes	
+			continent = serpentspine
+			OR = {
+				has_goblin_minority_trigger = yes
+				has_kobold_minority_trigger = yes
+			}
+		}
+        NOT = { 
+			has_country_modifier = racial_pop_kobold_purge 
+			has_country_modifier = racial_pop_kobold_expulsion 
+			has_country_modifier = racial_pop_goblin_purge 
+			has_country_modifier = racial_pop_goblin_expulsion 	
+		}
+	}
+	
+	immediate = {
+		set_country_flag = dig_imported
+        hidden_effect = {
+			random_owned_province = {
+				limit = {
+					has_construction = digging_deeper
+					continent = serpentspine
+				}
+				set_province_flag = diggy_minorities_imported
+				save_event_target_as = import_destination
+			}
+			random_owned_province = {
+				limit = {
+					is_city = yes
+					OR = {
+						has_goblin_minority_trigger = yes
+						has_kobold_minority_trigger = yes
+					}
+				}
+				save_event_target_as = import_origin
+			}
+		}
+	}
+
+	
+	option = {
+		name = diggy.900.a
+		ai_chance = { factor = 100 }
+		if = {
+			limit = { has_estate = estate_burghers }
+			add_estate_loyalty = { estate = estate_burghers loyalty = 10 }
+            add_estate_influence_modifier = {
+				estate = estate_burghers
+				desc = diggy_diggy_rejected_labor_plan
+				influence = 10
+				duration = 3650
+			}
+		}
+		if = {
+    		limit = {
+    			event_target:import_origin = { has_goblin_minority_trigger = yes }
+			} 
+			small_decrease_of_goblin_tolerance_effect = yes
+		}
+		else = { small_decrease_of_kobold_tolerance_effect = yes }
+	
+		hidden_effect = {
+				event_target:import_destination = { clr_province_flag = diggy_minorities_imported }
+		}
+	}
+
+	
+	option = {
+		name = diggy.900.b
+		ai_chance = { factor = 100 }
+        add_years_of_income = -0.083
+        hidden_effect = { event_target:import_destination = { change_variable = { cons_prog = 0.025 } } }
+        tooltip = { event_target:import_destination = { change_variable = { cons_prog = 0.0125 } } }	
+        if = {
+            limit = {
+                event_target:import_origin = { has_goblin_minority_trigger = yes }
+            }
+	        event_target:import_destination = { add_goblin_minority_size_effect = yes }
+        }
+        else = { event_target:import_destination = { add_kobold_minority_size_effect = yes } }
+        if = {
+			limit = { has_estate = estate_burghers }
+			add_estate_loyalty = { estate = estate_burghers loyalty = -10}
+    	}
+    	country_event = { id = diggy.901 days = 365 }
+    }
+
+	option = {
+		name = diggy.900.c
+		ai_chance = { factor = 10000 }
+		highlight = yes
+        trigger = { ruler_has_personality = tolerant_personality }
+        add_years_of_income = -0.25
+        hidden_effect = { capital_scope = { change_variable = { cons_prog = 0.050 } } }
+        tooltip = { capital_scope = { change_variable = { cons_prog = 0.025 } } }	
+        if = {
+            limit = {
+                event_target:import_origin = { has_goblin_minority_trigger = yes }
+            }
+	        event_target:import_destination = { add_goblin_minority_size_effect = yes }
+        }
+        else = { event_target:import_destination = { add_kobold_minority_size_effect = yes } }
+        if = { 
+			limit = { has_estate = estate_burghers }
+			add_estate_loyalty = { estate = estate_burghers loyalty = -20 }
+    	}
+    	country_event = { id = diggy.901 days = 365 }
+	}
+}
+
+country_event = { #Imported Labor Race War
+	id = diggy.901
+	title = diggy.901.t
+	desc = diggy.901.d
+	picture = ANGRY_MOB_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = diggy.901.a
+		ai_chance = { factor = 100 }
+        if = {
+                limit = { event_target:import_origin = { has_goblin_minority_trigger = yes } }
+                event_target:import_destination = {remove_goblin_minority_size_effect = yes }
+        }
+    	else_if = { 
+			limit = { event_target:import_origin = { has_kobold_minority_trigger = yes } }
+            event_target:import_destination = {remove_kobold_minority_size_effect = yes }
+		}
+		hidden_effect = { event_target:import_destination = { change_variable = { cons_prog = -0.1 } } }
+   		tooltip = { event_target:import_destination = { change_variable = { cons_prog = -0.050 } } }
+		clr_country_flag = dig_imported
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					has_construction = digging_deeper
+					continent = serpentspine
+					has_province_flag = diggy_minorities_imported
+				}
+				clr_province_flag = diggy_minorities_imported
+			}
+		}
+	}
+
+	option = {
+		name = diggy.901.b
+		ai_chance = { factor = 100 }
+    	custom_tooltip = diggy_diggy_veins_run_red_tooltip
+		hidden_effect = { 
+			random = {
+				chance = 30
+				country_event = { id = diggy.902 days = 730 }
+			}
+		}
+	}
+
+	option = {
+		name = diggy.901.c
+		ai_chance = { factor = 100 }
+		
+    	add_yearly_manpower = -0.5
+		if = {
+    		limit = {
+    			event_target:import_origin = {
+            		has_goblin_minority_trigger = yes
+				} 
+    		}	
+			ROOT = { small_increase_of_goblin_tolerance_effect = yes }
+		}
+		else_if = { 
+			limit = {
+    			event_target:import_origin = {
+            		has_kobold_minority_trigger = yes
+        		}
+    		}	
+			ROOT = { small_increase_of_kobold_tolerance_effect = yes } 
+		}
+		clr_country_flag = dig_imported
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					has_construction = digging_deeper
+					continent = serpentspine
+					has_province_flag = diggy_minorities_imported
+				}
+				clr_province_flag = diggy_minorities_imported
+			}
+		}
+	}
+
+	option = {
+		name = diggy.901.e
+		ai_chance = { factor = 10000 }
+		trigger = { ruler_has_personality = silver_tongue_personality }
+		highlight = yes
+
+		add_years_of_income = -0.083
+		hidden_effect = { event_target:import_destination = { change_variable = { cons_prog = 0.025 } } }
+        tooltip = { event_target:import_destination ={ change_variable = { cons_prog = 0.0125 } } }
+		if = {
+    		limit = {
+    			event_target:import_origin = {
+            		has_goblin_minority_trigger = yes
+        		}
+    		}	
+			ROOT = { large_increase_of_goblin_tolerance_effect = yes }
+		}
+		else_if = { 
+			limit = {
+    			event_target:import_origin = {
+            		has_kobold_minority_trigger = yes
+        		}
+    		}	
+			ROOT = { large_increase_of_kobold_tolerance_effect = yes } 
+		}
+		clr_country_flag = dig_imported
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					has_construction = digging_deeper
+					continent = serpentspine
+					has_province_flag = diggy_minorities_imported
+				}
+				clr_province_flag = diggy_minorities_imported
+			}
+		}
+	}
+}
+
+country_event = { #Diggy Diggy Veins Run Red
+	id = diggy.902
+	title = diggy.902.t
+	desc = diggy.902.d
+	picture = VILLAGE_BURNING_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = diggy.902.a
+		ai_chance = { factor = 100 }
+		hidden_effect = { capital_scope = { change_variable = { cons_prog = -0.20 } } }
+		tooltip = { capital_scope = { change_variable = { cons_prog = -0.10 } } }
+		if = {
+    		limit = {
+    			event_target:import_origin = {
+            		has_goblin_minority_trigger = yes
+				} 
+    		}	
+			event_target:import_destination = { remove_goblin_minority_size_effect = yes }
+		}
+		else_if = { 
+			limit = {
+    			event_target:import_origin = {
+            		has_kobold_minority_trigger = yes
+        		}
+    		}	
+			event_target:import_destination = { remove_kobold_minority_size_effect = yes } 
+		}
+
+		event_target:import_destination = {
+				spawn_rebels = {
+					type = leadered_peasant_rebels
+					size = 2
+				}
+		}
+	
+		clr_country_flag = diggy_veins_run_red
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					has_construction = digging_deeper
+					continent = serpentspine
+					has_province_flag = diggy_minorities_imported
+				}
+				clr_province_flag = diggy_minorities_imported
+			}
+		}
+		clr_country_flag = dig_imported
 	}
 }

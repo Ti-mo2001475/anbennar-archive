@@ -5,7 +5,10 @@
 can_use_magic = { #Can I cast spells and study? (interact with the magic UI)
 	custom_trigger_tooltip = {
 		tooltip = can_use_magic
-		has_not_banned_magic = yes #banning magic instantly blocks magic, even if you have a PM ruler
+		OR = {
+			has_not_banned_magic_artificery = yes #banning magic instantly blocks magic, even if you have a PM ruler
+			has_country_flag = can_use_magic_while_artificery #Command
+		}
 		NOT = { has_country_modifier = block_magic_temp_modifier } #modifier to block all casting of magic, without removing the mage estate
 		OR = {
 			AND = {
@@ -14,10 +17,6 @@ can_use_magic = { #Can I cast spells and study? (interact with the magic UI)
 			}
 			has_ruler_flag = ruler_can_cast_magic_without_mage_personality_flag #For MT always letting you cast spells, like Zokka
 			ruler_is_powerful_mage = yes
-		}
-		OR = {
-			is_not_in_artificery_mode = yes
-			has_country_flag = can_use_magic_while_artificery #Command
 		}
 	}
 }
@@ -2134,6 +2133,10 @@ has_mana_discount = { #this is important to help us bypass the fact that country
 		has_country_modifier = $school$_spell_$discount$
 		has_country_flag = $school$_spell_$discount$_next_cast
 		has_ruler_flag = $school$_spell_$discount$
+
+		has_country_modifier = level_$level$_spell_$discount$
+		has_country_flag = level_$level$_spell_$discount$_next_cast
+		has_ruler_flag = level_$level$_spell_$discount$
 	}
 }
 mana_proxy_half = {
@@ -2351,6 +2354,9 @@ has_cast_war_magic = {
 			has_country_modifier = I55_markhentakruan_1_mod
 			has_country_modifier = I55_markhentakruan_2_mod
 			has_country_modifier = I55_markhentakruan_3_mod
+
+			#Bardic
+			has_country_modifier = enchantment_0_bardic_inspiration_spell_mod
 		}
 	}
 }
@@ -3097,7 +3103,10 @@ enchantment_3_dominate_to_surrender_trigger = { # Dominate to Surrender
 	siege_magic_trigger = { offense = yes [[menu] menu = yes offense_trigger = "enchantment_3_dominate_to_surrender_local_trigger = yes" ] }
 }
 enchantment_3_dominate_to_surrender_local_trigger = {
-	NOT = { has_province_modifier = enchantment_3_dominate_to_surrender_local_mod }
+	custom_trigger_tooltip = {
+		tooltip = enchantment_3_dominate_to_surrender_local_trigger_tt
+		NOT = { has_province_modifier = enchantment_3_dominate_to_surrender_local_mod }
+	}
 }
 
 has_cast_enchanting_envoy = {
@@ -3586,7 +3595,7 @@ necromancy_1_contagion_trigger = { #Contagion
 	siege_magic_trigger = { [[menu] menu = yes defense_trigger = "necromancy_1_contagion_local_trigger = yes" ] }
 }
 necromancy_1_contagion_local_trigger = { # Contagion
-	NOT = { has_province_modifier = necromancy_1_contagion_local_mod }
+	province_has_not_contagion = yes	#might be that this trigger need this particular syntax, so I'm putting the scripted trigger inside, rather than replacing
 }
 necromancy_2_speak_with_dead_trigger = { # Speak With Dead
 	has_not_banned_necromancy = yes
@@ -3600,22 +3609,15 @@ necromancy_2_speak_with_dead_trigger = { # Speak With Dead
 	is_lesser_in_union = no
 	custom_trigger_tooltip = {
 		tooltip = necromancy_2_speak_with_dead_spell_trigger_tt
-		NOT = { has_ruler_modifier = necromancy_2_speak_with_dead_cooldown_mod }
+		NOT = {
+			has_ruler_modifier = necromancy_2_speak_with_dead_cooldown_mod
+			has_ruler_modifier = necromancy_2_speak_with_dead_cooldown_mod_0
+		}
 	}
 	OR = {
-		NOT = { adm = 5 }
-		NOT = { dip = 5 }
-		NOT = { mil = 5 }
-		ruler_is_immortal = yes
-	}
-	hidden_trigger = {
-		NOT = {
-			AND = {
-				adm = 6
-				dip = 6
-				mil = 6
-			}
-		}
+		NOT = { adm = 6 }
+		NOT = { dip = 6 }
+		NOT = { mil = 6 }
 	}
 }
 necromancy_2_remove_pain_trigger = { # Remove Pain
@@ -3684,7 +3686,10 @@ has_not_cast_contagion = {
 province_has_contagion = {
 	custom_trigger_tooltip = {
 		tooltip = province_has_contagion
-		has_province_modifier = necromancy_1_contagion_local_mod
+		OR = {
+			has_province_modifier = necromancy_1_contagion_local_mod
+			has_province_modifier = kaino_necromancy_1_contagion_local_mod
+		}
 	}
 }
 province_has_not_contagion = {
@@ -3804,42 +3809,18 @@ transmutation_2_reshape_terrain_trigger = { # Reshape Terrain
 	}
 }
 transmutation_3_rite_of_conception_trigger = { # Rite of Conception
-	if = { # Rending tughayasa_reward
-		limit = {
-			OR = {
-				has_country_flag = tughayasa_reward_primary
-				has_country_flag = tughayasa_reward
-			}
-		}
-		level_requirement_lowered = { cause = tughayasa }
-		is_overall_transmutation_level_2_minimum = yes
-	}
-	else = {
-		is_overall_transmutation_level_3 = yes
-	}
+	is_overall_transmutation_level_3 = yes
+
 	[[player] has_mana_to_cast_spell = { school = transmutation level = 3 id = rite_of_conception } ]
 
-	if = {
-		limit = {
-			OR = {
-				has_country_flag = tughayasa_reward_primary
-				has_country_flag = tughayasa_reward
-			}
-		}
-		if = {
-			limit = { has_government_attribute = heir }
-			heir_is_not_powerful_mage = yes
-		}
-		else = { ruler_is_not_powerful_mage = yes }
-	}
-	else = {
-		government_has_heirs = yes
-		NOT = { government = theocracy }
-		heir_is_not_powerful_mage = yes
-	}
+	government_has_heirs = yes
+	heir_is_not_powerful_mage = yes
 
 	if = {
-		limit = { has_government_attribute = queen }
+		limit = {
+			has_government_attribute = queen
+			NOT = { government = theocracy }
+		}
 		has_consort = yes #Can be of the same gender, because of magic
 	}
 
@@ -4521,7 +4502,7 @@ at_least_magical_infrastructure_level_1 = {
 }
 has_magical_infrastructure_level_0 = {
 	custom_trigger_tooltip = {
-		tooltip = at_least_magical_infrastructure_level_1
+		tooltip = has_magical_infrastructure_level_0
 		NOT = {
 			has_country_modifier = magical_infrastructure_4
 			has_country_modifier = magical_infrastructure_3
@@ -4629,6 +4610,16 @@ can_upgrade_to_magical_infrastructure_4 = {
 					}
 				}
 				has_nila_tenvach = { level = 3 }
+				AND = {
+					owns = 4811
+					4811 = { # trigger to use the monument
+						has_great_project = {
+							type = jianxusi
+							tier = 3
+						}
+						can_use_monument_jianxusi_trigger = yes
+					}
+				}
 			}
 		}
 	}
@@ -4707,6 +4698,16 @@ can_upgrade_to_magical_infrastructure_3 = {
 					}
 				}
 				has_nila_tenvach = { level = 3 }
+				AND = {
+					owns = 4811
+					4811 = { # trigger to use the monument
+						has_great_project = {
+							type = jianxusi
+							tier = 3
+						}
+						can_use_monument_jianxusi_trigger = yes
+					}
+				}
 			}
 		}
 	}
@@ -4784,6 +4785,16 @@ can_upgrade_to_magical_infrastructure_2 = {
 					}
 				}
 				has_nila_tenvach = { level = 3 }
+				AND = {
+					owns = 4811
+					4811 = { # trigger to use the monument
+						has_great_project = {
+							type = jianxusi
+							tier = 3
+						}
+						can_use_monument_jianxusi_trigger = yes
+					}
+				}
 			}
 		}
 	}
@@ -4863,6 +4874,16 @@ can_upgrade_to_magical_infrastructure_1 = {
 					}
 				}
 				has_nila_tenvach = { level = 3 }
+				AND = {
+					owns = 4811
+					4811 = { # trigger to use the monument
+						has_great_project = {
+							type = jianxusi
+							tier = 3
+						}
+						can_use_monument_jianxusi_trigger = yes
+					}
+				}
 			}
 		}
 	}
@@ -4969,6 +4990,13 @@ has_cannor_clerical_spell_list_default = {
 }
 has_cannor_clerical_spell_list_non_default = {
 	has_custom_spell_list_of_group_non_default = { group = cannor_clerical }
+}
+
+has_bardic_spell_list_default = {
+	has_custom_spell_list_of_group_with_subgroup = { group = bardic subgroup = default }
+}
+has_bardic_spell_list_non_default = {
+	has_custom_spell_list_of_group_non_default = { group = bardic }
 }
 
 
@@ -5381,6 +5409,26 @@ evocation_3_xhazobkult_default_3_trigger = {
 	NOT = { has_ruler_modifier = fire_that_burn_the_body_and_soul }
 }
 
+#Kaino Federation
+custom_spell_fangaula_kaino_1_trigger = {
+	necromancy_0_fangaula_kaino_1_trigger = { [[player] player = $player$ ] }
+}
+
+necromancy_0_fangaula_kaino_1_trigger = {
+	[[player]
+		has_mana_to_cast_magical_tradition_spell = {
+			school = necromancy
+			level = 0
+			id = fangaula_kaino_1
+			has_spell_specific_discounts = yes
+		}
+	]
+	any_owned_province = {
+		holy_order = kainos_grasp_holy_order
+		development = 4
+	}
+}
+
 #Eighard
 custom_spell_eordand_eighard_5_trigger = {
 	abjuration_1_eordand_eighard_5_trigger = { [[player] player = $player$ ] }
@@ -5424,6 +5472,124 @@ abjuration_2_cannor_clerical_default_3_trigger = {
 	[[player] has_mana_to_cast_magical_tradition_spell = { school = abjuration level = 2 id = cannor_clerical_default_3 } ]
 	legitimacy_equivalent = 90
 	everyone_has_infamy_paragon = yes
+}
+
+#Gemradcurt
+custom_spell_eordand_gemradcurt_5_trigger = {
+	enchantment_1_eordand_gemradcurt_5_trigger = { [[player] player = $player$ ] }
+}
+
+enchantment_1_eordand_gemradcurt_5_trigger = {
+	[[player]
+		has_mana_to_cast_magical_tradition_spell = {
+			school = enchantment
+			level = 1
+			id = eordand_gemradcurt_5
+		}
+	]
+	NOT = { has_country_modifier = gemradcurt_cold_command_mod }
+}
+
+#Bardic spells
+custom_spell_bardic_default_1_trigger = {
+	enchantment_0_bardic_default_1_trigger = { [[player] player = $player$ ] }
+}
+custom_spell_bardic_default_2_trigger = {
+	enchantment_1_bardic_default_2_trigger = { [[player] player = $player$ ] }
+}
+custom_spell_bardic_default_3_trigger = {
+	enchantment_2_bardic_default_3_trigger = { [[player] player = $player$ ] }
+}
+custom_spell_bardic_default_4_trigger = {
+	enchantment_3_bardic_default_4_trigger = { [[player] player = $player$ ] }
+}
+
+enchantment_0_bardic_default_1_trigger = {
+	war_magic_trigger = yes
+	[[player] has_mana_to_cast_magical_tradition_spell = { school = enchantment level = 0 id = bardic_default_1 } ]
+	NOT = { has_country_modifier = enchantment_0_bardic_inspiration_spell_mod }
+}
+
+enchantment_1_bardic_default_2_trigger = {
+	# Since you learn these from interacting with other countries, we'll hide the
+	# triggers and effects until you've discovered it
+	# This unlock condition could be used for MTs
+	if = {
+		limit = {
+			enchantment_1_bardic_default_2_subtrigger = no
+		}
+		enchantment_1_bardic_default_2_subtrigger = yes
+	}
+	else = {
+		is_overall_enchantment_level_1_minimum = yes
+		[[player] has_mana_to_cast_magical_tradition_spell = { school = enchantment level = 1 id = bardic_default_2 } ]
+		NOT = { has_country_modifier = enchantment_1_aria_of_affection_spell_mod }
+	}
+}
+enchantment_1_bardic_default_2_subtrigger = {
+	custom_trigger_tooltip = {
+		tooltip = bardic_magic_spell_2_unlocked_tt
+		has_country_flag = bardic_magic_spell_2_unlocked
+	}
+}
+
+enchantment_2_bardic_default_3_trigger = {
+	# Since you learn these from interacting with other countries, we'll hide the
+	# triggers and effects until you've discovered it
+	# This unlock condition could be used for MTs
+	if = {
+		limit = {
+			enchantment_2_bardic_default_3_subtrigger = no
+		}
+		enchantment_2_bardic_default_3_subtrigger = yes
+	}
+	else = {
+		is_overall_enchantment_level_2_minimum = yes
+		[[player] has_mana_to_cast_magical_tradition_spell = { school = enchantment level = 2 id = bardic_default_3 } ]
+		bardic_hymn_of_history_inactive = yes
+	}
+}
+enchantment_2_bardic_default_3_subtrigger = {
+	custom_trigger_tooltip = {
+		tooltip = bardic_magic_spell_3_unlocked_tt
+		has_country_flag = bardic_magic_spell_3_unlocked
+	}
+}
+bardic_hymn_of_history_inactive = {
+	custom_trigger_tooltip = {
+		tooltip = bardic_hymn_of_history_active_tt
+		NOT = {
+			has_country_modifier = enchantment_2_bold_wormrider_mod
+			has_country_modifier = enchantment_2_content_goatherder_mod
+			has_country_modifier = enchantment_2_first_peacemaker_mod
+			has_country_modifier = enchantment_2_great_bearer_king_mod
+			has_country_modifier = enchantment_2_virtuous_shaman_mod
+			has_country_modifier = enchantment_2_mad_scholar_mod
+		}
+	}
+}
+
+enchantment_3_bardic_default_4_trigger = {
+	# Since you learn these from interacting with other countries, we'll hide the
+	# triggers and effects until you've discovered it
+	# This unlock condition could be used for MTs
+	if = {
+		limit = {
+			enchantment_3_bardic_default_4_subtrigger = no
+		}
+		enchantment_3_bardic_default_4_subtrigger = yes
+	}
+	else = {
+		is_overall_enchantment_level_3 = yes
+		[[player] has_mana_to_cast_magical_tradition_spell = { school = enchantment level = 3 id = bardic_default_4 } ]
+		NOT = { has_country_modifier = enchantment_3_elegy_of_exhaustion_spell_mod }
+	}
+}
+enchantment_3_bardic_default_4_subtrigger = {
+	custom_trigger_tooltip = {
+		tooltip = bardic_magic_spell_4_unlocked_tt
+		has_country_flag = bardic_magic_spell_4_unlocked
+	}
 }
 
 ### STOP.

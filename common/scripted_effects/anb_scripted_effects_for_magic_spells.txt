@@ -310,6 +310,27 @@ make_spell_school_free = {
 	]
 }
 
+make_spell_level_free = {
+	[[ruler]
+		custom_tooltip = level_$level$_spell_free
+		custom_tooltip = while_ruler_alive_tt
+		set_ruler_flag = level_$level$_spell_free
+	]
+	[[heir]
+		custom_tooltip = level_$level$_spell_free
+		custom_tooltip = while_heir_alive_tt
+		set_heir_flag = level_$level$_spell_free
+	]
+	[[next_cast]
+		custom_tooltip = level_$level$_spell_free
+		custom_tooltip = for_next_cast_only_tt
+		set_country_flag = level_$level$_spell_free_next_cast
+	]
+	[[duration]
+		add_country_modifier = { name = level_$level$_spell_free duration = $duration$ }
+	]
+}
+
 make_all_spell_free = {
 	make_spell_school_free = {
 		school = all
@@ -360,6 +381,28 @@ make_spell_school_half_off = {
 		add_country_modifier = { name = $school$_spell_half duration = $duration$ }
 	]
 }
+
+make_spell_level_half_off = {
+	[[ruler]
+		custom_tooltip = level_$level$_spell_half
+		custom_tooltip = while_ruler_alive_tt
+		set_ruler_flag = level_$level$_spell_half
+	]
+	[[heir]
+		custom_tooltip = level_$level$_spell_half
+		custom_tooltip = while_heir_alive_tt
+		set_heir_flag = level_$level$_spell_half
+	]
+	[[next_cast]
+		custom_tooltip = level_$level$_spell_half
+		custom_tooltip = for_next_cast_only_tt
+		set_country_flag = level_$level$_spell_half_next_cast
+	]
+	[[duration]
+		add_country_modifier = { name = level_$level$_spell_half duration = $duration$ }
+	]
+}
+
 make_all_spell_half_off = {
 	make_spell_school_half_off = {
 		school = all
@@ -410,6 +453,28 @@ make_spell_school_one_quarter_off = {
 		add_country_modifier = { name = $school$_spell_three_quarter duration = $duration$ }
 	]
 }
+
+make_spell_level_one_quarter_off = {
+	[[ruler]
+		custom_tooltip = level_$level$_spell_three_quarter
+		custom_tooltip = while_ruler_alive_tt
+		set_ruler_flag = level_$level$_spell_three_quarter
+	]
+	[[heir]
+		custom_tooltip = level_$level$_spell_three_quarter
+		custom_tooltip = while_heir_alive_tt
+		set_heir_flag = level_$level$_spell_three_quarter
+	]
+	[[next_cast]
+		custom_tooltip = level_$level$_spell_three_quarter
+		custom_tooltip = for_next_cast_only_tt
+		set_country_flag = level_$level$_spell_three_quarter_next_cast
+	]
+	[[duration]
+		add_country_modifier = { name = level_$level$_spell_three_quarter duration = $duration$ }
+	]
+}
+
 make_all_spell_one_quarter_off = {
 	make_spell_school_one_quarter_off = {
 		school = all
@@ -469,6 +534,7 @@ remove_discount_next_cast_flag = {
 
 		$school$_$level$_$id$_spell_$discount$_next_cast = { custom_tooltip = for_next_cast_only_tt clr_country_flag = $school$_$level$_$id$_spell_$discount$_next_cast }
 		$school$_spell_$discount$_next_cast = { custom_tooltip = for_next_cast_only_tt clr_country_flag = $school$_spell_$discount$_next_cast }
+		level_$level$_spell_$discount$_next_cast = { custom_tooltip = for_next_cast_only_tt clr_country_flag = level_$level$_spell_$discount$_next_cast }
 		all_spell_$discount$_next_cast = { custom_tooltip = for_next_cast_only_tt clr_country_flag = all_spell_$discount$_next_cast }
 	}
 }
@@ -588,12 +654,16 @@ clear_active_war_magic = {
 	remove_country_modifier = yanacotle_volcanic_armoury_manipulated_fortune
 	remove_country_modifier = yanacotle_volcanic_armoury_shock_and_awe
 	remove_country_modifier = yanacotle_volcanic_armoury_flaming_munitions
+
+	# Bardic
+	remove_country_modifier = enchantment_0_bardic_inspiration_spell_mod
 }
 
 remove_harmful_siege_magic = { #Remove siege magic that's bad after you siege down a province
 	remove_province_modifier = enchantment_3_dominate_to_surrender_siege_mod
 	remove_province_modifier = transmutation_1_mass_enlarge_local_mod
 	remove_province_modifier = necromancy_1_contagion_local_mod
+	remove_province_modifier = kaino_necromancy_1_contagion_local_mod
 }
 
 ai_magic_siege_pulse = {
@@ -1192,32 +1262,73 @@ on_pre_divination_1_deposit_divination_effect = {
 divination_1_deposit_divination_effect = {  # Deposit Divination
 	on_pre_divination_1_deposit_divination_effect = yes
 	 
-	if = {
-		limit = { at_least_magic_project_level = { project = orb_of_omniscience level = 1 } }
-		if = {
-			limit = { receiving_mindarayan_buff = yes }
-			if = {
-				limit = { 4527 = { has_great_project = { type = oracle_mountain tier = 3 } } }
-				divination_1_deposit_divination_sub_effect = { days = 5110 }
+	if = { # effect of monument:jianxusi
+		limit = { 
+			owns = 4811
+			4811 = { # trigger to use the monument
+				has_great_project = {
+					type = jianxusi
+					tier = 3
+				}
+				can_use_monument_jianxusi_trigger = yes
 			}
-			else = { divination_1_deposit_divination_sub_effect = { days = 4380 } }
-			custom_tooltip = tughayasa_divination_booster_tt
 		}
-		else = { divination_1_deposit_divination_sub_effect = { days = 3650 } }
-		custom_tooltip = divination_1_deposit_divination_upgrade_yes
+		if = {
+			limit = { at_least_magic_project_level = { project = orb_of_omniscience level = 1 } }
+			if = {
+				limit = { receiving_mindarayan_buff = yes }
+				if = {
+					limit = { 4527 = { has_great_project = { type = oracle_mountain tier = 3 } } }
+					divination_1_deposit_divination_sub_effect = { days = 10220 }
+				}
+				else = { divination_1_deposit_divination_sub_effect = { days = 8760 } }
+				custom_tooltip = tughayasa_divination_booster_tt
+			}
+			else = { divination_1_deposit_divination_sub_effect = { days = 7300 } }
+			custom_tooltip = divination_1_deposit_divination_upgrade_yes
+		}
+		else = {
+			if = {
+				limit = { receiving_mindarayan_buff = yes }
+				if = {
+					limit = { 4527 = { has_great_project = { type = oracle_mountain tier = 3 } } }
+					divination_1_deposit_divination_sub_effect = { days = 5110 }
+				}
+				else = { divination_1_deposit_divination_sub_effect = { days = 4380 } }
+				custom_tooltip = tughayasa_divination_booster_tt
+			}
+			else = { divination_1_deposit_divination_sub_effect = { days = 3650 } }
+			custom_tooltip = divination_1_deposit_divination_upgrade_no
+		}
 	}
 	else = {
 		if = {
-			limit = { receiving_mindarayan_buff = yes }
+			limit = { at_least_magic_project_level = { project = orb_of_omniscience level = 1 } }
 			if = {
-				limit = { 4527 = { has_great_project = { type = oracle_mountain tier = 3 } } }
-				divination_1_deposit_divination_sub_effect = { days = 2555 }
+				limit = { receiving_mindarayan_buff = yes }
+				if = {
+					limit = { 4527 = { has_great_project = { type = oracle_mountain tier = 3 } } }
+					divination_1_deposit_divination_sub_effect = { days = 5110 }
+				}
+				else = { divination_1_deposit_divination_sub_effect = { days = 4380 } }
+				custom_tooltip = tughayasa_divination_booster_tt
 			}
-			else = { divination_1_deposit_divination_sub_effect = { days = 2190 } }
-			custom_tooltip = tughayasa_divination_booster_tt
+			else = { divination_1_deposit_divination_sub_effect = { days = 3650 } }
+			custom_tooltip = divination_1_deposit_divination_upgrade_yes
 		}
-		else = { divination_1_deposit_divination_sub_effect = { days = 1825 } }
-		custom_tooltip = divination_1_deposit_divination_upgrade_no
+		else = {
+			if = {
+				limit = { receiving_mindarayan_buff = yes }
+				if = {
+					limit = { 4527 = { has_great_project = { type = oracle_mountain tier = 3 } } }
+					divination_1_deposit_divination_sub_effect = { days = 2555 }
+				}
+				else = { divination_1_deposit_divination_sub_effect = { days = 2190 } }
+				custom_tooltip = tughayasa_divination_booster_tt
+			}
+			else = { divination_1_deposit_divination_sub_effect = { days = 1825 } }
+			custom_tooltip = divination_1_deposit_divination_upgrade_no
+		}
 	}
 
 	hidden_effect = {
@@ -1275,6 +1386,26 @@ divination_1_deposit_divination_sub_effect = { #Deposit Divination sub-effect
 			every_owned_province = {
 				limit = { OR = { province_with_mineable_goods = yes trade_goods = damestear } }
 				add_province_modifier = { name = yanacotle_volcanic_dig_sites duration = $days$ }
+			}
+		}
+	}
+	if = { # has monument:Jianxusi
+		limit = {
+			owns = 4811
+			4811 = { # trigger to use the monument
+				has_great_project = {
+					type = jianxusi
+					tier = 2
+				}
+				can_use_monument_jianxusi_trigger = yes
+			}
+		}
+		custom_tooltip = divination_1_deposit_divination_spell_effect_from_jianxusi_tooltip
+		tooltip = { 5690 = { add_province_modifier = { name = jianxusi_modifier_tier_II_for_deposit_divination duration = $days$ } } }
+		hidden_effect = {
+			every_owned_province = {
+				limit = { OR = { province_with_mineable_goods = yes trade_goods = damestear } }
+				add_province_modifier = { name = jianxusi_modifier_tier_II_for_deposit_divination duration = $days$ }
 			}
 		}
 	}
@@ -2181,33 +2312,17 @@ illusion_1_fear_and_loathing_effect = { #Fear and Loathing
 	}
 
 	custom_tooltip = spell_sabotage_effect_tt #All war enemies and rivals get
-	tooltip = { add_country_modifier = { name = illusion_1_fear_and_loathing_sabotage_mod duration = 3650 } }
+	tooltip = { add_country_modifier = { name = illusion_1_fear_and_loathing_sabotage_mod duration = 1825 } }
 
 	hidden_effect = {
-		set_variable = { war_enemy_dev = 150 } #Always spawn at least one revolt
-		set_variable = { num_revolts_left = 8 } #Don't spawn more than 8 revolts
+		set_variable = { num_revolts_left = 5 } #Don't spawn more than 5 revolts
 		every_war_enemy_country = {
-			limit = { capital_scope = { controlled_by = PREV has_siege = no } } #No gimping self
-
-			PREV = {
-				export_to_variable = { which = temp_dev_check value = total_development who = PREV }
-				change_variable = { which = war_enemy_dev which = temp_dev_check }
+			limit = {
+				capital_scope = { controlled_by = PREV has_siege = no } #No gimping self
+				PREV = { check_variable = { num_revolts_left = 1 } }
 			}
-
-			while = {
-				limit = {
-					PREV = {
-						check_variable = { war_enemy_dev = 150 }
-						check_variable = { num_revolts_left = 1 }
-					}
-				}
-				PREV = {
-					subtract_variable = { war_enemy_dev = 150 }
-					subtract_variable = { num_revolts_left = 1 }
-				}
-				
-				illusion_1_fear_and_loathing_sub_effect = { caster_scope = PREV }
-			}
+			PREV = { subtract_variable = { num_revolts_left = 1 } }
+			illusion_1_fear_and_loathing_sub_effect = { caster_scope = PREV }
 		}
 
 		every_war_enemy_country = {
@@ -2222,22 +2337,52 @@ illusion_1_fear_and_loathing_effect = { #Fear and Loathing
 	add_country_modifier = { name = illusion_1_fear_and_loathing_cooldown_mod duration = 1825 hidden = yes } #Sorry no spamming rebels
 }
 illusion_1_fear_and_loathing_sub_effect = { #Fear and Loathing sub-effect that spawns rebels
-	if = { #Orenvalyam overwrite
-		limit = {
-			$caster_scope$ = { has_country_flag = U39_fear_and_loathing_buff_flag }
-			total_development = 300
-		}
-		capital_scope = { anti_tax_rebels = 3 }
-	}
-	else_if = { # kimanis overwrite
+	if = { # kimanis overwrite
 		limit = { $caster_scope$ = { has_country_flag = G61_spell_effect_razzle } }
-		capital_scope = { kimanis_wine_cultists = 1 }
+		capital_scope = { kimanis_wine_cultists = 2 }
 	}
-	else = { capital_scope = { anti_tax_rebels = 1 } }
-
-	if = { #Invention for everyone with mixed
-		limit = { $caster_scope$ = { has_estate_privilege = artifice_invention_sonic_amplifiers } }
-		capital_scope = { anti_tax_rebels = 1 }
+	else_if = { #size 1000 = mage rebels led by war wizard
+		limit = { total_development = 1000 }
+		if = { #Orenvalyam triples size
+			limit = { $caster_scope$ = { has_country_flag = U39_fear_and_loathing_buff_flag } }
+			capital_scope = { spawn_war_wizard_rebels = { type = mage_rebels size = 3 } }
+		}
+		else_if = { #Invention for everyone with mixed
+			limit = { $caster_scope$ = { has_estate_privilege = artifice_invention_sonic_amplifiers } }
+			capital_scope = { spawn_war_wizard_rebels = { type = mage_rebels size = 2 } }
+		}
+		else = { capital_scope = { spawn_war_wizard_rebels = { type = mage_rebels size = 1 } } }
+	}
+	else_if = { #size 600 = pretender
+		limit = { total_development = 600 }
+		if = { #Orenvalyam triples size
+			limit = { $caster_scope$ = { has_country_flag = U39_fear_and_loathing_buff_flag } }
+			capital_scope = { pretender_rebels = 3 }
+		}
+		else_if = { #Invention for everyone with mixed
+			limit = { $caster_scope$ = { has_estate_privilege = artifice_invention_sonic_amplifiers } }
+			capital_scope = { pretender_rebels = 2 }
+		}
+		else = { capital_scope = { pretender_rebels = 1 } }
+	}
+	else_if = { #size 300 = leadered peasants
+		limit = { total_development = 300 }
+		if = { #Orenvalyam triples size
+			limit = { $caster_scope$ = { has_country_flag = U39_fear_and_loathing_buff_flag } }
+			capital_scope = { leadered_peasant_rebels = 3 }
+		}
+		else_if = { #Invention for everyone with mixed
+			limit = { $caster_scope$ = { has_estate_privilege = artifice_invention_sonic_amplifiers } }
+			capital_scope = { leadered_peasant_rebels = 2 }
+		}
+		else = { capital_scope = { leadered_peasant_rebels = 1 } }
+	}
+	else = { #else - anti-tax peasants
+		if = { #Invention for everyone with mixed
+			limit = { $caster_scope$ = { has_estate_privilege = artifice_invention_sonic_amplifiers } }
+			capital_scope = { anti_tax_rebels = 2 }
+		}
+		else = { capital_scope = { anti_tax_rebels = 1 } }
 	}
 }
 illusion_1_bread_and_circuses_effect = { # Bread and Circuses
@@ -2450,6 +2595,14 @@ necromancy_0_false_life_effect = { # False Life
 necromancy_1_steal_vitality_effect = { # Steal Vitality
 	custom_tooltip = necromancy_1_steal_vitality_effect_tt
 	necromancy_1_steal_vitality_sub_effect = { days = 1825 }
+	if = {
+		limit = { has_country_flag = necromancy_1_steal_vitality_add_attrition }
+		add_country_modifier = { name = necromancy_1_steal_vitality_mod_attrition duration = 1825 }
+	}
+	if = {
+		limit = { has_country_flag = necromancy_1_steal_vitality_add_monarch_lifespan }
+		add_ruler_modifier = { name = necromancy_1_steal_vitality_mod_monarch_lifespan duration = -1 }
+	}
 }
 necromancy_1_steal_vitality_sub_effect = { # Steal Vitality sub-effect (not needed rn)
 	tooltip = {
@@ -2465,18 +2618,33 @@ necromancy_1_steal_vitality_sub_effect = { # Steal Vitality sub-effect (not need
 					trade_goods = slaves
 				}
 			}
-			add_province_modifier = { name = necromancy_1_steal_vitality_local_mod duration = $days$ }
+			if = {
+				limit = { owner = { has_country_flag = kaino_steal_vitality_moderation } }
+				add_base_production = -1
+				add_province_modifier = { name = kaino_necromancy_1_steal_vitality_local_mod duration = $days$ }
+			}
+			else = {
+				add_province_modifier = { name = necromancy_1_steal_vitality_local_mod duration = $days$ }
+			}
 		}
 		add_country_modifier = { name = necromancy_1_steal_vitality_cooldown_mod duration = $days$ hidden = yes }
 	}
 }
+
 necromancy_1_contagion_effect = { # Contagion
 	increase_witch_king_points_medium = { level = necromancy_level_1_minimum }
 	PREV = {
-		add_devastation = 20
 		custom_tooltip = change_siege_negative_tt
 		hidden_effect = { change_siege = -1 }
-		add_province_modifier = { name = necromancy_1_contagion_local_mod duration = 730 }
+		if = { 
+			limit = { PREV = { has_country_flag = kaino_contagion_adze_swarm } }
+			add_devastation = 100
+			add_province_modifier = { name = kaino_necromancy_1_contagion_local_mod duration = 730 }
+		}
+		else = {
+			add_devastation = 20
+			add_province_modifier = { name = necromancy_1_contagion_local_mod duration = 730 }
+		}
 	}
 	hidden_effect = {
 		PREV = {
@@ -2491,46 +2659,7 @@ necromancy_1_contagion_effect = { # Contagion
 	}
 }
 necromancy_2_speak_with_dead_effect = { # Speak With Dead
-	tooltip = {
-		random_list = {
-			1 = {
-				trigger = {
-					OR = {
-						NOT = { adm = 5 }
-						AND = {
-							ruler_is_immortal = yes
-							NOT = { adm = 6 }
-						}
-					}
-				}
-				change_adm = 1
-			}
-			1 = {
-				trigger = {
-					OR = {
-						NOT = { dip = 5 }
-						AND = {
-							ruler_is_immortal = yes
-							NOT = { dip = 6 }
-						}
-					}
-				}
-				change_dip = 1
-			}
-			1 = {
-				trigger = {
-					OR = {
-						NOT = { mil = 5 }
-						AND = {
-							ruler_is_immortal = yes
-							NOT = { mil = 6 }
-						}
-					}
-				}
-				change_mil = 1
-			}
-		}
-	}
+	tooltip = { add_random_ruler_skill = yes }
 
 	custom_tooltip = SEPERATOR_TOOLTIP
 	if = {
@@ -2545,14 +2674,14 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 					ruler_is_homunculus = yes
 				}
 			}
-			add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = 18250 }
+			add_necromancy_2_speak_with_dead_cost = { duration = 18250 }
 		}
 		else_if = { #30 years
 			limit = {
 				fast_ruler_is_elven = yes
 				NOT = { ruler_culture = wood_elf }
 			}
-			add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = 10950 }
+			add_necromancy_2_speak_with_dead_cost = { duration = 10950 }
 		}
 		else_if = { #20 years
 			limit = {
@@ -2562,10 +2691,14 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 					fast_ruler_is_dwarven = yes
 				}
 			}
-			add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = 7300 }
+			add_necromancy_2_speak_with_dead_cost = { duration = 7300 }
+		}
+		else_if = {
+			limit = { has_country_flag =  kaino_speak_with_the_dead_buff } #kaino fed buff
+			custom_tooltip = kaino_speak_with_the_dead_buff_tt
 		}
 		else = { #8 years - default
-			add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = 2920 }
+			add_necromancy_2_speak_with_dead_cost = { duration = 2920 }
 		}
 	}
 	
@@ -2576,168 +2709,45 @@ necromancy_2_speak_with_dead_effect = { # Speak With Dead
 		randnum_effect = {
 			max = 6
 			case6 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { adm = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { adm = 6 }
-							}
-						}
-					}
-					change_adm = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { dip = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { dip = 6 }
-							}
-						}
-					}
-					change_dip = 1
-				}
+				if = { limit = { NOT = { adm = 6 } } change_adm = 1 }
+				else_if = { limit = { NOT = { dip = 6 } } change_dip = 1 }
 				else = { change_mil = 1 }
 			"
 			case5 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { adm = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { adm = 6 }
-							}
-						}
-					}
-					change_adm = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { mil = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { mil = 6 }
-							}
-						}
-					}
-					change_mil = 1
-				}
+				if = { limit = { NOT = { adm = 6 } } change_adm = 1 }
+				else_if = { limit = { NOT = { mil = 6 } } change_mil = 1 }
 				else = { change_dip = 1 }
 			"
 			case4 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { dip = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { dip = 6 }
-							}
-						}
-					}
-					change_dip = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { mil = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { mil = 6 }
-							}
-						}
-					}
-					change_mil = 1
-				}
+				if = { limit = { NOT = { dip = 6 } } change_dip = 1 }
+				else_if = { limit = { NOT = { mil = 6 } } change_mil = 1 }
 				else = { change_adm = 1 }
 			"
 			case3 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { dip = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { dip = 6 }
-							}
-						}
-					}
-					change_dip = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { adm = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { adm = 6 }
-							}
-						}
-					}
-					change_adm = 1
-				}
+				if = { limit = { NOT = { dip = 6 } } change_dip = 1 }
+				else_if = { limit = { NOT = { adm = 6 } } change_adm = 1 }
 				else = { change_mil = 1 }
 			"
 			case2 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { mil = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { mil = 6 }
-							}
-						}
-					}
-					change_mil = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { adm = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { adm = 6 }
-							}
-						}
-					}
-					change_adm = 1
-				}
+				if = { limit = { NOT = { mil = 6 } } change_mil = 1 }
+				else_if = { limit = { NOT = { adm = 6 } } change_adm = 1 }
 				else = { change_dip = 1 }
 			"
 			case1 = "
-				if = {
-					limit = {
-						OR = {
-							NOT = { mil = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { mil = 6 }
-							}
-						}
-					}
-					change_mil = 1
-				}
-				else_if = {
-					limit = {
-						OR = {
-							NOT = { dip = 5 }
-							AND = {
-								ruler_is_immortal = yes
-								NOT = { dip = 6 }
-							}
-						}
-					}
-					change_dip = 1
-				}
+				if = { limit = { NOT = { mil = 6 } } change_mil = 1 }
+				else_if = { limit = { NOT = { dip = 6 } } change_dip = 1 }
 				else = { change_adm = 1 }
 			"
 		}
+	}
+}
+add_necromancy_2_speak_with_dead_cost = {
+	if = {
+		limit = { has_country_flag = necromancy_2_speak_with_dead_cost_0 }
+		add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod_0 duration = $duration$ }
+	}
+	else = {
+		add_ruler_modifier = { name = necromancy_2_speak_with_dead_cooldown_mod duration = $duration$ }
 	}
 }
 necromancy_2_remove_pain_effect = { # Remove Pain
@@ -2760,9 +2770,16 @@ necromancy_2_remove_pain_effect = { # Remove Pain
 }
 necromancy_3_chronophage_effect = { # Chronophage
 	increase_witch_king_points_large = { level = necromancy_level_3 }
-	add_country_modifier = { name = necromancy_3_chronophage_mod duration = 365 } #1 year
-	custom_tooltip = necromancy_3_chronophage_spell_effect_tt
-	country_event = { id = magic_spell.700 days = 366 }
+	if = { 
+		limit = { has_country_flag = kaino_super_duper_chronophage }
+		add_country_modifier = { name = kaino_necromancy_3_chronophage_mod duration = 18250 } #50 years mwahahahaa
+	}
+	if = {
+		limit = { NOT = {has_country_flag = kaino_super_duper_chronophage } }
+		add_country_modifier = { name = necromancy_3_chronophage_mod duration = 365 } #1 year
+		custom_tooltip = necromancy_3_chronophage_spell_effect_tt
+		country_event = { id = magic_spell.700 days = 366 }
+	}	
 }
 
 #####################
@@ -3043,44 +3060,16 @@ transmutation_2_reshape_terrain_effect = { # Reshape Terrain
 }
 transmutation_3_rite_of_conception_effect = { # Rite of Conception
 	if = {
-		limit = {
-			OR = {
-				has_country_flag = tughayasa_reward
-				has_country_flag = tughayasa_reward_primary
-			}
-		}
-		if = {
-			limit = { has_government_attribute = heir }
-			tooltip = {
-				random_list = {
-					1 = { country_event = { id = magic_spell.800 days = 240 random = 60 } }
-					1 = { country_event = { id = magic_spell.801 days = 240 random = 60 } }
-				}
-			}
-			hidden_effect = {
-				add_country_modifier = { name = transmutation_3_rite_of_conception_cooldown_mod duration = 301 }
-				capital_scope = { add_province_triggered_modifier = rite_of_conception_randomization_ptm }
-			}
-		}
-		if = {
-			limit = { NOT = { has_government_attribute = heir } }
-			country_event = { id = magic_spell.803 }
-		}
-		custom_tooltip = tughayasa_empowered_tt
+		limit = { government = theocracy }
+		country_event = { id = magic_spell.808 days = 300 }
+		custom_tooltip = transmutation_3_rite_of_conception_effect_2_tt
 	}
 	if = {
-		limit = {
-			NOT = {
-				has_country_flag = tughayasa_reward
-				has_country_flag = tughayasa_reward_primary
-			}
-		}
+		limit = { NOT = { government = theocracy } }
 		custom_tooltip = transmutation_3_rite_of_conception_effect_tt
-		hidden_effect = { 
-			add_country_modifier = { name = transmutation_3_rite_of_conception_cooldown_mod duration = 301 hidden = yes }
-			capital_scope = { add_province_triggered_modifier = rite_of_conception_randomization_ptm }
-		}
+		hidden_effect = { capital_scope = { add_province_triggered_modifier = rite_of_conception_randomization_ptm } }
 	}
+	add_country_modifier = { name = transmutation_3_rite_of_conception_cooldown_mod duration = 301 hidden = yes }
 }
 
 
@@ -3165,8 +3154,11 @@ clr_all_custom_spell_groups = {
 		clr_harpy_spell_lists = yes
 		clr_bulwar_spell_lists = yes
 		clr_xhazobkult_spell_lists = yes
+		clr_centaur_spell_lists = yes
 		clr_eordand_spell_lists = yes
 		clr_cannor_clerical_spell_lists = yes
+		clr_fangaula_spell_lists = yes
+		clr_bardic_spell_lists = yes
 		hidden_effect = { #Keep this here - simplifies this effect
 			clr_country_flag = magic_list_any
 			clr_country_flag = show_custom_spell_list #just in case
@@ -3231,6 +3223,14 @@ clr_centaur_spell_lists = {
 	}
 }
 
+clr_fangaula_spell_lists = {
+	if = {
+		limit = { has_any_custom_spell_list_in_group = { group = fangaula } }
+		clr_custom_spell_list = { group = fangaula subgroup = default }
+		clr_custom_spell_list = { group = fangaula subgroup = kaino }
+	}
+}
+
 clr_eordand_spell_lists = {
 	if = {
 		limit = { has_any_custom_spell_list_in_group = { group = eordand } }
@@ -3245,6 +3245,13 @@ clr_cannor_clerical_spell_lists = {
 		#Put any sublists here
 	}
 }
+clr_bardic_spell_lists = {
+	if = { #Fast check of group flag
+		limit = { has_any_custom_spell_list_in_group = { group = bardic } }
+		clr_custom_spell_list = { group = bardic subgroup = default }
+		#Put any sublists here
+	}
+}
 
 magical_tradition_on_spell_cast_effect = { magical_tradition_on_$group$_spell_cast_effect = yes }
 # magical_tradition_on_$group$_spell_cast_effect
@@ -3253,9 +3260,7 @@ magical_tradition_on_harpy_spell_cast_effect = {
 	# Harpylen (F98) MT cares about this
 	hidden_effect = {
 		if = {
-			limit = {
-				tag = F98
-			}
+			limit = { tag = F98 }
 			change_variable = {
 				which = F98_harpy_spells_cast
 				value = 1
@@ -3268,6 +3273,8 @@ magical_tradition_on_bulwar_spell_cast_effect = {}
 magical_tradition_on_eordand_spell_cast_effect = {}
 magical_tradition_on_xhazobkult_spell_cast_effect = {}
 magical_tradition_on_cannor_clerical_spell_cast_effect = {}
+magical_tradition_on_fangaula_spell_cast_effect = {}
+magical_tradition_on_bardic_spell_cast_effect = {}
 
 
 
@@ -4270,4 +4277,206 @@ abjuration_2_cannor_clerical_default_3_effect = {
 			add_province_modifier = { name = hallow_cathedral_cannor_clerical_spell_mod duration = 3650 }
 		}
 	}	
+}
+
+# Bardic
+enchantment_0_bardic_default_1_effect = {
+	add_country_modifier = {
+		name = enchantment_0_bardic_inspiration_spell_mod
+		duration = 1825 # 5 years
+	}
+	custom_tooltip = bardic_spell_inspiration_every_war_ally_tt
+	hidden_effect = {
+		# There is no every_war_friendly_country
+		every_country = { # all war allies
+			limit = {
+				is_in_war = {
+					participants = ROOT
+				}
+				NOT = { war_with = ROOT }
+			}
+			add_country_modifier = {
+				name = enchantment_0_bardic_inspiration_spell_mod
+				duration = 1825 # 5 years
+			}
+		}
+	}
+}
+
+enchantment_1_bardic_default_2_effect = {
+	# Since you learn these from interacting with other countries, we'll hide the
+	# triggers and effects until you've discovered it
+	# This unlock condition could be used for MTs
+	if = {
+		limit = {
+			enchantment_1_bardic_default_2_subtrigger = no
+		}
+		custom_tooltip = "???"
+	}
+	else = {
+		if = {
+			limit = {
+				has_dlc = "Dharma"
+			}
+			custom_tooltip = bardic_spell_aria_of_affection_tt
+		}
+		else = {
+			custom_tooltip = bardic_spell_aria_of_affection_tt_no_dharma
+		}
+		hidden_effect = {
+			add_country_modifier = {
+				name = enchantment_1_aria_of_affection_spell_mod
+				duration = 1825 # 5 years
+			}
+		}
+	}
+}
+
+enchantment_2_bardic_default_3_effect = {
+	# Since you learn these from interacting with other countries, we'll hide the
+	# triggers and effects until you've discovered it
+	# This unlock condition could be used for MTs
+	if = {
+		limit = {
+			enchantment_2_bardic_default_3_subtrigger = no
+		}
+		custom_tooltip = "???"
+	}
+	else = {
+		custom_tooltip = bardic_spell_hymn_cycle_tt
+		if = {
+			limit = {
+				is_variable_equal = {
+					which = bardic_hymn_of_history_tracker
+					value = 0
+				}
+			}
+			add_country_modifier = {
+				name = enchantment_2_bold_wormrider_mod
+				duration = 5475 # 15 years
+			}
+		}
+		else_if = {
+			limit = {
+				is_variable_equal = {
+					which = bardic_hymn_of_history_tracker
+					value = 1
+				}
+			}
+			add_country_modifier = {
+				name = enchantment_2_content_goatherder_mod
+				duration = 5475 # 15 years
+			}
+		}
+		else_if = {
+			limit = {
+				is_variable_equal = {
+					which = bardic_hymn_of_history_tracker
+					value = 2
+				}
+			}
+			add_country_modifier = {
+				name = enchantment_2_first_peacemaker_mod
+				duration = 5475 # 15 years
+			}
+		}
+		else_if = {
+			limit = {
+				is_variable_equal = {
+					which = bardic_hymn_of_history_tracker
+					value = 3
+				}
+			}
+			add_country_modifier = {
+				name = enchantment_2_great_bearer_king_mod
+				duration = 5475 # 15 years
+			}
+		}
+		else_if = {
+			limit = {
+				is_variable_equal = {
+					which = bardic_hymn_of_history_tracker
+					value = 4
+				}
+			}
+			add_country_modifier = {
+				name = enchantment_2_virtuous_shaman_mod
+				duration = 5475 # 15 years
+			}
+		}
+		else_if = {
+			limit = {
+				is_variable_equal = {
+					which = bardic_hymn_of_history_tracker
+					value = 5
+				}
+			}
+			add_country_modifier = {
+				name = enchantment_2_mad_scholar_mod
+				duration = 5475 # 15 years
+			}
+		}
+
+		hidden_effect = {
+			# Start at 0, increment 1 each cast, then at 6 go back to 0
+			change_variable = {
+				which = bardic_hymn_of_history_tracker
+				value = 1
+			}
+			modulo_variable = {
+				which = bardic_hymn_of_history_tracker
+				value = 6
+			}
+		}
+	}
+}
+
+enchantment_3_bardic_default_4_effect = {
+	# Since you learn these from interacting with other countries, we'll hide the
+	# triggers and effects until you've discovered it
+	# This unlock condition could be used for MTs
+	if = {
+		limit = {
+			enchantment_3_bardic_default_4_subtrigger = no
+		}
+		custom_tooltip = "???"
+	}
+	else = {
+		add_rebel_progress = {
+			value = -100 # Set all rebel progress to 0
+		}
+		add_stability = 1
+		add_war_exhaustion = -2
+		add_country_modifier = {
+			name = enchantment_3_elegy_of_exhaustion_spell_mod
+			duration = 3650 # 10 years
+		}
+	}
+}
+
+#Gemradcurt
+enchantment_1_eordand_gemradcurt_5_effect = { #Cold Command
+	add_country_modifier = { 
+		name = gemradcurt_cold_command_mod
+		duration = 3650
+	}
+}
+
+#Kaino Federation
+necromancy_0_fangaula_kaino_1_effect = { #drain life spell
+	hidden_effect = {
+		change_variable = { kaino_casted_drain_life = 1 }
+	}
+	random_owned_province = {
+		limit = {
+			holy_order = kainos_grasp_holy_order
+			development = 4
+		}
+		remove_random_development = yes
+	}
+	custom_tooltip = linebreak_tt
+	add_adm_power = 10
+	add_dip_power = 10
+	add_mil_power = 10
+	increase_witch_king_points_medium = yes
 }

@@ -1604,6 +1604,10 @@ palace_of_divine_call = {
 			limit = { owner = { is_or_was_tag = { tag = Y09 } } } 
 			owner = { mission_completed = bianfang_city_of_temples }
 		}
+		else_if = {
+			limit = { owner = { is_or_was_tag = { tag = Y00 } } } 
+			owner = { mission_completed = azkare_worthy_tomb }
+		}
 		else = {
 			is_capital = yes
 		}
@@ -1620,6 +1624,10 @@ palace_of_divine_call = {
 		else_if = {
 			limit = { owner = { is_or_was_tag = { tag = Y09 } } } 
 			owner = { mission_completed = bianfang_city_of_temples }
+		}
+		else_if = {
+			limit = { owner = { is_or_was_tag = { tag = Y00 } } } 
+			owner = { mission_completed = azkare_worthy_tomb }
 		}
 		else = {
 			is_capital = yes
@@ -4475,4 +4483,99 @@ nomsyulhan_crossing = {
 			owner = { if = { limit = { has_reform = tsukqiao_throne_of_lies_reform } add_legitimacy = 10 } }
 		}
 	}
+}
+
+jianxusi = { start = 4811 #jianxusi
+	date = 1444.1.1
+	time = { months = 1 }
+	build_cost = 5000
+	can_be_moved = no
+	move_days_per_unit_distance = 10
+	starting_tier = 1
+
+	type = monument
+	build_trigger = {}
+	on_built = {}
+	on_destroyed = {}
+	can_use_modifiers_trigger = { #also used in divination_1_deposit_divination_effect & divination_1_deposit_divination_sub_effect
+		can_use_monument_jianxusi_trigger = yes
+	}
+	can_upgrade_trigger = { #also used in divination_1_deposit_divination_effect & divination_1_deposit_divination_sub_effect
+		can_use_monument_jianxusi_trigger = yes
+	}
+	keep_trigger = {}
+	tier_0 = { 
+		upgrade_time = { months = 0 } 
+		cost_to_upgrade = { factor = 0 } 
+		province_modifiers = {}
+		area_modifier = {}
+		country_modifiers = {}
+		on_upgraded = {}
+	}
+	tier_1 = {
+		cost_to_upgrade = { factor = 1000 } 
+		upgrade_time = { months = 120 } 
+		province_modifiers = {
+			trade_goods_size = 0.50
+		}
+		area_modifier = {}
+		country_modifiers = {
+			mages_influence_modifier = 0.05
+			global_missionary_strength = 0.005
+		}
+		on_upgraded = {}	
+	}
+	tier_2 = {
+		cost_to_upgrade = { factor = 2500 }
+		upgrade_time = { months = 240 } 
+		province_modifiers = {
+			trade_goods_size = 1
+		}
+		area_modifier = {}
+		country_modifiers = {
+			mages_influence_modifier = 0.05
+			mages_loyalty_modifier = 0.05			
+			global_missionary_strength = 0.01
+		}
+		on_upgraded = {
+			custom_tooltip = monument_jianxusi_tier_2_tooltip
+			#other effect:
+			#The spell Divined Deposits is +33% Local Goods Produced Modifier.
+			#modifier name : jianxusi_modifier_tier_II_for_deposit_divination
+			#changes made in txt below
+			#anb_scripted_effects_for_magic_spells.txt :
+			#divination_1_deposit_divination_sub_effect    add buff to country when cast spell
+		}	
+	}
+	tier_3 = {
+		cost_to_upgrade = { factor = 5000 }
+		upgrade_time = { months = 480 }
+		province_modifiers = {
+			trade_goods_size = 1.5
+		}
+		area_modifier = {}
+		region_modifier = {}
+		country_modifiers = {
+			mages_influence_modifier = 0.10
+			mages_loyalty_modifier = 0.10	
+			mages_estate_experience_mod = 0.10
+			global_missionary_strength = 0.02
+		}
+		on_upgraded = {
+			custom_tooltip = monument_jianxusi_tier_3_tooltip
+			#other effect:
+			#The duration of the spell Divined Deposits is doubled and +33% Local Goods Produced Modifier.
+			#The spell Divined Deposits is +33% Local Goods Produced Modifier.
+			#modifier name : jianxusi_modifier_tier_II_for_deposit_divination
+			#changes made in txt below
+			#anb_scripted_effects_for_magic_spells.txt :
+			#divination_1_deposit_divination_effect    double buff existing time
+			#divination_1_deposit_divination_sub_effect    add buff to country when cast spell
+
+			# As a Special Magical Infrastructure Requirement 
+			#changes made below：
+			#anb_scripted_triggers_magic.txt：
+			#can_upgrade_to_magical_infrastructure_1	can_upgrade_to_magical_infrastructure_2		can_upgrade_to_magical_infrastructure_3		can_upgrade_to_magical_infrastructure_4			
+		}
+	}	
 }

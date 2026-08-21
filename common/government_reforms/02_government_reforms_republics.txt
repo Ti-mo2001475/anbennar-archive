@@ -3170,7 +3170,7 @@ sunrise_court_reform = {
 		anb_special_seats = yes
 		locked_T1_reform = yes
 	}
-	duration = 30
+	duration = 10
 }
 
 beikdugang_plutocracy_reform = {
@@ -10642,30 +10642,28 @@ mangrove_dictatorship = {
 
 magical_oversight_reform = {
 	icon = "indian_crown"
-	lock_level_when_selected = yes
 	allow_normal_conversion = yes
 	potential = {
 		has_estate = estate_mages
 	}
 	modifiers = {
 		max_estate_spell_levels = 1
-		mages_estate_experience_mod = 0.2
+		mages_estate_experience_mod = 0.15
 	}
 	removed_effect = {
  		if = {
 			limit = { has_estate_privilege = estate_mages_development_of_mage_towers }
-				every_owned_province = {
-					limit = {
-                        has_building = mage_tower
-					}
-					add_province_modifier = { 
-						name = estate_mages_development_of_mage_towers_mod
-						duration = -1
-					}
-					remove_province_modifier = estate_mages_development_of_mage_towers_improved_mod
+			every_owned_province = {
+				limit = {
+					has_building = mage_tower
+				}
+				add_province_modifier = { 
+					name = estate_mages_development_of_mage_towers_mod
+					duration = -1
+				}
+				remove_province_modifier = estate_mages_development_of_mage_towers_improved_mod
 			}
 		}
-
  	}
 	effect = {
 		hidden_effect = {
@@ -10958,9 +10956,33 @@ overseas_governorate = {
 		anb_special_elections = yes
 	}
 
-	#government_abilities = {
-	#	end_overseas_governorate
-	#}
+	government_abilities = {
+		end_foreign_influence_mechanic
+	}
 	effect = {
 	}
+}
+peasants_republic_m26 = { #Change when adding mission tree
+	allow_normal_conversion = yes
+	icon = "peasant_republic"
+	potential = {
+		is_or_was_tag = { tag = M26 }
+	}
+	valid_for_nation_designer = no
+	modifiers = {
+		production_efficiency = 0.1
+		land_morale = 0.05
+		max_absolutism = -10
+		raze_power_gain = 0.25
+	}
+	effect = {
+		custom_tooltip = peasants_republic_m26_tt
+	}
+	custom_attributes = {
+		raze_province = yes
+		enables_plutocratic_idea_group = yes
+		enables_aristocratic_idea_group = no
+		disables_estate_nobles = yes
+	}
+	duration = 4
 }

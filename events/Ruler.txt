@@ -107,7 +107,7 @@ country_event = { # Ruler Death Event Part 1
 			NOT = { ruler_culture = wood_elf }
 		}
 		modifier = {
-			factor = 0.5
+			factor = 0.4
 			fast_ruler_is_dwarven = yes
 		}
 		modifier = {
@@ -177,35 +177,24 @@ country_event = { # Ruler Death Event Part 1
 
 		#Dwarven
 		modifier = {
-			factor = 0.7
-			fast_ruler_is_dwarven = yes
-			NOT = { ruler_age = 125 }
-		}
-		modifier = {
-			factor = 0.8
-			fast_ruler_is_dwarven = yes
-			ruler_age = 125
-			NOT = { ruler_age = 175 }
-		}
-		modifier = {
-			factor = 1.7
+			factor = 2
 			fast_ruler_is_dwarven = yes
 			ruler_age = 150
 		}
 		modifier = {
-			factor = 3.2
+			factor = 2.2
+			fast_ruler_is_dwarven = yes
+			ruler_age = 172
+		}
+		modifier = {
+			factor = 2.6
+			fast_ruler_is_dwarven = yes
+			ruler_age = 185
+		}
+		modifier = {
+			factor = 2
 			fast_ruler_is_dwarven = yes
 			ruler_age = 200
-		}
-		modifier = {
-			factor = 3.8
-			fast_ruler_is_dwarven = yes
-			ruler_age = 225
-		}
-		modifier = {
-			factor = 4.6
-			fast_ruler_is_dwarven = yes
-			ruler_age = 250
 		}
 
 		#Gnomish/Wood Elf
@@ -1331,7 +1320,7 @@ country_event = { # Consort die
 			NOT = { consort_culture = wood_elf }
 		}
 		modifier = {
-			factor = 0.5
+			factor = 0.4
 			fast_consort_is_dwarven = yes
 		}
 		modifier = {
@@ -1403,22 +1392,22 @@ country_event = { # Consort die
 		modifier = {
 			factor = 2
 			fast_consort_is_dwarven = yes
-			consort_age = 135
+			consort_age = 150
 		}
 		modifier = {
 			factor = 2.2
 			fast_consort_is_dwarven = yes
-			consort_age = 151
+			consort_age = 172
 		}
 		modifier = {
 			factor = 2.6
 			fast_consort_is_dwarven = yes
-			consort_age = 167
+			consort_age = 185
 		}
 		modifier = {
 			factor = 2
 			fast_consort_is_dwarven = yes
-			consort_age = 183
+			consort_age = 200
 		}
 
 		#Gnomish/Wood Elf
@@ -1947,7 +1936,7 @@ country_event = { #Heir dies
 			NOT = { heir_culture = wood_elf }
 		}
 		modifier = {
-			factor = 0.5
+			factor = 0.4
 			fast_heir_is_dwarven = yes
 		}
 		modifier = {
@@ -2019,22 +2008,22 @@ country_event = { #Heir dies
 		modifier = {
 			factor = 2
 			fast_heir_is_dwarven = yes
-			heir_age = 135
+			heir_age = 150
 		}
 		modifier = {
 			factor = 2.2
 			fast_heir_is_dwarven = yes
-			heir_age = 151
+			heir_age = 172
 		}
 		modifier = {
 			factor = 2.6
 			fast_heir_is_dwarven = yes
-			heir_age = 167
+			heir_age = 185
 		}
 		modifier = {
 			factor = 2
 			fast_heir_is_dwarven = yes
-			heir_age = 183
+			heir_age = 200
 		}
 
 		#Gnomish/Wood Elf
@@ -2785,12 +2774,7 @@ country_event = {
 
 	trigger = {
 		#has_dlc = "Rights of Man" - unnecessary as we no longer use ruler personalities
-		OR = {
-			fast_consort_is_elven = yes
-			fast_consort_is_dwarven = yes
-			fast_consort_is_gnomish = yes
-			fast_consort_is_half_elven = yes
-		}
+		is_long_lived_consort = yes
 	}
 
 	option = {
@@ -2811,12 +2795,7 @@ country_event = {
 
 	trigger = {
 		#has_dlc = "Rights of Man" - unnecessary as we no longer use ruler personalities
-		OR = {
-			fast_heir_is_elven = yes
-			fast_heir_is_dwarven = yes
-			fast_heir_is_gnomish = yes
-			fast_heir_is_half_elven = yes
-		}
+		is_long_lived_heir = yes
 	}
 
 	option = {
@@ -2837,12 +2816,7 @@ country_event = {
 
 	trigger = {
 		#has_dlc = "Rights of Man" - unnecessary as we no longer use ruler personalities
-		OR = {
-			fast_ruler_is_elven = yes
-			fast_ruler_is_dwarven = yes
-			fast_ruler_is_gnomish = yes
-			fast_ruler_is_half_elven = yes
-		}
+		is_long_lived_ruler = yes
 	}
 
 	option = {
@@ -2853,6 +2827,5 @@ country_event = {
 			limit = { government = theocracy }
 			set_ruler_flag = long_lived_theocracy
 		}
-			
 	}
 }

@@ -199,6 +199,8 @@ aPUI_gene_pillars_setup_calculate_health = {
 	if = { limit = { gene_pillars_setup_has_specific_class_in_party = { class = fighter_B } } change_variable = { which = temp value = 1 } }
 	if = { limit = { gene_pillars_setup_has_specific_class_in_party = { class = fighter_C } } change_variable = { which = temp value = -1 } }
 
+	if = { limit = { owner = { mission_completed = A29_plunder_the_pillars } } change_variable = { which = temp value = 1 } }
+
 	# Add things that would affect party starting health here
 
 	#gene_pillars_check_extra_hp_at_start = {
@@ -349,12 +351,25 @@ gene_pillar_successful_end_expedition_effect = {
 		gene_pillars_add_xp_effect = { amount = 100 }
 		add_prestige = 5
 		set_country_flag = aPUI_gene_pillar_explored_level_1_in_@event_target:gene_pillar_exploration_province
+		event_target:gene_pillar_exploration_province = {
+			add_province_modifier = {
+				name = gene_pillar_explored_institution_growth_1
+				duration = -1
+			}
+		}
 	}
 	if = {
 		limit = { has_country_flag = gene_pillar_is_exploring_level_2_pillar }
 		gene_pillars_add_xp_effect = { amount = 300 }
 		add_prestige = 10
 		set_country_flag = aPUI_gene_pillar_explored_level_2_in_@event_target:gene_pillar_exploration_province
+		event_target:gene_pillar_exploration_province = {
+			remove_province_modifier = gene_pillar_explored_institution_growth_1
+			add_province_modifier = {
+				name = gene_pillar_explored_institution_growth_2
+				duration = -1
+			}
+		}
 	}
 	if = {
 		limit = { has_country_flag = gene_pillar_is_exploring_level_3_pillar }
@@ -362,6 +377,13 @@ gene_pillar_successful_end_expedition_effect = {
 		add_prestige = 20
 		set_country_flag = aPUI_gene_pillar_explored_level_3_in_@event_target:gene_pillar_exploration_province
 		clr_country_flag = gene_pillars_visited_nexus_of_realities # Only clear once you beat the pillar on level 3
+		event_target:gene_pillar_exploration_province = {
+			remove_province_modifier = gene_pillar_explored_institution_growth_2
+			add_province_modifier = {
+				name = gene_pillar_explored_institution_growth_3
+				duration = -1
+			}
+		}
 	}
 	change_variable = {
 		which = num_gene_pillar_explorations_completed
@@ -539,6 +561,10 @@ gene_pillar_generic_then_specific_event = {
 				limit = { has_country_flag = gene_pillars_exploration_events_double_speed }
 				multiply_variable = { GenePillarsSpeed = 0.5 }
 			}
+			if = {
+				limit = { has_country_flag = A29_faster_genepillar_expedition }
+				multiply_variable = { GenePillarsSpeed = 0.75 }
+			}
 
 			### Add Speed modifiers above here ###
 
@@ -665,7 +691,6 @@ gene_pillar_generic_then_specific_event = {
 					}
 				}
 			}
-
 			# This is just so the initial event doesn't advance the progress bar
 			[[advance]
 				gene_pillars_advance_progress_bar = yes
@@ -2381,7 +2406,7 @@ gene_pillars_random_insyaa_invention_unlock = {
 				has_country_flag = reward_artifice_invention_industrial_automatories
 				NOT = { has_country_flag = researching_artifice_invention_industrial_automatories }
 			}
-			unlock_insyaa_invention = { invention = artifice_invention_reverse_mechanim }
+			unlock_insyaa_invention = { invention = artifice_invention_industrial_automatories }
 			clr_country_flag = reward_artifice_invention_industrial_automatories
 			country_event = {
 				id = insyaa_flavour.101
@@ -3343,33 +3368,33 @@ gene_pillars_get_random_mechanim_invention_flag = {
 			set_country_flag = reward_artifice_invention_mech_steel_detector
 		}
 		100 = {
-			trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_reawakening_prosedure } }
-			set_country_flag = reward_artifice_invention_mech_reawakening_prosedure
-		}
-		#Religious
-		100 = {
 			trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_building_plates } }
 			set_country_flag = reward_artifice_invention_mech_building_plates
 		}
+		#Religious
 		100 = {
-			trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_terrain_specialization } }
+			trigger = { religion_group = mechanim_religion NOT = { has_country_flag = unlocked_artifice_invention_mech_reawakening_procedure } }
+			set_country_flag = reward_artifice_invention_mech_reawakening_procedure
+		}
+		100 = {
+			trigger = { religion_group = mechanim_religion NOT = { has_country_flag = unlocked_artifice_invention_mech_terrain_specialization } }
 			set_country_flag = reward_artifice_invention_mech_terrain_specialization
+		}
+		100 = {
+			trigger = { religion_group = mechanim_religion NOT = { has_country_flag = unlocked_artifice_invention_mech_pillar_scouts } }
+			set_country_flag = reward_artifice_invention_mech_pillar_scouts
 		}
 		#Military
 		100 = {
-			trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_lava_cell } }
+			trigger = { has_country_modifier = mechanim_military NOT = { has_country_flag = unlocked_artifice_invention_mech_lava_cell } }
 			set_country_flag = reward_artifice_invention_mech_lava_cell
 		}
 		100 = {
-			trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_fireproof_plating } }
+			trigger = { has_country_modifier = mechanim_military NOT = { has_country_flag = unlocked_artifice_invention_mech_fireproof_plating } }
 			set_country_flag = reward_artifice_invention_mech_fireproof_plating
 		}
 		100 = {
-			trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_pillar_scouts } }
-			set_country_flag = reward_artifice_invention_mech_pillar_scouts
-		}
-		100 = {
-			trigger = { NOT = { has_country_flag = unlocked_artifice_invention_mech_amphibious_attachements } }
+			trigger = { has_country_modifier = mechanim_military NOT = { has_country_flag = unlocked_artifice_invention_mech_amphibious_attachements } }
 			set_country_flag = reward_artifice_invention_mech_amphibious_attachements
 		}
 		#Head

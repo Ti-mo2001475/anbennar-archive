@@ -1,0 +1,72 @@
+namespace = kinbond
+
+#Hidden event for variable calculation
+country_event = {
+    id = kinbond.1
+    title = kinbond.1.t
+	desc = kinbond.1.d
+	picture = TRADEGOODS_eventPicture
+     hidden = yes
+    is_triggered_only = yes
+
+    option = {
+        if = {
+            limit = {
+                is_variable_equal = {
+                    which = arrowsentvariable
+                    which = forestguardvariable
+                }
+            }
+            set_country_flag = balancedkinbond
+            clr_country_flag = forestguard_dominant
+            clr_country_flag = arrowsent_dominant
+            kinbond_aspect_replacement = yes
+        }
+        else_if = {
+            limit = {
+                check_variable = {
+                    which = arrowsentvariable
+                    which = forestguardvariable
+                }
+            }
+            set_country_flag = arrowsent_dominant
+            clr_country_flag = forestguard_dominant
+            clr_country_flag = balancedkinbond
+            kinbond_aspect_replacement = yes
+        }
+        else = {
+            set_country_flag = forestguard_dominant
+            clr_country_flag = arrowsent_dominant
+            clr_country_flag = balancedkinbond
+            kinbond_aspect_replacement = yes
+        }
+    }
+}
+
+
+
+
+
+
+#Kinbond startup
+country_event = {
+    id = kinbond.2
+    title = kinbond.2.t
+    desc = kinbond.2.d
+    picture = TRADEGOODS_eventPicture
+    hidden = yes
+    is_triggered_only = yes
+    
+
+    option = { 
+        set_variable = {
+            which = arrowsentvariable
+            value = 0
+        }
+        set_variable = {
+            which = forestguardvariable
+            value = 0
+        }
+        country_event = { id = kinbond.1 }
+    }
+}
