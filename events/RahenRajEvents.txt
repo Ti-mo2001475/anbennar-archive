@@ -190,6 +190,10 @@ province_event = {	#on raj capital conquered
 						#Make subject of new raja
 						raj_become_prabhi = yes
 					}
+					every_subject_country = {
+						limit = { is_colonial_nation = yes }
+						raj_become_umsadhri = yes
+					}
 
 					#Make old raja subject of new raja
 					raj_become_prabhi = yes
@@ -229,8 +233,19 @@ province_event = {	#on raj capital conquered
 					limit = {
 						has_government_attribute = is_raja_subject
 						NOT = { war_with = event_target:raj_raja_global_target }
+						NOT = { is_colonial_nation = yes }
 					}
 					raj_become_prabhi = yes
+				}
+				every_country = {
+					limit = {
+						OR = {
+							is_colonial_nation_of = event_target:raj_raja_global_target
+							is_subject_of_type = umsadhri_vassal
+						}
+						NOT = { war_with = event_target:raj_raja_global_target }
+					}
+					raj_become_umsadhri = yes
 				}
 				#Any old prabhi/senapti still at war with the new raja get independence
 				every_country = {
@@ -290,6 +305,7 @@ province_event = {	#on raj capital conquered
 							is_subject_of_type = daimyo_vassal
 							is_subject_of_type = great_daimyo_vassal
 							is_subject_of_type = vizier_vassal
+							is_subject_of_type = umsadhri_vassal
 						}
 						NOT = { overlord = { has_government_attribute = is_raja } }
 					}
@@ -300,6 +316,7 @@ province_event = {	#on raj capital conquered
 							is_subject_of_type = daimyo_vassal
 							is_subject_of_type = great_daimyo_vassal
 							is_subject_of_type = vizier_vassal
+							is_subject_of_type = umsadhri_vassal
 						}
 						NOT = { overlord = { has_government_attribute = is_raja } }
 					}
@@ -1624,6 +1641,10 @@ country_event = {				#address the issue of nations released inside the raj with 
 				NOT = { has_reform = prabhi_reform }
 			}
 			AND = {
+				is_subject_of_type = umsadhri_vassal
+				NOT = { has_reform = umsadhri_reform }
+			}
+			AND = {
 				is_subject_of_type = great_daimyo_vassal
 				NOT = {
 					AND = {
@@ -1696,6 +1717,17 @@ country_event = {				#address the issue of nations released inside the raj with 
 				change_government = monarchy
 			}
 			add_government_reform = senapti_reform
+		}
+		else_if = {
+			limit = { 
+				is_subject_of_type = umsadhri_vassal 
+				NOT = { has_reform = umsadhri_reform }
+			}
+				if = {
+				limit = { NOT = { government = monarchy } }
+				change_government = monarchy
+			}
+			add_government_reform = umsadhri_reform				
 		}
 		
 
@@ -2797,7 +2829,14 @@ country_event = {
 		name = rahenraj.5000.a
 		ai_chance = { factor = 1 }
 		
-		raj_become_prabhi = yes
+		if = {
+			limit = { NOT = { is_colonial_nation = yes } }
+			raj_become_prabhi = yes
+		}
+		else = {
+			raj_become_umsadhri = yes
+		}
+		
 		country_event = { id = rahenraj.10 days = 35 }  #adds the raj cohesion privilege
 		
 	}
@@ -3375,6 +3414,144 @@ country_event = { #The Raj's Strongest Soldier (The Sweetest of gifts, from a pe
 			name = "Astir the Green"
 			cost_multiplier = 0.25
 			skill = 3
+		}
+	}
+}
+
+country_event = { #Umsadhri subject event 
+	id = rahenraj.6000 #The numbering in this file confuses me. I guess we'll just keep 6000s as any colony-esque events for future?
+	title = rahenraj.6000.t
+	desc = {
+		trigger = { is_subject_of_type = daimyo_vassal }
+		desc = "rahenraj.6000.d3"
+	}
+	desc = {
+		trigger = { is_the_raja = yes }
+		desc = "rahenraj.6000.d1"
+	}
+	desc = { 
+		trigger = {
+			OR = {
+				is_subject_of_type = great_daimyo_vassal
+				is_subject_of_type = vizier_vassal
+			}			
+		}
+		desc = "rahenraj.6000.d2"
+	}
+	picture = COLONIZATION_eventPicture
+	is_triggered_only = yes
+
+	option = { #Love da Raj
+		name = "rahenraj.6000.a"
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 0.25
+				NOT = { is_subject_of_type = daimyo_vassal }
+			}
+		}
+		trigger = { is_not_the_raja = yes }
+		event_target:raj_raja_global_target = {
+			create_subject = {
+				subject_type = umsadhri_vassal
+				subject = event_target:raja_possible_umsadhri
+			}
+			add_opinion = {
+				who = ROOT
+				modifier = raj_granted_colonial_subject
+			}
+		}
+		event_target:raja_possible_umsadhri = {
+			change_government = monarchy
+			add_government_reform = umsadhri_reform
+			hidden_effect = { country_event = { id = rahenraj.10 days = 35 } } #adds the raj cohesion privilege
+		}
+		add_liberty_desire = -25
+		event_target:raj_raja_global_target = {
+			add_country_modifier = {
+				name = raj_umsadhri_granted
+				duration = 3650
+			}
+		}
+		custom_tooltip = umsadhri_bonus_objective_tt
+		hidden_effect = {
+			set_country_flag = raj_granted_umsadhri
+		}
+	}
+
+	option = { #Raj is cool but I like my colony
+		name = "rahenraj.6000.b"
+		ai_chance = {
+			factor = 60
+		}
+		trigger = {
+			NOT = { 
+				is_subject_of_type = daimyo_vassal 
+			}
+			is_not_the_raja = yes
+		}
+		highlight = yes
+		add_prestige = 10
+	}
+
+	option = { #Fuck you Raj I like my colony
+		ai_chance = {
+			factor = 40
+		}
+		name = "rahenraj.6000.c"
+		trigger = { 
+			NOT = { 
+				is_subject_of_type = daimyo_vassal
+			}
+			is_not_the_raja = yes
+		}
+		highlight = yes
+		add_liberty_desire = 25
+		event_target:raj_raja_global_target = {
+			add_country_modifier = {
+				name = raj_umsadhri_denied
+				duration = 3650
+			}
+		}
+	}
+
+	option = { #Fuck you Raj but I lose my colony :(
+		name = "rahenraj.6000.e"
+		ai_chance = {
+			factor = 2.5
+		}
+		trigger = { 
+			is_subject_of_type = daimyo_vassal  
+			is_not_the_raja = yes 
+		}
+		highlight = yes
+		add_liberty_desire = 50
+		event_target:raj_raja_global_target = {
+			add_opinion = {
+				who = ROOT
+				modifier = raj_stolen_colonial_subject
+			}
+			reverse_add_opinion = {
+				who = ROOT
+				modifier = raj_stolen_colonial_subject
+			}
+			add_country_modifier = {
+				name = raj_umsadhri_stolen
+				duration = 3650
+			}
+		}
+	}
+
+	option = { #We is the raj
+		name = "rahenraj.6000.f"
+		ai_chance = {
+			factor = 100
+		}
+		trigger = { is_the_raja = yes }
+		highlight = yes
+		add_country_modifier = {
+			name = raj_umsadhri_founded
+			duration = 3650
 		}
 	}
 }
