@@ -1303,16 +1303,25 @@ custom_button = { # Bardic Magic - Bardic Exchange
 			has_custom_spell_list_of_group = { group = bardic }
 		}
 		ROOT = {
-			has_90_opinion_improved_relation = {
-				target = FROM
+			if = {
+				limit = { # These DLCs adds the favours mechanic
+					OR = {
+						has_dlc = "Leviathan"
+						has_dlc = "The Cossacks"
+					}
+				}
+				has_50_opinion_improved_relation = {
+					target = FROM
+				}
+				owes_favors = {
+					who = FROM
+					value = 10
+				}
 			}
-			trust = {
-				who = FROM
-				value = 60
-			}
-			owes_favors = { #placeholder I think this is the right way
-				who = FROM
-				value = 20
+			else = {
+				has_75_opinion_improved_relation = {
+					target = FROM
+				}
 			}
 		}
 	}
