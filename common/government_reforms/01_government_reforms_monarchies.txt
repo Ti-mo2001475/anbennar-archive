@@ -5511,6 +5511,37 @@ senapti_reform = {
 	}
 }
 
+umsadhri_reform = { #Unique colonial subject for Raja
+	icon = "vandiphan_thalassocracy"
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	maintain_dynasty = yes
+
+	potential = {
+		has_reform = umsadhri_reform
+		is_colonial_nation = yes
+		OR = {
+			overlord = { has_government_attribute = is_raja }
+			any_known_country = {
+				war_with = ROOT
+				has_government_attribute = is_raja
+			}
+		}
+	}
+	valid_for_nation_designer = no
+	legacy_equivalent = daimyo_legacy
+	modifiers = {
+		global_sailors_modifier = 0.1
+		naval_forcelimit_modifier = 0.2
+	}
+
+	custom_attributes = {
+		locked_government_type = yes
+		is_raja_subject = yes
+		locked_T1_reform = yes		
+	}
+}
+
 raja_reform = {
 	icon = "shogunate"
 	allow_normal_conversion = yes
