@@ -291,6 +291,468 @@ country_event = {
 #	}
 #}
 
+#Fire and Water
+country_event = {
+	id = planetouched.4
+	title = planetouched.4.t
+	desc = {
+		trigger = { has_estate_privilege = estate_planetouched_organization_oppressed }
+		desc = planetouched.4.d.oppressed
+	}
+	desc = {
+		trigger = { NOT = { has_estate_privilege = estate_planetouched_organization_oppressed } }
+		desc = planetouched.4.d.notoppressed
+	}
+	picture = AFRICAN_KING_MEDIATING_eventPicture
+
+	trigger = {
+		has_estate = estate_planetouched
+		NOT = { has_country_modifier = PT_4_favor_fire }
+		NOT = { has_country_modifier = PT_4_favor_water }
+		NOT = { has_country_modifier = PT_4_encourage_rivalry }
+		NOT = { has_country_modifier = PT_4_brought_to_court }
+		NOT = { has_country_modifier = PT_4_execute_troublemakers }
+		NOT = { has_country_modifier = PT_4_ruler_favor_fire }
+		NOT = { has_country_modifier = PT_4_ruler_favor_water }
+	}
+
+	is_triggered_only = yes
+
+	option = { #Favor Fire
+		name = planetouched.4.a
+		ai_chance = { factor = 50 }
+		trigger = {
+			NOT = {
+				has_estate_privilege = estate_planetouched_organization_oppressed
+			}
+		}
+		add_country_modifier = {
+			name = PT_4_favor_fire
+			duration = 3650
+		}
+	}
+	
+	option = { #Favor Water
+		name = planetouched.4.b
+		ai_chance = { factor = 50 }
+		trigger = {
+			NOT = {
+				has_estate_privilege = estate_planetouched_organization_oppressed
+			}
+		}
+		add_country_modifier = {
+			name = PT_4_favor_water
+			duration = 3650
+		}
+	}
+
+	option = { #Execute the Troublemakers
+		name = planetouched.4.f
+		ai_chance = { factor = 50 }
+		trigger = {
+			OR = {
+				has_estate_privilege = estate_planetouched_organization_oppressed
+				has_estate_privilege = estate_planetouched_organization_scattered
+			}
+		}
+		add_mil_power = -15
+		add_country_modifier = {
+			name = PT_4_execute_troublemakers
+			duration = 3650
+		}
+		add_estate_loyalty = {
+			estate = estate_planetouched
+			loyalty = -10
+		}
+		hidden_effect = {
+			add_estate_loyalty = {
+				estate = estate_planetouched
+				loyalty = -5
+			}
+			add_estate_loyalty = {
+				estate = all
+				loyalty = 5
+			}
+		}
+		custom_tooltip = pt_all_but_pt_gain_5
+	}
+
+	option = { #Encourage the Rivalry
+		name = planetouched.4.c
+		ai_chance = { factor = 100 }
+		trigger = {
+			has_estate_privilege = estate_planetouched_organization_empowered
+		}
+		highlight = yes
+		add_country_modifier = {
+			name = PT_4_encourage_rivalry
+			duration = 3650
+		}
+		hidden_effect = {
+			add_estate_loyalty = {
+				estate = all
+				loyalty = -5
+			}
+			add_estate_loyalty = {
+				estate = estate_planetouched
+				loyalty = 5
+			}
+		}
+		custom_tooltip = pt_all_but_pt_lose_5
+	}
+
+	option = { #Bring Their Leaders to Court
+		name = planetouched.4.e
+		ai_chance = { factor = 100 }
+		trigger = {
+			has_estate_privilege = estate_planetouched_organization_state
+		}
+		highlight = yes
+		add_country_modifier = {
+			name = PT_4_brought_to_court
+			duration = 3650
+		}
+		define_advisor = {
+			type = naval_reformer
+			skill = 2
+			cost_multiplier = 0.5
+		}
+		define_advisor = {
+			type = army_reformer
+			skill = 2
+			cost_multiplier = 0.5
+		}
+	}
+
+	option = { #The Ruler Favors Fire
+		name = planetouched.4.g
+		ai_chance = { factor = 200 }
+		trigger = {
+			ruler_has_personality = fire_planetouched_personality
+		}
+		highlight = yes
+		add_country_modifier = {
+			name = PT_4_ruler_favor_fire
+			duration = 5475
+		}
+	}
+
+	option = { #The Ruler Favors Water
+		name = planetouched.4.h
+		ai_chance = { factor = 200 }
+		trigger = {
+			ruler_has_personality = water_planetouched_personality
+		}
+		highlight = yes
+		add_country_modifier = {
+			name = PT_4_ruler_favor_water
+			duration = 5475
+		}
+	}
+}
+
+country_event = { #Shadow Mediums
+	id = planetouched.5
+	title = planetouched.5.t
+	desc = planetouched.5.d
+	picture = MAGE_MOON_ALTER_eventPicture
+
+	trigger = {
+		has_estate = estate_planetouched
+		religion = fangaulan_pantheon
+		NOT = { has_country_modifier = PT_5_commune }
+		NOT = { has_country_modifier = PT_5_priests }
+		NOT = { has_country_modifier = PT_5_monopolize }
+		NOT = { has_country_modifier = PT_5_brought_to_court }
+		NOT = { has_country_modifier = PT_5_arrest }
+		NOT = { has_ruler_modifier = PT_5_ruler_divine }
+	}
+
+	is_triggered_only = yes
+
+	option = { #It is good to commune with your ancestors
+		name = planetouched.5.a
+		ai_chance = { factor = 50 }
+		trigger = {
+			NOT = {
+				has_estate_privilege = estate_planetouched_organization_oppressed
+			}
+		}
+		add_country_modifier = {
+			name = PT_5_commune
+			duration = 3650
+		}
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -10
+		}
+	}
+
+	option = { #Have the priests set the people straight
+		name = planetouched.5.b
+		ai_chance = { factor = 50 }
+		add_country_modifier = {
+			name = PT_5_priests
+			duration = 3650
+		}
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 10
+		}
+		add_estate_loyalty = {
+			estate = estate_planetouched
+			loyalty = -10
+		}
+	}
+
+	option = { #Arrest them for sacrilege
+		name = planetouched.5.f
+		ai_chance = { factor = 100 }
+		trigger = {
+			has_estate_privilege = estate_planetouched_organization_oppressed
+		}
+		add_mil_power = -15
+		add_country_modifier = {
+			name = PT_5_arrest
+			duration = 3650
+		}
+		add_estate_loyalty = {
+			estate = estate_planetouched
+			loyalty = -10
+		}
+		hidden_effect = {
+			add_estate_loyalty = {
+				estate = estate_planetouched
+				loyalty = -5
+			}
+			add_estate_loyalty = {
+				estate = all
+				loyalty = 5
+			}
+		}
+		custom_tooltip = pt_all_but_pt_gain_5
+	}
+
+	option = { #Allow the planetouched to monopolize the medium business
+		name = planetouched.5.c
+		ai_chance = { factor = 100 }
+		trigger = {
+			has_estate_privilege = estate_planetouched_organization_empowered
+		}
+		highlight = yes
+		add_country_modifier = {
+			name = PT_5_monopolize
+			duration = 5475
+		}
+		add_prestige = 10
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -10
+		}
+	}
+
+	option = { #Bring the best of the mediums to court
+		name = planetouched.5.e
+		ai_chance = { factor = 100 }
+		trigger = {
+			has_estate_privilege = estate_planetouched_organization_state
+		}
+		highlight = yes
+		add_country_modifier = {
+			name = PT_5_brought_to_court
+			duration = 3650
+		}
+		define_advisor = {
+			type = court_mage
+			skill = 2
+			cost_multiplier = 0.5
+		}
+	}
+
+	option = { #The ruler, too, has a whiff of the divine
+		name = planetouched.5.g
+		ai_chance = { factor = 200 }
+		trigger = {
+			ruler_has_personality = shadow_planetouched_personality
+		}
+		highlight = yes
+		add_stability_or_adm_power = yes
+		add_ruler_modifier = {
+			name = PT_5_ruler_divine
+		}
+	}
+}
+
+country_event = { #Bringer of Life
+	id = planetouched.6
+	title = planetouched.6.t
+	desc = {
+		trigger = { has_estate_privilege = estate_planetouched_organization_empowered }
+		desc = planetouched.6.d.empowered
+	}
+	desc = {
+		trigger = {	NOT = { has_estate_privilege = estate_planetouched_organization_empowered } }
+		desc = planetouched.6.d.notempowered
+	}
+	picture = NZINGHA_eventPicture
+
+	trigger = {
+		has_estate = estate_planetouched
+		is_year = 1500
+		NOT = { is_year = 1600 }
+		ai = no
+	}
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = { #Her efforts will ensure we have plenty of soldiers for years to come.
+		name = planetouched.6.a
+		ai_chance = { factor = 50 }
+		trigger = {
+			NOT = { has_estate_privilege = estate_planetouched_organization_oppressed }
+		}
+		add_country_modifier = {
+			name = PT_6_conscript
+			duration = 9125
+		}
+		if = {
+			limit = {
+				has_estate_privilege = estate_planetouched_organization_scattered
+			}
+			hidden_effect = {
+				add_estate_loyalty = {
+					estate = all
+					loyalty = -5
+				}
+				add_estate_loyalty = {
+					estate = estate_planetouched
+					loyalty = 5
+				}
+			}
+			custom_tooltip = pt_all_but_pt_lose_5
+		}
+	}
+
+	option = { #Put her to work for the nobility, not commoners
+		name = planetouched.6.g
+		ai_chance = { factor = 50 }
+		trigger = { NOT = { has_estate_privilege = estate_planetouched_organization_empowered } }
+		add_country_modifier = {
+			name = PT_6_nobles
+			duration = 9125
+		}
+		add_estate_loyalty = {
+			estate = estate_nobles
+			loyalty = 10
+		}
+	}
+
+	option = { #Arrest her for overstepping her place
+		name = planetouched.6.e
+		ai_chance = { factor = 100 }
+		trigger = { has_estate_privilege = estate_planetouched_organization_oppressed }
+		add_mil_power = -15
+		add_country_modifier = {
+			name = PT_6_arrest
+			duration = 3650
+		}
+		add_estate_loyalty = {
+			estate = estate_planetouched
+			loyalty = -10
+		}
+		hidden_effect = {
+			add_estate_loyalty = {
+				estate = estate_planetouched
+				loyalty = -10
+			}
+			add_estate_loyalty = {
+				estate = all
+				loyalty = 10
+			}
+		}
+		custom_tooltip = pt_all_but_pt_gain_10
+	}
+
+	option = { #Give her whatever she needs
+		name = planetouched.6.b
+		ai_chance = { factor = 100 }
+		trigger = { has_estate_privilege = estate_planetouched_organization_empowered }
+		highlight = yes
+		add_years_of_income = -0.1
+		add_country_modifier = {
+			name = PT_6_give_whatever
+			duration = 10950
+		}
+		hidden_effect = {
+			add_estate_loyalty = {
+				estate = all
+				loyalty = -5
+			}
+			add_estate_loyalty = {
+				estate = estate_planetouched
+				loyalty = 5
+			}
+		}
+		custom_tooltip = pt_all_but_pt_lose_5
+	}
+
+	option = { #Bring her to court
+		name = planetouched.6.c
+		ai_chance = { factor = 100 }
+		trigger = {
+			OR = {
+				has_estate_privilege = estate_planetouched_organization_state
+				ruler_has_personality = infertile_personality
+			}
+		}
+		highlight = yes
+		add_country_modifier = {
+			name = PT_6_court
+			duration = 9125
+		}
+		define_advisor = {
+			type = recruitmaster
+			skill = 2
+			cost_multiplier = 0.5
+			name = "Lumusi Sako"
+			female = yes
+			culture = binwarji
+			religion = fangaulan_pantheon
+		}
+	}
+
+	option = { #The ruler will assist her personally
+		name = planetouched.6.f
+		ai_chance = { factor = 200 }
+		trigger = { ruler_has_personality = life_planetouched_personality }
+		highlight = yes
+		add_country_modifier = {
+			name = PT_6_ruler
+			duration = 9125
+		}
+		if = {
+			limit = {
+				OR = {
+					has_estate_privilege = estate_planetouched_organization_scattered
+					has_estate_privilege = estate_planetouched_organization_oppressed
+				}
+			}
+			hidden_effect = {			
+				add_estate_loyalty = {
+					estate = all
+					loyalty = -5
+				}
+				add_estate_loyalty = {
+					estate = estate_planetouched
+					loyalty = 5
+				}
+			}
+			custom_tooltip = pt_all_but_pt_gain_5
+		}
+	}
+}
+
 # Turning ruler into planetouched commander.
 country_event = {
 	id = planetouched.100

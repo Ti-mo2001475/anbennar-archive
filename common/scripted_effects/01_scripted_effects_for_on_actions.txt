@@ -3370,6 +3370,26 @@ on_province_religion_changed_effect = { #Randomizer has fixed outcomes on this o
 		limit = { NOT = { religion_group = triunic_lake } }
 		remove_province_modifier = triunic_tolerated_foreign_missionaries
 	}
+	if = {
+		limit = {
+			owner = {
+				owns = 4801
+			}
+			has_terrain = jungle
+			religion = mystic_accord
+			4801 = {
+				has_great_project = {
+					type = tabai_spirit_palace
+					tier = 3
+				}
+				province_can_use_tabai_spirit_palace = yes
+			}
+		}
+		add_province_modifier = {
+			name = haless_tabai_spirit_palace
+			duration = -1
+		}
+	}
 }
 
 on_province_religion_converted_effect = {
@@ -19525,6 +19545,43 @@ on_province_owner_change_monuments = {
 			}
 		}
 	}
+	##Tabai Spirit-Palace
+	if = { limit = { province_id = 4801 }
+		if = { 
+			limit = {
+				has_great_project = {
+					type = tabai_spirit_palace
+					tier = 2
+				}
+			}
+			if = {
+				limit = {
+					has_great_project = {
+						type = tabai_spirit_palace
+						tier = 3
+					}
+					province_can_use_tabai_spirit_palace = yes
+				}
+				owner = {
+					every_owned_province = {
+						limit = {
+							religion = mystic_accord
+							has_terrain = jungle
+						}
+						add_province_modifier = {
+							name = haless_tabai_spirit_palace
+							duration = -1
+						}
+					}
+				}
+			}
+			FROM = {
+				every_owned_province = {
+					remove_province_modifier = haless_tabai_spirit_palace
+				}
+			}
+		}
+	}
 
 	##### When you have monument #####
 	if = { #Ascajar
@@ -19946,6 +20003,26 @@ on_province_owner_change_monuments = {
 	
 	hinuibee_hive_province_owner_change = yes
 	fluvial_waterworks_province_owner_change = yes
+	if = {
+		limit = {
+			owner = {
+				owns = 4801
+			}
+			religion = mystic_accord
+			has_terrain = jungle
+			4801 = {
+				has_great_project = {
+					type = tabai_spirit_palace
+					tier = 3
+				}
+				province_can_use_tabai_spirit_palace = yes
+			}
+		}
+		add_province_modifier = {
+			name = haless_tabai_spirit_palace
+			duration = -1
+		}
+	}
 }
 
 on_production_manufactory_built_effect = { #Farm Estate, Wharf, Plantation but not Ramparts
