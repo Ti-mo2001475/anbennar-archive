@@ -272,15 +272,40 @@ marrhold = {
 		}
 		
 		trigger = {
-			is_institution_enabled = manufactories
-			has_estate = estate_artificers
-			estate_loyalty = {
-				estate = estate_artificers
-				loyalty = 60
+			OR = {
+				AND = {
+					is_institution_enabled = manufactories
+					has_estate = estate_artificers
+					estate_loyalty = {
+						estate = estate_artificers
+						loyalty = 60
+					}
+				}
+				AND = {
+					treasury = 5000
+					any_ally = {
+						has_90_opinion_improved_relation = { target = ROOT }
+						trust = { who = ROOT value = 90}
+					}
+				}
 			}
 		}
 		
 		effect = {
+			if = {
+				limit = {
+					OR = {
+						NOT = { has_estate = estate_artificers }
+						NOT = {
+							estate_loyalty = {
+								estate = estate_artificers
+								loyalty = 60
+							}
+						}
+					}
+				}
+				add_treasury = -5000
+			}
 			if = {
 				limit = { has_dlc = "Lions of the North" }
 				add_country_modifier = {
@@ -400,9 +425,18 @@ marrhold_two = {
 		}
 		
 		trigger = {
-			has_global_modifier_value = {
-				which = cavalry_power
-				value = 0.4
+			OR = {
+				has_global_modifier_value = {
+					which = cavalry_power
+					value = 0.4
+				}
+				AND = {
+					has_global_modifier_value = {
+						which = cavalry_power
+						value = 0.3
+					}
+					cavalry_fraction = 0.35
+				}
 			}
 			barracks = 5
 		}
@@ -524,17 +558,28 @@ marrhold_two = {
 		}
 		
 		trigger = {
+			employed_advisor = { category = MIL skill = 3 }
 			895 = {
-				has_building = university
-			}
-			OR = {
-				army_organiser = 3
-				army_reformer = 3
-				commandant = 3
-				grand_captain = 3
-				recruitmaster = 3
-				fortification_expert = 3
-				quartermaster = 3
+				OR = {
+					has_building = university
+					AND = {
+						development = 25
+						OR = { # has_latest_manpower_building_trigger
+							has_building = training_fields
+							AND = {
+								NOT = { owner = { mil_tech = 16 } }
+								has_building = barracks
+							}
+						}
+						OR = {# has_latest_forcelimit_building_trigger
+							has_building = conscription_center
+							AND = {
+								NOT = { owner = { mil_tech = 22 } }
+								has_building = regimental_camp
+							}
+						}
+					}
+				}
 			}
 		}
 		
@@ -833,6 +878,11 @@ marrhold_three = {
 		}
 		
 		effect = {
+			add_stability_or_adm_power = yes
+			add_country_modifier = {
+				name = marrhold_chance
+				duration = 5475 #15 years
+			}
 			swapstoke_area = {
 				add_permanent_claim = ROOT
 			}
@@ -905,6 +955,22 @@ marrhold_three = {
 		}
 		
 		effect = {
+			add_country_modifier = {
+				name = marrhold_dominance
+				duration = 9125 #25 years
+			}
+			oldhaven_area = {
+				add_province_modifier = {
+					name = marrhold_solidified_control
+					duration = -1
+				}
+			}
+			sarwood_area = {
+				add_province_modifier = {
+					name = marrhold_solidified_control
+					duration = -1
+				}
+			}
 			coalwoud_area = {
 				add_permanent_claim = ROOT
 			}
@@ -970,7 +1036,7 @@ marrhold_three = {
 		
 		trigger = {
 			mil_power = 100
-			years_of_income = 0.5
+			treasury = 200
 			OR = {
 				army_reformer = 2
 				commandant = 2
@@ -980,7 +1046,7 @@ marrhold_three = {
 		
 		effect = {
 			add_mil_power = -100
-			add_years_of_income = -0.5
+			add_treasury = -200
 			add_country_modifier = {
 				name = marrhold_glory
 				duration = 7300 #20 years
@@ -1059,6 +1125,22 @@ marrhold_three = {
 			add_country_modifier = {
 				name = marrhold_woods
 				duration = 9125 #25 years
+			}
+			every_owned_province = {
+				limit = { superregion = deepwoods_superregion }
+				if = {
+					limit = { culture = marrodic }
+					add_province_modifier = {
+						name = marrhold_solidified_control
+						duration = -1
+					}
+				}
+				else = { #TODO add onaction to flip this to solidified control when culture conversion happens
+					add_province_modifier = {
+						name = marrhold_woods_province
+						duration = -1
+					}
+				}
 			}
 		}
 	}
@@ -1325,6 +1407,18 @@ marrhold_four = {
 		}
 		
 		effect = {
+			medirleigh_area = {
+				add_province_modifier = {
+					name = marrhold_solidified_control
+					duration = -1
+				}
+			}
+			swapstoke_area = {
+				add_province_modifier = {
+					name = marrhold_solidified_control
+					duration = -1
+				}
+			}
 			escerfork_area = {
 				limit = {
 					NOT = { is_core = ROOT }
@@ -1381,6 +1475,24 @@ marrhold_four = {
 		}
 		
 		effect = {
+			escerfork_area = {
+				add_province_modifier = {
+					name = marrhold_solidified_control
+					duration = -1
+				}
+			}
+			humacvord_area = {
+				add_province_modifier = {
+					name = marrhold_solidified_control
+					duration = -1
+				}
+			}
+			blademarch_area = {
+				add_province_modifier = {
+					name = marrhold_solidified_control
+					duration = -1
+				}
+			}
 			burnoll_area = {
 				limit = {
 					NOT = { is_core = ROOT }
@@ -1438,7 +1550,37 @@ marrhold_four = {
 		}
 		
 		effect = {
-			southgate_area = {
+			810 = { #arrowfield
+				add_building_construction = {
+					building = fort_15th
+					cost = 0.5
+				}
+			}
+			825 = { #smallmere
+				add_building_construction = {
+					building = fort_15th
+					cost = 0.5
+				}
+			}
+			burnoll_area = {
+				add_province_modifier = {
+					name = marrhold_solidified_control
+					duration = -1
+				}
+			}
+			blademarch_area = {
+				add_province_modifier = {
+					name = marrhold_solidified_control
+					duration = -1
+				}
+			}
+			themin_area = {
+				add_province_modifier = {
+					name = marrhold_solidified_control
+					duration = -1
+				}
+			}
+			oudeben_area = {
 				limit = {
 					NOT = { is_core = ROOT }
 					NOT = { is_permanent_claim = ROOT }
@@ -1489,7 +1631,13 @@ marrhold_four = {
 		effect = {
 			add_country_modifier = {
 				name = marrhold_trade_dominance
-				duration = 9125 #25 years
+				duration = -1
+			}
+			808 = { #vernham
+				add_province_modifier = {
+					name = marrhold_trade_dominance_local
+					duration = -1
+				}
 			}
 		}
 	}
@@ -1535,19 +1683,20 @@ marrhold_four = {
 		}
 		
 		trigger = {
-			monthly_income = 50
+			monthly_income = 100
 			development_in_provinces = {
-				value = 400
+				value = 650
 				culture = marrodic
 			}
 		}
 		
 		effect = {
+			add_country_modifier = {
+				name = marrhold_riches
+				duration = -1
+			}
 			add_prestige = 50
 			add_splendor = 200
-			add_adm_power = 75
-			add_dip_power = 75
-			add_mil_power = 75
 		}
 	}
 }
@@ -1577,6 +1726,7 @@ marrhold_five = {
 		}
 		
 		trigger = {
+			treasury = 50
 			896 = {
 				owned_by = ROOT
 				base_production = 8
@@ -1588,7 +1738,7 @@ marrhold_five = {
 		}
 		
 		effect = {
-			add_years_of_income = -0.5
+			add_treasury = -50
 			896 = {
 				add_permanent_province_modifier = {
 					name = adv_big_forge
@@ -1874,6 +2024,16 @@ marrhold_five = {
 		}
 		
 		effect = {
+			add_country_modifier = {
+				name = marrhold_prize
+				duration = 1825 #5 years
+			}
+			southgate_area = {
+				add_province_modifier = {
+					name = marrhold_solidified_control
+					duration = -1
+				}
+			}
 			castonath_area = {
 				add_permanent_claim = ROOT
 			}

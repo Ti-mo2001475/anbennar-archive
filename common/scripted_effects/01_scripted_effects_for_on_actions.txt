@@ -8382,6 +8382,19 @@ on_province_culture_change_effect = {
 	}
 	if = {
 		limit = {
+			owner = { tag = B36 mission_completed = marrhold_feybane }
+			superregion = deepwoods_superregion
+			NOT = { has_province_modifier = marrhold_solidified_control }
+			culture = marrodic
+		}
+		remove_province_modifier = marrhold_woods_province
+		add_permanent_province_modifier = {
+			name = marrhold_solidified_control
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
 			owner = { has_government_attribute = cheaper_goblin_governance }
 			culture_group = goblin
 			NOT = { has_province_modifier = goblin_citizens }
@@ -15381,6 +15394,59 @@ on_province_owner_change_effect = {
 			country_event = { id = escanni_wars.4 }
 		}
 	}
+
+	if = {
+		limit = {
+			tag = B36
+			OR = {
+				AND = {
+					owner = { mission_completed = marrhold_marches }
+					OR = {
+						area = escerfork_area
+						area = humacvord_area
+						area = blademarch_area
+					}
+				}
+				AND = {
+					owner = { mission_completed = marrhold_dominance }
+					OR = {
+						area = oldhaven_area
+						area = sarwood_area
+					}
+				}
+				AND = {
+					owner = { mission_completed = marrhold_eyes_on_prize }
+					area = southgate_area
+				}
+				AND = {
+					owner = { mission_completed = marrhold_silvermere }
+					OR = {
+						area = burnoll_area
+						area = themin_area
+						area = oudeben_area
+					}
+				}
+				AND = {
+					owner = { mission_completed = marrhold_grudge }
+					OR = {
+						area = medirleigh_area
+						area = swapstoke_area
+					}
+				}
+				AND = {
+					owner = { mission_completed = marrhold_feybane }
+					superregion = deepwoods_superregion
+					culture = marrodic
+				}
+			}
+		}
+
+		add_province_modifier = {
+			name = marrhold_solidified_control
+			duration = -1
+		}
+	}
+
 	#broken masquerade vampires t3 tier down
 	if = {
 		limit = {
