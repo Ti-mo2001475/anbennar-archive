@@ -1577,6 +1577,39 @@ ban_necromancy = {
 		limit = { is_overall_advancing_school = { school = necromancy } }
 		hidden_effect = { country_event = { id = magic_system.99 } }
 	}
+	if = {
+		limit = { has_country_modifier = undead_military }
+		reset_racial_military_via_administration = yes
+	}
+}
+
+unban_necromancy = { #currently unused
+	custom_tooltip = unban_necromancy_tt
+	clr_country_flag = banned_necromancy
+	clr_ruler_flag = banned_necromancy
+
+	if = { #Copy-pasted code from racial_mil_change_military_effect
+		limit = { at_least_magic_project_level = { project = army_of_the_dead level = 1 } }
+		clear_racial_military = yes
+
+		add_country_modifier = { name = $RACE$_military duration = -1 hidden = yes }
+		tooltip = { add_country_modifier = { name = $RACE$_military duration = -1 } } #TODO Jothell check this works
+
+		if = {
+			limit = { has_country_flag = aotd_skeleton_army }
+			add_country_modifier = { name = aotd_skeleton_mod duration = -1 }
+		}
+		if = {
+			limit = { has_country_flag = aotd_zombie_army }
+			add_country_modifier = { name = aotd_zombie_mod duration = -1 }
+		}
+		if = {
+			limit = { has_country_flag = aotd_centaur_army }
+			add_country_modifier = { name = aotd_centaur_mod duration = -1 }
+		}
+
+		racial_mil_change_mil_sub_effects = yes
+	}
 }
 
 #####################
@@ -2160,19 +2193,22 @@ magic_level_up_all_ruler_schools = {
 
 estate_action_RECRUIT_WAR_WIZARD = {
 	if = {
-		limit = { exactly_magic_project_level = { project = battlemage_academy level = 3 } }
-		add_mil_power = -40
-	}
-	else_if = {
-		limit = { exactly_magic_project_level = { project = battlemage_academy level = 2 } }
-		add_mil_power = -60
-	}
-	else_if = {
-		limit = { exactly_magic_project_level = { project = battlemage_academy level = 1 } }
-		add_mil_power = -80
-	}
-	else = {
-		add_mil_power = -100
+		limit = { NOT = { has_country_modifier = magocracy_knight_heir } }
+		if = {
+			limit = { exactly_magic_project_level = { project = battlemage_academy level = 3 } }
+			add_mil_power = -40
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = battlemage_academy level = 2 } }
+			add_mil_power = -60
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = battlemage_academy level = 1 } }
+			add_mil_power = -80
+		}
+		else = {
+			add_mil_power = -100
+		}
 	}
 	create_war_wizard = yes
 }

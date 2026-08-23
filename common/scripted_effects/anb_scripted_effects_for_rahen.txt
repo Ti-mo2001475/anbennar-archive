@@ -2273,7 +2273,7 @@ command_move_orc_slave_state = { #tag = R63 OR R64   target = command_move_targe
 						if = {
 							limit = {
 								continent = asia
-								NOT = { culture_group = wuhyun }
+								NOT = { culture_is_wuhyun = yes }
 							}
 							export_to_variable = {
 								which = original_wuhyun_culture
@@ -4233,6 +4233,22 @@ raj_become_prabhi = {
     }
 }
 
+raj_become_umsadhri = {
+	if = {
+		limit = { NOT = { government = monarchy } }
+		change_government = monarchy
+	}
+	hidden_effect = {
+		event_target:raj_raja_global_target = {
+			create_subject = {
+				subject_type = umsadhri_vassal
+				subject = PREV
+			}
+		}
+    }
+	add_government_reform = umsadhri_reform
+}
+
 raj_become_vizier = {
 	hidden_effect = {
 		if = {
@@ -4334,6 +4350,7 @@ raj_dismantling_effect = {
 					is_subject_of_type = daimyo_vassal
 					is_subject_of_type = great_daimyo_vassal
 					is_subject_of_type = vizier_vassal
+					is_subject_of_type = umsadhri_vassal
 				}
 			}
 			#Grant freedom from old raja

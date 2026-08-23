@@ -170,13 +170,6 @@ transfer_trade_power = {
 			set_country_flag = trade_power_count_4
 			clr_country_flag = trade_power_count_3
 		}
-		if = {
-			limit = { has_saved_global_event_target = feiten_or_was_feiten_target }
-			if = {
-				limit = { tag = event_target:feiten_or_was_feiten_target }
-				FROM = { set_country_flag = transfers_trade_to_feiten }
-			}
-		}
 	}
 }
 
@@ -1409,10 +1402,10 @@ declarewar = {
 				has_country_flag = J84_lizardfolk_expedition_flag
 				FROM = {
 					OR = {
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 						num_of_owned_provinces_with = {
 							value = 10
-							culture_group = lizardfolk
+							culture_is_lizardfolk = yes
 						}
 					}
 				}
@@ -4262,7 +4255,7 @@ insultaction = {
 			limit = {
 				OR = {
 					tag = H89
-					tag = S45
+					is_or_was_tag = { tag = S45 }
 				}
 			}
 			ROOT = { change_variable = { insult_counter = 1 } }
@@ -4332,6 +4325,7 @@ insultaction = {
 					limit = {
 						is_great_power = no
 						NOT = { num_of_subjects = 1 }
+						NOT = { is_subject = yes }
 					}
 					reverse_add_casus_belli = { type = cb_vassalize_mission target = ROOT months = 120 }
 				}
@@ -4444,6 +4438,42 @@ insultaction = {
 			dragon_turtle_change_friendship = { dragon_turtle = kealakys_ever_hungry amount = -5 }
 		}
 		else = { dragon_turtle_change_friendship = { dragon_turtle = kealakys_ever_hungry amount = -3 } }
+		
+		# Bardic Magic
+		if = {
+			limit = {
+				has_country_modifier = enchantment_1_aria_of_affection_spell_mod
+				OR = {
+					reverse_has_opinion_modifier = {
+						who = FROM
+						modifier = scornfully_insulted
+					}
+					NOT = { has_dlc = "Dharma" }
+				}
+			}
+			FROM = {
+				remove_opinion = {
+					who = ROOT
+					modifier = scornfully_insulted
+				}
+				remove_opinion = {
+					who = ROOT
+					modifier = insulted
+				}
+				add_opinion = {
+					who = ROOT
+					modifier = enchantment_bardic_aria_of_affection_reverse_insult
+				}
+				add_favors = {
+					who = ROOT
+					amount = 20
+				}
+				country_event = { # This will lose some trust and check trust threshold
+					id = magic_spell.406
+					days = 1825 # 5 years
+				}
+			}
+		}
 	}
 }
 

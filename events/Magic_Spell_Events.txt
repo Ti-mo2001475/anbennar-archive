@@ -532,6 +532,45 @@ country_event = { #Dominate to Surrender notification
 	}
 }
 
+country_event = { #Bardic Magic - Aria of Affection timeout
+	id = magic_spell.406
+	title = magic_spell.406.t
+	desc = magic_spell.406.desc
+	picture = PIRATES_CAPTURED_eventPicture # placeholder
+	
+	is_triggered_only = yes
+	hidden = yes
+
+	option = {
+		name = magic_spell.406.a
+		ai_chance = { factor = 1 }
+
+		# This event is fired for the receiver of my insult
+		# FROM should be the country who sent the insult
+
+		# They lose 10 trust of me
+		add_trust = {
+			who = FROM
+			value = -10
+		}
+		# If their trust of me is now below 50, gain negative opinion
+		if = {
+			limit = {
+				NOT = {
+					trust = {
+						who = FROM
+						value = 50
+					}
+				}
+			}
+			add_opinion = {
+				who = FROM
+				modifier = enchantment_bardic_aria_of_affection_taken_advantage
+			}
+		}
+	}
+}
+
 ###########################
 ### EVOCATION (500-599) ###
 ###########################
@@ -714,7 +753,7 @@ country_event = { #Fear and Loathing
 		name = magic_spell.601.a
 		ai_chance = { factor = 1 }
 		
-		tooltip = { add_country_modifier = { name = illusion_1_fear_and_loathing_sabotage_mod duration = 3650 } }
+		tooltip = { add_country_modifier = { name = illusion_1_fear_and_loathing_sabotage_mod duration = 1825 } }
 
 		if = {
 			limit = { war_with = FROM } #rivals don't get rebels
@@ -1242,5 +1281,222 @@ country_event = { #Add Fire that Burns the Body and Soul
 	option = {
 		name = magic_spell.807.a
 		add_ruler_modifier = { name = fire_that_burn_the_body_and_soul duration = 1825 }
+	}
+}
+
+country_event = { #Rite of Conception: Theocracy
+	id = magic_spell.808
+	title = magic_spell.808.t
+	desc = magic_spell.808.desc
+	picture = KINGS_CHOICE_eventPicture
+	is_triggered_only = yes
+
+	immediate = { hidden_effect = { remove_country_modifier = transmutation_3_rite_of_conception_cooldown_mod anb_pre_election_setup = yes } }
+	after = { anb_post_election_cleanup = yes }
+
+	option = { #Administrator
+		name = magic_spell.808.a
+
+		custom_tooltip = magic_spell_808_a_tt
+
+		if = {
+			limit = { can_see_theocratic_heir_stats_trigger = yes }
+			if = {
+				limit = {
+					OR = {
+						has_global_modifier_value = {
+							which = female_advisor_chance
+							value = 1
+						}
+						# Anbennar - Female priests by culture or religion
+						culture_group = harpy
+					}
+				}
+				define_heir = {
+					age = 22
+					female = yes
+					change_adm = 1
+				}
+			}
+			else = {
+				define_heir_random_gender = {
+					age = 22
+					change_adm = 1
+					number = 1
+				}
+			}
+		}
+		else = {
+			if = {
+				limit = {
+					OR = {
+						has_global_modifier_value = {
+							which = female_advisor_chance
+							value = 1
+						}
+						# Anbennar - Female priests by culture or religion
+						culture_group = harpy
+					}
+				}
+				define_heir = {
+					age = 22
+					female = yes
+					change_adm = 1
+					hidden = yes
+				}
+			}
+			else = {
+				define_heir_random_gender = {
+					age = 22
+					change_adm = 1
+					hidden = yes
+					number = 1
+				}
+			}
+		}
+
+		define_powerful_mage = { type = heir }
+		hidden_effect = { magic_school_level_up = { school = illusion type = heir } }
+	}
+
+	option = { #Diplomat
+		name = magic_spell.808.b
+
+		custom_tooltip = magic_spell_808_b_tt
+
+		if = {
+			limit = { can_see_theocratic_heir_stats_trigger = yes }
+			if = {
+				limit = {
+					OR = {
+						has_global_modifier_value = {
+							which = female_advisor_chance
+							value = 1
+						}
+						# Anbennar - Female priests by culture or religion
+						culture_group = harpy
+					}
+				}
+				define_heir = {
+					age = 25
+					female = yes
+					change_dip = 1
+				}
+			}
+			else = {
+				define_heir_random_gender = {
+					age = 25
+					change_dip = 1
+					number = 2
+				}
+			}
+		}
+		else = {
+			if = {
+				limit = {
+					OR = {
+						has_global_modifier_value = {
+							which = female_advisor_chance
+							value = 1
+						}
+						# Anbennar - Female priests by culture or religion
+						culture_group = harpy
+					}
+				}
+				define_heir = {
+					age = 25
+					female = yes
+					change_dip = 1
+					hidden = yes
+				}
+			}
+			else = {
+				define_heir_random_gender = {
+					age = 25
+					change_dip = 1
+					hidden = yes
+					number = 2
+				}
+			}
+		}
+
+		define_powerful_mage = { type = heir }
+		hidden_effect = { magic_school_level_up = { school = enchantment type = heir } }
+	}
+
+	option = { #Warrior
+		name = magic_spell.808.c
+
+		custom_tooltip = magic_spell_808_c_tt
+
+		if = {
+			limit = { can_see_theocratic_heir_stats_trigger = yes }
+			if = {
+				limit = {
+					OR = {
+						has_global_modifier_value = {
+							which = female_advisor_chance
+							value = 1
+						}
+						# Anbennar - Female priests by culture or religion
+						culture_group = harpy
+					}
+				}
+				define_heir = {
+					age = 28
+					female = yes
+					change_mil = 1
+				}
+			}
+			else = {
+				define_heir_random_gender = {
+					age = 28
+					change_mil = 1
+					number = 3
+				}
+			}
+		}
+		else = {
+			if = {
+				limit = {
+					OR = {
+						has_global_modifier_value = {
+							which = female_advisor_chance
+							value = 1
+						}
+						# Anbennar - Female priests by culture or religion
+						culture_group = harpy
+					}
+				}
+				define_heir = {
+					age = 28
+					female = yes
+					change_mil = 1
+					hidden = yes
+				}
+			}
+			else = {
+				define_heir_random_gender = {
+					age = 28
+					change_mil = 1
+					hidden = yes
+					number = 3
+				}
+			}
+		}
+
+		define_powerful_mage = { type = heir }
+		hidden_effect = { magic_school_level_up = { school = evocation type = heir } }
+	}
+
+	option = { #Current Heir
+		name = magic_spell.808.d
+		trigger = { has_heir = yes }
+
+		custom_tooltip = magic_spell_808_d_tt
+
+		define_powerful_mage = { type = heir }
+		add_stability_or_adm_power = yes
+		add_devotion = 10
 	}
 }
