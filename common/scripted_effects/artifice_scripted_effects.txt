@@ -4965,6 +4965,24 @@ artifice_tiering_progress = {
 	}
 }
 
+artifice_advance_basic_to_advanced = {
+	set_country_flag = artifice_unlocked_advanced
+	clr_country_flag = artifice_unlocked_basic
+	set_variable = {
+		which = artifice_level_progress
+		value = 0
+	}
+}
+
+artifice_advance_advanced_to_expert = {
+	set_country_flag = artifice_unlocked_expert
+	clr_country_flag = artifice_unlocked_advanced
+	set_variable = {
+		which = artifice_level_progress
+		value = 0
+	}
+}
+
 artifice_tiering_update = {
 	if = {
 		limit = {
@@ -4972,70 +4990,56 @@ artifice_tiering_update = {
 		}
 		if = {
 			limit = {
-				is_year = 1500
 				has_country_flag = artifice_unlocked_basic
 				NOT = { has_country_flag = artifice_limited_to_tier_1 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 2
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							is_year = 1500
+							check_variable = {
+								which = artifice_level_progress
+								value = 2
+							}
+						}
+						AND = {
+							NOT = { is_year = 1500 }
+							check_variable = {
+								which = artifice_level_progress
+								value = 4
+							}
+						}
+					}
 				}
-			}
-			set_country_flag = artifice_unlocked_advanced
-			clr_country_flag = artifice_unlocked_basic
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
-			}
-		}
-		else_if = {
-			limit = {
-				NOT = { is_year = 1500 }
-				has_country_flag = artifice_unlocked_basic
-				NOT = { has_country_flag = artifice_limited_to_tier_1 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 4
-				}
-			}
-			set_country_flag = artifice_unlocked_advanced
-			clr_country_flag = artifice_unlocked_basic
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
+				artifice_advance_basic_to_advanced = yes
 			}
 		}
 		else_if = {			
 			limit = { 
-				is_year = 1550
 				has_country_flag = artifice_unlocked_advanced
 				NOT = { has_country_flag = artifice_limited_to_tier_2 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 2
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							is_year = 1550
+							check_variable = {
+								which = artifice_level_progress
+								value = 2
+							}
+						}
+						AND = {
+							NOT = { is_year = 1550 }
+							check_variable = {
+								which = artifice_level_progress
+								value = 4
+							}
+						}
+					}
 				}
-			}
-			set_country_flag = artifice_unlocked_expert
-			clr_country_flag = artifice_unlocked_advanced
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
-			}
-		}
-		else_if = {
-			limit = { 
-				NOT = { is_year = 1550 }
-				has_country_flag = artifice_unlocked_advanced
-				NOT = { has_country_flag = artifice_limited_to_tier_2 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 4
-				}
-			}
-			set_country_flag = artifice_unlocked_expert
-			clr_country_flag = artifice_unlocked_advanced
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
+				artifice_advance_advanced_to_expert = yes
 			}
 		}
 	}
@@ -5048,70 +5052,56 @@ artifice_tiering_update = {
 		}
 		if = {
 			limit = {
-				is_year = 1500
 				has_country_flag = artifice_unlocked_basic
 				NOT = { has_country_flag = artifice_limited_to_tier_1 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 3
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							is_year = 1500
+							check_variable = {
+								which = artifice_level_progress
+								value = 3
+							}
+						}
+						AND = {
+							NOT = { is_year = 1500 }
+							check_variable = {
+								which = artifice_level_progress
+								value = 6
+							}
+						}
+					}
 				}
-			}
-			set_country_flag = artifice_unlocked_advanced
-			clr_country_flag = artifice_unlocked_basic
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
-			}
-		}
-		else_if = {
-			limit = {
-				NOT = { is_year = 1500 }
-				has_country_flag = artifice_unlocked_basic
-				NOT = { has_country_flag = artifice_limited_to_tier_1 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 6
-				}
-			}
-			set_country_flag = artifice_unlocked_advanced
-			clr_country_flag = artifice_unlocked_basic
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
+				artifice_advance_basic_to_advanced = yes
 			}
 		}
 		else_if = {			
-			limit = { 
-				is_year = 1550
+			limit = {
 				has_country_flag = artifice_unlocked_advanced
 				NOT = { has_country_flag = artifice_limited_to_tier_2 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 3
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							is_year = 1550
+							check_variable = {
+								which = artifice_level_progress
+								value = 3
+							}
+						}
+						AND = {
+							NOT = { is_year = 1550 }
+							check_variable = {
+								which = artifice_level_progress
+								value = 6
+							}
+						}
+					}
 				}
-			}
-			set_country_flag = artifice_unlocked_expert
-			clr_country_flag = artifice_unlocked_advanced
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
-			}
-		}
-		else_if = {
-			limit = { 
-				NOT = { is_year = 1550 }
-				has_country_flag = artifice_unlocked_advanced
-				NOT = { has_country_flag = artifice_limited_to_tier_2 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 6
-				}
-			}
-			set_country_flag = artifice_unlocked_expert
-			clr_country_flag = artifice_unlocked_advanced
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
+				artifice_advance_advanced_to_expert = yes
 			}
 		}	
 	}
@@ -5124,70 +5114,56 @@ artifice_tiering_update = {
 		}
 		if = {
 			limit = {
-				is_year = 1500
 				has_country_flag = artifice_unlocked_basic
 				NOT = { has_country_flag = artifice_limited_to_tier_1 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 6
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							is_year = 1500
+							check_variable = {
+								which = artifice_level_progress
+								value = 6
+							}
+						}
+						AND = {
+							NOT = { is_year = 1500 }
+							check_variable = {
+								which = artifice_level_progress
+								value = 12
+							}
+						}
+					}
 				}
-			}
-			set_country_flag = artifice_unlocked_advanced
-			clr_country_flag = artifice_unlocked_basic
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
-			}
-		}
-		else_if = {
-			limit = {
-				NOT = { is_year = 1500 }
-				has_country_flag = artifice_unlocked_basic
-				NOT = { has_country_flag = artifice_limited_to_tier_1 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 12
-				}
-			}
-			set_country_flag = artifice_unlocked_advanced
-			clr_country_flag = artifice_unlocked_basic
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
+				artifice_advance_basic_to_advanced = yes
 			}
 		}
 		else_if = {			
 			limit = { 
-				is_year = 1550
 				has_country_flag = artifice_unlocked_advanced
 				NOT = { has_country_flag = artifice_limited_to_tier_2 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 6
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							is_year = 1550
+							check_variable = {
+								which = artifice_level_progress
+								value = 6
+							}
+						}
+						AND = {
+							NOT = { is_year = 1550 }
+							check_variable = {
+								which = artifice_level_progress
+								value = 12
+							}
+						}
+					}
 				}
-			}
-			set_country_flag = artifice_unlocked_expert
-			clr_country_flag = artifice_unlocked_advanced
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
-			}
-		}
-		else_if = {
-			limit = { 
-				NOT = { is_year = 1550 }
-				has_country_flag = artifice_unlocked_advanced
-				NOT = { has_country_flag = artifice_limited_to_tier_2 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 12
-				}
-			}
-			set_country_flag = artifice_unlocked_expert
-			clr_country_flag = artifice_unlocked_advanced
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
+				artifice_advance_advanced_to_expert = yes
 			}
 		}		
 	}
