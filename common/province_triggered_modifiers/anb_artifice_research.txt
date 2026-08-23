@@ -174,18 +174,7 @@ artifice_research_ptm = {
 						}
 					}
 				}
-				if = {
-					limit = {
-						OR = {
-							tag = Y20
-							was_tag = Y20
-						}
-					}
-					set_variable = {
-						which = artificeResearchOptionsFeiten
-						value = 2
-					}
-				}
+
 				#Tier options left checker
 				if = {
 					limit = {
@@ -242,6 +231,27 @@ artifice_research_ptm = {
 					}
 					artifice_research_select_innovation_options_effect = yes
 				}
+
+				# separate unique selection for feiten
+				if = {
+					limit = {
+						is_or_was_tag = { tag = Y20 }
+					}
+					set_variable = {
+						which = artificeResearchOptionsFeiten
+						value = 2
+					}
+					while = {
+						limit = {
+							check_variable = {
+								which = artificeResearchOptionsFeiten
+								value = 1
+							}
+						}
+						artifice_research_feiten_select_innovation_options_effect = yes
+					}
+				}
+
 				country_event = {
 					id = artifice_research.3
 					#days = 10
