@@ -515,7 +515,7 @@ country_event = {
 }
 
 
-#What Doesn’t Kill You…
+#What Doesn't Kill You...
 country_event = {
 	id = beast_memory.21
 	title = beast_memory.21.t
@@ -559,7 +559,7 @@ country_event = {
 		name = beast_memory.21.b
         ai_chance = { factor = 50 }
         add_legitimacy = 10
-        add_yearly_manpower = 0.25
+        add_yearly_manpower = -0.25
         add_country_modifier = {
             name = beast_memory_cracking_down
             duration = 3650
@@ -607,14 +607,14 @@ country_event = {
 	trigger = {
         culture_group = inyaswarosa
         NOT = { 
-            has_country_modifier = had_mongoose_assassination_event
+            has_country_modifier = had_wild_kind_of_madness
         }
 	}
 
     immediate = {
         hidden_effect = {
             add_country_modifier = {
-                name = had_mongoose_assassination_event
+                name = had_wild_kind_of_madness
                 duration = 5475
                 hidden = yes
             }
@@ -629,17 +629,13 @@ country_event = {
         ai_chance = { factor = 50 }
         add_yearly_manpower = -0.25
         if = {
-            trigger = {
+            limit = {
                 OR = {
                     religion = sky_domain
                     religion = beast_memory
                 }
             }
-            add_church_power = 25
-        }
-        add_ruler_modifier = {
-            name = beast_memory_survived_assassination
-            duration = -1
+            add_church_power = -25
         }
 	}
 
@@ -674,6 +670,7 @@ country_event = {
         highlight = yes
         trigger = {
             personality = zealot_personality
+            religion = beast_memory
         }
         ai_chance = { factor = 100 }
         add_treasury = -50
@@ -765,7 +762,7 @@ country_event = {
         add_church_power = 50
         add_manpower = -0.001
         if = {
-            trigger = {
+            limit = {
                 OR = {
                     religion = sky_domain
                     religion = beast_memory
@@ -881,9 +878,7 @@ country_event = {
 	is_triggered_only = yes
 
     trigger = {
-        any_owned_province = {
-            religion = beast_memory
-        }
+        num_of_religion = { religion = beast_memory value = 1 }
         NOT = { 
             any_owned_province = {
                 OR = {
@@ -967,6 +962,7 @@ country_event = {
 
     trigger = {
         religion = beast_memory
+        num_of_religion = { religion = beast_memory value = 1 }
         NOT = {
             has_country_modifier = had_young_and_restless
         }
