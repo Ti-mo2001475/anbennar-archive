@@ -11,6 +11,29 @@ levaajan_effect = {
 		custom_tooltip = $aspect$_country_modifiers_tt
 		hidden_effect = { add_country_modifier = { name = $aspect$_country_mod duration = 3650 } }
 	}
+
+	if = { #The High Bastion Monument
+		limit = {
+			owns = 6804 #Irdenkhiid
+			can_use_the_high_bastion = yes
+			has_great_project = {
+				type = the_high_bastion
+				tier = 2
+			}
+		}
+		if = {
+			limit = {
+				6804 = { #Irdenkhiid
+					has_great_project = {
+						type = the_high_bastion
+						tier = 3
+					}
+				}
+			}
+			add_yearly_manpower = 0.5
+		}
+		else = { add_yearly_manpower = 0.25 }
+	}
 }
 
 levaajan_save_as_target = {
