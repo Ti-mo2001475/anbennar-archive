@@ -181,7 +181,7 @@ marrhold = {
 		effect = {
 			add_country_modifier = {
 				name = "marrhold_salvation"
-				duration = 7300 #20 years
+				duration = -1
 			}
 		}
 	}
@@ -374,7 +374,7 @@ marrhold_two = {
 		
 		trigger = {
 			any_owned_province = {
-				development = 10
+				base_production = 9
 				has_building = farm_estate
 			}
 		}
@@ -385,6 +385,36 @@ marrhold_two = {
 				add_country_modifier = {
 					name = marrhold_griffon_breeding_dlc
 					duration = 7300 #20 years
+				}
+				custom_tooltip = marrhold_applicable_stables_tt
+				tooltip = {
+					random_owned_province = {
+						limit = { 
+							base_production = 9
+							has_building = farm_estate
+						}
+						add_province_modifier = {
+							name = marrhold_griffon_pasture
+							duration = -1
+						} 
+					}
+				}
+				hidden_effect = {
+					for = {
+						amount = 10
+						effect = "
+						random_owned_province = { #10
+							limit = { 
+								base_production = 9
+								has_building = farm_estate
+								NOT = { has_province_modifier = marrhold_griffon_pasture }
+							}
+							add_province_modifier = {
+								name = marrhold_griffon_pasture
+								duration = -1
+							} 
+						}"
+					}
 				}
 			}
 			else = {
@@ -584,9 +614,11 @@ marrhold_two = {
 		}
 		
 		effect = {
-			add_country_modifier = {
-				name = marrhold_feather_academy
-				duration = 9125 #25 years
+			895 = { #griffonsgate
+				add_permanent_province_modifier = {
+					name = marrhold_feather_academy
+					duration = -1
+				}
 			}
 		}
 	}
@@ -1049,7 +1081,7 @@ marrhold_three = {
 			add_treasury = -200
 			add_country_modifier = {
 				name = marrhold_glory
-				duration = 7300 #20 years
+				duration = -1
 			}
 		}
 	}
@@ -1126,19 +1158,38 @@ marrhold_three = {
 				name = marrhold_woods
 				duration = 9125 #25 years
 			}
-			every_owned_province = {
-				limit = { superregion = deepwoods_superregion }
-				if = {
-					limit = { culture = marrodic }
-					add_province_modifier = {
-						name = marrhold_solidified_control
-						duration = -1
-					}
-				}
-				else = { #TODO add onaction to flip this to solidified control when culture conversion happens
+			custom_tooltip = marrhold_woods_control_tt
+			tooltip = {
+				3035 = {
 					add_province_modifier = {
 						name = marrhold_woods_province
 						duration = -1
+					}
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = { superregion = deepwoods_superregion }
+					if = {
+						limit = {
+							OR = {
+								culture = marrodic
+								AND = {
+									culture = wood_elf
+									owner = { accepted_culture = wood_elf }
+								}
+							}
+						}
+						add_province_modifier = {
+							name = marrhold_solidified_control
+							duration = -1
+						}
+					}
+					else = { #TODO add onaction to flip this to solidified control when culture conversion happens
+						add_province_modifier = {
+							name = marrhold_woods_province
+							duration = -1
+						}
 					}
 				}
 			}
@@ -1153,30 +1204,14 @@ marrhold_three = {
 		}
 		
 		provinces_to_highlight = {
-			OR = {
-				region = west_deepwoods_region
-				region = east_deepwoods_region
-			}
-			OR = {
-				unrest = 1
-				nationalism = 1
-			}
+			superregion = deepwoods_superregion
+			NOT = { has_province_modifier = marrhold_solidified_control }
 		}
 		
 		trigger = {
-			west_deepwoods_region= {
+			deepwoods_superregion = {
 				type = all
-				NOT = {
-					unrest = 1
-					nationalism = 1
-				}
-			}
-			east_deepwoods_region = {
-				type = all
-				NOT = {
-					unrest = 1
-					nationalism = 1
-				}
+				has_province_modifier = marrhold_solidified_control
 			}
 		}
 		
@@ -1254,7 +1289,7 @@ marrhold_three = {
 			add_dip_power = -200
 			add_mil_power = -200
 			if = {
-				limit = { government = monarchy }
+				limit = { government = monarchy } #TODO hand out marrhold_griffon_empire_legacy when forming EWOC tags
 				add_government_reform = griffon_empire_reform
 			}
 			else = {
@@ -1535,6 +1570,7 @@ marrhold_four = {
 		}
 		
 		trigger = {
+			treasury = 200
 			burnoll_area = {
 				country_or_non_sovereign_subject_holds = ROOT
 				type = all
@@ -1556,7 +1592,7 @@ marrhold_four = {
 					cost = 0.5
 				}
 			}
-			825 = { #smallmere
+			823 = { #burnoll
 				add_building_construction = {
 					building = fort_15th
 					cost = 0.5
@@ -1568,7 +1604,7 @@ marrhold_four = {
 					duration = -1
 				}
 			}
-			blademarch_area = {
+			oudeben_area = {
 				add_province_modifier = {
 					name = marrhold_solidified_control
 					duration = -1
@@ -1580,7 +1616,7 @@ marrhold_four = {
 					duration = -1
 				}
 			}
-			oudeben_area = {
+			southgate_area = {
 				limit = {
 					NOT = { is_core = ROOT }
 					NOT = { is_permanent_claim = ROOT }
