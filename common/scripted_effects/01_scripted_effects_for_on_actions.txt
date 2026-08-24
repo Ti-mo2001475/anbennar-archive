@@ -20015,7 +20015,19 @@ on_province_owner_change_monuments = {
 			duration = -1
 		}
 	}
+
 	the_high_bastion_on_action_effect = yes
+
+	if = { #Ghalorcander Monument
+		limit = {
+			has_great_project = {
+				type = ghalorcander
+				tier = 3
+			}
+			FROM = { can_use_ghalorcander = yes }
+		}
+		double_manufactory_modifiers = yes
+	}
 }
 
 on_production_manufactory_built_effect = { #Farm Estate, Wharf, Plantation but not Ramparts
@@ -20040,6 +20052,7 @@ on_production_manufactory_built_effect = { #Farm Estate, Wharf, Plantation but n
 		}
 		owner = { dragon_turtle_change_friendship = { dragon_turtle = grandfather_moss amount = 3 } }
 	}
+	ghalorcander_on_built_manufactory_effect = { manufactory = production }
 }
 
 on_production_manufactory_destroyed_effect = { #Farm Estate, Wharf, Plantation but not Ramparts
@@ -20056,6 +20069,7 @@ on_production_manufactory_destroyed_effect = { #Farm Estate, Wharf, Plantation b
 			}
 		}
 	}
+	remove_province_modifier = double_manufactory_modifiers_production
 }
 
 on_idea_taken_effect = { #Any basic idea e.g. "War Council" in Mercenary ideas or "Global Empire" in Exploration
