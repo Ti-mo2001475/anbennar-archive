@@ -1318,3 +1318,123 @@ pajeong_end_effects = {
 	remove_estate_privilege = estate_nobles_disobedience_of_the_hwalbaek
 	remove_estate_privilege = estate_church_disobedience_of_the_neoksamaji
 }
+
+the_high_bastion_on_action_effect = {
+	if = {
+		limit = {
+			owner = {
+				owns = 6804 #Irdenkhiid
+				can_use_the_high_bastion = yes
+			}
+			6804 = { #Irdenkhiid
+				has_great_project = {
+					type = the_high_bastion
+					tier = 1
+				}
+			}
+		}
+		if = {
+			limit = { province_id = 6804 } #Irdenkhiid
+			if = {
+				limit = {
+					has_great_project = {
+						type = the_high_bastion
+						tier = 3
+					}
+				}
+				owner = {
+					every_owned_province = {
+						limit = {
+							has_climate = arid
+							has_fort_building_trigger = yes
+						}
+						remove_province_modifier = the_high_bastion_arid_fort_1
+						remove_province_modifier = the_high_bastion_arid_fort_2
+						add_province_modifier = {
+							name = the_high_bastion_arid_fort_3
+							duration = -1
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					has_great_project = {
+						type = the_high_bastion
+						tier = 2
+					}
+				}
+				owner = {
+					every_owned_province = {
+						limit = {
+							has_climate = arid
+							has_fort_building_trigger = yes
+						}
+						remove_province_modifier = the_high_bastion_arid_fort_1
+						remove_province_modifier = the_high_bastion_arid_fort_3
+						add_province_modifier = {
+							name = the_high_bastion_arid_fort_2
+							duration = -1
+						}
+					}
+				}
+			}
+			else = {
+				owner = {
+					every_owned_province = {
+						limit = {
+							has_climate = arid
+							has_fort_building_trigger = yes
+						}
+						remove_province_modifier = the_high_bastion_arid_fort_2
+						remove_province_modifier = the_high_bastion_arid_fort_3
+						add_province_modifier = {
+							name = the_high_bastion_arid_fort_1
+							duration = -1
+						}
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_climate = arid
+				has_fort_building_trigger = yes
+			}
+			if = {
+				limit = {
+					6804 = { #Irdenkhiid
+						has_great_project = {
+							type = the_high_bastion
+							tier = 3
+						}
+					}
+				}
+				add_province_modifier = {
+					name = the_high_bastion_arid_fort_3
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					6804 = { #Irdenkhiid
+						has_great_project = {
+							type = the_high_bastion
+							tier = 2
+						}
+					}
+				}
+				add_province_modifier = {
+					name = the_high_bastion_arid_fort_2
+					duration = -1
+				}
+			}
+			else = {
+				add_province_modifier = {
+					name = the_high_bastion_arid_fort_1
+					duration = -1
+				}
+			}
+		}
+	}
+}
