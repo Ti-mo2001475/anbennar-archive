@@ -14938,6 +14938,43 @@ the_defiant_province_scripted_effect = {
 	}
 }
 
+thousand_words_assembly_per_province_scripted_effect = {
+	if = {
+		limit = {
+			4859 = {
+				has_great_project = {
+					type = thousand_words_assembly
+					tier = 3
+				}
+			}
+		}
+		add_province_modifier = {
+			name = thousand_words_assembly_yanszin_buff_3
+			duration = -1
+		}
+	}
+	else_if = {
+		limit = {
+			4859 = {
+				has_great_project = {
+					type = thousand_words_assembly
+					tier = 2
+				}
+			}
+		}
+		add_province_modifier = {
+			name = thousand_words_assembly_yanszin_buff_2
+			duration = -1
+		}
+	}
+	else = {
+		add_province_modifier = {
+			name = thousand_words_assembly_yanszin_buff_1
+			duration = -1
+		}
+	}
+}
+
 thousand_words_assembly_province_scripted_effect = {
 	#Thousand Words Assembly
 	if = {
@@ -14954,40 +14991,7 @@ thousand_words_assembly_province_scripted_effect = {
 				}
 			}
 		}
-		if = {
-			limit = {
-				4859 = {
-					has_great_project = {
-						type = thousand_words_assembly
-						tier = 3
-					}
-				}
-			}
-			add_province_modifier = {
-				name = thousand_words_assembly_yanszin_buff_3
-				duration = -1
-			}
-		}
-		else_if = {
-			limit = {
-				4859 = {
-					has_great_project = {
-						type = thousand_words_assembly
-						tier = 2
-					}
-				}
-			}
-			add_province_modifier = {
-				name = thousand_words_assembly_yanszin_buff_2
-				duration = -1
-			}
-		}
-		else = {
-			add_province_modifier = {
-				name = thousand_words_assembly_yanszin_buff_1
-				duration = -1
-			}
-		}
+		thousand_words_assembly_per_province_scripted_effect = yes
 	}
 	if = {
 		limit = {
@@ -15025,42 +15029,33 @@ thousand_words_assembly_province_scripted_effect = {
 					limit = {
 						province_group = yanszin_heartland_group
 					}
-					if = {
-						limit = {
-							4859 = {
-								has_great_project = {
-									type = thousand_words_assembly
-									tier = 3
-								}
-							}
-						}
-						add_province_modifier = {
-							name = thousand_words_assembly_yanszin_buff_3
-							duration = -1
-						}
-					}
-					else_if = {
-						limit = {
-							4859 = {
-								has_great_project = {
-									type = thousand_words_assembly
-									tier = 2
-								}
-							}
-						}
-						add_province_modifier = {
-							name = thousand_words_assembly_yanszin_buff_2
-							duration = -1
-						}
-					}
-					else = {
-						add_province_modifier = {
-							name = thousand_words_assembly_yanszin_buff_1
-							duration = -1
-						}
-					}
+					thousand_words_assembly_per_province_scripted_effect = yes
 				}
 			}
 		}
 	}
 }
+
+port_of_two_spirits_per_province_scripted_effect = {
+	if = {
+		limit = {
+			4774 = {
+				has_great_project = {
+					type = port_of_two_spirits
+					tier = 3
+				}
+			}
+		}
+		add_province_modifier = {
+			name = port_of_two_spirits_trade_center_modifier_2
+			duration = -1
+		}
+	}
+	else = {
+		add_province_modifier = {
+			name = port_of_two_spirits_trade_center_modifier_1
+			duration = -1
+		}
+	}
+}
+
