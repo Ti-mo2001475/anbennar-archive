@@ -321,12 +321,21 @@ I26_salla_elyn_2_quiet = {
 					loyalty = 50
 				}
 			}
+			dip_power = 150
 		}
 
 		effect = {
+			add_dip_power = -150
 			add_country_modifier = {
 				name = I26_down_the_river_modifier
-				duration = 3650
+				duration = 9125
+			}
+			custom_tooltip = I26_following_the_flow_tt
+			hidden_effect = {
+				country_event = {
+					id = flavor_salla_elyn.500
+					days = 365
+				}
 			}
 		}
 	}
@@ -793,7 +802,10 @@ I26_salla_elyn_3 = {
 			}
 			custom_trigger_tooltip = {
 				tooltip = I26_liberate_the_thorn_grove_flag_tt
-				has_country_flag = I26_liberate_the_thorn_grove_flag
+				OR = {
+					has_country_flag = I26_liberate_the_thorn_grove_flag_success
+					has_country_flag = I26_liberate_the_thorn_grove_flag_fail
+				}
 			}
 			if = {
 				limit = { has_estate = estate_mages }
@@ -820,8 +832,18 @@ I26_salla_elyn_3 = {
 			custom_tooltip = I26_first_agenda_effect_effect_tooltip
 			if = {
 				limit = {
-					NOT = { has_country_flag = I26_liberate_the_mountain_grove_flag }
-					NOT = { has_country_flag = I26_liberate_the_bone_grove_flag }
+					NOT = { 
+						OR = {
+							has_country_flag = I26_liberate_the_mountain_grove_flag_success
+							has_country_flag = I26_liberate_the_mountain_grove_flag_fail
+						}
+					}
+					NOT = { 
+						OR = {
+							has_country_flag = I26_liberate_the_bone_grove_flag_success
+							has_country_flag = I26_liberate_the_bone_grove_flag_fail
+						}
+					}
 				}
 				add_country_modifier = {
 					name = I26_drennen_knowledge_modifier
@@ -918,9 +940,6 @@ I26_salla_elyn_3_back_again_2 = {
 			}
 			set_country_flag = I26_unlock_train_rhaidd_flag
 			custom_tooltip = I26_viridescent_tower_effect_tooltip
-			hidden_effect = {
-				add_stability = 2
-			}
 			capital_scope = {
 				discover_country = A85
 			}
@@ -1071,12 +1090,30 @@ I26_salla_elyn_3_2 = {
 			
 			custom_trigger_tooltip = {
 				tooltip = I26_a_verdant_crown_trigger_tooltip
-				has_country_flag = I26_liberate_the_mountain_grove_flag
-				has_country_flag = I26_liberate_the_bone_grove_flag
-				has_country_flag = I26_liberate_the_thorn_grove_flag
-				has_country_flag = I26_liberate_the_lake_grove_flag
-				has_country_flag = I26_liberate_the_hunter_grove_flag
-				has_country_flag = I26_liberate_the_arrow_grove_flag
+				OR = {
+					has_country_flag = I26_liberate_the_mountain_grove_flag_success
+					has_country_flag = I26_liberate_the_mountain_grove_flag_fail
+				}
+				OR = {
+					has_country_flag = I26_liberate_the_bone_grove_flag_success
+					has_country_flag = I26_liberate_the_bone_grove_flag_fail
+				}
+				OR = {
+					has_country_flag = I26_liberate_the_thorn_grove_flag_success
+					has_country_flag = I26_liberate_the_thorn_grove_flag_fail
+				}
+				OR = {
+					has_country_flag = I26_liberate_the_lake_grove_flag_success
+					has_country_flag = I26_liberate_the_lake_grove_flag_fail
+				}
+				OR = {
+					has_country_flag = I26_liberate_the_hunter_grove_flag_success
+					has_country_flag = I26_liberate_the_hunter_grove_flag_fail
+				}
+				OR = {
+					has_country_flag = I26_liberate_the_arrow_grove_flag_success
+					has_country_flag = I26_liberate_the_arrow_grove_flag_fail
+				}
 			}
 			calc_true_if = {
 				deepwoods_superregion = {
@@ -1169,7 +1206,10 @@ I26_salla_elyn_4 = {
 		trigger = {
 			custom_trigger_tooltip = {
 				tooltip = I26_first_victory_of_many_trigger_tooltip
-				has_country_flag = I26_liberate_the_lake_grove_flag
+				OR = {
+					has_country_flag = I26_liberate_the_lake_grove_flag_success
+					has_country_flag = I26_liberate_the_lake_grove_flag_fail
+				}
 			}
 			prestige = 35
 		}
@@ -1209,7 +1249,10 @@ I26_salla_elyn_4 = {
 			}
 			custom_trigger_tooltip = {
 				tooltip = I26_struggle_no_more_trigger_tooltip
-				has_country_flag = I26_liberate_the_bone_grove_flag
+				OR = {
+					has_country_flag = I26_liberate_the_bone_grove_flag_success
+					has_country_flag = I26_liberate_the_bone_grove_flag_fail
+				}
 			}
 			if = {
 				limit = { ai = yes }
@@ -1233,8 +1276,18 @@ I26_salla_elyn_4 = {
 			custom_tooltip = I26_first_agenda_effect_effect_tooltip
 			if = {
 				limit = {
-					NOT = { has_country_flag = I26_liberate_the_mountain_grove_flag }
-					NOT = { has_country_flag = I26_liberate_the_thorn_grove_flag }
+					NOT = { 
+						OR = {
+							has_country_flag = I26_liberate_the_mountain_grove_flag_success
+							has_country_flag = I26_liberate_the_mountain_grove_flag_fail
+						}
+					}
+					NOT = { 
+						OR = {
+							has_country_flag = I26_liberate_the_thorn_grove_flag_success
+							has_country_flag = I26_liberate_the_thorn_grove_flag_fail
+						}
+					}
 				}
 				add_country_modifier = {
 					name = I26_cenagi_pathfinder_modifier
@@ -1281,7 +1334,10 @@ I26_salla_elyn_4 = {
 		trigger = {
 			custom_trigger_tooltip = {
 				tooltip = I26_the_first_priority_trigger_tooltip
-				has_country_flag = I26_liberate_the_hunter_grove_flag
+				OR = {
+					has_country_flag = I26_liberate_the_hunter_grove_flag_success
+					has_country_flag = I26_liberate_the_hunter_grove_flag_fail
+				}
 			}
 			custom_trigger_tooltip = {
 				tooltip = I26_the_first_priority_trigger_tooltip2
@@ -1634,7 +1690,10 @@ I26_salla_elyn_5 = {
 		trigger = {
 			custom_trigger_tooltip = {
 				tooltip = I26_honor_our_alliance_trigger_tooltip
-				has_country_flag = I26_liberate_the_mountain_grove_flag
+				OR = {
+					has_country_flag = I26_liberate_the_mountain_grove_flag_success
+					has_country_flag = I26_liberate_the_mountain_grove_flag_fail
+				}
 			}
 			diplomatic_reputation = 5
 			I27 = {
@@ -1654,8 +1713,18 @@ I26_salla_elyn_5 = {
 			custom_tooltip = I26_first_agenda_effect_effect_tooltip
 			if = {
 				limit = {
-					NOT = { has_country_flag = I26_liberate_the_thorn_grove_flag }
-					NOT = { has_country_flag = I26_liberate_the_bone_grove_flag }
+					NOT = { 
+						OR = {
+							has_country_flag = I26_liberate_the_thorn_grove_flag_success
+							has_country_flag = I26_liberate_the_thorn_grove_flag_fail
+						}
+					}
+					NOT = { 
+						OR = {
+							has_country_flag = I26_liberate_the_bone_grove_flag_success
+							has_country_flag = I26_liberate_the_bone_grove_flag_fail
+						}
+					}
 				}
 				add_country_modifier = {
 					name = I26_united_leadership_modifier

@@ -1107,9 +1107,11 @@ custom_button = { #vampire_spread_action
 	effect = {
 		ROOT = { hidden_effect = { set_country_flag = spread_vamps_@FROM } }
 		FROM = {
-			capital_scope = {
-				#Event uses random_owned_province
-				add_province_triggered_modifier = custom_diplo_ui_vampire_spread_action_ptm
+			hidden_effect = {
+				capital_scope = {
+					#Event uses random_owned_province
+					add_province_triggered_modifier = custom_diplo_ui_vampire_spread_action_ptm
+				}
 			}
 			change_estate_land_share = {
 				estate = estate_vampires
@@ -3247,15 +3249,13 @@ custom_button = { # U39_assassination_action
 		}
 	}
 	effect = {
-		hidden_effect = {
-			set_country_flag = orenvalyam_assassination_target_flag
-			FROM = {
-				clr_country_flag = U39_assassination_success_flag
-				clr_country_flag = U39_assassination_fail_flag
-				set_country_flag = U39_assassination_ongoing
-				tooltip = { country_event = { id = orenvalyam_events.400 days = 1 } }
-				hidden_effect = { capital_scope = { add_province_triggered_modifier = orenvalyam_randomness_ptm } }
-			}
+		set_country_flag = orenvalyam_assassination_target_flag
+		FROM = {
+			clr_country_flag = U39_assassination_success_flag
+			clr_country_flag = U39_assassination_fail_flag
+			set_country_flag = U39_assassination_ongoing
+			tooltip = { country_event = { id = orenvalyam_events.400 days = 1 } }
+			hidden_effect = { capital_scope = { add_province_triggered_modifier = orenvalyam_randomness_ptm } }
 		}
 		FROM = {
 			if = {
