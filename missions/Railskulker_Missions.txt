@@ -618,7 +618,6 @@ railskulker_column_1_pt2 = {
 					owned_by = ROOT
 				}
 				devastation = 1
-				has_province_flag = flooded_province
 			}
 			NOT = { province_id = 4120 }
 			NOT = { province_id = 4121 }
@@ -633,7 +632,6 @@ railskulker_column_1_pt2 = {
 						AND = {
 							owned_by = ROOT
 							NOT = { devastation = 1 }
-							NOT = { has_province_flag = flooded_province }
 						}
 						province_id = 4120
 						province_id = 4121
@@ -650,47 +648,61 @@ railskulker_column_1_pt2 = {
 			country_event =  { id = flavour_railskulker.6 }
 		}
 	}
-	railskulker_new_places_new_mushrooms = {
-		icon = mission_have_manufactories
+	railskulker_absolutely_no_stealing = {
+		icon = mission_horse_siege
 		position = 12
 		required_missions = {
 			railskulker_take_the_vale
-			}
+		}
 			
 		provinces_to_highlight = {
-			region = serpents_vale_region
+			province_id = 4147 #orlazam az dihr
 			NOT = {
 				AND = {
-					owned_by = ROOT
-					has_manufactory_trigger = yes
-					development = 7
+					country_or_non_sovereign_subject_holds = ROOT
+					owner = {
+						dwarovar_goblin_culture_primary = yes
+					}
+					hold_condition = { Repaired = yes }
 				}
 			}
-			NOT = {	province_id = 4120 }
-			NOT = { province_id = 4121 }
 		}
 			
 		trigger = {
-			has_country_modifier = railskulker_a_populous_kept_calm
-			serpents_vale_region = {
-				type = all
-				custom_trigger_tooltip = {
-					tooltip = railskulker_new_places_new_mushrooms_tt
-					OR = {
-						AND = {
-							owned_by = ROOT
-							development = 7
-							has_manufactory_trigger = yes
-						}
-						province_id = 4120
-						province_id = 4121
-					}
+			4147 = { #orlazam az dihr
+				country_or_non_sovereign_subject_holds = ROOT
+				owner = {
+					dwarovar_goblin_culture_primary = yes
 				}
+				hold_condition = { Repaired = yes }
 			}
+			treasury = 300
 		}
 			
 		effect = {
-			country_event = { id = flavour_railskulker.7 }
+			if = {
+				limit = {
+					4147 = { #orlazam az dihr
+						dwarovar_goblin_culture = yes
+					}
+				}
+				4147 = { #orlazam az dihr 
+					add_devastation = -100
+				}
+				add_treasury = -150
+			}
+			
+			else = {
+				4147 = { #orlazam az dihr
+					change_culture = ROOT
+					change_religion = ROOT
+					add_devastation = -100
+					add_base_manpower = -2
+					add_base_production = -2
+					add_base_tax = -1
+				}
+				add_treasury = -300
+			}
 		}
 	}
 }
@@ -1253,9 +1265,55 @@ railskulker_column_1_pt3 = {
 		has_country_flag = railskulker_missions_pt3
 	}
 
+	railskulker_new_places_new_mushrooms = {
+		icon = mission_have_manufactories
+		position = 13
+		required_missions = {
+			railskulker_absolutely_no_stealing
+		}
+			
+		provinces_to_highlight = {
+			region = serpents_vale_region
+			NOT = {
+				AND = {
+					owned_by = ROOT
+					has_manufactory_trigger = yes
+					development = 7
+					NOT = { has_province_flag = flooded_province }
+				}
+			}
+			NOT = {	province_id = 4120 }
+			NOT = { province_id = 4121 }
+		}
+			
+		trigger = {
+			has_country_modifier = railskulker_a_populous_kept_calm
+			serpents_vale_region = {
+				type = all
+				custom_trigger_tooltip = {
+					tooltip = railskulker_new_places_new_mushrooms_tt
+					OR = {
+						AND = {
+							owned_by = ROOT
+							development = 7
+							has_manufactory_trigger = yes
+							NOT = { has_province_flag = flooded_province }
+						}
+						province_id = 4120
+						province_id = 4121
+					}
+				}
+			}
+		}
+			
+		effect = {
+			country_event = { id = flavour_railskulker.7 }
+		}
+	}
+
 	railskulker_an_alternative_use = {
 		icon = gory_to_the_black_army
-		position = 13
+		position = 14
 		required_missions = {
 			railskulker_new_places_new_mushrooms
 		}
@@ -1309,64 +1367,6 @@ railskulker_column_1_pt3 = {
 			}
 		}
 	}
-
-	railskulker_absolutely_no_stealing = {
-		icon = mission_horse_siege
-		position = 14
-		required_missions = {
-			railskulker_an_alternative_use
-		}
-			
-		provinces_to_highlight = {
-			province_id = 4147 #orlazam az dihr
-			NOT = {
-				AND = {
-					country_or_non_sovereign_subject_holds = ROOT
-					owner = {
-						dwarovar_goblin_culture_primary = yes
-					}
-					hold_condition = { Repaired = yes }
-				}
-			}
-		}
-			
-		trigger = {
-			4147 = { #orlazam az dihr
-				country_or_non_sovereign_subject_holds = ROOT
-				owner = {
-					dwarovar_goblin_culture_primary = yes
-				}
-				hold_condition = { Repaired = yes }
-			}
-			treasury = 300
-		}
-			
-		effect = {
-			if = {
-				limit = {
-					4147 = { #orlazam az dihr
-						dwarovar_goblin_culture = yes
-					}
-				}
-				4147 = { #orlazam az dihr 
-					add_devastation = -100
-				}
-				add_treasury = -150
-			}
-			
-			else = {
-				4147 = { #orlazam az dihr
-					change_culture = ROOT
-					change_religion = ROOT
-					add_devastation = -100
-					add_base_manpower = -2
-					add_base_production = -2
-					add_base_tax = -1
-				}
-				add_treasury = -300
-			}
-		}
-	}
 }
 	
 railskulker_column_2_pt3 = {
@@ -1383,7 +1383,7 @@ railskulker_column_2_pt3 = {
 		icon = kingdom_of_lombardy
 		position = 15
 		required_missions = {
-			railskulker_absolutely_no_stealing
+			railskulker_an_alternative_use
 			railskulker_the_last_threat
 			}
 			
