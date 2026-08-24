@@ -422,7 +422,7 @@ barracks = {
 				name = G46_barracks_buff
 				duration = -1
 			}
-		}		
+		}
 	} 
 	on_destroyed = {
 		on_manpower_building_destroyed_effect = yes
@@ -944,7 +944,6 @@ regimental_camp = {
 				duration = -1
 			}
 		}
-
 	}
 	on_destroyed = {
 		on_forcelimit_building_destroyed_effect = yes
@@ -1661,7 +1660,7 @@ training_fields = {
 			# FROM = {
 				# add_manpower = -1
 			# }
-		# }		
+		# }
 	}
 	on_obsolete = {
 		remove_development_from_building = {
@@ -3492,6 +3491,27 @@ soldier_households = {
 				duration = -1
 			}
 		}
+
+		#The Defiant
+		if = {
+			limit = {
+				owner = { 
+					owns = 4917 
+					can_use_the_defiant_trigger = yes
+				}
+				4917 = {
+					has_great_project = {
+						type = the_defiant
+						tier = 3
+					}
+				}
+			}
+			add_province_modifier = {
+				name = the_defiant_soldier_households_buff
+				hidden = yes
+				duration = -1
+			}
+		}
 	}
 
 	on_destroyed = {
@@ -3558,6 +3578,8 @@ soldier_households = {
 			limit = { has_province_modifier = zerat_soldiers_household }
 			remove_province_modifier = zerat_soldiers_household
 		}
+
+		remove_province_modifier = the_defiant_soldier_households_buff
 	}
 	on_obsolete = {
 	}
