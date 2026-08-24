@@ -3598,10 +3598,7 @@ necromancy_1_contagion_trigger = { #Contagion
 	has_not_banned_necromancy = yes
 	is_overall_necromancy_level_1_minimum = yes
 	[[player] has_mana_to_cast_spell = { school = necromancy level = 1 id = contagion } ]
-	siege_magic_trigger = { [[menu] menu = yes defense_trigger = "necromancy_1_contagion_local_trigger = yes" ] }
-}
-necromancy_1_contagion_local_trigger = { # Contagion
-	province_has_not_contagion = yes	#might be that this trigger need this particular syntax, so I'm putting the scripted trigger inside, rather than replacing
+	siege_magic_trigger = { [[menu] menu = yes defense_trigger = "province_has_not_contagion = yes" ] }
 }
 necromancy_2_speak_with_dead_trigger = { # Speak With Dead
 	has_not_banned_necromancy = yes
@@ -3779,10 +3776,7 @@ transmutation_1_plant_growth_trigger = { # Plant Growth
 transmutation_1_mass_enlarge_trigger = { # Mass Enlarge
 	is_overall_transmutation_level_1_minimum = yes
 	[[player] has_mana_to_cast_spell = { school = transmutation level = 1 id = mass_enlarge } ]
-	siege_magic_trigger = { offense = yes [[menu] menu = yes offense_trigger = "transmutation_1_mass_enlarge_local_trigger = yes" ] }
-}
-transmutation_1_mass_enlarge_local_trigger = {
-	NOT = { has_province_modifier = transmutation_1_mass_enlarge_local_mod }
+	siege_magic_trigger = { offense = yes [[menu] menu = yes offense_trigger = "province_has_not_mass_enlarge = yes" ] }
 }
 transmutation_2_transmute_to_gold_trigger = { # Transmute to Gold
 	is_overall_transmutation_level_2_minimum = yes
@@ -3861,6 +3855,18 @@ has_not_cast_plant_growth = {
 	custom_trigger_tooltip = {
 		tooltip = has_not_cast_plant_growth
 		NOT = { has_cast_plant_growth = yes }
+	}
+}
+province_has_mass_enlarge = {
+	custom_trigger_tooltip = {
+		tooltip = province_has_mass_enlarge
+		has_province_modifier = transmutation_1_mass_enlarge_local_mod
+	}
+}
+province_has_not_mass_enlarge = {
+	custom_trigger_tooltip = {
+		tooltip = province_has_not_mass_enlarge
+		NOT = { province_has_mass_enlarge = yes }
 	}
 }
 has_cast_reshape_terrain = {
