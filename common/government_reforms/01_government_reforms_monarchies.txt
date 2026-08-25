@@ -4574,7 +4574,7 @@ orcish_kingdom_reform = {
 	allow_normal_conversion = yes
 	potential = {
 		OR = {
-			culture_group = orcish
+			culture_is_orcish = yes
 			culture_is_half_orcish = yes
 		}
 	}
@@ -4582,7 +4582,7 @@ orcish_kingdom_reform = {
 	valid_for_nation_designer = yes
 	nation_designer_cost = 0
 	nation_designer_trigger = {
-		culture_group = orcish
+		culture_is_orcish = yes
 	}
 
 	modifiers = {
@@ -4601,8 +4601,7 @@ ogre_kingdom = {
 	valid_for_nation_designer = yes
 	nation_designer_cost = 10
 	nation_designer_trigger = {
-		culture_group = ogre
-		NOT = { primary_culture = horned_ogre }
+		is_western_ogre_primary_culture = yes
 	}
 	lock_level_when_selected = yes
 	maintain_dynasty = yes
@@ -4630,8 +4629,11 @@ mengotsa = {
 	valid_for_nation_designer = yes
 	nation_designer_cost = 50
 	nation_designer_trigger = {
-		culture_group = ogre
-		NOT = { primary_culture = horned_ogre }
+		OR = {
+			culture = mossmouth_ogre
+			culture = fathide_ogre
+			culture = bloodtooth_ogre
+		}
 	}
 
 	lock_level_when_selected = yes
@@ -4663,8 +4665,11 @@ ogre_empire = {
 	valid_for_nation_designer = yes
 	nation_designer_cost = 75
 	nation_designer_trigger = {
-		culture_group = ogre
-		NOT = { primary_culture = horned_ogre }
+		OR = {
+			culture = mossmouth_ogre
+			culture = fathide_ogre
+			culture = bloodtooth_ogre
+		}
 	}
 
 	lock_level_when_selected = yes
@@ -4693,8 +4698,11 @@ great_ogre_horde = {
 	valid_for_nation_designer = yes
 	nation_designer_cost = 100
 	nation_designer_trigger = {
-		culture_group = ogre
-		NOT = { primary_culture = horned_ogre }
+		OR = {
+			culture = mossmouth_ogre
+			culture = fathide_ogre
+			culture = bloodtooth_ogre
+		}
 	}
 
 	lock_level_when_selected = yes
@@ -5500,6 +5508,37 @@ senapti_reform = {
 		locked_government_type = yes
 		is_raja_subject = yes
 		locked_T1_reform = yes
+	}
+}
+
+umsadhri_reform = { #Unique colonial subject for Raja
+	icon = "vandiphan_thalassocracy"
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	maintain_dynasty = yes
+
+	potential = {
+		has_reform = umsadhri_reform
+		is_colonial_nation = yes
+		OR = {
+			overlord = { has_government_attribute = is_raja }
+			any_known_country = {
+				war_with = ROOT
+				has_government_attribute = is_raja
+			}
+		}
+	}
+	valid_for_nation_designer = no
+	legacy_equivalent = daimyo_legacy
+	modifiers = {
+		global_sailors_modifier = 0.1
+		naval_forcelimit_modifier = 0.2
+	}
+
+	custom_attributes = {
+		locked_government_type = yes
+		is_raja_subject = yes
+		locked_T1_reform = yes		
 	}
 }
 
@@ -9503,7 +9542,7 @@ harpy_honours_system = {
 	allow_normal_conversion = yes
 	potential = {
 		has_country_flag = H72_harpy_honours
-		NOT = { culture_group = harpy }
+		NOT = { culture_is_harpy = yes }
 	}
 	trigger = {
 		OR = {
@@ -9511,8 +9550,8 @@ harpy_honours_system = {
 			high_tolerance_harpy_race_trigger = yes
 		}
 		OR = {
-			any_owned_province = { culture_group = harpy }
-			any_subject_country = { culture_group = harpy }
+			any_owned_province = { culture_is_harpy = yes }
+			any_subject_country = { culture_is_harpy = yes }
 		}
 	}
 	modifiers = {
@@ -16717,4 +16756,20 @@ relic_lords_of_taychend = {
         remove_country_modifier = relic_lords_absolutism_4
         remove_country_modifier = relic_lords_absolutism_5
     }
+}
+
+A29_tripartite_empire_reform = {
+	icon = "crown"
+	lock_level_when_selected = yes
+	potential = {
+		has_reform = A29_tripartite_empire_reform
+	}
+	modifiers = {
+		governing_capacity_modifier = 0.2
+		min_autonomy_in_territories = -0.1
+	}
+	custom_attributes = {
+		locked_government_type = yes
+		locked_T1_reform = yes
+	}
 }

@@ -2639,9 +2639,14 @@ gained_development_from_building = {
 	has_province_flag = built_dev_$building$
 }
 
-#1.35
+#1.35 [Eco ideas finisher]
 gained_dev_from_eco_building = {
 	has_province_flag = built_eco_dev_$building$
+}
+
+# Limited sources of this ability stack with eco finisher but not with each other
+gained_dev_from_special_building = {
+	has_province_flag = built_special_dev_$building$
 }
 
 gained_development_from_any_building = {
@@ -2939,6 +2944,7 @@ is_not_free_merc_company = {
 		NOT = { mercenary_company = merc_elemental_animals }
 		NOT = { mercenary_company = merc_spiritfire_elementals }
 		NOT = { mercenary_company = merc_far_suns_elite }
+		NOT = { mercenary_company = merc_war_alchemists }
 	}
 }
 
@@ -5337,16 +5343,8 @@ neighbor_is_ahead_in_institution = {
 }
 
 eligible_for_gov_tribal_reform_monster_non_horde = {
-	OR = {
-		culture_group = orcish
-		culture_group = goblin
-		culture_group = harpy
-		culture_group = ogre
-		culture_group = giantkind
-		culture_group = kobold
-		culture_group = gnollish
-		##culture_group = centaur
-	}
+	monstrous_culture = yes
+	NOT = { culture_is_centaur = yes }
 	is_tribal = yes
 	NOT = { has_reform = ogre_horde }
 	NOT = { has_reform = emerald_horde }

@@ -3068,6 +3068,26 @@ kai_diligent_bureucracy = {
 		halved_parliament_bribes = yes
 		manufactory_development_discount = yes
 	}
+	effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					has_manufactory_trigger = yes
+				}
+				anb_manufactory_discount = yes
+			}
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					has_manufactory_trigger = yes
+				}
+				anb_manufactory_discount_remove = yes
+			}
+		}
+	}
 }
 
 kai_diligent_bureucracy_no_dlc = {
@@ -10460,6 +10480,31 @@ kheionai_the_kheionolyklos = {
 
 	effect = {
 		custom_tooltip = kheionai_the_kheionolyklos_effect_tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					has_seat_in_parliament = yes
+				}
+				if = {
+					limit = {
+						OR = {
+							has_terrain = city_terrain
+							development = 20
+						} 
+					}
+					add_province_modifier = {
+						name = kheionai_the_kheionolyklos_good_mod
+						duration = -1
+					}
+				}
+				else = {
+					add_province_modifier = {
+						name = kheionai_the_kheionolyklos_bad_mod
+						duration = -1
+					}
+				}
+			}
+		}
 	}
 	
 	removed_effect = {
@@ -10642,30 +10687,28 @@ mangrove_dictatorship = {
 
 magical_oversight_reform = {
 	icon = "indian_crown"
-	lock_level_when_selected = yes
 	allow_normal_conversion = yes
 	potential = {
 		has_estate = estate_mages
 	}
 	modifiers = {
 		max_estate_spell_levels = 1
-		mages_estate_experience_mod = 0.2
+		mages_estate_experience_mod = 0.15
 	}
 	removed_effect = {
  		if = {
 			limit = { has_estate_privilege = estate_mages_development_of_mage_towers }
-				every_owned_province = {
-					limit = {
-                        has_building = mage_tower
-					}
-					add_province_modifier = { 
-						name = estate_mages_development_of_mage_towers_mod
-						duration = -1
-					}
-					remove_province_modifier = estate_mages_development_of_mage_towers_improved_mod
+			every_owned_province = {
+				limit = {
+					has_building = mage_tower
+				}
+				add_province_modifier = { 
+					name = estate_mages_development_of_mage_towers_mod
+					duration = -1
+				}
+				remove_province_modifier = estate_mages_development_of_mage_towers_improved_mod
 			}
 		}
-
  	}
 	effect = {
 		hidden_effect = {

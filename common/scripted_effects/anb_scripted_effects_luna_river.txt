@@ -157,7 +157,15 @@ please_city = {
 			add_corruption = 5
 		}
 	}
-	else = {
+	else_if = {
+		limit = {
+			NOT = {
+				check_variable = {
+					which = lunaRiverAttitudeVariable
+					value = 5
+				}
+			}
+		}
 		custom_tooltip = please_city_tt
 		hidden_effect = {
 			change_variable = {
@@ -165,6 +173,9 @@ please_city = {
 				value = 1
 			}
 		}
+	}
+	else = {
+		custom_tooltip = please_city_capped_tt
 	}
 }
 
@@ -176,7 +187,13 @@ anger_city = {
 			add_corruption = -2.5
 		}
 	}
-	else = {
+	else_if = {
+		limit = { 
+			check_variable = {
+				which = lunaRiverAttitudeVariable
+				value = 2
+			}
+		}
 		custom_tooltip = anger_city_tt
 		hidden_effect = {
 			subtract_variable = {
@@ -184,6 +201,9 @@ anger_city = {
 				value = 1
 			}
 		}
+	}
+	else = {
+		custom_tooltip = anger_city_capped_tt
 	}
 }
 
