@@ -4028,3 +4028,27 @@ merc_emperors_flame = {
 		morale_damage_received = -0.1
 	}
 }
+
+# Pinklady Band (Esmaria) - cruel and infamous mercs
+merc_pinklady_band = {
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+    regiments_per_development = 0.025
+	cavalry_weight = 0.2
+	cavalry_cap = 4
+	home_province = 280
+	sprites = { westerngfx_sprite_pack }
+    trigger = {
+		NOT = { has_country_modifier = monstrous_nation }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
+		}
+		NOT = { has_global_flag = new_pinklady_band }
+		owns_core_province = 280
+	}
+	cost_modifier = 1.2
+	modifier = {
+		shock_damage = 0.15		#ferocious
+		loot_amount = 0.5 		#and cruel
+	}
+}
