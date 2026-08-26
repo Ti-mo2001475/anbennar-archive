@@ -1523,7 +1523,22 @@ estate_artificers_relic_fueled_artificery = {
 	is_valid = {
 		NOT = { has_country_flag = artifice_no_base_privileges }
 		NOT = { has_country_flag = gor_vazumbrog_limited_artificery_privileges }
-		has_country_flag = magic_artificery_artificery_only
+		OR = {
+			NOT = { has_estate_privilege = estate_artificers_relic_fueled_artificery }
+			AND = {
+				OR = {
+					num_of_provinces_owned_or_owned_by_subjects_with = {
+						value = 2
+						trade_goods = damestear
+					}
+					num_of_provinces_owned_or_owned_by_subjects_with = {
+						value = 5
+						trade_goods = precursor_relics
+					}
+				}
+				has_country_flag = magic_artificery_artificery_only
+			}
+		}
 	}
 	can_select = {
 		OR = {
@@ -1544,7 +1559,6 @@ estate_artificers_relic_fueled_artificery = {
 	can_revoke = {
 	}
 	on_granted = {
-		custom_tooltip = artifice_faster_research_with_relics_or_damestear_tt
 	}
 	on_revoked = {
 		if = {
@@ -1565,24 +1579,7 @@ estate_artificers_relic_fueled_artificery = {
 		
 	}
 	benefits = {
-
-	}
-	conditional_modifier = {
-		trigger = {
-			OR = {
-				num_of_provinces_owned_or_owned_by_subjects_with = {
-					value = 2
-					trade_goods = damestear
-				}
-				num_of_provinces_owned_or_owned_by_subjects_with = {
-					value = 5
-					trade_goods = precursor_relics
-				}
-			}
-		}
-		modifier = {
-			artificers_research_time = -0.20
-		}
+		artificers_research_time = -0.20
 	}
 	ai_will_do = {
 		factor = 5
