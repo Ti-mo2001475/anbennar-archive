@@ -6499,6 +6499,14 @@ on_death_election = {
 		set_country_flag = end_election_on_death
 		country_event = { id = flavour_endralliande.1 } #overseas governorate
 	}
+	if = {
+		limit = {
+			tag = F60
+			has_ruler_flag = maracout_alive_ruler
+			has_country_flag = maracout_alive
+		}
+		country_event = { id = flavour_samsumbat.25 } # Samsumbat Maracout Death
+	}
 	events = {
 		701		# Election event
 		shadow.5
@@ -6555,7 +6563,6 @@ on_death_election = {
 		flavour_karach.14 #Karach Election Event
 		orenvalyam_events.100 #Orenvalyam Election Event
 		orenvalyam_events.102 #Increase Yodhan's Sickness 
-		flavour_samsumbat.25 # F60 Samsumbat Maracout Death
 	}
 }
 
@@ -9923,13 +9930,13 @@ on_yearly_pulse_2 = {
 			is_year = 1474 
 		}
 		random_list = {
-			22 = { # With a base of 22% per year, it should have about a 90% chance to have happened by 1483
+			15 = { # With a base of 15% per year, it should have about a 50% chance by 1478 and about 80% chance to have happened by 1483
 				country_event = {
-					id = flavour_samsumbat.26
+					id = flavour_samsumbat.25
 				}
 			}
-			78 = {
-				modifier = { # I want it basically guaranteed in 1484
+			85	 = {
+				modifier = { # I want it guaranteed in 1484
 					factor = 0
 					is_year = 1484
 				}

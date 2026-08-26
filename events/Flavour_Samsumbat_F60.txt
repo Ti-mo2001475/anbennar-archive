@@ -687,7 +687,7 @@ country_event = {
 		break_alliance = FROM
 		reverse_add_casus_belli = {
 			target = FROM # Samsumbat
-			type = cb_force_satrapy_samsumbat
+			type = cb_force_satrapy_mission_no_adjacency
 			months = 60 # 5 years
 		}
 	}
@@ -933,7 +933,7 @@ country_event = {
 					government = monarchy
 				}
 				reverse_add_casus_belli = {
-					type = cb_force_satrapy_samsumbat
+					type = cb_force_satrapy_mission_no_adjacency
 					target = ROOT
 					months = 2400 # 200 years
 				}
@@ -1039,7 +1039,7 @@ country_event = {
 					}
 				}
 				reverse_add_casus_belli = {
-					type = cb_force_satrapy_samsumbat
+					type = cb_force_satrapy_mission_no_adjacency
 					target = ROOT
 					months = 2400 # 200 years
 				}
@@ -1155,38 +1155,7 @@ country_event = {
 	id = flavour_samsumbat.25
 	title = flavour_samsumbat.25.title
 	desc = flavour_samsumbat.25.desc
-	picture = DINATOLDIR_ANIMATED_eventPicture # placeholder
-
-	is_triggered_only = yes
-	fire_only_once = yes
-
-	trigger = {
-		tag = F60
-		has_ruler = "Maracout"
-		has_country_flag = maracout_alive
-	}
-
-	immediate = {
-		clr_country_flag = maracout_alive
-	}
-
-	# Very sad
-	option = {
-		name = flavour_samsumbat.25.a
-
-		remove_country_modifier = F60_father_of_the_republic
-	}
-}
-
-# The Death of Maracout
-# Purposely has the same loc keys as the previous event. They are the same, but I couldn't
-# think of a way to have them work as a single event with one trigger so it wouldn't trigger
-# on another ruler elected then dying too early
-country_event = {
-	id = flavour_samsumbat.26
-	title = flavour_samsumbat.25.title
-	desc = flavour_samsumbat.25.desc
-	picture = DINATOLDIR_ANIMATED_eventPicture # placeholder
+	picture = DEATH_OF_HEIR_eventPicture
 
 	is_triggered_only = yes
 	fire_only_once = yes
@@ -1203,14 +1172,14 @@ country_event = {
 		# If he is still the leader, kill him
 		if = {
 			limit = {
-				has_ruler = "Maracout"
+				has_ruler_flag = maracout_alive_ruler
 			}
 			kill_ruler = yes
 		}
 	}
 }
 
-# 
+# Fires for the subject that you have finished decentralising
 country_event = {
 	id = flavour_samsumbat.27
 	title = flavour_samsumbat.27.title
@@ -1236,8 +1205,7 @@ country_event = {
 	# Decentralise the country
 	option = {
 		name = flavour_samsumbat.27.a
-
-		# custom_tooltip = "something about releasing countries that all become satrapies"
+		
 		hidden_effect = {
 			every_owned_province = {
 				set_province_flag = F60_just_decentralised_province
@@ -1245,6 +1213,7 @@ country_event = {
 		}
 
 		release_all_possible_countries = yes
+		custom_tooltip = every_released_country_satrapy_subject_tt
 
 		hidden_effect = {
 			every_known_country = {
@@ -1286,7 +1255,7 @@ country_event = {
 	}
 }
 
-# 
+# Fires for you, the overlord, to explain the decentralisation is done
 country_event = {
 	id = flavour_samsumbat.28
 	title = flavour_samsumbat.28.title
@@ -1309,5 +1278,6 @@ country_event = {
 	# Subject decentralised
 	option = {
 		name = flavour_samsumbat.28.a
+		custom_tooltip = every_released_country_satrapy_overlord_tt
 	}
 }
