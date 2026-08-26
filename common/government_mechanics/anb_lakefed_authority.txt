@@ -1,0 +1,134 @@
+lakefed_authority_mechanic = {
+	alert_icon_gfx = GFX_alerticons_government_mechanics
+	alert_icon_index = 37
+
+	available = {
+		has_reform = lake_republic
+		has_country_flag = federation_leader
+		# this is what "is_lake_federation_leader = yes" does
+		# however, if you use a scripted trigger here, it will error (despite working? probably?)
+	}
+
+	powers = {
+		lakefed_authority_power = {
+			gui = lakefed_authority_bar
+			max = 100
+			min = 0
+			default = 0
+			reset_on_new_ruler = no
+			is_good = yes
+			show_before_interactions = yes
+			scaled_modifier = {
+				modifier = {
+					development_cost = -0.1
+					global_manpower = 7.5
+					dip_advisor_cost = -0.15
+				}
+			}
+		}
+	}
+	interactions = {
+		lakefed_ease_internal_tensions = {
+			icon = GFX_lakefed_authority_ease_internal_tensions
+			gui = lakefed_authority_button
+			cost_type = lakefed_authority_power
+			cost = 90
+			cooldown_years = 4
+			effect = {
+				custom_tooltip = lakefed_ease_internal_tensions_tt
+				hidden_effect = {
+					every_country = {
+						limit = { has_country_modifier = lake_federation_member }
+						add_country_modifier = {
+							name = lakefed_ease_internal_tensions_modifier
+							duration = 1460 #4 years
+						}
+					}
+					
+					#Modifier notification event. Is a major event to tell everyone else 
+					if = {
+						limit = { ai = yes }
+						country_event = { id = lake.600 }
+					}
+					else = {
+						random_known_country = {
+							limit = {
+								has_country_modifier = lake_federation_member
+								ai = yes
+							}
+							country_event = { id = lake.600 }
+						}
+					}
+				}
+			}
+		}
+		lakefed_encourage_colonial_ventures = {
+			icon = GFX_lakefed_authority_encourage_colonial_ventures
+			gui = lakefed_authority_button
+			cost_type = lakefed_authority_power
+			cost = 90
+			cooldown_years = 4
+			effect = {
+				custom_tooltip = lakefed_encourage_colonial_ventures_tt
+				hidden_effect = {
+					every_country = {
+						limit = { has_country_modifier = lake_federation_member }
+						add_country_modifier = {
+							name = lakefed_encourage_colonial_ventures_modifier
+							duration = 1460 #4 years
+						}
+					}
+					
+					#Modifier notification event. Is a major event to tell everyone else 
+					if = {
+						limit = { ai = yes }
+						country_event = { id = lake.601 }
+					}
+					else = {
+						random_known_country = {
+							limit = {
+								has_country_modifier = lake_federation_member
+								ai = yes
+							}
+							country_event = { id = lake.601 }
+						}
+					}
+				}
+			}
+		}
+		lakefed_incentivize_urban_development = {
+			icon = GFX_lakefed_authority_incentivize_urban_development
+			gui = lakefed_authority_button
+			cost_type = lakefed_authority_power
+			cost = 90
+			cooldown_years = 4
+			effect = {
+				custom_tooltip = lakefed_incentivize_urban_development_tt
+				hidden_effect = {
+					every_country = {
+						limit = { has_country_modifier = lake_federation_member }
+						add_country_modifier = {
+							name = lakefed_incentivize_urban_development_modifier
+							duration = 1460 #4 years
+						}
+					}
+					
+					#Modifier notification event. Is a major event to tell everyone else 
+					if = {
+						limit = { ai = yes }
+						country_event = { id = lake.602 }
+					}
+					else = {
+						random_known_country = {
+							limit = {
+								has_country_modifier = lake_federation_member
+								ai = yes
+							}
+							country_event = { id = lake.602 }
+						}
+					}
+				}
+			}
+		}
+	}
+}

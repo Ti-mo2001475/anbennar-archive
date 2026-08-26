@@ -11803,12 +11803,34 @@ on_built_manpower_building_effect = {
 			duration = -1
 		}
 	}
+
+	#The Defiant
+	if = {
+		limit = {
+			owner = { 
+				owns = 4917 
+				can_use_the_defiant_trigger = yes
+			}
+			4917 = {
+				has_great_project = {
+					type = the_defiant
+					tier = 1
+				}
+			}
+		}
+		add_province_modifier = {
+			name = the_defiant_barracks_buff
+			hidden = yes
+			duration = -1
+		}
+	}
 }
 
 on_manpower_building_destroyed_effect = {
 	remove_province_modifier = L80_barrack_buff
 	remove_province_modifier = harpylen_barrack_roost
 	remove_province_modifier = kaino_barracks_bonuses
+	remove_province_modifier = the_defiant_barracks_buff
 }
 
 on_built_production_building_effect = {
@@ -12177,8 +12199,31 @@ on_built_forcelimit_building_effect = {
 		}
 		FROM = { S45_add_momentum = { value = 1 action = building } }
 	}
+
+	#The Defiant
+	if = {
+		limit = {
+			owner = { 
+				owns = 4917 
+				can_use_the_defiant_trigger = yes
+			}
+			4917 = {
+				has_great_project = {
+					type = the_defiant
+					tier = 2
+				}
+			}
+		}
+		add_province_modifier = {
+			name = the_defiant_regiment_camp_buff
+			hidden = yes
+			duration = -1
+		}
+	}
 }
-on_forcelimit_building_destroyed_effect = {}
+on_forcelimit_building_destroyed_effect = {
+	remove_country_modifier = the_defiant_regiment_camp_buff
+}
 
 on_built_courthouse_building_effect = {
 	if = {
@@ -14011,6 +14056,15 @@ startup_1444_effects = {
 				days = 1999 #5'4 years
 			}
 		}
+	}
+
+	if = { #Lake Federation Government Mechanic
+		limit = { has_government_mechanic = lakefed_authority_mechanic }
+		set_variable = { lakefed_authority_var = 0 }
+		set_variable = { lakefed_authority_dead_var = 0 }
+		set_variable = { lakefed_authority_opinion_var = 0.1 }
+		set_variable = { lakefed_authority_cohesion_var = 2.25 }
+		set_variable = { lakefed_authority_display_var = 2.35 }
 	}
 }
 
@@ -19992,6 +20046,105 @@ on_province_owner_change_monuments = {
 		province_event = { id = insyaa_flavour.2003 } #on_secret_of_the_hinuilands_owned needs a 1 day delay
 	}
 	
+	#Port of Two Spirits
+	if = {
+		limit = {
+			owner = { owns = 4774 }
+			4774 = {
+				has_great_project = {
+					type = port_of_two_spirits
+					tier = 2
+				}
+			}
+			province_has_center_of_trade_of_level = 1
+		}
+		port_of_two_spirits_per_province_scripted_effect = yes
+	}
+	if = {
+		limit = {
+			province_id = 4774
+		}
+		FROM = {
+			every_owned_province = {
+				remove_province_modifier = port_of_two_spirits_trade_center_modifier_1
+				remove_province_modifier = port_of_two_spirits_trade_center_modifier_2
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					NOT = { tag = Y65 }
+					NOT = { religion = devouring_path }
+				}
+				4774 = {
+					has_great_project = {
+						type = port_of_two_spirits
+						tier = 2
+					}
+				}
+			}
+			owner = {
+				every_owned_province = {
+					limit = {
+						province_has_center_of_trade_of_level = 1
+					}
+					port_of_two_spirits_per_province_scripted_effect = yes
+				}
+			}
+		}
+	}
+
+	#House of Fire and Water
+	if = {
+		limit = {
+			province_id = 4949
+		}
+		if = {
+			limit = {
+				owner = {
+					can_use_house_of_fire_and_water_trigger = yes
+				}
+				has_great_project = {
+					type = house_of_fire_and_water
+					tier = 2
+				}
+			}
+			if = {
+				limit = {
+					has_great_project = {
+						type = house_of_fire_and_water
+						tier = 3
+					}
+				}
+				owner = {
+					add_country_modifier = {
+						name = house_of_fire_and_water_artificery_buff_2
+						duration = -1
+					}
+				}
+			}
+			else = {
+				owner = {
+					add_country_modifier = {
+						name = house_of_fire_and_water_artificery_buff_1
+						duration = -1
+					}
+				}
+			}
+		}
+		FROM = {
+			remove_country_modifier = house_of_fire_and_water_artificery_buff_1
+			remove_country_modifier = house_of_fire_and_water_artificery_buff_2
+			random_hired_mercenary_company = {
+				limit = { template = merc_war_alchemists }
+				disband_mercenary_company = merc_war_alchemists
+			}
+		}
+	}
+
+	the_defiant_province_scripted_effect = yes
+	thousand_words_assembly_province_scripted_effect = yes
+
 	hinuibee_hive_province_owner_change = yes
 	fluvial_waterworks_province_owner_change = yes
 	if = {
