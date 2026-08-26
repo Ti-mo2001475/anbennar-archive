@@ -1122,26 +1122,20 @@ on_religion_change = {
 					tier = 2
 				}
 			}
-			NOT = { tag = Y65 }
-			NOT = { religion = devouring_path }
+			can_use_port_of_two_spirits = yes
+			NOT = { religion = mystic_accord }
 		}
-		if = {
-			limit = {
-				NOT = { religion = mystic_accord }
-			}
-			every_owned_province = {
-				limit = { province_has_center_of_trade_of_level = 1 }
-				port_of_two_spirits_per_province_scripted_effect = yes
-			}
-		}
-		else = {
-			every_owned_province = {
-				remove_province_modifier = port_of_two_spirits_trade_center_modifier_1
-				remove_province_modifier = port_of_two_spirits_trade_center_modifier_2
-			}
+		every_owned_province = {
+			limit = { province_has_center_of_trade_of_level = 1 }
+			port_of_two_spirits_per_province_scripted_effect = yes
 		}
 	}
-
+	else = {
+		every_owned_province = {
+			remove_province_modifier = port_of_two_spirits_trade_center_modifier_1
+			remove_province_modifier = port_of_two_spirits_trade_center_modifier_2
+		}
+	}
 }
 
 # country.
@@ -21765,11 +21759,11 @@ on_center_of_trade_upgrade = {
 
 	if = { #Port of Two Spirits
 		limit = {
-			owner = {
+			owner = { 
 				owns = 4774
-				NOT = { tag = Y65 }
-				NOT = { religion = devouring_path }
+				NOT = { religion = mystic_accord }
 			}
+			can_use_port_of_two_spirits = yes
 			4774 = {
 				has_great_project = {
 					type = port_of_two_spirits
