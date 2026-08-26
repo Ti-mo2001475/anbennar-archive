@@ -6152,6 +6152,7 @@ corvurian_midnight_reform = {
 	custom_attributes = {
 		locked_government_type = yes
 		locked_T1_reform = yes
+		better_vampire_ruler = yes
 	}
 	ai = {
 		factor = 10
@@ -10685,24 +10686,27 @@ court_of_art_and_culture_reform = {
 	}
 }
 vampires_masquerade_culture_reform = {
-    icon = "royal_court"
-    allow_normal_conversion = yes
-    potential = {
-        has_estate = estate_vampires
-        OR = { 
-            has_estate_privilege = estate_vampires_law_traditional_masquerade 
-            has_estate_privilege = estate_vampires_law_state_collusion_masquerade
-        }
-        NOT = { tag = H81 }
-        NOT = { tag = Y02 }  
+	icon = "royal_court"
+	allow_normal_conversion = yes
+	potential = {
+		has_estate = estate_vampires
+		OR = { 
+			has_estate_privilege = estate_vampires_law_traditional_masquerade 
+			has_estate_privilege = estate_vampires_law_state_collusion_masquerade
+			has_estate_privilege = estate_vampire_law_relic_shrouded_masquerade
+		}
+		NOT = { tag = H81 }
+		NOT = { tag = Y02 }  
 	}
-    modifiers = {
-        improve_relation_modifier = 0.15
-        diplomatic_reputation = 1
-        vampires_influence_modifier = 0.05
+	modifiers = {
+		improve_relation_modifier = 0.15
+		diplomatic_reputation = 1
+		vampires_influence_modifier = 0.05
 	}
-
-    }
+	custom_attributes = {
+		better_vampire_ruler = yes
+	}
+}
 #deliberative_assembly
 
 # parliamentary_reform defined in common file
@@ -13190,6 +13194,7 @@ luciande_lucians_domain_reform = {
 		rulers_can_be_generals = no
 		locked_government_type = yes
 		locked_T1_reform = yes
+		better_vampire_ruler = yes
 	}
 
 	heir = no

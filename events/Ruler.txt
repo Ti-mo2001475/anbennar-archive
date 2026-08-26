@@ -2556,34 +2556,20 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_ruler_flag = long_lived_ruler
-		if = {
-			limit = { fast_ruler_is_elven = yes NOT = { ruler_culture = wood_elf } }
-			ruler_age = 500
-		}
-		if = {
-			limit = { ruler_culture = wood_elf }
-			ruler_age = 350
-		}
-		if = {
-			limit = { fast_ruler_is_dwarven = yes }
-			ruler_age = 300
-		}
-		if = {
-			limit = { fast_ruler_is_gnomish = yes }
-			ruler_age = 350
+		OR = {
+			AND = {
+				ruler_is_vampire = yes
+				vampire_age = { greater_than_or_equal_to = 54750 }
+			}
+			AND = {
+				ruler_is_lich = yes
+				had_country_flag = { flag = ruled_by_lich days = 54750 }
+			}
 		}
 		NOT = {
 			has_country_flag = beat_red_reaper
-			has_ruler_flag = ghost_emperor
-			has_ruler_flag = is_a_homunculus
 			has_country_flag = J84_is_mihaela_flag #Taychendi Empire
 		}
-		if = {
-			limit = { ruler_is_vampire = yes }
-			vampire_age = { greater_than_or_equal_to = 54750 } #150 Years
-		}
-		ruler_age = 200
 	}
 
 	mean_time_to_happen = {
@@ -2627,6 +2613,12 @@ country_event = {
 		trigger = {
 			NOT = {
 				is_ruler_all_schools_level_3 = yes
+				AND = {
+					ruler_is_vampire = yes
+					adm = 6
+					dip = 6
+					mil = 6
+				}
 			}
 		}
 
@@ -2638,37 +2630,52 @@ country_event = {
 					country_event = { id = anb_ruler.13 } #You kill the Red Reaper
 
 					modifier = {
-						factor = 1.5
+						factor = 1.8
 						is_ruler_necromancy_level_3 = yes
 					}
 					modifier = {
-						factor = 1.5
+						factor = 1.8
 						is_ruler_divination_level_3 = yes
 					}
 					modifier = {
-						factor = 1.5
+						factor = 1.8
 						is_ruler_evocation_level_3 = yes
 					}
 					modifier = {
-						factor = 1.5
+						factor = 1.8
 						is_ruler_abjuration_level_3 = yes
 					}
 					modifier = {
-						factor = 1.5
+						factor = 1.8
 						is_ruler_transmutation_level_3 = yes
 					}
 					modifier = {
-						factor = 1.5
+						factor = 1.8
 						is_ruler_enchantment_level_3 = yes
 					}
 					modifier = {
-						factor = 1.5
+						factor = 1.8
 						is_ruler_illusion_level_3 = yes
 					}
 					modifier = {
-						factor = 1.5
+						factor = 1.8
 						is_ruler_conjuration_level_3 = yes
 					}
+					modifier = {
+						factor = 1.8
+						ruler_is_vampire = yes
+						adm = 6
+					}
+					modifier = {
+						factor = 1.8
+						ruler_is_vampire = yes
+						dip = 6
+					}
+					modifier = {
+						factor = 1.8
+						ruler_is_vampire = yes
+						mil = 6
+					}	
 					modifier = {
 						factor = 1.05
 						mil = 6
@@ -2687,7 +2694,17 @@ country_event = {
 		highlight = yes
 
 		trigger = {
-			hidden_trigger = { is_ruler_all_schools_level_3 = yes }
+			hidden_trigger = {
+				OR = { 
+					is_ruler_all_schools_level_3 = yes
+					AND = {
+						ruler_is_vampire = yes
+						adm = 6
+						dip = 6
+						mil = 6
+					}
+				} 
+			}
 		}
 
 		custom_tooltip = explode_red_reaper_tt
@@ -2738,8 +2755,13 @@ country_event = {
 			value = monarch_age
 			who = ROOT
 		}
-
-		kill_a_lich_effect = yes
+		if = {
+			limit = { ruler_is_vampire = yes }
+			kill_vampire_ruler = yes
+		}
+		else = {
+			kill_a_lich_effect = yes
+		}
 	}
 }
 
