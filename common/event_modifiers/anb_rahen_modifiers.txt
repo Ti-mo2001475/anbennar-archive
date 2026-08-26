@@ -106,6 +106,22 @@ raj_neglected_provincial_administration = {
 	raj_ministries_loyalty_modifier = -0.05
 	vassal_income = -0.05
 }
+raj_umsadhri_granted = {
+	picture = "icon_raj_cohesion_mod"
+	raj_cohesion_bonus = 10
+}
+raj_umsadhri_denied = {
+	picture = "icon_raj_cohesion_mod"
+	raj_cohesion_bonus = -10
+}
+raj_umsadhri_stolen = {
+	picture = "icon_raj_cohesion_mod"
+	raj_cohesion_bonus = -15
+}
+raj_umsadhri_founded = {
+	picture = "icon_raj_cohesion_mod"
+	raj_cohesion_bonus = 10
+}
 
 #Rahen Court Reforms
 raj_manavas_influence = {
@@ -962,7 +978,7 @@ command_marching_on_the_tree = {
 
 
 command_wolf_warcamp = {
-	local_manpower_modifier = 0.5
+	local_manpower = 2
 	local_regiment_cost = -0.25
 	regiment_recruit_speed = -0.25
 	supply_limit = 10
@@ -971,7 +987,7 @@ command_wolf_warcamp = {
 	picture = "icon_command_wolf_warcamp"
 }
 command_boar_warcamp = {
-	local_manpower_modifier = 0.5
+	local_manpower = 2
 	local_regiment_cost = -0.25
 	regiment_recruit_speed = -0.25
 	supply_limit = 10
@@ -980,7 +996,7 @@ command_boar_warcamp = {
 	picture = "icon_command_boar_warcamp"
 }
 command_lion_warcamp = {
-	local_manpower_modifier = 0.5
+	local_manpower = 2
 	local_regiment_cost = -0.25
 	regiment_recruit_speed = -0.25
 	supply_limit = 10
@@ -990,7 +1006,7 @@ command_lion_warcamp = {
 
 }
 command_tiger_warcamp = {
-	local_manpower_modifier = 0.5
+	local_manpower = 2
 	local_regiment_cost = -0.25
 	regiment_recruit_speed = -0.25
 	supply_limit = 10
@@ -1000,7 +1016,7 @@ command_tiger_warcamp = {
 
 }
 command_elephant_warcamp = {
-	local_manpower_modifier = 0.5
+	local_manpower = 2
 	local_regiment_cost = -0.25
 	regiment_recruit_speed = -0.25
 	supply_limit = 10
@@ -1009,7 +1025,7 @@ command_elephant_warcamp = {
 	picture = "icon_command_elephant_warcamp"
 }
 command_dragon_warcamp = {
-	local_manpower_modifier = 0.5
+	local_manpower = 2
 	local_regiment_cost = -0.25
 	regiment_recruit_speed = -0.25
 	supply_limit = 10
@@ -1018,7 +1034,7 @@ command_dragon_warcamp = {
 	picture = "icon_command_dragon_warcamp"
 }
 command_azepyanunin_warcamp = {
-	local_manpower_modifier = 0.5
+	local_manpower = 2
 	local_regiment_cost = -0.25
 	regiment_recruit_speed = -0.25
 	supply_limit = 10
@@ -1026,7 +1042,7 @@ command_azepyanunin_warcamp = {
 	local_fort_maintenance_modifier = -0.25
 }
 command_kintonan_warcamp = {
-	local_manpower_modifier = 0.5
+	local_manpower = 2
 	local_regiment_cost = -0.25
 	regiment_recruit_speed = -0.25
 	supply_limit = 10
@@ -1034,7 +1050,7 @@ command_kintonan_warcamp = {
 	local_fort_maintenance_modifier = -0.25
 }
 command_ikaniwagain_warcamp = {
-	local_manpower_modifier = 0.5
+	local_manpower = 2
 	local_regiment_cost = -0.25
 	regiment_recruit_speed = -0.25
 	supply_limit = 10
@@ -1042,13 +1058,13 @@ command_ikaniwagain_warcamp = {
 	local_fort_maintenance_modifier = -0.25
 }
 command_R63_warcamp = {
-	local_manpower_modifier = 0.5
+	local_manpower = 2
 	local_regiment_cost = -0.25
 	province_trade_power_value = 0.1
 	picture = "local_manpower_modifier"
 }
 command_R64_warcamp = {
-	local_manpower_modifier = 0.5
+	local_manpower = 2
 	local_regiment_cost = -0.25
 	province_trade_power_value = 0.1
 	picture = "local_manpower_modifier"
@@ -1948,7 +1964,31 @@ rahen_raj_low_vizier_influence_mods_senapti = {
 	# Buffs - None
 	# Debuffs - None
 }
-
+# - Umsadhri Modifiers
+rahen_raj_high_vizier_influence_mods_umsadhri = {
+	#Buffs
+	naval_morale = 0.10
+	leader_cost = -0.15
+	sailors_recovery_speed = 0.25
+	land_maintenance_modifier = -0.15
+	naval_maintenance_modifier = -0.30
+	global_colonial_growth = 40
+	#Debuffs - None
+}
+rahen_raj_med_vizier_influence_mods_umsadhri = {
+	#Buffs
+	naval_morale = 0.05
+	leader_cost = -0.10
+	sailors_recovery_speed = 0.15
+	land_maintenance_modifier = -0.10
+	naval_maintenance_modifier = -0.20
+	global_colonial_growth = 20
+	#Debuffs - None
+}
+rahen_raj_low_vizier_influence_mods_umsadhri = {
+	#Buffs - None
+	#Debuffs - None
+}
 
 #Misc raja stuff
 senapti_march_bonus = {
@@ -1964,6 +2004,13 @@ vizier_march_bonus = {
 	land_maintenance_modifier = -0.15
 	development_cost_modifier = 0.1
 	governing_capacity_modifier = -0.25
+}
+umsadhri_march_bonus = {
+	global_sailors_modifier = 0.15
+	land_forcelimit_modifier = 0.05
+	naval_forcelimit_modifier = 0.20
+	defensiveness = 0.20
+	fort_maintenance_modifier = -0.20
 }
 vizier_lost_promotion_mod = {
 }
@@ -2183,19 +2230,19 @@ rahen_monument_to_glory = {
 	local_tax_modifier = 0.75
 }
 
-aided_admin_advisor = {
+rahen_extra_bureacrats_aided_admin_advisor = {
 	reform_progress_growth = 0.1
 }
 
-ministries_at_work = {
+rahen_extra_bureaucrats_ministries_at_work = {
 	advisor_cost = -0.1
 }
 
-direct_assistance_reformer = {
+rahen_direct_assistance_reformer = {
 	expand_administration_cost = -0.25
 }
 
-direct_assistance_mage = {
+rahen_direct_assistance_mage = {
 	mages_ruler_experience_mod = 0.2
 }
 
@@ -2203,15 +2250,17 @@ homegrown_sari_industry = {
 	local_production_efficiency = 0.1	
 }
 
-harimari_snubbed = {
+rahen_event_202_cooldown = {}
+
+rahen_food_harimari_snubbed = {
 	local_unrest = 1
 }
 
-human_snubbed = {
+rahen_food_human_snubbed = {
 	local_unrest = 1
 }
 
-refugees_placated = {
+shamakhadi_refugees_placated = {
 	global_unrest = -1
 }
 
@@ -2219,11 +2268,11 @@ shamakhadi_refugees_snubbed = {
 	global_unrest = 2
 }
 
-strong_companies = {
-	province_trade_power_modifier = 0.2
+rahen_strong_companies = {
+	global_prov_trade_power_modifier = 0.2
 }
 
-unions_pleased = {
+rahen_unions_pleased = {
 	global_unrest = -2
 }
 
@@ -2239,7 +2288,7 @@ destressed_ruler_third_times_the_charm = {
 	monarch_lifespan = 0.1
 }
 
-nationally_endorsed_tour_company = {
+rahen_nationally_endorsed_tour_company = {
 	trade_efficiency = 0.1
 }
 

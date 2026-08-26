@@ -1179,7 +1179,7 @@ country_event = { #Magical Fortress 2 - Gather Supplies
 		name = magic_project_magical_fortress.2.a
 		ai_chance = { factor = 1 }
 
-		magical_fortress_suffer_setback = { amount = -25 effect = "add_prestige = 10" }
+		magical_fortress_suffer_setback = { amount = -20 effect = "add_prestige = 10" }
 	}
 }
 
@@ -1203,7 +1203,7 @@ country_event = { #Magical Fortress 3 - Make a Decision
 		name = magic_project_magical_fortress.3.b
 		ai_chance = { factor = 1 }
 
-		magical_fortress_suffer_setback = { amount = -25 mod = prestige }
+		magical_fortress_suffer_setback = { amount = -20 mod = prestige }
 	}
 }
 
@@ -1261,7 +1261,7 @@ country_event = { #Magical Fortress 6 - Losing Sleep
 		name = magic_project_magical_fortress.6.a
 		ai_chance = { factor = 1 }
 
-		magical_fortress_suffer_setback = { amount = -50 effect = "add_splendor = 50" }
+		magical_fortress_suffer_setback = { amount = -40 effect = "add_splendor = 50" }
 	}
 }
 
@@ -1285,7 +1285,7 @@ country_event = { #Magical Fortress 7 - Make a Decision
 		name = magic_project_magical_fortress.7.b
 		ai_chance = { factor = 1 }
 
-		magical_fortress_suffer_setback = { amount = -50 mod = splendor }
+		magical_fortress_suffer_setback = { amount = -40 mod = splendor }
 	}
 }
 
@@ -1347,7 +1347,7 @@ country_event = { #Magical Fortress 10 - Palace Close to Completion
 		name = magic_project_magical_fortress.10.a
 		ai_chance = { factor = 1 }
 
-		magical_fortress_suffer_setback = { amount = -75 effect = "change_variable = { currentMana = 50 }" }
+		magical_fortress_suffer_setback = { amount = -60 effect = "change_variable = { currentMana = 50 }" }
 	}
 }
 
@@ -1371,7 +1371,7 @@ country_event = { #Magical Fortress 11 - Make a Decision
 		name = magic_project_magical_fortress.7.b
 		ai_chance = { factor = 1 }
 
-		magical_fortress_suffer_setback = { amount = -75 mod = mana_regen }
+		magical_fortress_suffer_setback = { amount = -60 mod = mana_regen }
 	}
 }
 
@@ -5795,7 +5795,7 @@ country_event = { #Lichless Death - Gov change
 			else_if = {
 				limit = {
 					OR = {
-						culture_is_troll = yes
+						culture_group = giantkind
 						culture_group = kobold
 					}
 				}
@@ -6789,13 +6789,13 @@ country_event = { #Undead Army gains manpower on winning battles
 	hidden = yes
 	is_triggered_only = yes
 	
-	trigger = { check_variable = { raise_undead = 3001 } } #Don't raise if it was a nothing battle
+	trigger = { check_variable = { raise_undead = 4001 } } #Don't raise if it was a nothing battle
 	
 	option = {	#Rise!
 		name = magic_project_army_of_the_dead.20.a
 		ai_chance = { factor = 1 }
 
-		divide_variable = { raise_undead = 3 } #33% of the dead are raised
+		divide_variable = { raise_undead = 4 } #25% of the dead are raised
 		round_variable = { #truncate decimal portion
 			which = raise_undead
 			value = -1
@@ -7343,13 +7343,11 @@ country_event = { #Homunculus, Vivum
 	option = { #Magus Attendant
 		name = magic_project_homunculus.6.e
 		ai_chance = { factor = 1 }
-		trigger = {
-			has_government_attribute = is_magocracy
-			NOT = { has_government_attribute = queen }
-		}
+		trigger = { government = theocracy }
 		highlight = yes
 		
 		add_country_modifier = { name = homunculus_attendant duration = -1 }
+		custom_tooltip = homunculus_attendant_desc
 		custom_tooltip = tooltip_magic_project_advance
 	}
 	
@@ -10546,13 +10544,7 @@ country_event = {
 				1 = { add_mil_power = 100 }
 			}
 		}
-		else = {
-			random_list = {
-				1 = { trigger = { NOT = { adm = 6 } } change_adm = 1 }
-				1 = { trigger = { NOT = { dip = 6 } } change_dip = 1 }
-				1 = { trigger = { NOT = { mil = 6 } } change_mil = 1 }
-			}
-		}
+		else = { add_random_ruler_skill = yes }
 	}
 	option = {
 		name = magic_project_cangji_project.5.b

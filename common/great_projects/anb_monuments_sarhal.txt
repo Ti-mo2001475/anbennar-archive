@@ -679,13 +679,13 @@ lizardfolk_port = {
 				owner = {
 					OR = {
 						is_vyzemby_primary_culture = yes
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 					}
 				}
 				AND = {
 					OR = {
 						is_vyzemby_culture = yes
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 					}
 					has_owner_accepted_culture = yes
 				}
@@ -722,13 +722,13 @@ lizardfolk_port = {
 				owner = {
 					OR = {
 						is_vyzemby_primary_culture = yes
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 					}
 				}
 				AND = {
 					OR = {
 						is_vyzemby_culture = yes
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 					}
 					has_owner_accepted_culture = yes
 				}
@@ -759,13 +759,13 @@ lizardfolk_port = {
 				owner = {
 					OR = {
 						is_vyzemby_primary_culture = yes
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 					}
 				}
 				AND = {
 					OR = {
 						is_vyzemby_culture = yes
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 					}
 					has_owner_accepted_culture = yes
 				}
@@ -3096,21 +3096,6 @@ tree_of_tales = {
 	type = monument
 
 	build_trigger = {
-		if = {
-			limit = {
-				owner = {
-					has_country_flag = tree_of_tales_free_use 
-				}
-			}
-			custom_trigger_tooltip = {
-				tooltip = great_project_mt_enabled
-				always = yes
-			}
-		}
-		else = {
-			religion_group = tanibic_religion
-			has_owner_religion = yes
-		}
 	}
 
 	on_built = {
@@ -3295,11 +3280,6 @@ dendugma_monastery = {
 	type = monument
 
 	build_trigger = {
-		owner = {
-				religion = fangaulan_pantheon
-		}
-		culture_group = west_sarhaly
-		has_owner_accepted_culture = yes
 	}
 
 	on_built = {
@@ -3309,19 +3289,39 @@ dendugma_monastery = {
 	}
 
 	can_use_modifiers_trigger = {
-		owner = {
-				religion = fangaulan_pantheon
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = dendugma_build_bypass_flag
+				}
+			}
+			always = yes
 		}
-		culture_group = west_sarhaly
-		has_owner_accepted_culture = yes
+		else = {
+			owner = {
+				religion = fangaulan_pantheon
+			}
+			culture_group = west_sarhaly
+			has_owner_accepted_culture = yes
+		}
 	}
 
 	can_upgrade_trigger = {
-		owner = {
-				religion = fangaulan_pantheon
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = dendugma_build_bypass_flag
+				}
+			}
+			always = yes
 		}
-		culture_group = west_sarhaly
-		has_owner_accepted_culture = yes
+		else = {
+			owner = {
+				religion = fangaulan_pantheon
+			}
+			culture_group = west_sarhaly
+			has_owner_accepted_culture = yes
+		}
 	}
 
 	keep_trigger = {
@@ -3542,7 +3542,6 @@ imperial_arena = {
 	type = monument
 
 	build_trigger = {
-		can_use_imperial_arena_scripted_trigger = yes
 	}
 
 	on_built = {
@@ -6958,7 +6957,10 @@ genie_palace_of_jinnakah = {
 			else_if = {
 				limit = { owner = { tag = S91 } }
 				owner = { country_event = { id = ardimya.102 } }
-				6063 = { add_cardinal = yes }
+				if = {
+					limit = { owner = { religion = ravelian } }
+					6063 = { add_cardinal = yes }
+				}
 			}
 		}
 		conditional_modifier = {
@@ -7002,32 +7004,30 @@ genie_palace_of_jinnakah = {
 			}
 			hidden_effect = {
 				if = {
-					limit = { owner = { tag = S91 } 6063 = { has_cardinal = no } }
-					6063 = {
-						add_cardinal = yes
-						add_province_modifier = {
-							name = ardimyan_rite_religious_centre_0
-							duration = -1
-						}
-					}
-				}
-				else_if = {
-					limit = { owner = { tag = S91 } 6063 = { has_cardinal = yes } }
+					limit = { owner = { tag = S91 } }
 					6063 = {
 						add_province_modifier = {
 							name = ardimyan_rite_religious_centre_0
 							duration = -1
 						}
 					}
-					owner = {
-						random_owned_province = {
-							limit = { religion = ravelian }
-							add_cardinal = yes
+					if = {
+						limit = { 6063 = { has_cardinal = no } }
+						6063 = { add_cardinal = yes }
+					}
+					else = {
+						owner = {
+							random_owned_province = {
+								limit = {
+									religion = ravelian
+									has_cardinal = no
+								}
+								add_cardinal = yes
+							}
 						}
 					}
 				}
 			}
-
 		}
 		conditional_modifier = {
 			trigger = { owner = { tag = S91 } }
