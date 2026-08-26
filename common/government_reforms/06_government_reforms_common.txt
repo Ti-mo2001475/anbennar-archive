@@ -8238,3 +8238,79 @@ gov_reform_elven_forebears = {
 		}
 	}
 }
+
+#T4 NSC
+nsc_chosens_duty = {
+	icon = "regionally_elected_commanders"
+	allow_normal_conversion = yes
+	lock_level_when_selected = no
+	potential = {
+		OR = {
+			NOT = { tag = H67 }
+			has_country_flag = debug_test
+		}
+		OR = {
+			religion = bulwari_sun_cult
+			has_country_flag = updating_isolationism_window
+		}
+		NOT = { is_adventurer = yes }
+	}
+	modifiers = {
+		church_loyalty_modifier = 0.1
+		num_accepted_cultures = 1
+	}
+	custom_attributes = {
+		disabled_expelling_elven = yes
+		disabled_purging_elven = yes
+		buffed_dictate_understanding = yes
+	}
+	effect = {
+		custom_tooltip = nsc_chosens_duty_tt
+		hidden_effect = {
+			nsc_chosens_duty_effect = yes
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			nsc_chosens_duty_removed_effect = yes
+		}
+	}
+}
+
+nsc_chosens_duty_rezankand = {
+	icon = "regionally_elected_commanders"
+	allow_normal_conversion = yes
+	lock_level_when_selected = no
+	potential = {
+		OR = {
+			tag = H67
+			has_country_flag = debug_test
+		}
+		OR = {
+			religion = bulwari_sun_cult
+			has_country_flag = updating_isolationism_window
+		}
+		NOT = { is_adventurer = yes }
+	}
+	modifiers = {
+		church_loyalty_modifier = 0.1
+		num_accepted_cultures = 1
+		establish_order_cost = -0.1 #no local variant
+	}
+	custom_attributes = {
+		disabled_expelling_elven = yes
+		disabled_purging_elven = yes
+		buffed_dictate_understanding = yes
+	}
+	effect = {
+		custom_tooltip = nsc_chosens_duty_rezankand_tt
+		hidden_effect = {
+			nsc_chosens_duty_effect = yes
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			nsc_chosens_duty_removed_effect = yes
+		}
+	}
+}
