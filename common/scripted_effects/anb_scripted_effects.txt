@@ -3906,8 +3906,13 @@ restore_ruler_stats = {
 revival_stat_loss = {
 	if = {
 		limit = { 
-			has_country_flag = b38_entef_ruler
-			has_country_flag = b38_entef_sarcophagus
+			OR = {
+				AND = { 
+					has_country_flag = b38_entef_ruler
+					has_country_flag = b38_entef_sarcophagus
+				}
+				has_country_flag = vampire_controlled_rebirth
+			}
 		}
 		random_list = {
 			25 = { }
@@ -3915,6 +3920,7 @@ revival_stat_loss = {
 			25 = { change_dip = -1 }
 			25 = { change_mil = -1 }
 		}
+		hidden_effect = { clr_country_flag = vampire_controlled_rebirth }
 	}
 	else = {
 		random_list = {
@@ -14792,3 +14798,270 @@ kinbond_aspect_replacement = {
 		add_church_aspect = spirit_defiance_dominant
 	}
 }
+
+upgrade_aksa_sanuyego_scripted_effect = {
+	custom_tooltip = upgrade_aksa_sanuyego_scripted_effect_tt
+	hidden_effect = {
+		4716 = {
+			remove_province_modifier = aksa_sanuyego_modifier
+			remove_province_modifier = aksa_sanuyego_modifier_upgrade
+			add_permanent_province_modifier = {
+				name = aksa_sanuyego_modifier_upgrade
+				duration = -1
+			}
+		}
+	}
+}
+
+the_defiant_province_scripted_effect = {
+	#The Defiant
+	if = {
+		limit = {
+			owner = { 
+				owns = 4917 
+				can_use_the_defiant_trigger = yes
+			}
+			4917 = {
+				has_great_project = {
+					type = the_defiant
+					tier = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_manpower_building_trigger = yes
+			}
+			add_province_modifier = {
+				name = the_defiant_barracks_buff
+				hidden = yes
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				has_forcelimit_building_trigger = yes
+				4917 = {
+					has_great_project = {
+						type = the_defiant
+						tier = 2
+					}
+				}
+			}
+			add_province_modifier = {
+				name = the_defiant_regiment_camp_buff
+				hidden = yes
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				has_building = soldier_households
+				4917 = {
+					has_great_project = {
+						type = the_defiant
+						tier = 3
+					}
+				}
+			}
+			add_province_modifier = {
+				name = the_defiant_soldier_households_buff
+				hidden = yes
+				duration = -1
+			}
+		}
+	}
+	if = {
+		limit = {
+			province_id = 4917
+		}
+		FROM = {
+			every_owned_province = {
+				remove_province_modifier = the_defiant_barracks_buff
+				remove_province_modifier = the_defiant_regiment_camp_buff
+				remove_province_modifier = the_defiant_soldier_households_buff
+			}
+		}
+		if = {
+			limit = {
+				owner = { 
+					can_use_the_defiant_trigger = yes
+				}
+				4917 = {
+					has_great_project = {
+						type = the_defiant
+						tier = 1
+					}
+				}
+			}
+			owner = {
+				every_owned_province = {
+					if = {
+						limit = {
+							has_manpower_building_trigger = yes
+						}
+						add_province_modifier = {
+							name = the_defiant_barracks_buff
+							hidden = yes
+							duration = -1
+						}
+					}
+					if = {
+						limit = {
+							has_forcelimit_building_trigger = yes
+							4917 = {
+								has_great_project = {
+									type = the_defiant
+									tier = 2
+								}
+							}
+						}
+						add_province_modifier = {
+							name = the_defiant_regiment_camp_buff
+							hidden = yes
+							duration = -1
+						}
+					}
+					if = {
+						limit = {
+							has_building = soldier_households
+							4917 = {
+								has_great_project = {
+									type = the_defiant
+									tier = 3
+								}
+							}
+						}
+						add_province_modifier = {
+							name = the_defiant_soldier_households_buff
+							hidden = yes
+							duration = -1
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+thousand_words_assembly_per_province_scripted_effect = {
+	if = {
+		limit = {
+			4859 = {
+				has_great_project = {
+					type = thousand_words_assembly
+					tier = 3
+				}
+			}
+		}
+		add_province_modifier = {
+			name = thousand_words_assembly_yanszin_buff_3
+			duration = -1
+		}
+	}
+	else_if = {
+		limit = {
+			4859 = {
+				has_great_project = {
+					type = thousand_words_assembly
+					tier = 2
+				}
+			}
+		}
+		add_province_modifier = {
+			name = thousand_words_assembly_yanszin_buff_2
+			duration = -1
+		}
+	}
+	else = {
+		add_province_modifier = {
+			name = thousand_words_assembly_yanszin_buff_1
+			duration = -1
+		}
+	}
+}
+
+thousand_words_assembly_province_scripted_effect = {
+	#Thousand Words Assembly
+	if = {
+		limit = {
+			province_group = yanszin_heartland_group
+			owner = { owns = 4859 }
+			4859 = {
+				has_great_project = {
+					type = thousand_words_assembly
+					tier = 1
+				}
+				owner = {
+					can_use_thousand_words_assembly_scripted_trigger = yes
+				}
+			}
+		}
+		thousand_words_assembly_per_province_scripted_effect = yes
+	}
+	if = {
+		limit = {
+			province_id = 4859
+		}
+		FROM = {
+			if = {
+				limit = {
+					OR = {
+						NOT = { has_country_flag = is_member_of_yanszin_league_flag }
+						ROOT = { owner = { NOT = { has_country_flag = is_member_of_yanszin_league_flag } } }
+					}
+				}
+				every_owned_province = {
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_1
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_2
+					remove_province_modifier = thousand_words_assembly_yanszin_buff_3
+				}
+			}
+		}
+		if = {
+			limit = {
+				4859 = {
+					has_great_project = {
+						type = thousand_words_assembly
+						tier = 1
+					}
+					owner = {
+						can_use_thousand_words_assembly_scripted_trigger = yes
+					}
+				}
+			}
+			owner = {
+				every_owned_province = {
+					limit = {
+						province_group = yanszin_heartland_group
+					}
+					thousand_words_assembly_per_province_scripted_effect = yes
+				}
+			}
+		}
+	}
+}
+
+port_of_two_spirits_per_province_scripted_effect = {
+	if = {
+		limit = {
+			4774 = {
+				has_great_project = {
+					type = port_of_two_spirits
+					tier = 3
+				}
+			}
+		}
+		add_province_modifier = {
+			name = port_of_two_spirits_trade_center_modifier_2
+			duration = -1
+		}
+	}
+	else = {
+		add_province_modifier = {
+			name = port_of_two_spirits_trade_center_modifier_1
+			duration = -1
+		}
+	}
+}
+
