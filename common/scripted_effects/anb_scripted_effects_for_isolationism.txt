@@ -150,7 +150,12 @@ update_nsc_level_secondary_effects = { 								#This effect can be triggered by 
 			}
 		}
 		if = {
-			limit = { has_reform = nsc_chosens_duty }
+			limit = {
+				OR = {
+					has_reform = nsc_chosens_duty
+					has_reform = nsc_chosens_duty_rezankand
+				}
+			}
 			nsc_chosens_duty_effect = yes
 		}
 	}
@@ -1575,7 +1580,10 @@ nsc_chosens_duty_sub_effect = {
 	if = {
 		limit = {
 			owner = {
-				has_reform = nsc_chosens_duty
+				OR = {
+					has_reform = nsc_chosens_duty
+					has_reform = nsc_chosens_duty_rezankand
+				}
 				isolationism = $isolationism$
 			}
 		}
@@ -1602,19 +1610,31 @@ nsc_chosens_duty_sub_effect = {
 		]
 		[[adm]
 			if = {
-				limit = { holy_order = order_of_judges_order }
+				limit = {
+					holy_order = order_of_judges_order
+					has_elven_minority_trigger = yes
+					owner = { has_reform = nsc_chosens_duty_rezankand }
+				}
 				owner = { add_adm_power = $adm$ }
 			}
 		]
 		[[dip]
 			if = {
-				limit = { holy_order = sundancers_order }
+				limit = {
+					holy_order = sundancers_order
+					has_elven_minority_trigger = yes
+					owner = { has_reform = nsc_chosens_duty_rezankand }
+				}
 				owner = { add_dip_power = $dip$ }
 			}
 		]
 		[[mil]
 			if = {
-				limit = { holy_order = avengers_order }
+				limit = {
+					holy_order = avengers_order
+					has_elven_minority_trigger = yes
+					owner = { has_reform = nsc_chosens_duty_rezankand }
+				}
 				owner = { add_mil_power = $mil$ }
 			}
 		]
