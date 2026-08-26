@@ -9108,6 +9108,29 @@ on_monthly_pulse = {
 			}
 		}
 	}
+
+	if = { #Lake Federation Government Mechanic
+		limit = { has_government_mechanic = lakefed_authority_mechanic }
+		calculate_lakefed_authority = yes
+		if = {
+			limit = { check_variable = { lakefed_authority_var = 0 } }
+			gov_power_var_effect_granular = {
+				mechanic = lakefed_authority_mechanic
+				power = lakefed_authority_power
+				var = lakefed_authority_var
+				sign = +
+			}
+		}
+		else = {
+			multiply_variable = { which = lakefed_authority_var value = -1 }
+			gov_power_var_effect_granular = {
+				mechanic = lakefed_authority_mechanic
+				power = lakefed_authority_power
+				var = lakefed_authority_var
+				sign = -
+			}
+		}
+	}
 }
 
 on_yearly_pulse = {
