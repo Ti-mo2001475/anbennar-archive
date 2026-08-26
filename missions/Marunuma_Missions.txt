@@ -1,0 +1,606 @@
+N93_col_1 = {
+    slot = 1
+    generic = no
+    ai = yes
+    has_country_shield = yes
+    potential = { tag = N93 }
+    N93_kobold_kneighbors = {
+        icon = mission_kobold
+        position = 2
+        required_missions = {
+            N93_stonescrawls_origin
+        }
+        provinces_to_highlight = {
+            is_capital_of = N91
+            N91 = {
+                NOT = {
+                    AND = {
+                        OR = {
+                            alliance_with = ROOT
+                            has_100_opinion_improved_relation = { target = ROOT }
+                        }
+                        has_opinion_modifier = { who = ROOT modifier = sent_gift }
+                    }
+                }
+            }
+        }
+        trigger = {
+            N91 = {
+                has_opinion_modifier = { who = ROOT modifier = sent_gift }
+                OR = {
+                    alliance_with = ROOT
+                    has_100_opinion_improved_relation = { target = ROOT }
+                }
+            }
+            has_cast_enchanting_envoy_embassy = yes
+        }
+        effect = {
+            force_remove_rival = N91
+            add_historical_friend = N91
+            add_country_modifier = { name = N93_stonestory_guidance duration = -1 }
+            N91 = {
+                force_remove_rival = ROOT
+                add_historical_friend = ROOT
+                add_country_modifier = { name = N93_stonescrawl_guidance duration = -1 }
+            }
+        }
+    }
+    N93_kobold_kinship = {
+        icon = mission_purple_kobold_2_insyaa
+        position = 3
+        required_missions = {
+            N93_kobold_kneighbors
+            N93_rushing_stone
+        }
+        provinces_to_highlight = {
+            is_capital_of = N91
+            N91 = {
+                NOT = {
+                    AND = {
+                        alliance_with = ROOT
+                        trust = { who = ROOT value = 70 }
+                        has_opinion = { who = ROOT value = 200 }
+                    }
+                }
+            }
+        }
+        trigger = {
+            N91 = {
+                OR = {
+                    alliance_with = ROOT
+                    is_subject_of = ROOT
+                }
+                trust = { who = ROOT value = 70 }
+                OR = {
+                    has_opinion = { who = ROOT value = 200 }
+                    has_100_opinion_improved_relation = { target = ROOT }
+                }
+            }
+            has_cast_any_abjuration_spell = yes
+            has_cast_any_conjuration_spell = yes
+        }
+        effect = {
+            custom_tooltip = N93_add_stonestory_support_tt
+            if = { limit = { is_estate_conjuration_level_0 = yes }
+                add_country_modifier = { name = N93_stonestory_support_0 duration = -1 }
+            }
+            else_if = { limit = { is_estate_conjuration_level_1 = yes }
+                add_country_modifier = { name = N93_stonestory_support_1 duration = -1 }
+            }
+            else_if = { limit = { is_estate_conjuration_level_2 = yes }
+                add_country_modifier = { name = N93_stonestory_support_2 duration = -1 }
+            }
+            else = {
+                add_country_modifier = { name = N93_stonestory_support_3 duration = -1 }
+            }
+            custom_tooltip = N93_unlock_merc_clones_tt
+            N91 = {
+                if = { limit = { alliance_with = ROOT }
+                    country_event_with_insight = { id = flavour_marunuma.2 insight_tooltip = N93_insight_2_tt }
+                }
+            }
+        }
+    }
+    N93_kobold_kuestion = {
+        icon = mission_purple_kobold_insyaa
+        position = 4
+        required_missions = {
+            N93_kobold_kinship
+        }
+        provinces_to_highlight = {}
+        trigger = {
+            N91 = {
+                has_opinion = { who = ROOT value = 200 }
+                NOT = { liberty_desire = 1 }
+                years_in_vassalage_under = { who = ROOT years = 10 }
+            }
+            custom_trigger_tooltip = {
+                tooltip = N93_proficient_abjuration_spell_tt
+                OR = {
+                    has_cast_protected_journey = yes
+                    has_cast_ward = yes
+                    has_cast_mage_armor = yes
+                }
+            }
+            custom_trigger_tooltip = {
+                tooltip = N93_proficient_conjuration_spell_tt
+                OR = {
+                    has_cast_summon_animals = yes
+                    has_cast_conjure_supplies = yes
+                    has_cast_summon_elementals = yes
+                    has_cast_aid_construction = yes
+                    has_cast_extraplanar_contact = yes
+                }
+            }
+        }
+        effect = {
+            country_event_with_insight = { id = flavour_marunuma.3 insight_tooltip = N93_insight_3_tt }
+        }
+    }
+}
+N93_col_2 = {
+    slot = 2
+    generic = no
+    ai = yes
+    has_country_shield = yes
+    potential = { tag = N93 }
+    N93_stonescrawls_origin = {
+        icon = mission_empowerment
+        position = 1
+        provinces_to_highlight = {}
+        trigger = {
+            OR = {
+                type_is_advancing_school = { type = country school = abjuration }
+                is_estate_abjuration_level_1_minimum = yes
+            }
+            num_of_estate_agendas_completed = { estate = estate_mages value = 1 }
+            treasury = 50
+        }
+        effect = {
+            add_treasury = -50
+            add_country_modifier = { name = N93_stonescrawl_guidance duration = -1 }
+        }
+    }
+    N93_rushing_stone = {
+        icon = mission_horse_siege
+        position = 2
+        required_missions = {
+            N93_stonescrawls_origin
+        }
+        provinces_to_highlight = {
+            is_capital_of = ROOT
+            NOT = {
+                num_of_units_in_province = {
+                    who = ROOT
+                    type = cavalry
+                    amount = 4
+                }
+            }
+        }
+        trigger = {
+            is_estate_abjuration_level_1_minimum = yes
+            capital_scope = {
+                num_of_units_in_province = {
+                    who = ROOT
+                    type = cavalry
+                    amount = 4
+                }
+            }
+        }
+        effect = {
+            capital_scope = {
+                kill_units = {
+                    who = ROOT
+                    type = cavalry
+                    amount = 4
+                }
+            }
+            custom_tooltip = N93_unlock_mobile_fortress_tt
+        }
+    }
+    N93_seize_the_rivers = {
+        icon = mission_royal_roads
+        position = 4
+        required_missions = {
+            N93_kobold_kinship
+            N93_hydraulic_works
+        }
+        provinces_to_highlight = {
+            province_group = daowati_river
+            NOT = { country_or_subject_holds = ROOT }
+        }
+        trigger = {
+            daowati_river = {
+                type = all
+                country_or_subject_holds = ROOT
+            }
+            has_mana = { amount = 100 }
+        }
+        effect = {
+            change_mana = { amount = -100 }
+            daowati_river = {
+                add_permanent_province_modifier = { name = N93_basalt_bridge duration = -1 }
+            }
+        }
+    }
+}
+N93_col_3 = {
+    slot = 3
+    generic = no
+    ai = yes
+    has_country_shield = yes
+    potential = { tag = N93 }
+    N93_lineage_of_marunuma = {
+        icon = mission_confrontation
+        position = 1
+        provinces_to_highlight = {}
+        trigger = {
+            prestige = 20
+            months_of_ruling = 108 # ruler starts out ruling for 4 years so 5 years from game start
+        }
+        effect = {
+            country_event_with_insight = { id = flavour_marunuma.0 insight_tooltip = N93_insight_0_tt }
+        }
+    }
+    N93_stone_library = {
+        icon = mission_magnificent_castle
+        position = 2
+        required_missions = {
+            N93_stonescrawls_origin
+            N93_lineage_of_marunuma
+            N93_rise_of_the_clan_guilds
+        }
+        provinces_to_highlight = {
+            province_id = 3673
+            NOT = { num_of_times_improved_by_owner = 2 }
+            if = { limit = { has_dlc = "Mandate of Heaven" }
+                gegebou_area = {
+                    NOT = { has_state_edict = edict_advancement_effort }
+                }
+            }
+            else = {
+                NOT = {
+                    num_of_units_in_province = {
+                        who = ROOT
+                        amount = 10
+                    }
+                }
+            }
+        }
+        trigger = {
+            3673 = {
+                owned_by = ROOT
+                num_of_times_improved_by_owner = 2
+            }
+            if = { limit = { has_dlc = "Mandate of Heaven" }
+                gegebou_area = {
+                    has_state_edict = edict_advancement_effort
+                }
+            }
+            else = {
+                3673 = {
+                    num_of_units_in_province = {
+                        who = ROOT
+                        amount = 10
+                    }
+                }
+            }
+        }
+        effect = {
+            country_event_with_insight = { id = flavour_marunuma.1 insight_tooltip = N93_insight_1_tt }
+        }
+    }
+    N93_hydraulic_works = {
+        icon = mission_sarisung_river_merchant
+        position = 3
+        required_missions = {
+            N93_rushing_stone
+            N93_stone_library
+        }
+        provinces_to_highlight = {
+            is_capital_of = ROOT
+            NOT = { num_of_times_improved_by_owner = 6 }
+        }
+        trigger = {
+            has_mana = { amount = 50 }
+            capital_scope = {
+                num_of_times_improved_by_owner = 6
+            }
+        }
+        effect = {
+            change_mana = { amount = -50 }
+            add_country_modifier = { name = N93_hydraulic_construction duration = -1 }
+            daowati_river = {
+                add_permanent_claim = ROOT
+            }
+        }
+    }
+    N93_marunuma_rightful_rulers = {
+        icon = mission_arise_ashes
+        position = 5
+        required_missions = {
+            N93_kobold_kuestion
+            N93_seize_the_rivers
+            N93_seize_the_source
+            N93_marunuman_legitimacy
+        }
+        provinces_to_highlight = {
+            OR = {
+                AND = {
+                    region = great_plateau_region
+                    NOT = { country_or_subject_holds = ROOT }
+                }
+                AND = {
+                    province_id = 3675
+                    NOT = {
+                        AND = {
+                            owned_by = ROOT
+                            has_great_project = { type = kakunor_cloud_city tier = 2 }
+                        }
+                    }
+                }
+            }
+        }
+        trigger = {
+            3675 = {
+                owned_by = ROOT
+                has_great_project = { type = kakunor_cloud_city tier = 2 }
+            }
+            num_of_provinces_owned_or_owned_by_subjects_with = {
+                value = 25
+                region = great_plateau_region
+            }
+            OR = {
+                is_estate_abjuration_level_2_minimum = yes
+                is_estate_conjuration_level_2_minimum = yes
+            }
+        }
+        effect = {
+            country_event_with_insight = { id = flavour_marunuma.5 insight_tooltip = N93_insight_5_tt }
+        }
+    }
+}
+N93_col_4 = {
+    slot = 4
+    generic = no
+    ai = yes
+    has_country_shield = yes
+    potential = { tag = N93 }
+    N93_rise_of_the_clan_guilds = {
+        icon = mission_the_grand_bazaar
+        position = 1
+        provinces_to_highlight = {}
+        trigger = {
+            has_estate_privilege = estate_burghers_commercial_board_of_advice
+            num_of_estate_agendas_completed = { estate = estate_burghers value = 1 }
+        }
+        effect = {
+            custom_tooltip = N93_improve_commercial_advisory_board_tt
+            custom_tooltip = N93_define_random_dip_advisor_tt
+            hidden_effect = {
+                define_random_dip_advisor_effect = { skill = 1 cost_multiplier = 0.25 culture = skyfall_ogre }
+            }
+        }
+    }
+    N93_seize_the_source = {
+        icon = mission_se_along_the_river
+        position = 4
+        required_missions = {
+            N93_hydraulic_works
+        }
+        provinces_to_highlight = {
+            OR = {
+                province_id = 3704
+                province_id = 3686
+            }
+            NOT = {
+                AND = {
+                    country_or_subject_holds = ROOT
+                    has_trade_building_trigger = yes
+                }
+            }
+        }
+        trigger = {
+            3704 = {
+                country_or_subject_holds = ROOT
+                has_trade_building_trigger = yes
+            }
+            3686 = {
+                country_or_subject_holds = ROOT
+                has_trade_building_trigger = yes
+            }
+        }
+        effect = {
+            3704 = {
+                add_or_upgrade_center_of_trade = yes
+                add_permanent_province_modifier = { name = N93_hydraulic_locks duration = -1 }
+            }
+            3687 = {
+                add_or_upgrade_center_of_trade = yes
+                add_permanent_province_modifier = { name = N93_hydraulic_locks duration = -1 }
+            }
+        }
+    }
+}
+N93_col_5 = {
+    slot = 5
+    generic = no
+    ai = yes
+    has_country_shield = yes
+    potential = { tag = N93 }
+    N93_the_thorn = {
+        icon = mission_dual_diplomacy
+        position = 1
+        required_missions = {}
+        provinces_to_highlight = {
+            if = { limit = { exists = N87 }
+                is_capital_of = N87
+                N87 = {
+                    NOT = {
+                        AND = {
+                            has_spy_network_from = { who = ROOT value = 25 }
+                            has_been_insulted_by_root = yes
+                        }
+                    }
+                }
+            }
+            else_if = { limit = { 3666 = { owned_by = ROOT } }
+                always = no
+            }
+            else = {
+                province_id = 3666
+                owner = {
+                    NOT = {
+                        AND = {
+                            has_spy_network_from = { who = ROOT value = 25 }
+                            has_been_insulted_by_root = yes
+                        }
+                    }
+                }
+            }
+        }
+        trigger = {
+            if = { limit = { exists = N87 }
+                N87 = {
+                    has_spy_network_from = { who = ROOT value = 25 }
+                    has_been_insulted_by_root = yes
+                }
+            }
+            else_if = { limit = { owns = 3666 }
+                owns = 3666
+            }
+            else = {
+                3666 = {
+                    owner = {
+                        has_spy_network_from = { who = ROOT value = 25 }
+                        has_been_insulted_by_root = yes
+                    }
+                }
+            }
+        }
+        effect = {
+            if = { limit = { exists = N87 }
+                N87 = {
+                    add_spy_network_from = { who = ROOT value = -25 }
+                    reverse_add_casus_belli = { target = ROOT type = cb_vassalize_mission months = 240 }
+                }
+            }
+            else_if = { limit = { owns = 3666 }
+                add_local_autonomy = -25
+            }
+            else = {
+                3666 = {
+                    owner = {
+                        add_spy_network_from = { who = ROOT value = -25 }
+                        reverse_add_casus_belli = { target = ROOT type = cb_vassalize_mission months = 240 }
+                    }
+                }
+            }
+            gegebou_area = {
+                add_permanent_claim = ROOT
+            }
+            betrarite_area = {
+                add_permanent_claim = ROOT
+            }
+        }
+    }
+    N93_removed_from_our_side = {
+        icon = mission_sw_against_the_desert
+        position = 2
+        required_missions = {
+            N93_the_thorn
+        }
+        provinces_to_highlight = {
+            OR = {
+                AND = {
+                    if = { limit = { exists = N87 }
+                        is_capital_of = N87
+                        NOT = { N87 = { is_subject_of = ROOT } }
+                    }
+                    else = {
+                        province_id = 3666
+                        NOT = { owned_by = ROOT }
+                    }
+                }
+                AND = {
+                    province_id = 3667
+                    NOT = { num_of_units_in_province = { who = ROOT type = infantry amount = 4 } }
+                }
+            }
+        }
+        trigger = {
+            OR = {
+                overlord_of = N87
+                AND = {
+                    NOT = { exists = N87 }
+                    owns = 3666
+                }
+            }
+            3667 = {
+                num_of_units_in_province = { who = ROOT type = infantry amount = 4 }
+            }
+        }
+        effect = {
+            ragadurari_area = {
+                add_permanent_claim = ROOT
+            }
+            3667 = {
+                kill_units = { who = ROOT type = infantry amount = 4 }
+            }
+            simple_dynamic_effect = {
+                first_custom_tooltip = N93_daokape_frontier_1_tt
+                first_limit = "overlord_of = N87"
+                first_effect = "
+                remove_rival = N87 remove_historical_rival = N87
+                N87 = {
+                    remove_rival = ROOT remove_historical_rival = ROOT add_liberty_desire = -50
+                    tooltip = { create_colony_mission_reward = { province = 3667 }
+                }
+                hidden_effect = { change_variable = { N91_mission_sway = -1 } }
+                "
+                second_custom_tooltip = N93_daokape_frontier_2_tt
+                second_limit = "
+                NOT = { exists = N87 }
+                owns = 3666
+                "
+                second_effect = "
+                3666 = { add_local_autonomy = -25 }
+                create_colony_mission_reward = { province = 3667 }
+                hidden_effect = { change_variable = { N91_mission_sway = 1 } }
+                "
+            }
+            # have to use this effect outside of the simple_dynamic_effect. funky stuff going on with add_siberian_construction and ROOT
+            hidden_effect = {
+                if = { limit = { overlord_of = N87 }
+                    N87 = { country_event = { id = flavour_marunuma.1000 } }
+                }
+            }
+        }
+    }
+    N93_marunuman_legitimacy = {
+        icon = mission_magnificent_castle
+        position = 4
+        required_missions = {
+            N93_removed_from_our_side
+        }
+        provinces_to_highlight = {
+            province_id = 3675
+            NOT = {
+                AND = {
+                    owned_by = ROOT
+                    is_core = ROOT
+                    has_great_project = { type = kakunor_cloud_city tier = 1 }
+                }
+            }
+        }
+        trigger = {
+            owns_core_province = 3675
+            3675 = {
+                has_great_project = { type = kakunor_cloud_city tier = 1 }
+            }
+        }
+        effect = {
+            country_event_with_insight = { id = flavour_marunuma.4 insight_tooltip = N93_insight_4_tt }
+        }
+    }
+}
