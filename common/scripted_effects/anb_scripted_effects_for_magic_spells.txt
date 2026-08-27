@@ -657,6 +657,9 @@ clear_active_war_magic = {
 
 	# Bardic
 	remove_country_modifier = enchantment_0_bardic_inspiration_spell_mod
+
+	#Haless
+	remove_country_modifier = chi_default_invoke_the_grave_earth_mod
 }
 
 remove_harmful_siege_magic = { #Remove siege magic that's bad after you siege down a province
@@ -3159,6 +3162,7 @@ clr_all_custom_spell_groups = {
 		clr_cannor_clerical_spell_lists = yes
 		clr_fangaula_spell_lists = yes
 		clr_bardic_spell_lists = yes
+		clr_chi_spell_lists = yes
 		hidden_effect = { #Keep this here - simplifies this effect
 			clr_country_flag = magic_list_any
 			clr_country_flag = show_custom_spell_list #just in case
@@ -3250,6 +3254,13 @@ clr_bardic_spell_lists = {
 		limit = { has_any_custom_spell_list_in_group = { group = bardic } }
 		clr_custom_spell_list = { group = bardic subgroup = default }
 		#Put any sublists here
+	}
+}
+
+clr_chi_spell_lists = {
+	if = {
+		limit = { has_any_custom_spell_list_in_group = { group = chi } }
+		clr_custom_spell_list = { group = haless subgroup = default }
 	}
 }
 
@@ -4479,4 +4490,79 @@ necromancy_0_fangaula_kaino_1_effect = { #drain life spell
 	add_dip_power = 10
 	add_mil_power = 10
 	increase_witch_king_points_medium = yes
+}
+
+#Halessi Chi Magic
+divination_1_rite_of_upright_nourishment_effect = {
+	add_country_modifier = { name = chi_default_rite_of_upright_nourishment_tracker_mod duration = 3650 hidden = yes }
+	trigger_switch = {
+		on_trigger = national_focus
+		ADM = {
+			trigger_switch = {
+				on_trigger = advisor
+				court_mage = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_court_mage_mod duration = 3650 } }
+				artist = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_artist_mod duration = 3650 } }
+				inquisitor = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_inquisitor_mod duration = 3650 } }
+				master_of_mint = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_master_of_mint_mod duration = 3650 } }
+				natural_scientist = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_natural_scientist_mod duration = 3650 } }
+				philosopher = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_philosopher_mod duration = 3650 } }
+				theologian = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_theologian_mod duration = 3650 } }
+				treasurer = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_treasurer_mod duration = 3650 } }
+			}
+		}
+		DIP = {
+			trigger_switch = {
+				on_trigger = advisor
+				colonial_governor = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_colonial_governor_mod duration = 3650 } }
+				diplomat = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_diplomat_mod duration = 3650 } }
+				naval_reformer = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_naval_reformer_mod duration = 3650 } }
+				navigator = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_navigator_mod duration = 3650 } }
+				spymaster = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_spymaster_mod duration = 3650 } }
+				statesman = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_statesman_mod duration = 3650 } }
+				trader = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_trader_mod duration = 3650 } }
+			}
+		}
+		MIL = {
+			trigger_switch = {
+				on_trigger = advisor
+				army_organiser = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_army_organiser_mod duration = 3650 } }
+				army_reformer = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_army_reformer_mod duration = 3650 } }
+				commandant = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_commandant_mod duration = 3650 } }
+				grand_captain = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_grand_captain_mod duration = 3650 } }
+				recruitmaster = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_recruitmaster_mod duration = 3650 } }
+				fortification_expert = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_fortification_expert_mod duration = 3650 } }
+				quartermaster = { add_country_modifier = { name = chi_default_rite_of_upright_nourishment_quartermaster_mod duration = 3650 } }
+			}
+		}
+	}
+	custom_tooltip = chi_default_rite_of_upright_nourishment_effect_tt
+}
+illusion_1_harmonize_feng_shui_effect = {
+	custom_tooltip = chi_default_harmonize_feng_shui_spell_effect
+	add_country_modifier = { name = reset_national_focus_mod duration = 1 hidden = yes }
+	hidden_effect = {
+		every_owned_province = {
+			limit = {
+				NOT = { has_province_flag = feng_shui_tracker_flag }
+				OR = {
+					has_tax_building_trigger = yes
+					province_group = temple_province_group
+					province_has_chi_wellspring_trigger = yes
+				}
+			}
+
+			add_prosperity = 25
+			area = {
+				add_devastation = -25
+				set_province_flag = feng_shui_tracker_flag
+			}
+		}
+		every_owned_province = { clr_province_flag = feng_shui_tracker_flag }
+	}
+}
+abjuration_1_invoke_the_grave_earth_effect = {
+	add_country_modifier = { name = chi_default_invoke_the_grave_earth_mod duration = 1825 }
+}
+conjuration_1_channel_chi_effect = {
+	add_country_modifier = { name = chi_default_channel_chi_mod duration = 1825 }
 }
