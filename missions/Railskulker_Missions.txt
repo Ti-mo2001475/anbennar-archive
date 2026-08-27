@@ -509,8 +509,7 @@ railskulker_column_5 = {
 			}
 		}
 	}
-	
-			
+
 railskulker_column_1_pt2 = {
 	slot = 1
 	generic= no
@@ -520,13 +519,62 @@ railskulker_column_1_pt2 = {
 		tag = H75
 		has_country_flag = railskulker_missions_pt2
 		}
-		
+
+	railskulker_integrate_isolated_clans = {
+		icon = mission_feast
+		position = 8
+		required_missions = {
+			railskulker_recognize_the_councils
+		}
+			
+		provinces_to_highlight = {
+			OR = {
+				area = dagrite_depths_area
+				area = zokkorna_caverns_area
+				area = riftway_area
+				area = dwarovrod_10_12_area
+				area = dwarovrod_15_17_area
+				}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+			
+		trigger = {
+			dagrite_depths_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			zokkorna_caverns_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			riftway_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			dwarovrod_10_12_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			dwarovrod_15_17_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			}
+			
+		effect = {
+			jorkad_junction_area = { add_permanent_claim = ROOT }
+			dwarovrod_7_9_area = { add_permanent_claim = ROOT }
+			dagrinrod_4_6_area = { add_permanent_claim = ROOT }
+			dagrinrod_7_9_area = { add_permanent_claim = ROOT }
+		}
+	}
+
 	railskulker_our_southern_brethren = {
 		icon = mission_face_off
 		position = 9
 		required_missions = {
 			railskulker_integrate_isolated_clans
-			}
+		}
 			
 		provinces_to_highlight = {
 			province_id = 2963 #hul jorkad
@@ -702,63 +750,14 @@ railskulker_column_2_pt2 = {
 		tag = H75
 		has_country_flag = railskulker_missions_pt2
 	}
-		
-	railskulker_integrate_isolated_clans = {
-		icon = mission_feast
+	
+	railskulker_deploy_mushroom_gas = {
+		icon = mission_hanged_tree
 		position = 8
 		required_missions = {
 			railskulker_recognize_the_councils
 		}
-			
-		provinces_to_highlight = {
-			OR = {
-				area = dagrite_depths_area
-				area = zokkorna_caverns_area
-				area = riftway_area
-				area = dwarovrod_10_12_area
-				area = dwarovrod_15_17_area
-				}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-		}
-			
-		trigger = {
-			dagrite_depths_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			zokkorna_caverns_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			riftway_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			dwarovrod_10_12_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			dwarovrod_15_17_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			}
-			
-		effect = {
-			jorkad_junction_area = { add_permanent_claim = ROOT }
-			dwarovrod_7_9_area = { add_permanent_claim = ROOT }
-			dagrinrod_4_6_area = { add_permanent_claim = ROOT }
-			dagrinrod_7_9_area = { add_permanent_claim = ROOT }
-		}
-	}
-		
-	railskulker_deploy_mushroom_gas = {
-		icon = mission_hanged_tree
-		position = 9
-		required_missions = {
-			railskulker_integrate_isolated_clans
-		}
-			
+
 		provinces_to_highlight = {
 			OR = {
 				area = dwarovrod_7_9_area
@@ -831,25 +830,24 @@ railskulker_column_2_pt2 = {
 				AND = {
 					owned_by = ROOT
 					hold_condition = { Repaired = yes }
-					}
 				}
 			}
-				
+		}
 			
 		trigger = {
 			amldihr_area = {
 				type = all
 				owned_by = ROOT
 				hold_condition = { Repaired = yes }
-				}
 			}
+		}
 			
 		effect = {
 			 country_event =  { id = flavour_railskulker.5 }
 			}
 		}
 	}
-	
+
 railskulker_column_3_pt2 = {
 	slot = 3
 	generic= no
@@ -858,7 +856,7 @@ railskulker_column_3_pt2 = {
 	potential = {
 		tag = H75
 		has_country_flag = railskulker_missions_pt2
-		}
+	}
 		
 	railskulker_learning_to_use_their_creations = {
 		icon = mission_shady_encounter
@@ -984,7 +982,7 @@ railskulker_column_4_pt2 = {
 	potential = {
 		tag = H75
 		has_country_flag = railskulker_missions_pt2
-		}
+	}
 		
 	railskulker_make_them_an_offer = {
 		icon = mission_alliances
@@ -1147,7 +1145,7 @@ railskulker_column_5_pt2 = {
 		position = 9
 		required_missions = {
 			railskulker_make_them_an_offer
-			}
+		}
 			
 		provinces_to_highlight = {
 			AND = {
@@ -1347,7 +1345,7 @@ railskulker_column_2_pt3 = {
 	potential = {
 		tag = H75
 		has_country_flag = railskulker_missions_pt3
-		}
+	}
 		
 	railskulker_smartest_of_all_goblins = {
 		icon = kingdom_of_lombardy
@@ -1355,7 +1353,7 @@ railskulker_column_2_pt3 = {
 		required_missions = {
 			railskulker_an_alternative_use
 			railskulker_the_last_threat
-			}
+		}
 			
 		provinces_to_highlight = {
 			owned_by = ROOT
@@ -1365,14 +1363,14 @@ railskulker_column_2_pt3 = {
 		
 		trigger = {
 			is_at_war = no
-			total_development = 1000
+			total_own_and_non_tributary_subject_development = 1000
 			all_owned_province = {
 				NOT = { devastation = 1 }
-				}
+			}
 			2931 = { #er-natvir
 				has_dwarven_hold_7 = yes
-				}		
-			}
+			}		
+		}
 		
 		effect = {
 			add_country_modifier = {
@@ -1391,21 +1389,21 @@ railskulker_column_3_pt3 = {
 	potential = {
 		tag = H75
 		has_country_flag = railskulker_missions_pt3
-		}
+	}
 		
 	railskulker_sponsor_success = {
 		icon = medici_bank_ledgers
 		position = 12
 		required_missions = {
 			railskulker_on_the_rails_again
-			}
+		}
 
 		provinces_to_highlight = {
 			province_id = 2931 #er-natvir
 			NOT = {
 				has_dwarven_hold_6 = yes
-				}
 			}
+		}
 			
 		trigger = {
 			2931 = { #er-natvir
@@ -1438,13 +1436,13 @@ railskulker_column_3_pt3 = {
 			}
 		}
 	}
-		
+
 	railskulker_the_birth_of_an_idea = {
 		icon = mission_patronize_sufi_scholars
 		position = 13
 		required_missions = {
 			railskulker_sponsor_success
-			}
+		}
 			
 		trigger = {
 			OR = {
@@ -1472,6 +1470,7 @@ railskulker_column_3_pt3 = {
 				}
 			}
 		}
+	}
 		
 	railskulker_the_last_threat = {
 		icon = mission_mountain_castle
