@@ -8034,6 +8034,41 @@ on_completed_agenda_effect_estate_burghers = {
 			amount = 1
 		}
 	}
+	if = {
+		limit = {
+			4859 = {
+				owned_by = ROOT
+				can_use_thousand_words_assembly_scripted_trigger = yes
+				has_great_project = {
+					type = thousand_words_assembly
+					tier = 2
+				}
+			}
+		}
+		if = {
+			limit = {
+				4859 = {
+					has_great_project = {
+						type = thousand_words_assembly
+						tier = 3
+					}
+				}
+			}
+			remove_country_modifier = thousand_words_assembly_merchant_buff_1
+			remove_country_modifier = thousand_words_assembly_merchant_buff_2
+			add_country_modifier = {
+				name = thousand_words_assembly_merchant_buff_2
+				duration = 5475
+			}
+		}
+		else = {
+			remove_country_modifier = thousand_words_assembly_merchant_buff_1
+			add_country_modifier = {
+				name = thousand_words_assembly_merchant_buff_1
+				duration = 5475
+			}
+		}
+	}
 }
 on_completed_agenda_effect_estate_church = {
 	if = {

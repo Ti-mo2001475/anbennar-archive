@@ -98,7 +98,7 @@ rayaz_1 = {
 					NOT = { liberty_desire = 50 }
 				}
 			}
-			owns_core_province = 5898 #Karassk
+			owns_or_non_sovereign_subject_of = 5898 #Karassk
 			5912 = { development = 12 }	#Arazinik
 		} 
 
@@ -150,11 +150,11 @@ rayaz_1 = {
 		required_missions = { rayaz_1_2 } 
 		provinces_to_highlight = { 
 			OR = {
-                province_id = 3216 #Azafard
-                province_id = 5894 #Ashuzal
-                province_id = 5923 #Tsya ra Thusk 
-                province_id = 6024 #Asparimu
-            }
+				province_id = 3216 #Azafard
+				province_id = 5894 #Ashuzal
+				province_id = 5923 #Tsya ra Thusk 
+				province_id = 6024 #Asparimu
+			}
 			NOT = { has_fort_building_trigger = yes }
 		} 
 
@@ -427,7 +427,18 @@ rayaz_3 = {
 				L99 = { #Katsanada
 					vassal_of = ROOT #Rayaz
 					NOT = { liberty_desire = 50 }
-					has_embargo_rivals = yes
+					if = {
+						limit = {
+							ROOT = {
+								any_known_country = {
+									NOT = { has_been_eclipsed_by = ROOT }
+									NOT = { has_eclipsed = ROOT }
+								}
+							}
+						}
+
+						has_embargo_rivals = yes
+					}
 					has_scutage = yes
 				}
 				AND = {
@@ -446,7 +457,18 @@ rayaz_3 = {
 				L90 = { #Ashkha
 					vassal_of = ROOT #Rayaz
 					NOT = { liberty_desire = 50 }
-					has_embargo_rivals = yes
+					if = {
+						limit = {
+							ROOT = {
+								any_known_country = {
+									NOT = { has_been_eclipsed_by = ROOT }
+									NOT = { has_eclipsed = ROOT }
+								}
+							}
+						}
+
+						has_embargo_rivals = yes
+					}
 					has_scutage = yes
 				}
 				AND = {
@@ -665,10 +687,43 @@ rayaz_3 = {
 			rayaz_3_4
 			rayaz_5_4
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = { 
+			OR = {
+				AND = {
+					superregion = taneyas_superregion
+					NOT = { owned_by = ROOT }
+					NOT = {
+						ROOT = {
+							num_of_owned_provinces_with = {
+								value = 75
+								superregion = taneyas_superregion
+							}
+						}
+					}
+				}
+				AND = {
+					OR = {
+						province_id = 5921
+						province_id = 5650
+						province_id = 5898
+						province_id = 5914
+						province_id = 5941
+						province_id = 5951 
+						province_id = 5947
+						province_id = 5646
+						province_id = 5908
+						province_id = 5863
+					}
+					NOT = { owned_by = ROOT }
+				}
+			}
+		 } 
 
 		trigger = {  
-			reform_level = 4
+			OR = {
+				reform_level = 4
+				is_tribal = no
+			}
 			custom_trigger_tooltip = {
 				tooltip = can_form_khatalashya_tt
 				num_of_owned_provinces_with = {
@@ -1013,6 +1068,7 @@ rayaz_5 = {
 						OR = {
 							alliance_with = ROOT #Rayaz
 							guaranteed_by = ROOT #Rayaz
+							is_subject_of = ROOT
 						}
 						NOT = {
 							AND = {
@@ -1055,6 +1111,7 @@ rayaz_5 = {
 							OR = {
 								alliance_with = ROOT #Rayaz
 								guaranteed_by = ROOT #Rayaz
+								is_subject_of = ROOT
 							}
 						}
 						calc_true_if = {
@@ -1068,6 +1125,7 @@ rayaz_5 = {
 								OR = {
 									alliance_with = ROOT #Rayaz
 									guaranteed_by = ROOT #Rayaz
+									is_subject_of = ROOT
 								}
 							}
 							amount = 3
@@ -1219,7 +1277,14 @@ rayaz_5 = {
 			set_country_flag = rayaz_naga_upgraded
 			set_estate_privilege = estate_church_naga_upgraded_mutation
 			custom_tooltip = rayaz_ashhana_anzalkatsa_reward_tt
-			#Put in the Blood Curse Reward Later!!!!!!!!!
+
+			hidden_effect = {
+				every_owned_province = {
+					limit = { has_province_modifier = rampaging_ashhana_hordes }
+					rayaz_pacify_bloodcurse = yes
+				}
+			}
+
 			hidden_effect = {
 				every_subject_country = {
 					limit = {

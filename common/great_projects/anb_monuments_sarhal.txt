@@ -6957,7 +6957,10 @@ genie_palace_of_jinnakah = {
 			else_if = {
 				limit = { owner = { tag = S91 } }
 				owner = { country_event = { id = ardimya.102 } }
-				6063 = { add_cardinal = yes }
+				if = {
+					limit = { owner = { religion = ravelian } }
+					6063 = { add_cardinal = yes }
+				}
 			}
 		}
 		conditional_modifier = {
@@ -7001,32 +7004,30 @@ genie_palace_of_jinnakah = {
 			}
 			hidden_effect = {
 				if = {
-					limit = { owner = { tag = S91 } 6063 = { has_cardinal = no } }
-					6063 = {
-						add_cardinal = yes
-						add_province_modifier = {
-							name = ardimyan_rite_religious_centre_0
-							duration = -1
-						}
-					}
-				}
-				else_if = {
-					limit = { owner = { tag = S91 } 6063 = { has_cardinal = yes } }
+					limit = { owner = { tag = S91 } }
 					6063 = {
 						add_province_modifier = {
 							name = ardimyan_rite_religious_centre_0
 							duration = -1
 						}
 					}
-					owner = {
-						random_owned_province = {
-							limit = { religion = ravelian }
-							add_cardinal = yes
+					if = {
+						limit = { 6063 = { has_cardinal = no } }
+						6063 = { add_cardinal = yes }
+					}
+					else = {
+						owner = {
+							random_owned_province = {
+								limit = {
+									religion = ravelian
+									has_cardinal = no
+								}
+								add_cardinal = yes
+							}
 						}
 					}
 				}
 			}
-
 		}
 		conditional_modifier = {
 			trigger = { owner = { tag = S91 } }
