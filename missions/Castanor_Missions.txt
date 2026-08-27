@@ -626,7 +626,7 @@ castanor_1_missions_b = {
 				region = ourdia_region
 				region = daravans_folly_region
 			}
-			culture_group = goblin
+			culture_is_goblin = yes
 		}
 
 		trigger = {
@@ -639,7 +639,7 @@ castanor_1_missions_b = {
 			hidden_effect = {
 				bahar_region = {
 					if = {
-						limit = { culture_group = goblin }
+						limit = { culture_is_goblin = yes }
 						change_religion = ROOT
 						change_culture = bahari
 						add_devastation = 50
@@ -665,7 +665,7 @@ castanor_1_missions_b = {
 				}
 				ourdia_region = {
 					if = {
-						limit = { culture_group = goblin }
+						limit = { culture_is_goblin = yes }
 						change_religion = ROOT
 						change_culture = ourdi
 						add_devastation = 50
@@ -691,7 +691,7 @@ castanor_1_missions_b = {
 				}
 				daravans_folly_region = {
 					if = {
-						limit = { culture_group = goblin }
+						limit = { culture_is_goblin = yes }
 						change_religion = ROOT
 						change_culture = ourdi
 						add_devastation = 50
@@ -835,7 +835,7 @@ castanor_1_missions_b = {
 		}
 		provinces_to_highlight = {
 			region = harpy_hills_region
-			culture_group = harpy
+			culture_is_harpy = yes
 		}
 		
 		trigger = {
@@ -847,10 +847,30 @@ castanor_1_missions_b = {
 			custom_tooltip = castanor_declawing_the_queendom_effect_tt
 			hidden_effect = {
 				harpy_hills_region = {
-					limit = { culture_group = harpy }
+					limit = { culture_is_harpy = yes }
 					change_religion = ROOT
 					change_culture = gelkar
 					add_devastation = 50
+				}
+				harpy_hills_region = {
+					if = {
+						limit = { has_any_harpy_pop_trigger = yes }
+						remove_harpy_minority_size_effect = yes
+						trigger_switch = {
+							on_trigger = development
+							33 = { owner = { add_treasury = 250 } }
+							30 = { owner = { add_treasury = 230 } }
+							27 = { owner = { add_treasury = 210 } }
+							24 = { owner = { add_treasury = 180 } }
+							21 = { owner = { add_treasury = 155 } }
+							18 = { owner = { add_treasury = 135 } }
+							15 = { owner = { add_treasury = 115 } }
+							12 = { owner = { add_treasury = 100 } }
+							9 = { owner = { add_treasury = 85 } }
+							6 = { owner = { add_treasury = 60 } }
+							1 = { owner = { add_treasury = 50 } }
+						}
+					}
 				}
 			}
 			
@@ -862,26 +882,6 @@ castanor_1_missions_b = {
 				add_province_modifier = {
 					name = castanor_under_human_control
 					duration = 7300
-				}
-			}
-			harpy_hills_region = {
-				if = {
-					limit = { has_any_harpy_pop_trigger = yes }
-					remove_harpy_minority_size_effect = yes
-					trigger_switch = {
-						on_trigger = development
-						33 = { owner = { add_treasury = 250 } }
-						30 = { owner = { add_treasury = 230 } }
-						27 = { owner = { add_treasury = 210 } }
-						24 = { owner = { add_treasury = 180 } }
-						21 = { owner = { add_treasury = 155 } }
-						18 = { owner = { add_treasury = 135 } }
-						15 = { owner = { add_treasury = 115 } }
-						12 = { owner = { add_treasury = 100 } }
-						9 = { owner = { add_treasury = 85 } }
-						6 = { owner = { add_treasury = 60 } }
-						1 = { owner = { add_treasury = 50 } }
-					}
 				}
 			}
 		}
@@ -980,7 +980,7 @@ castanor_1_missions_b = {
 		required_missions = { castanor_conquer_the_borders }
 		provinces_to_highlight = {
 			continent = europe
-			culture_group = gnollish
+			culture_is_gnollish = yes
 			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
@@ -988,7 +988,7 @@ castanor_1_missions_b = {
 			mil_power = 100
 			NOT = {
 				europe = {
-					culture_group = gnollish
+					culture_is_gnollish = yes
 					NOT = { country_or_non_sovereign_subject_holds = ROOT }
 				}
 			}
@@ -1001,7 +1001,7 @@ castanor_1_missions_b = {
 			hidden_effect = {
 				the_borders_region = {
 					if = {
-						limit = { culture_group = gnollish }
+						limit = { culture_is_gnollish = yes }
 						change_culture = wexonard
 						change_religion = ROOT
 						add_devastation = 50
@@ -1027,7 +1027,7 @@ castanor_1_missions_b = {
 				}
 				east_dameshead_region = {
 					if = {
-						limit = { culture_group = gnollish }
+						limit = { culture_is_gnollish = yes }
 						change_culture = vernman
 						change_religion = ROOT
 						add_devastation = 50
@@ -1053,7 +1053,7 @@ castanor_1_missions_b = {
 				}
 				businor_region = {
 					if = {
-						limit = { culture_group = gnollish }
+						limit = { culture_is_gnollish = yes }
 						change_culture = busilari
 						change_religion = ROOT
 						add_devastation = 50
@@ -1079,7 +1079,7 @@ castanor_1_missions_b = {
 				}
 				daravans_folly_region = {
 					if = {
-						limit = { culture_group = gnollish }
+						limit = { culture_is_gnollish = yes }
 						change_culture = dostanorian
 						change_religion = ROOT
 						add_devastation = 50
@@ -2394,15 +2394,15 @@ castanor_2_missions = {
 			# }
 			if = {
 				limit = { 831 = { higher_development_than = 8 } }
-				add_prestige_excess_to_splendour_effect = { VAL = 25 }
+				hidden_effect = { add_prestige_excess_to_splendour_effect = { VAL = 25 } }
 			}
 			if = {
 				limit = { 832 = { higher_development_than = 8 } }
-				add_prestige_excess_to_splendour_effect = { VAL = 25 }
+				hidden_effect = { add_prestige_excess_to_splendour_effect = { VAL = 25 } }
 			}
 			if = {
 				limit = { 833 = { higher_development_than = 8 } }
-				add_prestige_excess_to_splendour_effect = { VAL = 25 }
+				hidden_effect = { add_prestige_excess_to_splendour_effect = { VAL = 25 } }
 			}
 			custom_tooltip = castanor_greatest_city_in_the_world_effect_tt
 		}
@@ -3186,7 +3186,7 @@ castanor_2_missions = {
 			}
 			akasik_region = {
 				if = {
-					limit = { culture_group = gnollish }
+					limit = { culture_is_gnollish = yes }
 					add_devastation = 50
 				if = {
 					limit = {
@@ -4666,7 +4666,7 @@ castanor_3_missions_c = {
 					}
 					add_province_triggered_modifier = castanor_river_support
 				}
-				heartland_borders_area = {
+				crownshields_area = {
 					limit = {
 						NOT = { province_id = 255 } # Crownsway
 					}

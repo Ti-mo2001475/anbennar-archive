@@ -1145,25 +1145,27 @@ country_event = {
 
 #Half-orc Creation
 country_event = {
-	id = racial_pop_misc.2
+	id = racial_pop_misc.2 #TODO: Armon give custom loc for this in Deepwoods
 	title = racial_pop_misc.2.t
 	desc = racial_pop_misc.2.d
 	picture = REFUGEES_ESCAPING_eventPicture
 	goto = racial_pop_province_target
 
 	is_triggered_only = yes
-	
+
 	#Make em
-	option = {		
+	option = {
 		name = racial_pop_misc.2.a
-
 		custom_tooltip = racial_pop_grow_horc_tt
-		
 		tooltip = {
 			if = {
 				limit = {
 					event_target:racial_pop_province_target = {
-						culture_is_human = yes
+						OR = {
+							culture_is_human = yes
+							culture_is_elven = yes
+							culture_is_ruinborn = yes
+						}
 					}
 				}
 				event_target:racial_pop_province_target = {
@@ -1171,11 +1173,11 @@ country_event = {
 					add_half_orcish_minority_size_effect = yes
 				}
 			}
-			
-			if = {
+			if = { # PRIORITET 1: HUMAN						
 				limit = {
 					event_target:racial_pop_province_target = {
-						culture_group = orcish
+						culture_is_orcish = yes
+						has_human_minority_trigger = yes
 					}
 				}
 				event_target:racial_pop_province_target = {
@@ -1183,23 +1185,51 @@ country_event = {
 					add_half_orcish_minority_size_effect = yes
 				}
 			}
+
+			else_if = { # PRIORITET 2: Ruinborn	
+				limit = {
+					event_target:racial_pop_province_target = {
+						culture_group = orcish
+						has_ruinborn_minority_trigger = yes
+						NOT = { has_human_minority_trigger = yes }
+					}
+				}
+				event_target:racial_pop_province_target = {
+					remove_ruinborn_minority_size_effect = yes
+					add_half_orcish_minority_size_effect = yes
+				}
+			}
+			else_if = { # PRIORITET 3: Elf
+				limit = {
+					event_target:racial_pop_province_target = {
+						culture_group = orcish
+						has_elven_minority_trigger = yes
+						NOT = { has_human_minority_trigger = yes }
+						NOT = { has_ruinborn_minority_trigger = yes }
+					}
+				}
+				event_target:racial_pop_province_target = {
+					remove_elven_minority_size_effect = yes
+					add_half_orcish_minority_size_effect = yes
+				}
+			}
 		}
-		
 	}
-	
+
 	#hide it
-	option = {		
+	option = {
 		name = racial_pop_misc.2.b
-
 		custom_tooltip = racial_pop_grow_horc_tt
-
 		set_country_flag = hide_half_orc_creation
-
 		tooltip = {
 			if = {
 				limit = {
 					event_target:racial_pop_province_target = {
-						culture_is_human = yes
+						OR = {
+							culture_is_human = yes
+							culture_is_elven = yes
+							culture_is_ruinborn = yes
+						}
 					}
 				}
 				event_target:racial_pop_province_target = {
@@ -1207,11 +1237,11 @@ country_event = {
 					add_half_orcish_minority_size_effect = yes
 				}
 			}
-			
-			if = {
+			if = { # PRIORITET 1: HUMAN			
 				limit = {
 					event_target:racial_pop_province_target = {
-						culture_group = orcish
+						culture_is_orcish = yes
+						has_human_minority_trigger = yes
 					}
 				}
 				event_target:racial_pop_province_target = {
@@ -1219,10 +1249,36 @@ country_event = {
 					add_half_orcish_minority_size_effect = yes
 				}
 			}
+
+			else_if = { # PRIORITET 2: Ruinborn	
+				limit = {
+					event_target:racial_pop_province_target = {
+						culture_group = orcish
+						has_ruinborn_minority_trigger = yes
+						NOT = { has_human_minority_trigger = yes }
+					}
+				}
+				event_target:racial_pop_province_target = {
+					remove_ruinborn_minority_size_effect = yes
+					add_half_orcish_minority_size_effect = yes
+				}
+			}
+			else_if = { # PRIORITET 3: Elf	
+				limit = {
+					event_target:racial_pop_province_target = {
+						culture_group = orcish
+						has_elven_minority_trigger = yes
+						NOT = { has_human_minority_trigger = yes }
+						NOT = { has_ruinborn_minority_trigger = yes }
+					}
+				}
+				event_target:racial_pop_province_target = {
+					remove_elven_minority_size_effect = yes
+					add_half_orcish_minority_size_effect = yes
+				}
+			}
 		}
-		
 	}
-	
 }
 
 #pop menu for players
@@ -1522,7 +1578,7 @@ country_event = {
 
 #hidden Half-orc Creation
 country_event = {
-	id = racial_pop_misc.5
+	id = racial_pop_misc.5 #TODO: Armon give custom loc for this in Deepwoods
 	title = racial_pop_misc.2.t
 	desc = racial_pop_misc.2.d
 	picture = REFUGEES_ESCAPING_eventPicture
@@ -1547,15 +1603,30 @@ country_event = {
 					has_human_minority_trigger = yes
 					culture_group = orcish
 				}
+				AND = { #Orc primary culture, elven minority
+					has_elven_minority_trigger = yes
+					culture_group = orcish
+				}
+				AND = { #Orc primary culture, ruinborn minority
+					has_ruinborn_minority_trigger = yes
+					culture_group = orcish
+				}
 				AND = { #Human primary culture, orc minority
 					has_orcish_minority_trigger = yes
 					culture_is_human = yes
+				}
+				AND = { #Elven primary culture, orc minority
+					has_orcish_minority_trigger = yes
+					culture_is_elven = yes
+				}
+				AND = { #Ruinborn primary culture, orc minority
+					has_orcish_minority_trigger = yes
+					culture_is_ruinborn = yes
 				}
 			}
 			NOT = { has_half_orcish_minority_trigger = yes }
 			owned_by = ROOT
 		}
-		
 	}
 	
 	mean_time_to_happen = {
@@ -1565,7 +1636,11 @@ country_event = {
 			calc_true_if = {
 				all_owned_province = {
 					has_orcish_minority_trigger = yes
-					culture_is_human = yes
+					OR = {
+						culture_is_human = yes
+						culture_is_elven = yes
+						culture_is_ruinborn = yes
+					}
 					is_core = ROOT
 				}
 				amount = 20
@@ -1575,7 +1650,11 @@ country_event = {
 			factor = 0.25
 			calc_true_if = {
 				all_owned_province = {
-					has_human_minority_trigger = yes
+					OR = {
+						has_human_minority_trigger = yes
+						has_elven_minority_trigger = yes
+						has_ruinborn_minority_trigger = yes
+					}
 					culture_group = orcish
 					is_core = ROOT
 				}
@@ -1597,6 +1676,18 @@ country_event = {
 		modifier = {
 			factor = 0.9
 			any_owned_province = {
+				has_coexisting_elven_minority_trigger = yes
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_owned_province = {
+				has_coexisting_ruinborn_minority_trigger = yes
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_owned_province = {
 				has_integrated_orcish_minority_trigger = yes
 			}
 		}
@@ -1609,11 +1700,23 @@ country_event = {
 		modifier = {
 			factor = 0.9
 			any_owned_province = {
+				has_integrated_elven_minority_trigger = yes
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_owned_province = {
+				has_integrated_ruinborn_minority_trigger = yes
+			}
+		}
+		modifier = {
+			factor = 0.9
+			any_owned_province = {
 				has_half_orcish_minority_trigger = yes
 			}
 		}
 		modifier = {
-			factor = 0.5
+			factor = 0.9
 			has_country_modifier = racial_focus_half_orcish
 		}
 	}
@@ -1626,7 +1729,11 @@ country_event = {
 		hidden_effect = {
 			random_owned_province = {
 				limit = {
-					has_human_minority_trigger = yes
+					OR = {
+						has_human_minority_trigger = yes
+						has_elven_minority_trigger = yes
+						has_ruinborn_minority_trigger = yes
+					}
 					culture_group = orcish
 					NOT = { has_half_orcish_minority_trigger = yes }
 					is_core = ROOT
@@ -1635,7 +1742,11 @@ country_event = {
 			}
 			random_owned_province = {
 				limit = {
-					has_human_minority_trigger = yes
+					OR = {
+						has_human_minority_trigger = yes
+						has_elven_minority_trigger = yes
+						has_ruinborn_minority_trigger = yes
+					}
 					culture_group = orcish
 					NOT = { has_half_orcish_minority_trigger = yes }
 					development = 10
@@ -1645,7 +1756,11 @@ country_event = {
 			}
 			random_owned_province = {
 				limit = {
-					has_human_minority_trigger = yes
+					OR = {
+						has_human_minority_trigger = yes
+						has_elven_minority_trigger = yes
+						has_ruinborn_minority_trigger = yes
+					}
 					culture_group = orcish
 					NOT = { has_half_orcish_minority_trigger = yes }
 					development = 20
@@ -1657,7 +1772,11 @@ country_event = {
 			random_owned_province = {
 				limit = {
 					has_orcish_minority_trigger = yes
-					culture_is_human = yes
+					OR = {
+						culture_is_human = yes
+						culture_is_elven = yes
+						culture_is_ruinborn = yes
+					}
 					NOT = { has_half_orcish_minority_trigger = yes }
 					is_core = ROOT
 				}
@@ -1666,7 +1785,11 @@ country_event = {
 			random_owned_province = {
 				limit = {
 					has_orcish_minority_trigger = yes
-					culture_is_human = yes
+					OR = {
+						culture_is_human = yes
+						culture_is_elven = yes
+						culture_is_ruinborn = yes
+					}
 					NOT = { has_half_orcish_minority_trigger = yes }
 					development = 10
 					is_core = ROOT
@@ -1676,7 +1799,11 @@ country_event = {
 			random_owned_province = {
 				limit = {
 					has_orcish_minority_trigger = yes
-					culture_is_human = yes
+					OR = {
+						culture_is_human = yes
+						culture_is_elven = yes
+						culture_is_ruinborn = yes
+					}
 					NOT = { has_half_orcish_minority_trigger = yes }
 					development = 20
 					is_core = ROOT
@@ -1687,7 +1814,11 @@ country_event = {
 				limit = {
 					event_target:racial_pop_province_target = {
 						has_orcish_minority_trigger = yes
-						culture_is_human = yes
+						OR = {
+							culture_is_human = yes
+							culture_is_elven = yes
+							culture_is_ruinborn = yes
+						}
 					}
 				}
 				event_target:racial_pop_province_target = {
@@ -1696,11 +1827,11 @@ country_event = {
 				}
 			}
 			
-			if = {
+			if = { # PRIORITET 1: HUMAN			
 				limit = {
 					event_target:racial_pop_province_target = {
-						has_human_minority_trigger = yes
 						culture_group = orcish
+						has_human_minority_trigger = yes
 					}
 				}
 				event_target:racial_pop_province_target = {
@@ -1709,31 +1840,57 @@ country_event = {
 				}
 			}
 
+			else_if = { # PRIORITET 2: Ruinborn	
+				limit = {
+					event_target:racial_pop_province_target = {
+						culture_group = orcish
+						has_ruinborn_minority_trigger = yes
+						NOT = { has_human_minority_trigger = yes }
+					}
+				}
+				event_target:racial_pop_province_target = {
+					remove_ruinborn_minority_size_effect = yes
+					add_half_orcish_minority_size_effect = yes
+				}
+			}
+			else_if = { # PRIORITET 3: Elf	
+				limit = {
+					event_target:racial_pop_province_target = {
+						culture_group = orcish
+						has_elven_minority_trigger = yes
+						NOT = { has_human_minority_trigger = yes }
+						NOT = { has_ruinborn_minority_trigger = yes }
+					}
+				}
+				event_target:racial_pop_province_target = {
+					remove_elven_minority_size_effect = yes
+					add_half_orcish_minority_size_effect = yes
+				}
+			}
 		}
 	}
-	
 	#Make em
 	option = {		
 		name = racial_pop_misc.2.a
 
 		custom_tooltip = racial_pop_grow_horc_tt
-		
+
 		if = {
-			limit = {
-				NOT = {
-					has_country_flag = hide_half_orc_creation
-				}
-			}
+			limit = { NOT = { has_country_flag = hide_half_orc_creation } }
 			country_event = {
 				id = racial_pop_misc.2
 			}
-		}		
+		}
 
 		tooltip = {
 			if = {
 				limit = {
 					event_target:racial_pop_province_target = {
-						culture_is_human = yes
+						OR = {
+							culture_is_human = yes
+							culture_is_elven = yes
+							culture_is_ruinborn = yes
+						}
 					}
 				}
 				event_target:racial_pop_province_target = {
@@ -1742,21 +1899,49 @@ country_event = {
 				}
 			}
 			
-			if = {
+			if = { # PRIORITET 1: HUMAN			
 				limit = {
 					event_target:racial_pop_province_target = {
 						culture_group = orcish
+						has_human_minority_trigger = yes
 					}
 				}
 				event_target:racial_pop_province_target = {
 					remove_human_minority_size_effect = yes
+					add_half_orcish_minority_size_effect = yes
+				}
+			}
+
+			else_if = { # PRIORITET 2: Ruinborn	
+				limit = {
+					event_target:racial_pop_province_target = {
+						culture_group = orcish
+						has_ruinborn_minority_trigger = yes
+						NOT = { has_human_minority_trigger = yes }
+					}
+				}
+				event_target:racial_pop_province_target = {
+					remove_ruinborn_minority_size_effect = yes
+					add_half_orcish_minority_size_effect = yes
+				}
+			}
+			else_if = { # PRIORITET 3: Elf	
+				limit = {
+					event_target:racial_pop_province_target = {
+						culture_group = orcish
+						has_elven_minority_trigger = yes
+						NOT = { has_human_minority_trigger = yes }
+						NOT = { has_ruinborn_minority_trigger = yes }
+					}
+				}
+				event_target:racial_pop_province_target = {
+					remove_elven_minority_size_effect = yes
 					add_half_orcish_minority_size_effect = yes
 				}
 			}
 		}
 	}	
 }
-
 
 # This event is used by the racial UI and triggered by "pop_menu_calculations"
 # Calling every_owned_province to update tolerance in a scripted effect generates 1 invalid scope at the end of iteration

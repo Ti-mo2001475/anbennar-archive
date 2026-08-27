@@ -679,13 +679,13 @@ lizardfolk_port = {
 				owner = {
 					OR = {
 						is_vyzemby_primary_culture = yes
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 					}
 				}
 				AND = {
 					OR = {
 						is_vyzemby_culture = yes
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 					}
 					has_owner_accepted_culture = yes
 				}
@@ -722,13 +722,13 @@ lizardfolk_port = {
 				owner = {
 					OR = {
 						is_vyzemby_primary_culture = yes
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 					}
 				}
 				AND = {
 					OR = {
 						is_vyzemby_culture = yes
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 					}
 					has_owner_accepted_culture = yes
 				}
@@ -759,13 +759,13 @@ lizardfolk_port = {
 				owner = {
 					OR = {
 						is_vyzemby_primary_culture = yes
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 					}
 				}
 				AND = {
 					OR = {
 						is_vyzemby_culture = yes
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 					}
 					has_owner_accepted_culture = yes
 				}
@@ -1949,7 +1949,7 @@ great_merfolk_canal = {
 	start = 6000
 	
 	# not built at game start (so anything built during game time will be there if you start a game after that date)
-	date = 1869.11.17
+	date = 1000.11.17
 	
 	#time to build
 	time = {
@@ -1970,33 +1970,11 @@ great_merfolk_canal = {
 
 	#can we build it?
 	build_trigger = {
-		if = {
-			limit = { 
-				FROM = { 
-					OR = {
-						mission_completed = khatalashya_the_merfolk_canal
-						adm_tech = 22
-						has_country_flag = L68_merfolk_cannal_merchant
-					}
-				} 
-			}
-			FROM = {
-			is_subject = no
-			owns_or_vassal_of = 6000
-			}
-		}
-		else = {
-			FROM = {
-				owns_or_vassal_of = 6000
-				is_subject = no
-				adm_tech = 22
-			}
-		}
+		
 	}
 
 	#what to do when it's built
 	on_built = {
-		add_canal = great_merfolk_canal
 	}
 	
 	#what to do when it's destroyed
@@ -2010,6 +1988,21 @@ great_merfolk_canal = {
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
+		if = {
+			limit = { 
+				FROM = { 
+					OR = {
+						mission_completed = khatalashya_the_merfolk_canal
+						has_country_flag = L68_merfolk_cannal_merchant
+					}
+				} 
+			}
+			FROM = { is_subject = no }
+		}
+		else = {
+			FROM = { is_subject = no }
+			FROM = { adm_tech = 22 }
+		}
 	}
 
 	#can our country keep it or is it destroyed when we get hold of it?
@@ -2030,7 +2023,6 @@ great_merfolk_canal = {
 
 		#what modifiers are added to the province when we have this project here on this tier
 		province_modifiers = {
-			province_trade_power_value = 10
 		}
 
 		#what modifiers are added to the provinces in the map area when we have this project here on this tier
@@ -2039,7 +2031,6 @@ great_merfolk_canal = {
 
 		#what modifiers are added to the country when we have this project here on this tier
 		country_modifiers = {
-			global_trade_power = 0.01
 		}
 
 		#what effects happen when this tier is achieved
@@ -2056,7 +2047,7 @@ great_merfolk_canal = {
 
 		#cost to upgrade to this level (0 for tier 0)
 		cost_to_upgrade = {
-			factor = 1000
+			factor = 3000
 		}
 
 		#what modifiers are added to the province when we have this project here on this tier
@@ -2075,6 +2066,7 @@ great_merfolk_canal = {
 
 		#what effects happen when this tier is achieved
 		on_upgraded = {
+			add_canal = great_merfolk_canal
 			on_sarhal_monument_upgraded = yes
 			owner = { add_prestige = 40 }			
 		}
@@ -3104,21 +3096,6 @@ tree_of_tales = {
 	type = monument
 
 	build_trigger = {
-		if = {
-			limit = {
-				owner = {
-					has_country_flag = tree_of_tales_free_use 
-				}
-			}
-			custom_trigger_tooltip = {
-				tooltip = great_project_mt_enabled
-				always = yes
-			}
-		}
-		else = {
-			religion_group = tanibic_religion
-			has_owner_religion = yes
-		}
 	}
 
 	on_built = {
@@ -3303,11 +3280,6 @@ dendugma_monastery = {
 	type = monument
 
 	build_trigger = {
-		owner = {
-				religion = fangaulan_pantheon
-		}
-		culture_group = west_sarhaly
-		has_owner_accepted_culture = yes
 	}
 
 	on_built = {
@@ -3317,19 +3289,39 @@ dendugma_monastery = {
 	}
 
 	can_use_modifiers_trigger = {
-		owner = {
-				religion = fangaulan_pantheon
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = dendugma_build_bypass_flag
+				}
+			}
+			always = yes
 		}
-		culture_group = west_sarhaly
-		has_owner_accepted_culture = yes
+		else = {
+			owner = {
+				religion = fangaulan_pantheon
+			}
+			culture_group = west_sarhaly
+			has_owner_accepted_culture = yes
+		}
 	}
 
 	can_upgrade_trigger = {
-		owner = {
-				religion = fangaulan_pantheon
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = dendugma_build_bypass_flag
+				}
+			}
+			always = yes
 		}
-		culture_group = west_sarhaly
-		has_owner_accepted_culture = yes
+		else = {
+			owner = {
+				religion = fangaulan_pantheon
+			}
+			culture_group = west_sarhaly
+			has_owner_accepted_culture = yes
+		}
 	}
 
 	keep_trigger = {
@@ -3550,7 +3542,6 @@ imperial_arena = {
 	type = monument
 
 	build_trigger = {
-		can_use_imperial_arena_scripted_trigger = yes
 	}
 
 	on_built = {
@@ -6845,5 +6836,209 @@ palace_of_the_sealed_tree = {
 			on_sarhal_monument_upgraded = yes
 			custom_tooltip = induce_illness_monument_tt_3
 		}	
+	}
+}
+
+genie_palace_of_jinnakah = {
+	start = 6063
+	date = 1000.1.1
+	build_cost = 1000
+	can_be_moved = no
+	starting_tier = 0
+	type = monument
+	
+	build_trigger = {
+
+	}
+	on_built = {
+	
+	}
+	on_destroyed = {
+		
+    }
+    can_use_modifiers_trigger = {
+		owner = {
+			OR = {
+				primary_culture = guryadagga
+				primary_culture = ardimyan
+			}
+			OR = {
+				religion = genie_cult
+				tag = S91
+			}
+		}
+    }
+    can_upgrade_trigger = {
+		owner = {
+			OR = {
+				primary_culture = guryadagga
+				primary_culture = ardimyan
+			}
+			OR = {
+				religion = genie_cult
+				tag = S91
+			}
+		}
+		if = {
+			limit = {
+				has_great_project = { type = genie_palace_of_jinnakah tier = 2 }
+				owner = { tag = S91 }
+			}
+			owner = { religion = ravelian }
+			religion = ravelian
+		}
+    }
+	keep_trigger = { }
+	
+	tier_0 = {
+        upgrade_time = {
+            months = 0
+        }
+        cost_to_upgrade = {
+			factor = 0
+        }
+        province_modifiers = {}
+        country_modifiers = {}
+        on_upgraded = {
+			on_sarhal_monument_upgraded = yes
+		}
+	}
+	
+	tier_1 = {
+		upgrade_time = {
+			months = 120
+		}
+		cost_to_upgrade = {
+			factor = 1000
+		}
+		province_modifiers = {
+			local_development_cost = -0.2
+		}
+		country_modifiers = {
+			legitimacy = 0.25
+			devotion = 0.25
+			horde_unity = 0.25
+			republican_tradition = 0.075
+		}
+		on_upgraded = { on_sarhal_monument_upgraded = yes }
+		conditional_modifier = {
+			trigger = { owner = { tag = S91 } }
+			modifier = { all_estate_loyalty_equilibrium = 0.025 }
+		}
+		conditional_modifier = {
+			trigger = { owner = { religion = genie_cult } }
+			modifier = { max_absolutism = 5 }
+		}
+	}
+
+	tier_2 = {
+		upgrade_time = {
+			months = 240
+		}
+		cost_to_upgrade = {
+			factor = 2500
+		}
+		area_modifier = {
+			local_development_cost = -0.35
+			local_autonomy = -0.15
+		}
+		country_modifiers = {
+			legitimacy = 0.5
+			devotion = 0.5
+			horde_unity = 0.5
+			republican_tradition = 0.15
+		}
+		on_upgraded = {
+			on_sarhal_monument_upgraded = yes
+			if = {
+				limit = { owner = { religion = genie_cult } }
+				owner = { country_event = { id = ardimya.100 } }
+			}
+			else_if = {
+				limit = { owner = { tag = S91 } }
+				owner = { country_event = { id = ardimya.102 } }
+				if = {
+					limit = { owner = { religion = ravelian } }
+					6063 = { add_cardinal = yes }
+				}
+			}
+		}
+		conditional_modifier = {
+			trigger = { owner = { tag = S91 } }
+			modifier = { all_estate_loyalty_equilibrium = 0.05 }
+		}
+		conditional_modifier = {
+			trigger = { owner = { religion = genie_cult } }
+			modifier = { max_absolutism = 10 }
+		}	
+	}
+	tier_3 = {
+		upgrade_time = {
+			months = 480
+		}
+		cost_to_upgrade = {
+			factor = 5000
+		}
+		area_modifier = {
+			local_development_cost = -0.5
+		}
+		region_modifier = {
+			local_autonomy = -0.15
+		}
+		country_modifiers = {
+			manpower_in_true_faith_provinces = 0.05
+			legitimacy = 0.5
+			devotion = 0.5
+			horde_unity = 0.5
+			republican_tradition = 0.15
+		}
+		on_upgraded = {
+			on_sarhal_monument_upgraded = yes
+			if = {
+				limit = { owner = { tag = S91 } }
+				custom_tooltip = S91_ardimyan_rite_religious_centre_explain_tt
+			}
+			else_if = {
+				limit = { owner = { religion = genie_cult } }
+				custom_tooltip = S91_genie_cult_absolutism_tt
+			}
+			hidden_effect = {
+				if = {
+					limit = { owner = { tag = S91 } }
+					6063 = {
+						add_province_modifier = {
+							name = ardimyan_rite_religious_centre_0
+							duration = -1
+						}
+					}
+					if = {
+						limit = { 6063 = { has_cardinal = no } }
+						6063 = { add_cardinal = yes }
+					}
+					else = {
+						owner = {
+							random_owned_province = {
+								limit = {
+									religion = ravelian
+									has_cardinal = no
+								}
+								add_cardinal = yes
+							}
+						}
+					}
+				}
+			}
+		}
+		conditional_modifier = {
+			trigger = { owner = { tag = S91 } }
+			modifier = {
+				all_estate_loyalty_equilibrium = 0.1
+				estate_interaction_cooldown_modifier = -0.2
+			}
+		}
+		conditional_modifier = {
+			trigger = { owner = { religion = genie_cult } }
+			modifier = { max_absolutism = 20 }
+		}
 	}
 }

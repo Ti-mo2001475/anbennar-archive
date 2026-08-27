@@ -146,8 +146,8 @@ can_exploit_tax = {
 	condition = {
 		tooltip = "black_orc_no_dev"
 		potential = {
-			FROM = { dwarovar_orc_culture_primary = yes }
 			province_group = hold_province
+			FROM = { dwarovar_orc_culture_primary = yes }
 		}
 		allow = { always = no }
 	}
@@ -157,8 +157,8 @@ can_exploit_production = {
 	condition = {
 		tooltip = "black_orc_no_dev"
 		potential = {
-			FROM = { dwarovar_orc_culture_primary = yes }
 			province_group = hold_province
+			FROM = { dwarovar_orc_culture_primary = yes }
 		}
 		allow = { always = no }
 	}
@@ -168,8 +168,8 @@ can_exploit_manpower = {
 	condition = {
 		tooltip = "black_orc_no_dev"
 		potential = {
-			FROM = { dwarovar_orc_culture_primary = yes }
 			province_group = hold_province
+			FROM = { dwarovar_orc_culture_primary = yes }
 		}
 		allow = { always = no }
 	}
@@ -193,26 +193,14 @@ can_change_culture = {
 
 can_move_capital = {
 	condition = {
-		tooltip = "NO_CAPITAL_MOVE_RAJA"
+		tooltip = NO_MOVE_CAPITAL_GENERIC
 		potential = {
-			FROM = {
-				has_government_attribute = is_raja
+			OR = {
+				FROM = { has_government_attribute = cannot_move_capital }
+				FROM = { has_country_flag = cannot_move_capital_flag }
 			}
 		}
-		allow = {
-			always = no
-		}
-	}
-	condition = {
-		tooltip = "NO_CAPITAL_MOVE_WULIN"
-		potential = {
-			FROM = {
-				has_reform = wulin
-			}
-		}
-		allow = {
-			always = no
-		}
+		allow = { always = no }
 	}
 	condition = {
 		tooltip = "NO_CAPITAL_MOVE_DIGGING"
@@ -246,53 +234,6 @@ can_move_capital = {
 		}
 	}
 	condition = {
-		tooltip = "NO_CAPITAL_MOVE_ARENA"
-		potential = {
-			FROM = {
-				has_reform = teplinbasiet_arena_kingdom_reform
-			}
-		}
-		allow = {
-			always = no
-		}
-	}
-	condition = {
-		tooltip = "NO_CAPITAL_MOVE_NEWSHIRE"
-		potential = {
-			FROM = {
-				OR = {
-					has_reform = newshire_stewardship
-					has_reform = newshire_high_stewardship
-				}
-			}
-		}
-		allow = {
-			always = no
-		}
-	}
-	condition = {
-		tooltip = "NO_CAPITAL_MOVE_GOR_VAZUMBROG"
-		potential = {
-			FROM = {
-				has_reform = titanium_stratocracy
-			}
-		}
-		allow = {
-			always = no
-		}
-	}
-	condition = {
-		tooltip = "NO_CAPITAL_MOVE_LUCIANDE"
-		potential = {
-			FROM = {
-				has_country_flag = B34_luciande_tamed_mists
-			}
-		}
-		allow = {
-			always = no
-		}
-	}
-	condition = {
 		tooltip = "black_orc_no_capital_movement"
 		potential = {
 			FROM = { 
@@ -300,17 +241,6 @@ can_move_capital = {
 				capital_scope = { province_group = hold_province }
 				has_country_flag = blorc_plunder_capital_set
 			}
-		}
-		allow = { always = no }
-	}
-	condition = {
-		tooltip = "NO_CAPITAL_MOVE_KALSYTO"
-		potential = {
-			FROM = { 
-				has_country_flag  = J33_triunic_parliament
-				capital_scope = { province_group = triunic_cities }
-			}
-			#NOT = { province_group = triunic_cities }
 		}
 		allow = { always = no }
 	}
@@ -324,37 +254,6 @@ can_move_capital = {
 				has_province_modifier = sed_centaur_tributary_system
 				has_province_modifier = sed_nomadic_governance
 			}
-		}
-	}
-	condition = {
-		tooltip = "NO_CAPITAL_MOVE_ZOKKA"
-		potential = {
-			FROM = {
-				has_country_flag = zokka_block_capital_move_flag
-			}
-		}
-		allow = {
-			always = no
-		}
-	}
-	condition = {
-		tooltip = "NO_CAPITAL_MOVE_MANGROVE"
-		potential = {
-			FROM = {
-				has_government_attribute = mangrove_republic
-			}
-		}
-		allow = {
-			always = no
-		}
-	}
-	condition = {
-		tooltip = "NO_CAPITAL_MOVE_GASHA"
-		potential = {
-			FROM = { has_country_flag = L76_bloody_jungle_flag }
-		}
-		allow = {
-			always = no
 		}
 	}
 }

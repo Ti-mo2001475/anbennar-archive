@@ -845,7 +845,7 @@ check_if_caste_is_shared = {
 				has_country_flag = centaur_in_$caste$castes
 				has_country_flag = dwarven_in_$caste$castes
 				has_country_flag = elven_in_$caste$castes
-				has_country_flag = gnoll_in_$caste$castes
+				has_country_flag = gnollish_in_$caste$castes
 				has_country_flag = gnomish_in_$caste$castes
 				has_country_flag = goblin_in_$caste$castes
 				has_country_flag = half_elven_in_$caste$castes
@@ -2241,11 +2241,31 @@ command_move_orc_slave_state = { #tag = R63 OR R64   target = command_move_targe
 	}
 	hidden_effect = {
 		$tag$ = {
-			every_owned_province = {
+			random_owned_province = { #Go to new capital immediately to prevent weirdness around institution preservation
+				limit = { has_province_flag = command_move_target_flag }
+				hidden_effect = {
+					export_to_variable = {
+						variable_name = previousCulture
+						value = culture
+					}
+					export_to_variable = {
+						variable_name = previousReligion
+						value = religion
+					}
+				}
+				add_core = PREV
+				change_culture = PREV
+				change_religion = PREV
+				add_province_modifier = { name = command_$tag$_warcamp duration = -1 }
+				$tag$ = { set_capital = PREV }
+				
+				set_province_flag = command_converted_province_flag
+			}
+			every_owned_province = { #Hand old provinces back to Command
 				limit = { NOT = { has_province_flag = command_move_target_flag } }
-				if = {
+				if = { #convert back old capital
 					limit = { has_province_flag = command_converted_province_flag }
-					add_base_manpower = -2
+					remove_province_modifier = command_$tag$_warcamp
 					change_culture = variable:previousCulture
 					change_religion = variable:previousReligion
 					if = {
@@ -2253,7 +2273,7 @@ command_move_orc_slave_state = { #tag = R63 OR R64   target = command_move_targe
 						if = {
 							limit = {
 								continent = asia
-								NOT = { culture_group = wuhyun }
+								NOT = { culture_is_wuhyun = yes }
 							}
 							export_to_variable = {
 								which = original_wuhyun_culture
@@ -2294,27 +2314,6 @@ command_move_orc_slave_state = { #tag = R63 OR R64   target = command_move_targe
 					remove_core = $tag$
 					add_core = R62
 				}
-			}
-			random_owned_province = {
-				hidden_effect = {
-					export_to_variable = {
-						variable_name = previousCulture
-						value = culture
-					}
-					export_to_variable = {
-						variable_name = previousReligion
-						value = religion
-					}
-				}
-				add_core = PREV
-				change_culture = PREV
-				change_religion = PREV
-				add_base_manpower = 2
-				$tag$ = {
-					set_capital = PREV
-				}
-				
-				set_province_flag = command_converted_province_flag
 			}
 			every_owned_province = { clr_province_flag = command_move_target_flag }
 			
@@ -2366,6 +2365,44 @@ command_slave_state_cede_surrounding = {
 	}
 	#NOTE: this is done like this because ceding the province directly in every_neighbor_province can cause a crash
 	#perhaps because e.g. the list of border provinces is decreased in size by adding a new province to the tag
+}
+
+command_brorc_gain_hubris_per_unit_in_province = { #FROM is the province scope, this is for use in on_siege_won_country without clogging up the code
+	if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 10 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 10 } }
+	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 9 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 9 } }
+	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 8 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 8 } }
+	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 7 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 7 } }
+	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 6 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 6 } }
+	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 5 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 5 } }
+	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 4 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 4 } }
+	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 3 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 3 } }
+	else_if = { limit = { FROM = { num_of_units_in_province = { who = PREV amount = 2 } } } add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 2 } }
+	else = { add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 1 } }
+}
+command_brorc_gain_hubris_from_battle = {
+	if = { #so FROM is only the enemy army *leader*. This catches most edge cases for Brorcs
+		limit = {
+			OR = {
+				FROM = { tag = R62 }
+				FROM = { is_subject_of = R62 }
+			}
+			R62 = {
+				any_subject_country = {
+					has_government_mechanic = brorc_slave_mechanic
+					ROOT = { num_of_units_in_province = { who = PREV amount = 5 } }
+				}
+			}
+		}
+		R62 = {
+			every_subject_country = {
+				limit = {
+					has_government_mechanic = brorc_slave_mechanic
+					ROOT = { num_of_units_in_province = { who = PREV amount = 5 } }
+				}
+				add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 4 }
+			}
+		}
+	}
 }
 
 command_migration_randomization_effect = {
@@ -4199,6 +4236,22 @@ raj_become_prabhi = {
     }
 }
 
+raj_become_umsadhri = {
+	if = {
+		limit = { NOT = { government = monarchy } }
+		change_government = monarchy
+	}
+	hidden_effect = {
+		event_target:raj_raja_global_target = {
+			create_subject = {
+				subject_type = umsadhri_vassal
+				subject = PREV
+			}
+		}
+    }
+	add_government_reform = umsadhri_reform
+}
+
 raj_become_vizier = {
 	hidden_effect = {
 		if = {
@@ -4300,6 +4353,7 @@ raj_dismantling_effect = {
 					is_subject_of_type = daimyo_vassal
 					is_subject_of_type = great_daimyo_vassal
 					is_subject_of_type = vizier_vassal
+					is_subject_of_type = umsadhri_vassal
 				}
 			}
 			#Grant freedom from old raja

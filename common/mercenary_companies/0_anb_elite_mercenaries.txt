@@ -8,9 +8,6 @@ merc_amldahvad_guard = {
 	cavalry_cap = 0
 	sprites = { group_dwarves_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_amldahvad_guard }
 	}
 	cost_modifier = 0.8
@@ -28,9 +25,6 @@ merc_domandrod_lightbringers = {
 	cavalry_cap = 2
 	sprites = { sav_base_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		tag = H21 #Eordand
 	}
 	cost_modifier = 1
@@ -48,9 +42,6 @@ merc_iron_company = {
 	cavalry_cap = 4
     artillery_weight = 0.1
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		tag = Z50 #Grombar
 		has_unlocked_merc_company = { merc_company = merc_iron_company }
 	}
@@ -70,9 +61,6 @@ merc_sarisung_city_guard = {
 	cavalry_weight = 0
 	artillery_weight = 0
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_sarisung_city_guard }
 	}
 	cost_modifier = 1.25
@@ -90,9 +78,6 @@ merc_442nd = {
 	cavalry_cap = 0
 	sprites = { westerngfx_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_442nd }
 	}
 	cost_modifier = 1
@@ -112,10 +97,10 @@ merc_ogrillons = {
 	home_province = 4123
 	sprites = { black_orc_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
+		OR = {
+			has_country_modifier = ogrillons
+			has_country_modifier = H72_ogrillon_bands
 		}
-		has_country_modifier = H72_ogrillon_bands
 		has_unlocked_merc_company = { merc_company = merc_ogrillons }
 	}
 	cost_modifier = 1
@@ -134,8 +119,9 @@ merc_jaddaresas_chosen = {
 	sprites = { sun_elf_sprite_pack }
     trigger = {
 		NOT = { has_country_modifier = monstrous_nation }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
 		}
 		has_unlocked_merc_company = { merc_company = merc_jaddaresas_chosen }
 	}
@@ -158,10 +144,11 @@ merc_suraelic_guard = {
     artillery_weight = 0.4
 	sprites = { sun_elf_sprite_pack }
     trigger = {
-		has_unlocked_merc_company = { merc_company = merc_suraelic_guard }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
 		}
+		has_unlocked_merc_company = { merc_company = merc_suraelic_guard }
 		owns_core_province = 625
 	}
 	cost_modifier = 1.5
@@ -184,9 +171,6 @@ merc_order_of_keepers = {
 		has_ruler_modifier = xia_wielding_kongren
 		NOT = { has_country_modifier = xia_ended_the_keepers }
 		has_unlocked_merc_company = { merc_company = merc_order_of_keepers }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 
 	cost_modifier = 1
@@ -208,9 +192,6 @@ merc_corvurian_dark_legion = {
 	sprites = { easterngfx_sprite_pack }
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_corvurian_dark_legion }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		owns_core_province = 441
 	}
 	cost_modifier = 0.75
@@ -229,9 +210,6 @@ merc_marrhold_griffon_knight = {
 	sprites = { easterngfx_sprite_pack }
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_marrhold_griffon_knight }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		owns_core_province = 895
 	}
 	cost_modifier = 0.60
@@ -254,9 +232,6 @@ merc_marrhold_steel_griffon = {
 	sprites = { easterngfx_sprite_pack }
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_marrhold_steel_griffon }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		owns_core_province = 895
 	}
 	cost_modifier = 0.80
@@ -279,9 +254,6 @@ merc_marrhold_griffon_survey = {
 	sprites = { easterngfx_sprite_pack }
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_marrhold_griffon_survey }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		owns_core_province = 880
 	}
 	cost_modifier = 0.60
@@ -303,9 +275,6 @@ merc_marrhold_griffon_sky_lancers = {
 	sprites = { easterngfx_sprite_pack }
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_marrhold_griffon_sky_lancers }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		owns_core_province = 895
 	}
 	cost_modifier = 0.80
@@ -327,9 +296,6 @@ merc_marrhold_griffon_grenadiers = {
 	sprites = { easterngfx_sprite_pack }
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_marrhold_griffon_grenadiers }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		owns_core_province = 880
 	}
 	cost_modifier = 0.80
@@ -352,9 +318,6 @@ merc_marrhold_griffon_bombardiers = {
 	sprites = { easterngfx_sprite_pack }
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_marrhold_griffon_bombardiers }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		owns_core_province = 896
 	}
 	cost_modifier = 1
@@ -376,13 +339,9 @@ merc_wolves_of_crovis = {
 	home_province = 731 #Rycastle
 	sprites = { easterngfx_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		custom_trigger_tooltip = {
 			tooltip = woc_founded
 			has_unlocked_merc_company = { merc_company = merc_wolves_of_crovis }
-			
 		}
 		owns_core_province = 731
 	}
@@ -404,14 +363,10 @@ merc_serpent_knights = {
 	home_province = 698 #Serpentback
 	sprites = { easterngfx_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		custom_trigger_tooltip = {
 			tooltip = sk_empowered
 			has_unlocked_merc_company = { merc_company = merc_serpent_knights }
 		}
-		owns_core_province = 698
 	}
 	cost_modifier = 1.1
 	modifier = {
@@ -431,9 +386,6 @@ merc_aelnar_first_corps = {
     artillery_weight = 0.5
 	sprites = { moon_elf_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_aelnar_first_corps }
 	}
 	cost_modifier = 0.33
@@ -452,9 +404,6 @@ merc_aelnar_second_corps = {
     artillery_weight = 0.5
 	sprites = { moon_elf_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_aelnar_second_corps }
 	}
 	cost_modifier = 0.33
@@ -473,9 +422,6 @@ merc_aelnar_third_corps = {
     artillery_weight = 0.5
 	sprites = { moon_elf_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_aelnar_third_corps }
 	}
 	cost_modifier = 0.33
@@ -495,9 +441,6 @@ merc_aelnar_fourth_corps = {
     artillery_weight = 0.5
 	sprites = { moon_elf_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_aelnar_fourth_corps }
 	}
 	cost_modifier = 0.33
@@ -519,9 +462,6 @@ merc_aelnar_precursor_legions = {
 	trigger = {
 		hidden_trigger = { ai = no } # necessary as the AI crashes when attempting to disband mercs with cost_modifier of 0
 		has_unlocked_merc_company = { merc_company = merc_aelnar_precursor_legions }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0
 	modifier = {
@@ -544,9 +484,6 @@ merc_seinathil_warsingers = {
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_seinathil_warsingers }
 		owns_core_province = 916
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.70
 	modifier = {
@@ -557,7 +494,7 @@ merc_seinathil_warsingers = {
 	}
 }
 
-#Krakdhumvror Grim Legion
+#Krakdh mvror Grim Legion
 merc_grim_legion = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
     regiments_per_development = 0.04
@@ -569,12 +506,7 @@ merc_grim_legion = {
     trigger = {
 		tag = I02
 		has_unlocked_merc_company = { merc_company = merc_grim_legion }
-		hidden_trigger = {
-			NOT = { has_country_modifier = krak_grim_legion_busy }
-		}
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
+		NOT = { has_country_modifier = krak_grim_legion_busy }
 	}
 	cost_modifier = 0.9
 	modifier = {
@@ -593,9 +525,6 @@ merc_convocationary_guard = {
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_convocationary_guard }
 		sarisung_area = { owned_by = ROOT }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.9
 	modifier = {
@@ -611,10 +540,11 @@ merc_shuvuush_auxillaries = {
 	sprites = { shuvuush_sprite_pack }
 	cavalry_weight = 0.75
 	trigger = {
-		has_unlocked_merc_company = { merc_company = merc_shuvuush_auxillaries }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
 		}
+		has_unlocked_merc_company = { merc_company = merc_shuvuush_auxillaries }
 	}
 	cost_modifier = 1
 	modifier = {
@@ -632,10 +562,11 @@ merc_kenmanshir = {
 	cavalry_weight = 0
 	artillery_weight = 0.4
 	trigger = {
-		has_unlocked_merc_company = { merc_company = merc_kenmanshir }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
 		}
+		has_unlocked_merc_company = { merc_company = merc_kenmanshir }
 	}
 	cost_modifier = 0.75
 	modifier = {
@@ -655,9 +586,6 @@ merc_cannorian_veterans = {
 	}
 	trigger = {
 		has_unlocked_merc_company = { merc_company = merc_cannorian_veterans }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		4722 = {
 			owned_by = ROOT
 		}
@@ -679,9 +607,6 @@ merc_blue_viziers = {
     cost_modifier = 0.25 #Souls have been eaten by Gorger Lord, act like tormented puppets - need just the basics to keep the body from dying
 	trigger = {
 		has_unlocked_merc_company = { merc_company = merc_blue_viziers }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 
 	}
     modifier = {
@@ -700,9 +625,6 @@ merc_northern_legion = {
 	sprites = { yan_sprite_pack }
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_northern_legion }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		4868 = { owned_by = ROOT }
 	}
 	cost_modifier = 0.25
@@ -724,9 +646,6 @@ merc_jiantsiang_blazing_claws = {
 	sprites = { harimari_sprite_pack }
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_jiantsiang_blazing_claws }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		owns_core_province = 4925
 	}
 	cost_modifier = 0.75
@@ -747,9 +666,6 @@ merc_jiantsiang_shuvuush_auxilaries = {
 	sprites = { shuvuush_sprite_pack }
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_jiantsiang_shuvuush_auxilaries }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		owns_core_province = 5415
 	}
 	cost_modifier = 0.75
@@ -771,9 +687,6 @@ merc_dhenijanraj_sramaya_pearlglaives = {
 	sprites = { sarniryabsad_sprite_pack }
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_dhenijanraj_sramaya_pearlglaives }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		owns_core_province = 4420
 	}
 	cost_modifier = 0.75
@@ -794,9 +707,6 @@ merc_dhenijanraj_tiger_command = {
 	sprites = { hobgoblin_sprite_pack }
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_dhenijanraj_tiger_command }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		owns_core_province = 4630
 	}
 	cost_modifier = 1.0
@@ -818,9 +728,6 @@ merc_fjarforska = {
 	sprites = { asiangfx_sprite_pack }
     trigger = {
 		has_unlocked_merc_company = { merc_company = merc_fjarforska }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		owns_core_province = 4182
 	}
 	cost_modifier = 0.5
@@ -841,9 +748,6 @@ merc_feiten_jellyfish_scouts = {
 		has_country_flag = feiten_jellyfish_scouts_unlocked
 		NOT = { ai = yes }
 		has_unlocked_merc_company = { merc_company = merc_feiten_jellyfish_scouts }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.01
 	modifier = {
@@ -860,9 +764,6 @@ merc_feiten_lightning_jellyfish = {
 	trigger = {
 		has_country_flag = feiten_lightning_shuimu_unlocked NOT = { ai = yes }
 		has_unlocked_merc_company = { merc_company = merc_feiten_lightning_jellyfish }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.01
 	modifier = {
@@ -883,9 +784,6 @@ merc_feiten_stasis = {
 	trigger = {
 		has_country_flag = feiten_stasis_experimental_unlocked NOT = { ai = yes }
 		has_unlocked_merc_company = { merc_company = merc_feiten_stasis }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.01
 	modifier = {
@@ -906,9 +804,6 @@ merc_feiten_firestorm = {
 	trigger = {
 		has_country_flag = feiten_firestorm_experimental_unlocked NOT = { ai = yes }
 		has_unlocked_merc_company = { merc_company = merc_feiten_firestorm }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.01
 	modifier = {
@@ -930,9 +825,6 @@ merc_feiten_sky_factory = {
 		has_country_flag = feiten_sky_factory_experimental_unlocked
 		NOT = { ai = yes }
 		has_unlocked_merc_company = { merc_company = merc_feiten_sky_factory }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.01
 	modifier = {
@@ -944,7 +836,7 @@ merc_feiten_sky_factory = {
 	}
 }
 
-veykodan_guard_elite_merc = {
+merc_veykodan_guard_elite = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	regiments_per_development = 0.06
 	cavalry_weight = 0.2
@@ -953,9 +845,6 @@ veykodan_guard_elite_merc = {
 	sprites = { easterngfx_sprite_pack }
     trigger = {
 		has_country_flag = G35_veykodan_mercs_available_flag
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		U21 = {
 			is_subject_of = ROOT
 		}		
@@ -983,9 +872,6 @@ merc_novice_slayers = {
 		has_unlocked_merc_company = { merc_company = merc_novice_slayers }
 		NOT = { has_unlocked_merc_company = { merc_company = merc_bloodied_slayers } }
 		NOT = { has_unlocked_merc_company = { merc_company = merc_doomed_slayers } }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.85
 	modifier = {
@@ -1006,9 +892,6 @@ merc_bloodied_slayers = {
 		tag = I20
 		has_unlocked_merc_company = { merc_company = merc_bloodied_slayers }
 		NOT = { has_unlocked_merc_company = { merc_company = merc_doomed_slayers } }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 1
 	modifier = {
@@ -1028,9 +911,6 @@ merc_doomed_slayers = {
     trigger = {
 		tag = I20
 		has_unlocked_merc_company = { merc_company = merc_doomed_slayers }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 1.25
 	modifier = {
@@ -1055,9 +935,6 @@ merc_vault_guard = {
 			was_tag = H82
 		}
 		has_unlocked_merc_company = { merc_company = merc_vault_guard }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.8
 	modifier = {
@@ -1077,10 +954,11 @@ merc_tluukt_harpy_janissaries = {
 	artillery_weight = 0
 	sprites = { harpy_sprite_pack }
     trigger = {
-		has_unlocked_merc_company = { merc_company = merc_tluukt_harpy_janissaries }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
 		}
+		has_unlocked_merc_company = { merc_company = merc_tluukt_harpy_janissaries }
 		2904 = { country_or_subject_holds = ROOT }
 	}
 	modifier = {
@@ -1102,10 +980,11 @@ merc_tluukt_masnsih_janissaries = {
 	artillery_weight = 0
 	sprites = { muslimgfx_sprite_pack }
     trigger = {
-		has_unlocked_merc_company = { merc_company = merc_tluukt_masnsih_janissaries }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
 		}
+		has_unlocked_merc_company = { merc_company = merc_tluukt_masnsih_janissaries }
 		2900 = { country_or_subject_holds = ROOT }
 	}
 	modifier = {
@@ -1124,10 +1003,11 @@ merc_tluukt_bulwar_janissaries = {
 	artillery_weight = 0
 	sprites = { muslimgfx_sprite_pack }
     trigger = {
-		has_unlocked_merc_company = { merc_company = merc_tluukt_bulwar_janissaries }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
 		}
+		has_unlocked_merc_company = { merc_company = merc_tluukt_bulwar_janissaries }
 		643 = { country_or_subject_holds = ROOT }
 	}
 	modifier = {
@@ -1149,9 +1029,6 @@ merc_shazstundihr_marbleblood = {
     trigger = {
 		tag = I11
 		has_unlocked_merc_company = { merc_company = merc_shazstundihr_marbleblood }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.1
 	modifier = {
@@ -1171,8 +1048,9 @@ merc_siadan_stormtalon_guard = {
     sprites = { harpy_sprite_pack }
     trigger = {
         tag = F48
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
 		}
         has_unlocked_merc_company = { merc_company = merc_siadan_stormtalon_guard }
     }
@@ -1195,9 +1073,6 @@ merc_bianfang_hobgoblin_army = {
 	trigger = {
 		is_or_was_tag = { tag = Y09 }
 		has_unlocked_merc_company = { merc_company = merc_bianfang_hobgoblin_army }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.1
 	modifier = {
@@ -1218,8 +1093,9 @@ merc_dartax_sebhuliam = {
 	artillery_weight = 0.0
 	sprites = { easterngfx_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
 		}
 		NOT = { has_unlocked_merc_company = { merc_company = merc_dartax_mage_sebhuliam } }
 		has_unlocked_merc_company = { merc_company = merc_dartax_sebhuliam }
@@ -1241,10 +1117,11 @@ merc_dartax_mage_sebhuliam = {
 	artillery_weight = 0.0
 	sprites = { easterngfx_sprite_pack }
 	trigger = {
-		has_unlocked_merc_company = { merc_company = merc_dartax_mage_sebhuliam }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
 		}
+		has_unlocked_merc_company = { merc_company = merc_dartax_mage_sebhuliam }
 		owns_core_province = 550
 	}
 	cost_modifier = 0.15
@@ -1265,9 +1142,6 @@ merc_newshire_peapods = {
 	sprites = { redfoot_sprite_pack }
 	trigger = {
 		has_unlocked_merc_company = { merc_company = merc_newshire_peapods }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.5
 	modifier = {
@@ -1290,9 +1164,6 @@ merc_newshire_wallnuts = {
 	sprites = { redfoot_sprite_pack }
 	trigger = {
 		has_unlocked_merc_company = { merc_company = merc_newshire_wallnuts }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.5
 	modifier = {
@@ -1317,9 +1188,6 @@ merc_newshire_squashkin = {
 	sprites = { redfoot_sprite_pack }
 	trigger = {
 		has_unlocked_merc_company = { merc_company = merc_newshire_squashkin }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.5
 	modifier = {
@@ -1340,9 +1208,6 @@ merc_newshire_sunwatchers = {
 	sprites = { redfoot_sprite_pack }
 	trigger = {
 		has_unlocked_merc_company = { merc_company = merc_newshire_sunwatchers }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.5
 	modifier = {
@@ -1365,9 +1230,6 @@ merc_crimson_executioners = {
 			was_tag = B34
 		}
 		has_unlocked_merc_company = { merc_company = merc_crimson_executioners }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.01
 	modifier = {
@@ -1390,9 +1252,6 @@ merc_terror_knights = {
 			was_tag = B34
 		}
 		has_unlocked_merc_company = { merc_company = merc_terror_knights }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.60
 	modifier = {
@@ -1412,9 +1271,6 @@ merc_freemarches_the_gray_guard = {
 	home_province = 1193 #Cursed Heart/Free Heart
 	trigger = {
 		has_unlocked_merc_company = { merc_company = merc_freemarches_the_gray_guard }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.25
 	modifier = {
@@ -1432,9 +1288,6 @@ merc_amacimst_the_amethyst_order = {
 	cavalry_weight = 1.0
 	home_province = 1172 #Amacimst
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		OR = {
 			tag = G26
 			AND = {
@@ -1469,8 +1322,9 @@ merc_jaherian_exemplars = {
     artillery_weight = 0.4
 	sprites = { sun_elf_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
 		}
 		has_unlocked_merc_company = { merc_company = merc_jaherian_exemplars }
 		is_incident_active = incident_thirteenth_night
@@ -1494,12 +1348,13 @@ merc_surani_exemplars = {
 	artillery_weight = 0.4
 	sprites = { surani_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
 		}
 		OR = {
 			is_incident_active = incident_thirteenth_night
-			has_country_flag = vacyntassi_serondars_request_flag
+			hidden_trigger = { has_country_flag = vacyntassi_serondars_request_flag }
 			has_unlocked_merc_company = { merc_company = merc_surani_exemplars }
 		}
 		owns_core_province = 631
@@ -1519,12 +1374,7 @@ merc_command_wolf_army = {
 	cavalry_cap = 8
 	artillery_weight = 0.41
 	sprites = { hobgoblin_sprite_pack } 
-	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
-		ai = no mission_completed = R62_supply_the_kikunin has_estate = estate_wolf_command 
-	}
+	trigger = { ai = no mission_completed = R62_supply_the_kikunin has_estate = estate_wolf_command }
 	cost_modifier = 0.01
 	modifier = {
 	land_attrition = -0.25
@@ -1539,12 +1389,7 @@ merc_command_boar_army = {
 	cavalry_cap = 2
 	artillery_weight = 0.41
 	sprites = { hobgoblin_sprite_pack } 
-	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
-		ai = no mission_completed = R62_supply_the_kikunin has_estate = estate_boar_command 
-	}
+	trigger = { ai = no mission_completed = R62_supply_the_kikunin has_estate = estate_boar_command }
 	cost_modifier = 0.01
 	modifier = {
 		discipline = 0.05
@@ -1559,12 +1404,7 @@ merc_command_lion_army = {
 	cavalry_cap = 4
 	artillery_weight = 0.41
 	sprites = { hobgoblin_sprite_pack } 
-	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
-		ai = no mission_completed = R62_supply_the_kikunin has_estate = estate_lion_command 
-	}
+	trigger = { ai = no mission_completed = R62_supply_the_kikunin has_estate = estate_lion_command }
 	cost_modifier = 0.01
 	modifier = {
 		land_morale = 0.2
@@ -1577,12 +1417,7 @@ merc_command_dragon_army = {
 	cavalry_weight = 0
 	artillery_weight = 0.5
 	sprites = { asiangfx_sprite_pack } 
-	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
-		ai = no mission_completed = R62_supply_the_kikunin has_estate = estate_dragon_command 
-	}
+	trigger = { ai = no mission_completed = R62_supply_the_kikunin has_estate = estate_dragon_command }
 	cost_modifier = 0.01
 	modifier = {
 		backrow_artillery_damage = 0.25
@@ -1599,12 +1434,7 @@ merc_command_elephant_army = {
 	cavalry_cap = 6
 	artillery_weight = 0.41
 	sprites = { indiangfx_sprite_pack } 
-	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
-		ai = no mission_completed = R62_supply_the_kikunin has_estate = estate_elephant_command 
-	}
+	trigger = { ai = no mission_completed = R62_supply_the_kikunin has_estate = estate_elephant_command }
 	cost_modifier = 0.01
 	modifier = {
 		shock_damage_received = -0.2
@@ -1619,12 +1449,7 @@ merc_command_tiger_army = {
 	cavalry_cap = 4
 	artillery_weight = 0.33
 	sprites = { harimari_sprite_pack } 
-	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
-		ai = no mission_completed = R62_supply_the_kikunin has_estate = estate_tiger_command 
-	}
+	trigger = { ai = no mission_completed = R62_supply_the_kikunin has_estate = estate_tiger_command }
 	cost_modifier = 0.01
 	modifier = {
 		shock_damage = 0.1
@@ -1643,9 +1468,6 @@ merc_mountainshark_giantsharks = {
 	home_province = 4147
 	sprites = { cave_goblin_sprite_pack } # Change when trolls get sprites
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_mountainshark_giantsharks }
 	}
 	cost_modifier = 0.5
@@ -1667,9 +1489,6 @@ merc_mountainshark_dragonsharks = {
 	home_province = 2863
 	sprites = { redscale_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_mountainshark_dragonsharks }
 	}
 	cost_modifier = 0.5
@@ -1690,9 +1509,6 @@ merc_raggedy_gun_knights = {
 	cavalry_weight = 1.0
 	home_province = 2854 #Cathfei
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		OR = {
 			tag = H61
 			was_tag = H61
@@ -1714,10 +1530,6 @@ merc_lords_of_platinum = {
 	cavalry_cap = 0
 	artillery_weight = 0
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
-		NOT = { has_unlocked_merc_company = { merc_company = merc_lords_of_platinum_improved } }
 		has_unlocked_merc_company = { merc_company = merc_lords_of_platinum }
 		owns_core_province = 2868
 	}
@@ -1737,9 +1549,6 @@ merc_lords_of_platinum_improved = {
 	cavalry_cap = 0
 	artillery_weight = 0
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_lords_of_platinum_improved }
 		owns_core_province = 2868
 	}
@@ -1761,11 +1570,8 @@ merc_yidabs_vanguard = {
 	home_province = 4070 #Yidab's Nest
 	sprites = { cave_goblin_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_yidabs_vanguard }
-		has_estate_privilege = estate_adventurers_allclan_bestiary_yidab
+		has_country_flag = I98_yidab_merc
 	}
 	cost_modifier = 0.75
 	modifier = {
@@ -1785,9 +1591,6 @@ merc_mboala_war_dogs = {
 	cavalry_cap = 33
 	sprites = { vyzemby_units_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_mboala_war_dogs }
 	}
 	cost_modifier = 0.8
@@ -1804,9 +1607,6 @@ merc_paddleboard_knights = {
 	artillery_weight = 0.0
 	sprites = { easterngfx_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		OR = {
 			tag = G33
 			was_tag = G33
@@ -1828,9 +1628,6 @@ merc_haebiszyae_guard_cavalry = {
 	home_province = 2579 #Oremvand
 	sprites = { yodhanpir_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		OR = {
 			tag = J70 #Oremvand
 			was_tag = J70
@@ -1854,9 +1651,6 @@ merc_royakottar_kattyva_elite_vangaurd = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	home_province = 2500 #Royakottar
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_royakottar_kattyva_elite_vangaurd }
 	}
 	regiments_per_development = 0.1
@@ -1882,9 +1676,6 @@ merc_G53_lawarund = {
 	artillery_weight = 0.1
 	sprites = { kheionai_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		any_owned_province = {
 			area = donkalyn_area
 		}
@@ -1908,9 +1699,6 @@ merc_G53_hsamaz = {
 	artillery_weight = 0.3
 	sprites = { kheionai_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		any_owned_province = {
 			area = donkalyn_area
 		}
@@ -1937,9 +1725,6 @@ merc_volisi_vara_redeemed_swordsmen = {
 	home_province = 6756
 	sprites = { westerngfx_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_volisi_vara_redeemed_swordsmen }
 	}
 	cost_modifier = 0.75
@@ -1954,9 +1739,6 @@ merc_the_silverspite_company = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	home_province = 2551 #Kattisangamar
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_the_silverspite_company }
 	}
 	regiments_per_development = 0.1
@@ -1982,9 +1764,6 @@ merc_sarraka = {
 	max_size = 4
 	sprites = { zanite_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_sarraka }
 		owns_core_province = 591
 	}
@@ -2007,9 +1786,6 @@ merc_sarraka_two = {
 	min_size = 16
 	max_size = 16
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_sarraka_two }
 		owns_core_province = 591
 	}
@@ -2032,9 +1808,6 @@ merc_sarraka_three = {
 	min_size = 40
 	max_size = 40
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_sarraka_three }
 		owns_core_province = 591
 	}
@@ -2059,9 +1832,6 @@ merc_R61_pasindesh_scouts = {
 	artillery_weight = 0.1
 	sprites = { ghankedhen_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = pasiragha_flag_ravanars_plan
 	}
 	modifier = {
@@ -2081,9 +1851,6 @@ merc_daughters_of_akasik_elite = {
 	home_province = 402
 	sprites = { akasi_units_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_daughters_of_akasik_elite }
 	}
 	cost_modifier = 1
@@ -2099,9 +1866,6 @@ merc_larankarha_household_cavalry = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	home_province = 2487 #Urvand
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_larankarha_household_cavalry }
 	}
 	regiments_per_development = 0.05
@@ -2125,12 +1889,10 @@ merc_stone_army_tier_2 = {
 	home_province = 4914 #Gushibi
 	sprites = { yan_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = gushuokguan_stone_army_tier_2
 	}
 	cost_modifier = 1
+	
 	modifier = {
 		discipline = 0.05
 		land_morale = 0.1
@@ -2147,12 +1909,10 @@ merc_rock_raiders = {
 	home_province = 4919 #Xuanbik
 	sprites = { yan_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = gushuokguan_rock_raiders
 	}
 	cost_modifier = 1.5
+	
 	modifier = {
 		movement_speed = 0.1
 		loot_amount = 0.1
@@ -2170,12 +1930,10 @@ merc_rock_raiders_tier_2 = {
 	home_province = 4919 #Xuanbik
 	sprites = { yan_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = gushuokguan_rock_raiders_tier_2
 	}
 	cost_modifier = 1.5
+	
 	modifier = {
 		movement_speed = 0.2
 		loot_amount = 0.2
@@ -2195,12 +1953,10 @@ merc_chrome_claws = {
 	home_province = 4925 #Jiantsiang
 	sprites = { yan_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = gushuokguan_chrome_claws
 	}
 	cost_modifier = 1.25
+	
 	modifier = {
 		infantry_shock = 0.3
 		shock_damage = 0.05
@@ -2218,12 +1974,10 @@ merc_chrome_claws_tier_2 = {
 	home_province = 4925 #Jiantsiang
 	sprites = { yan_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = gushuokguan_chrome_claws_tier_2
 	}
 	cost_modifier = 1.25
+	
 	modifier = {
 		infantry_shock = 0.3
 		shock_damage = 0.1
@@ -2241,12 +1995,10 @@ merc_dacite_dragons = {
 	home_province = 4901 #Hubao
 	sprites = { yan_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = gushuokguan_dacite_dragons
 	}
 	cost_modifier = 1.75
+	
 	modifier = {
 		artillery_power = 0.1
 		fire_damage = 0.1
@@ -2263,12 +2015,10 @@ merc_dacite_dragons_tier_2 = {
 	home_province = 4901 #Hubao
 	sprites = { yan_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = gushuokguan_dacite_dragons_tier_2
 	}
 	cost_modifier = 1.75
+	
 	modifier = {
 		artillery_power = 0.15
 		fire_damage = 0.15
@@ -2285,12 +2035,10 @@ merc_whetstones = {
 	home_province = 4839 #Zyugok
 	sprites = { yan_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = gushuokguan_whetstones
 	}
 	cost_modifier = 1.25
+	
 	modifier = {
 		movement_speed = 0.1
 		morale_damage = 0.1
@@ -2309,12 +2057,10 @@ merc_whetstones_tier_2 = {
 	home_province = 4839 #Zyugok
 	sprites = { yan_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = gushuokguan_whetstones_tier_2
 	}
 	cost_modifier = 1.25
+	
 	modifier = {
 		movement_speed = 0.2
 		morale_damage = 0.15
@@ -2331,12 +2077,10 @@ merc_marble_mounts = {
 	home_province = 4853 #Anjiang
 	sprites = { yan_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = gushuokguan_marble_mounts
 	}
 	cost_modifier = 1.5
+	
 	modifier = {
 		morale_damage = 0.1
 		cavalry_flanking = 0.25
@@ -2354,12 +2098,10 @@ merc_marble_mounts_tier_2 = {
 	home_province = 4853 #Anjiang
 	sprites = { yan_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = gushuokguan_marble_mounts_tier_2
 	}
 	cost_modifier = 1.5
+	
 	modifier = {
 		morale_damage = 0.1
 		cavalry_shock = 0.3
@@ -2380,12 +2122,10 @@ merc_flying_pebbles = {
 	home_province = 4879 #Feiten
 	sprites = { yan_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = gushuokguan_flying_pebbles
 	}
 	cost_modifier = 1.75
+	
 	modifier = {
 		movement_speed = 0.2
 		# siege_ability = 0.1 doesn't work in merc scope
@@ -2403,12 +2143,10 @@ merc_flying_pebbles_tier_2 = {
 	home_province = 4879 #Feiten
 	sprites = { yan_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = gushuokguan_flying_pebbles_tier_2
 	}
 	cost_modifier = 1.75
+	
 	modifier = {
 		movement_speed = 0.2
 		# siege_ability = 0.1 doesn't work in merc scope
@@ -2423,9 +2161,6 @@ merc_the_orcish_company = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	home_province = 2197 #Hidden Hills (Ozgarom's Spawn Point)
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_the_orcish_company }
 	}
 	regiments_per_development = 0.06
@@ -2444,9 +2179,6 @@ merc_shadowbound_ashama = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	home_province = 5971 #Metat Tagokag
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_shadowbound_ashama }
 	}
 	regiments_per_development = 0.06
@@ -2469,9 +2201,6 @@ merc_ameion_kattyam_auxiliary = {
 	max_size = 20
 	sprites = { westerngfx_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_ameion_kattyam_auxiliary }
 	}
 	cost_modifier = 1.5
@@ -2484,23 +2213,27 @@ merc_ameion_kattyam_auxiliary = {
 #Wyvernheart Burnbloods
 merc_wyvernheart_burnblood_company_1 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0.6
+
     cavalry_weight = 0
     artillery_weight = 0
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
         has_country_flag = wyvernheart_burnblood_1
     }
+
     modifier = {
         shock_damage = 0.10
 		shock_damage_received = 0.20
 		reinforce_speed = 0.25
     }
+
     min_size = 24
     max_size = 24
     manpower_pool = 48
@@ -2508,23 +2241,27 @@ merc_wyvernheart_burnblood_company_1 = {
 
 merc_wyvernheart_burnblood_company_2_1 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0.6
+
     cavalry_weight = 0
     artillery_weight = 0
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
         has_country_flag = wyvernheart_burnblood_2
     }
+
     modifier = {
         shock_damage = 0.10
 		shock_damage_received = 0.10
 		reinforce_speed = 0.25
     }
+
     min_size = 24
     max_size = 24
     manpower_pool = 48
@@ -2532,41 +2269,48 @@ merc_wyvernheart_burnblood_company_2_1 = {
 
 merc_wyvernheart_burnblood_company_2_2 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0.6
+
     cavalry_weight = 0
     artillery_weight = 0
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
         has_country_flag = wyvernheart_burnblood_2
     }
+
     modifier = {
         shock_damage = 0.10
 		shock_damage_received = 0.10
 		reinforce_speed = 0.25
     }
+
     min_size = 24
     max_size = 24
     manpower_pool = 48
 }
 merc_wyvernheart_burnblood_company_3_1 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0.6
+
     cavalry_weight = 0
     artillery_weight = 0
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
         has_country_flag = wyvernheart_burnblood_3
     }
+
     modifier = {
         shock_damage = 0.10
 		shock_damage_received = 0.10
@@ -2574,6 +2318,7 @@ merc_wyvernheart_burnblood_company_3_1 = {
 		morale_damage_received = -0.10
 		reinforce_speed = 0.25
     }
+
     min_size = 32
     max_size = 32
     manpower_pool = 64
@@ -2581,18 +2326,21 @@ merc_wyvernheart_burnblood_company_3_1 = {
 
 merc_wyvernheart_burnblood_company_3_2 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0.6
+
     cavalry_weight = 0
     artillery_weight = 0
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
         has_country_flag = wyvernheart_burnblood_3
     }
+
     modifier = {
         shock_damage = 0.10
 		shock_damage_received = 0.10
@@ -2600,6 +2348,7 @@ merc_wyvernheart_burnblood_company_3_2 = {
 		morale_damage_received = -0.10
 		reinforce_speed = 0.25
     }
+
     min_size = 32
     max_size = 32
     manpower_pool = 64
@@ -2607,18 +2356,21 @@ merc_wyvernheart_burnblood_company_3_2 = {
 
 merc_wyvernheart_burnblood_company_4_1 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0.4
+
     cavalry_weight = 0
     artillery_weight = 0.4
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
         has_country_flag = wyvernheart_burnblood_4
     }
+
     modifier = {
         shock_damage = 0.10
 		shock_damage_received = 0.10
@@ -2626,6 +2378,7 @@ merc_wyvernheart_burnblood_company_4_1 = {
 		morale_damage_received = -0.10
 		reinforce_speed = 0.25
     }
+
     min_size = 50
     max_size = 50
     manpower_pool = 100
@@ -2633,18 +2386,21 @@ merc_wyvernheart_burnblood_company_4_1 = {
 
 merc_wyvernheart_burnblood_company_4_2 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0.4
+
     cavalry_weight = 0
     artillery_weight = 0.4
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
         has_country_flag = wyvernheart_burnblood_4
     }
+
     modifier = {
         shock_damage = 0.10
 		shock_damage_received = 0.10
@@ -2652,6 +2408,7 @@ merc_wyvernheart_burnblood_company_4_2 = {
 		morale_damage_received = -0.10
 		reinforce_speed = 0.25
     }
+
     min_size = 50
     max_size = 50
     manpower_pool = 100
@@ -2659,18 +2416,21 @@ merc_wyvernheart_burnblood_company_4_2 = {
 
 merc_wyvernheart_burnblood_company_4_3 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0.4
+
     cavalry_weight = 0
     artillery_weight = 0.4
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
         has_country_flag = wyvernheart_burnblood_4
     }
+
     modifier = {
         shock_damage = 0.10
 		shock_damage_received = 0.10
@@ -2678,6 +2438,7 @@ merc_wyvernheart_burnblood_company_4_3 = {
 		morale_damage_received = -0.10
 		reinforce_speed = 0.25
     }
+
     min_size = 50
     max_size = 50
     manpower_pool = 100
@@ -2685,72 +2446,84 @@ merc_wyvernheart_burnblood_company_4_3 = {
 
 merc_wyvernheart_burnblood_company_5_1 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0.4
+
     cavalry_weight = 0
     artillery_weight = 0.5
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
         has_country_flag = wyvernheart_burnblood_5
     }
+
     modifier = {
         shock_damage = 0.20
 		fire_damage = 0.10
 		morale_damage_received = -0.10
 		reinforce_speed = 0.25
     }
+
     min_size = 72
     max_size = 72
     manpower_pool = 144
 }
 merc_wyvernheart_burnblood_company_5_2 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0.4
+
     cavalry_weight = 0
     artillery_weight = 0.5
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
         has_country_flag = wyvernheart_burnblood_5
     }
+
     modifier = {
         shock_damage = 0.20
 		fire_damage = 0.10
 		morale_damage_received = -0.10
 		reinforce_speed = 0.25
     }
+
     min_size = 72
     max_size = 72
     manpower_pool = 144
 }
 merc_wyvernheart_burnblood_company_5_3 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0.4
+
     cavalry_weight = 0
     artillery_weight = 0.5
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
         has_country_flag = wyvernheart_burnblood_5
     }
+
     modifier = {
         shock_damage = 0.20
 		fire_damage = 0.10
 		morale_damage_received = -0.10
 		reinforce_speed = 0.25
     }
+
     min_size = 72
     max_size = 72
     manpower_pool = 144
@@ -2758,99 +2531,112 @@ merc_wyvernheart_burnblood_company_5_3 = {
 
 merc_wyvernheart_burnblood_company_6_1 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0.4
+
     cavalry_weight = 0
     artillery_weight = 0.5
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
         has_country_flag = wyvernheart_burnblood_6
     }
+
     modifier = {
         shock_damage = 0.20
 		fire_damage = 0.10
 		morale_damage_received = -0.10
 		reinforce_speed = 0.25
     }
+
     min_size = 84
     max_size = 84
     manpower_pool = 168
 }
-
 merc_wyvernheart_burnblood_company_6_2 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0.4
+
     cavalry_weight = 0
     artillery_weight = 0.5
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
         has_country_flag = wyvernheart_burnblood_6
     }
+
     modifier = {
         shock_damage = 0.20
 		fire_damage = 0.10
 		morale_damage_received = -0.10
 		reinforce_speed = 0.25
     }
+
     min_size = 84
     max_size = 84
     manpower_pool = 168
 }
-
 merc_wyvernheart_burnblood_company_6_3 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0.4
+
     cavalry_weight = 0
     artillery_weight = 0.5
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
         has_country_flag = wyvernheart_burnblood_6
     }
+
     modifier = {
         shock_damage = 0.20
 		fire_damage = 0.10
 		morale_damage_received = -0.10
 		reinforce_speed = 0.25
     }
+
     min_size = 84
     max_size = 84
     manpower_pool = 168
 }
-
 merc_wyvernheart_burnblood_company_6_4 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0.4
+
     cavalry_weight = 0
     artillery_weight = 0.5
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
         has_country_flag = wyvernheart_burnblood_6
     }
+
     modifier = {
         shock_damage = 0.20
 		fire_damage = 0.10
 		morale_damage_received = -0.10
 		reinforce_speed = 0.25
     }
+
     min_size = 84
     max_size = 84
     manpower_pool = 168
@@ -2865,12 +2651,10 @@ merc_rhada_lifters = {
 	artillery_weight = 0
 	sprites = { africangfx_sprite_pack } #placeholder
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = S53_rhada_lifters_flag
 	}
 	cost_modifier = 0.85
+	
 	modifier = {
 		shock_damage_received = -0.15 
 		fire_damage_received = -0.05
@@ -2887,12 +2671,10 @@ merc_gnoll_buffalo_jumpers = {
 	artillery_weight = 0
 	sprites = { gnoll_sprite_pack } 
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = S53_gnoll_buffalo_jumpers_flag
 	}
 	cost_modifier = 1.33
+	
 	modifier = {
 		shock_damage = 0.10
 		shock_damage_received = -0.10
@@ -2914,6 +2696,7 @@ merc_izenwez_league_players = {
 		has_country_flag = S53_izenwez_league_players_flag
 	}
 	cost_modifier = 1.50
+	
 	modifier = {
 		infantry_power = 0.10
 		infantry_fire = 0.15
@@ -2924,6 +2707,7 @@ merc_izenwez_league_players = {
 }
 
 #Yassa Ashhana Royal Guard
+
 merc_ashhana_royal_guard = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	regiments_per_development = 0.03
@@ -2933,9 +2717,6 @@ merc_ashhana_royal_guard = {
 	home_province = 5951
 	sprites = { africangfx_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_ashhana_royal_guard }
 	}
 	modifier = {
@@ -2944,7 +2725,6 @@ merc_ashhana_royal_guard = {
 		infantry_power = 0.1
 	}
 }
-
 #junansuar priest-smiths
 merc_mojobaa_warrior_monks = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
@@ -2952,9 +2732,6 @@ merc_mojobaa_warrior_monks = {
 	home_province = 5808
 	sprites = { binwarji_units_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_mojobaa_warrior_monks }
 	}
 	cost_modifier = 0.5
@@ -2974,9 +2751,6 @@ merc_chien_boarsofdinh = {
 	home_province = 4955 #Keoaden
 	sprites = { south_kai_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_chien_boarsofdinh }
 	}
 	cost_modifier = 0.5
@@ -2997,10 +2771,7 @@ merc_karakhanbari_grenadiers = {
 	artillery_weight = 0.2
 	counts_towards_force_limit = no
 	sprites = { karakhanbar_sprite_pack } 
-	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
+	trigger = { 
 		has_country_flag = karakhanbar_might_makes_right_effect_mercenary_idea_reward_flag 
 	} 
 	cost_modifier = 0.50 
@@ -3016,10 +2787,7 @@ merc_karakhanbari_elven_rangers = {
 	cavalry_cap = 0 
 	artillery_weight = 0 
 	sprites = { moon_elf_sprite_pack } 
-	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
+	trigger = { 
 		has_country_flag = karakhanbar_elven_mercenaries 
 	} 
 	cost_modifier = 0.75 
@@ -3039,9 +2807,6 @@ merc_wolfguard = {
 	artillery_weight = 0.5
 	sprites = { triunicgfx_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = I90_unlock_wolfguard
 	}
 	cost_modifier = 0.6
@@ -3055,13 +2820,12 @@ merc_lrm_city_guard = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
     regiments_per_development = 0.05
 	cavalry_cap = 0
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = LRM_city_guard
 		NOT = { capital_scope = { development = 30 } }
 	}
+
 	modifier = {
 		land_morale = -0.1
 		movement_speed = -0.1
@@ -3072,10 +2836,8 @@ merc_lrm_city_guard_upgraded = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
     regiments_per_development = 0.05
 	cavalry_cap = 0
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = LRM_city_guard
 		capital_scope = {
 			development = 30
@@ -3093,12 +2855,7 @@ merc_uesrennu_armoured_kotakompus = {
 	cavalry_weight = 0
 	home_province = 2554
 	sprites = { yodhanpir_sprite_pack }
-    trigger = {	
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
-		has_country_flag = armoured_kotakompus 
-	}
+    trigger = {	has_country_flag = armoured_kotakompus }
 	cost_modifier = 1.1
 	modifier = {
 		shock_damage = 0.1
@@ -3114,10 +2871,7 @@ merc_children_of_the_thorns = {
 	cavalry_weight = 0.2
 	home_province = 33
 	sprites = { easterngfx_sprite_pack }
-    trigger = {		
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}	
+    trigger = {			
 		has_unlocked_merc_company = { merc_company = merc_children_of_the_thorns }
 		owns_core_province = 33
 	}
@@ -3139,9 +2893,6 @@ merc_wineport_watchers = {
 	home_province = 101 # Wineport
 	sprites = { easterngfx_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_wineport_watchers }
 		owns_core_province = 101
 	}
@@ -3161,9 +2912,6 @@ merc_foxalley_foxes = {
 	home_province = 81 # Foxalley
 	sprites = { easterngfx_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_foxalley_foxes }
 		owns_core_province = 81
 	}
@@ -3182,9 +2930,6 @@ merc_wineport_seven_chalices = {
 	home_province = 101 #Wineport
 	sprites = { easterngfx_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_wineport_seven_chalices }
 		owns_core_province = 101
 	}
@@ -3203,13 +2948,11 @@ merc_raj_foreign_legion = {
 	artillery_weight = 0.25
 	sprites = { rabhidarubsad_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_modifier = rahen_raj_mandate_vizier_1_vizier_senaptia_mod
 		overlord = { is_at_war = yes }
 	}
 	cost_modifier = 0.75
+	
 	modifier = {	#random ones, might wanna change em
 		movement_speed = 0.10
 		land_morale = 0.05
@@ -3227,29 +2970,25 @@ merc_ironwall = {
 	home_province = 740
 	sprites = { gray_orc_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		capital_scope = { continent = europe }
 		NOT = { is_or_was_tag = { tag = Z18 } }
 		has_unlocked_merc_company = { merc_company = merc_ironwall }
 	}
 	cost_modifier = 0.75
+
 	modifier = {
 		shock_damage = 0.10
 	}
 }
-
 merc_chaqway_flamingoes = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
     regiments_per_development = 0.05
 	cavalry_weight = 1
+	
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_estate_privilege = estate_mages_chaqway_flamingo
 	}
+
 	modifier = {
 		reinforce_speed = -0.1
 		cav_to_inf_ratio = 1.0
@@ -3258,7 +2997,6 @@ merc_chaqway_flamingoes = {
 	}
 	counts_towards_force_limit = no
 }
-
 #Zokka Rakshasa Devotees
 merc_zokka_rakshasa_devotees = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
@@ -3269,9 +3007,6 @@ merc_zokka_rakshasa_devotees = {
 	home_province = 4384 #mindanan
 	sprites = { harimari_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_zokka_rakshasa_devotees }
 	}
 	cost_modifier = 1
@@ -3282,7 +3017,6 @@ merc_zokka_rakshasa_devotees = {
 		reinforce_speed = 0.1
 	}
 }
-
 merc_konol_hawk_legion = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	regiments_per_development = 0.1
@@ -3291,19 +3025,13 @@ merc_konol_hawk_legion = {
 	artillery_weight = 0.1
 	home_province = 496
 	sprites = { gnoll_sprite_pack }
-    trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
-		has_unlocked_merc_company = { merc_company = merc_konol_hawk_legion } 
-	}
+    trigger = {	has_unlocked_merc_company = { merc_company = merc_konol_hawk_legion } }
 	cost_modifier = 1.1
 	modifier = {
 		discipline = 0.1
 		morale_damage_received = -0.1
 	}
 }
-
 merc_konol_carrion_legion = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	regiments_per_development = 0.1
@@ -3312,19 +3040,13 @@ merc_konol_carrion_legion = {
 	artillery_weight = 0
 	home_province = 475
 	sprites = { gnoll_sprite_pack }
-    trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
-		has_unlocked_merc_company = { merc_company = merc_konol_carrion_legion } 
-	}
+    trigger = {	has_unlocked_merc_company = { merc_company = merc_konol_carrion_legion } }
 	cost_modifier = 1.1
 	modifier = {
 		infantry_power = 0.2
 		reinforce_speed = 0.5
 	}
 }
-
 merc_konol_sandstorm_legion = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	regiments_per_development = 0.1
@@ -3333,12 +3055,7 @@ merc_konol_sandstorm_legion = {
 	artillery_weight = 0
 	home_province = 3194
 	sprites = { gnoll_sprite_pack }
-    trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
-		has_unlocked_merc_company = { merc_company = merc_konol_sandstorm_legion } 
-	}
+    trigger = {	has_unlocked_merc_company = { merc_company = merc_konol_sandstorm_legion } }
 	cost_modifier = 1.1
 	modifier = {
 		cavalry_power = 0.2
@@ -3346,7 +3063,6 @@ merc_konol_sandstorm_legion = {
 		movement_speed = 0.5
 	}
 }
-
 merc_konol_venom_legion = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	regiments_per_development = 0.1
@@ -3355,19 +3071,13 @@ merc_konol_venom_legion = {
 	artillery_weight = 0.3
 	home_province = 463
 	sprites = { gnoll_sprite_pack }
-    trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
-		has_unlocked_merc_company = { merc_company = merc_konol_venom_legion } 
-	}
+    trigger = {	has_unlocked_merc_company = { merc_company = merc_konol_venom_legion } }
 	cost_modifier = 1.1
 	modifier = {
 		fire_damage = 0.1
 		backrow_artillery_damage = 0.2
 	}
 }
-
 merc_konol_scourge_legion = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	regiments_per_development = 0.1
@@ -3376,12 +3086,7 @@ merc_konol_scourge_legion = {
 	artillery_weight = 0.1
 	home_province = 493
 	sprites = { gnoll_sprite_pack }
-    trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
-		has_unlocked_merc_company = { merc_company = merc_konol_scourge_legion } 
-	}
+    trigger = {	has_unlocked_merc_company = { merc_company = merc_konol_scourge_legion } }
 	cost_modifier = 1.1
 	modifier = {
 		shock_damage = 0.1
@@ -3399,9 +3104,6 @@ merc_istralari_banshees_small_a = {
     trigger = {	
 		has_country_flag = A45_banshee_company_1
 		NOT = { has_country_flag = A45_banshee_ni_complete } 
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 	}
 	cost_modifier = 0.75
 	modifier = {
@@ -3415,12 +3117,9 @@ merc_istralari_banshees_small_b = {
 	regiments_per_development = 0.03
 	cavalry_weight = 0
 	artillery_weight = 0
-    trigger = {
+    trigger = {	
 		has_country_flag = A45_banshee_company_1
-		has_country_flag = A45_banshee_ni_complete
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
+		has_country_flag = A45_banshee_ni_complete  
 	}
 	cost_modifier = 0.75
 	modifier = {
@@ -3435,12 +3134,9 @@ merc_istralari_banshees_mid_a = {
 	regiments_per_development = 0.06
 	cavalry_weight = 0
 	artillery_weight = 0.2
-    trigger = {
+    trigger = {	
 		has_country_flag = A45_banshee_company_2
-		NOT = { has_country_flag = A45_banshee_ni_complete }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
+		NOT = { has_country_flag = A45_banshee_ni_complete } 
 	}
 	cost_modifier = 0.75
 	modifier = {
@@ -3456,12 +3152,9 @@ merc_istralari_banshees_mid_b = {
 	regiments_per_development = 0.06
 	cavalry_weight = 0
 	artillery_weight = 0.2
-    trigger = {
+    trigger = {	
 		has_country_flag = A45_banshee_company_2
-		has_country_flag = A45_banshee_ni_complete
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
+		has_country_flag = A45_banshee_ni_complete  
 	}
 	cost_modifier = 0.75
 	modifier = {
@@ -3481,10 +3174,7 @@ merc_istralari_banshees_large_a = {
 	artillery_weight = 0.3
     trigger = {	
 		has_country_flag = A45_banshee_company_3
-		NOT = { has_country_flag = A45_banshee_ni_complete }
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
+		NOT = { has_country_flag = A45_banshee_ni_complete } 
 	}
 	cost_modifier = 0.75
 	modifier = {
@@ -3501,12 +3191,9 @@ merc_istralari_banshees_large_b = {
 	regiments_per_development = 0.09
 	cavalry_weight = 0
 	artillery_weight = 0.3
-    trigger = {
+    trigger = {	
 		has_country_flag = A45_banshee_company_3
-		has_country_flag = A45_banshee_ni_complete
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
+		has_country_flag = A45_banshee_ni_complete  
 	}
 	cost_modifier = 0.75
 	modifier = {
@@ -3522,49 +3209,60 @@ merc_istralari_banshees_large_b = {
 #Verne
 merc_verne_exploration_team_1 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0
 	counts_towards_force_limit = no
+
     cavalry_weight = 0
     artillery_weight = 0
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
         has_country_flag = verne_vernissage_expedition_teams_unlocked
 		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
 			ai = no
 		}
     }
+
     modifier = {
         movement_speed = 0.10
 		reinforce_speed = 0.25
     }
+
     min_size = 6
     max_size = 6
     manpower_pool = 48
 }
-
 merc_verne_exploration_team_2 = {
     mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+
     regiments_per_development = 0
     cost_modifier = 0
 	counts_towards_force_limit = no
+
     cavalry_weight = 0
     artillery_weight = 0
+
     cavalry_cap = 0
+
     sprites = { easterngfx_sprite_pack }
+
     trigger = {
         has_country_flag = verne_vernissage_expedition_teams_unlocked
 		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
 			ai = no
 		}
     }
+
     modifier = {
         movement_speed = 0.10
 		reinforce_speed = 0.25
     }
+
     min_size = 6
     max_size = 6
     manpower_pool = 48
@@ -3575,9 +3273,6 @@ merc_parahechendi_scythed_chariots = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	home_province = 2550 #Parahechend
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_parahechendi_scythed_chariots }
 	}
 	regiments_per_development = 0.05
@@ -3597,9 +3292,6 @@ merc_ebeneshi_scythed_chariots = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	home_province = 2485 #Tirsi Ebenesh
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_ebeneshi_scythed_chariots }
 	}
 	regiments_per_development = 0.05
@@ -3619,9 +3311,6 @@ merc_kalavendi_scythed_chariots = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	home_province = 2550 #Parahechend
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_kalavendi_scythed_chariots }
 	}
 	regiments_per_development = 0.05
@@ -3641,9 +3330,6 @@ merc_larankarha_scythed_chariots = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	home_province = 2485 #Tirsi Ebenesh
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_larankarha_scythed_chariots }
 	}
 	regiments_per_development = 0.05
@@ -3667,9 +3353,6 @@ merc_adeen_hardliners = {
 	sprites = { ndurubu_units_pack }
 	artillery_weight = 0.5
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_country_flag = rinta_adeen_hardliners_unlocked
 	}
 	max_size = 30 
@@ -3684,9 +3367,6 @@ merc_deranne_seaflower_knights = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	home_province = 113 #Deranne
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		mission_completed = deranne_vengeance_of_tomorrow
 		NOT = { mission_completed = deranne_derannic_behemoths }
 	}
@@ -3712,15 +3392,13 @@ merc_human_iyashlagila_1 = {
 	artillery_weight = 0.25
 	sprites = { africangfx_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_estate_privilege = estate_burghers_khair_families_iysashlagila_management
 		development_in_provinces = {
 			value = 250
 			has_human_majority_trigger = yes
 		}
 	}
+
 	modifier = {
 		shock_damage_received = 0.15
 		reinforce_speed = 0.15
@@ -3728,6 +3406,7 @@ merc_human_iyashlagila_1 = {
 		land_morale = 0.10
 		loot_amount = 0.50 
 	}
+
 	cost_modifier = 0.5
 	counts_towards_force_limit = no
 }
@@ -3740,15 +3419,13 @@ merc_human_iyashlagila_2 = {
 	artillery_weight = 0.25
 	sprites = { africangfx_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_estate_privilege = estate_burghers_khair_families_iysashlagila_management
 		development_in_provinces = {
 			value = 500
 			has_human_majority_trigger = yes
 		}
 	}
+
 	modifier = {
 		shock_damage_received = 0.15
 		reinforce_speed = 0.15
@@ -3756,6 +3433,7 @@ merc_human_iyashlagila_2 = {
 		land_morale = 0.10
 		loot_amount = 0.50
 	}
+
 	cost_modifier = 0.5
 	counts_towards_force_limit = no
 }
@@ -3768,15 +3446,13 @@ merc_human_iyashlagila_3 = {
 	artillery_weight = 0.25
 	sprites = { africangfx_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_estate_privilege = estate_burghers_khair_families_iysashlagila_management
 		development_in_provinces = {
 			value = 750
 			has_human_majority_trigger = yes
 		}
 	}
+
 	modifier = {
 		shock_damage_received = 0.15
 		reinforce_speed = 0.15
@@ -3784,6 +3460,7 @@ merc_human_iyashlagila_3 = {
 		land_morale = 0.10
 		loot_amount = 0.50
 	}
+
 	cost_modifier = 0.5
 	counts_towards_force_limit = no
 }
@@ -3796,15 +3473,13 @@ merc_human_iyashlagila_4 = {
 	artillery_weight = 0.25
 	sprites = { africangfx_sprite_pack }
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_estate_privilege = estate_burghers_khair_families_iysashlagila_management
 		development_in_provinces = {
 			value = 1000
 			has_human_majority_trigger = yes
 		}
 	}
+
 	modifier = {
 		shock_damage_received = 0.15
 		reinforce_speed = 0.15
@@ -3812,6 +3487,7 @@ merc_human_iyashlagila_4 = {
 		land_morale = 0.10
 		loot_amount = 0.50
 	}
+
 	cost_modifier = 0.5
 	counts_towards_force_limit = no
 }
@@ -3827,11 +3503,12 @@ merc_angels_base = {
 	cost_modifier = 0.01
 	cavalry_weight = 0
 	artillery_weight = 0
+
 	trigger = { has_country_flag = summon_extraplanars_angels_base }
 	modifier = { reinforce_speed = 0.25 }
 	counts_towards_force_limit = no
+	no_additional_manpower_from_max_size = yes
 }
-
 merc_angels_defense = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 25
@@ -3839,6 +3516,7 @@ merc_angels_defense = {
 	cost_modifier = 0.01
 	cavalry_weight = 0
 	artillery_weight = 0
+
 	trigger = { has_country_flag = summon_extraplanars_angels_defense }
 	modifier = {
 		reinforce_speed = 0.25
@@ -3846,7 +3524,6 @@ merc_angels_defense = {
 	}
 	counts_towards_force_limit = no
 }
-
 merc_angels_defense_2 = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 40
@@ -3854,6 +3531,7 @@ merc_angels_defense_2 = {
 	cost_modifier = 0.01
 	cavalry_weight = 0
 	artillery_weight = 0
+
 	trigger = { has_country_flag = summon_extraplanars_angels_defense_2 }
 	modifier = {
 		reinforce_speed = 0.25
@@ -3862,7 +3540,6 @@ merc_angels_defense_2 = {
 	}
 	counts_towards_force_limit = no
 }
-
 merc_angels_offense = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 25
@@ -3870,14 +3547,15 @@ merc_angels_offense = {
 	cost_modifier = 0.01
 	cavalry_weight = 0
 	artillery_weight = 0
+
 	trigger = { has_country_flag = summon_extraplanars_angels_offense }
 	modifier = {
 		reinforce_speed = 0.25
 		infantry_power = 0.25
 	}
 	counts_towards_force_limit = no
+	no_additional_manpower_from_max_size = yes
 }
-
 merc_angels_offense_2 = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 40
@@ -3885,6 +3563,7 @@ merc_angels_offense_2 = {
 	cost_modifier = 0.01
 	cavalry_weight = 0
 	artillery_weight = 0
+
 	trigger = { has_country_flag = summon_extraplanars_angels_offense_2 }
 	modifier = {
 		reinforce_speed = 0.25
@@ -3892,8 +3571,8 @@ merc_angels_offense_2 = {
 		discipline = 0.1
 	}
 	counts_towards_force_limit = no
+	no_additional_manpower_from_max_size = yes
 }
-
 merc_eldritch_base = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 10
@@ -3901,14 +3580,15 @@ merc_eldritch_base = {
 	cost_modifier = 0.01
 	cavalry_weight = 1
 	artillery_weight = 0
+
 	trigger = { has_country_flag = summon_extraplanars_eldritch_base }
 	modifier = {
 		cav_to_inf_ratio = 1
 		reinforce_speed = 0.25
 	}
 	counts_towards_force_limit = no
+	no_additional_manpower_from_max_size = yes
 }
-
 merc_eldritch_fast = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 25
@@ -3916,6 +3596,7 @@ merc_eldritch_fast = {
 	cost_modifier = 0.01
 	cavalry_weight = 1
 	artillery_weight = 0
+
 	trigger = { has_country_flag = summon_extraplanars_eldritch_fast }
 	modifier = {
 		cav_to_inf_ratio = 1
@@ -3923,8 +3604,8 @@ merc_eldritch_fast = {
 		movement_speed = 0.33
 	}
 	counts_towards_force_limit = no
+	no_additional_manpower_from_max_size = yes
 }
-
 merc_eldritch_fast_2 = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 40
@@ -3932,6 +3613,7 @@ merc_eldritch_fast_2 = {
 	cost_modifier = 0.01
 	cavalry_weight = 1
 	artillery_weight = 0
+
 	trigger = { has_country_flag = summon_extraplanars_eldritch_fast_2 }
 	modifier = {
 		cav_to_inf_ratio = 1
@@ -3941,8 +3623,8 @@ merc_eldritch_fast_2 = {
 		cavalry_flanking = 0.5
 	}
 	counts_towards_force_limit = no
+	no_additional_manpower_from_max_size = yes
 }
-
 merc_eldritch_mass = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 25
@@ -3950,6 +3632,7 @@ merc_eldritch_mass = {
 	cost_modifier = 0.01
 	cavalry_weight = 1
 	artillery_weight = 0
+
 	trigger = { has_country_flag = summon_extraplanars_eldritch_mass }
 	modifier = {
 		cav_to_inf_ratio = 1
@@ -3958,7 +3641,6 @@ merc_eldritch_mass = {
 	}
 	counts_towards_force_limit = no
 }
-
 merc_eldritch_mass_2 = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 40
@@ -3966,6 +3648,7 @@ merc_eldritch_mass_2 = {
 	cost_modifier = 0.01
 	cavalry_weight = 1
 	artillery_weight = 0
+
 	trigger = { has_country_flag = summon_extraplanars_eldritch_mass_2 }
 	modifier = {
 		cav_to_inf_ratio = 1
@@ -3975,7 +3658,6 @@ merc_eldritch_mass_2 = {
 	}
 	counts_towards_force_limit = no
 }
-
 merc_devils_base = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 10
@@ -3985,8 +3667,8 @@ merc_devils_base = {
 	artillery_weight = 1
 	trigger = { has_country_flag = summon_extraplanars_devils_base }
 	counts_towards_force_limit = no
+	no_additional_manpower_from_max_size = yes
 }
-
 merc_devils_frontline = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 25
@@ -3998,7 +3680,6 @@ merc_devils_frontline = {
 	modifier = { artillery_shock = 0.5 }
 	counts_towards_force_limit = no
 }
-
 merc_devils_frontline_2 = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 40
@@ -4013,7 +3694,6 @@ merc_devils_frontline_2 = {
 	}
 	counts_towards_force_limit = no
 }
-
 merc_devils_backline = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 25
@@ -4024,8 +3704,8 @@ merc_devils_backline = {
 	trigger = { has_country_flag = summon_extraplanars_devils_backline }
 	modifier = { backrow_artillery_damage = 0.1 }
 	counts_towards_force_limit = no
+	no_additional_manpower_from_max_size = yes
 }
-
 merc_devils_backline_2 = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	min_size = 40
@@ -4039,8 +3719,8 @@ merc_devils_backline_2 = {
 		fire_damage = 0.15
 	}
 	counts_towards_force_limit = no
+	no_additional_manpower_from_max_size = yes
 }
-
 merc_elemental_animals = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	regiments_per_development = 0.1
@@ -4048,7 +3728,9 @@ merc_elemental_animals = {
 	cavalry_weight = 0.2
 	artillery_weight = 0
 	max_size = 20
+
 	trigger = {	has_country_modifier = conjuration_1_summon_elemental_animals_mod }
+
 	modifier = {
 		discipline = -0.1
 		shock_damage_received = 0.1
@@ -4056,9 +3738,9 @@ merc_elemental_animals = {
 		land_morale = 0.05
 		land_attrition = -0.25
 	}
+
 	counts_towards_force_limit = no
 }
-
 merc_spiritfire_elementals = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_AND_FORCELIMIT_COST
 	regiments_per_development = 0.05
@@ -4066,12 +3748,15 @@ merc_spiritfire_elementals = {
 	cavalry_weight = 0.33
 	artillery_weight = 0
 	min_size = 10
+
 	trigger = { has_country_modifier = conjuration_2_summon_spiritfire_elementals_mod }
+
 	modifier = {
 		fire_damage_received = -0.2
 		land_morale = 0.1
 		fire_damage = 0.15
 	}
+
 	counts_towards_force_limit = no
 }
 
@@ -4084,9 +3769,6 @@ merc_children_of_the_vanguard = {
 	home_province = 5415 #Hogunuug
 	sprites = { asiangfx_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		5415 = {
 			owned_by = ROOT
 			has_province_modifier = the_northern_bastion_upgrade
@@ -4109,9 +3791,6 @@ merc_bibyobi_monster_hunters = {
 	sprites = { vyzemby_units_pack }
 	cavalry_weight = 0
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_bibyobi_monster_hunters }
 	}
 	modifier = {
@@ -4126,9 +3805,6 @@ merc_bibyobi_wereleopards = {
 	sprites = { vyzemby_units_pack }
 	cavalry_weight = 0
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_bibyobi_wereleopards }
 	}
 	modifier = {
@@ -4145,9 +3821,6 @@ merc_bibyobi_ninki_nanka = {
 	sprites = { vyzemby_units_pack }
 	cavalry_weight = 1
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_bibyobi_ninki_nanka }
 	}
 	modifier = {
@@ -4168,9 +3841,6 @@ merc_beikling_hill_raiders = { #Hill Raiders
 	home_province = 4852 #Tiaochi
 	sprites = { yan_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_beikling_hill_raiders }
 		NOT = { has_unlocked_merc_company = { merc_company = merc_beikling_royal_host } }
 	}
@@ -4190,9 +3860,6 @@ merc_beikling_royal_host = { #Royal Host
 	home_province = 4844 #Emgolu
 	sprites = { yan_sprite_pack }
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_beikling_royal_host }
 	}
 	cost_modifier = 0.5
@@ -4202,15 +3869,11 @@ merc_beikling_royal_host = { #Royal Host
 		shock_damage = 0.2
 	}
 }
-
 #Orenvalyam
 merc_wild_magic_casters = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	home_province = 2388 #Cara Lafquen
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_wild_magic_casters }
 	}
 	regiments_per_development = 0.05
@@ -4230,9 +3893,6 @@ merc_campurana_corintar = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	home_province = 6559 #Kottar Orenkoraim
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_campurana_corintar }
 	}
 	regiments_per_development = 0.05
@@ -4252,9 +3912,6 @@ merc_campurana_hotzaya = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
 	home_province = 1048 #Valorpoint
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_campurana_hotzaya }
 	}
 	regiments_per_development = 0.05
@@ -4278,8 +3935,9 @@ merc_ostavranan = {
 	artillery_weight = 0
 	sprites = { green_orc_sprite_pack } 
 	trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
 		}
 		has_unlocked_merc_company = { merc_company = merc_ostavranan } 
 	}
@@ -4300,18 +3958,11 @@ merc_lelanan_daughters_of_lel = {
 	regiments_per_development = 0.05
 	cavalry_weight = 0.1
 	cavalry_cap = 2
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel }
-		NOT = { 
-			OR = {
-				has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel_upgraded_1 }
-				has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel_upgraded_2 }
-			}
-		}
 	}
+
 	cost_modifier = 0.5
 	modifier = {
         may_recruit_female_generals = yes
@@ -4329,13 +3980,11 @@ merc_lelanan_daughters_of_lel_upgraded_1 = {
 	regiments_per_development = 0.05
 	cavalry_weight = 0.1
 	cavalry_cap = 2
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel_upgraded_1 }
-		NOT = { has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel_upgraded_2 } }
 	}
+
 	cost_modifier = 0.5
 	modifier = {
         may_recruit_female_generals = yes
@@ -4353,12 +4002,11 @@ merc_lelanan_daughters_of_lel_upgraded_2 = {
 	regiments_per_development = 0.05
 	cavalry_weight = 0.1
 	cavalry_cap = 2
+
     trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
 		has_unlocked_merc_company = { merc_company = merc_lelanan_daughters_of_lel_upgraded_2 }
 	}
+
 	cost_modifier = 0.5
 	modifier = {
         may_recruit_female_generals = yes
@@ -4370,6 +4018,7 @@ merc_lelanan_daughters_of_lel_upgraded_2 = {
 	counts_towards_force_limit = no
 }
 
+
 #Gnollakaz
 merc_emperors_flame = {
 	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
@@ -4380,16 +4029,36 @@ merc_emperors_flame = {
 	cavalry_cap = 4
 	artillery_weight = 0.2
 	sprites = { gnoll_sprite_pack }
-    trigger = {
-		hidden_trigger = {
-			NOT = { technology_group = tech_centaur }
-		}
-		has_unlocked_merc_company = { merc_company = merc_emperors_flame } 
-	}
+    trigger = {	has_unlocked_merc_company = { merc_company = merc_emperors_flame } }
 	cost_modifier = 0.7
 	modifier = {
 		allow_mercenary_drill = yes
 		discipline = 0.1
 		morale_damage_received = -0.1
+	}
+}
+
+#House of Fire and Water
+merc_war_alchemists = {
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+	regiments_per_development = 0.05
+	min_size = 10
+	cavalry_weight = 0
+	artillery_weight = 0.4
+	sprites = { asiangfx_sprite_pack }
+    trigger = {
+		owns_core_province = 4949
+		4949 = {
+			has_great_project = {
+				type = house_of_fire_and_water
+				tier = 2
+			}
+		}
+		can_use_house_of_fire_and_water_trigger = yes
+	}
+	cost_modifier = 0.7
+	modifier = {
+		infantry_fire = 0.2
+		land_attrition = -0.2
 	}
 }

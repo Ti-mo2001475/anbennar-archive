@@ -227,7 +227,10 @@ pashaine_1 = {
 						has_country_flag = religious_league_war_on_winning_side
 					}
 					AND = {
-						has_global_flag = peace_of_esmaria
+						OR = {
+							has_global_flag = peace_of_esmaria
+							has_global_flag = ravelian_epiphany_peace
+						}
 						hre_religion_treaty = yes
 						diplomatic_reputation = 6
 					}
@@ -235,9 +238,7 @@ pashaine_1 = {
 						custom_trigger_tooltip = {
 							tooltip = pashaine_lost_league_tt
 							NOT = { has_country_flag = religious_league_war_on_winning_side }
-							any_elector = {
-								has_country_flag = religious_league_war_on_winning_side
-							}
+							hre_religion_locked = yes
 						}
 						diplomatic_reputation = 9
 						prestige = 50
@@ -1528,11 +1529,7 @@ pashaine_1_post_prelude = {
 				}
 			}
 			innovativeness = 50
-			OR = {
-				is_ahead_of_time_in_technology = { tech = adm }
-				is_ahead_of_time_in_technology = { tech = dip }
-				is_ahead_of_time_in_technology = { tech = mil }
-			}
+			is_ahead_of_time_in_any_technology = yes
 		} 
 
 		effect = {  
@@ -3022,11 +3019,21 @@ pashaine_3_post_unity = {
 			has_commanding_three_star = yes 
 		} 
 
-		effect = {  
+		effect = {
 			businor_region = { add_permanent_claim = ROOT }
 			the_borders_region = { add_permanent_claim = ROOT }
 			custom_tooltip = pashaine_lose_separatism_tt
 			hidden_effect = {
+				if = {
+					limit = {
+						any_subject_country = {
+							has_country_modifier = colony_inspired_by_revolution
+						}
+					}
+					every_subject_country = {
+						remove_country_modifier = colony_inspired_by_revolution
+					}
+				}
 				every_owned_province = {
 					limit = { has_province_flag = was_part_of_hre }
 					add_nationalism = -100

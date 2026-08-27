@@ -1941,6 +1941,7 @@ country_event = { #Religious Reforms - Reform 5
 			name = taychend_reform_5_mod
 			duration = 3650 #10 years
 		}
+		taychend_superregion = { add_permanent_claim = ROOT }
 		hidden_effect = {
 			remove_country_modifier = taychend_reform_1_mod
 			remove_country_modifier = taychend_reform_2_mod
@@ -1969,5 +1970,244 @@ country_event = { #Religious Reforms - Reform 5
 		taychend_remove_free_reform = { reform = 5 }
 		clr_country_flag = taychendi_is_passing_reform
 		every_owned_province = { clr_province_flag = taychendi_reform_rebels }
+	}
+}
+
+
+### Taychendi gov reforms ###
+# Yearly glory from subjects
+country_event = {
+    id = taychendi.2002
+    title = taychendi.2002.t
+    desc = taychendi.2002.d
+    picture = REFORM_eventPicture
+
+    is_triggered_only = yes
+    hidden = yes          
+
+    immediate = {
+        if = {
+            limit = { num_of_subjects = 5 }
+            gain_taychend_glory_effect = { amount = 25 }
+        }
+        else_if = {
+            limit = { num_of_subjects = 4 }
+            gain_taychend_glory_effect = { amount = 20 }
+        }
+        else_if = {
+            limit = { num_of_subjects = 3 }
+            gain_taychend_glory_effect = { amount = 15 }
+        }
+        else_if = {
+            limit = { num_of_subjects = 2 }
+            gain_taychend_glory_effect = { amount = 10 }
+        }
+        else_if = {
+            limit = { num_of_subjects = 1 }
+            gain_taychend_glory_effect = { amount = 5 }
+        }
+    }
+	option = {
+		name = taychendi.2002.a
+	}
+}
+
+country_event = {
+    id = taychendi.2003
+    title = taychendi.2003.t
+    desc = taychendi.2003.d
+    hidden = yes
+	picture = REFORM_eventPicture
+
+    is_triggered_only = yes
+
+    immediate = {
+
+        if = {
+            limit = {
+                NOT = { has_reform = relic_lords_of_taychend }
+            }
+
+            remove_country_modifier = relic_lords_absolutism_1
+            remove_country_modifier = relic_lords_absolutism_2
+            remove_country_modifier = relic_lords_absolutism_3
+            remove_country_modifier = relic_lords_absolutism_4
+            remove_country_modifier = relic_lords_absolutism_5
+        }
+
+        # 5%
+        else_if = {
+            limit = {
+                NOT = {
+                    trading_part = {
+                        trade_goods = precursor_relics
+                        value = 0.05
+                    }
+                }
+            }
+
+            remove_country_modifier = relic_lords_absolutism_1
+            remove_country_modifier = relic_lords_absolutism_2
+            remove_country_modifier = relic_lords_absolutism_3
+            remove_country_modifier = relic_lords_absolutism_4
+            remove_country_modifier = relic_lords_absolutism_5
+        }
+
+        # 5-10%
+        else_if = {
+            limit = {
+                trading_part = {
+                    trade_goods = precursor_relics
+                    value = 0.05
+                }
+                NOT = {
+                    trading_part = {
+                        trade_goods = precursor_relics
+                        value = 0.10
+                    }
+                }
+            }
+
+            remove_country_modifier = relic_lords_absolutism_2
+            remove_country_modifier = relic_lords_absolutism_3
+            remove_country_modifier = relic_lords_absolutism_4
+            remove_country_modifier = relic_lords_absolutism_5
+
+            if = {
+                limit = {
+                    NOT = { has_country_modifier = relic_lords_absolutism_1 }
+                }
+
+                add_country_modifier = {
+                    name = relic_lords_absolutism_1
+                    duration = -1
+                }
+            }
+        }
+
+        # 10-20%
+        else_if = {
+            limit = {
+                trading_part = {
+                    trade_goods = precursor_relics
+                    value = 0.10
+                }
+                NOT = {
+                    trading_part = {
+                        trade_goods = precursor_relics
+                        value = 0.20
+                    }
+                }
+            }
+
+            remove_country_modifier = relic_lords_absolutism_1
+            remove_country_modifier = relic_lords_absolutism_3
+            remove_country_modifier = relic_lords_absolutism_4
+            remove_country_modifier = relic_lords_absolutism_5
+
+            if = {
+                limit = {
+                    NOT = { has_country_modifier = relic_lords_absolutism_2 }
+                }
+
+                add_country_modifier = {
+                    name = relic_lords_absolutism_2
+                    duration = -1
+                }
+            }
+        }
+
+        # 20-30%
+        else_if = {
+            limit = {
+                trading_part = {
+                    trade_goods = precursor_relics
+                    value = 0.20
+                }
+                NOT = {
+                    trading_part = {
+                        trade_goods = precursor_relics
+                        value = 0.30
+                    }
+                }
+            }
+
+            remove_country_modifier = relic_lords_absolutism_1
+            remove_country_modifier = relic_lords_absolutism_2
+            remove_country_modifier = relic_lords_absolutism_4
+            remove_country_modifier = relic_lords_absolutism_5
+
+            if = {
+                limit = {
+                    NOT = { has_country_modifier = relic_lords_absolutism_3 }
+                }
+
+                add_country_modifier = {
+                    name = relic_lords_absolutism_3
+                    duration = -1
+                }
+            }
+        }
+
+        # 30-40%
+        else_if = {
+            limit = {
+                trading_part = {
+                    trade_goods = precursor_relics
+                    value = 0.30
+                }
+                NOT = {
+                    trading_part = {
+                        trade_goods = precursor_relics
+                        value = 0.40
+                    }
+                }
+            }
+
+            remove_country_modifier = relic_lords_absolutism_1
+            remove_country_modifier = relic_lords_absolutism_2
+            remove_country_modifier = relic_lords_absolutism_3
+            remove_country_modifier = relic_lords_absolutism_5
+
+            if = {
+                limit = {
+                    NOT = { has_country_modifier = relic_lords_absolutism_4 }
+                }
+
+                add_country_modifier = {
+                    name = relic_lords_absolutism_4
+                    duration = -1
+                }
+            }
+        }
+
+        # 40%+
+        else_if = {
+            limit = {
+                trading_part = {
+                    trade_goods = precursor_relics
+                    value = 0.40
+                }
+            }
+
+            remove_country_modifier = relic_lords_absolutism_1
+            remove_country_modifier = relic_lords_absolutism_2
+            remove_country_modifier = relic_lords_absolutism_3
+            remove_country_modifier = relic_lords_absolutism_4
+
+            if = {
+                limit = {
+                    NOT = { has_country_modifier = relic_lords_absolutism_5 }
+                }
+
+                add_country_modifier = {
+                    name = relic_lords_absolutism_5
+                    duration = -1
+                }
+            }
+        }
+    }
+	option = {
+		name = taychendi.2003.a
 	}
 }

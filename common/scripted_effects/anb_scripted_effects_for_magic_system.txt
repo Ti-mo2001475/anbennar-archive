@@ -571,6 +571,8 @@ magic_advancement_abort_all_effect = { #Indiscriminate. Assumes nothing about yo
 		#Black Herd
 		clr_country_flag = black_herd_project_1_project
 		clr_country_flag = black_herd_project_lichdom_project
+
+		#Harpylen
 		clr_country_flag = harpylen_project_project
 
 		#Eighard
@@ -601,6 +603,46 @@ magic_advancement_abort_all_effect = { #Indiscriminate. Assumes nothing about yo
 			}
 			else = { 6182 = { remove_province_modifier = yanacotle_great_forge_construction }}
 		}
+
+		#Ministries Privilege
+		remove_country_modifier = estate_raj_ministries_magical_oversight_commission_mod
+
+		#Deathwinds
+		clr_country_flag = deathwinds_kheion_and_kaydhano_project
+		if = {
+			limit = { has_country_modifier = kaydhano_exp_mod_1 }
+			remove_country_modifier = kaydhano_exp_mod_1
+			decrease_deathwinds_level = { amount = 1 }
+		}
+		if = {
+			limit = { has_country_modifier = kaydhano_exp_mod_2 }
+			remove_country_modifier = kaydhano_exp_mod_2
+			decrease_deathwinds_level = { amount = 2 }
+		}
+		if = {
+			limit = { has_country_modifier = kaydhano_exp_mod_3 }
+			remove_country_modifier = kaydhano_exp_mod_3
+			decrease_deathwinds_level = { amount = 3 }
+		}
+		if = {
+			limit = { has_country_flag = labyrinth_of_sorncell_unlocked }
+			clr_country_flag = labyrinth_of_sorncell_project
+			remove_country_modifier = celliande_nameless_lead
+			remove_country_modifier = celliande_estate_lead
+			remove_country_modifier = celliande_hunger
+			remove_country_modifier = celliande_shrine_rhin
+			remove_country_modifier = celliande_archives_search
+			remove_country_modifier = celliande_shrine_rhin2
+			remove_country_modifier = celliande_archives_search2
+			remove_country_modifier = celliande_ruler_speach
+			remove_country_modifier = celliande_will_die
+			remove_country_modifier = celliande_cling_light
+			remove_country_modifier = celliande_darkness_light
+		}
+
+		#Kaino
+		clr_country_flag = kaino_project_apotheosis_of_mercy_project	
+		clr_country_flag = kaino_project_romantic_date_kyaa_project
 	}
 }
 magic_advancement_clr_type_flags = {
@@ -720,6 +762,16 @@ start_magic_project = { #Country only
 	custom_tooltip = $project$_lookahead
 
 	hidden_effect = {
+		#Ministries Privilege
+		if = {
+			limit = { has_country_modifier = estate_raj_ministries_magical_oversight_commission_mod_dummy }
+			remove_country_modifier = estate_raj_ministries_magical_oversight_commission_mod_dummy
+			add_country_modifier = {
+				name = estate_raj_ministries_magical_oversight_commission_mod
+				duration = -1
+			}
+		}
+
 		set_magic_experience_target = { type = country project = $project$ }
 		set_variable = { which = country_magic_experience value = 0 }
 		update_magic_ui_experience_modifiers = yes
@@ -1525,6 +1577,39 @@ ban_necromancy = {
 		limit = { is_overall_advancing_school = { school = necromancy } }
 		hidden_effect = { country_event = { id = magic_system.99 } }
 	}
+	if = {
+		limit = { has_country_modifier = undead_military }
+		reset_racial_military_via_administration = yes
+	}
+}
+
+unban_necromancy = { #currently unused
+	custom_tooltip = unban_necromancy_tt
+	clr_country_flag = banned_necromancy
+	clr_ruler_flag = banned_necromancy
+
+	if = { #Copy-pasted code from racial_mil_change_military_effect
+		limit = { at_least_magic_project_level = { project = army_of_the_dead level = 1 } }
+		clear_racial_military = yes
+
+		add_country_modifier = { name = $RACE$_military duration = -1 hidden = yes }
+		tooltip = { add_country_modifier = { name = $RACE$_military duration = -1 } } #TODO Jothell check this works
+
+		if = {
+			limit = { has_country_flag = aotd_skeleton_army }
+			add_country_modifier = { name = aotd_skeleton_mod duration = -1 }
+		}
+		if = {
+			limit = { has_country_flag = aotd_zombie_army }
+			add_country_modifier = { name = aotd_zombie_mod duration = -1 }
+		}
+		if = {
+			limit = { has_country_flag = aotd_centaur_army }
+			add_country_modifier = { name = aotd_centaur_mod duration = -1 }
+		}
+
+		racial_mil_change_mil_sub_effects = yes
+	}
 }
 
 #####################
@@ -1693,15 +1778,18 @@ recalculate_country_mana_regen = {}
 recalculate_heir_mana_regen = {}
 
 give_random_spell_school = {
-	random_list = {
-		1 = { trigger = { NOT = { has_$type$_flag = abjuration_3 } } magic_school_level_up = { type = $type$ school = abjuration } }
-		1 = { trigger = { NOT = { has_$type$_flag = conjuration_3 } } magic_school_level_up = { type = $type$ school = conjuration } }
-		1 = { trigger = { NOT = { has_$type$_flag = divination_3 } } magic_school_level_up = { type = $type$ school = divination } }
-		1 = { trigger = { NOT = { has_$type$_flag = enchantment_3 } } magic_school_level_up = { type = $type$ school = enchantment } }
-		1 = { trigger = { NOT = { has_$type$_flag = evocation_3 } } magic_school_level_up = { type = $type$ school = evocation } }
-		1 = { trigger = { NOT = { has_$type$_flag = illusion_3 } } magic_school_level_up = { type = $type$ school = illusion } }
-		1 = { trigger = { NOT = { has_$type$_flag = necromancy_3 } has_not_banned_necromancy = yes } magic_school_level_up = { type = $type$ school = necromancy } }
-		1 = { trigger = { NOT = { has_$type$_flag = transmutation_3 } } magic_school_level_up = { type = $type$ school = transmutation } }
+	custom_tooltip = give_random_spell_school_$type$_tt
+	hidden_effect = {
+		random_list = {
+			1 = { trigger = { NOT = { has_$type$_flag = abjuration_3 } } magic_school_level_up = { type = $type$ school = abjuration } }
+			1 = { trigger = { NOT = { has_$type$_flag = conjuration_3 } } magic_school_level_up = { type = $type$ school = conjuration } }
+			1 = { trigger = { NOT = { has_$type$_flag = divination_3 } } magic_school_level_up = { type = $type$ school = divination } }
+			1 = { trigger = { NOT = { has_$type$_flag = enchantment_3 } } magic_school_level_up = { type = $type$ school = enchantment } }
+			1 = { trigger = { NOT = { has_$type$_flag = evocation_3 } } magic_school_level_up = { type = $type$ school = evocation } }
+			1 = { trigger = { NOT = { has_$type$_flag = illusion_3 } } magic_school_level_up = { type = $type$ school = illusion } }
+			1 = { trigger = { NOT = { has_$type$_flag = necromancy_3 } has_not_banned_necromancy = yes } magic_school_level_up = { type = $type$ school = necromancy } }
+			1 = { trigger = { NOT = { has_$type$_flag = transmutation_3 } } magic_school_level_up = { type = $type$ school = transmutation } }
+		}
 	}
 }
 give_ruler_random_spell_school = { give_random_spell_school = { type = ruler } } #Alias
@@ -2105,19 +2193,22 @@ magic_level_up_all_ruler_schools = {
 
 estate_action_RECRUIT_WAR_WIZARD = {
 	if = {
-		limit = { exactly_magic_project_level = { project = battlemage_academy level = 3 } }
-		add_mil_power = -40
-	}
-	else_if = {
-		limit = { exactly_magic_project_level = { project = battlemage_academy level = 2 } }
-		add_mil_power = -60
-	}
-	else_if = {
-		limit = { exactly_magic_project_level = { project = battlemage_academy level = 1 } }
-		add_mil_power = -80
-	}
-	else = {
-		add_mil_power = -100
+		limit = { NOT = { has_country_modifier = magocracy_knight_heir } }
+		if = {
+			limit = { exactly_magic_project_level = { project = battlemage_academy level = 3 } }
+			add_mil_power = -40
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = battlemage_academy level = 2 } }
+			add_mil_power = -60
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = battlemage_academy level = 1 } }
+			add_mil_power = -80
+		}
+		else = {
+			add_mil_power = -100
+		}
 	}
 	create_war_wizard = yes
 }
@@ -2302,10 +2393,6 @@ define_war_wizard_sub_effect = { #the levels here correspond with the war wizard
 
 create_war_wizard = { #the more general war-wizard function
 	custom_tooltip = create_war_wizard_tt
-	hidden_effect = { #RNG for names is broken unless we set saved name
-		set_saved_name = { key = ww_male_name type = leader }
-		set_saved_name = { key = ww_female_name type = leader female = yes }
-	}
 
 	if = { #all the tooltips go after this block!
 		limit = { exactly_magic_project_level = { project = battlemage_academy level = 3 } }
@@ -2332,19 +2419,15 @@ create_war_wizard = { #the more general war-wizard function
 	hidden_effect = { #We need the PRNG for situations like the evocation project
 		if = {
 			limit = { culture_is_harpy = yes }
-			create_general = { name = ww_female_name female = yes }
+			create_general = { female = yes }
 		}
 		else = {
 			randnum_effect = {
 				max = 2
-				case1 = "create_general = { name = ww_male_name }"
-				case2 = "create_general = { name = ww_female_name female = yes }"
+				case1 = "create_general = { }"
+				case2 = "create_general = { female = yes }"
 			}
 		}
-
-		#Clear names
-		clear_saved_name = ww_male_name
-		clear_saved_name = ww_female_name
 
 		#Clear war wizard modifiers
 		remove_country_modifier = war_wizard_3_mod

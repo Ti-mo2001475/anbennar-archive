@@ -14,9 +14,18 @@ estate_planetouched_organization_empowered = {
 		}
 	}
 	can_select = {
-		num_of_estate_privileges = {
-			estate = estate_planetouched
-			value = 7
+		if = {
+			limit = { mission_completed = kaino_bokiya_3 }
+			num_of_estate_privileges = {
+				estate = estate_planetouched
+				value = 6
+			}
+		}
+		else = {
+			num_of_estate_privileges = {
+				estate = estate_planetouched
+				value = 7
+			}
 		}
 		estate_loyalty = {
 			estate = estate_planetouched
@@ -36,10 +45,10 @@ estate_planetouched_organization_empowered = {
 		always = no
 	}
 	on_granted = {
-		
+		scaling_with_influence_privilege_tooltip_one_modifier = { estate_privilege = estate_planetouched_organization_empowered }
 	}
-	on_invalid = {
-		
+	on_revoked = {
+		scaling_with_influence_privilege_tooltip_one_modifier = { estate_privilege = estate_planetouched_organization_empowered }
 	}
 	
 	influence_scaled_conditional_modifier = {	#Modifier that are applied if the specified conditions are true. At 100% Influence you gain 100% of the modifier.
@@ -85,6 +94,10 @@ estate_planetouched_organization_state = {
 		always = no
 	}
 	on_granted = {
+		scaling_with_influence_privilege_tooltip_one_modifier = { estate_privilege = estate_planetouched_organization_state }
+	}
+	on_revoked = {
+		scaling_with_influence_privilege_tooltip_one_modifier = { estate_privilege = estate_planetouched_organization_state }
 	}
 
 	influence_scaled_conditional_modifier = {	#Modifier that are applied if the specified conditions are true. At 100% Influence you gain 100% of the modifier.
@@ -124,9 +137,11 @@ estate_planetouched_organization_scattered = {
 	}
 	on_granted = {
 		custom_tooltip = estate_planetouched_organization_oppressed_explainer_tt
+		scaling_with_influence_privilege_tooltip_one_modifier = { estate_privilege = estate_planetouched_organization_scattered }
 	}
 	on_revoked = {
 		custom_tooltip = estate_planetouched_organization_oppressed_explainer_tt
+		scaling_with_influence_privilege_tooltip_one_modifier = { estate_privilege = estate_planetouched_organization_scattered }
 	}
 	benefits = {
 		#planetouched_privilege_slots = 1
@@ -189,6 +204,14 @@ estate_planetouched_organization_oppressed = {
 		planetouched_loyalty_modifier = -0.05
 		planetouched_influence_modifier = -0.05
 		global_unrest = 5
+	}
+	on_granted = {
+		scaling_with_influence_privilege_tooltip_one_modifier = { estate_privilege = estate_planetouched_organization_oppressed }
+		scaling_with_loyalty_privilege_tooltip = { estate_privilege = estate_planetouched_organization_oppressed }
+	}
+	on_revoked = {
+		scaling_with_influence_privilege_tooltip_one_modifier = { estate_privilege = estate_planetouched_organization_oppressed }
+		scaling_with_loyalty_privilege_tooltip = { estate_privilege = estate_planetouched_organization_oppressed }
 	}
 
 	loyalty_scaled_conditional_modifier = {
@@ -424,7 +447,15 @@ estate_planetouched_scattered_aro = {
 							church_power = 200
 							patriarch_authority = 30
 							AND = {
-								religion = genie_cult
+								NOT = {
+									religion = fangaulan_pantheon
+								}
+								NOT = {
+									religion = xhazobkult
+								}
+								NOT = {
+									religion = kvangahga
+								}
 								religious_unity = 0.8
 							}
 						}
@@ -1010,9 +1041,11 @@ estate_planetouched_scattered_titles = {
 	on_granted = {
 		custom_tooltip = estate_planetouched_scattered_scattered_titles_tt
 		hidden_effect = { clr_country_flag = recently_done_against_planetouched_agenda }
+		scaling_with_influence_privilege_tooltip = { estate_privilege = estate_planetouched_scattered_titles }
 	}
 	on_revoked = {
 		custom_tooltip = estate_planetouched_scattered_scattered_titles_tt
+		scaling_with_influence_privilege_tooltip = { estate_privilege = estate_planetouched_scattered_titles }
 	}
 	
 	ai_will_do = {
@@ -1654,7 +1687,7 @@ estate_planetouched_state_couriers = {
 		}
 		modifier = {
 			diplomatic_upkeep = 1
-			reduced_liberty_desire = 0.05
+			reduced_liberty_desire = 5
 			nobles_loyalty_modifier = -0.05
 		}
 	}
@@ -1668,3 +1701,81 @@ estate_planetouched_state_couriers = {
 ##############################################
 ### REGIONAL/CULTURAL/RELIGIOUS PRIVILEGES ###
 ##############################################
+
+
+
+##############################################
+##### MISSION TREE / BESPOKE PRIVILEGES ######
+##############################################
+
+estate_planetouched_L22_atoners_will = { #Binwarji_privilege
+	icon = privilege_promote_maratha_nobility
+	max_absolutism = 0
+	loyalty = 0.1
+	influence = 0.1
+	is_valid = {
+		has_country_flag = L22_atoners_will_flag
+	}
+	can_select = {
+		always = yes
+	}
+	can_revoke = {
+		always = no
+	}
+	on_granted = {
+		
+	}
+	on_invalid = {
+		
+	}
+	penalties = {
+		global_tax_modifier = -0.2
+	}
+	benefits = {
+		
+	}
+	loyalty_scaled_conditional_modifier = {
+		trigger = {
+			always = yes
+		}
+		modifier = {
+			state_maintenance_modifier = -0.2
+			administrative_efficiency = 0.05
+		}
+	}
+	ai_will_do = {
+		factor = 5
+	}
+}
+
+#MT
+
+estate_planetouched_A29_planetouched_production = {
+	icon = privilege_aghas
+	loyalty = 0.05
+	influence = 0.05
+	is_valid = { has_country_flag = A29_planetouched_production_unlock }
+	on_granted = {  }
+	benefits = {
+		production_efficiency = 0.1
+	}
+	
+	ai_will_do = {
+		factor = 5
+	}
+}
+
+estate_planetouched_A29_emperors_mantle = {
+	icon = privilege_royal_marriage
+	loyalty = 0.1
+	influence = 0
+	is_valid = { has_country_flag = A29_emperors_mantle_privilege_unlock }
+	on_granted = {  }
+	benefits = {
+		core_creation = -0.1
+	}
+	
+	ai_will_do = {
+		factor = 5
+	}
+}

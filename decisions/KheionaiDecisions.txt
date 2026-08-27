@@ -69,29 +69,13 @@ country_decisions = {
 		major = yes 
 
 		potential = {
-			OR = {
-				tag = G51 #Arpedifer
-				tag = G47 #Oktikheion
-				tag = G61 #Kimanis
-				tag = G46 #Degakheion
-				tag = G50 #Ormam
-				tag = G48 #Kherka
-				tag = G49 #Lokemeion
-			}
+			is_a_kheion = yes
 			has_not_all_nekheis = yes
 		}
 
 		allow = {
 			hidden_trigger = { 
-				OR = {
-					tag = G51 #Arpedifer
-					tag = G47 #Oktikheion
-					tag = G61 #Kimanis
-					tag = G46 #Degakheion
-					tag = G50 #Ormam
-					tag = G48 #Kherka
-					tag = G49 #Lokemeion
-				}
+				is_a_kheion = yes
 				has_not_all_nekheis = yes 
 			}
 			if = {
@@ -547,6 +531,84 @@ country_decisions = {
 					tag = G61 #Kimanis
 				}
 				NOT = { has_country_modifier = kheionai_cogekeio }
+			}
+		}
+	}
+
+	mass_upgrade_windwards = {
+
+		potential = {
+			ai = no
+			any_owned_province = { region = alecand_region }
+			has_not_full_deathwinds_system = yes
+		}
+
+		provinces_to_highlight = {
+			region = alecand_region
+			owned_by = ROOT
+			windward_mass_upgrade_triggers = yes
+		}
+
+		allow = {
+			hidden_trigger = {
+				ai = no
+				any_owned_province = { region = alecand_region }
+				has_not_full_deathwinds_system = yes
+			}
+			alecand_region = { windward_mass_upgrade_triggers = yes }
+		}
+
+		effect = {
+			custom_tooltip = alecand_upgrade_add_windwards_tt
+			hidden_effect = {
+				alecand_region = {
+					limit = { windward_mass_upgrade_triggers = yes }
+					mass_upgrade_windward = yes
+				}
+			}
+		}
+	}
+
+	desolate_alecand = {
+
+		potential = {
+			ai = no
+			any_owned_province = { region = alecand_region }
+			has_not_full_deathwinds_system = yes
+		}
+
+		allow = {
+			hidden_trigger = {
+				ai = no
+				has_not_full_deathwinds_system = yes
+			}
+			any_owned_province = { region = alecand_region }
+		}
+
+		effect = {
+			if = {
+				limit = { has_country_flag = desolating_alecand_flag }
+				custom_tooltip = undesolate_alecand_tt
+				hidden_effect = {
+					every_owned_province = {
+						limit = { region = alecand_region }
+						remove_province_modifier = desolate_alecand_mod
+					}
+					clr_country_flag = desolating_alecand_flag
+				}
+			}
+			else = {
+				custom_tooltip = desolate_alecand_tt
+				hidden_effect = {
+					every_owned_province = {
+						limit = { region = alecand_region }
+						add_province_modifier = {
+							name = desolate_alecand_mod
+							duration = -1
+						}
+					}
+					set_country_flag = desolating_alecand_flag
+				}
 			}
 		}
 	}

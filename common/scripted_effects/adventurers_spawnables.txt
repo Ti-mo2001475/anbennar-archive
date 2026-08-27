@@ -124,15 +124,32 @@ ynn_culture_shift = {
 		limit = { ruler_culture = ROOT }
 		set_ruler_culture = $to_culture$
 	}
-	if = {
-		limit = { has_heir = yes heir_culture = ROOT }
-		set_heir_culture = $to_culture$
+	else_if = {
+		limit = { ruler_is_half_orcish = yes }
+		set_ruler_culture = chippengarder_half_orc
 	}
 	if = {
-		limit = { has_consort = yes consort_culture = ROOT }
-		set_consort_culture = $to_culture$
+		limit = { has_heir = yes }
+		if = {
+			limit = { heir_culture = ROOT }
+			set_heir_culture = $to_culture$
+		}
+		else_if = {
+			limit = { heir_is_half_orcish = yes }
+			set_heir_culture = chippengarder_half_orc
+		}
 	}
-	
+	if = {
+		limit = { has_consort = yes }
+		if = {
+			limit = { consort_culture = ROOT }
+			set_consort_culture = $to_culture$
+		}
+		else_if = {
+			limit = { consort_is_half_orcish = yes }
+			set_consort_culture = chippengarder_half_orc
+		}
+	}
 	set_country_flag = new_adventurer_culture
 	
 	change_primary_culture = $to_culture$
@@ -227,13 +244,31 @@ escanni_culture_shift = {
 		limit = { ruler_culture = ROOT }
 		set_ruler_culture = $to_culture$
 	}
-	if = {
-		limit = { has_heir = yes heir_culture = ROOT }
-		set_heir_culture = $to_culture$
+	else_if = {
+		limit = { ruler_is_half_elven = yes }
+		set_ruler_culture = farrani_half_elf
 	}
 	if = {
-		limit = { has_consort = yes consort_culture = ROOT }
-		set_consort_culture = $to_culture$
+		limit = { has_heir = yes }
+		if = {
+			limit = { heir_culture = ROOT }
+			set_heir_culture = $to_culture$
+		}
+		else_if = {
+			limit = { heir_is_half_elven = yes }
+			set_heir_culture = farrani_half_elf
+		}
+	}
+	if = {
+		limit = { has_consort = yes }
+		if = {
+			limit = { consort_culture = ROOT }
+			set_consort_culture = $to_culture$
+		}
+		else_if = {
+			limit = { consort_is_half_elven = yes }
+			set_consort_culture = farrani_half_elf
+		}
 	}
 	
 	set_country_flag = new_adventurer_culture

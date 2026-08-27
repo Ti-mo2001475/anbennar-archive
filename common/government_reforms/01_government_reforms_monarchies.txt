@@ -4574,7 +4574,7 @@ orcish_kingdom_reform = {
 	allow_normal_conversion = yes
 	potential = {
 		OR = {
-			culture_group = orcish
+			culture_is_orcish = yes
 			culture_is_half_orcish = yes
 		}
 	}
@@ -4582,7 +4582,7 @@ orcish_kingdom_reform = {
 	valid_for_nation_designer = yes
 	nation_designer_cost = 0
 	nation_designer_trigger = {
-		culture_group = orcish
+		culture_is_orcish = yes
 	}
 
 	modifiers = {
@@ -4601,8 +4601,7 @@ ogre_kingdom = {
 	valid_for_nation_designer = yes
 	nation_designer_cost = 10
 	nation_designer_trigger = {
-		culture_group = ogre
-		NOT = { primary_culture = horned_ogre }
+		is_western_ogre_primary_culture = yes
 	}
 	lock_level_when_selected = yes
 	maintain_dynasty = yes
@@ -4630,8 +4629,11 @@ mengotsa = {
 	valid_for_nation_designer = yes
 	nation_designer_cost = 50
 	nation_designer_trigger = {
-		culture_group = ogre
-		NOT = { primary_culture = horned_ogre }
+		OR = {
+			culture = mossmouth_ogre
+			culture = fathide_ogre
+			culture = bloodtooth_ogre
+		}
 	}
 
 	lock_level_when_selected = yes
@@ -4663,8 +4665,11 @@ ogre_empire = {
 	valid_for_nation_designer = yes
 	nation_designer_cost = 75
 	nation_designer_trigger = {
-		culture_group = ogre
-		NOT = { primary_culture = horned_ogre }
+		OR = {
+			culture = mossmouth_ogre
+			culture = fathide_ogre
+			culture = bloodtooth_ogre
+		}
 	}
 
 	lock_level_when_selected = yes
@@ -4693,8 +4698,11 @@ great_ogre_horde = {
 	valid_for_nation_designer = yes
 	nation_designer_cost = 100
 	nation_designer_trigger = {
-		culture_group = ogre
-		NOT = { primary_culture = horned_ogre }
+		OR = {
+			culture = mossmouth_ogre
+			culture = fathide_ogre
+			culture = bloodtooth_ogre
+		}
 	}
 
 	lock_level_when_selected = yes
@@ -4721,6 +4729,7 @@ great_ogre_horde = {
 		queen = no
 		royal_marriage = no
 		disables_regular_estates = yes
+		is_monstrous_horde = yes
 		locked_T1_reform = yes
 	}
 }
@@ -5343,7 +5352,7 @@ hobgoblin_stratocracy_reform = {
 	lock_level_when_selected = yes
 	potential = {
 		culture_group = hobgoblin
-		NOT = { religion = eagle_worship }
+		NOT = { religion = banbe_anen }
 	}
 	valid_for_nation_designer = yes
 	nation_designer_cost = 0
@@ -5375,6 +5384,7 @@ hobgoblin_stratocracy_reform = {
 		disables_regular_estates = yes
 		disables_estate_mages = yes
 		locked_T1_reform = yes
+		disables_estate_adventurers = yes
 	}
 
 	government_abilities = {
@@ -5501,6 +5511,37 @@ senapti_reform = {
 	}
 }
 
+umsadhri_reform = { #Unique colonial subject for Raja
+	icon = "vandiphan_thalassocracy"
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	maintain_dynasty = yes
+
+	potential = {
+		has_reform = umsadhri_reform
+		is_colonial_nation = yes
+		OR = {
+			overlord = { has_government_attribute = is_raja }
+			any_known_country = {
+				war_with = ROOT
+				has_government_attribute = is_raja
+			}
+		}
+	}
+	valid_for_nation_designer = no
+	legacy_equivalent = daimyo_legacy
+	modifiers = {
+		global_sailors_modifier = 0.1
+		naval_forcelimit_modifier = 0.2
+	}
+
+	custom_attributes = {
+		locked_government_type = yes
+		is_raja_subject = yes
+		locked_T1_reform = yes		
+	}
+}
+
 raja_reform = {
 	icon = "shogunate"
 	allow_normal_conversion = yes
@@ -5545,6 +5586,7 @@ raja_reform = {
 	custom_attributes = {
 		locked_government_type = yes
 		is_raja = yes
+		cannot_move_capital = yes
 		locked_T1_reform = yes
 	}
 
@@ -5578,6 +5620,9 @@ tiltaghar_grand_vizier_reform = {
 	custom_attributes = {
 		locked_government_type = yes
 	}
+
+	effect = { set_country_flag = enables_raj_ministries_flag }
+	removed_effect = { clr_country_flag = enables_raj_ministries_flag }
 }
 
 phoenix_akalate = {
@@ -6679,6 +6724,7 @@ teplinbasiet_arena_kingdom_reform = {
 	}
 	custom_attributes = {
 		locked_T1_reform = yes
+		cannot_move_capital = yes
 	}
 	effect = {
 		hidden_effect = { remove_heir = { } }
@@ -6836,6 +6882,7 @@ titanium_stratocracy = {
 	custom_attributes = {
 		generals_become_rulers = yes
 		locked_government_type = yes
+		cannot_move_capital = yes
 	}
 	effect = {
 		custom_tooltip = titanium_stratocracy_magic_tt
@@ -8162,7 +8209,7 @@ imperial_nobility_reform = {
 # 	}
 # }
 
- nobles_of_the_wand_reform = {
+nobles_of_the_wand_reform = {
  	icon = "commander_king_reform"
  	allow_normal_conversion = yes
  	potential = {
@@ -8181,10 +8228,15 @@ imperial_nobility_reform = {
  		advisor_cost = -0.1
  		monthly_favor_modifier = 0.1
  	}
+	custom_attributes = {
+		increased_mage_chance_ruler = yes
+		increased_mage_chance_consort = yes
+		increased_mage_chance_heir = yes
+	}
  	ai = {
  		factor = 1
  	}
- }
+}
 
 #Anbennar
 dwarovar_old_clans_reform = {
@@ -8246,7 +8298,11 @@ magical_elite_reform = {
 		mages_loyalty_modifier = 0.1
 		mages_influence_modifier = 0.05
 	}
-
+	custom_attributes = {
+		increased_mage_chance_ruler = yes
+		increased_mage_chance_consort = yes
+		increased_mage_chance_heir = yes
+	}
 	ai = {
 		factor = 1
 		modifier = {
@@ -9403,6 +9459,7 @@ raja_magocracy_reform = {
 	custom_attributes = {
 		locked_government_type = yes
 		is_raja = yes
+		cannot_move_capital = yes
 		is_magocracy = yes
 		locked_T1_reform = yes
 	}
@@ -9485,7 +9542,7 @@ harpy_honours_system = {
 	allow_normal_conversion = yes
 	potential = {
 		has_country_flag = H72_harpy_honours
-		NOT = { culture_group = harpy }
+		NOT = { culture_is_harpy = yes }
 	}
 	trigger = {
 		OR = {
@@ -9493,8 +9550,8 @@ harpy_honours_system = {
 			high_tolerance_harpy_race_trigger = yes
 		}
 		OR = {
-			any_owned_province = { culture_group = harpy }
-			any_subject_country = { culture_group = harpy }
+			any_owned_province = { culture_is_harpy = yes }
+			any_subject_country = { culture_is_harpy = yes }
 		}
 	}
 	modifiers = {
@@ -12428,6 +12485,49 @@ harpy_matriarchy_reform = {
 		queen = no
 		disabled_expelling_human = yes
 		disabled_purging_human = yes
+		is_harpy_matriarchy = yes
+		locked_T1_reform = yes
+	}
+	conditional = {
+		allow = { has_dlc = "Rights of Man" }
+		has_harem = yes
+	}
+}
+
+harpy_matriarchy_tribal_reform = {
+	lock_level_when_selected = yes
+	allow_normal_conversion = yes
+	icon = "harpy_matriarchy"
+	potential = {
+		ruler_is_harpy = yes
+	}
+	valid_for_nation_designer = yes
+	nation_designer_cost = 20
+	nation_designer_trigger = {
+		OR = {
+			ruler_culture = firanyan_harpy
+			ruler_culture = siadunan_harpy
+			ruler_culture = stonewing_harpy
+			ruler_culture = nzeri_harpy
+			ruler_culture = nuzenapu_harpy
+			ruler_culture = nuraryi_harpy
+		}
+	}
+	legacy_equivalent = ottoman_government_legacy
+
+	modifiers = {
+		legitimacy = 0.5
+		stability_cost_modifier = -0.10
+		can_fabricate_for_vassals = yes
+		block_introduce_heir = yes
+	}
+
+	custom_attributes = {
+		queen = no
+		disabled_expelling_human = yes
+		disabled_purging_human = yes
+		is_monstrous_horde = yes
+		is_harpy_matriarchy = yes
 		locked_T1_reform = yes
 	}
 	conditional = {
@@ -12474,6 +12574,7 @@ harpy_matriarchy_ayarallen_early_gov_mechanic_reform = {
 		queen = no
 		disabled_expelling_human = yes
 		disabled_purging_human = yes
+		is_harpy_matriarchy = yes
 		locked_T1_reform = yes
 	}
 	conditional = {
@@ -13181,6 +13282,7 @@ harpy_queendom_reform = {
 		queen = no
 		disabled_expelling_human = yes
 		disabled_purging_human = yes
+		is_harpy_matriarchy = yes
 		locked_T1_reform = yes
 	}
 	conditional = {
@@ -15823,6 +15925,9 @@ endhuvi_erudite_court_reform = {
 		diplomatic_reputation = 1
 		advisor_cost = -0.1
 	}
+	custom_attributes = {
+		increased_mage_chance_heir = yes
+	}
 	effect = {
 		custom_tooltip = endhuvi_erudite_court_reform_tt
 	}
@@ -16335,6 +16440,335 @@ yenbenmirra_federation = {
 	custom_attributes = {
 		disabled_expelling = yes
 		disabled_purging = yes
+		locked_government_type = yes
+		locked_T1_reform = yes
+	}
+}
+
+
+### Taychendi gov ref ###
+
+#hereditary_vs_nobility t2
+lesser_heroes_state = { 
+	icon = "giga_chad"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = taychendi_ruinborn_elf
+	}
+	trigger = {
+		culture_group = taychendi_ruinborn_elf
+	}
+	modifiers = {
+		vassal_forcelimit_bonus = 0.2
+		vassal_income = 0.225
+        governing_capacity_modifier = -0.25
+		# liberty_desire_from_subject_development = +0.2
+	}
+	effect = {
+		custom_tooltip = yearly_glory_tt #add glory every year trough on_action(on_yearly_pulse) and event
+	}
+}
+
+#Bureaucracy t3
+kalavendy_gos_ref = {
+	icon = "kalavendy_gos_ref"
+	allow_normal_conversion = yes
+	potential = {
+		culture = kalavendhi
+	}
+	trigger = {
+		culture = kalavendhi
+	}
+	modifiers = {
+		manpower_recovery_speed = 0.1
+		global_prosperity_growth = 0.2
+	}
+	effect = {
+		custom_tooltip = kalavendy_gos_ref_tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = { province_with_arable_goods = yes region = kalavend_region }
+				add_province_modifier = {
+					name = kalavendy_population #+15% local manpower and 20% trade value modifier
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				remove_province_modifier = kalavendy_population
+			}
+		}
+	}
+}
+
+larankarha_gos_ref = {
+	icon = "larankarha_gos_ref"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			culture = larankarha	
+			culture = advakhalla		
+		}
+	}
+	trigger = {
+		OR = {
+			culture = larankarha
+			culture = advakhalla
+		}
+	}
+	modifiers = {
+		build_time = -0.15
+		global_monthly_devastation = -0.05
+	}
+	effect = {
+		custom_tooltip = larankarha_gos_ref_tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					region = larankarha_highlands_region
+					has_terrain = mountain
+				}
+				add_province_modifier = {							
+					name = larankarha_mountain_expansion_mountains
+					duration = -1
+					hidden = yes
+				}
+			}
+			every_owned_province = {
+				limit = {
+					region = larankarha_highlands_region
+					has_terrain = highlands
+				}
+				add_province_modifier = {
+					name = larankarha_mountain_expansion_highlands
+					duration = -1
+					hidden = yes
+				}
+			}
+			every_owned_province = {
+				limit = {
+					region = larankarha_highlands_region
+					has_terrain = hills
+				}
+				add_province_modifier = {
+					name = larankarha_mountain_expansion_hills
+					duration = -1	
+					hidden = yes
+				}
+			}
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				remove_province_modifier = larankarha_mountain_expansion_highlands
+				remove_province_modifier = larankarha_mountain_expansion_mountains
+				remove_province_modifier = larankarha_mountain_expansion_hills
+			}
+		}
+	}
+}
+
+yodhanpir_gos_ref = {
+	icon = "yodhanpir_gos_ref"
+	allow_normal_conversion = yes
+	potential = {
+		culture = yodhanpir
+	}
+	trigger = {
+		culture = yodhanpir
+	}
+	modifiers = {
+		global_regiment_cost = -0.15
+		global_autonomy = -0.05
+	}
+	effect = {
+		custom_tooltip = yodhanpir_gos_ref_tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					culture = yodhanpir
+					superregion = taychend_superregion
+				}
+				add_province_modifier = {
+					name = yodhanpir_gos_regiment #+10 regiment speed
+					duration = -1
+					hidden = yes
+				}
+			}
+			every_owned_province = {
+				limit = {
+					NOT = { culture = yodhanpir }
+					superregion = taychend_superregion
+				}
+				add_province_modifier = { 
+					name = yodhanpir_gos_tax #+10 tax
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				remove_province_modifier = yodhanpir_gos_regiment
+				remove_province_modifier = yodhanpir_gos_tax
+			}
+		}
+	}
+}
+
+thekvrystana_gos_ref = {
+	icon = "thekvrystana_gos_ref"
+	allow_normal_conversion = yes
+	potential = {
+		culture = thekvrystana
+	}
+	trigger = {
+		culture = thekvrystana
+	}
+	modifiers = {
+		placed_merchant_power = 12.5
+		prestige_decay = -0.005
+	}
+	effect = {
+		custom_tooltip = thekvrystana_gos_ref_tt
+    	hidden_effect = {
+			every_owned_province = {
+				limit = {
+					superregion = taychend_superregion
+					has_port = yes
+					province_has_center_of_trade_of_level = 1
+					has_river_estuary_trigger = yes
+				}
+				add_province_modifier = {
+					name = thekvrystana_coastal_trade_modifier #+5 trade power
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				remove_province_modifier = thekvrystana_coastal_trade_modifier
+			}
+		}
+	}
+}
+
+sarihaddhi_gos_ref = {
+	icon = "sarihaddhi_gos_ref"
+	allow_normal_conversion = yes
+	potential = {
+		culture = sarihaddi
+	}
+	trigger = {
+		culture = sarihaddi
+	}
+	modifiers = {
+		trade_steering = 0.15
+		loot_amount = 0.5
+	}
+	effect = {
+		custom_tooltip = sarihaddhi_gos_ref_tt
+    	hidden_effect = {
+			every_owned_province = {
+				limit = {
+					superregion = taychend_superregion
+					trade_goods = livestock
+				}
+				add_province_modifier = {
+					name = sarihaddhi_lives_mod #Gives -2% cav cost
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				remove_province_modifier = sarihaddhi_lives_mod
+			}
+		}
+	}
+}
+
+#state_and_religion t4
+Age_of_glory = {
+    icon = "Age_of_glory"
+	allow_normal_conversion = yes
+    potential = {
+        culture_group = taychendi_ruinborn_elf
+    }
+	trigger = {
+		culture_group = taychendi_ruinborn_elf
+	}
+    modifiers = {
+        monthly_splendor = 1
+        prestige = 0.75
+    }
+    
+    conditional = {
+        allow = {
+            has_dlc = "Mandate of Heaven"
+        }
+        custom_attributes = {
+            taych_taking_age_rewards_gives_glory = yes #gives 100 glory if non reformed, 25 vainglory if Taych. Empire and 7 PP if of non hero cult or refprmed and didnt form Taych. Empire
+        }
+    }
+    
+    conditional = {
+        allow = {
+            NOT = { has_dlc = "Mandate of Heaven" }
+        }
+        custom_attributes = {
+            diet_increases_not_influence = yes
+        }
+    }
+} 
+
+#growth_of_administration t7
+relic_lords_of_taychend = {  
+    icon = "black_demesne"
+    allow_normal_conversion = yes
+    potential = {
+        culture_group = taychendi_ruinborn_elf
+    }
+    trigger = {
+        culture_group = taychendi_ruinborn_elf
+    }
+    modifiers = {
+		yearly_absolutism = 1
+        global_autonomy = -0.015
+    }
+    removed_effect = {
+        remove_country_modifier = relic_lords_absolutism_1
+        remove_country_modifier = relic_lords_absolutism_2
+        remove_country_modifier = relic_lords_absolutism_3
+        remove_country_modifier = relic_lords_absolutism_4
+        remove_country_modifier = relic_lords_absolutism_5
+    }
+}
+
+A29_tripartite_empire_reform = {
+	icon = "crown"
+	lock_level_when_selected = yes
+	potential = {
+		has_reform = A29_tripartite_empire_reform
+	}
+	modifiers = {
+		governing_capacity_modifier = 0.2
+		min_autonomy_in_territories = -0.1
+	}
+	custom_attributes = {
 		locked_government_type = yes
 		locked_T1_reform = yes
 	}

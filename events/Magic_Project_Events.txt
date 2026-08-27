@@ -57,6 +57,7 @@ namespace = magic_project
 ### If you want your project to count for magical infrastructure requirements, tick up magic_projects_completed at the end
 ### Remember to clear your progress flags/modifiers in magic_advancement_abort_all_effect
 
+
 country_event = { #Error code 404: project upgrade not found
 	id = magic_project.404
 	title = magic_project.404.t
@@ -1178,7 +1179,7 @@ country_event = { #Magical Fortress 2 - Gather Supplies
 		name = magic_project_magical_fortress.2.a
 		ai_chance = { factor = 1 }
 
-		magical_fortress_suffer_setback = { amount = -25 effect = "add_prestige = 10" }
+		magical_fortress_suffer_setback = { amount = -20 effect = "add_prestige = 10" }
 	}
 }
 
@@ -1202,7 +1203,7 @@ country_event = { #Magical Fortress 3 - Make a Decision
 		name = magic_project_magical_fortress.3.b
 		ai_chance = { factor = 1 }
 
-		magical_fortress_suffer_setback = { amount = -25 mod = prestige }
+		magical_fortress_suffer_setback = { amount = -20 mod = prestige }
 	}
 }
 
@@ -1260,7 +1261,7 @@ country_event = { #Magical Fortress 6 - Losing Sleep
 		name = magic_project_magical_fortress.6.a
 		ai_chance = { factor = 1 }
 
-		magical_fortress_suffer_setback = { amount = -50 effect = "add_splendor = 50" }
+		magical_fortress_suffer_setback = { amount = -40 effect = "add_splendor = 50" }
 	}
 }
 
@@ -1284,7 +1285,7 @@ country_event = { #Magical Fortress 7 - Make a Decision
 		name = magic_project_magical_fortress.7.b
 		ai_chance = { factor = 1 }
 
-		magical_fortress_suffer_setback = { amount = -50 mod = splendor }
+		magical_fortress_suffer_setback = { amount = -40 mod = splendor }
 	}
 }
 
@@ -1306,7 +1307,6 @@ country_event = { #Magical Fortress 8 - Complete Castle
 			remove_province_modifier = abjuration_1_ward_mod_1
 			add_province_modifier = { name = magical_fortress_mod_2 duration = -1 }
 			add_province_modifier = { name = abjuration_1_ward_mod_2 duration = -1 }
-			hidden_effect = { province_event = { id = kheionai.2 } }
 		}
 		
 		magical_fortress_grant_bonus = { mod = splendor }
@@ -1347,7 +1347,7 @@ country_event = { #Magical Fortress 10 - Palace Close to Completion
 		name = magic_project_magical_fortress.10.a
 		ai_chance = { factor = 1 }
 
-		magical_fortress_suffer_setback = { amount = -75 effect = "change_variable = { currentMana = 50 }" }
+		magical_fortress_suffer_setback = { amount = -60 effect = "change_variable = { currentMana = 50 }" }
 	}
 }
 
@@ -1371,7 +1371,7 @@ country_event = { #Magical Fortress 11 - Make a Decision
 		name = magic_project_magical_fortress.7.b
 		ai_chance = { factor = 1 }
 
-		magical_fortress_suffer_setback = { amount = -75 mod = mana_regen }
+		magical_fortress_suffer_setback = { amount = -60 mod = mana_regen }
 	}
 }
 
@@ -3303,19 +3303,27 @@ country_event = { #Battlemage Academy 4 - Graduation
 	is_triggered_only = yes
 	immediate = {
 		if = {
-			limit = { ai = yes } #AI handling for missing progress events, note RNG works normally
-			random_list = {
-				1 = {
-					trigger = { NOT = { has_country_modifier = battlemage_academy_outhouse_1 has_country_modifier = battlemage_academy_outhouse_2 } }
-					set_country_flag = battlemage_academy_outhouse_flag
+			limit = { #AI handling for missing progress events, note RNG works normally. Also supports independent firing of the event such as via magic_project_level_up in missions.
+				NOT = {
+					has_country_flag = battlemage_academy_outhouse_flag
+					has_country_flag = battlemage_academy_underwear_flag
+					has_country_flag = battlemage_academy_graffiti_flag
 				}
-				1 = {
-					trigger = { NOT = { has_country_modifier = battlemage_academy_underwear_1 has_country_modifier = battlemage_academy_underwear_2 } }
-					set_country_flag = battlemage_academy_underwear_flag
-				}
-				1 = {
-					trigger = { NOT = { has_country_modifier = battlemage_academy_graffiti_1 has_country_modifier = battlemage_academy_graffiti_2 } }
-					set_country_flag = battlemage_academy_graffiti_flag
+			}
+			hidden_effect = {
+				random_list = {
+					1 = {
+						trigger = { NOT = { has_country_modifier = battlemage_academy_outhouse_1 has_country_modifier = battlemage_academy_outhouse_2 } }
+						set_country_flag = battlemage_academy_outhouse_flag
+					}
+					1 = {
+						trigger = { NOT = { has_country_modifier = battlemage_academy_underwear_1 has_country_modifier = battlemage_academy_underwear_2 } }
+						set_country_flag = battlemage_academy_underwear_flag
+					}
+					1 = {
+						trigger = { NOT = { has_country_modifier = battlemage_academy_graffiti_1 has_country_modifier = battlemage_academy_graffiti_2 } }
+						set_country_flag = battlemage_academy_graffiti_flag
+					}
 				}
 			}
 		}
@@ -5586,6 +5594,7 @@ country_event = { #Lich - Gov change to Magocracy
 		NOT = { is_lesser_in_union = yes }
 		NOT = { has_reform = argordstun_gleaming_council } #This is a T2 reform
 		NOT = { has_reform = argordstun_stubborn_reformists }
+		NOT = { has_reform = kainos_kingdom_reform } #Kaino Fed MT alternate
 		NOT = { has_country_flag = cannot_change_governments }
 	}
 	
@@ -5786,7 +5795,7 @@ country_event = { #Lichless Death - Gov change
 			else_if = {
 				limit = {
 					OR = {
-						culture_is_troll = yes
+						culture_group = giantkind
 						culture_group = kobold
 					}
 				}
@@ -6124,6 +6133,7 @@ country_event = { #Lich Destruction - Phylactery destroyed
 		ai_chance = { factor = 50 }
 		
 		kill_a_lich_effect = yes
+		ban_necromancy = yes
 	}
 }
 
@@ -6779,13 +6789,13 @@ country_event = { #Undead Army gains manpower on winning battles
 	hidden = yes
 	is_triggered_only = yes
 	
-	trigger = { check_variable = { raise_undead = 3001 } } #Don't raise if it was a nothing battle
+	trigger = { check_variable = { raise_undead = 4001 } } #Don't raise if it was a nothing battle
 	
 	option = {	#Rise!
 		name = magic_project_army_of_the_dead.20.a
 		ai_chance = { factor = 1 }
 
-		divide_variable = { raise_undead = 3 } #33% of the dead are raised
+		divide_variable = { raise_undead = 4 } #25% of the dead are raised
 		round_variable = { #truncate decimal portion
 			which = raise_undead
 			value = -1
@@ -7333,13 +7343,11 @@ country_event = { #Homunculus, Vivum
 	option = { #Magus Attendant
 		name = magic_project_homunculus.6.e
 		ai_chance = { factor = 1 }
-		trigger = {
-			has_government_attribute = is_magocracy
-			NOT = { has_government_attribute = queen }
-		}
+		trigger = { government = theocracy }
 		highlight = yes
 		
 		add_country_modifier = { name = homunculus_attendant duration = -1 }
+		custom_tooltip = homunculus_attendant_desc
 		custom_tooltip = tooltip_magic_project_advance
 	}
 	
@@ -9968,6 +9976,75 @@ country_event = {
 		}
 	}
 }
+#Labyrinth of Sorncell MAGICAL PROJECT
+#EVENT HANDLER
+namespace = magic_project_labyrinth_of_sorncell
+
+country_event = { 
+	id = magic_project_labyrinth_of_sorncell.0
+	title = magic_project_labyrinth_of_sorncell.0.t
+	desc = magic_project_labyrinth_of_sorncell.0.d
+	picture = SPY_eventPicture
+	is_triggered_only = yes
+	hidden = yes
+	
+	immediate = {
+		if = {
+			limit = { has_country_flag = magic_project_completed_flag }
+			if = {
+				limit = { at_least_magic_project_level = { project = labyrinth_of_sorncell level = 3 } }
+				country_event = { id = celliande.110 }
+			}
+			else_if = {
+				limit = { at_least_magic_project_level = { project = labyrinth_of_sorncell level = 2 } }
+				country_event = { id = celliande.106 }
+			}
+			else_if = {
+				limit = { at_least_magic_project_level = { project = labyrinth_of_sorncell level = 1 } }
+				country_event = { id = celliande.102 }
+			}
+		}
+		else_if = {
+			limit = { check_variable = { current_experience_percent = 33 } NOT = { has_country_flag = magic_project_first_event_happened } }
+			set_country_flag = magic_project_first_event_happened
+			if = { 
+				limit = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 1 } }
+				country_event = { id = celliande.104 }
+			}
+		}
+		else_if = {
+			limit = { check_variable = { current_experience_percent = 50 } NOT = { has_country_flag = magic_project_second_event_happened } }
+			set_country_flag = magic_project_second_event_happened
+			if = {
+				limit = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 2 } }
+				country_event = { id = celliande.108 }
+			}
+			else_if = {
+				limit = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 0 } }
+				country_event = { id = celliande.101 }
+			}
+		}
+		else_if = {
+			limit = { check_variable = { current_experience_percent = 66 } NOT = { has_country_flag = magic_project_third_event_happened } }
+			set_country_flag = magic_project_third_event_happened
+			if = {
+				limit = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 1 } }
+				country_event = { id = celliande.105 }
+			}
+		}
+		else_if = {
+			limit = { check_variable = { current_experience_percent = 75 } NOT = { has_country_flag = magic_project_fourth_event_happened } }
+			set_country_flag = magic_project_fourth_event_happened
+			if = {
+				limit = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 2 } }
+				country_event = { id = celliande.109 }
+			}
+		}
+	}
+	option = {
+		name = magic_project_labyrinth_of_sorncell.0.a
+	}
+}
 
 #BLACK HERD PROJECT
 
@@ -10018,7 +10095,7 @@ country_event = {
 			}
 			else_if = { 
 				limit = {
-					check_variable = { black_herd_causalities_var = 10000 }
+					check_variable = { black_herd_causalities_var = 50000 }
 					check_variable = { current_experience_percent = 92 } #~550/600 exp
 					exactly_magic_project_level = { project = black_herd_project_1 level = 1 }
 				}
@@ -10338,7 +10415,7 @@ country_event = {
 	id = magic_project_cangji_project.1
 	title = magic_project_cangji_project.1.t
 	desc = magic_project_cangji_project.1.d
-	picture = MAGIC_STUDY_AND_RELAX_eventPicture.dds
+	picture = MAGIC_STUDY_AND_RELAX_eventPicture
 	is_triggered_only = yes
 	immediate = { set_country_flag = in_magic_progress_event }
 	after = { clr_country_flag = in_magic_progress_event }
@@ -10419,7 +10496,7 @@ country_event = {
 	id = magic_project_cangji_project.4
 	title = magic_project_cangji_project.4.t
 	desc = magic_project_cangji_project.4.d
-	picture = MAGIC_STUDY_AND_RELAX_eventPicture.dds
+	picture = MAGIC_STUDY_AND_RELAX_eventPicture
 	is_triggered_only = yes
 	immediate = { set_country_flag = in_magic_progress_event }
 	after = { clr_country_flag = in_magic_progress_event }
@@ -10449,7 +10526,7 @@ country_event = {
 	id = magic_project_cangji_project.5
 	title = magic_project_cangji_project.5.t
 	desc = magic_project_cangji_project.5.d
-	picture = LOOMING_DEATH_eventPicture.dds
+	picture = LOOMING_DEATH_eventPicture
 	is_triggered_only = yes
 	immediate = { set_country_flag = in_magic_progress_event }
 	after = { clr_country_flag = in_magic_progress_event }
@@ -10467,13 +10544,7 @@ country_event = {
 				1 = { add_mil_power = 100 }
 			}
 		}
-		else = {
-			random_list = {
-				1 = { trigger = { NOT = { adm = 6 } } change_adm = 1 }
-				1 = { trigger = { NOT = { dip = 6 } } change_dip = 1 }
-				1 = { trigger = { NOT = { mil = 6 } } change_mil = 1 }
-			}
-		}
+		else = { add_random_ruler_skill = yes }
 	}
 	option = {
 		name = magic_project_cangji_project.5.b
@@ -10579,7 +10650,7 @@ country_event = {
 	id = magic_project_cangji_project.7
 	title = magic_project_cangji_project.7.t
 	desc = magic_project_cangji_project.7.d
-	picture = MAGIC_STUDY_AND_RELAX_eventPicture.dds
+	picture = MAGIC_STUDY_AND_RELAX_eventPicture
 	is_triggered_only = yes
 	immediate = { set_country_flag = in_magic_progress_event }
 	after = { clr_country_flag = in_magic_progress_event }
@@ -10629,7 +10700,7 @@ country_event = {
 	id = magic_project_cangji_project.9
 	title = magic_project_cangji_project.9.t
 	desc = magic_project_cangji_project.9.d
-	picture = FIREBALL_eventPicture.dds
+	picture = FIREBALL_eventPicture
 	is_triggered_only = yes
 	option = {
 		name = magic_project_cangji_project.9.a
@@ -11003,7 +11074,9 @@ country_event = { #COMPLETION EVENT
 			if = {
 				limit = { has_ruler_flag = l36_kyola_ruler }
 				hidden_effect = {
-					add_or_extend_ruler_modifier = { name = exceptional_willpower_150 duration = -1 }
+					add_exceptional_willpower_150 = {
+						extend = yes
+					}
 				}
 				custom_tooltip = L36_Kyola_ruler_yes_end_willpower_tt
 			}
@@ -11114,6 +11187,134 @@ country_event = {
 		}
 	}
 }
+
+#Kaino Federation
+namespace = magic_project_kaino_project_apotheosis_of_mercy
+
+country_event = { 
+	id = magic_project_kaino_project_apotheosis_of_mercy.0 
+	title = none
+	desc = none
+	picture = none
+
+	is_triggered_only = yes
+	hidden = yes
+	
+	immediate = {
+		if = {
+			limit = { has_country_flag = magic_project_completed_flag }
+			country_event = {
+				id = magic_project_kaino_project_apotheosis_of_mercy.1
+			}
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 0 } }
+			if = {
+				limit = { check_variable = { current_experience_percent = 1 } NOT = { has_country_flag = magic_project_first_event_happened } }
+				set_country_flag = magic_project_first_event_happened
+				country_event = { id = flavour_kaino.30 }
+			}
+			else_if = {
+				limit = { check_variable = { current_experience_percent = 67 } NOT = { has_country_flag = magic_project_second_event_happened } }
+				set_country_flag = magic_project_second_event_happened
+				country_event = { id = flavour_kaino.31 }
+			}
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 1 } }
+			if = {
+				limit = { check_variable = { current_experience_percent = 1 } NOT = { has_country_flag = magic_project_first_event_happened } }
+				set_country_flag = magic_project_first_event_happened
+				country_event = { id = flavour_kaino.33 }
+			}
+			else_if = {
+				limit = { check_variable = { current_experience_percent = 67 } NOT = { has_country_flag = magic_project_second_event_happened } }
+				set_country_flag = magic_project_second_event_happened
+				country_event = { id = flavour_kaino.34 }
+			}
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 2 } }
+			if = {
+				limit = { check_variable = { current_experience_percent = 1 } NOT = { has_country_flag = magic_project_first_event_happened } }
+				set_country_flag = magic_project_first_event_happened
+				country_event = { id = flavour_kaino.36 }
+			}
+			else_if = {
+				limit = { check_variable = { current_experience_percent = 67 } NOT = { has_country_flag = magic_project_second_event_happened } }
+				set_country_flag = magic_project_second_event_happened
+				country_event = { id = flavour_kaino.37 }
+			}
+		}
+	}
+	option = {
+		name = none
+	}
+}
+
+country_event = {
+	id = magic_project_kaino_project_apotheosis_of_mercy.1
+	title = none
+	desc = none
+	picture = none
+
+	is_triggered_only = yes
+	hidden = yes
+	
+	option = {
+		name = none
+		if = {
+			limit = { at_least_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 3 } }
+			country_event = { id = flavour_kaino.38 }
+		}
+		else_if = {
+			limit = { at_least_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 2 } }
+			country_event = { id = flavour_kaino.35 }
+		}
+		else_if = {
+			limit = { at_least_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 1 } }
+			country_event = { id = flavour_kaino.32 }
+		}
+	}
+}
+
+namespace = magic_project_kaino_project_romantic_date_kyaa
+
+country_event = { 
+	id = magic_project_kaino_project_romantic_date_kyaa.0 
+	title = none
+	desc = none
+	picture = none
+
+	is_triggered_only = yes
+	hidden = yes
+	
+	immediate = {
+		if = {
+			limit = { has_country_flag = magic_project_completed_flag }
+			country_event = {
+				id = flavour_kaino.44
+			}
+		}
+		else_if = {
+			if = {
+				limit = { check_variable = { current_experience_percent = 1 } NOT = { has_country_flag = magic_project_first_event_happened } }
+				set_country_flag = magic_project_first_event_happened
+				country_event = { id = flavour_kaino.42 }
+			}
+			else_if = {
+				limit = { check_variable = { current_experience_percent = 60 } NOT = { has_country_flag = magic_project_second_event_happened } }
+				set_country_flag = magic_project_second_event_happened
+				country_event = { id = flavour_kaino.43 }
+			}
+		}
+	}
+	option = {
+		name = none
+	}
+}
+
+
 namespace = magic_project_kanolowele_volcanic_armoury
 
 country_event = { 
@@ -11295,4 +11496,55 @@ country_event = {
 		}
 	}
 	option = {}
+}
+
+#DEATHWINDS PROJECT
+
+namespace = magic_project_deathwinds_kheion_and_kaydhano
+
+country_event = { 
+	id = magic_project_deathwinds_kheion_and_kaydhano.0
+	title = none
+	desc = none
+	picture = none
+
+	is_triggered_only = yes
+	hidden = yes
+	
+	immediate = {
+		if = {
+			limit = { has_country_flag = magic_project_completed_flag }
+				if = {
+					limit = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 3 } }
+					country_event = { id = kheionai.58 }
+				}
+				else_if = {
+					limit = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 2 } }
+					country_event = { id = kheionai.55 }
+				}
+				else_if = {
+					limit = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } }
+					country_event = { id = kheionai.52 }
+				}
+		}
+		else_if = {
+			limit = { check_variable = { current_experience_percent = 50 } NOT = { has_country_flag = magic_project_first_event_happened } }
+			set_country_flag = magic_project_first_event_happened
+			if = { 
+				limit = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 2 } }
+				country_event = { id = kheionai.57 }
+			}
+			else_if = { 
+				limit = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } }
+				country_event = { id = kheionai.54 }
+			}
+			else_if = {
+				limit = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 0 } }
+				country_event = { id = kheionai.51 }
+			}
+		}
+	}
+	option = {
+		name = none
+	}
 }

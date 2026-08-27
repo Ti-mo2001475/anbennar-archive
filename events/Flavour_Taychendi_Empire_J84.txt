@@ -688,7 +688,6 @@ country_event = {
 	option = {
 		name = taychendi_empire_events.9.a
 		2736 = { #Degakheion
-			remove_province_modifier = kheionai_warded_city
 			add_base_tax = -5
 			add_base_production = -5
 			add_base_manpower = -5
@@ -701,7 +700,6 @@ country_event = {
 				name = J84_disassembling_windward
 				duration = 14600 #40 years
 			}
-			hidden_effect = { add_permanent_windward_level = { level = -2 } }
 			change_trade_goods = damestear
 			set_province_flag = permanent_damestear 
 		}
@@ -799,9 +797,8 @@ country_event = {
 				name = J84_kingdom_of_prophacy
 				duration = -1
 			}
+			gain_full_deathwinds_system = yes
 		}
-		custom_tooltip = J84_deathwind_lab_enabled_tt
-		set_country_flag = J84_deathwind_lab_enabled_flag
 	}
 
 	option = {
@@ -813,8 +810,15 @@ country_event = {
 				duration = -1
 			}
 		}
-		custom_tooltip = J84_deathwind_lab_enabled_tt
-		set_country_flag = J84_deathwind_lab_enabled_flag
+		custom_tooltip = J84_upgrade_windwards_tt
+		hidden_effect = {
+			alecandi_capital_provinces = {
+				limit = { NOT = { province_id = 2736 } } #Degakheion
+				every_neighbor_province = {
+					upgrade_windward_for_free = yes
+				}
+			}
+		}
 	}
 }
 
@@ -830,7 +834,6 @@ country_event = {
 		name = taychendi_empire_events.13.a
 		alecandi_capital_provinces = {
 			limit = { NOT = { province_id = 2736 } } #Degakheion
-			remove_province_modifier = kheionai_warded_city
 			add_base_tax = -5
 			add_base_production = -5
 			add_base_manpower = -5
@@ -844,7 +847,6 @@ country_event = {
 				duration = 14600 #40 years
 			}
 			hidden_effect = { 
-				add_permanent_windward_level = { level = -2 } 
 				save_trade_goods = yes
 			}
 			change_trade_goods = damestear
@@ -1792,7 +1794,7 @@ country_event = {
 				effect = "
 				random_owned_province = {
 					limit = {
-						culture_group = orcish
+						culture_is_orcish = yes
 						NOT = { has_province_flag = J84_temp_flag }
 					}
 					add_devastation = 25
@@ -1947,7 +1949,7 @@ country_event = {
 		custom_tooltip = J84_lizardfolk_gain_ae_tt
 		tooltip = {
 			random_country = {
-				limit = { culture_group = lizardfolk }
+				limit = { culture_is_lizardfolk = yes }
 				add_aggressive_expansion = {
 					who = ROOT
 					value = 25
@@ -1972,7 +1974,7 @@ country_event = {
 		}
 		hidden_effect = {
 			every_country = {
-				limit = { culture_group = lizardfolk }
+				limit = { culture_is_lizardfolk = yes }
 				add_aggressive_expansion = {
 					who = ROOT
 					value = 25
@@ -2041,7 +2043,7 @@ country_event = {
 		}
 		hidden_effect = {
 			every_province = {
-				limit = { culture_group = lizardfolk }
+				limit = { culture_is_lizardfolk = yes }
 				add_permanent_claim = ROOT
 			}
 			taychend_superregion = {
@@ -2052,7 +2054,7 @@ country_event = {
 				}
 			}
 			every_country = {
-				limit = { culture_group = lizardfolk }
+				limit = { culture_is_lizardfolk = yes }
 				add_aggressive_expansion = {
 					who = ROOT
 					value = 100
@@ -3113,7 +3115,7 @@ country_event = {
 	id = taychendi_empire_events.400 #The Echoes of Ebenanth
 	title = taychendi_empire_events.400.t
 	desc = taychendi_empire_events.400.d
-	picture = country_co
+	picture = COUNTRY_COLLAPSE_eventPicture
 
 	is_triggered_only = yes
 

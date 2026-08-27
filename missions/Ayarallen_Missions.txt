@@ -226,6 +226,24 @@ F27_column1 = {
 			custom_tooltip = F27_fledgling_upgrade_tt
 			set_country_flag = F27_roost_upgrade
 			set_country_flag = harpy_roost_upgrade
+			hidden_effect = {
+				every_owned_province = {
+					limit = { harpy_roost_st_has_any_roost = yes }
+					if = {
+						limit = { harpy_roost_st_has_non_fledgling_roost = yes }
+						add_province_modifier = {
+							name = F27_roost_upgrade_two
+							duration = -1
+						}
+					}
+					else = {
+						add_province_modifier = {
+							name = F27_roost_upgrade_one
+							duration = -1
+						}
+					}
+				}
+			}
 		} 
 	}
 }
@@ -237,7 +255,7 @@ F27_column2 = {
 	potential = { tag = F27 } 
 
 	F27_raise_the_flocks = {
-		icon = mission_heated_battle
+		icon = mission_harpy_fusilier
 		position = 1
 		provinces_to_highlight = { 
 			owned_by = ROOT
@@ -565,7 +583,7 @@ F27_column3 = {
 				}
 			}
 			development_in_provinces = {
-				value = 290
+				value = 260
 				region = harpy_hills_region
 			}
 		} 

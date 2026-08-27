@@ -3700,29 +3700,6 @@ ravenhill_war_2 = {
 	}
 }
 
-kheios_deathwind_manager = {
-	potential = {
-		always = yes
-	}
-	trigger = {
-		hidden_trigger = {
-			had_province_flag = {
-				flag = deathwinds_flag
-				days = 2
-			}
-		}
-	}
-
-	on_activation = {
-		province_event = {
-			id = kheionai.1
-			days = 3650
-		}
-		clr_province_flag = deathwinds_flag
-		remove_province_triggered_modifier = kheios_deathwind_manager
-	}
-}
-
 krakazol_drinking_ptm = {
 	potential = { I20 = { exists = yes } }
 
@@ -7075,15 +7052,7 @@ rite_of_conception_randomization_ptm = {
 				random_list = {
 					1 = { country_event = { id = magic_spell.800 days = 240 random = 60 } }
 					1 = { country_event = { id = magic_spell.801 days = 240 random = 60 } }
-					1 = {
-						trigger = {
-							NOT = {
-								has_country_flag = tughayasa_reward
-								has_country_flag = tughayasa_reward_primary
-							}
-						}
-						country_event = { id = magic_spell.802 days = 240 random = 60 }
-					}
+					1 = { country_event = { id = magic_spell.802 days = 240 random = 60 } }
 				}
 			}
 		}
@@ -7524,7 +7493,7 @@ ptm_foundationism_shepherds = {
 		NOT = { has_active_triggered_province_modifier = ptm_foundationism_shepherds }
 	}
 
-	on_activation = { #I wonder if you will lose some dev if you convert multiple province in same day
+	on_activation = {
 		owner = { country_event = { id = insyaa_flavour.1002 } }
 		remove_province_triggered_modifier = ptm_foundationism_shepherds
 	}
@@ -7541,6 +7510,7 @@ ptm_add_random_dev = {
 
 	trigger = {
 		always = yes
+		NOT = { has_active_triggered_province_modifier = ptm_add_random_dev }
 	}
 
 	on_activation = {
@@ -7902,5 +7872,52 @@ hallow_randomization_ptm = {
 			}
 		}
 		remove_province_triggered_modifier = hallow_randomization_ptm
+	}
+}
+
+rioqay_diu_random_ptm = {
+	# this exist to ensure the deity chosen is actually random
+	# the deity screen is apparently not a good source for randomness
+	hidden = yes
+	trigger = {
+		always = yes
+	}
+	potential = {
+		always = yes
+	}
+	on_activation = {
+		owner = {
+			country_event = {
+				id = amadia.3
+			}
+		}
+		remove_province_triggered_modifier = rioqay_diu_random_ptm
+	}
+}
+
+shifting_sands_handler_ptm = {
+	hidden = yes
+	trigger = {
+		always = yes
+	}
+	potential = {
+		always = yes
+	}
+	on_activation = {
+		province_event = { id = haless.1001 days = 3650 } #Intervals of 10 years
+		remove_province_triggered_modifier = shifting_sands_handler_ptm
+	}
+}
+shifting_sands_reversion_ptm = {
+	hidden = yes
+	trigger = {
+		always = yes
+	}
+	potential = {
+		always = yes
+	}
+	on_activation = {
+		province_event = { id = haless.1004 days = 1095 } #Intervals of 3 years because that's how long the extension is
+		remove_province_triggered_modifier = shifting_sands_reversion_ptm
 	}
 }

@@ -463,6 +463,7 @@ LRM_1_2 = {
 						who = ROOT
 						value = 150
 					}
+					exists = no
 				}
 			}
 			A13 = {
@@ -473,6 +474,7 @@ LRM_1_2 = {
 						who = ROOT
 						value = 150
 					}
+					exists = no
 				}
 			}
 			emperor = {
@@ -1103,6 +1105,9 @@ LRM_4 = {
 					}
 				}
 			}
+			capital_scope = {
+				NOT = { has_construction = any }
+			}
 		} 
 
 		effect = {
@@ -1189,17 +1194,18 @@ LRM_4 = {
 
 		trigger = {
 			has_adm_advisor_2 = yes
-			is_ahead_of_time_in_technology = { tech = adm }
 			has_dip_advisor_2 = yes
-			is_ahead_of_time_in_technology = { tech = dip }
 			has_mil_advisor_2 = yes
-			is_ahead_of_time_in_technology = { tech = mil }
+			is_ahead_of_time_in_all_technology = yes
 			OR = {
 				innovativeness = 30
 				ruler_has_personality = patron_of_arts_personality
 				ruler_has_personality = reformist_personality
 				ruler_has_personality = scholar_personality
 				ruler_has_personality = free_thinker_personality
+			}
+			capital_scope = {
+				NOT = { has_construction = any }
 			}
 		} 
 
@@ -1384,6 +1390,7 @@ LRM_5 = {
 				all_known_country = {
 					OR = {
 						NOT = { capital_scope = { region = esmaria_region } }
+						is_emperor = yes
 						has_been_insulted_by_root = yes
 					}
 				}

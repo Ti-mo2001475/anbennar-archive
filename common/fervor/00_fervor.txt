@@ -2,6 +2,7 @@ fervor_trade = {
 	cost = 6
 	potential = {
 		religion = the_jadd
+		NOT = { has_estate_privilege = estate_church_ebbusubtu_festivities }
 	}
 	trigger = {
 	}
@@ -27,7 +28,11 @@ fervor_trade = {
 			factor = 0
 			NOT = { fervor = 50 }
 			has_active_fervor = no
-		}	
+		}
+		modifier = {
+			factor = 0
+			NOT = { religion = the_jadd }
+		}
 	}
 }
 
@@ -35,6 +40,7 @@ fervor_war = {
 	cost = 6
 	potential = {
 		religion = the_jadd
+		NOT = { has_estate_privilege = estate_church_ebbusubtu_festivities }
 	}
 	trigger = {
 	}
@@ -51,7 +57,11 @@ fervor_war = {
 		modifier = {
 			factor = 10
 			is_at_war = yes
-		}		
+		}
+		modifier = {
+			factor = 0
+			NOT = { religion = the_jadd }
+		}
 	}	
 }
 
@@ -59,6 +69,7 @@ fervor_stability = {
 	cost = 6
 	potential = {
 		religion = the_jadd
+		NOT = { has_estate_privilege = estate_church_ebbusubtu_festivities }
 	}
 	trigger = {
 	}
@@ -89,6 +100,10 @@ fervor_stability = {
 			NOT = { fervor = 50 }
 			has_active_fervor = no
 		}
+		modifier = {
+			factor = 0
+			NOT = { religion = the_jadd }
+		}
 	}	
 }
 
@@ -96,6 +111,7 @@ fervor_diplomacy = { #1.35
 	cost = 6
 	potential = {
 		religion = the_jadd
+		NOT = { has_estate_privilege = estate_church_ebbusubtu_festivities }
 	}
 	trigger = {
 	}
@@ -113,6 +129,149 @@ fervor_diplomacy = { #1.35
 			factor = 0
 			NOT = { fervor = 50 }
 			has_active_fervor = no
+		}
+		modifier = {
+			factor = 0
+			NOT = { religion = the_jadd }
+		}
+	}
+}
+
+fervor_trade_buffed = {
+	cost = 6
+	potential = {
+		has_estate_privilege = estate_church_ebbusubtu_festivities
+	}
+	trigger = {
+	}
+	effect = {
+		yearly_corruption = -0.1
+		advisor_cost = -0.1
+		global_unrest = -1
+	}
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 1.5
+			has_advisor = yes
+		}
+		modifier = {
+			factor = 1.25
+			corruption = 1
 		}	
+		modifier = {
+			factor = 1.25
+			corruption = 2
+		}
+		modifier = {
+			factor = 0
+			NOT = { fervor = 50 }
+			has_active_fervor = no
+		}
+		modifier = {
+			factor = 0
+			NOT = { religion = the_jadd }
+		}
+	}
+}
+
+fervor_war_buffed = {
+	cost = 6
+	potential = {
+		has_estate_privilege = estate_church_ebbusubtu_festivities
+	}
+	trigger = {
+	}
+	effect = {
+		land_morale = 0.1
+		naval_morale = 0.1
+		morale_damage = 0.05
+	}
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			is_at_war = no
+		}
+		modifier = {
+			factor = 10
+			is_at_war = yes
+		}
+		modifier = {
+			factor = 0
+			NOT = { religion = the_jadd }
+		}
 	}	
+}
+
+fervor_stability_buffed = {
+	cost = 6
+	potential = {
+		has_estate_privilege = estate_church_ebbusubtu_festivities
+	}
+	trigger = {
+	}
+	effect = {
+		reform_progress_growth = 0.15
+		manpower_in_true_faith_provinces = 0.15
+		stability_cost_modifier = -0.15
+	}
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 1.25
+			always = yes
+		}
+		modifier = {
+			factor = 0.5
+			NOT = { trade_income_percentage = 0.1 }
+		}		
+		modifier = {
+			factor = 1.25
+			trade_income_percentage = 0.25
+		}
+		modifier = {
+			factor = 1.25
+			trade_income_percentage = 0.5
+		}			
+		modifier = {
+			factor = 0
+			NOT = { fervor = 50 }
+			has_active_fervor = no
+		}
+		modifier = {
+			factor = 0
+			NOT = { religion = the_jadd }
+		}
+	}	
+}
+
+fervor_diplomacy_buffed = { #1.35
+	cost = 6
+	potential = {
+		has_estate_privilege = estate_church_ebbusubtu_festivities
+	}
+	trigger = {
+	}
+	effect = {
+		diplomatic_reputation = 2
+		improve_relation_modifier = 0.2
+		ae_impact = -0.1
+	}
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 1.25
+			is_at_war = no
+		}
+		modifier = {
+			factor = 0
+			NOT = { fervor = 50 }
+			has_active_fervor = no
+		}
+		modifier = {
+			factor = 0
+			NOT = { religion = the_jadd }
+		}
+	}
 }

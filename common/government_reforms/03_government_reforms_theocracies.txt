@@ -1017,6 +1017,7 @@ wulin = {
 		locked_T1_reform = yes
 		anb_theocracy_unique_heir_election = yes
 		disables_estate_eunuchs_anb = yes
+		cannot_move_capital = yes
 	}
 
 	effect = {
@@ -1647,7 +1648,6 @@ magisterium_reform = {
 		is_magocracy = yes
 		locked_T1_reform = yes
 		anb_theocracy_unique_heir_election = yes
-		is_eligible_for_hre_emperor = yes
 	}
 
 	conditional = {
@@ -1685,8 +1685,9 @@ magocracy_reform = {
 	}
 
 	modifiers = {	#for better spellcasting
-		all_power_cost = -0.05
-		
+		all_power_cost = -0.025
+		max_estate_spell_levels = 2
+		mages_monthly_experience = 1
 		mages_influence_modifier = 0.1
 	}
 	custom_attributes = {
@@ -1722,6 +1723,8 @@ arakeprun_magocracy = {
 
 	modifiers = {	#for better spellcasting
 		all_power_cost = -0.025
+		max_estate_spell_levels = 1
+		mages_monthly_experience = 0.5
 		production_efficiency = 0.05
 		mages_loyalty_modifier = 0.1
 		artificers_loyalty_modifier = 0.1
@@ -1751,7 +1754,9 @@ verkal_ozovar_magocracy = {
 	}
 
 	modifiers = {	#for better spellcasting
-		all_power_cost = -0.05
+		all_power_cost = -0.025
+		max_estate_spell_levels = 2
+		mages_monthly_experience = 1
 		mages_influence_modifier = 0.1
 
 		governing_capacity_modifier = -0.80
@@ -2162,7 +2167,7 @@ shadow_horde = {
 	raze_province = yes
 	nation_designer_cost = 0
 	nation_designer_trigger = {
-		culture_group = giantkind
+		culture = swamp_troll
 	}
 	icon = "fist_in_air"
 	lock_level_when_selected = yes
@@ -2744,7 +2749,7 @@ education_of_the_theurge_reform = {
 	modifiers = {
 		mages_loyalty_modifier = 0.1
 		mages_influence_modifier = 0.05
-		mages_estate_experience_mod = 0.2
+		mages_monthly_experience = 1
 	}
 }
 
@@ -3447,6 +3452,104 @@ cloistered_doctrines_reform = {
 	modifiers = {
 		free_land_leader_pool = 1
 		army_tradition = 0.25
+	}
+}
+
+paragons_of_reverence_reform = {
+	icon = "kingdom_of_god"
+	potential = {
+		religion = regent_court
+		OR = {
+			is_or_was_tag = { tag = A10 }
+			is_or_was_tag = { tag = A41 }
+			is_or_was_tag = { tag = A43 }
+			is_or_was_tag = { tag = A53 }
+			is_or_was_tag = { tag = B92 }
+		}
+	}
+	trigger = {
+		if = {
+			limit = { is_or_was_tag = { tag = A10 } }
+			capital = 97
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A41 } }
+			capital = 4
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A43 } }
+			capital = 265
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A53 } }
+			capital = 249
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = B92 } }
+			capital = 266
+		}
+	}
+	modifiers = {
+		devotion = 1
+		church_influence_modifier = 0.1
+	}
+	effect = {
+		capital_scope = {
+			add_province_modifier = {
+				name = gov_paragons_of_reverence
+				duration = -1
+			}
+		}
+		custom_tooltip = paragons_of_reverence_gods_tt
+		hidden_effect = {
+			if = {
+				limit = { is_or_was_tag = { tag = A10 } }
+				set_country_flag = upgraded_minara
+			}
+			if = {
+				limit = { is_or_was_tag = { tag = A41 } }
+				set_country_flag = upgraded_the_dame
+			}
+			if = {
+				limit = { is_or_was_tag = { tag = A43 } }
+				set_country_flag = upgraded_ryala
+			}
+			if = {
+				limit = { is_or_was_tag = { tag = A53 } }
+				set_country_flag = upgraded_ara
+			}
+			if = {
+				limit = { is_or_was_tag = { tag = B92 } }
+				set_country_flag = upgraded_esmaryal
+			}
+		}
+	}
+	removed_effect = {
+		if = {
+			limit = { is_or_was_tag = { tag = A10 } }
+			clr_country_flag = upgraded_minara
+			97 = { remove_province_modifier = gov_paragons_of_reverence }
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A41 } }
+			clr_country_flag = upgraded_the_dame
+			4 = { remove_province_modifier = gov_paragons_of_reverence }
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A43 } }
+			clr_country_flag = upgraded_ryala
+			265 = { remove_province_modifier = gov_paragons_of_reverence }
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = A53 } }
+			clr_country_flag = upgraded_ara
+			249 = { remove_province_modifier = gov_paragons_of_reverence }
+		}
+		if = {
+			limit = { is_or_was_tag = { tag = B92 } }
+			clr_country_flag = upgraded_esmaryal
+			266 = { remove_province_modifier = gov_paragons_of_reverence }
+		}
 	}
 }
 
@@ -4867,7 +4970,9 @@ tehanek_magocracy_reform = {
 	}
 
 	modifiers = {	#for better spellcasting
-		all_power_cost = -0.05
+		all_power_cost = -0.025
+		max_estate_spell_levels = 2
+		mages_monthly_experience = 1
 		advisor_pool = 2
 		church_power_modifier = 0.10
 		mages_influence_modifier = 0.10
@@ -5051,8 +5156,9 @@ gemradcurt_order_run_arcane_education_reform = {
 	}
 	
 	modifiers = {
-		free_land_leader_pool = 1
+		leader_land_shock = 1
 		advisor_pool = 1
+		mages_estate_experience_mod = 0.10
 		female_advisor_chance = 0.15
 	}
 
@@ -5350,11 +5456,11 @@ eagle_hobgoblins_searching_reform = {
 	icon = "ambush_tactics"
 	potential = {
 		culture = eagle_command
-		religion = eagle_worship
+		religion = banbe_anen
 	}
 	trigger = {
 		culture = eagle_command
-		religion = eagle_worship
+		religion = banbe_anen
 	}
 	allow_normal_conversion = yes
 	valid_for_nation_designer = yes
@@ -5378,7 +5484,7 @@ eagle_hobgoblins_rule_of_order_reform = {
 	icon = "religious_harmony_reform"
 	potential = {
 		culture = eagle_command
-		religion = eagle_worship
+		religion = banbe_anen
 		has_not_banned_magic_artificery = yes
 	}
 	valid_for_nation_designer = yes
@@ -6767,6 +6873,7 @@ mangrove_theocracy = {
 		locked_government_type = yes
 		locked_T1_reform = yes
 		mangrove_republic = yes
+		cannot_move_capital = yes
 	}
 	effect = {
 		country_event = { id = mangrove.0 }
@@ -6981,6 +7088,31 @@ U39_kavalali_theo_democracy = {
 		anb_theocracy_unique_heir_election = yes
 		locked_government_type = yes
 		locked_T1_reform = yes
+	}
+}
+
+#Kaino Federation
+
+kainos_kingdom_reform = {
+	icon = "kainos_kingdom"
+
+	potential = {
+		has_reform = kainos_kingdom_reform
+	}
+	lock_level_when_selected = yes
+	rulers_can_be_generals = no
+	heirs_can_be_generals = no
+
+	modifiers = {
+		development_cost = 5
+		raze_power_gain = -1
+		necromancy_experience_mod = 0.35
+	}
+	custom_attributes = {
+		raze_province = yes	
+	}
+	effect = {
+		custom_tooltip = kaino_raze_to_bluepot
 	}
 }
 

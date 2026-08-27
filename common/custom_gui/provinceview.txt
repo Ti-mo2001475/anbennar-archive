@@ -729,6 +729,116 @@ custom_button = { #Merfolk Settlements
 	}
 }
 
+##############
+# Deathwinds #
+##############
+custom_window = {
+	name = aPUI_deathwinds_window
+	potential = {
+		has_open_aPUI_in_province = { name = deathwinds }
+	}
+}
+custom_text_box = { name = aPUI_deathwinds_title }
+
+custom_button = {
+	name = aPUI_deathwinds_button
+    potential = { has_eligible_aPUI_deathwinds_in_province = yes }
+	trigger = { }
+	effect = {
+		hidden_effect = {
+			open_aPUI_in_province = { name = deathwinds }
+			#Set variable to 0 so thecustom tooltip doesn't look wrong
+			FROM = { set_variable = { deathwinds_kheion_and_kaydhano_level = 0 } }
+		}
+		}
+	tooltip = aPUI_deathwinds_button_tt
+}
+custom_button = { #Deathwinds dummy
+	name = aPUI_deathwinds_button_dummy
+    potential = { has_eligible_aPUI_deathwinds_in_province = yes }
+	tooltip = aPUI_deathwinds_button_dummy_tt
+	frame = { number = 1 }
+}
+
+custom_text_box = { name = aPUI_deathwinds_windward_value tooltip = aPUI_deathwinds_windward_desc }
+custom_text_box = { name = aPUI_deathwinds_deathwinds_value tooltip = aPUI_deathwinds_deathwinds_desc }
+custom_text_box = { name = aPUI_deathwinds_info_title }
+custom_text_box = { name = aPUI_deathwinds_info_prov_r1c1 }
+custom_text_box = { name = aPUI_deathwinds_info_prov_r1c2 }
+custom_text_box = { name = aPUI_deathwinds_info_prov_r1c3 }
+custom_text_box = { name = aPUI_deathwinds_info_prov_r2c1 }
+custom_text_box = { name = aPUI_deathwinds_info_prov_r2c2 }
+
+#Upgrade Windwards Buttons
+custom_button = {
+	name = aPUI_deathwinds_upgrades_button_1
+	tooltip = aPUI_deathwinds_upgrades_button_1
+	trigger = { windward_upgrade_triggers = yes }
+	effect = { upgrade_windwards = yes }
+	frame = { number = 2 }
+}
+custom_button = {
+	name = aPUI_deathwinds_upgrades_area_button_1
+	tooltip = aPUI_deathwinds_upgrades_area_button_1
+	trigger = { windwards_area_trigger = { trigger = windward_upgrade_triggers } }
+	effect = { custom_tooltip = deathwinds_requirements_tt deathwind_button_effect = { effect = upgrade_windwards } }
+	frame = { number = 6 }
+}
+
+#Reinforce with Manpower Buttons
+custom_button = {
+	name = aPUI_deathwinds_upgrades_button_2
+	tooltip = aPUI_deathwinds_upgrades_button_2
+	trigger = { windwards_reinforce_with_manpower_trigger = yes }
+	effect = { windwards_reinforce_with_manpower_effect = yes }
+	frame = { number = 3 }
+}
+custom_button = {
+	name = aPUI_deathwinds_upgrades_area_button_2
+	tooltip = aPUI_deathwinds_upgrades_area_button_2
+	trigger = { area_for_scope_province = { windwards_reinforce_with_manpower_trigger = yes } }
+	effect = { custom_tooltip = deathwinds_requirements_tt deathwind_button_effect = { effect = windwards_reinforce_with_manpower_effect } }
+	frame = { number = 7 }
+}
+
+#Reinforce with Mana Button
+custom_button = {
+	name = aPUI_deathwinds_upgrades_button_3
+	tooltip = aPUI_deathwinds_upgrades_button_3
+	trigger = { windwards_reinforce_with_mana_trigger = yes }
+	effect = { windwards_reinforce_with_mana_effect = yes }
+	frame = { number = 4 }
+}
+custom_button = {
+	name = aPUI_deathwinds_upgrades_area_button_3
+	tooltip = aPUI_deathwinds_upgrades_area_button_3
+	trigger = { area_for_scope_province = { windwards_reinforce_with_mana_trigger = yes } }
+	effect = { custom_tooltip = deathwinds_requirements_tt deathwind_button_effect = { effect = windwards_reinforce_with_mana_effect } }
+	frame = { number = 8 }
+}
+
+#Destroy Windwards Button
+custom_button = {
+	name = aPUI_deathwinds_upgrades_button_4
+	tooltip = aPUI_deathwinds_upgrades_button_4
+	trigger = { reduce_windward_triggers = yes }
+	effect = { reduce_windward_level = yes }
+	frame = { number = 5 }
+}
+custom_button = {
+	name = aPUI_deathwinds_upgrades_area_button_4
+	tooltip = aPUI_deathwinds_upgrades_area_button_4
+	trigger = { area_for_scope_province = { reduce_windward_triggers = yes } }
+	effect = { deathwind_button_effect = { effect = reduce_windward_level } }
+	frame = { number = 9 }
+}
+
+custom_icon = {
+	name = aPUI_deathwinds_progress
+	frame_variable = aPUI_deathwinds_framevar
+}
+custom_icon = { name = aPUI_deathwinds_frame tooltip = aPUI_deathwinds_bar_tt }
+
 #Slot 2 - Province type button
 custom_button = { #Dummy closed
 	name = GFX_province_button_dummy_2
@@ -1100,7 +1210,7 @@ custom_button = {
 	potential = { 
 		owner = {
 			tag = FROM
-			culture_group = harpy
+			culture_is_harpy = yes
 			has_country_flag = harpy_roost_setup_completed # Won't work properly if setup hasn't been completed.
 		}
 		OR = {
@@ -1487,6 +1597,7 @@ custom_button = { # Build Charkuchin Kobold supply centre
 			}
 		}
 		custom_tooltip = charkuchin_kobold_supply_facility_button_add_tt
+		custom_tooltip = kobold_citadel_province_upkeep_free
 	}
 	tooltip = charkuchin_kobold_supply_facility_button_tt
 }
@@ -2306,7 +2417,10 @@ custom_button = {
 			NOT = { has_province_flag = vault_hearthstone_engine_locked }
 		}
 		NOT = { trade_goods = serpentbloom }
-		NOT = { has_dwarovar_dungeon = yes }
+		custom_trigger_tooltip = {
+			tooltip = can_spawn_expedition_tooltip
+			NOT = { has_dwarovar_dungeon = yes }
+		}
 	}
 	effect = {
 		if = {
@@ -2737,6 +2851,134 @@ custom_button = { #Cangji
 	}
 	tooltip = V05_call_the_flames
 }
+custom_button = { #Celliande Archeology
+	name = celliande_province_button
+	tooltip = celliande_province_button_tt
+	potential = {
+		OR = {
+			province_id = 419
+			province_id = 919
+			province_id = 312
+			province_id = 332
+		}
+		owned_by = A56 #Celliande
+	}
+	trigger = {
+		if = {
+			limit = {
+				province_id = 419 #Varlosen
+			}
+			custom_trigger_tooltip = {
+				tooltip = mission_completed_celliande_first_many_tt
+				owner = {
+					mission_completed = celliande_first_many
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				province_id = 919 #Rhinmond
+			}
+			custom_trigger_tooltip = {
+				tooltip = mission_completed_celliande_first_many_tt
+				owner = {
+					mission_completed = celliande_first_many
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				province_id = 312 #Quintenbury
+			}
+			custom_trigger_tooltip = {
+				tooltip = mission_completed_celliande_treachery_gisdenese_tt
+				owner = {
+					mission_completed = celliande_treachery_gisdenese
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				province_id = 332 #Corseton
+			}
+			custom_trigger_tooltip = {
+				tooltip = mission_completed_celliande_great_necropolis_tt
+				owner = {
+					mission_completed = celliande_great_necropolis
+				}
+			}
+		}
+		owner = {
+			manpower = 2
+			mil_power = 50
+		}
+		has_building = mage_tower
+		if = {
+			limit = { has_province_flag = celliande_already_explored }
+			custom_trigger_tooltip = {
+				tooltip = celliande_already_explored.tt
+				always = no
+			}
+		}
+		else_if = {
+			limit = { has_province_flag = celliande_is_exploring }
+			custom_trigger_tooltip = {
+				tooltip = celliande_is_exploring.tt
+				always = no
+			}
+		}
+		else_if = {
+			limit = { owner = { has_country_flag = celliande_is_exploring_country } }
+			custom_trigger_tooltip = {
+				tooltip = celliande_is_exploring2.tt
+				always = no
+			}
+		}
+	}
+	effect = {
+		owner = {
+			add_manpower = -2
+			add_mil_power = -50
+		}
+		trigger_switch = {
+			on_trigger = province_id
+			419 = {
+				owner = {
+					country_event = {
+						id = celliande.150
+					}
+				}
+			}
+			919 = {
+				owner = {
+					country_event = {
+						id = celliande.152
+					}
+				}
+			}
+			312 = {
+				owner = {
+					country_event = {
+						id = celliande.157
+					}
+				}
+			}
+			332 = {
+				owner = {
+					country_event = {
+						id = celliande.161
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			set_province_flag = celliande_is_exploring
+			owner = {
+				set_country_flag = celliande_is_exploring_country
+			}
+		}
+	}
+}
 #################################
 # Anbennar Province UI Expanded #
 #################################
@@ -2871,7 +3113,6 @@ custom_button = {
 		}
 	}
 	effect = {
-		custom_tooltip = " " #Linebreak
 		FROM = { add_church_power = -200 }
 		cultivate_province_xia_path = yes
 	}
@@ -3991,6 +4232,10 @@ custom_button = {
 		}
 	}
 }
+custom_icon = {
+	name = aPUI_kobold_citadel_button_1_select_glow
+	potential = { has_province_flag = current_ordinance_food }
+}
 custom_button = {
 	name = aPUI_kobold_citadel_button_2
 	tooltip = kobold_ordinance_education_tt
@@ -4011,6 +4256,10 @@ custom_button = {
 			kobold_citadel_estimate_time_and_cost = yes
 		}
 	}
+}
+custom_icon = {
+	name = aPUI_kobold_citadel_button_2_select_glow
+	potential = { has_province_flag = current_ordinance_education }
 }
 custom_button = {
 	name = aPUI_kobold_citadel_button_3
@@ -4033,6 +4282,10 @@ custom_button = {
 		}
 	}
 }
+custom_icon = {
+	name = aPUI_kobold_citadel_button_3_select_glow
+	potential = { has_province_flag = current_ordinance_foundations }
+}
 custom_button = {
 	name = aPUI_kobold_citadel_button_4
 	tooltip = kobold_ordinance_working_tt
@@ -4054,6 +4307,10 @@ custom_button = {
 		}
 	}
 }
+custom_icon = {
+	name = aPUI_kobold_citadel_button_4_select_glow
+	potential = { has_province_flag = current_ordinance_working }
+}
 custom_button = {
 	name = aPUI_kobold_citadel_button_5
 	tooltip = kobold_ordinance_services_tt
@@ -4074,6 +4331,10 @@ custom_button = {
 			kobold_citadel_estimate_time_and_cost = yes
 		}
 	}
+}
+custom_icon = {
+	name = aPUI_kobold_citadel_button_5_select_glow
+	potential = { has_province_flag = current_ordinance_services }
 }
 custom_button = {
 	name = aPUI_kobold_citadel_button_upgrade

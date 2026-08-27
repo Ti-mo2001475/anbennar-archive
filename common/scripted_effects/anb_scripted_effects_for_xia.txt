@@ -221,48 +221,110 @@ cultivate_active_xia_path = {
 	}
 }
 
+# can't use trigger_switch, doesn't tooltip properly in province button ui
 cultivate_province_xia_path = {
-	trigger_switch = {
-		on_trigger = has_province_modifier
-
-		xia_path_six_points_origin = { owner = { cultivate_xia_path_generic = { path = six_points } } }
-		xia_path_open_sky_origin = { owner = { cultivate_xia_path_generic = { path = open_sky } } }
-		xia_path_true_aim_origin = { owner = { cultivate_xia_path_generic = { path = true_aim } } }
-		xia_path_crouching_tiger_origin = { owner = { cultivate_xia_path_generic = { path = crouching_tiger } } }
-		xia_path_piercing_spear_origin = { owner = { cultivate_xia_path_generic = { path = piercing_spear } } }
-		xia_path_elephant_origin = { owner = { cultivate_xia_path_generic = { path = elephant } } }
-		xia_path_charging_bull_origin = { owner = { cultivate_xia_path_generic = { path = charging_bull } } }
-		xia_path_deep_fog_origin = { owner = { cultivate_xia_path_generic = { path = deep_fog } } }
-		xia_path_woodcutter_origin = { owner = { cultivate_xia_path_generic = { path = woodcutter } } }
-		xia_path_drunken_fist_origin = { owner = { cultivate_xia_path_generic = { path = drunken_fist } } }
-		xia_path_unbroken_shield_origin = { owner = { cultivate_xia_path_generic = { path = unbroken_shield } } }
-		xia_path_shadow_veil_origin = { owner = { cultivate_xia_path_generic = { path = shadow_veil } } }
-		xia_path_high_tower_origin = { owner = { cultivate_xia_path_generic = { path = high_tower } } }
-		xia_path_dancing_breeze_origin = { owner = { cultivate_xia_path_generic = { path = dancing_breeze } } }
-		xia_path_heavenly_armor_origin = { owner = { cultivate_xia_path_generic = { path = heavenly_armor } } }
-		xia_path_humble_servant_origin = { owner = { cultivate_xia_path_generic = { path = humble_servant } } }
-		xia_path_sacred_spring_origin = { owner = { cultivate_xia_path_generic = { path = sacred_spring } } }
-		xia_path_thousand_kicks_origin = { owner = { cultivate_xia_path_generic = { path = thousand_kicks } } }
-		xia_path_slippery_eel_origin = { owner = { cultivate_xia_path_generic = { path = slippery_eel } } }
-		xia_path_golden_core_origin = { owner = { cultivate_xia_path_generic = { path = golden_core } } }
-		xia_path_keepers_origin = { owner = { cultivate_xia_path_generic = { path = keepers } } }
-		xia_path_gentle_fist_origin = { owner = { cultivate_xia_path_generic = { path = gentle_fist } } }
-		xia_path_looming_shadow_origin = { owner = { cultivate_xia_path_generic = { path = looming_shadow } } }
-		xia_path_silk_origin = { owner = { cultivate_xia_path_generic = { path = silk } } }
-		xia_path_flowing_water_origin = { owner = { cultivate_xia_path_generic = { path = flowing_water } } }
-
-		#MT Schools
-		xia_path_tortured_mist_origin = { owner = { cultivate_xia_path_generic = { path = tortured_mist } } }
-		xia_path_cresting_phoenix_origin = { owner = { cultivate_xia_path_generic = { path = cresting_phoenix } } }
-		xia_path_blazing_sun_origin = { owner = { cultivate_xia_path_generic = { path = blazing_sun } } }
-		xia_path_desert_fire_origin = { owner = { cultivate_xia_path_generic = { path = desert_fire } } }
-
+	if = { limit = { has_province_modifier = xia_path_six_points_origin }
+		owner = { cultivate_province_xia_path_helper = { path = six_points } }
 	}
-	FROM = {
+	else_if = { limit = { has_province_modifier = xia_path_open_sky_origin }
+		owner = { cultivate_province_xia_path_helper = { path = open_sky } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_true_aim_origin }
+		owner = { cultivate_province_xia_path_helper = { path = true_aim } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_crouching_tiger_origin }
+		owner = { cultivate_province_xia_path_helper = { path = crouching_tiger } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_piercing_spear_origin }
+		owner = { cultivate_province_xia_path_helper = { path = piercing_spear } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_elephant_origin }
+		owner = { cultivate_province_xia_path_helper = { path = elephant } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_charging_bull_origin }
+		owner = { cultivate_province_xia_path_helper = { path = charging_bull } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_deep_fog_origin }
+		owner = { cultivate_province_xia_path_helper = { path = deep_fog } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_woodcutter_origin }
+		owner = { cultivate_province_xia_path_helper = { path = woodcutter } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_drunken_fist_origin }
+		owner = { cultivate_province_xia_path_helper = { path = drunken_fist } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_unbroken_shield_origin }
+		owner = { cultivate_province_xia_path_helper = { path = unbroken_shield } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_shadow_veil_origin }
+		owner = { cultivate_province_xia_path_helper = { path = shadow_veil } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_high_tower_origin }
+		owner = { cultivate_province_xia_path_helper = { path = high_tower } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_dancing_breeze_origin }
+		owner = { cultivate_province_xia_path_helper = { path = dancing_breeze } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_heavenly_armor_origin }
+		owner = { cultivate_province_xia_path_helper = { path = heavenly_armor } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_humble_servant_origin }
+		owner = { cultivate_province_xia_path_helper = { path = humble_servant } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_sacred_spring_origin }
+		owner = { cultivate_province_xia_path_helper = { path = sacred_spring } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_thousand_kicks_origin }
+		owner = { cultivate_province_xia_path_helper = { path = thousand_kicks } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_slippery_eel_origin }
+		owner = { cultivate_province_xia_path_helper = { path = slippery_eel } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_golden_core_origin }
+		owner = { cultivate_province_xia_path_helper = { path = golden_core } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_keepers_origin }
+		owner = { cultivate_province_xia_path_helper = { path = keepers } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_gentle_fist_origin }
+		owner = { cultivate_province_xia_path_helper = { path = gentle_fist } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_looming_shadow_origin }
+		owner = { cultivate_province_xia_path_helper = { path = looming_shadow } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_silk_origin }
+		owner = { cultivate_province_xia_path_helper = { path = silk } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_flowing_water_origin }
+		owner = { cultivate_province_xia_path_helper = { path = flowing_water } }
+	}
+	#MT Schools
+	else_if = { limit = { has_province_modifier = xia_path_tortured_mist_origin }
+		owner = { cultivate_province_xia_path_helper = { path = tortured_mist } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_cresting_phoenix_origin }
+		owner = { cultivate_province_xia_path_helper = { path = cresting_phoenix } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_blazing_sun_origin }
+		owner = { cultivate_province_xia_path_helper = { path = blazing_sun } }
+	}
+	else_if = { limit = { has_province_modifier = xia_path_desert_fire_origin }
+		owner = { cultivate_province_xia_path_helper = { path = desert_fire } }
+	}
+	owner = {
 		if = {
 			limit = { has_country_flag = xia_enlightenment_event_not_fired }
 			country_event = { id = one_xia.5 }
 		}
+	}
+}
+
+cultivate_province_xia_path_helper = {
+	tooltip = {
+		add_or_extend_country_modifier = { name = xia_path_$path$_mod_1 duration = -1 }
+	}
+	hidden_effect = {
+		cultivate_xia_path_generic = { path = $path$ }
 	}
 }
 

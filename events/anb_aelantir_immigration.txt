@@ -1,0 +1,443 @@
+namespace = aelantir_immigration
+
+country_event = { #Moon Elves seek path to Citizenship
+	id = aelantir_immigration.0
+	title = aelantir_immigration.0.t
+	desc = aelantir_immigration.0.d
+	picture = HARBOUR_eventPicture
+
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = {
+			current_age = age_of_discovery
+		}
+		is_religion_enabled = corinite
+
+		capital_scope = {
+			OR = {
+				continent = north_america
+				continent = south_america
+			}
+		}
+
+		OR = {
+			is_colonial_nation = yes
+			is_former_colonial_nation = yes
+			is_aelantiri_spawnable = yes # i think this should cover aelantiri formables
+			has_country_flag = changed_from_colonial_nation
+		}
+
+		OR = {
+			medium_tolerance_elven_race_trigger = yes # i think this is coexistence
+			high_tolerance_elven_race_trigger = yes
+		}
+		NOT = { culture_group = elven }
+
+		total_development   = 100
+		any_owned_province = {
+			OR = {
+				continent = north_america
+				continent = south_america
+			}
+			has_port = yes
+			NOT = { # less than
+				development = 15
+			}
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					OR = {
+						continent = north_america
+						continent = south_america
+					}
+					has_port = yes
+					NOT = {
+						development = 15
+					}
+				}
+				save_event_target_as = little_moonhaven_province #province needed for later events
+			}
+
+			prepare_months_of_trade_income = { months = 6 }
+		}
+	}
+
+	goto = little_moonhaven_province
+
+	option = {# Option 1: Found  Little Moonhaven
+		name = aelantir_immigration.0.1
+
+		ai_chance = { factor = 100 }
+
+		event_target:little_moonhaven_province = {
+			#adds Little Moonhaven Province Modifier
+			add_province_modifier = {
+				name = aelantir_immigration_little_moonhaven
+				duration = -1
+			}
+			# flips to Moon Elf culture and faiths
+			change_culture = moon_elf
+			random_list = {
+				33 = {
+					change_religion = corinite
+				}
+				34 = {
+					change_religion = regent_court
+				}
+				33 = {
+					change_religion = elven_forebears
+				}
+			}
+		}
+		generic_increase_of_racial_tolerance_effect = {
+			race = elven
+			small = yes
+		}
+
+		hidden_effect = { #triggers the events
+			country_event = {
+				id = aelantir_immigration.1
+				days = 9125
+			}
+		}
+	}
+
+	option = { # Tell the elves to bugger off
+		name = aelantir_immigration.0.2
+		ai_chance = { factor = 50 }
+
+		add_country_modifier = {
+			name = aelantir_immigration_elvish_immigrants_rejected
+			duration = 1095 # 3 years
+		}
+
+		generic_decrease_of_racial_tolerance_effect = {
+			race = elven
+			large = yes
+		}
+	}
+
+	option = { #Found Little Moonhaven, but scrape some off the top.
+		name = aelantir_immigration.0.3
+		ai_chance = { factor = 1000 }
+
+		trigger = {
+			OR = {
+				ruler_has_personality = embezzler_personality
+				ruler_has_personality = greedy_personality
+				ruler_has_personality = drunkard_personality
+			}
+		}
+		highlight = yes
+
+		event_target:little_moonhaven_province = {
+			#adds Little Moonhaven Province Modifier
+			add_province_modifier = {
+				name = aelantir_immigration_little_moonhaven_greedy # worse version of little moonhaven
+				duration = -1
+			}
+			# flips to Moon Elf culture and faiths
+			change_culture = moon_elf
+			random_list = {
+				33 = {
+					change_religion = corinite
+				}
+				34 = {
+					change_religion = regent_court
+				}
+				33 = {
+					change_religion = elven_forebears
+				}
+			}
+		}
+
+		add_prepared_months_of_trade_income = yes #not sure about this one, was getting an error on the default = {} intellisense was suggesting
+
+		hidden_effect = { #triggers the events
+			country_event = {
+				id = aelantir_immigration.1
+				days = 9125
+			}
+		}
+	}
+
+	option = { # [Consort] rallies the court in favour of the proposal
+		name = aelantir_immigration.0.4
+		ai_chance = { factor = 1000 }
+
+		trigger = { #checks the consort is an elf or wescanni half elf
+			OR = {
+				consort_is_elven = yes
+				and = {
+					consort_is_cannorian_half_elven = yes #didnt want farrani orginially but i can live with that
+				}
+			}
+		}
+		highlight = yes
+
+		add_country_modifier = {
+			name = aelantir_immigration_consort_supports_proposal
+			duration = 1825 #5 years
+		}
+
+		event_target:little_moonhaven_province = {
+			#adds Little Moonhaven Province Modifier
+			add_province_modifier = {
+				name = aelantir_immigration_little_moonhaven
+				duration = -1
+			}
+			# flips to Moon Elf culture and faiths
+			change_culture = moon_elf
+			random_list = {
+				33 = {
+					change_religion = corinite
+				}
+				34 = {
+					change_religion = regent_court
+				}
+				33 = {
+					change_religion = elven_forebears
+				}
+			}
+		}
+
+		generic_increase_of_racial_tolerance_effect = {
+			race = elven
+			small = yes
+		}
+
+		hidden_effect = { #triggers the events
+			country_event = {
+				id = aelantir_immigration.1
+				days = 9125
+			}
+		}
+	}
+
+	option = { # Found Little Moonhaven, and empower them to succeed
+		name = aelantir_immigration.0.5
+		ai_chance = { factor = 100 }
+
+		trigger = {
+			OR = {
+				ruler_has_personality = just_personality
+				ruler_has_personality = tolerant_personality
+				ruler_has_personality = entrepreneur_personality
+			}
+		}
+		highlight = yes
+
+		event_target:little_moonhaven_province = {
+			#adds Little Moonhaven Province Modifier
+			add_province_modifier = {
+				name = aelantir_immigration_little_moonhaven_empowered # empowered little moonhaven
+				duration = -1
+			}
+			# flips to Moon Elf culture and faiths
+			change_culture = moon_elf
+			random_list = {
+				33 = {
+					change_religion = corinite
+				}
+				34 = {
+					change_religion = regent_court
+				}
+				33 = {
+					change_religion = elven_forebears
+				}
+			}
+		}
+
+		generic_increase_of_racial_tolerance_effect = {
+			race = elven
+			medium = yes
+		}
+
+		hidden_effect = { #triggers the events
+			country_event = {
+				id = aelantir_immigration.1
+				days = 9125
+			}
+		}
+	}
+}
+
+country_event = { # determine next event
+    id = aelantir_immigration.1
+    title = aelantir_immigration.1.t
+    desc = aelantir_immigration.1.d
+    picture = none
+	 
+	hidden = yes
+	is_triggered_only = yes
+
+	option = {
+		ai_chance = { factor = 100 }
+		if = {
+			limit = {
+				OR = {
+					medium_tolerance_elven_race_trigger = yes # i think this is coexistence
+					high_tolerance_elven_race_trigger = yes
+				}
+				event_target:little_moonhaven_province =  {
+					owned_by = ROOT
+					OR = {
+						has_province_modifier = aelantir_immigration_little_moonhaven
+						has_province_modifier = aelantir_immigration_little_moonhaven_greedy
+						has_province_modifier = aelantir_immigration_little_moonhaven_empowered
+					}
+				}
+			}
+			country_event = {
+				id = aelantir_immigration.2
+			}
+		}
+		else = {
+			country_event = {
+				id = aelantir_immigration.3
+			}
+		}
+	}
+}
+
+country_event = { # Enclaves foster ties with Cannorian Elves
+	id = aelantir_immigration.2
+	title = aelantir_immigration.2.t
+	desc = aelantir_immigration.2.d
+	picture = CITY_DEVELOPMENT_eventPicture
+
+	is_triggered_only = yes
+
+	goto = little_moonhaven_province
+
+	option = { # standard option
+		name = aelantir_immigration.2.1
+
+		every_country = {
+			limit = {
+				capital_scope = { superregion = western_cannor_superregion }
+				culture_group = elven
+			}
+			add_trust = {
+				who = root
+				value = 10
+			}
+			add_opinion = {
+				who = root
+				modifier = aelantir_immigration_the_protector_of_little_moonhaven_a
+			}
+		}
+
+		add_country_modifier = {
+			name = aelantir_immigration_elvish_enclaves_protected
+			duration = 3650 #ten years
+		}
+	}
+
+	option = { # silver tongue
+		name = aelantir_immigration.2.2
+
+		trigger = {
+			OR = {
+				ruler_has_personality = silver_tongue_personality
+				ruler_has_personality = fierce_negotiator_personality
+			}
+		}
+		highlight = yes
+
+		every_country = {
+			limit = {
+				capital_scope = { superregion = western_cannor_superregion }
+				culture_group = elven
+			}
+			add_trust = {
+				who = root
+				value = 10
+			}
+			add_opinion = {
+				who = root
+				modifier = aelantir_immigration_the_protector_of_little_moonhaven_b #empowered version
+			}
+		}
+
+		add_country_modifier = {
+			name = aelantir_immigration_elvish_enclaves_protected
+			duration = 5840 #sixteen years
+		}
+	}
+}
+
+country_event = { # Promises Broken to the Enclaves
+	id = aelantir_immigration.3
+	title = aelantir_immigration.3.t
+	desc = aelantir_immigration.3.d
+	picture = OVEREXTENSION_eventPicture
+
+	is_triggered_only = yes
+
+	goto = little_moonhaven_province
+
+	option = {
+		name = aelantir_immigration.3.1
+
+		every_country = {
+			limit = {
+				capital_scope = { superregion = western_cannor_superregion }
+				culture_group = elven
+			}
+			add_trust = {
+				who = root
+				value = -10
+			}
+			add_opinion = {
+				who = root
+				modifier = aelantir_immigration_the_liar_of_little_moonhaven_a #empowered version
+			}
+		}
+
+		event_target:little_moonhaven_province = {
+			remove_province_modifier = aelantir_immigration_little_moonhaven # littlemoonhaven
+			remove_province_modifier = aelantir_immigration_little_moonhaven_greedy # littlemoonhaven greedy
+			remove_province_modifier = aelantir_immigration_little_moonhaven_empowered # littlemoonhaven empowered
+		}
+	}
+
+	option = {
+		name = aelantir_immigration.3.2
+
+		trigger = {
+			OR = {
+				ruler_has_personality = silver_tongue_personality
+				ruler_has_personality = fierce_negotiator_personality
+			}
+		}
+		highlight = yes
+
+		every_country = {
+			limit = {
+				capital_scope = { superregion = western_cannor_superregion }
+				culture_group = elven
+			}
+			add_trust = {
+				who = root
+				value = -5
+			}
+			add_opinion = {
+				who = root
+				modifier = aelantir_immigration_the_liar_of_little_moonhaven_b #empowered version
+			}
+		}
+
+		event_target:little_moonhaven_province = {
+			remove_province_modifier = aelantir_immigration_little_moonhaven # littlemoonhaven
+			remove_province_modifier = aelantir_immigration_little_moonhaven_greedy # littlemoonhaven greedy
+			remove_province_modifier = aelantir_immigration_little_moonhaven_empowered # littlemoonhaven empowered
+		}
+	}
+}

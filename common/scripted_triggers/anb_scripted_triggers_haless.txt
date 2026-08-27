@@ -111,3 +111,41 @@ has_pajeong_reassimilation_points = {
 		value = $value$
 	}
 }
+
+can_use_monument_jianxusi_trigger = { # 4811 = { can_use_monument_jianxusi_trigger = yes }
+	OR = {
+		religion = accretive_path
+		religion = transmutative_path
+		religion = mystic_accord
+	}
+	has_owner_religion = yes
+	owner = {
+		has_estate = estate_mages
+		capital_scope = {
+			OR = {
+				superregion = yanshen_superregion
+				region = xianjie_region
+				region = shamakhad_region
+				region = thidinkai_region
+			}
+		}
+	}
+	OR = {
+		has_owner_accepted_culture = yes
+		has_owner_culture = yes
+	}
+}
+province_can_use_tabai_spirit_palace = {
+	culture_group = bom
+	OR = {
+		has_owner_culture = yes
+		has_owner_accepted_culture = yes
+	}
+	owner = {
+		culture_group = bom
+		OR = {
+			religion = mystic_accord
+			secondary_religion = mystic_accord
+		}
+	}
+}

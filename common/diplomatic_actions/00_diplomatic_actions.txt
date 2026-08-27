@@ -170,13 +170,6 @@ transfer_trade_power = {
 			set_country_flag = trade_power_count_4
 			clr_country_flag = trade_power_count_3
 		}
-		if = {
-			limit = { has_saved_global_event_target = feiten_or_was_feiten_target }
-			if = {
-				limit = { tag = event_target:feiten_or_was_feiten_target }
-				FROM = { set_country_flag = transfers_trade_to_feiten }
-			}
-		}
 	}
 }
 
@@ -1409,10 +1402,10 @@ declarewar = {
 				has_country_flag = J84_lizardfolk_expedition_flag
 				FROM = {
 					OR = {
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 						num_of_owned_provinces_with = {
 							value = 10
-							culture_group = lizardfolk
+							culture_is_lizardfolk = yes
 						}
 					}
 				}
@@ -1930,6 +1923,12 @@ declarewar = {
 			}
 			country_event = { id = flavour_zerat.10 } #The Second Northern Expedition
 			clr_country_flag = zerat_yezel_war
+		}
+
+		#Devandi Church Power Gain - Askaeorg
+		if = {
+			limit = { ROOT = { religion = askaeorg } }
+			add_church_power = 10
 		}
 	}
 }
@@ -2487,6 +2486,11 @@ enforce_peace = {
 				is_at_war = no
 			}
 			set_country_flag = vir_forb_peace_enforced
+		}
+		#Devandi Church Power Gain - Mazhthramazh
+		if = {
+			limit = { religion = mazhthramazh }
+			add_church_power = 50
 		}
 	}
 }
@@ -3622,6 +3626,11 @@ vassalaction = {
 				value = 500
 			}
 		}
+		#Devandi Church Power Gain - Mazhthramazh
+		if = {
+			limit = { religion = mazhthramazh }
+			add_church_power = 50
+		}
 	}
 }
 
@@ -4246,7 +4255,7 @@ insultaction = {
 			limit = {
 				OR = {
 					tag = H89
-					tag = S45
+					is_or_was_tag = { tag = S45 }
 				}
 			}
 			ROOT = { change_variable = { insult_counter = 1 } }
@@ -4316,6 +4325,7 @@ insultaction = {
 					limit = {
 						is_great_power = no
 						NOT = { num_of_subjects = 1 }
+						NOT = { is_subject = yes }
 					}
 					reverse_add_casus_belli = { type = cb_vassalize_mission target = ROOT months = 120 }
 				}
@@ -4428,6 +4438,42 @@ insultaction = {
 			dragon_turtle_change_friendship = { dragon_turtle = kealakys_ever_hungry amount = -5 }
 		}
 		else = { dragon_turtle_change_friendship = { dragon_turtle = kealakys_ever_hungry amount = -3 } }
+		
+		# Bardic Magic
+		if = {
+			limit = {
+				has_country_modifier = enchantment_1_aria_of_affection_spell_mod
+				OR = {
+					reverse_has_opinion_modifier = {
+						who = FROM
+						modifier = scornfully_insulted
+					}
+					NOT = { has_dlc = "Dharma" }
+				}
+			}
+			FROM = {
+				remove_opinion = {
+					who = ROOT
+					modifier = scornfully_insulted
+				}
+				remove_opinion = {
+					who = ROOT
+					modifier = insulted
+				}
+				add_opinion = {
+					who = ROOT
+					modifier = enchantment_bardic_aria_of_affection_reverse_insult
+				}
+				add_favors = {
+					who = ROOT
+					amount = 20
+				}
+				country_event = { # This will lose some trust and check trust threshold
+					id = magic_spell.406
+					days = 1825 # 5 years
+				}
+			}
+		}
 	}
 }
 
@@ -4785,6 +4831,43 @@ requestpeace = {
 			}
 			FROM = { set_country_flag = F60_custom_liberation_cb_target_country }
 		}
+		#Besolaki - Set flag if using Support Rebels cb for special event
+		if = {
+			limit = {
+				has_country_flag = G54_supporting_brethern_flag
+				OR = {
+					is_in_war = {
+						attacker_leader = ROOT
+						defender_leader = FROM
+						casus_belli = cb_support_rebels
+					}
+					is_in_war = {
+						attacker_leader = FROM
+						defender_leader = ROOT
+						casus_belli = cb_support_rebels
+					}
+				}
+			}
+			FROM = { set_country_flag = G54_supporting_peasant_rebels_flag }
+		}
+		if = {
+			limit = {
+				FROM = { has_country_flag = G54_supporting_brethern_flag }
+				OR = {
+					is_in_war = {
+						attacker_leader = ROOT
+						defender_leader = FROM
+						casus_belli = cb_support_rebels
+					}
+					is_in_war = {
+						attacker_leader = FROM
+						defender_leader = ROOT
+						casus_belli = cb_support_rebels
+					}
+				}
+			}
+			set_country_flag = G54_supporting_peasant_rebels_flag
+		}
 	}
 	effect = { # This happens after all of the peace effects like on_province_owner_change, on_country_released, etc
 		if = {
@@ -4801,7 +4884,9 @@ requestpeace = {
 				clr_country_flag = F60_custom_liberation_cb_target_country
 			}
 		}
-
+		#Besolaki - Clear flag if using Support Rebels cb for special event
+		clr_country_flag = G54_supporting_peasant_rebels_flag
+		FROM = { clr_country_flag = G54_supporting_peasant_rebels_flag }
 	}
 	condition = { #Iochand
 		tooltip = A80_second_small_war_tt
@@ -4948,6 +5033,11 @@ knowledge_sharing = {
 			}
 			add_favors = { who = FROM amount = 25 }
 			FROM = { add_country_modifier = { name = I27_faster_embracement_mod duration = 1825 } }
+		}
+		#Devandi Church Power Gain - Askaeorg
+		if = {
+			limit = { religion = askaeorg }
+			add_church_power = 20
 		}
 	}
 }

@@ -1564,6 +1564,107 @@ custom_icon = {
 
 
 
+
+### Kaino Federation
+
+custom_window = {
+	name = kaino_projects_window
+	potential = {
+		tag = L49
+	}
+}
+# Button 1
+custom_text_box = { name = kaino_project_apotheosis_of_mercy potential = { always = no } tooltip = kaino_project_apotheosis_of_mercy.desc }
+custom_button = {
+	name = kaino_project_apotheosis_of_mercy
+	potential = { 
+		has_country_flag = kaino_unlock_apotheosis_of_mercy_magical_project
+	} # Optional
+	trigger = { 
+		custom_trigger_tooltip = {
+			tooltip = kaino_project_apotheosis_of_mercy_unlock_tt
+			has_country_flag = kaino_unlock_apotheosis_of_mercy_magical_project
+		}
+		can_upgrade_project = { project = kaino_project_apotheosis_of_mercy } 
+	}
+	effect = { start_magic_project = { project = kaino_project_apotheosis_of_mercy event_1 = magic_project_kaino_project_apotheosis_of_mercy.0 } }
+	tooltip = kaino_project_apotheosis_of_mercy.desc
+}
+
+# Progressbar 1
+custom_text_box = { name = kaino_project_apotheosis_of_mercy_progress potential = { always = no } }
+custom_button = { name = kaino_project_apotheosis_of_mercy_progress potential = { always = no } }
+custom_icon = {
+	name = kaino_project_apotheosis_of_mercy_progress
+	potential = { 
+		has_country_flag = kaino_unlock_apotheosis_of_mercy_magical_project
+	}
+	frame = {
+		number = 100
+		trigger = { exactly_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 3 } }
+	}
+	frame = {
+		number = 66
+		trigger = { exactly_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 2 } }
+	}
+	frame = {
+		number = 33
+		trigger = { exactly_magic_project_level = { project = kaino_project_apotheosis_of_mercy level = 1 } }
+	}
+	frame = {
+		number = 0
+		trigger = { always = yes }
+	}
+}
+
+
+# Button 2
+custom_text_box = { name = kaino_project_romantic_date_kyaa potential = { always = no } tooltip = kaino_project_romantic_date_kyaa.desc }
+custom_button = {
+	name = kaino_project_romantic_date_kyaa
+	potential = { 
+		has_country_flag = kaino_unlock_romantic_date_kyaa_magical_project
+	}
+	trigger = { 
+		can_upgrade_project_with_single_stage = {
+			project = kaino_project_romantic_date_kyaa
+		}
+		custom_trigger_tooltip = {
+			tooltip = kaino_project_romantic_date_kyaa_unlock_tt
+			has_country_flag = kaino_unlock_romantic_date_kyaa_magical_project
+		}
+	}
+	effect = {
+		start_magic_project = { 
+			project = kaino_project_romantic_date_kyaa 
+			event_1 = magic_project_kaino_project_romantic_date_kyaa.0
+		}
+		hidden_effect = {
+			set_magic_experience_target = { type = country project = kaino_project_romantic_date_kyaa xptarget = 800 }
+		}
+	}
+	tooltip = kaino_project_romantic_date_kyaa.desc
+}
+# Progressbar 2
+custom_text_box = { name = kaino_project_romantic_date_kyaa_progress potential = { always = no } }
+custom_button = { name = kaino_project_romantic_date_kyaa_progress potential = { always = no } }
+
+
+custom_icon = {
+	name = kaino_project_romantic_date_kyaa_progress
+	potential = { 
+		has_country_flag = S90_born_of_ashen_skies_unlock
+	}
+	frame = {
+		number = 99
+		trigger = { exactly_magic_project_level = { project = kaino_project_romantic_date_kyaa level = 1 } }
+	}
+	frame = {
+		number = 0
+		trigger = { always = yes }
+	}
+}
+
 #####################################
 #	  Insyaa Regional projects		#
 #####################################
@@ -1682,6 +1783,155 @@ custom_icon = {
 	frame = {
 		number = 33
 		trigger = { exactly_magic_project_level = { project = harpylen_project level = 1 } }
+	}
+	frame = {
+		number = 0
+		trigger = { always = yes }
+	}
+}
+
+########################
+# Deathwinds Project
+custom_window = {
+	name = kheionai_projects_window
+	potential = {
+		has_full_deathwinds_system = yes
+	}
+}
+# Button 1
+custom_text_box = { name = deathwinds_kheion_and_kaydhano potential = { always = no } tooltip = deathwinds_kheion_and_kaydhano.desc }
+custom_button = {
+	name = deathwinds_kheion_and_kaydhano
+	trigger = { 
+		can_upgrade_project = { project = deathwinds_kheion_and_kaydhano }
+		if = {
+			limit = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 2 } }
+			2728 = { #Arpedifer
+				owned_by = ROOT
+				has_great_project = { type = potirioipithion tier = 3 }
+			}
+			alecandi_capital_provinces = {
+				type = all
+				country_or_non_sovereign_subject_holds = yes
+			}
+		}
+		else_if = {
+			limit = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } }
+			2728 = { #Arpedifer
+				owned_by = ROOT
+				has_great_project = { type = potirioipithion tier = 2 }
+			}
+		}
+		else = {
+			2728 = { #Arpedifer
+				owned_by = ROOT
+				has_great_project = { type = potirioipithion tier = 1 }
+			}
+		}
+	}
+	effect = {
+		start_magic_project = {
+			project = deathwinds_kheion_and_kaydhano
+			school = abjuration
+			event_1 = kheionai.50
+			event_2 = kheionai.53
+			event_3 = kheionai.56
+		}
+	}
+	tooltip = deathwinds_kheion_and_kaydhano.desc
+}
+# Progressbar 1
+custom_text_box = { name = deathwinds_kheion_and_kaydhano_progress potential = { always = no } }
+custom_button = { name = deathwinds_kheion_and_kaydhano_progress potential = { always = no } }
+custom_icon = {
+	name = deathwinds_kheion_and_kaydhano_progress
+	frame = {
+		number = 100
+		trigger = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 3 } }
+	}
+	frame = {
+		number = 66
+		trigger = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 2 } }
+	}
+	frame = {
+		number = 33
+		trigger = { exactly_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } }
+	}
+	frame = {
+		number = 0
+		trigger = { always = yes }
+	}
+}
+# Textbox 1
+custom_button = { name = deathwinds_kheion_and_kaydhano_textbox potential = { always = no } }
+custom_text_box = {
+	name = deathwinds_kheion_and_kaydhano_textbox
+	# potential = { }
+}
+# Magic school icon
+custom_text_box = { name = deathwinds_kheion_and_kaydhano_school_icon potential = { always = no } }
+custom_button = { name = deathwinds_kheion_and_kaydhano_school_icon potential = { always = no } }
+custom_icon = {
+	name = deathwinds_kheion_and_kaydhano_school_icon
+	frame = { number = 1 } # Abjuration
+}
+#####################################
+#	Labyrinth of Sorncell			#
+#####################################
+custom_window = {
+	name = labyrinth_of_sorncell_window
+	potential = {
+		has_country_flag = labyrinth_of_sorncell_unlocked
+	}
+}
+# Button 1
+custom_text_box = { name = labyrinth_of_sorncell potential = { always = no } tooltip = labyrinth_of_sorncell.desc }
+custom_button = {
+	name = labyrinth_of_sorncell
+	# potential = { } # Optional
+	trigger = {
+		can_upgrade_project = { project = labyrinth_of_sorncell }
+		if = {
+			limit = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 1 } }
+			mission_completed = celliande_second_bout
+		}
+	}
+	effect = {
+		start_magic_project = {
+			project = labyrinth_of_sorncell
+			event_1 = celliande.100
+			event_2 = celliande.103
+			event_3 = celliande.107
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					NOT = { #Stage 0 or 2
+						exactly_magic_project_level = { project = labyrinth_of_sorncell level = 1 }
+					}
+				}
+				set_magic_experience_target = { type = country project = labyrinth_of_sorncell xptarget = 600 }
+			}
+		}
+	}
+	tooltip = labyrinth_of_sorncell.desc
+}
+# Progressbar 1
+custom_text_box = { name = labyrinth_of_sorncell_progress potential = { always = no } }
+custom_button = { name = labyrinth_of_sorncell_progress potential = { always = no } }
+custom_icon = {
+	name = labyrinth_of_sorncell_progress
+	frame = {
+		number = 100
+		trigger = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 3 } }
+	}
+	frame = {
+		number = 66
+		trigger = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 2 } }
+	}
+	frame = {
+		number = 33
+		trigger = { exactly_magic_project_level = { project = labyrinth_of_sorncell level = 1 } }
 	}
 	frame = {
 		number = 0

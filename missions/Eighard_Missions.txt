@@ -788,16 +788,7 @@ H14_missions_slot_4 = {
 						is_rival = ROOT
 						has_been_eclipsed_by = ROOT
 					}
-					OR = {
-						has_opinion_modifier = {
-							who = ROOT
-							modifier = insulted
-						}
-						has_opinion_modifier = {
-							who = ROOT
-							modifier = scornfully_insulted
-						}
-					}
+					has_been_insulted_by_root = yes
 				}
 			}
 			army_size_percentage = 0.9
@@ -1378,19 +1369,21 @@ H14_missions_accepted_1 = {
 				AND = {
 					province_id = 1770 #Aerin
 					NOT = {
-						country_or_non_sovereign_subject_holds = ROOT
-						has_dock_building_trigger = yes
-						has_shipyard_building_trigger = yes
-						if = {
-							limit = {
-								ROOT = {
-									has_dlc = "Dharma"
+						AND = {
+							country_or_non_sovereign_subject_holds = ROOT
+							has_dock_building_trigger = yes
+							has_shipyard_building_trigger = yes
+							if = {
+								limit = {
+									ROOT = {
+										has_dlc = "Dharma"
+									}
 								}
+								province_has_center_of_trade_of_level = 2
 							}
-							province_has_center_of_trade_of_level = 2
-						}
-						else = {
-							development = 10
+							else = {
+								development = 10
+							}
 						}
 					}
 				}

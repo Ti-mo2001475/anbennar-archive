@@ -664,7 +664,7 @@ estate_adventurers_free_company_rosters = {
 }
 
 estate_adventurers_ennoblement_of_adventurers = {
-	icon = privilege_royal_authority
+	icon = privilege_grant_autonomy
 	max_absolutism = -5
 	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
 	loyalty = 0.05
@@ -1933,9 +1933,15 @@ estate_adventurers_allclan_bestiary_yidab = {
 			merc_company = merc_yidabs_vanguard
 			free_merc = yes # Only include this line if "elite" merc that costs no professionalism
 		}
+		hidden_effect = {
+			set_country_flag = I98_yidab_merc
+		}
 	}
 
 	on_revoked = {
+		hidden_effect = {
+			clr_country_flag = I98_yidab_merc
+		}
 		random_hired_mercenary_company = {
 			limit = {
 				home_province = {
@@ -3084,106 +3090,6 @@ estate_nobles_castanor_upgraded_strong_duchies = {
 		modifier = { #will lose it via invalid sooner or later
 			factor = 10
 			has_estate_privilege = estate_nobles_castanor_upgraded_strong_duchies
-		}
-	}
-}
-
-estate_nobles_tribes_tame_the_frontier_privilege = {
-	icon = privilege_grant_new_world_charter
-	influence = 0.05
-	loyalty = 0.05
-	max_absolutism = 0
-	is_valid = {
-		capital_scope = { superregion = gerudia_superregion }
-		culture_native_to_gerudia_superregion = yes
-	}
-	can_select = {
-		adm_tech = 5
-	}
-	can_revoke = {
-		always = yes
-	}
-	on_granted = {
-		custom_tooltip = estate_nobles_tribes_tame_the_frontier_dt
-		custom_tooltip = estate_nobles_tribes_tame_the_frontier_nt
-		tooltip = {
-			add_province_modifier = {
-				name = estate_tame_the_frontier_new_colony_mod
-				duration = 18250 #50 years
-			}
-		}
-		
-		add_country_modifier = {
-			name = temporary_colonist
-			duration = -1
-		}
-		custom_tooltip = estate_nobles_tribes_tame_the_frontier_ct
-	}
-	on_granted_province = {
-		if = {
-			limit = {
-				is_colony = yes
-				OR = {
-					region = yyl_moista_region
-					region = northern_pass_region
-					superregion = gerudia_superregion
-				}
-			}
-			add_province_modifier = {
-				name = estate_tame_the_frontier_discount_mod
-				duration = -1
-			}
-		}
-		else = {
-			remove_province_modifier = estate_tame_the_frontier_discount_mod
-		}
-	}
-	on_revoked_province = {
-		remove_province_modifier = estate_tame_the_frontier_discount_mod
-	}
-	on_revoked = {
-		remove_temporary_colonist = yes
-	}
-	penalties = {
-		range = -0.25
-	}
-	ai_will_do = {
-		factor = 5 #>10 take, <5 revoke
-		modifier = {
-			factor = 2
-			capital_scope = { superregion = gerudia_superregion }
-			culture_native_to_gerudia_superregion = yes
-			adm_tech = 5
-		}
-		modifier = {
-			factor = 2
-			capital_scope = { superregion = gerudia_superregion }
-			culture_native_to_gerudia_superregion = yes
-			has_estate_privilege = estate_nobles_tribes_tame_the_frontier_privilege
-		}
-		modifier = {
-			factor = 0.2
-			has_idea_group = exploration_ideas
-		}
-		modifier = {
-			factor = 0.5
-			has_idea_group = expansion_ideas
-		}
-		modifier = {
-			factor = 0.5
-			NOT = { 
-				any_owned_province = { 
-					OR = {
-						superregion = gerudia_superregion
-						region = yyl_moista_region
-						region = northern_pass_region
-					}
-					OR = {
-						has_empty_adjacent_province = yes 
-						is_colony = yes
-					}
-				} 
-			}
 		}
 	}
 }
@@ -7596,18 +7502,6 @@ estate_church_dictate_understanding = { #pure bait
 			religion_group = bulwari
 			has_country_flag = updating_isolationism_window
 		}
-		OR = {
-			primary_culture = sun_elf
-			culture_group = bulwari
-		}
-		NOT = {
-			capital_scope = {
-				OR = {
-					continent = north_america
-					continent = south_america
-				}
-			}
-		}
 		NOT = {
 			tag = F46
 			tag = F51
@@ -9425,7 +9319,7 @@ estate_nobility_scaleguard_minor_houses = {
 	}
 	can_revoke = {
 		stability = 3
-		crown_land_share = 0.4
+		crown_land_share = 40
 	}
 	on_revoked = {
 	}
@@ -11365,7 +11259,7 @@ estate_burghers_alashakan_mutation = {
 		has_global_flag = khatalashya_zulkanez_2
 	}
 	can_select = {
-		culture_group = lizardfolk
+		culture_is_lizardfolk = yes
 		can_have_more_mutations = yes
 	}
 	can_revoke = {
@@ -11423,7 +11317,7 @@ estate_nobility_glidz_mutation = {
 		has_country_modifier = 333_kuvunika_citadel_colony
 	}
 	can_select = {
-		culture_group = lizardfolk
+		culture_is_lizardfolk = yes
 		can_have_more_mutations = yes
 	}
 	on_granted = {
@@ -20126,6 +20020,34 @@ estate_adventurers_U39_order_of_exemplars = { #Orenvalyam
 	}
 }
 
+
+
+#kaino magical project privilege
+estate_mages_kaino_bringers_of_mercy = {
+	icon = estate_eunuchs_royal_intrigue_keepers_privilege
+	loyalty = 0.1
+	influence = 0.1
+	max_absolutism = 0
+	land_share = 0
+
+	is_valid = { has_estate_privilege = estate_mages_kaino_bringers_of_mercy }
+	can_select = { has_estate_privilege = estate_mages_kaino_bringers_of_mercy }
+
+	benefits = {
+		core_creation = -0.1
+	}
+	ai_will_do = { factor = 10 }
+
+	can_revoke = {
+		always = no
+	}
+
+	on_granted = {
+		#tooltip here
+	}
+}
+
+
 #Landslide Infantry (Yanacotle culture group)
 estate_church_landslide_inquisitors = {
 	#Volcanic Truth - Landslide Inquisitors
@@ -20250,3 +20172,4 @@ estate_church_landslide_crusaders= {
 		factor = 5
 	}
 }
+

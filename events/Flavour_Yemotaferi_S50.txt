@@ -43,26 +43,22 @@ country_event = {
 		name = yemotaferi.2.a
 
 		if = {
-			limit = { has_government_attribute = can_see_theocratic_heir_stats }
+			limit = { can_see_theocratic_heir_stats_trigger = yes }
 			define_heir = {
 				age = 55
 				max_random_adm = 2
-				max_random_dip = 2
-				max_random_mil = 2
+				max_random_dip = 4
+				max_random_mil = 4
 				change_adm = 4
-				change_dip = 2
-				change_mil = 2
 			}
 		}
 		else = {
 			define_heir = {
 				age = 55
 				max_random_adm = 2
-				max_random_dip = 2
-				max_random_mil = 2
+				max_random_dip = 4
+				max_random_mil = 4
 				change_adm = 4
-				change_dip = 2
-				change_mil = 2
 				hide_skills = yes
 			}
 		}
@@ -87,25 +83,21 @@ country_event = {
 		name = yemotaferi.2.b
 
 		if = {
-			limit = { has_government_attribute = can_see_theocratic_heir_stats }
+			limit = { can_see_theocratic_heir_stats_trigger = yes }
 			define_heir = {
 				age = 55
-				max_random_adm = 2
-				max_random_dip = 2
+				max_random_adm = 4
+				max_random_dip = 4
 				max_random_mil = 2
-				change_adm = 2
-				change_dip = 2
 				change_mil = 4
 			}
 		}
 		else = {
 			define_heir = {
 				age = 55
-				max_random_adm = 2
-				max_random_dip = 2
+				max_random_adm = 4
+				max_random_dip = 4
 				max_random_mil = 2
-				change_adm = 2
-				change_dip = 2
 				change_mil = 4
 				hide_skills = yes
 			}
@@ -131,21 +123,39 @@ country_event = {
 		name = yemotaferi.2.c
 
 		if = {
-			limit = { has_government_attribute = can_see_theocratic_heir_stats }
-			define_heir = {
-				age = 30
-				max_random_adm = 3
-				max_random_dip = 3
-				max_random_mil = 3
+			limit = { can_see_theocratic_heir_stats_trigger = yes }
+			if = {
+				limit = { has_government_attribute = theocracy_magical_odds_boosted }
+				define_heir = {
+					age = 30
+				}
 			}
+			else = {
+				define_heir = {
+					age = 30
+					max_random_adm = 3
+					max_random_dip = 3
+					max_random_mil = 3
+				}
+			}
+
 		}
 		else = {
-			define_heir = {
-				age = 30
-				max_random_adm = 3
-				max_random_dip = 3
-				max_random_mil = 3
-				hide_skills  = yes
+			if = {
+				limit = { has_government_attribute = theocracy_magical_odds_boosted }
+				define_heir = {
+					age = 30
+					hide_skills  = yes
+				}
+			}
+			else = {
+				define_heir = {
+					age = 30
+					max_random_adm = 3
+					max_random_dip = 3
+					max_random_mil = 3
+					hide_skills  = yes
+				}
 			}
 		}
 
@@ -173,7 +183,7 @@ country_event = {
 		name = yemotaferi.2.e
 
 		if = {
-			limit = { has_government_attribute = can_see_theocratic_heir_stats }
+			limit = { can_see_theocratic_heir_stats_trigger = yes }
 			define_heir = {
 				age = 55
 				max_random_adm = 2
@@ -457,35 +467,7 @@ country_event = {
 		name = yemotaferi.5.a
 
 		hidden_effect = {
-			# Give each Hag Ally at least a predefined area to make sure they exist.
-			rakshas_area = {
-				cede_province = S70
-				add_core = S70
-			}
-			6062 = { add_latest_building = { fort = yes builder = S70 } }
-			grixzakr_area = {
-				cede_province = F68
-				add_core = F68
-			}
-			5665 = { add_latest_building = { fort = yes builder = F68 } }
-			garpix_rakkaz_area = {
-				cede_province = F71
-				add_core = F71
-			}
-			5470 = { add_latest_building = { fort = yes builder = F71 } }
-			simegesfan_area = {
-				cede_province = L66
-				add_core = L66
-			}
-			5689 = { add_latest_building = { fort = yes builder = L66 } }
-
-			# Make sure they are independent
-			S70 = { grant_independence = yes }
-			F68 = { grant_independence = yes }
-			F71 = { grant_independence = yes }
-			L66 = { grant_independence = yes }
-
-			# Expand them with land that has their cores/culture
+			# Give the hag alliance land that has their cores/culture
 			africa = {
 				limit = {
 					# Any province is fair game except for your heartlands
@@ -548,6 +530,34 @@ country_event = {
 					add_core = F71
 				}
 			}
+
+			# Give each country at least a predefined area to make sure they exist.
+			rakshas_area = {
+				cede_province = S70
+				add_core = S70
+			}
+			6062 = { add_latest_building = { fort = yes builder = S70 } }
+			garpix_rakkaz_area = {
+				cede_province = F71
+				add_core = F71
+			}
+			5470 = { add_latest_building = { fort = yes builder = F71 } }
+			grixzakr_area = {
+				cede_province = F68
+				add_core = F68
+			}
+			5665 = { add_latest_building = { fort = yes builder = F68 } }
+			simegesfan_area = {
+				cede_province = L66
+				add_core = L66
+			}
+			5689 = { add_latest_building = { fort = yes builder = L66 } }
+
+			# Make sure they are independent, have alliances, and are correct religion
+			S70 = { grant_independence = yes change_religion = night_coven }
+			F68 = { grant_independence = yes create_alliance = S70 change_religion = shadow_pact }
+			F71 = { grant_independence = yes create_alliance = S70 change_religion = shadow_pact }
+			L66 = { grant_independence = yes create_alliance = S70 change_religion = shadow_pact }
 		}
 
 		S70 = {
@@ -676,32 +686,6 @@ country_event = {
 			id = yemotaferi.14
 			days = 3
 		}
-
-		hidden_effect = {
-			if = {
-				limit = {
-					NOT = { has_global_flag = ilfanill_dead }
-					NOT = { has_global_flag = komina_dead }
-					NOT = { has_global_flag = hireet_dead }
-				}
-				set_global_flag = ilfanill_dead
-				every_country = {
-					limit = {
-						OR = {
-							capital_scope = { continent = africa }
-							development_in_provinces = {
-								value = 100
-								continent = africa
-							}
-						}
-					}
-					
-					country_event = {
-						id = sarhalevents.1001
-					}
-				}
-			}
-		}
 	}
 }
 
@@ -757,6 +741,33 @@ country_event = {
 			}
 			L66 = {
 				kill_leader = { type = "Komina Riftwhisper" }
+			}
+		}
+
+		hidden_effect = {
+			if = {
+				limit = {
+					NOT = { has_global_flag = ilfanill_dead }
+					NOT = { has_global_flag = komina_dead }
+					NOT = { has_global_flag = hireet_dead }
+				}
+				set_global_flag = ilfanill_dead
+				every_country = {
+					limit = {
+						NOT = { tag = ROOT }
+						OR = {
+							capital_scope = { continent = africa }
+							development_in_provinces = {
+								value = 100
+								continent = africa
+							}
+						}
+					}
+					
+					country_event = {
+						id = sarhalevents.1001
+					}
+				}
 			}
 		}
 	}
@@ -1030,5 +1041,59 @@ country_event = {
 		name = yemotaferi.13.a
 		
 		S50_add_advisor_modifiers_effect = yes
+	}
+}
+
+# Hidden event to turn Tanizu vassal into Bwa Tanizu, to avoid crashes
+country_event = {
+	id = yemotaferi.15
+	title = yemotaferi.15.t
+	desc = yemotaferi.15.d
+	picture = ADVISOR_eventPicture
+	is_triggered_only = yes
+	hidden = yes
+
+	option = {
+		name = yemotaferi.15.a
+		
+		random_subject_country = {
+			limit = {
+				primary_culture = tanizu
+			}
+			
+			if = {
+				limit = {
+					NOT = { exists = L59 } # Bwa Tanizu
+				}
+				custom_tooltip = S50_form_bwa_tanizu_tt
+				hidden_effect = {
+					form_bwa_tanizu_effect = yes
+				}
+
+				L59 = {
+					add_country_modifier = {
+						name = S50_one_tribe
+						duration = -1
+					}
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = S50_one_tribe
+					duration = -1
+				}
+			}
+
+			custom_tooltip = S50_tanizu_claims_tt
+			hidden_effect = {
+				east_sarhal_superregion = {
+					limit = {
+						religion = beast_memory
+						NOT = { country_or_subject_holds = ROOT }
+					}
+					add_permanent_claim = PREV
+				}
+			}
+		}
 	}
 }
