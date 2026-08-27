@@ -1348,36 +1348,44 @@ double_manufactory_modifiers = {
 		add_province_modifier = { name = double_manufactory_modifiers_ramparts duration = -1 }
 	}
 	if = {
-		limit = { has_building = soldier_households has_soldier_households_bonus_trade_good = no }
-		add_province_modifier = { name = double_manufactory_modifiers_soldier_households duration = -1 }
+		limit = { has_building = soldier_households }
+		if = {
+			limit = { has_soldier_households_bonus_trade_good = yes }
+			add_province_modifier = { name = double_manufactory_modifiers_soldier_households_bonus duration = -1 }
+		}
+		else = {
+			add_province_modifier = { name = double_manufactory_modifiers_soldier_households duration = -1 }
+		}
 	}
 	if = {
-		limit = { has_building = soldier_households has_soldier_households_bonus_trade_good = yes }
-		add_province_modifier = { name = double_manufactory_modifiers_soldier_households_bonus duration = -1 }
+		limit = { has_building = impressment_offices }
+		if = {
+			limit = { has_impressment_offices_bonus_trade_good = yes }
+			add_province_modifier = { name = double_manufactory_modifiers_impressment_offices_bonus duration = -1 }
+		}
+		else = {
+			add_province_modifier = { name = double_manufactory_modifiers_impressment_offices duration = -1 }
+		}
 	}
 	if = {
-		limit = { has_building = impressment_offices has_impressment_offices_trade_good = no }
-		add_province_modifier = { name = double_manufactory_modifiers_impressment_offices duration = -1 }
+		limit = { has_building = state_house }
+		if = {
+			limit = { has_state_house_bonus_trade_good = yes }
+			add_province_modifier = { name = double_manufactory_modifiers_state_house_bonus duration = -1 }
+		}
+		else = {
+			add_province_modifier = { name = double_manufactory_modifiers_state_house duration = -1 }
+		}
 	}
 	if = {
-		limit = { has_building = impressment_offices has_impressment_offices_trade_good = yes }
-		add_province_modifier = { name = double_manufactory_modifiers_impressment_offices_bonus duration = -1 }
-	}
-	if = {
-		limit = { has_building = state_house has_state_house_bonus_trade_good = no }
-		add_province_modifier = { name = double_manufactory_modifiers_state_house duration = -1 }
-	}
-	if = {
-		limit = { has_building = state_house has_state_house_bonus_trade_good = yes }
-		add_province_modifier = { name = double_manufactory_modifiers_state_house_bonus duration = -1 }
-	}
-	if = {
-		limit = { has_building = mage_tower has_mage_tower_bonus_trade_good = no }
-		add_province_modifier = { name = double_manufactory_modifiers_mage_tower duration = -1 }
-	}
-	if = {
-		limit = { has_building = mage_tower has_mage_tower_bonus_trade_good = yes }
-		add_province_modifier = { name = double_manufactory_modifiers_mage_tower_bonus duration = -1 }
+		limit = { has_building = mage_tower }
+		if = {
+			limit = { has_mage_tower_bonus_trade_good = yes }
+			add_province_modifier = { name = double_manufactory_modifiers_mage_tower_bonus duration = -1 }
+		}
+		else = {
+			add_province_modifier = { name = double_manufactory_modifiers_mage_tower duration = -1 }
+		}
 	}
 	if = {
 		limit = { has_building = automatory has_automatory_bonus_trade_good = yes }
