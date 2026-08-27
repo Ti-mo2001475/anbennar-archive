@@ -6146,51 +6146,57 @@ can_see_theocratic_heir_stats_trigger = {
 }
 
 can_use_thousand_words_assembly_scripted_trigger = {
-	OR = {
-		custom_trigger_tooltip = {
-			tooltip = is_member_of_yanszin_league_TT
-			has_country_flag = is_member_of_yanszin_league_flag
+	owner = {
+		OR = {
+			custom_trigger_tooltip = {
+				tooltip = is_member_of_yanszin_league_TT
+				has_country_flag = is_member_of_yanszin_league_flag
+			}
+			full_idea_group = trade_ideas
 		}
-		full_idea_group = trade_ideas
+		OR = {
+			primary_culture = jiangszun
+			accepted_culture = jiangszun
+		}
+		has_estate = estate_eunuchs_anb
 	}
-	OR = {
-		primary_culture = jiangszun
-		accepted_culture = jiangszun
-	}
-	has_estate = estate_eunuchs_anb
 }
 
 can_use_the_defiant_trigger = {
-	capital_scope = { superregion = yanshen_superregion }
-	OR = {
-		primary_culture = jiangyang
-		accepted_culture = jiangyang
+	owner = {
+		capital_scope = { superregion = yanshen_superregion }
+		OR = {
+			primary_culture = jiangyang
+			accepted_culture = jiangyang
+		}
+		NOT = { religion = devouring_path }
+		NOT = { religion = black_doctrine }
 	}
-	NOT = { religion = devouring_path }
-	NOT = { religion = black_doctrine }
 }
 
 can_use_house_of_fire_and_water_trigger = {
-	capital_scope = {
+	owner = {
+		capital_scope = {
+			OR = {
+				superregion = yanshen_superregion
+				region = xianjie_region
+			}
+		}
 		OR = {
-			superregion = yanshen_superregion
-			region = xianjie_region
+			culture_group = yan
+			primary_culture = serene_harimari
+			primary_culture = pezarangi_harpy
+			primary_culture = semifire_harpy
+			primary_culture = dragon_command
+			primary_culture = sunrise_elf
+			primary_culture = goldscale_kobold
+		}
+		OR = {
+			has_estate = estate_mages
+			has_estate = estate_artificers
 		}
 	}
-	OR = {
-		culture_group = yan
-		primary_culture = serene_harimari
-		primary_culture = pezarangi_harpy
-		primary_culture = semifire_harpy
-		primary_culture = dragon_command
-		primary_culture = sunrise_elf
-		primary_culture = goldscale_kobold
-	}
-	OR = {
-		has_estate = estate_mages
-		has_estate = estate_artificers
-	}
-	4949 = { has_owner_accepted_culture = yes }
+	has_owner_accepted_culture = yes
 }
 
 can_use_palace_of_the_divine_call_trigger = {
@@ -6213,6 +6219,14 @@ can_use_palace_of_the_divine_call_trigger = {
 	owner = { government_rank = 2 }
 }
 
+can_use_port_of_two_spirits = {
+	owner = {
+		NOT = { tag = Y65 }
+		NOT = { religion = devouring_path }
+		NOT = { religion = black_doctrine }
+	}
+}
+
 has_soldier_households_bonus_trade_good = {
 	OR = {
 		trade_goods = grain
@@ -6224,7 +6238,7 @@ has_soldier_households_bonus_trade_good = {
 	}
 }
 
-has_impressment_offices_trade_good = {
+has_impressment_offices_bonus_trade_good = {
 	OR = {
 		trade_goods = salt
 		trade_goods = fish
