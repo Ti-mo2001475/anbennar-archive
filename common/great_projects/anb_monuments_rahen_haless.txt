@@ -5482,3 +5482,223 @@ house_of_fire_and_water = {
 		}
 	}
 }
+
+the_high_bastion = {
+	start = 6804 #Irdenkhiid
+	date = 1444.1.1
+	starting_tier = 0
+
+	type = monument
+	can_be_moved = no
+	build_cost = 0
+	time = { months = 0 }
+
+	can_use_modifiers_trigger = { owner = { can_use_the_high_bastion = yes } }
+	keep_trigger = {}
+	can_upgrade_trigger = { owner = { can_use_the_high_bastion = yes } }
+	build_trigger = { owner = { can_use_the_high_bastion = yes } }
+
+	tier_0 = {
+		upgrade_time = { months = 0 }
+		cost_to_upgrade = { factor = 0 }
+		province_modifiers = {}
+		area_modifier = {}
+		country_modifiers = {}
+		on_upgraded = {}
+	}
+
+	tier_1 = {
+		upgrade_time = { months = 120 }
+		cost_to_upgrade = { factor = 1000 }
+		province_modifiers = {
+			local_hostile_attrition = 1
+			local_manpower_modifier = 0.25
+		}
+		area_modifier = {
+			local_tax_modifier = 0.25
+		}
+		region_modifier = {}
+		country_modifiers = {
+			global_missionary_strength = 0.01
+		}
+		
+		on_upgraded = {
+			custom_tooltip = the_high_bastion_fort_1_tt
+			hidden_effect = {
+				owner = {
+					every_owned_province = {
+						limit = {
+							has_climate = arid
+							has_fort_building_trigger = yes
+						}
+						remove_province_modifier = the_high_bastion_arid_fort_2
+						remove_province_modifier = the_high_bastion_arid_fort_3
+						add_province_modifier = {
+							name = the_high_bastion_arid_fort_1
+							duration = -1
+						}
+					}
+				}
+			}
+		}
+	}
+
+	tier_2 = {
+		upgrade_time = { months = 180 }
+		cost_to_upgrade = { factor = 2500 }
+		province_modifiers = {
+			local_hostile_attrition = 2
+			local_manpower_modifier = 0.5
+			local_garrison_size = 0.2
+		}
+		area_modifier = {
+			local_tax_modifier = 0.5
+			tax_income = 12
+		}
+		region_modifier = {
+		}
+		country_modifiers = {
+			global_missionary_strength = 0.02
+		}
+
+		on_upgraded = {
+			custom_tooltip = the_high_bastion_fort_2_tt
+			hidden_effect = {
+				owner = {
+					every_owned_province = {
+						limit = {
+							has_climate = arid
+							has_fort_building_trigger = yes
+						}
+						remove_province_modifier = the_high_bastion_arid_fort_1
+						remove_province_modifier = the_high_bastion_arid_fort_3
+						add_province_modifier = {
+							name = the_high_bastion_arid_fort_2
+							duration = -1
+						}
+					}
+				}
+			}
+		}
+	}
+
+	tier_3 = {
+		upgrade_time = { months = 240 }
+		cost_to_upgrade = { factor = 5000 }
+		province_modifiers = {
+			local_hostile_attrition = 3
+			local_manpower_modifier = 0.75
+			local_garrison_size = 0.4
+		}
+		area_modifier = {
+			local_tax_modifier = 1
+			tax_income = 24
+		}
+		region_modifier = {
+		}
+		country_modifiers = {
+			global_missionary_strength = 0.03
+		}
+
+		on_upgraded = {
+			custom_tooltip = the_high_bastion_fort_3_tt
+			hidden_effect = {
+				owner = {
+					every_owned_province = {
+						limit = {
+							has_climate = arid
+							has_fort_building_trigger = yes
+						}
+						remove_province_modifier = the_high_bastion_arid_fort_1
+						remove_province_modifier = the_high_bastion_arid_fort_2
+						add_province_modifier = {
+							name = the_high_bastion_arid_fort_3
+							duration = -1
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+ghalorcander = {
+	start = 6841 #The'as Aschur
+	date = 1444.1.1
+	starting_tier = 1
+
+	type = monument
+	can_be_moved = no
+	build_cost = 0
+	time = { months = 0 }
+
+	can_use_modifiers_trigger = { owner = { can_use_ghalorcander = yes } }
+	keep_trigger = {}
+	can_upgrade_trigger = { owner = { can_use_ghalorcander = yes } }
+	build_trigger = { owner = { can_use_ghalorcander = yes } }
+
+	tier_0 = {
+		upgrade_time = { months = 0 }
+		cost_to_upgrade = { factor = 0 }
+		province_modifiers = {}
+		area_modifier = {}
+		country_modifiers = {}
+		on_upgraded = {}
+	}
+
+	tier_1 = {
+		upgrade_time = { months = 120 }
+		cost_to_upgrade = { factor = 1000 }
+		province_modifiers = {
+			local_build_time = -0.1
+			local_build_cost = -0.1
+		}
+		area_modifier = {}
+		region_modifier = {}
+		country_modifiers = {
+			mages_monthly_experience = 0.25
+		}
+		
+		on_upgraded = {
+			custom_tooltip = ghalorcander_proficient_magic_tt
+		}
+	}
+
+	tier_2 = {
+		upgrade_time = { months = 180 }
+		cost_to_upgrade = { factor = 2500 }
+		province_modifiers = {
+			local_build_time = -0.2
+			local_build_cost = -0.2
+		}
+		area_modifier = {}
+		region_modifier = {}
+		country_modifiers = {
+			mages_monthly_experience = 0.5
+		}
+
+		on_upgraded = {
+			custom_tooltip = ghalorcander_renowned_magic_tt
+		}
+	}
+
+	tier_3 = {
+		upgrade_time = { months = 240 }
+		cost_to_upgrade = { factor = 5000 }
+		province_modifiers = {
+			local_build_time = -0.3
+			local_build_cost = -0.3
+		}
+		area_modifier = {}
+		region_modifier = {}
+		country_modifiers = {
+			mages_monthly_experience = 1
+			all_power_cost = -0.025
+		}
+
+		on_upgraded = {
+			custom_tooltip = ghalorcander_legendary_magic_tt
+			hidden_effect = { double_manufactory_modifiers = yes }
+		}
+	}
+}
