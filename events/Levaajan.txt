@@ -132,6 +132,31 @@ country_event = { #selecting a province
 					limit = { check_variable = { num_levaajan_abilities = 3 } }
 					country_event = { id = levaajan.10 }
 				}
+
+				if = { #The High Bastion Monument
+					limit = {
+						owns = 6804 #Irdenkhiid
+						can_use_the_high_bastion = yes
+						6804 = { #Irdenkhiid
+							has_great_project = {
+								type = the_high_bastion
+								tier = 2
+							}
+						}
+					}
+					if = {
+						limit = {
+							6804 = { #Irdenkhiid
+								has_great_project = {
+									type = the_high_bastion
+									tier = 3
+								}
+							}
+						}
+						add_yearly_manpower = 0.5
+					}
+					else = { add_yearly_manpower = 0.25 }
+				}
 			}
 		}
 	}
