@@ -744,43 +744,37 @@ xechtari_above_all_check_effect = {
 		# Owner gained land outside Alecand: no longer Alecand-only, strip the flag and mods.
 		owner = {
 			if = {
-				limit = { exists = yes }
-				if = {
-					limit = {
-						has_reform = xechtari_above_all
-						has_country_flag = xechtari_only_owns_alecand
-					}
-					every_owned_province = {
-						limit = { region = alecand_region }
-						remove_province_modifier = xechtari_above_all_mod
-					}
-					clr_country_flag = xechtari_only_owns_alecand
+				limit = {
+					has_reform = xechtari_above_all
+					has_country_flag = xechtari_only_owns_alecand
 				}
+				every_owned_province = {
+					limit = { region = alecand_region }
+					remove_province_modifier = xechtari_above_all_mod
+				}
+				clr_country_flag = xechtari_only_owns_alecand
 			}
 		}
 
 		# FROM lost its last province outside Alecand: now Alecand-only, set the flag and mods.
 		FROM = {
 			if = {
-				limit = { exists = yes }
-				if = {
-					limit = {
-						has_reform = xechtari_above_all
-						NOT = { has_country_flag = xechtari_only_owns_alecand }
-						all_owned_province = { region = alecand_region }
-					}
-					every_owned_province = {
-						limit = {
-							region = alecand_region
-							NOT = { culture = eltibhar }
-						}
-						add_province_modifier = {
-							name = xechtari_above_all_mod
-							duration = -1
-						}
-					}
-					set_country_flag = xechtari_only_owns_alecand
+				limit = {
+					has_reform = xechtari_above_all
+					NOT = { has_country_flag = xechtari_only_owns_alecand }
+					all_owned_province = { region = alecand_region }
 				}
+				every_owned_province = {
+					limit = {
+						region = alecand_region
+						NOT = { culture = eltibhar }
+					}
+					add_province_modifier = {
+						name = xechtari_above_all_mod
+						duration = -1
+					}
+				}
+				set_country_flag = xechtari_only_owns_alecand
 			}
 		}
 	}
