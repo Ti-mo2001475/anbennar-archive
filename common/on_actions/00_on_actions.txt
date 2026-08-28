@@ -20880,6 +20880,12 @@ on_consecrate_patriarch = {
 			}
 		}
 	}
+	if = {
+		limit = { owner = { has_government_attribute = feeding_the_flame_local_cults_buff } }
+		every_province_in_state = {
+			add_province_modifier = { name = feeding_the_flame_local_cult_buff duration = -1 hidden = yes }
+		}
+	}
 }
 
 # country. from = overlord
@@ -22148,6 +22154,31 @@ on_culture_promoted = {
 	V05_yan_cultures_effect = { culture = gangim }
 	V05_yan_cultures_effect = { culture = szitu }
 	V05_yan_cultures_effect = { culture = naamjyut }
+
+	#Sociocultural Synthesis
+	if = {
+		limit = { has_government_attribute = sociocultural_synthesis_heathen_provinces_buff }
+		every_owned_province = {
+			limit = { 
+				NOT = { religion_group = gnollish } 
+				NOT = { culture_group = gnollish }
+				has_owner_accepted_culture = yes
+				NOT = { has_province_modifier = sociocultural_synthesis_local_heathen_buff }
+			}
+			add_province_modifier = { name = sociocultural_synthesis_local_heathen_buff duration = -1 hidden = yes }
+		}
+		every_owned_province = {
+			limit = {
+				has_province_modifier = sociocultural_synthesis_local_heathen_buff
+				OR = {
+					religion_group = gnollish
+					culture_group = gnollish
+					NOT = { has_owner_accepted_culture = yes }
+				}
+			}
+			remove_province_modifier = sociocultural_synthesis_local_heathen_buff
+		}
+	}
 }
 
 # ROOT = country
@@ -22724,6 +22755,31 @@ on_culture_demoted = {
 	if = {
 		limit = { is_or_was_tag = { tag = S98 } }
 		S98_remove_culture_modifiers_effect = yes
+	}
+
+	#Sociocultural Synthesis
+	if = {
+		limit = { has_government_attribute = sociocultural_synthesis_heathen_provinces_buff }
+		every_owned_province = {
+			limit = { 
+				NOT = { religion_group = gnollish } 
+				NOT = { culture_group = gnollish }
+				has_owner_accepted_culture = yes
+				NOT = { has_province_modifier = sociocultural_synthesis_local_heathen_buff }
+			}
+			add_province_modifier = { name = sociocultural_synthesis_local_heathen_buff duration = -1 hidden = yes }
+		}
+		every_owned_province = {
+			limit = {
+				has_province_modifier = sociocultural_synthesis_local_heathen_buff
+				OR = {
+					religion_group = gnollish
+					culture_group = gnollish
+					NOT = { has_owner_accepted_culture = yes }
+				}
+			}
+			remove_province_modifier = sociocultural_synthesis_local_heathen_buff
+		}
 	}
 }
 

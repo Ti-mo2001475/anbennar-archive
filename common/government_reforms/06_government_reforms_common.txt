@@ -8307,9 +8307,27 @@ feeding_the_flame = {
 		church_influence_modifier = 0.05
 	}
 
+	effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = { has_state_patriach = yes }
+				add_province_modifier = { name = feeding_the_flame_local_cult_buff duration = -1 hidden = yes }
+			}
+		}
+	}
+
+	post_removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = { has_province_modifier = feeding_the_flame_local_cult_buff }
+				remove_province_modifier = feeding_the_flame_local_cult_buff
+			}
+		}
+	}
+
 	custom_attributes = {
-		feeding_the_flame_light_the_pyres_cost_reduction = yes
 		feeding_the_flame_light_the_pyres_buff = yes
+		feeding_the_flame_local_cults_buff = yes
 	}
 
 	ai = {
@@ -8322,6 +8340,7 @@ sociocultural_synthesis = {
 
 	potential = {
 		religion = xhazobkult
+		culture_group = gnollish
 	}
 
 	trigger = {
@@ -8346,6 +8365,25 @@ sociocultural_synthesis = {
 		if = {
 			limit = { has_country_flag = removing_monstrous }
 			decrease_monstrous_5 = yes
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = { 
+					NOT = { religion_group = gnollish } 
+					NOT = { culture_group = gnollish }
+					has_owner_accepted_culture = yes
+				}
+				add_province_modifier = { name = sociocultural_synthesis_local_heathen_buff duration = -1 hidden = yes }
+			}
+		}
+	}
+
+	post_removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = { has_province_modifier = sociocultural_synthesis_local_heathen_buff }
+				remove_province_modifier = sociocultural_synthesis_local_heathen_buff
+			}
 		}
 	}
 
