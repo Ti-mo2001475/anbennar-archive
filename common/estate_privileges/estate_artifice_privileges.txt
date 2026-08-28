@@ -1522,6 +1522,25 @@ estate_artificers_relic_fueled_artificery = {
 	influence = 0.1
 	is_valid = {
 		NOT = { has_country_flag = artifice_no_base_privileges }
+		NOT = { has_country_flag = gor_vazumbrog_limited_artificery_privileges }
+		OR = {
+			NOT = { has_estate_privilege = estate_artificers_relic_fueled_artificery }
+			AND = {
+				OR = {
+					num_of_provinces_owned_or_owned_by_subjects_with = {
+						value = 2
+						trade_goods = damestear
+					}
+					num_of_provinces_owned_or_owned_by_subjects_with = {
+						value = 5
+						trade_goods = precursor_relics
+					}
+				}
+				has_country_flag = magic_artificery_artificery_only
+			}
+		}
+	}
+	can_select = {
 		OR = {
 			num_of_provinces_owned_or_owned_by_subjects_with = {
 				value = 2
@@ -1532,10 +1551,6 @@ estate_artificers_relic_fueled_artificery = {
 				trade_goods = precursor_relics
 			}
 		}
-		NOT = { has_country_flag = gor_vazumbrog_limited_artificery_privileges }
-	}
-	can_select = {
-		
 		custom_trigger_tooltip = {
 			tooltip = artifice_requires_artificery_only_mode_tt
 			has_country_flag = magic_artificery_artificery_only
