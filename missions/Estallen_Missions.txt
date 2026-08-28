@@ -73,8 +73,10 @@ A93_silk_missions_slot = {
 						province_has_center_of_trade_of_level = 3
 					}
 				}
-				add_building = trade_depot
-				change_trade_goods = silk
+				280 = {
+					add_building = trade_depot
+					change_trade_goods = silk
+				}
 			}
 			else = {
 				280 = {
@@ -221,18 +223,48 @@ A93_silk_missions_slot = {
 				name = "estalleni_mercenary_relations"
 				duration = -1
 			}
-		}
-		custom_tooltip = A93_merc_ideas_tt
-		hidden_effect = {
-			trigger_switch = {
-				on_trigger = mercenary_ideas
-				1 = { add_mil_power = 50 }
-				2 = { add_mil_power = 100 }
-				3 = { add_mil_power = 150 }
-				4 = { add_mil_power = 200 }
-				5 = { add_mil_power = 250 }
-				6 = { add_mil_power = 300 }
-				7 = { add_mil_power = 350 }
+			custom_tooltip = A93_merc_ideas_tt
+			if = {
+				limit = {
+					mercenary_ideas = 7
+				}
+				add_mil_power = 350
+			}
+			else_if = {
+				limit = {
+					mercenary_ideas = 6
+				}
+				add_mil_power = 300
+			}
+			else_if = {
+				limit = {
+					mercenary_ideas = 5
+				}
+				add_mil_power = 250
+			}
+			else_if = {
+				limit = {
+					mercenary_ideas = 4
+				}
+				add_mil_power = 200
+			}
+			else_if = {
+				limit = {
+					mercenary_ideas = 3
+				}
+				add_mil_power = 150
+			}
+			else_if = {
+				limit = {
+					mercenary_ideas = 2
+				}
+				add_mil_power = 100
+			}
+			else_if = {
+				limit = {
+					mercenary_ideas = 1
+				}
+				add_mil_power = 50
 			}
 		}
 	}
@@ -431,14 +463,7 @@ A93_western_missions_slot = {
 						has_personal_deity = ryala
 					}
 				}
-				custom_tooltip = A93_no_ryala_tt
 				add_dip_power = -100
-			}
-			else = {
-				custom_tooltip = A93_has_ryala_tt
-				tooltip = {
-					add_dip_power = -100
-				}
 			}
 		}
 	}
@@ -675,14 +700,7 @@ A93_central_missions_slot = {
 						has_personal_deity = esmaryal
 					}
 				}
-				custom_tooltip = A93_no_esmaryal_tt
 				add_adm_power = -100
-			}
-			else = {
-				custom_tooltip = A93_has_esmaryal_tt
-				tooltip = {
-					add_adm_power = -100
-				}
 			}
 		}
 	}
@@ -808,8 +826,8 @@ A93_diplomacy_missions_slot = {
 		}
 
 		trigger = {
-			num_of_allies = 7
-			num_of_free_diplomatic_relations = 0
+			num_of_allies = 6
+			num_of_free_diplomatic_relations = 1
 			NOT = {
 				any_subject_country = {
 					liberty_desire = 50
@@ -1022,14 +1040,7 @@ A93_diplomacy_missions_slot = {
 						has_personal_deity = balgar
 					}
 				}
-				custom_tooltip = A93_no_balgar_tt
 				add_mil_power = -100
-			}
-			else = {
-				custom_tooltip = A93_has_balgar_tt
-				tooltip = {
-					add_mil_power = -100
-				}
 			}
 			if = {
 				limit = {
