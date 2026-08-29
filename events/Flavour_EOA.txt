@@ -1928,7 +1928,7 @@ country_event = {
 	id = flavor_empire.27
 	title = flavor_empire.27.t
 	desc = flavor_empire.27.d
-	picture = NOBLE_ESTATE_eventPicture
+	picture = PRAYING_eventPicture
 	
 	is_triggered_only = yes
 
@@ -2014,9 +2014,10 @@ country_event = {
 			limit = {
 				is_part_of_hre = yes
 				has_matching_religion = ROOT
+				NOT = {tag = ROOT}
 			}
 			add_opinion = {
-				who  = ROOT
+				who = ROOT
 				modifier = EOA_pulse_27_faithful_conduct
 			}
 			reverse_add_opinion = {
@@ -2030,7 +2031,7 @@ country_event = {
 				has_matching_religion = event_target:wedding_target
 			}
 			add_opinion = {
-				who  = ROOT
+				who = ROOT
 				modifier = EOA_pulse_27_heretical_conduct
 			}
 			reverse_add_opinion = {
@@ -2069,11 +2070,11 @@ country_event = {
 			ruler_has_personality = tolerant_personality
 		}
 		add_opinion = {
-			who  = event_target:wedding_target
+			who = event_target:wedding_target
 			modifier = EOA_pulse_27_faithful_conduct
 		}
 		reverse_add_opinion = {
-				who  = ROOT
+				who = ROOT
 				modifier = EOA_pulse_27_faithful_conduct
 		}
 	}
@@ -2083,7 +2084,7 @@ country_event = {
 	id = flavor_empire.28
 	title = flavor_empire.28.t
 	desc = flavor_empire.28.d
-	picture = NOBLE_ESTATE_eventPicture
+	picture = PRAYING_eventPicture
 	
 	is_triggered_only = yes
 	
@@ -2108,6 +2109,15 @@ country_event = {
 				}
 			}
 	}
+	
+	immediate = {
+		hidden_effect = {
+			A43 = {
+				save_event_target_as = temple_target
+				}
+		}
+	}
+	
 	option = {
 		name = flavor_empire.28.a
 		add_prestige = 10
@@ -2145,9 +2155,10 @@ country_event = {
 			limit = {
 				is_part_of_hre = yes
 				has_matching_religion = ROOT
+				NOT = {tag = ROOT}
 			}
 			add_opinion = {
-				who  = ROOT
+				who = ROOT
 				modifier = EOA_pulse_27_faithful_conduct
 			}
 			reverse_add_opinion = {
@@ -2158,10 +2169,10 @@ country_event = {
 		every_country = {
 			limit = {
 				is_part_of_hre = yes
-				has_matching_religion = A43
+				has_matching_religion = event_target:temple_target
 			}
 			add_opinion = {
-				who  = ROOT
+				who = ROOT
 				modifier = EOA_pulse_27_heretical_conduct
 			}
 			reverse_add_opinion = {
