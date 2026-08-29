@@ -3906,8 +3906,13 @@ restore_ruler_stats = {
 revival_stat_loss = {
 	if = {
 		limit = { 
-			has_country_flag = b38_entef_ruler
-			has_country_flag = b38_entef_sarcophagus
+			OR = {
+				AND = { 
+					has_country_flag = b38_entef_ruler
+					has_country_flag = b38_entef_sarcophagus
+				}
+				has_country_flag = vampire_controlled_rebirth
+			}
 		}
 		random_list = {
 			25 = { }
@@ -3915,6 +3920,7 @@ revival_stat_loss = {
 			25 = { change_dip = -1 }
 			25 = { change_mil = -1 }
 		}
+		hidden_effect = { clr_country_flag = vampire_controlled_rebirth }
 	}
 	else = {
 		random_list = {
@@ -5197,7 +5203,12 @@ anb_on_development_effect = {
 		limit = {
 			owner = {
 				is_or_was_tag = { tag = F60 }
-				has_country_flag = F60_improved_mine_safety
+				mission_completed = F60_improve_mine_safety
+			}
+			OR = {
+				trade_goods = copper
+				trade_goods = iron
+				trade_goods = gems
 			}
 			num_of_times_improved_by_owner = 2
 		}
@@ -14811,11 +14822,9 @@ the_defiant_province_scripted_effect = {
 	#The Defiant
 	if = {
 		limit = {
-			owner = { 
-				owns = 4917 
-				can_use_the_defiant_trigger = yes
-			}
+			owner = { owns = 4917 }
 			4917 = {
+				can_use_the_defiant_trigger = yes
 				has_great_project = {
 					type = the_defiant
 					tier = 1
@@ -14878,14 +14887,10 @@ the_defiant_province_scripted_effect = {
 		}
 		if = {
 			limit = {
-				owner = { 
-					can_use_the_defiant_trigger = yes
-				}
-				4917 = {
-					has_great_project = {
-						type = the_defiant
-						tier = 1
-					}
+				can_use_the_defiant_trigger = yes
+				has_great_project = {
+					type = the_defiant
+					tier = 1
 				}
 			}
 			owner = {
@@ -14986,9 +14991,7 @@ thousand_words_assembly_province_scripted_effect = {
 					type = thousand_words_assembly
 					tier = 1
 				}
-				owner = {
-					can_use_thousand_words_assembly_scripted_trigger = yes
-				}
+				can_use_thousand_words_assembly_scripted_trigger = yes
 			}
 		}
 		thousand_words_assembly_per_province_scripted_effect = yes
@@ -15019,9 +15022,7 @@ thousand_words_assembly_province_scripted_effect = {
 						type = thousand_words_assembly
 						tier = 1
 					}
-					owner = {
-						can_use_thousand_words_assembly_scripted_trigger = yes
-					}
+					can_use_thousand_words_assembly_scripted_trigger = yes
 				}
 			}
 			owner = {
