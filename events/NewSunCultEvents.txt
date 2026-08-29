@@ -11578,6 +11578,31 @@ province_event = {
 	}
 }
 
+#Chosen's Duty: building completion
+province_event = {
+	id = new_sun_cult.294
+	title = new_sun_cult.294.t
+	desc = new_sun_cult.294.d
+	picture = DIPLOMACY_eventPicture
+	hidden = yes
+	is_triggered_only = yes
+
+	immediate = {
+		random = {
+			chance = 50
+			if = {
+				limit = { NOT = { has_elven_minority_trigger = yes } }
+				add_elven_minority_size_effect = yes
+			}
+			nsc_chosens_duty_province_sub_effect = yes
+		}
+	}
+
+	option = {
+		name = new_sun_cult.294.a
+	}
+}
+
 #Debug event to refresh NSC incident UI, might be useful for future spawnables with it
 country_event = {
 	id = new_sun_cult.1000
