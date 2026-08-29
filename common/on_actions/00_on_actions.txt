@@ -25274,121 +25274,49 @@ on_holy_order_established = {
 			}
 		}
 		
-#Kheios gov ref
-	#ADM
-		else_if = {
-			limit = {
-				owner = { 
-					OR = { 
-						has_reform = absence_of_divinity_mon
-						has_reform = absence_of_divinity_rep
-					} 
-				}
-				NOT = { has_province_modifier = kheios_gov_cd }
+	#Kheios gov ref
+	else_if = {
+		limit = {
+			owner = {
 				OR = {
-					holy_order = maederitic_rule_order_level_1
-					holy_order = maederitic_rule_order_level_2
-					holy_order = maederitic_rule_order_level_3
-
-					holy_order = schaal_onitheia_order_level_1
-					holy_order = schaal_onitheia_order_level_2
-					holy_order = schaal_onitheia_order_level_3
-
-					holy_order = teachings_of_varamelas_order_level_1
-					holy_order = teachings_of_varamelas_order_level_2
-					holy_order = teachings_of_varamelas_order_level_3	
-				}		
+					has_reform = absence_of_divinity_mon
+					has_reform = absence_of_divinity_rep
+				}
 			}
-			area = {
+			NOT = { has_province_modifier = kheios_gov_cd }
+			OR = {
+				has_adm_kheionist_holy_order = yes
+				has_dip_kheionist_holy_order = yes
+				has_mil_kheionist_holy_order = yes
+			}
+		}
+		area = {
+			if = {
+				limit = {
+					NOT = { has_province_modifier = kheios_gov_cd }
+				}
+				add_province_modifier = {
+					name = kheios_gov_cd
+					duration = 1825
+					hidden = yes
+				}
 				if = {
-					limit = {
-						NOT = { has_province_modifier = kheios_gov_cd }
-					}
-					add_province_modifier = {
-						name = kheios_gov_cd
-						duration = 1825
-					}
+					limit = { has_adm_kheionist_holy_order = yes }
 					add_local_autonomy = -15
 				}
 			}
 		}
-
-	#DIP
-		else_if = {
-			limit = {
-				owner = { 
-					OR = { 
-						has_reform = absence_of_divinity_mon
-						has_reform = absence_of_divinity_rep
-					} 
-				}
-				NOT = { has_province_modifier = kheios_gov_cd }
-				OR = {
-					holy_order = dictats_of_isparokaeus_order_level_1
-					holy_order = dictats_of_isparokaeus_order_level_2
-					holy_order = dictats_of_isparokaeus_order_level_3
-
-					holy_order = archatiradist_doctrine_order_level_1
-					holy_order = archatiradist_doctrine_order_level_2
-					holy_order = archatiradist_doctrine_order_level_3
-
-					holy_order = anagbheism_order_level_1
-					holy_order = anagbheism_order_level_2
-					holy_order = anagbheism_order_level_3	
-				}			
-			}
+		if = {
+			limit = { has_dip_kheionist_holy_order = yes }
 			add_prosperity = 15
-			area = {
-				if = {
-					limit = {
-						NOT = { has_province_modifier = kheios_gov_cd }
-					}
-					add_province_modifier = {
-						name = kheios_gov_cd
-						duration = 1825
-					}
-				}
-			}
 		}
-	#MIL
 		else_if = {
-			limit = {
-				owner = { 
-					OR = { 
-						has_reform = absence_of_divinity_mon
-						has_reform = absence_of_divinity_rep
-					} 
-				}
-				NOT = { has_province_modifier = kheios_gov_cd }
-				OR = {
-					holy_order = axierophonic_mandate_order_level_1
-					holy_order = axierophonic_mandate_order_level_2
-					holy_order = axierophonic_mandate_order_level_3
-
-					holy_order = drivos_rochos_order_level_1
-					holy_order = drivos_rochos_order_level_2
-					holy_order = drivos_rochos_order_level_3
-
-					holy_order = laskaris_creed_order_level_1
-					holy_order = laskaris_creed_order_level_2
-					holy_order = laskaris_creed_order_level_3
-				}
-			}
+			limit = { has_mil_kheionist_holy_order = yes }
 			owner = {
 				add_rebel_progress = { value = -15 }
 			}
-			area = {
-				if = {
-					limit = {
-						NOT = { has_province_modifier = kheios_gov_cd }
-					}
-					add_province_modifier = {
-						name = kheios_gov_cd
-						duration = 1825	
-					}
-				}
-			}
 		}
+	}
 
 		# New Sun Cult
 		else_if = {
