@@ -2076,7 +2076,7 @@ remove_increase_same_religion_opinion = {
 #	}
 #}
 
-#Country effect - make sure to add an own custom tooltip in form of: "Every §Y$religion$§! country will have their opinion of [Root.GetName] increased by §G+50§!."
+#Country effect - make sure to add an own custom tooltip in form of: "Every ï¿½Y$religion$ï¿½! country will have their opinion of [Root.GetName] increased by ï¿½G+50ï¿½!."
 add_opinion_of_religion = { #1.35
 	hidden_effect = {
 		set_country_flag = has_improve_opinion_flag
@@ -2103,7 +2103,7 @@ add_opinion_of_religion = { #1.35
 	}
 }
 
-#Country effect - make sure to add a custom localization like: "Remove the opinion bonus of $religion$ countries for §Y[Root.GetName]§!."
+#Country effect - make sure to add a custom localization like: "Remove the opinion bonus of $religion$ countries for ï¿½Y[Root.GetName]ï¿½!."
 remove_religious_opinion_for_scope = { #1.35
 	hidden_effect = {
 		clr_country_flag = has_improve_opinion_flag
@@ -2766,7 +2766,7 @@ upgrade_building = {
 	]
 }
 
-#Country effect - Make sure to make an own custom tooltip for it when using it "Gain §G$years$ years§! worth of Trade Income."
+#Country effect - Make sure to make an own custom tooltip for it when using it "Gain ï¿½G$years$ yearsï¿½! worth of Trade Income."
 add_years_of_trade_income = {
 	hidden_effect = {
 		set_variable = {
@@ -3737,7 +3737,7 @@ for_variable_amount = {
 # <unit name> 
 ##########################################################
 #Country effect
-# For tooltip use the following scheme: "§Y<amount>§! of §Y<unit_type>§! will be created in §Y[<province>.GetName]§! for §Y[This.GetName]§!."
+# For tooltip use the following scheme: "ï¿½Y<amount>ï¿½! of ï¿½Y<unit_type>ï¿½! will be created in ï¿½Y[<province>.GetName]ï¿½! for ï¿½Y[This.GetName]ï¿½!."
 create_units_of_type = {
 	[[custom_tooltip]
 		custom_tooltip = $custom_tooltip$
@@ -3753,7 +3753,7 @@ create_units_of_type = {
 }
 
 #Province effect
-# For tooltip use the following scheme: "§Y<amount>§! of §Y<unit_type>§! will be created in §Y[This.GetName]§! for §Y[<who>.GetName]§!."
+# For tooltip use the following scheme: "ï¿½Y<amount>ï¿½! of ï¿½Y<unit_type>ï¿½! will be created in ï¿½Y[This.GetName]ï¿½! for ï¿½Y[<who>.GetName]ï¿½!."
 create_units_of_type_in_province = {
 	[[custom_tooltip]
 		custom_tooltip = $custom_tooltip$
@@ -4773,14 +4773,11 @@ increase_gold_discovery = {
 }
 
 remove_dev_from_building = {
+	# Check for each type of source separately so as to handle removal of stacked bonuses
 	if = {
 		limit = {
-			FROM = { 
-				OR = {
-					full_idea_group = economic_ideas
-					has_country_modifier = G58_coastal_utopia_modifier
-					has_government_attribute = add_dev_from_manufactories
-				}
+			FROM = {
+				full_idea_group = economic_ideas
 			}
 			gained_dev_from_eco_building = { building = $building$ }
 		}
@@ -4795,23 +4792,57 @@ remove_dev_from_building = {
 			clr_province_flag = built_eco_dev_$building$
 		}
 	}
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					has_government_attribute = add_dev_from_manufactories
+					has_country_modifier = G58_coastal_utopia_modifier
+				}
+			}
+			gained_dev_from_special_building = { building = $building$ }
+		}
+		add_base_$type$ = -$value$
+		if = {
+			limit = {
+				NOT = { base_$type$ = 1 }
+			}
+			set_base_$type$ = 1
+		}
+		hidden_effect = {
+			clr_province_flag = built_special_dev_$building$
+		}
+	}
 }
 
 add_dev_from_building = {
+	# Comes from econ ideas or from limited-availability sources (like missions & special goverment types)
+	# Eco ideas stacks with the limited sources, but the limited sources don't stack with each other
 	if = {
 		limit = {
-			FROM = { 
-				OR = {
-					full_idea_group = economic_ideas
-					has_country_modifier = G58_coastal_utopia_modifier
-					has_government_attribute = add_dev_from_manufactories
-				}
+			FROM = {
+				full_idea_group = economic_ideas
 			}
 			NOT = { gained_dev_from_eco_building = { building = $building$ } }
 		}
 		add_base_$type$ = $value$
 		hidden_effect = {
 			set_province_flag = built_eco_dev_$building$
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					has_government_attribute = add_dev_from_manufactories
+					has_country_modifier = G58_coastal_utopia_modifier
+				}
+			}
+			NOT = { gained_dev_from_special_building = { building = $building$ } }
+		}
+		add_base_$type$ = $value$
+		hidden_effect = {
+			set_province_flag = built_special_dev_$building$
 		}
 	}
 }

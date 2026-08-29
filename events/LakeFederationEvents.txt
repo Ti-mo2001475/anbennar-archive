@@ -1808,6 +1808,7 @@ country_event = {
 	option = {
 		name = lake.40.a
 		ai_chance = { factor = 100 }
+		regenerate_government_mechanics = yes
 		add_prestige = 5
 	}
 }
@@ -4373,7 +4374,9 @@ country_event = {
 				}
 			}
 			every_country = {
+				limit = { has_country_flag = federation_leader }
 				clr_country_flag = federation_leader
+				regenerate_government_mechanics = yes
 			}
 			event_target:new_federation_leader = {
 				set_country_flag = federation_leader
@@ -6526,4 +6529,54 @@ country_event = {
 	option = {
 		name = lake.527.a
 	}
+}
+
+
+#Federation Authority events to alert members of their new modifier, only ai can get them, players get the major alert
+country_event = { #Ease Internal Tensions
+	id = lake.600
+	title = lake.600.t
+	desc = lakefed_ease_internal_tensions_tt #Intentional
+	picture = DIPLOMACY_SIGNING_eventPicture
+	is_triggered_only = yes
+
+	major = yes
+	major_trigger = {
+		has_country_modifier = lake_federation_member
+		NOT = { has_government_mechanic = lakefed_authority_mechanic }
+	}
+	
+	option = { name = none }
+}
+
+country_event = { #Encourage Colonial Ventures
+	id = lake.601
+	title = lake.601.t
+	desc = lakefed_encourage_colonial_ventures_tt #Intentional
+	picture = DIPLOMACY_SIGNING_eventPicture
+	is_triggered_only = yes
+
+	major = yes
+	major_trigger = {
+		has_country_modifier = lake_federation_member
+		NOT = { has_government_mechanic = lakefed_authority_mechanic }
+	}
+	
+	option = { name = none }
+}
+
+country_event = { #Incentivize Urban Development
+	id = lake.602
+	title = lake.602.t
+	desc = lakefed_incentivize_urban_development_tt #Intentional
+	picture = DIPLOMACY_SIGNING_eventPicture
+	is_triggered_only = yes
+
+	major = yes
+	major_trigger = {
+		has_country_modifier = lake_federation_member
+		NOT = { has_government_mechanic = lakefed_authority_mechanic }
+	}
+	
+	option = { name = none }
 }

@@ -38,7 +38,7 @@ country_event = { #Ultimatum
 		tag = A56 #Celliande
 	}
 	
-	option = {
+	option = { #No
 		name = celliande.2.a
 		hawkfields_area = {
 			add_core = A56
@@ -52,7 +52,13 @@ country_event = { #Ultimatum
 			factor = 100
 			modifier = {
 				factor = 0
-				has_any_disaster = yes
+				OR = {
+					has_any_disaster = yes
+					AND = {
+						is_at_war = yes
+						NOT = { war_with = A56 }
+					}
+				}
 			}
 		}
 	}
@@ -64,7 +70,7 @@ country_event = { #Ultimatum
 		}
 		if = {
 			limit = {
-				A56 = {
+				A56 = { #Celliande
 					alliance_with = A34 #Bisan
 				}
 			}
@@ -85,10 +91,16 @@ country_event = { #Ultimatum
 			}
 		}
 		ai_chance = {
-			factor = 100
+			factor = 1
 			modifier = {
-				factor = 0.1
-				has_any_disaster = no
+				factor = 100
+				OR = {
+					has_any_disaster = yes
+					AND = {
+						is_at_war = yes
+						NOT = { war_with = A56 }
+					}
+				}
 			}
 		}
 	}
@@ -105,15 +117,39 @@ country_event = { #Tellum accord
 	
 	option = {
 		name = celliande.3.a
-		vassalize = A86
-		add_country_modifier = {
-			name = celliande_tellum_modifier
-			duration = 3650
-		}
-		A86 = { #Tellum
+		if = {
+			limit = {
+				A86 = {
+					exists = yes
+				}
+			}
 			if = {
-				limit = { total_development = 50 }
-				add_liberty_desire = 30
+				limit = {
+					A86 = {
+						vassal_of = ROOT
+					}
+				}
+				A86 = {
+					add_liberty_desire = -25
+				}
+			}
+			else = {
+				vassalize = A86
+				add_country_modifier = {
+					name = celliande_tellum_modifier
+					duration = 3650
+				}
+				A86 = { #Tellum
+					if = {
+						limit = { total_development = 50 }
+						add_liberty_desire = 30
+					}
+				}
+			}
+		}
+		else = {
+			417 = {
+				add_nationalism = -5
 			}
 		}
 	}
@@ -500,19 +536,18 @@ country_event = { #Renovation suprise
 	is_triggered_only = yes
 	
 	option = {
-		name = celliande.17.a
-		add_prestige = 25
-		add_splendor = 100
-		add_country_modifier = {
-			name = celliande_rep
-			duration = 3650
-		}
-	}
-	option = {
 		name = celliande.17.b
+		custom_tooltip = celliande.17.tt
+		hidden_effect = {
+			add_country_modifier = {
+				name = celliande_until_milcori
+				duration = -1
+			}
+		}
+		
 		add_country_modifier = {
 			name = celliande_border_claim
-			duration = 3650
+			duration = 9125 #25 Years
 		}
 	}
 }
@@ -973,9 +1008,7 @@ country_event = { #END level 2
 			duration = -1
 		}
 		custom_tooltip = celliande.106.tt
-		hidden_effect = {
-			set_country_flag = necromancy_2_speak_with_dead_cost_05
-		}
+		set_country_flag = necromancy_2_speak_with_dead_cost_0
 	}
 }
 country_event = { #Start level 3
@@ -1492,7 +1525,7 @@ country_event = { #Quintenbury 1
 		trigger = {
 			is_overall_divination_level_1_minimum = yes
 		}
-		change_mana = { amount = -10 }
+		change_mana = { amount = -8 }
 		add_treasury = -10
 		add_adm_power = -10
 		add_dip_power = -10
