@@ -2724,6 +2724,7 @@ A93_ideas = {
 
 	A93_where_the_party_starts = {
 		prestige = 1
+		caravan_power = 0.15
 	}
 	A93_the_pinklady_band = {
 		mercenary_cost = -0.15
@@ -3450,7 +3451,7 @@ Z22_ideas = {
 #Envermarck
 Z24_ideas = {
 	start = {
-		global_trade_goods_size_modifier = 0.1 	#Envermarck is known for high quality fish even among the Blue Reachmen cities as well as larger quantities meaning workers don‚Äôt even have to work harder to get more goods both produced and sold.
+		global_trade_goods_size_modifier = 0.1 	#Envermarck is known for high quality fish even among the Blue Reachmen cities as well as larger quantities meaning workers don't even have to work harder to get more goods both produced and sold.
 		defensiveness = 0.2						#Having been sacked recently the city has been more vigilant in their defenses of the city which will transfer over to any other forts they either build themselves or gain from conquest to try and ensure that the wealth of the land would not be taken by foreign invaders and that so many would not lose the place they call home if a city is sacked.
 	}	
 	bonus = {
@@ -3477,7 +3478,7 @@ Z24_ideas = {
 	Z24_from_selkies_to_friends = { #When the city of Envermarck was first founded around 580 AA a Sea Hag decided to take residence near the shore right off of the city. The people of the city were panicked as many children disappeared if they were playing at the shore, and when children were kept away many sailors or fishermen started to disappear. With no options left and the city seemingly nearing collapse a few Selkie took notice and offered to help the remaining people with the Sea Hag in return for respecting their part of the sea. As the deal was signed the plan went into motion and using their own magics the Sea Hag was slain and ever since the people of Envermarck respect Selkies and some have decided to join our army as sailors given their nomadic lifestyle and affinity for the sea.
 		global_sailors_modifier = 0.2 
 	}	
-	Z24_relics_of_giants = { #Following the adoption of artificery across Cannor the ancient Giant City north of Envermarck was explored, containing relics from the time of the Giant‚Äôs rule of Gerudia, even as far back as their wars against the dragons. It also has many relics dating back to the first war against the Sea Trolls which saw the rise of a Kraken-Lord to unite the tribes of trolls. Using a kraken bound using ancient giant magic he was able to conquer much of coastal Gerudia until a large coalition of all Gerudian people pushed them to the ancient city ruins where the Kraken-Lord was slain. Having access to old giant runic magic the Kraken-Lord had a large number of ancient giant relics stored in the ruins alongside the already existing relics making the exploration of the city allow for a constant influx of adventurers from all around.
+	Z24_relics_of_giants = { #Following the adoption of artificery across Cannor the ancient Giant City north of Envermarck was explored, containing relics from the time of the Giant's rule of Gerudia, even as far back as their wars against the dragons. It also has many relics dating back to the first war against the Sea Trolls which saw the rise of a Kraken-Lord to unite the tribes of trolls. Using a kraken bound using ancient giant magic he was able to conquer much of coastal Gerudia until a large coalition of all Gerudian people pushed them to the ancient city ruins where the Kraken-Lord was slain. Having access to old giant runic magic the Kraken-Lord had a large number of ancient giant relics stored in the ruins alongside the already existing relics making the exploration of the city allow for a constant influx of adventurers from all around.
 		idea_cost = -0.1
 	}
 	reachman_give_and_take = { # Shared idea : Blue Reachmen will fight for their liberty
@@ -20891,45 +20892,134 @@ Z65_ideas = {
 	}
 }
 
-#Dahui
-Z66_ideas = {
+#Gangim - Dahui
+Z66_Gangim_ideas = {
 	start = {
-		global_unrest = -2
-		governing_capacity_modifier = 0.1
+		leader_land_fire = 1
+		global_missionary_strength = 0.02
 	}
 	bonus = {
-		global_regiment_cost = -0.2
+		free_policy = 1
 	}
 	trigger = {
 		tag = Z66
+		OR = {
+			primary_culture = gangim
+			primary_culture = szitu
+		}
 	}
 	free = yes
 
-	Z66_emperor_of_the_yan = { #First native empire of Yanshen
-		legitimacy = 1
-		devotion = 1
-		republican_tradition = 0.3
-		horde_unity = 1
+	Z66_jiange = {
+		advisor_cost = -0.20
 	}
-	Z66_imperial_examinations = { #Civil service exams adopted from the Gowon
-		advisor_cost = -0.15
-		advisor_pool = 2
-	}
-	Z66_longjudan = { #Imperial armies created in the vein of the old Phoenix Empire legions
+	Z66_the_dragon_army = {
 		discipline = 0.05
 	}
-	Z66_house_of_the_tortoise = { #Imperial military academy
-		leader_land_manuever = 1
-		leader_land_fire = 1
+	Z66_a_righteous_accreive_path = {
+		missionaries = 1
+		tolerance_own = 1
 	}
-	Z66_jade_seal_ships = { #Armed merchant ships granted green licenses by the imperial throne to conduct trade
+	Z66_the_house_of_connections = {
+		trade_efficiency = 0.15
+		envoy_travel_time = -0.15
+	}
+	Z66_radiant_fire = {
+		artillery_fire = 0.5
+	}
+	Z66_inner_and_outer_courts = {
+		administrative_efficiency = 0.05
+	}
+	Z66_the_empire_of_radiant_gangim = {
+		max_absolutism = 20
+		yearly_absolutism = 1
+	}
+}
+
+#Jiangszun - Dahui
+Z66_Jiangszun_ideas = {
+	start = {
+		land_morale = 0.10
+		core_creation = -0.15
+	}
+	bonus = {
+		infantry_power = 0.15
+	}
+	trigger = {
+		tag = Z66
+		OR = {
+			primary_culture = jiangyang
+			primary_culture = jiangszun
+			primary_culture = beikling
+		}
+	}
+	free = yes
+	Z66_the_dragon_army = {
+		discipline = 0.05
+	}
+	Z66_the_imperial_examination_system = {
+		advisor_cost = -0.10
+		advisor_pool = 1
+	}
+	Z66_zhaoming_war_college = {
+		leader_siege = 1
+		prestige_from_land = 0.3
+	}
+	Z66_jade_seal_maritime_trade = {
 		global_trade_power = 0.15
 	}
-	Z66_qufenguo = { #Viceroys ruling the disparate regions of the empire, most natives elevated to the position via the exams
-		global_autonomy = -0.1
-	}
-	Z66_office_of_integration = { #Bureacratic office for integrating new peoples and territories
+	Z66_the_consorate_system = {
 		administrative_efficiency = 0.05
+	}
+	Z66_assimilateion_policy = {
+		governing_capacity_modifier = 0.15
+	}
+	Z66_the_empire_of_radiant_jiangszun = {
+		max_absolutism = 15
+		general_cost = -0.10
+	}
+}
+
+#Naamjyut - Dahui
+Z66_Naamjyut_ideas = {
+	start = {
+		global_regiment_cost = -0.15
+		build_cost = -0.10
+	}
+	bonus = {
+		vassal_forcelimit_bonus = 1
+	}
+	trigger = {
+		tag = Z66
+		OR = {
+			primary_culture = naamjyut
+			primary_culture = kuldaakin
+		}
+	}
+	free = yes
+	Z66_the_equal_court = {
+		female_advisor_chance = 0.5
+		idea_cost = -0.075
+	}
+	Z66_the_jyut_battalion = {
+		infantry_shock = 0.20
+	}
+	Z66_a_frontier_of_clans = {
+		min_autonomy_in_territories = -0.1
+	}
+	Z66_imperial_arsenal_collage = {
+		leader_naval_manuever = 1
+		global_ship_repair = 0.1
+	}
+	Z66_the_dragon_army = {
+		discipline = 0.05
+	}
+	Z66_the_yan_standard = {
+		production_efficiency = 0.20
+	}
+	Z66_the_empire_of_radiant_naamjyut = {
+		max_absolutism = 10
+		advisor_cost = -0.10
 	}
 }
 
@@ -24915,7 +25005,7 @@ H00_ideas = {
 	}
 	free = yes
 
-	H00_saerraeg_of_the_truth = { #Saerraeg of the Truth - Discuss Afrinabeg‚Äôs role in and context for creating the idea of Saerraeg, and its basic tenets.
+	H00_saerraeg_of_the_truth = { #Saerraeg of the Truth - Discuss Afrinabeg's role in and context for creating the idea of Saerraeg, and its basic tenets.
 		tolerance_own = 2
 	}
 	H00_breaker_of_chains = { #Passionate Resistance - Discuss the role of evildoers, evil, and other cultures in Saerraeg, and how it came about during the Metacognitive Age.
@@ -47388,11 +47478,11 @@ R89_ideas = {
 		reserves_organisation = 0.1
 	}
 
-	R89_sabarali_cannonry = { #Library in Sabaral with assistance from dwarven citizens that has secret cannon research, this is why we aren‚Äôt worried about the Command
+	R89_sabarali_cannonry = { #Library in Sabaral with assistance from dwarven citizens that has secret cannon research, this is why we aren't worried about the Command
 		backrow_artillery_damage = 0.10
 	}
 
-	R89_fat_cats_keen_eyes  = { #Ending: Artist is a spy, the king knows, has been learning about the artist‚Äôs nation too
+	R89_fat_cats_keen_eyes  = { #Ending: Artist is a spy, the king knows, has been learning about the artist's nation too
 		spy_offence = 0.2
 		global_spy_defence = 0.2
 	}
@@ -49599,7 +49689,7 @@ R93_ideas = {
 		Defensiveness = 0.15
 	}
 	
-	bonus = { #Capstone of a merchant to represent both the cityÔøΩs future as the capital of the Lorentish Haless Company and its general disposition as the leader of a trade empire.
+	bonus = { #Capstone of a merchant to represent both the city's future as the capital of the Lorentish Haless Company and its general disposition as the leader of a trade empire.
 		Merchants = 1
 	}
 	
@@ -49629,7 +49719,7 @@ R93_ideas = {
 		core_creation = -0.05
 	}
 	
-	R93_the_marsh_guard = { #Our city was born in the marshlands at the end of the Telebei, one full of frightening creatures. The Marsh Guard was created to fight these creatures, by syncretizing their methods with that of JaherÔøΩs phoenix legion, we can ensure our troops survive longer.
+	R93_the_marsh_guard = { #Our city was born in the marshlands at the end of the Telebei, one full of frightening creatures. The Marsh Guard was created to fight these creatures, by syncretizing their methods with that of Jaher's phoenix legion, we can ensure our troops survive longer.
 		shock_damage_received = -0.1
 	}
 	
@@ -51204,7 +51294,7 @@ Z46_ideas = {
 	}
 	
 	Z46_ebb_and_flow = { #the ebb and flow of esmaria
-		manpower_recovery_speed = 0.1
+		manpower_recovery_speed = 0.2
 	}
 	
 	Z46_greatest_show = { #the greatest show
@@ -51214,7 +51304,7 @@ Z46_ideas = {
 	
 	Z46_land_of_goddesses = { #a land of goddesses
 		global_missionary_strength = 0.01
-		land_forcelimit_modifier = 0.1
+		land_forcelimit_modifier = 0.2
 	}
 	
 	Z46_highest_fashion = { #highest fashion
@@ -53742,7 +53832,7 @@ N75_ideas = {
 N72_ideas = {
 	start = {
 		diplomatic_reputation = 1 #Diviners are a hot commodity and everyone wants one. 
-		tolerance_heretic = 2 #Bigotry shouldnít get in the way of business (unless its Aomauna). Plus, itís geographically in the center of the Kanolowele, a place where Anakue and Yanacotle intersect.
+		tolerance_heretic = 2 #Bigotry shouldnùt get in the way of business (unless its Aomauna). Plus, itùs geographically in the center of the Kanolowele, a place where Anakue and Yanacotle intersect.
 	}
 	bonus = {
 		innovativeness_gain = 0.5 #The future is uncertain, but multifaceted.
@@ -53786,8 +53876,8 @@ N72_ideas = {
 #Aomauna
 N37_ideas = {
 	start = {
-		war_exhaustion = -0.03 #Aomaunaís warriors are told that their futures are bright (sometimes it actually isnít, but it helps the morale).
-		global_tax_modifier = 0.10 #See a glimpse of the futureÖ for a price, of course.
+		war_exhaustion = -0.03 #Aomauna's warriors are told that their futures are bright (sometimes it actually isn't, but it helps the morale).
+		global_tax_modifier = 0.10 #See a glimpse of the future - for a price, of course.
 	}
 	bonus = {
 		technology_cost = -0.05 #The future is certain, and we are prepared.
@@ -53803,16 +53893,16 @@ N37_ideas = {
 
 	N37_the_diviners_dance = {
 		power_projection_from_insults = 1
-		spy_action_cost_modifier = -0.2 #Shared idea with Himenitzli. Historic feud between Himenitzli and the up and coming Aomauna. Both have different methods of fortunetelling; Himenitzliís is to divine through crystal balls, which is more scattershot and only reveals the many paths of the future whereas Aomaunaís is straight up piercing into the future through complex spells and questionable rituals. Both end up in a cold war known as ìthe divinersí dance,î an indirect war in which both nations sabotage each other. 
+		spy_action_cost_modifier = -0.2 #Shared idea with Himenitzli. Historic feud between Himenitzli and the up and coming Aomauna. Both have different methods of fortunetelling; Himenitzli's is to divine through crystal balls, which is more scattershot and only reveals the many paths of the future whereas Aomauna's is straight up piercing into the future through complex spells and questionable rituals. Both end up in a cold war known as 'the diviners' dance,' an indirect war in which both nations sabotage each other. 
 	}
 
 	N37_reign_of_the_timescryers = {
 		monarch_lifespan = 0.2
-		mages_influence_modifier = 0.10 #Fleeing from Himenitzli for unethical experimentation, this small band of fortunetellers have unlocked the ability to perceive the certain future in brief glimpses throughÖ questionable means. This breakthrough would attract the attention of Aomaunaís aristocracy and even Aomaunaís ruler themself after predicting a fatal incident that the ruler manages to sidestep. In time, these opportune fortunetellers would achieve the rank of ìtimescryers,î attaining unfathomable influence within. 
+		mages_influence_modifier = 0.10 #Fleeing from Himenitzli for unethical experimentation, this small band of fortunetellers have unlocked the ability to perceive the certain future in brief glimpses through questionable means. This breakthrough would attract the attention of Aomauna's aristocracy and even Aomauna's ruler themself after predicting a fatal incident that the ruler manages to sidestep. In time, these opportune fortunetellers would achieve the rank of 'timescryers,' attaining unfathomable influence within. 
 	}
 
 	N37_traps_for_future_reference = {
-		defensiveness = 0.20 #Thanks to its Timescryers, Aomauna always plans ahead for any future invasions, especially against their western neighbors. This preparedness would be vital to not just Aomaunaís survival, but expansion.
+		defensiveness = 0.20 #Thanks to its Timescryers, Aomauna always plans ahead for any future invasions, especially against their western neighbors. This preparedness would be vital to not just Aomauna's survival, but expansion.
 	}
 
 	N37_a_miracle_borne_from_ash = {
@@ -53821,7 +53911,7 @@ N37_ideas = {
 	}
 
 	N37_sparkrifles = {
-		infantry_fire = 0.15 #idea from Tfoolís version. Considered the magnum opus of the Timescryers, these guns are near replications of Gnomic inventions (Makes you wonder how they got them) and would aid Aomaunaís regional domination. But eventually, these weapons would end up being adopted by other cultures and nations, albeit slowly. But the Aomaunans were the first (debatably).
+		infantry_fire = 0.15 #idea from Tfool's version. Considered the magnum opus of the Timescryers, these guns are near replications of Gnomic inventions (Makes you wonder how they got them) and would aid Aomauna's regional domination. But eventually, these weapons would end up being adopted by other cultures and nations, albeit slowly. But the Aomaunans were the first (debatably).
 	}
 
 	N37_the_future_unifer_of_anakae = {

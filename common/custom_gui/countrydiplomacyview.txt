@@ -1305,16 +1305,25 @@ custom_button = { # Bardic Magic - Bardic Exchange
 			has_custom_spell_list_of_group = { group = bardic }
 		}
 		ROOT = {
-			has_90_opinion_improved_relation = {
-				target = FROM
+			if = {
+				limit = { # These DLCs adds the favours mechanic
+					OR = {
+						has_dlc = "Leviathan"
+						has_dlc = "The Cossacks"
+					}
+				}
+				has_50_opinion_improved_relation = {
+					target = FROM
+				}
+				owes_favors = {
+					who = FROM
+					value = 10
+				}
 			}
-			trust = {
-				who = FROM
-				value = 60
-			}
-			owes_favors = { #placeholder I think this is the right way
-				who = FROM
-				value = 20
+			else = {
+				has_75_opinion_improved_relation = {
+					target = FROM
+				}
 			}
 		}
 	}
@@ -1329,11 +1338,11 @@ custom_button = { # Bardic Magic - Bardic Exchange
 					NOT = { has_country_flag = bardic_magic_spell_2_unlocked }
 				}
 				# Unlock Aria of Affection
-				custom_tooltip = bardic_exchange_action_spend_20_favours_tt
+				custom_tooltip = bardic_exchange_action_spend_10_favours_tt
 				hidden_effect = {
 					add_favors = {
 						who = ROOT
-						amount = -20
+						amount = -10
 					}
 				}
 				set_country_flag = bardic_magic_spell_2_unlocked
@@ -1347,11 +1356,11 @@ custom_button = { # Bardic Magic - Bardic Exchange
 					NOT = { has_country_flag = bardic_magic_spell_3_unlocked }
 				}
 				# Unlock Hymn of History
-				custom_tooltip = bardic_exchange_action_spend_20_favours_tt
+				custom_tooltip = bardic_exchange_action_spend_10_favours_tt
 				hidden_effect = {
 					add_favors = {
 						who = ROOT
-						amount = -20
+						amount = -10
 					}
 				}
 				set_country_flag = bardic_magic_spell_3_unlocked
@@ -1365,11 +1374,11 @@ custom_button = { # Bardic Magic - Bardic Exchange
 					NOT = { has_country_flag = bardic_magic_spell_4_unlocked }
 				}
 				# Unlock Elegy of Exhaustion
-				custom_tooltip = bardic_exchange_action_spend_20_favours_tt
+				custom_tooltip = bardic_exchange_action_spend_10_favours_tt
 				hidden_effect = {
 					add_favors = {
 						who = ROOT
-						amount = -20
+						amount = -10
 					}
 				}
 				set_country_flag = bardic_magic_spell_4_unlocked
