@@ -4452,6 +4452,10 @@ insultaction = {
 				}
 			}
 			FROM = {
+				add_trust = { # To counteract vanilla loss from Insult
+					who = ROOT
+					value = 5
+				}
 				remove_opinion = {
 					who = ROOT
 					modifier = scornfully_insulted
@@ -4464,14 +4468,14 @@ insultaction = {
 					who = ROOT
 					modifier = enchantment_bardic_aria_of_affection_reverse_insult
 				}
-				add_favors = {
-					who = ROOT
-					amount = 20
-				}
 				country_event = { # This will lose some trust and check trust threshold
 					id = magic_spell.406
 					days = 1825 # 5 years
 				}
+			}
+			add_favors = {
+				who = FROM
+				amount = 20
 			}
 		}
 	}
