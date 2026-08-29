@@ -588,24 +588,30 @@ marrhold_two = {
 		}
 		
 		trigger = {
-			employed_advisor = { category = MIL skill = 3 }
+			has_mil_advisor_3 = yes
 			895 = {
 				OR = {
 					has_building = university
 					AND = {
 						development = 25
-						OR = { # has_latest_manpower_building_trigger
-							has_building = training_fields
-							AND = {
-								NOT = { owner = { mil_tech = 16 } }
-								has_building = barracks
+						custom_trigger_tooltip = {
+							tooltip = has_latest_manpower_building_trigger_tt
+							OR = { # has_latest_manpower_building_trigger
+								has_building = training_fields
+								AND = {
+									NOT = { owner = { mil_tech = 16 } }
+									has_building = barracks
+								}
 							}
 						}
-						OR = {# has_latest_forcelimit_building_trigger
-							has_building = conscription_center
-							AND = {
-								NOT = { owner = { mil_tech = 22 } }
-								has_building = regimental_camp
+						custom_trigger_tooltip = {
+							tooltip = has_latest_forcelimit_building_trigger_tt
+							OR = {# has_latest_forcelimit_building_trigger
+								has_building = conscription_center
+								AND = {
+									NOT = { owner = { mil_tech = 22 } }
+									has_building = regimental_camp
+								}
 							}
 						}
 					}
@@ -1185,7 +1191,7 @@ marrhold_three = {
 							duration = -1
 						}
 					}
-					else = { #TODO add onaction to flip this to solidified control when culture conversion happens
+					else = {
 						add_province_modifier = {
 							name = marrhold_woods_province
 							duration = -1
@@ -1289,7 +1295,7 @@ marrhold_three = {
 			add_dip_power = -200
 			add_mil_power = -200
 			if = {
-				limit = { government = monarchy } #TODO hand out marrhold_griffon_empire_legacy when forming EWOC tags
+				limit = { government = monarchy }
 				add_government_reform = griffon_empire_reform
 			}
 			else = {
