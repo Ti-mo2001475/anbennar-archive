@@ -78,6 +78,69 @@ hidden_progressive_opinion_for_scholar_trigger_100 = {
 		reverse_has_opinion = { who = FROM value = 75 }
 	}
 }
+#Has opinion to invite schoolars
+raheni_opinion_and_ties_to_invite_schoolar = {
+	if = {
+		limit = {
+			owns = 4384
+			4384 = {
+				has_great_project = {
+					type = holarohana
+					tier = 2
+				}
+				province_can_use_holarohana = yes
+			}
+		}
+		reverse_has_opinion = { who = FROM value = 100 }
+	}
+	else = {
+		reverse_has_opinion = { who = FROM value = 150 }
+		OR = {
+			alliance_with = FROM
+			is_subject_of = FROM
+			overlord_of = FROM
+		}
+	}
+}
+#Has enought mana to summon schoolar
+raheni_have_cost_of_inviting_schoolar = {
+	if = {
+		limit = {
+			owns = 4384
+			4384 = {
+				has_great_project = {
+					type = holarohana
+					tier = 2
+				}
+				province_can_use_holarohana = yes
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_country_flag = no_scholar_adm_cost
+					4384 = {
+						has_great_project = {
+							type = holarohana
+							tier = 3
+						}
+					}
+				}
+			}
+			adm_power_cost = 25
+		}
+	}
+	else = {
+		if = {
+			limit = {
+				NOT = {
+					has_country_flag = no_scholar_adm_cost
+				}
+			}
+			adm_power_cost = 50
+		}
+	}
+}
 
 #Scholars from where?
 #Country Scope
