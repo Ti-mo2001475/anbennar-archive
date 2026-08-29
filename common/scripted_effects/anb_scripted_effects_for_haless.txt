@@ -1393,7 +1393,7 @@ double_manufactory_modifiers = {
 	}
 }
 
-ghalorcander_on_built_manufactory_effect = {
+ghalorcander_on_built_manufactory_with_bonus_effect = {
 	if = {
 		limit = {
 			has_great_project = {
@@ -1407,5 +1407,18 @@ ghalorcander_on_built_manufactory_effect = {
 			add_province_modifier = { name = double_manufactory_modifiers_$manufactory$_bonus duration = -1 }
 		}
 		else = { add_province_modifier = { name = double_manufactory_modifiers_$manufactory$ duration = -1 } }
+	}
+}
+
+ghalorcander_on_built_manufactory_effect = {
+	if = {
+		limit = {
+			has_great_project = {
+				type = ghalorcander
+				tier = 3
+			}
+			owner = { can_use_ghalorcander = yes }
+		}
+		add_province_modifier = { name = double_manufactory_modifiers_$manufactory$ duration = -1 }
 	}
 }
