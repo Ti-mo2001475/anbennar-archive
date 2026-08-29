@@ -1936,43 +1936,43 @@ country_event = {
 		is_part_of_hre = yes
 		tag = A43
 		religion_group = cannorian
-		any_country = {
+		any_known_country = {
 			is_part_of_hre = yes
 			religion_group = cannorian
 			NOT = {
 				OR = {
-				tag = A43
-				is_enemy
-				is_rival
-				ai_attitude = {
-					who = FROM
-					attitude = attitude_hostile
-						}
+					tag = A43
+					is_enemy
+					is_rival
+					ai_attitude = {
+						who = FROM
+						attitude = attitude_hostile
 					}
 				}
 			}
+		}
 	}
 	
 	immediate = {
 		hidden_effect = {
-			random_country = {
-			limit = { 
-			is_part_of_hre = yes
-			religion_group = cannorian
-			NOT = {
-				OR = {
-				tag = A43
-				is_enemy
-				is_rival
-				ai_attitude = {
-					who = FROM
-					attitude = attitude_hostile
+			random_known_country = {
+				limit = { 
+					is_part_of_hre = yes
+					religion_group = cannorian
+					NOT = {
+						OR = {
+							tag = A43
+							is_enemy
+							is_rival
+							ai_attitude = {
+								who = FROM
+								attitude = attitude_hostile
+							}
 						}
-					}
-				} 
-			}
-			save_event_target_as = wedding_target
+					} 
 				}
+				save_event_target_as = wedding_target
+			}
 		}
 	}
 	
@@ -1980,14 +1980,13 @@ country_event = {
 		name = flavor_empire.27.a
 		add_devotion = 10
 		add_opinion = {
-			who  = event_target:wedding_target
+			who = event_target:wedding_target
 			modifier = EOA_pulse_27_wedding_bells
 		}
 		reverse_add_opinion = {
-			who  = event_target:wedding_target
+			who = event_target:wedding_target
 			modifier = EOA_pulse_27_wedding_bells
-		}
-		
+		}	
 	}
 	
 	option = {
@@ -2007,38 +2006,48 @@ country_event = {
 	option = {
 		name = flavor_empire.27.c
 		trigger = {
-			event_target:wedding_target = {NOT = {has_matching_religion = ROOT}}
+			event_target:wedding_target = {
+				NOT = {
+					has_matching_religion = ROOT
+				}
+			}
 		}
 		hidden_effect = {
-		every_country = {
-			limit = {
-				is_part_of_hre = yes
-				has_matching_religion = ROOT
-				NOT = {tag = ROOT}
+			every_known_country = {
+				if = {
+					limit = {
+						is_part_of_hre = yes
+						has_matching_religion = ROOT
+						NOT = {
+							tag = ROOT
+						}
+					}
+					add_opinion = {
+						who = ROOT
+						modifier = EOA_pulse_27_faithful_conduct
+					}
+					reverse_add_opinion = {
+						who = ROOT
+						modifier = EOA_pulse_27_faithful_conduct
+					}
+				}
+				else_if = {
+					limit = {
+						is_part_of_hre = yes
+						NOT = { 
+							has_matching_religion = ROOT 
+						}
+					}
+					add_opinion = {
+						who = ROOT
+						modifier = EOA_pulse_27_heretical_conduct
+					}
+					reverse_add_opinion = {
+						who = ROOT
+						modifier = EOA_pulse_27_heretical_conduct
+					}
+				}
 			}
-			add_opinion = {
-				who = ROOT
-				modifier = EOA_pulse_27_faithful_conduct
-			}
-			reverse_add_opinion = {
-			who = ROOT
-			modifier = EOA_pulse_27_faithful_conduct
-			}
-		}
-		every_country = {
-			limit = {
-				is_part_of_hre = yes
-				has_matching_religion = event_target:wedding_target
-			}
-			add_opinion = {
-				who = ROOT
-				modifier = EOA_pulse_27_heretical_conduct
-			}
-			reverse_add_opinion = {
-			who = ROOT
-			modifier = EOA_pulse_27_heretical_conduct
-			}
-		}
 		}
 		custom_tooltip = flavor_empire.27.c.tt
 		
@@ -2046,11 +2055,14 @@ country_event = {
 	
 	option = {
 		name = flavor_empire.27.e
-		trigger = { OR = {
-		ruler_has_personality = pious_personality
-		ruler_has_personality = zealot_personality
-		}
-		event_target:wedding_target = {has_matching_religion = ROOT}
+		trigger = { 
+			OR = {
+				ruler_has_personality = pious_personality
+				ruler_has_personality = zealot_personality
+			}
+			event_target:wedding_target = {
+				has_matching_religion = ROOT
+			}
 		}
 		add_devotion = 15
 		add_opinion = {
@@ -2058,15 +2070,19 @@ country_event = {
 			modifier = EOA_pulse_27_holy_wedding
 		}
 		reverse_add_opinion = {
-				who  = event_target:wedding_target
-				modifier = EOA_pulse_27_holy_wedding
+			who  = event_target:wedding_target
+			modifier = EOA_pulse_27_holy_wedding
 		}
 	}
 	
 	option = {
 		name = flavor_empire.27.f
 		trigger = {
-			event_target:wedding_target = {NOT = {has_matching_religion = ROOT}}
+			event_target:wedding_target = {
+				NOT = {
+					has_matching_religion = ROOT
+				}
+			}
 			ruler_has_personality = tolerant_personality
 		}
 		add_opinion = {
@@ -2074,8 +2090,8 @@ country_event = {
 			modifier = EOA_pulse_27_faithful_conduct
 		}
 		reverse_add_opinion = {
-				who = ROOT
-				modifier = EOA_pulse_27_faithful_conduct
+			who = event_target:wedding_target
+			modifier = EOA_pulse_27_faithful_conduct
 		}
 	}
 }
@@ -2099,25 +2115,17 @@ country_event = {
 			religion_group = cannorian
 			NOT = {
 				OR = {
-				is_enemy
-				is_rival
-				ai_attitude = {
-					who = FROM
-					attitude = attitude_hostile
-						}
+					is_enemy
+					is_rival
+					ai_attitude = {
+						who = FROM
+						attitude = attitude_hostile
 					}
 				}
 			}
-	}
-	
-	immediate = {
-		hidden_effect = {
-			A43 = {
-				save_event_target_as = temple_target
-				}
 		}
 	}
-	
+		
 	option = {
 		name = flavor_empire.28.a
 		add_prestige = 10
@@ -2129,7 +2137,6 @@ country_event = {
 			who  = A43
 			modifier = EOA_pulse_27_wedding_bells
 		}
-		
 	}
 	
 	option = {
@@ -2148,38 +2155,46 @@ country_event = {
 	option = {
 		name = flavor_empire.28.c
 		trigger = {
-			A43 = {NOT = {has_matching_religion = ROOT}}
+			A43 = {
+				NOT = {
+					has_matching_religion = ROOT
+				}
+			}
 		}
 		hidden_effect = {
-		every_country = {
-			limit = {
-				is_part_of_hre = yes
-				has_matching_religion = ROOT
-				NOT = {tag = ROOT}
+			every_known_country = {
+				if = {
+					limit = {
+						is_part_of_hre = yes
+						has_matching_religion = ROOT
+						NOT = {
+							tag = ROOT
+						}
+					}
+					add_opinion = {
+						who = ROOT
+						modifier = EOA_pulse_27_faithful_conduct
+					}
+					reverse_add_opinion = {
+						who = ROOT
+						modifier = EOA_pulse_27_faithful_conduct
+					}
+				}
+				else_if = {
+					limit = {
+						is_part_of_hre = yes
+						NOT = { has_matching_religion = ROOT }
+					}
+					add_opinion = {
+						who = ROOT
+						modifier = EOA_pulse_27_heretical_conduct
+					}
+					reverse_add_opinion = {
+						who = ROOT
+						modifier = EOA_pulse_27_heretical_conduct
+					}
+				}
 			}
-			add_opinion = {
-				who = ROOT
-				modifier = EOA_pulse_27_faithful_conduct
-			}
-			reverse_add_opinion = {
-			who = ROOT
-			modifier = EOA_pulse_27_faithful_conduct
-			}
-		}
-		every_country = {
-			limit = {
-				is_part_of_hre = yes
-				has_matching_religion = event_target:temple_target
-			}
-			add_opinion = {
-				who = ROOT
-				modifier = EOA_pulse_27_heretical_conduct
-			}
-			reverse_add_opinion = {
-			who = ROOT
-			modifier = EOA_pulse_27_heretical_conduct
-			}
-		}
 		}
 		custom_tooltip = flavor_empire.27.c.tt
 	}
@@ -2191,7 +2206,9 @@ country_event = {
 				ruler_has_personality = pious_personality
 				ruler_has_personality = zealot_personality
 			}
-			A43 = {has_matching_religion = ROOT}
+			A43 = {
+				has_matching_religion = ROOT
+			}
 		}
 		add_opinion = {
 			who  = A43
@@ -2202,9 +2219,9 @@ country_event = {
 			modifier = EOA_pulse_27_holy_wedding
 		}
 		add_country_modifier = { 
-				name = EOA_28_pulse_true_faith
-				duration = 3650
-			}
+			name = EOA_28_pulse_true_faith
+			duration = 3650
+		}
 	}
 	
 	option = {
@@ -2240,6 +2257,6 @@ country_event = {
 		add_country_modifier = { 
 				name = EOA_28_pulse_adultery
 				duration = 3650
-			}
+		}
 	}
 }
