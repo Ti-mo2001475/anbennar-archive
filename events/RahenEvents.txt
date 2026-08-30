@@ -1579,17 +1579,17 @@ country_event = {
 		}
 		has_estate = estate_raj_ministries
 		NOT = {
-			has_country_modifier = aided_admin_advisor
-			has_country_modifier = ministries_at_work
-			has_country_modifier = direct_assistance_mage
-			has_country_modifier = direct_assistance_reformer
+			has_country_modifier = rahen_extra_bureacrats_aided_admin_advisor
+			has_country_modifier = rahen_extra_bureaucrats_ministries_at_work
+			has_country_modifier = rahen_direct_assistance_mage
+			has_country_modifier = rahen_direct_assistance_reformer
 		}
 	}
 
 	option = {
 		name  = rahen.201.a
 		add_country_modifier = {
-			name = aided_admin_advisor
+			name = rahen_extra_bureacrats_aided_admin_advisor
 			duration = 3650
 		}
 		add_adm_power = 25
@@ -1598,7 +1598,7 @@ country_event = {
 	option = {
 		name = rahen.201.b
 		add_country_modifier = {
-			name  = ministries_at_work
+			name  = rahen_extra_bureaucrats_ministries_at_work
 			duration = 3650
 		}
 		add_estate_loyalty = {
@@ -1627,7 +1627,7 @@ country_event = {
 			}
 			add_adm_power = 50
 			add_country_modifier = {
-				name = direct_assistance_reformer
+				name = rahen_direct_assistance_reformer
 				duration = 3650
 			}
 		}
@@ -1636,7 +1636,7 @@ country_event = {
 				ruler_is_powerful_mage = yes
 			}
 			add_country_modifier = {
-				name = direct_assistance_mage
+				name = rahen_direct_assistance_mage
 				duration = 3650
 			}
 		}
@@ -1659,18 +1659,7 @@ country_event = {
 			silk = 1
 			cloth = 1
 		}
-		NOT = {
-			any_known_country = {
-				has_opinion_modifier = {
-					who = ROOT
-					modifier = foreign_sari_plus_opinion
-				}
-			}
-			any_owned_province = {
-				has_province_modifier = homegrown_sari_industry
-			}
-
-		}
+		NOT = { has_country_modifier = rahen_event_202_cooldown }
 	}
 
 	option = {
@@ -1685,13 +1674,20 @@ country_event = {
 		every_known_country = {
 			limit = {
 				capital_scope = {
-					region = bomdan_region
-					region = thidinkai_region
+					OR = {
+						region = bomdan_region
+						region = thidinkai_region
+					}
 				}
 			}
 			add_opinion = {
 				who = ROOT
 				modifier = foreign_sari_plus_opinion
+			}
+			add_country_modifier = {
+    			name = rahen_event_202_cooldown
+    			duration = 3650
+    			hidden = yes
 			}
 		}
 	}
@@ -1715,6 +1711,11 @@ country_event = {
 			}
 		}
 		add_prestige = 5
+		add_country_modifier = {
+    		name = rahen_event_202_cooldown
+    		duration = 3650
+    		hidden = yes
+		}
 	}
 
 }
@@ -1736,8 +1737,8 @@ country_event = {
 		NOT = {
 			any_owned_province = {
 				OR = {
-					has_province_modifier = harimari_snubbed
-					has_province_modifier = human_snubbed
+					has_province_modifier = rahen_food_harimari_snubbed
+					has_province_modifier = rahen_food_human_snubbed
 				}
 			}
 		}		
@@ -1751,12 +1752,15 @@ country_event = {
 
 	option = {
 		name = rahen.203.b
+		custom_tooltip = rahen_food_harimari_snubbed_explained_tt
 		small_decrease_of_harimari_tolerance_effect = yes
-        every_owned_province = {
-			limit = { fast_has_pop_of_race = { race = harimari } }
-			add_province_modifier = {
-				name = harimari_snubbed
-				duration = 1825
+		hidden_effect = {
+       	 every_owned_province = {
+				limit = { fast_has_pop_of_race = { race = harimari } }
+				add_province_modifier = {
+					name = rahen_food_harimari_snubbed
+					duration = 1825
+				}
 			}
 		}
 	}
@@ -1764,12 +1768,15 @@ country_event = {
 
 	option = {
 		name = rahen.203.c
+		custom_tooltip = rahen_food_human_snubbed_explained_tt
 		small_decrease_of_human_tolerance_effect = yes
-		every_owned_province = {
-			limit = { fast_has_pop_of_race = { race = human } }
-			add_province_modifier = {
-				name = human_snubbed
-				duration = 1825
+		hidden_effect = {
+			every_owned_province = {
+				limit = { fast_has_pop_of_race = { race = human } }
+				add_province_modifier = {
+					name = rahen_food_human_snubbed
+					duration = 1825
+				}
 			}
 		}
 	}
@@ -1793,15 +1800,15 @@ country_event = {
 		}
 		NOT = {
 			has_country_modifier = shamakhadi_refugees_snubbed
-			has_country_modifier = refugees_placated
+			has_country_modifier = shamakhadi_refugees_placated
 		}
 	}
 
 	option = {
 		name  = rahen.204.a
-		
+		custom_tooltip = shamakhadi_refugee_autonomy_explained_tt
 		add_country_modifier = {
-			name = refugees_placated
+			name = shamakhadi_refugees_placated
 			duration = 3650
 		}
 		add_estate_loyalty = {
@@ -1837,6 +1844,7 @@ country_event = {
 		trigger = {
 			ruler_has_personality = humane_personality
 		}
+		custom_tooltip = shamakhadi_refugees_helped_tt
 		for = {
 			amount = 2
 			effect = "random_owned_province = {
@@ -1871,6 +1879,7 @@ country_event = {
 	}
 
 	trigger = {
+		ai = no
 		has_estate = estate_uppercastes
 		has_estate = estate_middlecastes
 		has_estate = estate_lowercastes
@@ -1880,7 +1889,6 @@ country_event = {
 				owned_by = ROOT
 			}
 		}
-		ai = no
 	}
 
 	option = {
@@ -1917,14 +1925,9 @@ country_event = {
 
 	option = {
 		name = rahen.205.b
-		custom_tooltip = rahen205bexplanation_tt
-		hidden_effect = {
-			every_owned_province = {
-				add_province_modifier = {
-					name = strong_companies
-					duration = 1825
-				}
-			}
+		add_country_modifier = {
+			name = rahen_strong_companies
+			duration = 1825
 		}
 		add_estate_loyalty = {
 			estate = estate_uppercastes
@@ -1959,7 +1962,7 @@ country_event = {
 	option = {
 		name = rahen.205.c
 		add_country_modifier = {
-			name = unions_pleased
+			name = rahen_unions_pleased
 			duration = 1825
 		}
 		add_estate_loyalty = {
@@ -2233,7 +2236,7 @@ country_event = {
 			duration = -1
 		}
 		add_country_modifier = {
-			name = nationally_endorsed_tour_company
+			name = rahen_nationally_endorsed_tour_company
 			duration = 14600
 		}
 	}
@@ -2242,8 +2245,10 @@ country_event = {
 		highlight = yes 
 		name = rahen.207.c
 		trigger = {
-			ruler_has_personality = well_advised_personality
-			ruler_has_personality = entrepeneur_personality	
+			OR = {
+				ruler_has_personality = well_advised_personality
+				ruler_has_personality = entrepeneur_personality	
+			}
 		}
 		define_advisor = {
 			type = trader

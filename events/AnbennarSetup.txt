@@ -1679,12 +1679,18 @@ country_event = { #Initialize magic system
 			monthly_magic_upkeep_pulse = yes #first tick of monthly calcs, for players
 		}
 
-		#disable necromancy for insyaa tags
-		if = {
+		#Regional setup
+
+		if = { #disable necromancy for insyaa tags
 			limit = {
 				capital_scope = { continent = oceania }
 			}
 			set_country_flag = banned_necromancy
+		}
+
+		if = { #Haless Chi startup
+			limit = { can_access_haless_chi_magic = yes }
+			initialise_custom_spell_list = { group = chi }
 		}
 	}
 }
