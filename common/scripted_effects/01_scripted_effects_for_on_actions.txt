@@ -15403,53 +15403,31 @@ on_province_owner_change_effect = {
 
 	if = {
 		limit = {
-			tag = B36
-			OR = {
-				AND = {
-					owner = { mission_completed = marrhold_marches }
-					OR = {
-						area = escerfork_area
-						area = humacvord_area
-						area = blademarch_area
-					}
-				}
-				AND = {
-					owner = { mission_completed = marrhold_dominance }
-					OR = {
-						area = oldhaven_area
-						area = sarwood_area
-					}
-				}
-				AND = {
-					owner = { mission_completed = marrhold_eyes_on_prize }
-					area = southgate_area
-				}
-				AND = {
-					owner = { mission_completed = marrhold_silvermere }
-					OR = {
-						area = burnoll_area
-						area = themin_area
-						area = oudeben_area
-					}
-				}
-				AND = {
-					owner = { mission_completed = marrhold_grudge }
-					OR = {
-						area = medirleigh_area
-						area = swapstoke_area
-					}
-				}
-				AND = {
-					owner = { mission_completed = marrhold_feybane }
-					superregion = deepwoods_superregion
+			owner = { tag = B36 mission_completed = marrhold_feybane }
+			superregion = deepwoods_superregion
+		}
+		
+		if = {
+			limit = {
+				OR = {
 					culture = marrodic
+					AND = {
+						culture = wood_elf
+						owner = { accepted_culture = wood_elf }
+					}
 				}
 			}
-		}
 
-		add_province_modifier = {
-			name = marrhold_solidified_control
-			duration = -1
+			add_province_modifier = {
+				name = marrhold_solidified_control
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = marrhold_woods_province
+				duration = -1
+			}
 		}
 	}
 
