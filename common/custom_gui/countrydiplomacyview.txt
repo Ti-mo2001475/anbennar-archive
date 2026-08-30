@@ -1107,9 +1107,11 @@ custom_button = { #vampire_spread_action
 	effect = {
 		ROOT = { hidden_effect = { set_country_flag = spread_vamps_@FROM } }
 		FROM = {
-			capital_scope = {
-				#Event uses random_owned_province
-				add_province_triggered_modifier = custom_diplo_ui_vampire_spread_action_ptm
+			hidden_effect = {
+				capital_scope = {
+					#Event uses random_owned_province
+					add_province_triggered_modifier = custom_diplo_ui_vampire_spread_action_ptm
+				}
 			}
 			change_estate_land_share = {
 				estate = estate_vampires
@@ -1303,16 +1305,25 @@ custom_button = { # Bardic Magic - Bardic Exchange
 			has_custom_spell_list_of_group = { group = bardic }
 		}
 		ROOT = {
-			has_90_opinion_improved_relation = {
-				target = FROM
+			if = {
+				limit = { # These DLCs adds the favours mechanic
+					OR = {
+						has_dlc = "Leviathan"
+						has_dlc = "The Cossacks"
+					}
+				}
+				has_50_opinion_improved_relation = {
+					target = FROM
+				}
+				owes_favors = {
+					who = FROM
+					value = 10
+				}
 			}
-			trust = {
-				who = FROM
-				value = 60
-			}
-			owes_favors = { #placeholder I think this is the right way
-				who = FROM
-				value = 20
+			else = {
+				has_75_opinion_improved_relation = {
+					target = FROM
+				}
 			}
 		}
 	}
@@ -1327,11 +1338,11 @@ custom_button = { # Bardic Magic - Bardic Exchange
 					NOT = { has_country_flag = bardic_magic_spell_2_unlocked }
 				}
 				# Unlock Aria of Affection
-				custom_tooltip = bardic_exchange_action_spend_20_favours_tt
+				custom_tooltip = bardic_exchange_action_spend_10_favours_tt
 				hidden_effect = {
 					add_favors = {
 						who = ROOT
-						amount = -20
+						amount = -10
 					}
 				}
 				set_country_flag = bardic_magic_spell_2_unlocked
@@ -1345,11 +1356,11 @@ custom_button = { # Bardic Magic - Bardic Exchange
 					NOT = { has_country_flag = bardic_magic_spell_3_unlocked }
 				}
 				# Unlock Hymn of History
-				custom_tooltip = bardic_exchange_action_spend_20_favours_tt
+				custom_tooltip = bardic_exchange_action_spend_10_favours_tt
 				hidden_effect = {
 					add_favors = {
 						who = ROOT
-						amount = -20
+						amount = -10
 					}
 				}
 				set_country_flag = bardic_magic_spell_3_unlocked
@@ -1363,11 +1374,11 @@ custom_button = { # Bardic Magic - Bardic Exchange
 					NOT = { has_country_flag = bardic_magic_spell_4_unlocked }
 				}
 				# Unlock Elegy of Exhaustion
-				custom_tooltip = bardic_exchange_action_spend_20_favours_tt
+				custom_tooltip = bardic_exchange_action_spend_10_favours_tt
 				hidden_effect = {
 					add_favors = {
 						who = ROOT
-						amount = -20
+						amount = -10
 					}
 				}
 				set_country_flag = bardic_magic_spell_4_unlocked
@@ -3661,6 +3672,95 @@ custom_button = {
 					name = F98_harpylen_soothe_ruffled_feathers_cooldown
 					duration = 1825 # 5 years
 					hidden = yes
+				}
+			}
+		}
+	}
+}
+# F60 Samsumbat
+# Remember, FROM is me (Samsumbat) and ROOT is the target country
+custom_window = {
+	name = custom_diplomacy_F60
+	potential = {
+		FROM = {
+			custdip_unique_F60_potential = yes
+		}
+	}
+}
+custom_button = {
+	name = F60_samsumbat_satrapy_decentralise_subject_action
+	tooltip = F60_samsumbat_satrapy_decentralise_subject_action_tt
+	potential = { }
+	trigger = {
+		ROOT = { # For a more explicit tooltip
+			can_create_vassals = yes
+			is_subject_of = FROM
+			is_subject_of_type = tributary_state
+		}
+		FROM = {
+			NOT = { has_country_modifier = F60_decentralising_subject }
+		}
+	}
+	effect = {
+		FROM = {
+			add_country_modifier = {
+				name = F60_decentralising_subject # placeholder
+				duration = 1825 # 5 years
+			}
+		}
+		country_event = {
+			id = flavour_samsumbat.27
+			days = 1825 # 5 years
+		}
+	}
+}
+custom_button = {
+	name = F60_support_slave_or_republic_agitators_action
+	tooltip = F60_support_slave_or_republic_agitators_action_tt
+	potential = { }
+	trigger = {
+		FROM = { mission_completed = F60_topple_the_phoenix_kings }
+		ROOT = { # For a more explicit tooltip
+			NOT = {
+				is_subject_of = FROM
+			}
+			OR = {
+				slaves = 1
+				NOT = { government = republic }
+			}
+			has_spy_network_from = {
+				who = FROM
+				value = 30
+			}
+			if = {
+				limit = {
+					slaves = 1
+				}
+				NOT = { capital_scope = { has_province_modifier = F60_slave_agitators_capital } }
+			}
+			else = {
+				NOT = { capital_scope = { has_province_modifier = F60_republic_agitators_capital } }
+			}
+		}
+	}
+	effect = {
+		FROM = { add_mil_power = -25 }
+		if = {
+			limit = {
+				slaves = 1
+			}
+			capital_scope = {
+				add_province_modifier = {
+					name = F60_slave_agitators_capital
+					duration = 3650
+				}
+			}
+		}
+		else = {
+			capital_scope = {
+				add_province_modifier = {
+					name = F60_republic_agitators_capital
+					duration = 3650
 				}
 			}
 		}

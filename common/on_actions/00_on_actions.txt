@@ -1125,6 +1125,7 @@ on_religion_change = {
 		}
 		if = {
 			limit = {
+				4774 = { can_use_port_of_two_spirits = yes }
 				NOT = { religion = mystic_accord }
 			}
 			every_owned_province = {
@@ -1139,7 +1140,6 @@ on_religion_change = {
 			}
 		}
 	}
-
 }
 
 # country.
@@ -6528,6 +6528,14 @@ on_death_election = {
 		set_country_flag = end_election_on_death
 		country_event = { id = flavour_endralliande.1 } #overseas governorate
 	}
+	if = {
+		limit = {
+			tag = F60
+			has_ruler_flag = maracout_alive_ruler
+			has_country_flag = maracout_alive
+		}
+		country_event = { id = flavour_samsumbat.25 } # Samsumbat Maracout Death
+	}
 	events = {
 		701		# Election event
 		shadow.5
@@ -9112,6 +9120,29 @@ on_monthly_pulse = {
 			}
 		}
 	}
+
+	if = { #Lake Federation Government Mechanic
+		limit = { has_government_mechanic = lakefed_authority_mechanic }
+		calculate_lakefed_authority = yes
+		if = {
+			limit = { check_variable = { lakefed_authority_var = 0 } }
+			gov_power_var_effect_granular = {
+				mechanic = lakefed_authority_mechanic
+				power = lakefed_authority_power
+				var = lakefed_authority_var
+				sign = +
+			}
+		}
+		else = {
+			multiply_variable = { which = lakefed_authority_var value = -1 }
+			gov_power_var_effect_granular = {
+				mechanic = lakefed_authority_mechanic
+				power = lakefed_authority_power
+				var = lakefed_authority_var
+				sign = -
+			}
+		}
+	}
 }
 
 on_yearly_pulse = {
@@ -9940,6 +9971,31 @@ on_yearly_pulse_2 = {
 
 		9900 = 0
 	}
+
+	# Death of Maracout, Father of the Republic
+	if = {
+		limit = {
+			tag = F60 # Samsumbat
+			# This even should happen 30-40 years after the start date
+			NOT = { is_year = 1485 }
+			has_country_flag = maracout_alive
+			is_year = 1474 
+		}
+		random_list = {
+			15 = { # With a base of 15% per year, it should have about a 50% chance by 1478 and about 80% chance to have happened by 1483
+				country_event = {
+					id = flavour_samsumbat.25
+				}
+			}
+			85	 = {
+				modifier = { # I want it guaranteed in 1484
+					factor = 0
+					is_year = 1484
+				}
+			}
+		}
+	}
+			
 
 }
 on_yearly_pulse_3 = {
@@ -11503,6 +11559,16 @@ on_bi_yearly_pulse_5 = {
 
 		100 = xhazobkult_events.100
 
+		# Gerudia W
+		100 = skaldhyrric.23
+		75 = skaldhyrric.24 #if you're reworking Adventurers Wanted, don't forget this event
+		100 = skaldhyrric.25
+		100 = skaldhyrric.29
+		100 = skaldhyrric.30
+		100 = skaldhyrric.31
+		100 = skaldhyrric.32
+
+
 
 		# # Japanese Daimyos
 		# 15 = flavor_jap.10
@@ -11529,6 +11595,7 @@ on_bi_yearly_pulse_5 = {
 		# 50 = china_events.11
 		# 25 = china_events.12
 		# 25 = china_events.24
+
 
 		2000 = 0
 	}
@@ -13475,7 +13542,7 @@ on_four_year_pulse_4 = {
 		flavor_empire.22 #On the Matter of Dragons - chance to start the kobold exodus
 		bawa_simpat.2 #Lupulan DVP chain start 2
 	}
-	random_events = { #6860
+	random_events = {
 		80 = bulwar_flavour.9
 		1000 = bulwar_flavour.31
 		30 = bulwar_flavour.32
@@ -13508,6 +13575,12 @@ on_four_year_pulse_4 = {
 		150 = bulwar_flavour.155
 		100 = bulwar_flavour.156
 		100 = bulwar_flavour.157
+		120 = bulwar_flavour.159
+		160 = bulwar_flavour.160
+		120 = bulwar_flavour.161
+		80 = bulwar_flavour.162
+		160 = bulwar_flavour.163
+		160 = bulwar_flavour.164
 		1000 = 0
 	}
 	
@@ -15597,6 +15670,14 @@ on_five_year_pulse_3 = {
 	#Aelantir Immigration Events
 	random_events = { #TO be massively expanded ideally, potentially becoming a handler instead.
 		500 = aelantir_immigration.0
+	}
+
+	random_events = { #Beast memory events.
+		100 = beast_memory.21
+		50 = beast_memory.22
+		100 = beast_memory.25
+		50 = beast_memory.26
+		50 = beast_memory.27
 	}
 }
 	
@@ -17904,6 +17985,15 @@ on_province_owner_change = {
 				id = zaradyrra.30
 			}
 		}
+
+	}
+
+	if = {
+		limit = {
+			owner = { has_country_flag = rayaz_naga_upgraded }
+			has_province_modifier = rampaging_ashhana_hordes
+		}
+		rayaz_pacify_bloodcurse = yes
 	}
 
 	if = {
@@ -21757,16 +21847,16 @@ on_center_of_trade_upgrade = {
 
 	if = { #Port of Two Spirits
 		limit = {
-			owner = {
+			owner = { 
 				owns = 4774
-				NOT = { tag = Y65 }
-				NOT = { religion = devouring_path }
+				NOT = { religion = mystic_accord }
 			}
 			4774 = {
 				has_great_project = {
 					type = port_of_two_spirits
 					tier = 2
 				}
+				can_use_port_of_two_spirits = yes
 			}
 			province_has_center_of_trade_of_level = 1
 			NOT = {
@@ -26255,18 +26345,6 @@ on_country_released = {
 		country_event = { id = kheionism.3 } #Set your deity
 	}
 
-	# Samsumbat
-	# If the country was released from the target of our special liberation CB, give them the special gov reform
-	if = {
-		limit = {
-			FROM = {
-				is_or_was_tag = { tag = F60 }
-				has_country_flag = F60_custom_liberation_cb_target_country # This flag is set in the requestpeace pre_effect
-			}
-		}
-		add_government_reform = republic_of_free_peoples
-	}
-
 	if = { #Shuvuush/Kuuldaar tags become horde and gets the privilege
 		limit = {
 			technology_group = tech_shuvuush
@@ -29224,6 +29302,7 @@ on_institution_embracement = {
 }
 
 on_national_focus_change = {
+	remove_country_modifier = reset_national_focus_mod
 	#Pashaine
 	pashaine_apply_focus_bonus = yes
 }
@@ -30607,14 +30686,14 @@ on_adm_exploited = {
 			is_core = A72
 			base_tax = 2
 		}
-		save_global_event_target_as = celliande_cash_tax
+		set_province_flag = celliande_cash_tax
 		owner = {
 			add_owned_provinces_development_ducats = { #Not working without global event target
 				multiplier = 2.25
-				trigger = { province_id = event_target:celliande_cash_tax }
+				trigger = { has_province_flag = celliande_cash_tax }
 			}
 		}
-		clear_global_event_target = celliande_cash_tax
+		clr_province_flag = celliande_cash_tax
 		add_base_tax = -1
 	}
 }
@@ -31731,7 +31810,6 @@ on_tech_taken = { #ROOT - Country
 }
 
 on_adm_tech_taken = { #ROOT - Country, executed after on_tech_taken!
-	I98_adm_tech_tracker = yes
 	if = { 
 		limit = {
 			tag = B16
