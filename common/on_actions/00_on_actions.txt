@@ -6485,10 +6485,18 @@ on_new_term_election = {
 		flavour_karach.14 #Karach Formed Adzalan Election
 		flavour_endralliande.1 #overseas governorate
 	}
+	if = {
+        limit = { has_reform = sophocracy_republic }
+        grant_random_advisor_gov_rank = yes
+    }
 }
 
 # country
 on_death_election = {
+	if = {
+        limit = { has_reform = sophocracy_republic }
+        grant_random_advisor_gov_rank = yes
+    }
 	if = {
 		limit = { has_reform = presidential_despot_reform }
 		remove_government_reform = presidential_despot_reform
@@ -25291,19 +25299,17 @@ on_holy_order_established = {
 			}
 		}
 		area = {
+			limit = {
+				NOT = { has_province_modifier = kheios_gov_cd }
+			}
+			add_province_modifier = {
+				name = kheios_gov_cd
+				duration = 1825
+				hidden = yes
+			}
 			if = {
-				limit = {
-					NOT = { has_province_modifier = kheios_gov_cd }
-				}
-				add_province_modifier = {
-					name = kheios_gov_cd
-					duration = 1825
-					hidden = yes
-				}
-				if = {
-					limit = { has_adm_kheionist_holy_order = yes }
-					add_local_autonomy = -15
-				}
+				limit = { has_adm_kheionist_holy_order = yes }
+				add_local_autonomy = -15
 			}
 		}
 		if = {

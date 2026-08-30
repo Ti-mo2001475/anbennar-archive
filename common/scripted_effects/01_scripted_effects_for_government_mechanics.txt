@@ -796,9 +796,7 @@ xechtari_above_all_culture_check_effect = {
 			duration = -1
 		}
 	}
-	else = {
-		remove_province_modifier = xechtari_above_all_mod
-	}
+	remove_province_modifier = xechtari_above_all_mod
 }
 
 three_branches_focus_bonus = {
@@ -832,4 +830,29 @@ three_branches_focus_bonus = {
 			}
 		}
 	}
+}
+
+duumvirate_effect = {
+    set_saved_name = { key = consort_male_name type = leader }
+    kill_leader = { type = "Daftaterodegis" }
+    define_consort = {
+        name = consort_male_name
+        dynasty = " "
+        culture = ROOT
+        religion = ROOT
+        change_adm = -1
+        change_dip = -1
+        change_mil = 2
+        male = yes
+    }
+    create_general_with_current_tradition = {
+        add_fire = 1
+        add_shock = 2
+        add_manuever = 1
+        add_siege = 1
+        name = "Daftaterodegis"
+    }
+    hidden_effect = {
+        clear_saved_name = consort_male_name
+    }
 }
