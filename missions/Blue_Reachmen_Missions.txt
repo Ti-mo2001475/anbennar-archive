@@ -126,13 +126,10 @@ BR_3 = {
             NOT = { has_dock_building_trigger = yes }
         }
         trigger = {
-            calc_true_if = {
-                blue_reachman_cities = {
-                    type = all
-                    country_or_non_sovereign_subject_holds = ROOT
-                    has_dock_building_trigger = yes
-                }
-                amount = 5
+            num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+                value = 5
+                province_group = blue_reachman_cities
+                has_dock_building_trigger = yes
             }
             mercantilism = 15
         }
@@ -368,13 +365,17 @@ BR_5 = {
         }
         provinces_to_highlight = {
             area = northern_greatwoods_area
-            if = { limit = { ROOT = { overlord_of = Z26 } }
-                NOT = { owned_by = Z26 }
-            }
-            else = {
-                OR = {
-                    NOT = { owned_by = ROOT }
-                    nationalism = 1
+            OR = {
+                AND = {
+                    ROOT = { overlord_of = Z26 }
+                    NOT = { owned_by = Z26 }
+                }
+                AND = {
+                    NOT = { ROOT = { overlord_of = Z26 } }
+                    OR = {
+                        NOT = { owned_by = ROOT }
+                        nationalism = 1
+                    }
                 }
             }
         }
@@ -418,13 +419,9 @@ BR_5 = {
             NOT = { has_trade_building_trigger = yes }
         }
         trigger = {
-            calc_true_if = {
-                blue_reachman_cities = {
-                    type = all
-                    country_or_non_sovereign_subject_holds = ROOT
-                    has_trade_building_trigger = yes
-                }
-                amount = 5
+            num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+                value = 5
+                has_trade_building_trigger = yes
             }
             mercantilism = 15
         }
@@ -453,20 +450,8 @@ Z21_1 = {
         }
         provinces_to_highlight = {
             province_group = Z21_branch_order_provinces
-            if = {
-                limit = {
-                    ROOT = {
-                        NOT = {
-                            num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-                                value = 5
-                                has_province_flag = Z21_branch_order_built
-                            }
-                        }
-                    }
-                }
-                country_or_non_sovereign_subject_holds = ROOT
-                NOT = { has_province_flag = Z21_branch_order_built }
-            }
+            country_or_non_sovereign_subject_holds = ROOT
+            NOT = { has_province_flag = Z21_branch_order_built }
         }
         trigger = {
             num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
@@ -633,7 +618,9 @@ Z21_2 = {
             }
         }
         effect = {
+            custom_tooltip = Z21_enable_branch_orders
             698 = {
+                move_capital_effect = yes
                 kill_units = {
                     who = ROOT
                     type = cavalry
@@ -642,9 +629,7 @@ Z21_2 = {
                 add_permanent_province_modifier = { name = Z21_head_branch_1 duration = -1 }
                 Z21_place_head_branch_zoc_mods = { level_1 = yes }
                 set_province_flag = Z21_branch_order_built
-                move_capital_effect = yes
             }
-            custom_tooltip = Z21_enable_branch_orders
         }
     }
     Z21_equestrian_traditions = {
@@ -769,9 +754,15 @@ Z21_2 = {
             Z21_self_education
         }
         provinces_to_highlight = {
-            owner = {
-                is_cannorian_kobold_primary_culture = yes
-                has_been_insulted_by_root = no
+            OR = {
+                AND = {
+                    area = coddorran_heights_area
+                    NOT = { owned_by = ROOT }
+                }
+                owner = {
+                    is_cannorian_kobold_primary_culture = yes
+                    has_been_insulted_by_root = no
+                }
             }
         }
         trigger = {
@@ -814,7 +805,18 @@ Z21_2 = {
             Z21_reaffirm_our_mission
         }
         provinces_to_highlight = {
-            province_group = blue_reachman_cities
+            OR = {
+                AND = {
+                    province_group = blue_reachman_cities
+                    NOT = { country_or_non_sovereign_subject_holds = ROOT }
+                }
+                AND = {
+                    province_group = Z21_branch_order_provinces
+                    country_or_non_sovereign_subject_holds = ROOT
+                    NOT = { has_province_flag = Z21_branch_order_built }
+                }
+            }
+            
         }
         trigger = {
             blue_reachman_cities = {
