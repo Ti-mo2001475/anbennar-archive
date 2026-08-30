@@ -2583,7 +2583,7 @@ has_cast_abjuration_war_magic = {
 		OR = {
 			has_cast_combat_ward = yes
 			has_cast_mage_armor = yes
-			has_country_modifier = H14_icewardery_magic
+			has_country_modifier = chi_default_invoke_the_grave_earth_mod
 		}
 	}
 }
@@ -5447,7 +5447,6 @@ custom_spell_eordand_eighard_5_trigger = {
 }
 
 abjuration_1_eordand_eighard_5_trigger = {
-	war_magic_trigger = yes
 	[[player]
 		has_mana_to_cast_magical_tradition_spell = {
 			school = abjuration
@@ -5455,7 +5454,6 @@ abjuration_1_eordand_eighard_5_trigger = {
 			id = eordand_eighard_5
 		}
 	]
-	is_at_war = yes
 	NOT = { has_country_modifier = H14_icewardery_magic }
 }
 
@@ -5602,6 +5600,68 @@ enchantment_3_bardic_default_4_subtrigger = {
 		tooltip = bardic_magic_spell_4_unlocked_tt
 		has_country_flag = bardic_magic_spell_4_unlocked
 	}
+}
+
+#Chi
+can_access_haless_chi_magic = {
+	OR = {
+		culture_is_yan = yes
+		culture_group = kai
+	}
+	NOT = {
+		primary_culture = tamran
+		religion = devouring_path
+		#NOT has Shadowmancy
+	}
+}
+custom_spell_chi_default_rite_of_upright_nourishment_trigger = {
+	[[player] has_mana_to_cast_magical_tradition_spell = { school = divination level = 1 } ]
+	OR = {
+		is_overall_divination_level_1_minimum = yes
+		is_overall_transmutation_level_1_minimum = yes
+	}
+	custom_trigger_tooltip = {
+		tooltip = chi_default_rite_of_upright_nourishment_trigger_tt
+		OR = {
+			AND = {
+				national_focus = ADM
+				employed_advisor = { category = ADM }
+			}
+			AND = {
+				national_focus = DIP
+				employed_advisor = { category = DIP }
+			}
+			AND = {
+				national_focus = MIL
+				employed_advisor = { category = MIL }
+			}
+		}
+	}
+	NOT = { has_country_modifier = chi_default_rite_of_upright_nourishment_tracker_mod }
+}
+custom_spell_chi_default_harmonize_feng_shui_trigger = {
+	[[player] has_mana_to_cast_magical_tradition_spell = { school = illusion level = 1 } ]
+	OR = {
+		is_overall_enchantment_level_1_minimum = yes
+		is_overall_illusion_level_1_minimum = yes
+	}
+}
+custom_spell_chi_default_invoke_the_grave_earth_trigger = {
+	[[player] has_mana_to_cast_magical_tradition_spell = { school = abjuration level = 1 } ]
+	OR = {
+		is_overall_abjuration_level_1_minimum = yes
+		is_overall_necromancy_level_1_minimum = yes
+	}
+	war_magic_trigger = yes
+	NOT = { has_country_modifier = chi_default_invoke_the_grave_earth_mod }
+}
+custom_spell_chi_default_channel_chi_trigger = {
+	[[player] has_mana_to_cast_magical_tradition_spell = { school = conjuration level = 1 } ]
+	OR = {
+		is_overall_conjuration_level_1_minimum = yes
+		is_overall_evocation_level_1_minimum = yes
+	}
+	NOT = { has_country_modifier = chi_default_channel_chi_mod }
 }
 
 ### STOP.

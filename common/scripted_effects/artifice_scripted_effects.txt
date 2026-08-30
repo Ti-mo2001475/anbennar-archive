@@ -1665,6 +1665,149 @@ estate_action_GRANT_DRAFT_ARTIFICERS_ARTIFICE = {
 	}
 }
 
+# controls how many invention options are given for each tier in artifice research
+artifice_research_pick_num_inventions_per_tier = {
+	if = { #Fast Research Variable Setup
+		limit = {
+			OR = {
+				ai = yes
+				has_country_flag = artifice_research_random
+			}
+		}
+		#Tier 2
+		if = {
+			limit = {
+				has_country_flag = artifice_unlocked_advanced
+			}
+			set_variable = {
+				which = artificeResearchOptionsTier1
+				value = 1
+			}
+			set_variable = {
+				which = artificeResearchOptionsTier2
+				value = 1
+			}
+		}
+		#Tier 3
+		else_if = {
+			limit = {
+				has_country_flag = artifice_unlocked_expert
+			}
+			set_variable = {
+				which = artificeResearchOptionsTier1
+				value = 1
+			}
+			set_variable = {
+				which = artificeResearchOptionsTier2
+				value = 1
+			}
+			set_variable = {
+				which = artificeResearchOptionsTier3
+				value = 1
+			}
+		}
+		#Tier 1 - baseline
+		else = {
+			set_variable = {
+				which = artificeResearchOptionsTier1
+				value = 1
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			has_country_flag = artifice_research_fast
+		}
+		#Tier 2
+		if = {
+			limit = {
+				has_country_flag = artifice_unlocked_advanced
+			}
+			set_variable = {
+				which = artificeResearchOptionsTier1
+				value = 3
+			}
+			set_variable = {
+				which = artificeResearchOptionsTier2
+				value = 1
+			}
+		}
+		#Tier 3
+		else_if = {
+			limit = {
+				has_country_flag = artifice_unlocked_expert
+			}
+			set_variable = {
+				which = artificeResearchOptionsTier1
+				value = 3
+			}
+			set_variable = {
+				which = artificeResearchOptionsTier2
+				value = 2
+			}
+			set_variable = {
+				which = artificeResearchOptionsTier3
+				value = 1
+			}
+		}
+		#Tier 1 - baseline
+		else = {
+			set_variable = {
+				which = artificeResearchOptionsTier1
+				value = 2
+			}
+		}
+	}
+	else_if = { #Normal And Slow Research Variable Setup
+		limit = {
+			OR = {
+				has_country_flag = artifice_research_normal
+				has_country_flag = artifice_research_slow
+			}
+
+		}
+		#Tier 2
+		if = {
+			limit = {
+				has_country_flag = artifice_unlocked_advanced
+			}
+			set_variable = {
+				which = artificeResearchOptionsTier1
+				value = 3
+			}
+			set_variable = {
+				which = artificeResearchOptionsTier2
+				value = 2
+			}
+		}
+		#Tier 3
+		else_if = {
+			limit = {
+				has_country_flag = artifice_unlocked_expert
+			}
+			set_variable = {
+				which = artificeResearchOptionsTier1
+				value = 4
+			}
+			set_variable = {
+				which = artificeResearchOptionsTier2
+				value = 3
+			}
+			set_variable = {
+				which = artificeResearchOptionsTier3
+				value = 2
+			}
+		}
+		#Tier 1 - baseline
+		else = {
+			set_variable = {
+				which = artificeResearchOptionsTier1
+				value = 3
+			}
+		}
+	}
+}
+
 #Research Scripted Effect - Randomization Of Inventions
 artifice_research_select_innovation_options_effect = {
 
@@ -1677,10 +1820,6 @@ artifice_research_select_innovation_options_effect = {
 			}
 		}
 
-		set_variable = {
-			which = currentIterationsLeftTier1
-			which = artificeResearchOptionsTier1
-		}
 
 		random_list = {
 			#Economic Inventions - Tier 1
@@ -1696,10 +1835,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_spell_in_a_box
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -1713,10 +1849,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_self_cleaning_parchment
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -1730,10 +1863,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_box_of_holding
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -1747,10 +1877,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_market_mender
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -1764,10 +1891,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_arcane_battery_capital_complex
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -1781,10 +1905,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_plane_of_water_teleporter
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			#Military Inventions - Tier 1
 			1 = {
@@ -1799,10 +1920,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_portable_turrets
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -1816,10 +1934,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_commercial_sky_galleons
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -1833,10 +1948,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_sparkdrive_rifles
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -1850,10 +1962,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_vorpal_bullets
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -1867,10 +1976,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_magic_missile_deployer
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			#Society Inventions  - Tier 1
 			1 = {
@@ -1885,10 +1991,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_viewcatcher
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -1902,10 +2005,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_sending_stones
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -1919,10 +2019,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_centipedal_chests
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -1936,10 +2033,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_living_mirrors
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -1953,10 +2047,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_apparitional_communicator
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -1970,10 +2061,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_mystic_ciphers
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			#Special Inventions  - Tier 1
 			#Economic
@@ -1993,10 +2081,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_fine_print_obfuscator
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2018,10 +2103,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_automated_translator
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2039,10 +2121,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_wine_ageifier
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2057,10 +2136,7 @@ artifice_research_select_innovation_options_effect = {
 					primary_culture = pearlsedger
 				}
 				set_country_flag = research_artifice_invention_pearl_cultivators
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2075,10 +2151,7 @@ artifice_research_select_innovation_options_effect = {
 					culture_group = dwarven
 				}
 				set_country_flag = research_artifice_invention_superfast_elevators
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2093,10 +2166,7 @@ artifice_research_select_innovation_options_effect = {
 					mission_completed = z22_commercialised_magic
 				}
 				set_country_flag = research_artifice_invention_sustaining_arks
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2112,10 +2182,7 @@ artifice_research_select_innovation_options_effect = {
 					NOT = { is_or_was_tag = { tag = F50 } }
 				}
 				set_country_flag = research_artifice_invention_hanging_houses
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			#Military
 			1 = {
@@ -2133,10 +2200,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_ancestral_guardian_golems
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2151,10 +2215,7 @@ artifice_research_select_innovation_options_effect = {
 					religion = ravelian
 				}
 				set_country_flag = research_artifice_invention_antimagic_field_generator
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2169,10 +2230,7 @@ artifice_research_select_innovation_options_effect = {
 					culture_group = goblin
 				}
 				set_country_flag = research_artifice_invention_believable_ruin_2_bomb
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2191,10 +2249,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_vernman_hero_tonic
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2213,10 +2268,7 @@ artifice_research_select_innovation_options_effect = {
 					tag = Z38
 				}
 				set_country_flag = research_artifice_invention_dragonscale_plating
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2231,10 +2283,7 @@ artifice_research_select_innovation_options_effect = {
 					has_country_modifier = harimari_military
 				}
 				set_country_flag = research_artifice_invention_predator_exoskeleton
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2249,10 +2298,7 @@ artifice_research_select_innovation_options_effect = {
 					has_country_modifier = goblin_military
 				}
 				set_country_flag = research_artifice_invention_scrap_mechs
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2267,10 +2313,7 @@ artifice_research_select_innovation_options_effect = {
 					culture_group = taychendi_ruinborn_elf
 				}
 				set_country_flag = research_artifice_invention_war_rigs
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2285,10 +2328,7 @@ artifice_research_select_innovation_options_effect = {
 					religion_group = bulwari
 				}
 				set_country_flag = research_artifice_invention_sunbeam_armaments
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2306,10 +2346,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_power_fists
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2323,10 +2360,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_artificer_exo_arms
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2341,10 +2375,7 @@ artifice_research_select_innovation_options_effect = {
 					religion = the_jadd
 				}
 				set_country_flag = research_artifice_invention_table_war
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2359,10 +2390,7 @@ artifice_research_select_innovation_options_effect = {
 					is_bulwari_elf = yes
 				}
 				set_country_flag = research_artifice_invention_kevlar_shields
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			#Society
 			1 = {
@@ -2378,10 +2406,7 @@ artifice_research_select_innovation_options_effect = {
 					religion_group = fey_religion
 				}
 				set_country_flag = research_artifice_invention_fey_spray
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2396,10 +2421,7 @@ artifice_research_select_innovation_options_effect = {
 					culture_group = gnollish
 				}
 				set_country_flag = research_artifice_invention_scrapperclaws
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2417,10 +2439,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_great_processor
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2435,10 +2454,7 @@ artifice_research_select_innovation_options_effect = {
 					religion = the_hunt
 				}
 				set_country_flag = research_artifice_invention_voice_vessels
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2453,10 +2469,7 @@ artifice_research_select_innovation_options_effect = {
 					is_bulwari_elf = yes
 				}
 				set_country_flag = research_artifice_invention_sunspire_pylons
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2475,10 +2488,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_inscription_tools
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = {
 				trigger = {
@@ -2496,10 +2506,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_law_books
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			#Insyaa tab inventions
 			1 = { #Economic
@@ -2527,10 +2534,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_tgs_farmland
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = { #Economic
 				trigger = {
@@ -2557,10 +2561,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_tgs_livestock
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = { #Military
 				trigger = {
@@ -2596,10 +2597,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_sonic_weaponary
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = { #Military
 				trigger = {
@@ -2635,10 +2633,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_sonic_amplifiers
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = { #Society
 				trigger = {
@@ -2663,10 +2658,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_pillar_scouts
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = { #Society + Economic
 				trigger = {
@@ -2700,10 +2692,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_reverse_mechanim
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = { #Economic
 				trigger = {
@@ -2718,10 +2707,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_mech_building_plates
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = { #Military
 				trigger = {
@@ -2736,10 +2722,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_mech_fireproof_plating
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = { #Society
 				trigger = {
@@ -2754,10 +2737,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_mech_pillar_scouts
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = { #Military
 				trigger = {
@@ -2772,10 +2752,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_mech_amphibious_attachements
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = { #Economic
 				trigger = {
@@ -2811,10 +2788,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_assisted_growth
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = { #Economic
 				trigger = {
@@ -2850,10 +2824,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_crop_enlarge
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = { #Society
 				trigger = {
@@ -2878,10 +2849,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_okalu_scanners
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 			1 = { #Society
 				trigger = {
@@ -2906,35 +2874,37 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_memory_module
-				subtract_variable = {
-					which = artificeResearchOptionsTier1
-					value = 1
-				}
+				set_country_flag = found_tier_1_invention
 			}
 		}
 		if = {
 			limit = {
-				is_variable_equal = {
-					which = currentIterationsLeftTier1
-					which = artificeResearchOptionsTier1
-				}
+				has_country_flag = found_tier_1_invention
 			}
+			subtract_variable = {
+				which = artificeResearchOptionsTier1
+				value = 1
+			}
+			clr_country_flag = found_tier_1_invention
+		}
+		else = {
 			if = {
 				limit = {
 					is_variable_equal = {
 						which = originalIterationsLeftTier1
-						which = currentIterationsLeftTier1
+						which = artificeResearchOptionsTier1
 					}
 				}
+				# we're on the first iteration, so there are no tier 1 inventions available at all
 				set_country_flag = artifice_no_tier_1_inventions
-				subtract_variable = {
+				set_variable = {
 					which = originalIterationsLeftTier1
-					which = currentIterationsLeftTier1
+					value = 0
 				}
 			}
-			subtract_variable = {
+			set_variable = {
 				which = artificeResearchOptionsTier1
-				which = currentIterationsLeftTier1
+				value = 0
 			}
 		}
 	}
@@ -2946,11 +2916,6 @@ artifice_research_select_innovation_options_effect = {
 				which = artificeResearchOptionsTier2
 				value = 1
 			}
-		}
-
-		set_variable = {
-			which = currentIterationsLeftTier2
-			which = artificeResearchOptionsTier2
 		}
 
 		random_list = {
@@ -2967,10 +2932,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_growth_beans
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -2984,10 +2946,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_vendorless_stall
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3001,10 +2960,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_brass_prosthesis
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3018,10 +2974,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_gene_food_cultivation
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3035,10 +2988,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_subterrenes
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			#Military Inventions - Tier 2
 			1 = {
@@ -3053,10 +3003,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_wandlocks
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3070,10 +3017,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_balloonboost_packs
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3088,10 +3032,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_prototype_tanks
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3105,10 +3046,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_war_golems
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3122,10 +3060,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_arcane_blaster
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3140,10 +3075,7 @@ artifice_research_select_innovation_options_effect = {
 					is_bulwari_influenced_harpy_culture = yes
 				}
 				set_country_flag = research_artifice_invention_seismic_armor
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			#Society Inventions  - Tier 2
 			1 = {
@@ -3158,10 +3090,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_remedial_tinctures
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3175,10 +3104,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_arithmatons
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3192,10 +3118,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_think_thought_transmitters
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3209,10 +3132,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_mirage_detector_3000
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3226,10 +3146,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_empire_engine
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			#Special Inventions  - Tier 2
 			#Economic
@@ -3250,10 +3167,7 @@ artifice_research_select_innovation_options_effect = {
 					tag = Z38
 				}
 				set_country_flag = research_artifice_invention_prehensile_tail_attachments
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3268,10 +3182,7 @@ artifice_research_select_innovation_options_effect = {
 					religion = devouring_path
 				}
 				set_country_flag = research_artifice_invention_chi_cultivation_charm
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3286,10 +3197,7 @@ artifice_research_select_innovation_options_effect = {
 					culture_group = triunic
 				}
 				set_country_flag = research_artifice_invention_city_maintenance_bots
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3304,10 +3212,7 @@ artifice_research_select_innovation_options_effect = {
 					culture_group = harpy
 				}
 				set_country_flag = research_artifice_invention_artificial_egg_surrogates
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3322,10 +3227,7 @@ artifice_research_select_innovation_options_effect = {
 					mission_completed = z22_commercialised_magic
 				}
 				set_country_flag = research_artifice_invention_innate_windshaping
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3344,10 +3246,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_moisture_collector
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3368,10 +3267,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_sand_sails
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3389,10 +3285,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_selfrepairing_sails
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3407,10 +3300,7 @@ artifice_research_select_innovation_options_effect = {
 					is_bulwari_or_zanlibi_culture = yes
 				}
 				set_country_flag = research_artifice_invention_high_velocity_irrigation
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			#Military
 			1 = {
@@ -3426,10 +3316,7 @@ artifice_research_select_innovation_options_effect = {
 					religion = irdaeos_worship
 				}
 				set_country_flag = research_artifice_invention_wind_invokers
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3444,10 +3331,7 @@ artifice_research_select_innovation_options_effect = {
 					religion_group = cannorian
 				}
 				set_country_flag = research_artifice_invention_avatar_supersoldier_serum
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3462,10 +3346,7 @@ artifice_research_select_innovation_options_effect = {
 					religion = skaldhyrric_faith
 				}
 				set_country_flag = research_artifice_invention_lullaby_cannon
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3483,10 +3364,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_giantshape_warframe
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3501,10 +3379,7 @@ artifice_research_select_innovation_options_effect = {
 					has_country_modifier = orcish_military
 				}
 				set_country_flag = research_artifice_invention_controlled_rage_serum
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3519,10 +3394,7 @@ artifice_research_select_innovation_options_effect = {
 					has_country_modifier = gnomish_military
 				}
 				set_country_flag = research_artifice_invention_coddorran_powered_exosuit
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3537,10 +3409,7 @@ artifice_research_select_innovation_options_effect = {
 					has_country_modifier = goblin_military
 				}
 				set_country_flag = research_artifice_invention_eplusplus_compound
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3555,10 +3424,7 @@ artifice_research_select_innovation_options_effect = {
 					has_country_modifier = goblin_military
 				}
 				set_country_flag = research_artifice_invention_elemental_gunpowder
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3573,10 +3439,7 @@ artifice_research_select_innovation_options_effect = {
 					has_country_modifier = dwarven_military
 				}
 				set_country_flag = research_artifice_invention_gyrocopters
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3591,10 +3454,7 @@ artifice_research_select_innovation_options_effect = {
 					culture_group = kheionai_ruinborn_elf
 				}
 				set_country_flag = research_artifice_invention_kaydhano_powered_vessels
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3609,10 +3469,7 @@ artifice_research_select_innovation_options_effect = {
 					culture_group = hobgoblin
 				}
 				set_country_flag = research_artifice_invention_warfare_simulator
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3627,10 +3484,7 @@ artifice_research_select_innovation_options_effect = {
 					culture_group = gnomish
 				}
 				set_country_flag = research_artifice_invention_gu_boats
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3645,10 +3499,7 @@ artifice_research_select_innovation_options_effect = {
 					culture_group = ynnic_ruinborn_elf
 				}
 				set_country_flag = research_artifice_invention_veykoda_rune_protections
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3663,10 +3514,7 @@ artifice_research_select_innovation_options_effect = {
 					has_country_modifier = dwarven_military
 				}
 				set_country_flag = research_artifice_invention_platinum_warsuit
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3681,10 +3529,7 @@ artifice_research_select_innovation_options_effect = {
 					mission_completed = z22_commercialised_magic
 				}
 				set_country_flag = research_artifice_invention_icestorm_cannons
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3699,10 +3544,7 @@ artifice_research_select_innovation_options_effect = {
 					culture = sandfang_gnoll
 				}
 				set_country_flag = research_artifice_invention_brine_severer
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3717,10 +3559,7 @@ artifice_research_select_innovation_options_effect = {
 					culture = sandfang_gnoll
 				}
 				set_country_flag = research_artifice_invention_gravehound
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3735,10 +3574,7 @@ artifice_research_select_innovation_options_effect = {
 					is_bulwari_or_zanlibi_culture = yes
 				}
 				set_country_flag = research_artifice_invention_djinn_flyship
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3756,10 +3592,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_inscripted_rifle
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			#Society
 			1 = {
@@ -3775,10 +3608,7 @@ artifice_research_select_innovation_options_effect = {
 					culture_group = gnomish
 				}
 				set_country_flag = research_artifice_invention_conversation_calibrator
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3793,10 +3623,7 @@ artifice_research_select_innovation_options_effect = {
 					religion_group = khetist
 				}
 				set_country_flag = research_artifice_invention_game_of_khet
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3815,10 +3642,7 @@ artifice_research_select_innovation_options_effect = {
 					tag = Z38
 				}
 				set_country_flag = research_artifice_invention_burrower_arms
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3837,10 +3661,7 @@ artifice_research_select_innovation_options_effect = {
 					tag = Z38
 				}
 				set_country_flag = research_artifice_invention_soarwing_grafts
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3855,10 +3676,7 @@ artifice_research_select_innovation_options_effect = {
 					religion = ravelian
 				}
 				set_country_flag = research_artifice_invention_god_fragment_decoder
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3876,10 +3694,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_talking_god_temples
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3894,10 +3709,7 @@ artifice_research_select_innovation_options_effect = {
 					culture = exodus_goblin
 				}
 				set_country_flag = research_artifice_invention_litoral_reclamation
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3912,10 +3724,7 @@ artifice_research_select_innovation_options_effect = {
 					is_bulwari_elf = yes
 				}
 				set_country_flag = research_artifice_invention_enhanced_masks
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = {
 				trigger = {
@@ -3930,10 +3739,7 @@ artifice_research_select_innovation_options_effect = {
 					religion_group = bulwari
 				}
 				set_country_flag = research_artifice_invention_incantation_bowls
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}			
 			#Insyaa
 			1 = { #Society
@@ -3957,10 +3763,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_behavioral_chip
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = { #Military
 				trigger = {
@@ -3995,10 +3798,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_titano_thorns
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = { #Military
 				trigger = {
@@ -4033,10 +3833,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_titano_thorns
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = { #Military
 				trigger = {
@@ -4071,10 +3868,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_flak_cannons
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = { #Military
 				trigger = {
@@ -4099,10 +3893,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_fireproof_plating
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = { #Military
 				trigger = {
@@ -4127,10 +3918,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_mechanim_regiments
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = { #Society
 				trigger = {
@@ -4155,10 +3943,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_mechanim_deconstructor
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = { #Socitey
 				trigger = {
@@ -4193,10 +3978,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_steel_tracking
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = { #Military
 				trigger = {
@@ -4221,10 +4003,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_seed_siege
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = { #Society
 				trigger = {
@@ -4249,10 +4028,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_titano_weed
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = { #Economic
 				trigger = {
@@ -4277,10 +4053,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_animal_gene
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = { #Economic
 				trigger = {
@@ -4307,10 +4080,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_construction_bots
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = { #Economic
 				trigger = {
@@ -4325,10 +4095,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_mech_steel_detector
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = { #Society
 				trigger = {
@@ -4343,10 +4110,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_mech_reawakening_procedure
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 			1 = { #Military
 				trigger = {
@@ -4361,35 +4125,37 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_mech_lava_cell
-				subtract_variable = {
-					which = artificeResearchOptionsTier2
-					value = 1
-				}
+				set_country_flag = found_tier_2_invention
 			}
 		}
 		if = {
 			limit = {
-				is_variable_equal = {
-					which = currentIterationsLeftTier2
-					which = artificeResearchOptionsTier2
-				}
+				has_country_flag = found_tier_2_invention
 			}
+			subtract_variable = {
+				which = artificeResearchOptionsTier2
+				value = 1
+			}
+			clr_country_flag = found_tier_2_invention
+		}
+		else = {
 			if = {
 				limit = {
 					is_variable_equal = {
 						which = originalIterationsLeftTier2
-						which = currentIterationsLeftTier2
+						which = artificeResearchOptionsTier2
 					}
 				}
+				# we're on the first iteration, so there are no tier 2 inventions available at all
 				set_country_flag = artifice_no_tier_2_inventions
-				subtract_variable = {
+				set_variable = {
 					which = originalIterationsLeftTier2
-					which = currentIterationsLeftTier2
+					value = 0
 				}
 			}
-			subtract_variable = {
+			set_variable = {
 				which = artificeResearchOptionsTier2
-				which = currentIterationsLeftTier2
+				value = 0
 			}
 		}
 	}
@@ -4402,10 +4168,6 @@ artifice_research_select_innovation_options_effect = {
 				value = 1
 			}
 		}
-
-		set_variable = {
-			which = currentIterationsLeftTier3
-			which = artificeResearchOptionsTier3		}
 
 		random_list = {
 			#Economic Inventions - Tier 3
@@ -4421,10 +4183,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_pathway_transmutation
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4438,10 +4197,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_elemental_locomotives
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4455,10 +4211,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_t_wave_transceivers
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4472,10 +4225,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_naval_mageshields
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 
 			#Military Inventions - Tier 3
@@ -4491,10 +4241,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_black_damestear_bullets
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4508,10 +4255,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_artillery_autoloader
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4525,10 +4269,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_bioartificed_ascension
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4542,10 +4283,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_military_sky_galleons
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4559,10 +4297,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_personal_mageshields
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4576,10 +4311,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_damestear_reactor_megacannon
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4594,10 +4326,7 @@ artifice_research_select_innovation_options_effect = {
 					is_bulwari_influenced_harpy_culture = yes
 				}
 				set_country_flag = research_artifice_invention_scream_beamers
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			#Society Inventions  - Tier 3
 			1 = {
@@ -4612,10 +4341,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_crierless_crier_device
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4629,10 +4355,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_bureaucratizer
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4646,10 +4369,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_runethought_network
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4663,10 +4383,7 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_negotiation_nexus
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			#Special Inventions  - Tier 3
 			#Economic
@@ -4683,10 +4400,7 @@ artifice_research_select_innovation_options_effect = {
 					religion = the_thought
 				}
 				set_country_flag = research_artifice_invention_think_quik_drink_mix
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4701,10 +4415,7 @@ artifice_research_select_innovation_options_effect = {
 					culture_group = eordan_ruinborn_elf
 				}
 				set_country_flag = research_artifice_invention_weather_predicticator
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4719,10 +4430,7 @@ artifice_research_select_innovation_options_effect = {
 					culture_group = alenic
 				}
 				set_country_flag = research_artifice_invention_artifice_powered_magnate_factories
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4737,10 +4445,7 @@ artifice_research_select_innovation_options_effect = {
 					culture_group = gnomish
 				}
 				set_country_flag = research_artifice_invention_prefabricated_city_constructors
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4755,10 +4460,7 @@ artifice_research_select_innovation_options_effect = {
 					is_bulwari_or_zanlibi_culture = yes
 				}
 				set_country_flag = research_artifice_invention_reshtic_machine
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			#Military
 			1 = {
@@ -4774,10 +4476,7 @@ artifice_research_select_innovation_options_effect = {
 					religion = xhazobkult
 				}
 				set_country_flag = research_artifice_invention_demonflame_flamethrowers
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4792,10 +4491,7 @@ artifice_research_select_innovation_options_effect = {
 					has_country_modifier = goblin_military
 				}
 				set_country_flag = research_artifice_invention_chase_em_rockets
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4814,10 +4510,7 @@ artifice_research_select_innovation_options_effect = {
 					tag = Z38
 				}
 				set_country_flag = research_artifice_invention_dragonblood_gene_warriors
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4832,10 +4525,7 @@ artifice_research_select_innovation_options_effect = {
 					has_estate_privilege = estate_artificers_organization_discombobulatorium
 				}
 				set_country_flag = research_unlocked_artifice_invention_drill_shells
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4850,10 +4540,7 @@ artifice_research_select_innovation_options_effect = {
 					has_estate_privilege = estate_artificers_organization_discombobulatorium
 				}
 				set_country_flag = research_unlocked_artifice_invention_super_boots
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			#Society
 			1 = {
@@ -4869,10 +4556,7 @@ artifice_research_select_innovation_options_effect = {
 					has_estate_privilege = estate_artificers_organization_discombobulatorium
 				}
 				set_country_flag = research_artifice_invention_divendancer_speedboat
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = {
 				trigger = {
@@ -4887,10 +4571,7 @@ artifice_research_select_innovation_options_effect = {
 					culture = exodus_goblin
 				}
 				set_country_flag = research_artifice_invention_mech_bureau
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			#Insyaa
 			1 = { #Society + Economic
@@ -4926,10 +4607,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_industrial_automatories
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = { #Economic
 				trigger = {
@@ -4964,10 +4642,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_terrain_shaper
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = { #Society
 				trigger = {
@@ -4992,10 +4667,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_memory_storage
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = { #Military
 				trigger = {
@@ -5020,10 +4692,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_titano_cav
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = { #Military
 				trigger = {
@@ -5048,10 +4717,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_titano_artif
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = { #Society
 				trigger = {
@@ -5076,10 +4742,7 @@ artifice_research_select_innovation_options_effect = {
 				}
 				set_country_flag = research_artifice_invention_from_insyaa
 				set_country_flag = research_artifice_invention_auto_scribes
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 			1 = { #Military
 				trigger = {
@@ -5094,38 +4757,46 @@ artifice_research_select_innovation_options_effect = {
 					}
 				}
 				set_country_flag = research_artifice_invention_mech_terrain_specialization
-				subtract_variable = {
-					which = artificeResearchOptionsTier3
-					value = 1
-				}
+				set_country_flag = found_tier_3_invention
 			}
 		}
+		
 		if = {
 			limit = {
-				is_variable_equal = {
-					which = currentIterationsLeftTier3
-					which = artificeResearchOptionsTier3
-				}
+				has_country_flag = found_tier_3_invention
 			}
+			subtract_variable = {
+				which = artificeResearchOptionsTier3
+				value = 1
+			}
+			clr_country_flag = found_tier_3_invention
+		}
+		else = {
 			if = {
 				limit = {
 					is_variable_equal = {
 						which = originalIterationsLeftTier3
-						which = currentIterationsLeftTier3
+						which = artificeResearchOptionsTier3
 					}
 				}
+				# we're on the first iteration, so there are no tier 3 inventions available at all
 				set_country_flag = artifice_no_tier_3_inventions
-				subtract_variable = {
+				set_variable = {
 					which = originalIterationsLeftTier3
-					which = currentIterationsLeftTier3
+					value = 0
 				}
 			}
-			subtract_variable = {
+			set_variable = {
 				which = artificeResearchOptionsTier3
-				which = currentIterationsLeftTier3
+				value = 0
 			}
 		}
 	}
+}
+
+# unique invention selection for feiten
+artifice_research_feiten_select_innovation_options_effect = {
+
 	#Feiten is so cool....
 	if = {
 		limit = {
@@ -5294,6 +4965,24 @@ artifice_tiering_progress = {
 	}
 }
 
+artifice_advance_basic_to_advanced = {
+	set_country_flag = artifice_unlocked_advanced
+	clr_country_flag = artifice_unlocked_basic
+	set_variable = {
+		which = artifice_level_progress
+		value = 0
+	}
+}
+
+artifice_advance_advanced_to_expert = {
+	set_country_flag = artifice_unlocked_expert
+	clr_country_flag = artifice_unlocked_advanced
+	set_variable = {
+		which = artifice_level_progress
+		value = 0
+	}
+}
+
 artifice_tiering_update = {
 	if = {
 		limit = {
@@ -5301,70 +4990,56 @@ artifice_tiering_update = {
 		}
 		if = {
 			limit = {
-				is_year = 1500
 				has_country_flag = artifice_unlocked_basic
 				NOT = { has_country_flag = artifice_limited_to_tier_1 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 2
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							is_year = 1500
+							check_variable = {
+								which = artifice_level_progress
+								value = 2
+							}
+						}
+						AND = {
+							NOT = { is_year = 1500 }
+							check_variable = {
+								which = artifice_level_progress
+								value = 4
+							}
+						}
+					}
 				}
-			}
-			set_country_flag = artifice_unlocked_advanced
-			clr_country_flag = artifice_unlocked_basic
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
-			}
-		}
-		else_if = {
-			limit = {
-				NOT = { is_year = 1500 }
-				has_country_flag = artifice_unlocked_basic
-				NOT = { has_country_flag = artifice_limited_to_tier_1 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 4
-				}
-			}
-			set_country_flag = artifice_unlocked_advanced
-			clr_country_flag = artifice_unlocked_basic
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
+				artifice_advance_basic_to_advanced = yes
 			}
 		}
 		else_if = {			
 			limit = { 
-				is_year = 1550
 				has_country_flag = artifice_unlocked_advanced
 				NOT = { has_country_flag = artifice_limited_to_tier_2 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 2
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							is_year = 1550
+							check_variable = {
+								which = artifice_level_progress
+								value = 2
+							}
+						}
+						AND = {
+							NOT = { is_year = 1550 }
+							check_variable = {
+								which = artifice_level_progress
+								value = 4
+							}
+						}
+					}
 				}
-			}
-			set_country_flag = artifice_unlocked_expert
-			clr_country_flag = artifice_unlocked_advanced
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
-			}
-		}
-		else_if = {
-			limit = { 
-				NOT = { is_year = 1550 }
-				has_country_flag = artifice_unlocked_advanced
-				NOT = { has_country_flag = artifice_limited_to_tier_2 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 4
-				}
-			}
-			set_country_flag = artifice_unlocked_expert
-			clr_country_flag = artifice_unlocked_advanced
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
+				artifice_advance_advanced_to_expert = yes
 			}
 		}
 	}
@@ -5377,70 +5052,56 @@ artifice_tiering_update = {
 		}
 		if = {
 			limit = {
-				is_year = 1500
 				has_country_flag = artifice_unlocked_basic
 				NOT = { has_country_flag = artifice_limited_to_tier_1 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 3
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							is_year = 1500
+							check_variable = {
+								which = artifice_level_progress
+								value = 3
+							}
+						}
+						AND = {
+							NOT = { is_year = 1500 }
+							check_variable = {
+								which = artifice_level_progress
+								value = 6
+							}
+						}
+					}
 				}
-			}
-			set_country_flag = artifice_unlocked_advanced
-			clr_country_flag = artifice_unlocked_basic
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
-			}
-		}
-		else_if = {
-			limit = {
-				NOT = { is_year = 1500 }
-				has_country_flag = artifice_unlocked_basic
-				NOT = { has_country_flag = artifice_limited_to_tier_1 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 6
-				}
-			}
-			set_country_flag = artifice_unlocked_advanced
-			clr_country_flag = artifice_unlocked_basic
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
+				artifice_advance_basic_to_advanced = yes
 			}
 		}
 		else_if = {			
-			limit = { 
-				is_year = 1550
+			limit = {
 				has_country_flag = artifice_unlocked_advanced
 				NOT = { has_country_flag = artifice_limited_to_tier_2 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 3
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							is_year = 1550
+							check_variable = {
+								which = artifice_level_progress
+								value = 3
+							}
+						}
+						AND = {
+							NOT = { is_year = 1550 }
+							check_variable = {
+								which = artifice_level_progress
+								value = 6
+							}
+						}
+					}
 				}
-			}
-			set_country_flag = artifice_unlocked_expert
-			clr_country_flag = artifice_unlocked_advanced
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
-			}
-		}
-		else_if = {
-			limit = { 
-				NOT = { is_year = 1550 }
-				has_country_flag = artifice_unlocked_advanced
-				NOT = { has_country_flag = artifice_limited_to_tier_2 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 6
-				}
-			}
-			set_country_flag = artifice_unlocked_expert
-			clr_country_flag = artifice_unlocked_advanced
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
+				artifice_advance_advanced_to_expert = yes
 			}
 		}	
 	}
@@ -5453,70 +5114,56 @@ artifice_tiering_update = {
 		}
 		if = {
 			limit = {
-				is_year = 1500
 				has_country_flag = artifice_unlocked_basic
 				NOT = { has_country_flag = artifice_limited_to_tier_1 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 6
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							is_year = 1500
+							check_variable = {
+								which = artifice_level_progress
+								value = 6
+							}
+						}
+						AND = {
+							NOT = { is_year = 1500 }
+							check_variable = {
+								which = artifice_level_progress
+								value = 12
+							}
+						}
+					}
 				}
-			}
-			set_country_flag = artifice_unlocked_advanced
-			clr_country_flag = artifice_unlocked_basic
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
-			}
-		}
-		else_if = {
-			limit = {
-				NOT = { is_year = 1500 }
-				has_country_flag = artifice_unlocked_basic
-				NOT = { has_country_flag = artifice_limited_to_tier_1 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 12
-				}
-			}
-			set_country_flag = artifice_unlocked_advanced
-			clr_country_flag = artifice_unlocked_basic
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
+				artifice_advance_basic_to_advanced = yes
 			}
 		}
 		else_if = {			
 			limit = { 
-				is_year = 1550
 				has_country_flag = artifice_unlocked_advanced
 				NOT = { has_country_flag = artifice_limited_to_tier_2 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 6
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							is_year = 1550
+							check_variable = {
+								which = artifice_level_progress
+								value = 6
+							}
+						}
+						AND = {
+							NOT = { is_year = 1550 }
+							check_variable = {
+								which = artifice_level_progress
+								value = 12
+							}
+						}
+					}
 				}
-			}
-			set_country_flag = artifice_unlocked_expert
-			clr_country_flag = artifice_unlocked_advanced
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
-			}
-		}
-		else_if = {
-			limit = { 
-				NOT = { is_year = 1550 }
-				has_country_flag = artifice_unlocked_advanced
-				NOT = { has_country_flag = artifice_limited_to_tier_2 }
-				check_variable = {
-					which = artifice_level_progress
-					value = 12
-				}
-			}
-			set_country_flag = artifice_unlocked_expert
-			clr_country_flag = artifice_unlocked_advanced
-			set_variable = {
-				which = artifice_level_progress
-				value = 0
+				artifice_advance_advanced_to_expert = yes
 			}
 		}		
 	}
@@ -5611,6 +5258,7 @@ artifice_magic_switch_to_artificery_only_mode = {
 					id = magic_artificery_setup.2
 					days = 1
 				}
+				country_event = { id = magic_artificery_setup.5 } #incompetent artificery culture, to catch people holding the event open and culture-swapping back
 			}
 			if = { #To prevent player from picking magic only mode if they previously decided to have artificery 
 				limit = { #Losing artificery after gaining it is unsupported in the system and has undefined behavior involved (for example, what happens to currently-researching inventions).
@@ -5674,6 +5322,7 @@ artifice_magic_switch_to_mixed_mode = {
 					id = magic_artificery_setup.2
 					days = 1
 				}
+				country_event = { id = magic_artificery_setup.5 } #incompetent artificery culture, to catch people holding the event open and culture-swapping back
 			}
 			if = { #To prevent player from picking magic only mode if they previously decided to have artificery
 				limit = { #Losing artificery after gaining it is unsupported in the system and has undefined behavior involved (for example, what happens to currently-researching inventions).
