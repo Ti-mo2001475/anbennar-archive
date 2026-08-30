@@ -6,10 +6,8 @@ thunderborn_1 = {
 	ai = yes
 	has_country_shield = yes
 	potential = {
-		AND = {
-			tag = I49
-			NOT = { has_country_flag = I49_edeyne_dead_early } 
-		}
+		tag = I49
+		NOT = { has_country_flag = I49_edeyne_dead_early } 
 	}
 
 	I49_to_wander_with_purpose = {
@@ -44,19 +42,11 @@ thunderborn_1 = {
 		position = 3
 		required_missions = { I49_to_wander_with_purpose } 
 		provinces_to_highlight = {
-			region = east_forbidden_plains_region
-			NOT = {
-				ROOT = {
-					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-						value = 5
-						region = east_forbidden_plains_region
-					}
-				}
-			}
-			NOT = {
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		}
+            region = east_forbidden_plains_region
+            NOT = {
+                country_or_non_sovereign_subject_holds = ROOT
+            }
+        }
 
 		trigger = {
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
@@ -103,7 +93,7 @@ thunderborn_1 = {
 		position = 4
 		required_missions = { I49_edge_of_the_endless_plain } 
 		provinces_to_highlight = {
-			is_in_capital_area = yes
+			area_for_scope_province = { is_capital_of = ROOT }
 			owned_by = ROOT
 			NOT = { has_state_edict = edict_centralization_effort } 
 		}
@@ -138,10 +128,8 @@ thunderborn_2 = {
 	ai = yes
 	has_country_shield = yes
 	potential = {
-		AND = {
-			tag = I49
-			NOT = { has_country_flag = I49_edeyne_dead_early } 
-		}
+		tag = I49
+		NOT = { has_country_flag = I49_edeyne_dead_early } 
 	}
 
 	I49_to_begin_she_begins = {
@@ -187,10 +175,8 @@ thunderborn_2 = {
 			}
 			custom_trigger_tooltip = {
 				tooltip = I49_barter_thoughts_focused_practice_tooltip
-				AND = {
-					has_any_irdaeos_worship_religious_practice = yes
-					NOT = { has_malukhuga_religious_practice = yes } 
-				}
+				has_any_irdaeos_worship_religious_practice = yes
+				NOT = { has_malukhuga_religious_practice = yes } 
 			}
 		}
 
@@ -249,10 +235,8 @@ thunderborn_3 = {
 	ai = yes
 	has_country_shield = yes
 	potential = {
-		AND = {
-			tag = I49
-			NOT = { has_country_flag = I49_edeyne_dead_early } 
-		}
+		tag = I49
+		NOT = { has_country_flag = I49_edeyne_dead_early } 
 	}
 
 	I49_the_false_claimant = {
@@ -304,6 +288,13 @@ thunderborn_3 = {
 					total_development = 30
 				}
 				custom_tooltip = I49_false_claimant_effect_tooltip_1_yes
+				tooltip = {
+					kalgazuur_area = { add_permanent_claim = I49 } 
+					add_country_modifier = {
+						name = "I49_against_false_king"
+						duration = 1825
+					}
+				}
 				hidden_effect = {
 					kalgazuur_area = { add_permanent_claim = I49 } 
 					add_country_modifier = {
@@ -314,6 +305,13 @@ thunderborn_3 = {
 			}
 			else = {
 				custom_tooltip = I49_false_claimant_effect_tooltip_1_no
+				tooltip = {
+					kalgazuur_area = { add_permanent_claim = I49 } 
+					add_country_modifier = {
+						name = "I49_against_false_king"
+						duration = 1825
+					}
+				}
 			}
 			if = {
 				limit = {
@@ -329,6 +327,13 @@ thunderborn_3 = {
 					}
 				}
 				custom_tooltip = I49_false_claimant_effect_tooltip_2_yes
+				tooltip = {
+					add_estate_loyalty = {
+						estate = estate_monstrous_tribes
+						loyalty = 10
+					}
+					add_prestige = 20
+				}
 				hidden_effect = {
 					add_estate_loyalty = {
 						estate = estate_monstrous_tribes
@@ -354,8 +359,13 @@ thunderborn_3 = {
 			}
 			trade_goods = iron
 			OR = {
+				owned_by = I49
+				owned_by_subject_of = I49
+			}
+			OR = {
 				NOT = { has_tax_building_trigger = yes } 
 				NOT = { development = 7 } 
+				has_any_ongoing_construction = yes
 			}
 		}
 
@@ -382,7 +392,7 @@ thunderborn_3 = {
 			for = {
 				amount = 2
 				effect = "
-					thunderborn_ferrous_persuasions_effect
+					thunderborn_ferrous_persuasions_effect = yes
 				"
 			}
 			every_owned_province = {
@@ -413,12 +423,9 @@ thunderborn_3 = {
 					NOT = { owner = { culture_group = centaur }  } 
 				}
 			}
-			custom_trigger_tooltip = {
-				tooltip = I49_step_by_step_celebration_tooltip
-				check_variable = {
-					which = nbReligiousActions
-					value = 2
-				}
+			check_variable = {
+				which = nbReligiousActions
+				value = 2
 			}
 		}
 
@@ -461,40 +468,38 @@ thunderborn_3 = {
 		}
 
 		trigger = {
-			AND = {
-				any_subject_country = {
-					custom_trigger_tooltip = {
-						tooltip = I49_eye_storm_filustkhuga_tooltip
-						religious_school = {
-							group = centaur_religion
-							school = filustkhuga_school
-						}
+			any_subject_country = {
+				custom_trigger_tooltip = {
+					tooltip = I49_eye_storm_filustkhuga_tooltip
+					religious_school = {
+						group = centaur_religion
+						school = filustkhuga_school
 					}
-					has_90_opinion_improved_relation = { target = ROOT } 
-					has_25_opinion_sent_gift = { target = ROOT } 
 				}
-				any_subject_country = {
-					custom_trigger_tooltip = {
-						tooltip = I49_eye_storm_irdukhuga_tooltip
-						religious_school = {
-							group = centaur_religion
-							school = irdukhuga_school
-						}
+				has_90_opinion_improved_relation = { target = ROOT } 
+				has_25_opinion_sent_gift = { target = ROOT } 
+			}
+			any_subject_country = {
+				custom_trigger_tooltip = {
+					tooltip = I49_eye_storm_irdukhuga_tooltip
+					religious_school = {
+						group = centaur_religion
+						school = irdukhuga_school
 					}
-					has_90_opinion_improved_relation = { target = ROOT } 
-					has_25_opinion_sent_gift = { target = ROOT } 
-				}
-				any_subject_country = {
-					custom_trigger_tooltip = {
-						tooltip = I49_eye_storm_maslekhuga_tooltip
-						religious_school = {
-							group = centaur_religion
-							school = maslekhuga_school
-						}
+				}	
+				has_90_opinion_improved_relation = { target = ROOT } 
+				has_25_opinion_sent_gift = { target = ROOT } 
+			}
+			any_subject_country = {
+				custom_trigger_tooltip = {
+					tooltip = I49_eye_storm_maslekhuga_tooltip
+					religious_school = {
+						group = centaur_religion
+						school = maslekhuga_school
 					}
-					has_90_opinion_improved_relation = { target = ROOT } 
-					has_25_opinion_sent_gift = { target = ROOT } 
 				}
+				has_90_opinion_improved_relation = { target = ROOT } 
+				has_25_opinion_sent_gift = { target = ROOT } 
 			}
 			OR = {
 				diplomat = 1
@@ -532,33 +537,23 @@ thunderborn_3 = {
 		}
 
 		trigger = {
-			custom_trigger_tooltip = {
-				tooltip = I49_to_be_true_province_tooltip
-				num_of_owned_provinces_with = {
-					value = 4
-					has_tax_building_trigger = yes
-					OR = {
-						province_id = 5195
-						province_id = 5184
-						province_id = 5179
-						province_id = 5161
-						province_id = 5081
-						province_id = 5152
-					}
+			num_of_owned_provinces_with = {
+				value = 4
+				has_tax_building_trigger = yes
+				OR = {
+					province_id = 5195
+					province_id = 5184
+					province_id = 5179
+					province_id = 5161
+					province_id = 5081
+					province_id = 5152
 				}
 			}
 			reform_level = 3
-			custom_trigger_tooltip = {
-				tooltip = I49_to_be_true_celebration_tooltip
-				check_variable = {
-					which = nbReligiousActions
-					value = 4
-				}
-			}
-			custom_trigger_tooltip = {
-				tooltip = I49_to_be_true_NI_tooltip
-				has_idea = I49_thunder_announces_the_storm
-			}
+			check_variable = {
+				which = nbReligiousActions
+				value = 4
+			I49_ideas = 1
 		}
 
 		effect = { country_event = { id = flavour_thunderborn.6 }  } 
@@ -570,10 +565,8 @@ thunderborn_4 = {
 	ai = yes
 	has_country_shield = yes
 	potential = {
-		AND = {
-			tag = I49
-			NOT = { has_country_flag = I49_edeyne_dead_early } 
-		}
+		tag = I49
+		NOT = { has_country_flag = I49_edeyne_dead_early } 
 	}
 
 	I49_approach_the_shamans = {
@@ -651,7 +644,7 @@ thunderborn_4 = {
 			}
 			is_overall_advancing_magic = yes
 			check_variable = {
-				which = I49_NumTimesCastConductLightning
+				which = evocation_1_centaur_thunderborn_5_spell_count
 				value = 2
 			}
 		}
@@ -662,8 +655,57 @@ thunderborn_4 = {
 				skill = 3
 				cost_multiplier = 0.5
 			}
-			hidden_effect = { country_event = { id = flavour_thunderborn.9 }  } 
 			custom_tooltip = I49_to_be_conduit_effect_tooltip
+			if = {
+				limit = { army_tradition = 100 }
+				change_mana = { amount = 100 }
+				increase_magic_experience = { unmodified_amount = 100 }
+			}
+			else_if = {
+				limit = { army_tradition = 90 }
+				change_mana = { amount = 90 }
+				increase_magic_experience = { unmodified_amount = 90 }
+			}
+			else_if = {
+				limit = { army_tradition = 80 }
+				change_mana = { amount = 80 }
+				increase_magic_experience = { unmodified_amount = 80 }
+			}
+			else_if = {
+				limit = { army_tradition = 70 }
+				change_mana = { amount = 70 }
+				increase_magic_experience = { unmodified_amount = 70 }
+			}
+			else_if = {
+				limit = { army_tradition = 60 }
+				change_mana = { amount = 60 }
+				increase_magic_experience = { unmodified_amount = 60 }
+			}
+			else_if = {
+				limit = { army_tradition = 50 }
+				change_mana = { amount = 50 }
+				increase_magic_experience = { unmodified_amount = 50 }
+			}
+			else_if = {
+				limit = { army_tradition = 40 }
+				change_mana = { amount = 40 }
+				increase_magic_experience = { unmodified_amount = 40 }
+			}
+			else_if = {
+				limit = { army_tradition = 30 }
+				change_mana = { amount = 30 }
+				increase_magic_experience = { unmodified_amount = 30 }
+			}
+			else_if = {
+				limit = { army_tradition = 20 }
+				change_mana = { amount = 20 }
+				increase_magic_experience = { unmodified_amount = 20 }
+			}
+			else_if = {
+				limit = { army_tradition = 10 }
+				change_mana = { amount = 10 }
+				increase_magic_experience = { unmodified_amount = 10 }
+			}
 		}
 	}
 }
@@ -673,10 +715,8 @@ thunderborn_5 = {
 	ai = yes
 	has_country_shield = yes
 	potential = {
-		AND = {
-			tag = I49
-			NOT = { has_country_flag = I49_edeyne_dead_early } 
-		}
+		tag = I49
+		NOT = { has_country_flag = I49_edeyne_dead_early } 
 	}
 
 	I49_crook_of_the_mountain = {
@@ -827,13 +867,22 @@ thunderborn_5 = {
 					}
 					5259 = {
 						add_devastation = 50
-						owner = {
-							add_opinion = {
-								who = ROOT
-								modifier = aggressive_expansion
-								multiplier = 25
+						if = {
+							limit = {
+								owner = {
+									NOT = {
+										has_country_flag = I49_cover_thunder_ae_flag
+									}
+								}
 							}
-							set_country_flag = I49_cover_thunder_ae_flag
+							owner = {
+								add_opinion = {
+									who = ROOT
+									modifier = aggressive_expansion
+									multiplier = 25
+								}
+								set_country_flag = I49_cover_thunder_ae_flag
+							}
 						}
 					}
 				}
@@ -847,13 +896,22 @@ thunderborn_5 = {
 					}
 					5261 = {
 						add_devastation = 50
-						owner = {
-							add_opinion = {
-								who = ROOT
-								modifier = aggressive_expansion
-								multiplier = 25
+						if = {
+							limit = {
+								owner = {
+									NOT = {
+										has_country_flag = I49_cover_thunder_ae_flag
+									}
+								}
 							}
-							set_country_flag = I49_cover_thunder_ae_flag
+							owner = {
+								add_opinion = {
+									who = ROOT
+									modifier = aggressive_expansion
+									multiplier = 25
+								}
+								set_country_flag = I49_cover_thunder_ae_flag
+							}
 						}
 					}
 				}
@@ -867,13 +925,22 @@ thunderborn_5 = {
 					}
 					5262 = {
 						add_devastation = 50
-						owner = {
-							add_opinion = {
-								who = ROOT
-								modifier = aggressive_expansion
-								multiplier = 25
+						if = {
+							limit = {
+								owner = {
+									NOT = {
+										has_country_flag = I49_cover_thunder_ae_flag
+									}
+								}
 							}
-							set_country_flag = I49_cover_thunder_ae_flag
+							owner = {
+								add_opinion = {
+									who = ROOT
+									modifier = aggressive_expansion
+									multiplier = 25
+								}
+								set_country_flag = I49_cover_thunder_ae_flag
+							}
 						}
 					}
 				}

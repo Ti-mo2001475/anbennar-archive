@@ -4640,33 +4640,35 @@ evocation_1_centaur_thunderborn_5_effect = {
 			remove_province_modifier = I49_conduit_2
 		}
 	}
-	custom_tooltip = centaur_thunderborn_spell_devastation_army_tradition_tooltip
-	capital_scope = {
-		every_neighbor_province = {
-			limit = {
-				NOT = {
-					country_or_subject_holds = ROOT
-					is_empty = yes
-				}
-			}
-			add_devastation = 50
-			owner = {
-				add_country_modifier = {
-					name = I49_gathering_storms
-					duration = 1825
-				}
-			}
-			ROOT = {
-				add_army_tradition_or_mil_power = {
-					amount = 3
-				}
-			}
-		}
-	}
+	custom_tooltip = centaur_thunderborn_spell_devastation_tooltip
+	tooltip = {
+        add_country_modifier = {
+            name = I49_gathering_storms
+            duration = 1825
+        }
+    }
+	custom_tooltip = centaur_thunderborn_spell_army_tradition_tooltip
 	hidden_effect = {
-		change_variable = {
-			which = I49_NumTimesCastConductLightning
-			value = 1
+		capital_scope = {
+			every_neighbor_province = {
+				limit = {
+					NOT = {
+						country_or_subject_holds = ROOT
+					}
+				}
+				add_devastation = 50
+				owner = {
+					add_country_modifier = {
+						name = I49_gathering_storms
+						duration = 1825
+					}
+				}
+				ROOT = {
+					add_army_tradition_or_mil_power = {
+						amount = 3
+					}
+				}
+			}
 		}
 	}
 }

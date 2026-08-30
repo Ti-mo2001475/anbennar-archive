@@ -12,23 +12,21 @@ country_event = { #At the Edge of Everything
 	trigger = { tag = I49 } #Thunderborn
 
 	immediate = {
-		set_country_flag = I49_no_forming_taryean
-		set_country_flag = anb_on_action_tracking_raze_flag
-		set_country_flag = disabled_heir_events
-		set_country_flag = centaur_tracking_capital_move_flag
-		add_exceptional_willpower_75 = yes
-		add_ruler_modifier = {
-			name = I49_edeynes_insecurity_1
-		}
-		set_ruler_flag = is_gay
 		hidden_effect = {
-			set_variable = {
-				which = I49_NumTimesCastConductLightning
-				value = 0
-			}
-			set_variable = {
-				which = I49_to_be_conduit_while_variable
-				value = 0
+			set_country_flag = I49_no_forming_taryean
+			set_country_flag = anb_on_action_tracking_raze_flag
+			set_country_flag = disabled_heir_events
+			set_country_flag = centaur_tracking_capital_move_flag
+			set_ruler_flag = is_gay
+			hidden_effect = {
+				set_variable = {
+					which = I49_to_be_conduit_while_variable
+					value = 0
+				}
+				set_variable = {
+					which = centaur_num_times_moved_capital
+					value = 0
+				}
 			}
 		}
 	}
@@ -50,8 +48,15 @@ country_event = { #At the Edge of Everything
 			age = 16
 		}
 		set_consort_flag = is_gay
-		add_queen_personality = mage_personality
+		define_powerful_mage = {
+			type = consort
+			evocation = 1
+		}
 		set_country_flag = I49_zaya_alive
+		add_exceptional_willpower_75 = yes
+		add_ruler_modifier = {
+			name = I49_edeynes_insecurity_1
+		}
 		custom_tooltip = I49_edeyne_alive_tooltip
 	}
 }
@@ -262,10 +267,6 @@ country_event = { #At the Edge of Everything, Once More
     is_triggered_only = yes
 
 	immediate = {
-		remove_country_modifier = exceptional_willpower_75
-		add_ruler_modifier = {
-			name = exceptional_willpower_100
-		}
 		clr_country_flag = disabled_heir_events
 	}
 
@@ -279,7 +280,8 @@ country_event = { #At the Edge of Everything, Once More
 		increase_ruler_adm_effect = yes
 		increase_ruler_dip_effect = yes
 		increase_ruler_mil_effect = yes
-		custom_tooltip = I49_edge_everything_once_more_willpower_tooltip
+		remove_country_modifier = exceptional_willpower_75
+		add_exceptional_willpower_100 = yes
 		custom_tooltip = I49_edge_everything_may_form_taryean_tooltip
 	}
 }
@@ -299,48 +301,6 @@ country_event = { #She Was Born of the Storm
 	}
 }
 
-country_event = { #hidden event for To Be the Conduit
-	id = flavour_thunderborn.9
-	title = flavour_thunderborn.9.t
-	desc = flavour_thunderborn.9.d
-	picture = COMET_SIGHTED_eventPicture 
-	
-    is_triggered_only = yes
-	hidden = yes
-
-	immediate = {
-		export_to_variable = {
-			which = I49_to_be_conduit_army_tradition_variable
-			value = army_tradition
-			who = ROOT
-		}
-		set_variable = {
-			which = I49_to_be_conduit_while_variable
-			value = 10
-		}
-	}
-
-	option = { 
-		name = flavour_thunderborn.9.a
-		while = {
-			limit = {
-				NOT = {
-					check_variable = {
-						which = I49_to_be_conduit_while_variable
-						which = I49_to_be_conduit_army_tradition_variable
-					}
-				}
-			}
-			change_variable = {
-				which = I49_to_be_conduit_while_variable
-				value = 10
-			}
-			change_mana = { amount = 10 }
-			increase_magic_experience = { unmodified_amount = 10 }
-		}
-	}
-}
-
 country_event = { #Cerulean
 	id = flavour_thunderborn.10
 	title = flavour_thunderborn.10.t
@@ -356,6 +316,11 @@ country_event = { #Cerulean
 		set_custom_spell_list = {
 			group = centaur
 			subgroup = thunderborn
+		}
+		start_count_specific_spell_effect = { 
+			id = centaur_thunderborn_5
+			level = 1
+			school = evocation
 		}
 	}
 }
@@ -374,22 +339,19 @@ country_event = { #Deciphered Wreckage
 			name = I49_new_ideas
 			duration = 3650
 		}
-		custom_tooltip = I49_deciphered_wreckage_institution_tooltip
-		hidden_effect = {
-			if = {
-				limit = {
-					has_institution = feudalism
-				}
-				add_adm_power = 100
-				add_dip_power = 100
-				add_mil_power = 100
+		if = {
+			limit = {
+				has_institution = feudalism
 			}
-			else = {
-				capital_scope = {
-					add_institution_embracement = {
-						which = feudalism
-						value = 100
-					}
+			add_adm_power = 100
+			add_dip_power = 100
+			add_mil_power = 100
+		}
+		else = {
+			capital_scope = {
+				add_institution_embracement = {
+					which = feudalism
+					value = 100
 				}
 			}
 		}
@@ -404,9 +366,13 @@ country_event = { #A Stumble, a Fall
 	
     is_triggered_only = yes
 
+	immediate = {
+		clr_country_flag = I49_zaya_alive
+		set_country_flag = I49_zaya_injured
+	}
+
 	option = { 
 		name = flavour_thunderborn.12.a
-		set_country_flag = I49_zaya_injured
 	}
 }
 
@@ -418,10 +384,13 @@ country_event = { #Cloud Cover
 	
     is_triggered_only = yes
 
-	option = { 
-		name = flavour_thunderborn.13.a
+	immediate = {
 		clr_country_flag = I49_zaya_alive
 		clr_country_flag = I49_zaya_injured
+	}
+
+	option = { 
+		name = flavour_thunderborn.13.a
 		add_prestige = 10
 		add_splendor = 100
 	}
@@ -454,12 +423,15 @@ country_event = { #The Final Darkening
 		has_country_flag = I49_edeyne_alive
 	}
 
+	immediate = {
+		clr_country_flag = I49_edeyne_alive
+	}
+
 	option = { 
 		name = flavour_thunderborn.14.a
 		trigger = {
 			has_country_flag = I49_no_forming_taryean
 		}
-		clr_country_flag = I49_edeyne_alive
 		add_prestige = 10
 		add_splendor = 100
 		set_country_flag = I49_edeyne_dead_early
@@ -470,7 +442,6 @@ country_event = { #The Final Darkening
 		trigger = {
 			NOT = { has_country_flag = I49_no_forming_taryean }
 		}
-		clr_country_flag = I49_edeyne_alive
 		add_prestige = 10
 		add_splendor = 100
 		country_event = {

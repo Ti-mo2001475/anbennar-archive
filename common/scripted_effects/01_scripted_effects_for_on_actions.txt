@@ -7803,10 +7803,19 @@ on_war_declaration_effect = {
 		limit = {
 			tag = I49
 			mission_completed = I49_edge_of_the_endless_plain
-			OR = {
-				has_country_flag = thunderborn_attacking_filustkhuga
-				has_country_flag = thunderborn_attacking_irdukhuga
-				has_country_flag = thunderborn_attacking_maslekhuga
+			FROM = {
+				religious_school = {
+					group = centaur_religion
+					school = filustkhuga_school
+				}
+				religious_school = {
+					group = centaur_religion
+					school = irdukhuga_school
+				}
+				religious_school = {
+					group = centaur_religion
+					school = maslekhuga_school
+				}
 			}
 		}
 		if = {
@@ -7814,7 +7823,12 @@ on_war_declaration_effect = {
 				is_in_war = {
 					casus_belli = cb_vassalize_mission
 				}
-				has_country_flag = thunderborn_attacking_filustkhuga
+				FROM = {
+					religious_school = {
+						group = centaur_religion
+						school = filustkhuga_school
+					}
+				}
 			}
 			every_known_country = {
 				limit = {
@@ -7830,14 +7844,18 @@ on_war_declaration_effect = {
 					}
 				}
 			}
-			clr_country_flag = thunderborn_attacking_filustkhuga
 		}
 		else_if = {
 			limit = {
 				is_in_war = {
 					casus_belli = cb_vassalize_mission
 				}
-				has_country_flag = thunderborn_attacking_irdukhuga
+				FROM = {
+					religious_school = {
+						group = centaur_religion
+						school = irdukhuga_school
+					}
+				}
 			}
 			every_known_country = {
 				limit = {
@@ -7853,14 +7871,18 @@ on_war_declaration_effect = {
 					}
 				}
 			}
-			clr_country_flag = thunderborn_attacking_irdukhuga
 		}
 		else_if = {
 			limit = {
 				is_in_war = {
 					casus_belli = cb_vassalize_mission
 				}
-				has_country_flag = thunderborn_attacking_maslekhuga
+				FROM = {
+					religious_school = {
+						group = centaur_religion
+						school = maslekhuga_school
+					}
+				}
 			}
 			every_known_country = {
 				limit = {
@@ -7876,12 +7898,6 @@ on_war_declaration_effect = {
 					}
 				}
 			}
-			clr_country_flag = thunderborn_attacking_maslekhuga
-		}
-		else = {
-			clr_country_flag = thunderborn_attacking_filustkhuga
-			clr_country_flag = thunderborn_attacking_irdukhuga
-			clr_country_flag = thunderborn_attacking_maslekhuga
 		}
 	}
 }
