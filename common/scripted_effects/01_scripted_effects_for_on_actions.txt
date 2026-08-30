@@ -8757,6 +8757,23 @@ on_province_culture_change_effect = {
 		limit = { has_province_modifier = zerat_the_last_stand_of_ashhana }
 		remove_province_modifier = zerat_the_last_stand_of_ashhana
 	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = celliande_convert_wexara
+			}
+		}
+		if = {
+			limit = { OR = { culture = wexonard culture = arannese } }
+			add_province_modifier = {
+				name = celliande_revival
+				duration = -1
+			}
+		}
+		else = {
+			remove_province_modifier = celliande_revival
+		}
+	}
 }
 
 on_province_culture_converted_effect = {
@@ -8795,23 +8812,6 @@ on_province_culture_converted_effect = {
 			owner = { has_country_flag = random_dev_on_culture_conversion }
 		}
 		add_random_development = 1
-	}
-	if = {
-		limit = {
-			owner = {
-				has_country_flag = celliande_convert_wexara
-			}
-		}
-		if = {
-			limit = { OR = { culture = wexonard culture = arannese } }
-			add_province_modifier = {
-				name = celliande_revival
-				duration = -1
-			}
-		}
-		else = {
-			remove_province_modifier = celliande_revival
-		}
 	}
 }
 
