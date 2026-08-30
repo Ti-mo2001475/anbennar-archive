@@ -3750,45 +3750,6 @@ country_event = { #Thunderfire Unleashed
 		add_country_modifier = { name = haless_strict_oversight duration = 7300 }
 	}
 }
-country_event = { #Salvation's Promise
-	id = haless.751
-	title = hidden_event
-	desc = hidden_event.desc
-	picture = KOBOLD_SLAVE_eventPicture
-
-	is_triggered_only = yes
-	hidden = yes
-
-	trigger = {
-		owns = 6844
-		6844 = {
-			has_great_project = {
-				type = salvation_promise
-				tier = 3
-			}
-			province_can_use_salvation_promise = yes
-		}
-	}
-
-	option = {
-		name = hidden_event
-		if = {
-			limit = {
-				5085 = {
-					is_strongest_trade_power = ROOT
-				}
-			}
-			add_country_modifier = {
-				name = salvation_promise_tier_3_hidden_modifier
-				duration = 400 #A little more than year, we wont need to check if you lost monument because it will simply expire
-				hidden = yes
-			}
-		}
-		else = {
-			remove_country_modifier = salvation_promise_tier_3_hidden_modifier
-		}
-	}
-}
 
 # in an event because update_artifice_points = yes is inside the mission reward effects
 # and this avoids copying that huge effects for every single agenda with on_completed_agenda_effect
