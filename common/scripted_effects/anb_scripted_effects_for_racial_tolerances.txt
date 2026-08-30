@@ -4460,6 +4460,24 @@ generic_start_expulsion = {
 				limit = { ai = no }
 				country_event = { id = race_setup_events.9 days = 1 }
 			}
+
+			if = { # Trigger events for EoA members expelling imperial races
+				limit = {
+					is_part_of_hre = yes
+					any_elector = {
+						has_country_modifier = $race$_administration
+					}
+					all_elector = {
+						NOT = { has_country_flag = eoa_protector_elector } # Event chain not already going on
+					}
+				}
+				random_elector = {
+					limit = { has_country_modifier = $race$_administration }
+					set_country_flag = eoa_protector_elector
+					country_event = { id = flavor_empire.40 days = 100 }
+				}
+			}
+				
 			every_owned_province = {
 				limit = { has_small_$race$_minority_trigger = yes }
 				add_unrest = 2
@@ -6763,6 +6781,174 @@ monstrous_races_increase_of_racial_tolerance_effect = {
 		generic_increase_of_racial_tolerance_effect = { race = centaur $size$ = yes }
 		generic_increase_of_racial_tolerance_effect = { race = ogre $size$ = yes }
 		generic_increase_of_racial_tolerance_effect = { race = lizardfolk $size$ = yes }
+	}
+}
+
+# $size$ increase of racial tolerance based on $target$ primary race
+generic_increase_of_target_primary_racial_tolerance = {
+	if = {
+		limit = { $target$ = { culture_is_centaur = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = centaur $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_dwarven = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = dwarven $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_elven = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = elven $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_gnollish = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = gnollish $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_gnomish = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = gnomish $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_goblin = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = goblin $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_halfling = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = halfling $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_half_elven = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = half_elven $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_half_orcish = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = half_orcish $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_harimari = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = harimari $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_harpy = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = harpy $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_human = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = human $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_hobgoblin = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = hobgoblin $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_kobold = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = kobold $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_lizardfolk = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = lizardfolk $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_mechanim = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = mechanim $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_ogre = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = ogre $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_orcish = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = orcish $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_ruinborn = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = ruinborn $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_troll = yes } }
+		generic_increase_of_racial_tolerance_effect = { race = troll $size$ = yes }
+	}
+}
+
+# $size$ decrease of racial tolerance based on $target$ primary race
+generic_decrease_of_target_primary_racial_tolerance = {
+	if = {
+		limit = { $target$ = { culture_is_centaur = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = centaur $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_dwarven = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = dwarven $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_elven = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = elven $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_gnollish = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = gnollish $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_gnomish = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = gnomish $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_goblin = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = goblin $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_halfling = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = halfling $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_half_elven = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = half_elven $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_half_orcish = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = half_orcish $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_harimari = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = harimari $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_harpy = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = harpy $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_human = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = human $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_hobgoblin = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = hobgoblin $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_kobold = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = kobold $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_lizardfolk = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = lizardfolk $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_mechanim = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = mechanim $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_ogre = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = ogre $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_orcish = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = orcish $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_ruinborn = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = ruinborn $size$ = yes }
+	}
+	else_if = {
+		limit = { $target$ = { culture_is_troll = yes } }
+		generic_decrease_of_racial_tolerance_effect = { race = troll $size$ = yes }
 	}
 }
 
