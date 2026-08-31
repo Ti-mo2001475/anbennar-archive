@@ -84,6 +84,9 @@ thunderborn_1 = {
 						}
 					}
 				}
+				set_country_flag = thunderborn_has_filustkhuga_cb
+				set_country_flag = thunderborn_has_irdukhuga_cb
+				set_country_flag = thunderborn_has_maslekhuga_cb
 			}
 		}
 	}
@@ -93,8 +96,8 @@ thunderborn_1 = {
 		position = 4
 		required_missions = { I49_edge_of_the_endless_plain } 
 		provinces_to_highlight = {
-			area_for_scope_province = { is_capital_of = ROOT }
 			owned_by = ROOT
+			area_for_scope_province = { is_capital_of = ROOT }
 			NOT = { has_state_edict = edict_centralization_effort } 
 		}
 
@@ -344,6 +347,13 @@ thunderborn_3 = {
 			}
 			else = {
 				custom_tooltip = I49_false_claimant_effect_tooltip_2_no
+				tooltip = {
+					add_estate_loyalty = {
+						estate = estate_monstrous_tribes
+						loyalty = 10
+					}
+					add_prestige = 20
+				}
 			}
 		}
 	}
@@ -362,10 +372,14 @@ thunderborn_3 = {
 				owned_by = I49
 				owned_by_subject_of = I49
 			}
-			OR = {
-				NOT = { has_tax_building_trigger = yes } 
-				NOT = { development = 7 } 
-				has_any_ongoing_construction = yes
+			NOT = {
+				AND = {
+					OR = {
+						development = 7
+						has_tax_building_trigger = yes
+					}
+					has_any_ongoing_construction = no
+				}
 			}
 		}
 
@@ -552,6 +566,26 @@ thunderborn_3 = {
 				if = {
 					limit = {
 						has_saved_event_target = I49_highest_dev_vassal
+					}
+					every_subject_country = { 
+						limit = {
+							OR = {
+								religious_school = {
+									group = centaur_religion
+									school = filustkhuga_school
+								}
+								religious_school = {
+									group = centaur_religion
+									school = irdukhuga_school
+								}
+								religious_school = {
+									group = centaur_religion
+									school = maslekhuga_school
+								}
+							}
+							total_development = event_target:I49_highest_dev_vassal
+						}
+						save_event_target_as = I49_highest_dev_vassal
 					}
 					event_target:I49_highest_dev_vassal = {
 						if = {
