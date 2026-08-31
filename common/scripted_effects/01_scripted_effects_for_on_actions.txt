@@ -3361,6 +3361,26 @@ on_province_religion_changed_effect = { #Randomizer has fixed outcomes on this o
 		limit = { NOT = { religion_group = triunic_lake } }
 		remove_province_modifier = triunic_tolerated_foreign_missionaries
 	}
+	if = {
+		limit = {
+			owner = {
+				owns = 4801
+			}
+			has_terrain = jungle
+			religion = mystic_accord
+			4801 = {
+				has_great_project = {
+					type = tabai_spirit_palace
+					tier = 3
+				}
+				province_can_use_tabai_spirit_palace = yes
+			}
+		}
+		add_province_modifier = {
+			name = haless_tabai_spirit_palace
+			duration = -1
+		}
+	}
 }
 
 on_province_religion_converted_effect = {
@@ -7232,14 +7252,13 @@ on_war_declaration_effect = {
 	if = {
 		limit = {
 			tag = A77
-			mission_completed = reign_in_the_knight_errants
-			mission_completed = reign_in_the_knight_errants
+			mission_completed = forms_eight_to_three
 			is_in_war = {
 				attacker_leader = ROOT
 				casus_belli = cb_imperial_ban
 			}
 		}
-		A77 = {
+		FROM = {
 			set_country_flag = imperial_ban_goody_rewards
 		}
 	}
@@ -7495,6 +7514,17 @@ on_war_declaration_effect = {
 					duration = -1
 				}
 			}
+		}
+	}
+
+	if = {
+		limit = {
+			is_or_was_tag = { tag = A29 }
+			empire_of_china_reform_passed = imperial_right_reform
+		}
+		add_country_modifier = {
+			name = A29_imperial_right_modifier
+			duration = 1825
 		}
 	}
 
@@ -8592,7 +8622,7 @@ on_province_culture_change_effect = {
 	if = {
 		limit = { 
 			has_province_modifier = 333_lizardfolk_reclamation 
-			culture_group = lizardfolk
+			culture_is_lizardfolk = yes
 		}
 		remove_province_modifier = 333_lizardfolk_reclamation
 		add_base_tax = 1
@@ -8611,7 +8641,7 @@ on_province_culture_change_effect = {
 	if = {
 		limit = { 
 			has_province_modifier = 333_lizardfolk_reclamation_but_for_halflings
-			culture_group = lizardfolk
+			culture_is_lizardfolk = yes
 		}
 		remove_province_modifier = 333_lizardfolk_reclamation_but_for_halflings
 		change_culture = itayzemby_lizardfolk
@@ -8720,6 +8750,23 @@ on_province_culture_change_effect = {
 		limit = { has_province_modifier = zerat_the_last_stand_of_ashhana }
 		remove_province_modifier = zerat_the_last_stand_of_ashhana
 	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = celliande_convert_wexara
+			}
+		}
+		if = {
+			limit = { OR = { culture = wexonard culture = arannese } }
+			add_province_modifier = {
+				name = celliande_revival
+				duration = -1
+			}
+		}
+		else = {
+			remove_province_modifier = celliande_revival
+		}
+	}
 }
 
 on_province_culture_converted_effect = {
@@ -8758,23 +8805,6 @@ on_province_culture_converted_effect = {
 			owner = { has_country_flag = random_dev_on_culture_conversion }
 		}
 		add_random_development = 1
-	}
-	if = {
-		limit = {
-			owner = {
-				has_country_flag = celliande_convert_wexara
-			}
-		}
-		if = {
-			limit = { OR = { culture = wexonard culture = arannese } }
-			add_province_modifier = {
-				name = celliande_revival
-				duration = -1
-			}
-		}
-		else = {
-			remove_province_modifier = celliande_revival
-		}
 	}
 }
 
@@ -8896,7 +8926,7 @@ on_colony_finished_effect = {
 			owner = { 
 				is_part_of_hre = yes 
 				has_country_modifier = honderaak_incident_colonization 
-				NOT = { culture_group = gnollish } 
+				NOT = { culture_is_gnollish = yes } 
 			}
 		}
 		random_list = {
@@ -9504,6 +9534,18 @@ on_dip_development_effect = {
 		}
 	}
 
+	if = {
+		limit = {
+			owner = {
+				is_or_was_tag = { tag = A29 }
+				NOT = {
+					mission_completed = A29_land_and_sea
+				}
+			}
+		}
+		set_province_flag = dip_developed_by_owner
+	}
+
 	#mangrove republic
 	mangrove_on_dip_dev_effect = yes
 }
@@ -9684,6 +9726,7 @@ on_mil_development_effect = {
 				OR = {
 					primary_culture = primal_harimari
 					has_mission = vanrahar_5_build_warrior_housing
+					tag = A29 #busilar mt - maybe this effect should be genericised?
 				}
 			}
 		}
@@ -10158,7 +10201,25 @@ on_development_effect = {
 	if = {
 		limit = { has_province_modifier = haless_khantaari_treasure }
 		extend_province_modifier = { name = haless_khantaari_treasure duration = 1095 }
-		province_event = { id = haless.1003 days = 1096 }
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = A29_rav_dev_click_track
+				NOT = {
+					check_variable = {
+						which = busilar_rav_dev_clicks
+						value = 10
+					}
+				}
+			}
+		}
+		owner = {
+			change_variable = {
+				which = busilar_rav_dev_clicks
+				value = 0.5
+			}
+		}
 	}
 }
 
@@ -11613,6 +11674,30 @@ on_built_tax_building_effect = {
 			duration = -1
 		}
 	}
+	if = {
+		limit = {
+			owner = { has_country_flag = kaino_temple_bonuses_flag }
+			NOT = { development = 4 }
+			culture = kaino
+		}
+		add_province_modifier = {
+			name = kaino_temple_bonuses
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = A29_temples_give_tax_dev
+			}
+			NOT = {
+				has_province_flag = A29_temple_tax_prov
+			}
+		}
+		add_base_tax = 1
+		set_province_flag = A29_temple_tax_prov
+	}
+
 }
 
 on_tax_building_destroyed_effect = {
@@ -11622,6 +11707,16 @@ on_tax_building_destroyed_effect = {
 	remove_province_modifier = L80_temple_buff
 	remove_province_modifier = A80_expand_the_theatre_temples
 	remove_province_modifier = harpylen_temple_roost
+	remove_province_modifier = kaino_temple_bonuses
+	if = { #busilar
+		limit = {
+			owner = {
+				has_country_flag = A29_temples_give_tax_dev
+			}
+		}
+		add_base_tax = -1
+		clr_province_flag = A29_temple_tax_prov
+	}
 }
 
 on_built_manpower_building_effect = {	
@@ -11697,11 +11792,43 @@ on_built_manpower_building_effect = {
 			hidden = yes
 		}
 	}
+	if = {
+		limit = {
+			owner = { has_country_flag = kaino_barracks_bonuses_flag }
+			NOT = { development = 4 }
+			culture = kaino
+		}
+		add_province_modifier = {
+			name = kaino_barracks_bonuses
+			duration = -1
+		}
+	}
+
+	#The Defiant
+	if = {
+		limit = {
+			owner = { owns = 4917 }
+			4917 = {
+				has_great_project = {
+					type = the_defiant
+					tier = 1
+				}
+				can_use_the_defiant_trigger = yes
+			}
+		}
+		add_province_modifier = {
+			name = the_defiant_barracks_buff
+			hidden = yes
+			duration = -1
+		}
+	}
 }
 
 on_manpower_building_destroyed_effect = {
 	remove_province_modifier = L80_barrack_buff
 	remove_province_modifier = harpylen_barrack_roost
+	remove_province_modifier = kaino_barracks_bonuses
+	remove_province_modifier = the_defiant_barracks_buff
 }
 
 on_built_production_building_effect = {
@@ -11869,6 +11996,56 @@ on_built_any_fort_building_effect = {	# THIS = Province,  FROM = Builder (not ne
 		add_province_modifier = {
 			name = S45_mercenary_chapter
 			duration = -1
+		}
+	}
+
+	if = { #The High Bastion Monument
+		limit = {
+			owner = {
+				owns = 6804 #Irdenkhiid
+				can_use_the_high_bastion = yes
+			}
+			6804 = { #Irdenkhiid
+				has_great_project = {
+					type = the_high_bastion
+					tier = 1
+				}
+			}
+			has_climate = arid
+		}
+		if = {
+			limit = {
+				6804 = { #Irdenkhiid
+					has_great_project = {
+						type = the_high_bastion
+						tier = 3
+					}
+				}
+			}
+			add_province_modifier = {
+				name = the_high_bastion_arid_fort_3
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				6804 = { #Irdenkhiid
+					has_great_project = {
+						type = the_high_bastion
+						tier = 2
+					}
+				}
+			}
+			add_province_modifier = {
+				name = the_high_bastion_arid_fort_2
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = the_high_bastion_arid_fort_1
+				duration = -1
+			}
 		}
 	}
 }
@@ -12070,8 +12247,29 @@ on_built_forcelimit_building_effect = {
 		}
 		FROM = { S45_add_momentum = { value = 1 action = building } }
 	}
+
+	#The Defiant
+	if = {
+		limit = {
+			owner = { owns = 4917 }
+			4917 = {
+				can_use_the_defiant_trigger = yes
+				has_great_project = {
+					type = the_defiant
+					tier = 2
+				}
+			}
+		}
+		add_province_modifier = {
+			name = the_defiant_regiment_camp_buff
+			hidden = yes
+			duration = -1
+		}
+	}
 }
-on_forcelimit_building_destroyed_effect = {}
+on_forcelimit_building_destroyed_effect = {
+	remove_country_modifier = the_defiant_regiment_camp_buff
+}
 
 on_built_courthouse_building_effect = {
 	if = {
@@ -12710,8 +12908,6 @@ startup_1444_effects = {
 		if = { #One-time setup events
 			limit = { tag = REB }
 			emperor = { save_global_event_target_as = Emperor }
-
-			5214 = { province_event = { id = haless.1001 days = 3650 } } #Setup event for Gozengun Shifting Sands System
 		}
 
 		if = {
@@ -13267,8 +13463,8 @@ startup_1444_effects = {
 			}
 		}
 
-		#dwarovar reclaimer
-		if = { limit = { capital_scope = { continent = serpentspine } }
+		if = { #dwarovar reclaimer
+			limit = { capital_scope = { continent = serpentspine } }
 			add_country_modifier = { name = reclaiming_dwarovar duration = -1 }
 		}
 
@@ -13491,7 +13687,7 @@ startup_1444_effects = {
 			country_event = { id = mechanim.1 }
 		}
 
-		if = { limit = { culture_group = harpy }
+		if = { limit = { culture_is_harpy = yes }
 			harpy_roost_se_setup = yes
 
 			if = {
@@ -13774,6 +13970,10 @@ startup_1444_effects = {
 			limit = { tag = Z60 }
 			country_event = { id = tsukqiao.1 days = 7 } #Save primary culture
 			ban_necromancy = { country = yes }
+			country_event = {
+				id = nuraryi.1
+				days = 180
+			}
 		}
 		
 		#Pachpalka initialization
@@ -13902,6 +14102,15 @@ startup_1444_effects = {
 				days = 1999 #5'4 years
 			}
 		}
+	}
+
+	if = { #Lake Federation Government Mechanic
+		limit = { has_government_mechanic = lakefed_authority_mechanic }
+		set_variable = { lakefed_authority_var = 0 }
+		set_variable = { lakefed_authority_dead_var = 0 }
+		set_variable = { lakefed_authority_opinion_var = 0.1 }
+		set_variable = { lakefed_authority_cohesion_var = 2.25 }
+		set_variable = { lakefed_authority_display_var = 2.35 }
 	}
 }
 
@@ -15944,7 +16153,7 @@ on_province_owner_change_effect = {
 			if = {
 				limit = {
 					owner = { has_estate_privilege = estate_monstrous_tribes_gozlamoir_system }
-					NOT = { culture_group = centaur }
+					NOT = { culture_is_centaur = yes }
 				}
 				add_noncentaur_nomadic_zone_of_control_modifier = yes
 			}
@@ -17876,6 +18085,13 @@ on_province_owner_change_effect = {
 		}
 	}
 	
+	if = {	#vanilla MTTH made triggered_only
+		limit = {
+			owner = { has_reform = free_city }
+			NOT = { has_dlc = "Common Sense" }
+		}
+		owner = { country_event = { id = 9900 days = 180 } }
+	}
 } #on_province_owner_change_effect bottom
 
 on_primary_culture_changed_effect = {
@@ -17947,6 +18163,12 @@ on_primary_culture_changed_effect = {
 				change_government = republic
 			}
 			add_government_reform = republic_of_free_peoples
+			if = { # Give subjects the T10 reform if you have it
+				limit = {
+					overlord = { has_reform = citizens_khet_steward_united }
+				}
+				add_government_reform = citizens_khet_steward_united
+			}
 		}
 	}
 	#Ynn River Worship Ynnicised culture
@@ -18603,6 +18825,22 @@ anb_on_exploit_effect = {
 	}
 
 	anti_warlord_of_haless_check = yes
+	#busilar 
+	if = {
+		limit = {
+			owner = {
+				mission_completed = A29_extraction_economy 
+			}
+			NOT = { continent = europe }
+			NOT = { superregion = fangaula_superregion }
+			NOT = { region = bahar_region }
+			NOT = { region = kheterata_region }
+		}
+		add_province_modifier = {
+			name = A29_efficient_extraction
+			duration = 5475
+		}
+	}
 }
 on_province_owner_change_monuments = {
 	##### When monument changes owner #####
@@ -19404,6 +19642,43 @@ on_province_owner_change_monuments = {
 			}
 		}
 	}
+	##Tabai Spirit-Palace
+	if = { limit = { province_id = 4801 }
+		if = { 
+			limit = {
+				has_great_project = {
+					type = tabai_spirit_palace
+					tier = 2
+				}
+			}
+			if = {
+				limit = {
+					has_great_project = {
+						type = tabai_spirit_palace
+						tier = 3
+					}
+					province_can_use_tabai_spirit_palace = yes
+				}
+				owner = {
+					every_owned_province = {
+						limit = {
+							religion = mystic_accord
+							has_terrain = jungle
+						}
+						add_province_modifier = {
+							name = haless_tabai_spirit_palace
+							duration = -1
+						}
+					}
+				}
+			}
+			FROM = {
+				every_owned_province = {
+					remove_province_modifier = haless_tabai_spirit_palace
+				}
+			}
+		}
+	}
 
 	##### When you have monument #####
 	if = { #Ascajar
@@ -19823,8 +20098,258 @@ on_province_owner_change_monuments = {
 		province_event = { id = insyaa_flavour.2003 } #on_secret_of_the_hinuilands_owned needs a 1 day delay
 	}
 	
+	#Port of Two Spirits
+	if = {
+		limit = {
+			owner = { 
+				owns = 4774
+				NOT = { religion = mystic_accord }
+			}
+			4774 = {
+				has_great_project = {
+					type = port_of_two_spirits
+					tier = 2
+				}
+				can_use_port_of_two_spirits = yes
+			}
+			province_has_center_of_trade_of_level = 1
+		}
+		port_of_two_spirits_per_province_scripted_effect = yes
+	}
+	if = {
+		limit = {
+			province_id = 4774
+			has_great_project = {
+				type = port_of_two_spirits
+				tier = 1
+			}
+		}
+		FROM = {
+			every_owned_province = {
+				remove_province_modifier = port_of_two_spirits_trade_center_modifier_1
+				remove_province_modifier = port_of_two_spirits_trade_center_modifier_2
+			}
+		}
+		if = {
+			limit = {
+				can_use_port_of_two_spirits = yes
+				owner = { NOT = { religion = mystic_accord } }
+				has_great_project = {
+					type = port_of_two_spirits
+					tier = 2
+				}
+			}
+			owner = {
+				every_owned_province = {
+					limit = {
+						province_has_center_of_trade_of_level = 1
+					}
+					port_of_two_spirits_per_province_scripted_effect = yes
+				}
+			}
+		}
+	}
+
+	#House of Fire and Water
+	if = {
+		limit = {
+			province_id = 4949
+		}
+		if = {
+			limit = {
+				can_use_house_of_fire_and_water_trigger = yes
+				has_great_project = {
+					type = house_of_fire_and_water
+					tier = 2
+				}
+			}
+			if = {
+				limit = {
+					has_great_project = {
+						type = house_of_fire_and_water
+						tier = 3
+					}
+				}
+				owner = {
+					add_country_modifier = {
+						name = house_of_fire_and_water_artificery_buff_2
+						duration = -1
+					}
+				}
+			}
+			else = {
+				owner = {
+					add_country_modifier = {
+						name = house_of_fire_and_water_artificery_buff_1
+						duration = -1
+					}
+				}
+			}
+		}
+		FROM = {
+			remove_country_modifier = house_of_fire_and_water_artificery_buff_1
+			remove_country_modifier = house_of_fire_and_water_artificery_buff_2
+			random_hired_mercenary_company = {
+				limit = { template = merc_war_alchemists }
+				disband_mercenary_company = merc_war_alchemists
+			}
+		}
+	}
+
+	the_defiant_province_scripted_effect = yes
+	thousand_words_assembly_province_scripted_effect = yes
+
 	hinuibee_hive_province_owner_change = yes
 	fluvial_waterworks_province_owner_change = yes
+	if = {
+		limit = {
+			owner = {
+				owns = 4801
+			}
+			religion = mystic_accord
+			has_terrain = jungle
+			4801 = {
+				has_great_project = {
+					type = tabai_spirit_palace
+					tier = 3
+				}
+				province_can_use_tabai_spirit_palace = yes
+			}
+		}
+		add_province_modifier = {
+			name = haless_tabai_spirit_palace
+			duration = -1
+		}
+	}
+
+	if = { #The High Bastion Monument
+		limit = {
+			owner = {
+				owns = 6804 #Irdenkhiid
+				can_use_the_high_bastion = yes
+			}
+			6804 = { #Irdenkhiid
+				has_great_project = {
+					type = the_high_bastion
+					tier = 1
+				}
+			}
+		}
+		if = {
+			limit = { province_id = 6804 } #Irdenkhiid
+			if = {
+				limit = {
+					has_great_project = {
+						type = the_high_bastion
+						tier = 3
+					}
+				}
+				owner = {
+					every_owned_province = {
+						limit = {
+							has_climate = arid
+							has_fort_building_trigger = yes
+						}
+						remove_province_modifier = the_high_bastion_arid_fort_1
+						remove_province_modifier = the_high_bastion_arid_fort_2
+						add_province_modifier = {
+							name = the_high_bastion_arid_fort_3
+							duration = -1
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					has_great_project = {
+						type = the_high_bastion
+						tier = 2
+					}
+				}
+				owner = {
+					every_owned_province = {
+						limit = {
+							has_climate = arid
+							has_fort_building_trigger = yes
+						}
+						remove_province_modifier = the_high_bastion_arid_fort_1
+						remove_province_modifier = the_high_bastion_arid_fort_3
+						add_province_modifier = {
+							name = the_high_bastion_arid_fort_2
+							duration = -1
+						}
+					}
+				}
+			}
+			else = {
+				owner = {
+					every_owned_province = {
+						limit = {
+							has_climate = arid
+							has_fort_building_trigger = yes
+						}
+						remove_province_modifier = the_high_bastion_arid_fort_2
+						remove_province_modifier = the_high_bastion_arid_fort_3
+						add_province_modifier = {
+							name = the_high_bastion_arid_fort_1
+							duration = -1
+						}
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_climate = arid
+				has_fort_building_trigger = yes
+			}
+			if = {
+				limit = {
+					6804 = { #Irdenkhiid
+						has_great_project = {
+							type = the_high_bastion
+							tier = 3
+						}
+					}
+				}
+				add_province_modifier = {
+					name = the_high_bastion_arid_fort_3
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					6804 = { #Irdenkhiid
+						has_great_project = {
+							type = the_high_bastion
+							tier = 2
+						}
+					}
+				}
+				add_province_modifier = {
+					name = the_high_bastion_arid_fort_2
+					duration = -1
+				}
+			}
+			else = {
+				add_province_modifier = {
+					name = the_high_bastion_arid_fort_1
+					duration = -1
+				}
+			}
+		}
+	}
+
+	if = { #Ghalorcander Monument
+		limit = {
+			has_great_project = {
+				type = ghalorcander
+				tier = 3
+			}
+			owner = { can_use_ghalorcander = yes }
+		}
+		double_manufactory_modifiers = yes
+	}
 }
 
 on_production_manufactory_built_effect = { #Farm Estate, Wharf, Plantation but not Ramparts
@@ -19849,6 +20374,7 @@ on_production_manufactory_built_effect = { #Farm Estate, Wharf, Plantation but n
 		}
 		owner = { dragon_turtle_change_friendship = { dragon_turtle = grandfather_moss amount = 3 } }
 	}
+	ghalorcander_on_built_manufactory_effect = { manufactory = production }
 }
 
 on_production_manufactory_destroyed_effect = { #Farm Estate, Wharf, Plantation but not Ramparts
@@ -19865,6 +20391,7 @@ on_production_manufactory_destroyed_effect = { #Farm Estate, Wharf, Plantation b
 			}
 		}
 	}
+	remove_province_modifier = double_manufactory_modifiers_production
 }
 
 on_idea_taken_effect = { #Any basic idea e.g. "War Council" in Mercenary ideas or "Global Empire" in Exploration

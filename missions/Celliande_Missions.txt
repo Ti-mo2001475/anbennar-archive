@@ -33,7 +33,7 @@ celliande_1_missions = {
 				tooltip = celliande_knights_serondor.tt
 				has_country_flag = got_celliande_looming_shadows
 			}
-			num_of_galley = 15
+			num_of_galley = 10
 			navy_size_percentage = 0.9
 			413 = {
 				num_of_units_in_province = {
@@ -173,7 +173,7 @@ celliande_2_missions = {
 
 		trigger = {
 			if = {
-				limit = { exists = A48 }
+				limit = { exists = A48 } #Sugamber
 				A48 = { 
 					has_opinion_modifier = {
 						who = ROOT
@@ -183,8 +183,9 @@ celliande_2_missions = {
 			}
 			if = {
 				limit = { exists = A86 }
-				A86 = {
+				A86 = { #Tellum
 					OR = {
+						vassal_of = ROOT
 						AND = {
 							alliance_with = ROOT
 							has_opinion = {
@@ -197,6 +198,11 @@ celliande_2_missions = {
 							modifier = scornfully_insulted
 						}
 					}
+				}
+			}
+			else = {
+				417 = {
+					is_core = ROOT
 				}
 			}
 		}
@@ -223,7 +229,13 @@ celliande_2_missions = {
 				first_custom_tooltip = celliande_future_borders_unrest
 				first_limit = "
 					A48 = {
-						has_disaster = sugamber_succession_war
+						OR = {
+							has_any_disaster = yes
+							AND = {
+								is_at_war = yes
+								NOT = { war_with = ROOT }
+							}
+						}
 					}
 				"
 				first_effect = "
@@ -348,18 +360,8 @@ celliande_2_missions = {
 						who = U16
 						amount = 10
 					}
-					if = {
-						limit = { exists = U11 }
-						custom_tooltip = celliande_castellan_problems.tt
-						hidden_effect = {
-							U11 = {
-								every_owned_province = {
-									add_permanent_claim = A56
-								}
-							}
-						}
-					}
-					else = { ourdia_region = { add_permanent_claim = ROOT } }
+					custom_tooltip = celliande_castellan_problems.tt
+					ourdia_region = { limit = { NOT = { owned_by = U16 } } add_permanent_claim = ROOT }
 				"
 				second_custom_tooltip = celliande_castellan_problems.tt2
 				second_limit = "

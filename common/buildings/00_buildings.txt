@@ -370,7 +370,6 @@ temple = {
 			}		
 		
 		}
-
 	}
 
 	on_construction_started = {  #Fires when you start the construction,  ROOT - Province FROM - Country that started 1.35
@@ -423,7 +422,7 @@ barracks = {
 				name = G46_barracks_buff
 				duration = -1
 			}
-		}		
+		}
 	} 
 	on_destroyed = {
 		on_manpower_building_destroyed_effect = yes
@@ -945,7 +944,6 @@ regimental_camp = {
 				duration = -1
 			}
 		}
-
 	}
 	on_destroyed = {
 		on_forcelimit_building_destroyed_effect = yes
@@ -1662,7 +1660,7 @@ training_fields = {
 			# FROM = {
 				# add_manpower = -1
 			# }
-		# }		
+		# }
 	}
 	on_obsolete = {
 		remove_development_from_building = {
@@ -3191,6 +3189,8 @@ furnace = {
 		gronstunad_building_authority_effect = { value = 5 }
 
 		on_built_manufactory_effect = yes
+
+		ghalorcander_on_built_manufactory_effect = { manufactory = furnace }
 	}
 
 	on_destroyed = {
@@ -3204,6 +3204,7 @@ furnace = {
 			limit = { FROM = { has_reform = kai_diligent_bureucracy } }
 			anb_manufactory_discount_remove = yes
 		}
+		remove_province_modifier = double_manufactory_modifiers_furnace
 	}
 	on_obsolete = {
 	}
@@ -3302,6 +3303,8 @@ ramparts = {
 				}
 			}
 		}
+
+		ghalorcander_on_built_manufactory_effect = { manufactory = ramparts }
 	}
 
 	on_destroyed = { #1.35
@@ -3330,6 +3333,7 @@ ramparts = {
 		#Dragon Turtle
 		FROM = { dragon_turtle_change_friendship = { dragon_turtle = monzaketzya amount = -3 } }
 		remove_province_modifier = monzaketzya_self_sustaining_architecture
+		remove_province_modifier = double_manufactory_modifiers_ramparts
 	}
 
 	on_construction_started = {  #Fires when you start the construction,  ROOT - Province FROM - Country that started 1.35
@@ -3493,6 +3497,27 @@ soldier_households = {
 				duration = -1
 			}
 		}
+
+		#The Defiant
+		if = {
+			limit = {
+				owner = { owns = 4917 }
+				4917 = {
+					can_use_the_defiant_trigger = yes
+					has_great_project = {
+						type = the_defiant
+						tier = 3
+					}
+				}
+			}
+			add_province_modifier = {
+				name = the_defiant_soldier_households_buff
+				hidden = yes
+				duration = -1
+			}
+		}
+
+		ghalorcander_on_built_manufactory_with_bonus_effect = { manufactory = soldier_households }
 	}
 
 	on_destroyed = {
@@ -3559,6 +3584,10 @@ soldier_households = {
 			limit = { has_province_modifier = zerat_soldiers_household }
 			remove_province_modifier = zerat_soldiers_household
 		}
+
+		remove_province_modifier = the_defiant_soldier_households_buff
+		remove_province_modifier = double_manufactory_modifiers_soldier_households
+		remove_province_modifier = double_manufactory_modifiers_soldier_households_bonus
 	}
 	on_obsolete = {
 	}
@@ -3646,6 +3675,8 @@ impressment_offices = {
 		gronstunad_building_authority_effect = { value = 5 }
 
 		on_built_manufactory_effect = yes
+
+		ghalorcander_on_built_manufactory_with_bonus_effect = { manufactory = impressment_offices }
 	}
 	on_destroyed = {
 		on_destroyed_manufactory_effect = yes
@@ -3671,6 +3702,8 @@ impressment_offices = {
 			remove_province_modifier = a95_tier1_sailors
 			remove_province_modifier = a95_tier2_sailors
 		}
+		remove_province_modifier = double_manufactory_modifiers_impressment_offices
+		remove_province_modifier = double_manufactory_modifiers_impressment_offices_bonus
 	}
 	on_obsolete = {
 	}
@@ -3791,6 +3824,8 @@ state_house = {
 				}
 			}
 		}
+
+		ghalorcander_on_built_manufactory_with_bonus_effect = { manufactory = state_house }
 	}
 	on_destroyed = {
 		on_destroyed_manufactory_effect = yes
@@ -3816,6 +3851,8 @@ state_house = {
 				}
 			}
 		}
+		remove_province_modifier = double_manufactory_modifiers_state_house
+		remove_province_modifier = double_manufactory_modifiers_state_house_bonus
 	}
 	on_obsolete = {
 	}
@@ -4280,6 +4317,8 @@ mage_tower = {
 				}
 			}
 		}
+
+		ghalorcander_on_built_manufactory_with_bonus_effect = { manufactory = mage_tower }
 	}
 	on_destroyed = {
 		on_destroyed_manufactory_effect = yes
@@ -4497,6 +4536,8 @@ mage_tower = {
 				duration = -1
 			}
 		}
+		remove_province_modifier = double_manufactory_modifiers_mage_tower
+		remove_province_modifier = double_manufactory_modifiers_mage_tower_bonus
 	}
 
 	on_construction_started = {  #Fires when you start the construction,  ROOT - Province FROM - Country that started 1.35
@@ -4660,7 +4701,42 @@ automatory = {
 		gronstunad_building_authority_effect = { value = 1 }
 
 		on_built_manufactory_effect = yes
+
+		if = {
+			limit = {
+				owner = { mission_completed = A29_new_labour }
+			}
+			add_province_modifier = {
+				name = A29_robot_work_for_free
+				duration = -1 
+			}
+			every_neighbor_province = {
+				limit = {
+					owner = { mission_completed = A29_new_labour }
+				}
+				add_province_modifier = {
+					name = A29_robot_work_for_free 
+					duration = -1 
+				}
+			}
+		}
+
+		if = { #Ghalorcandor Monument
+			limit = {
+				has_great_project = {
+					type = ghalorcander
+					tier = 3
+				}
+				owner = { can_use_ghalorcander = yes }
+				has_automatory_bonus_trade_good = yes
+			}
+			add_province_modifier = {
+				name = double_manufactory_modifiers_automatory_bonus
+				duration = -1
+			}
+		}
 	}
+
 	on_destroyed = {
 		on_destroyed_manufactory_effect = yes
 		if = {
@@ -4668,6 +4744,31 @@ automatory = {
 			anb_manufactory_discount_remove = yes
 		}
 		anbennar_building_effect = yes
+		if = {
+			limit = {
+				owner = { mission_completed = A29_new_labour }
+				NOT = {
+					any_neighbor_province = {
+						owner = { mission_completed = A29_new_labour }
+						has_building = automatory
+					}
+				}
+			}
+			remove_province_modifier = A29_robot_work_for_free
+			every_neighbor_province = {
+				limit = {
+					owner = { mission_completed = A29_new_labour }
+					NOT = {
+						any_neighbor_province = {
+							owner = { mission_completed = A29_new_labour }
+							has_building = automatory
+						}
+					}
+				}
+				remove_province_modifier = A29_robot_work_for_free
+			}
+		}
+		remove_province_modifier = double_manufactory_modifiers_automatory_bonus
 	}
 
 	on_construction_started = {  #Fires when you start the construction,  ROOT - Province FROM - Country that started 1.35

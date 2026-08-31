@@ -202,17 +202,51 @@ country_event = {
 	option = { #no integrations
 		name = flavor_salla_elyn.7.a
 
-		every_known_country = {
-			limit = {
-				primary_culture = wood_elf
-				is_subject = no
-			 	trust = { who = ROOT value = 100 }
-				NOT = { is_or_was_tag = { tag = B16 } }
+		custom_tooltip = flavor_salla_elyn.7.tt
+		hidden_effect = {
+			every_known_country = {
+				limit = {
+					primary_culture = wood_elf
+					is_subject = no
+					trust = { who = ROOT value = 100 }
+					OR = {
+						AND = {
+							tag = I27
+							ROOT = { has_country_flag = I26_liberate_the_mountain_grove_flag_success }
+						}
+						AND = {
+							tag = I28
+							ROOT = { has_country_flag = I26_liberate_the_thorn_grove_flag_success }
+						}
+						AND = {
+							tag = I29
+							ROOT = { has_country_flag = I26_liberate_the_bone_grove_flag_success }
+						}
+						AND = {
+							tag = I30
+							ROOT = { has_country_flag = I26_liberate_the_hunter_grove_flag_success }
+						}
+						AND = {
+							tag = I31
+							ROOT = { has_country_flag = I26_liberate_the_eastern_groves_flag_success }
+						}
+						AND = {
+							tag = I32
+							ROOT = { has_country_flag = I26_liberate_the_eastern_groves_flag_success }
+						}
+						AND = {
+							tag = I33
+							ROOT = { has_country_flag = I26_liberate_the_arrow_grove_flag_success }
+						}
+						AND = {
+							tag = I34
+							ROOT = { has_country_flag = I26_liberate_the_eastern_groves_flag_success }
+						}
+					}
+				}
+				ROOT = { vassalize = PREV }
+				set_country_flag = I28_no_inherit
 			}
-			ROOT = {
-				vassalize = PREV
-			}
-			set_country_flag = I28_no_inherit
 		}
 		form_cyranvar = yes
 		add_country_modifier = {
@@ -225,15 +259,49 @@ country_event = {
 	option = { #integrations
 		name = flavor_salla_elyn.7.b
 
-		every_known_country = {
-			limit = {
-				primary_culture = wood_elf
-				is_subject = no
-			 	trust = { who = ROOT value = 100 }
-				NOT = { is_or_was_tag = { tag = B16 } }
-			}
-			ROOT = {
-				vassalize = PREV
+		custom_tooltip = flavor_salla_elyn.7.tt
+		hidden_effect = {
+			every_known_country = {
+				limit = {
+					primary_culture = wood_elf
+					is_subject = no
+					trust = { who = ROOT value = 100 }
+					OR = {
+						AND = {
+							tag = I27
+							ROOT = { has_country_flag = I26_liberate_the_mountain_grove_flag_success }
+						}
+						AND = {
+							tag = I28
+							ROOT = { has_country_flag = I26_liberate_the_thorn_grove_flag_success }
+						}
+						AND = {
+							tag = I29
+							ROOT = { has_country_flag = I26_liberate_the_bone_grove_flag_success }
+						}
+						AND = {
+							tag = I30
+							ROOT = { has_country_flag = I26_liberate_the_hunter_grove_flag_success }
+						}
+						AND = {
+							tag = I31
+							ROOT = { has_country_flag = I26_liberate_the_eastern_groves_flag_success }
+						}
+						AND = {
+							tag = I32
+							ROOT = { has_country_flag = I26_liberate_the_eastern_groves_flag_success }
+						}
+						AND = {
+							tag = I33
+							ROOT = { has_country_flag = I26_liberate_the_arrow_grove_flag_success }
+						}
+						AND = {
+							tag = I34
+							ROOT = { has_country_flag = I26_liberate_the_eastern_groves_flag_success }
+						}
+					}
+				}
+				ROOT = { vassalize = PREV }
 			}
 		}
 		form_cyranvar = yes
@@ -809,6 +877,15 @@ country_event = {
 			}
 		}
 		custom_tooltip = I26_moonlit_colonies
+		hidden_effect = {
+			every_owned_province = {
+				limit = { region = daravans_folly_region }
+				add_province_modifier = {
+					name = I26_moonlit_community_modifier
+					duration = -1
+				}
+			}
+		}
 		swap_non_generic_missions = yes
 	}
 }
@@ -1065,13 +1142,34 @@ country_event = {
 		name = flavor_salla_elyn.300.a
 
 		trigger = {
-			has_country_flag = I26_liberate_the_mountain_grove_flag
-			has_country_flag = I26_liberate_the_bone_grove_flag
-			has_country_flag = I26_liberate_the_thorn_grove_flag
-			has_country_flag = I26_liberate_the_lake_grove_flag
-			has_country_flag = I26_liberate_the_hunter_grove_flag
-			has_country_flag = I26_liberate_the_arrow_grove_flag
-			has_country_flag = I26_liberate_the_eastern_groves_flag
+			OR = {
+				has_country_flag = I26_liberate_the_mountain_grove_flag_success
+				has_country_flag = I26_liberate_the_mountain_grove_flag_fail
+			}
+			OR = {
+				has_country_flag = I26_liberate_the_bone_grove_flag_success
+				has_country_flag = I26_liberate_the_bone_grove_flag_fail
+			}
+			OR = {
+				has_country_flag = I26_liberate_the_thorn_grove_flag_success
+				has_country_flag = I26_liberate_the_thorn_grove_flag_fail
+			}
+			OR = {
+				has_country_flag = I26_liberate_the_lake_grove_flag_success
+				has_country_flag = I26_liberate_the_lake_grove_flag_fail
+			}
+			OR = {
+				has_country_flag = I26_liberate_the_hunter_grove_flag_success
+				has_country_flag = I26_liberate_the_hunter_grove_flag_fail
+			}
+			OR = {
+				has_country_flag = I26_liberate_the_arrow_grove_flag_success
+				has_country_flag = I26_liberate_the_arrow_grove_flag_fail
+			}
+			OR = {
+				has_country_flag = I26_liberate_the_eastern_groves_flag_success
+				has_country_flag = I26_liberate_the_eastern_groves_flag_fail
+			}
 		}
 		clr_country_flag = anb_has_special_agendas
 		clr_country_flag = I26_disabled_call_the_diet
@@ -1081,8 +1179,16 @@ country_event = {
 		name = flavor_salla_elyn.300.b
 
 		trigger = {
-			has_country_flag = I26_liberate_the_lake_grove_flag
-			NOT = { has_country_flag = I26_liberate_the_thorn_grove_flag }
+			OR = {
+				has_country_flag = I26_liberate_the_lake_grove_flag_success
+				has_country_flag = I26_liberate_the_lake_grove_flag_fail
+			}
+			NOT = { 
+				OR = {
+					has_country_flag = I26_liberate_the_thorn_grove_flag_success
+					has_country_flag = I26_liberate_the_thorn_grove_flag_fail
+				}
+			}
 		}
 
 		set_country_flag = I26_picked_thorn_grove_agenda
@@ -1095,8 +1201,16 @@ country_event = {
 		name = flavor_salla_elyn.300.c
 
 		trigger = {
-			has_country_flag = I26_liberate_the_lake_grove_flag
-			NOT = { has_country_flag = I26_liberate_the_bone_grove_flag }
+			OR = {
+				has_country_flag = I26_liberate_the_lake_grove_flag_success
+				has_country_flag = I26_liberate_the_lake_grove_flag_fail
+			}
+			NOT = { 
+				OR = {
+					has_country_flag = I26_liberate_the_bone_grove_flag_success
+					has_country_flag = I26_liberate_the_bone_grove_flag_fail
+				}
+			}
 		}
 
 		set_country_flag = I26_picked_bone_grove_agenda
@@ -1109,8 +1223,16 @@ country_event = {
 		name = flavor_salla_elyn.300.e
 
 		trigger = {
-			has_country_flag = I26_liberate_the_lake_grove_flag
-			NOT = { has_country_flag = I26_liberate_the_mountain_grove_flag }
+			OR = {
+				has_country_flag = I26_liberate_the_lake_grove_flag_success
+				has_country_flag = I26_liberate_the_lake_grove_flag_fail
+			}
+			NOT = { 
+				OR = {
+					has_country_flag = I26_liberate_the_mountain_grove_flag_success
+					has_country_flag = I26_liberate_the_mountain_grove_flag_fail
+				}
+			}
 		}
 
 		set_country_flag = I26_picked_mountain_grove_agenda
@@ -1124,10 +1246,21 @@ country_event = {
 
 		trigger = {
 			OR = {
-				has_country_flag = I26_liberate_the_mountain_grove_flag
-				has_country_flag = I26_liberate_the_thorn_grove_flag
+				OR = {
+					has_country_flag = I26_liberate_the_mountain_grove_flag_success
+					has_country_flag = I26_liberate_the_mountain_grove_flag_fail
+				}
+				OR = {
+					has_country_flag = I26_liberate_the_thorn_grove_flag_success
+					has_country_flag = I26_liberate_the_thorn_grove_flag_fail
+				}
 			}
-			NOT = { has_country_flag = I26_liberate_the_hunter_grove_flag }
+			NOT = { 
+				OR = {
+					has_country_flag = I26_liberate_the_hunter_grove_flag_success
+					has_country_flag = I26_liberate_the_hunter_grove_flag_fail
+				}
+			}
 		}
 
 		set_country_flag = I26_picked_hunter_grove_agenda
@@ -1140,8 +1273,16 @@ country_event = {
 		name = flavor_salla_elyn.300.g
 
 		trigger = {
-			has_country_flag = I26_liberate_the_bone_grove_flag
-			NOT = { has_country_flag = I26_liberate_the_arrow_grove_flag }
+			OR = {
+				has_country_flag = I26_liberate_the_bone_grove_flag_success
+				has_country_flag = I26_liberate_the_bone_grove_flag_fail
+			}
+			NOT = { 
+				OR = {
+					has_country_flag = I26_liberate_the_arrow_grove_flag_success
+					has_country_flag = I26_liberate_the_arrow_grove_flag_fail
+				}
+			}
 		}
 
 		set_country_flag = I26_picked_arrow_grove_agenda
@@ -1156,16 +1297,39 @@ country_event = {
 		trigger = {
 			OR = {
 				AND = {
-					has_country_flag = I26_liberate_the_mountain_grove_flag
-					has_country_flag = I26_liberate_the_bone_grove_flag
-					has_country_flag = I26_liberate_the_thorn_grove_flag
-					has_country_flag = I26_liberate_the_hunter_grove_flag
-					has_country_flag = I26_liberate_the_arrow_grove_flag
+					OR = {
+						has_country_flag = I26_liberate_the_mountain_grove_flag_success
+						has_country_flag = I26_liberate_the_mountain_grove_flag_fail
+					}
+					OR = {
+						has_country_flag = I26_liberate_the_bone_grove_flag_success
+						has_country_flag = I26_liberate_the_bone_grove_flag_fail
+					}
+					OR = {
+						has_country_flag = I26_liberate_the_thorn_grove_flag_success
+						has_country_flag = I26_liberate_the_thorn_grove_flag_fail
+					}
+					OR = {
+						has_country_flag = I26_liberate_the_hunter_grove_flag_success
+						has_country_flag = I26_liberate_the_hunter_grove_flag_fail
+					}
+					OR = {
+						has_country_flag = I26_liberate_the_arrow_grove_flag_success
+						has_country_flag = I26_liberate_the_arrow_grove_flag_fail
+					}
 				}
 				has_ruler_flag = I26_is_farwen
 			}
-			has_country_flag = I26_liberate_the_lake_grove_flag
-			NOT = { has_country_flag = I26_liberate_the_eastern_groves_flag }
+			OR = {
+				has_country_flag = I26_liberate_the_lake_grove_flag_success
+				has_country_flag = I26_liberate_the_lake_grove_flag_fail
+			}
+			NOT = {
+				OR = {
+					has_country_flag = I26_liberate_the_eastern_groves_flag_success
+					has_country_flag = I26_liberate_the_eastern_groves_flag_success
+				}
+			}
 		}
 
 		set_country_flag = I26_picked_eastern_groves_agenda
@@ -1178,7 +1342,12 @@ country_event = {
 		name = flavor_salla_elyn.300.i
 
 		trigger = {
-			NOT = { has_country_flag = I26_liberate_the_lake_grove_flag }
+			NOT = {
+				OR = {
+					has_country_flag = I26_liberate_the_lake_grove_flag_success
+					has_country_flag = I26_liberate_the_lake_grove_flag_fail
+				}
+			}
 		}
 
 		set_country_flag = I26_picked_lake_grove_agenda
@@ -1273,5 +1442,86 @@ country_event = { #Farwen shenanigans
 
 	option = {
 		name = flavor_salla_elyn.200.a
+	}
+}
+
+country_event = { #Down The River
+	id = flavor_salla_elyn.500
+	title = flavor_salla_elyn.500.t
+	desc = flavor_salla_elyn.500.d
+	picture = northamericagfx_COMET_SIGHTED_eventPicture
+
+	is_triggered_only = yes
+
+	hidden = yes
+
+	option = {
+		name = flavor_salla_elyn.500.a
+
+		if = {
+			limit = { NOT = { has_country_flag = I26_down_the_river_I } }
+			if = {
+				limit = { 3720 = { is_empty = yes } }
+				3720 = { add_siberian_construction = 1 }
+			}
+			else = { 3720 = { add_permanent_claim = ROOT } }
+			if = {
+				limit = { 446 = { is_empty = yes } }
+				446 = { add_siberian_construction = 1 }
+			}
+			else = { 446 = { add_permanent_claim = ROOT } }
+			if = {
+				limit = { 3719 = { is_empty = yes } }
+				3719 = { add_siberian_construction = 1 }
+			}
+			else = { 3719 = { add_permanent_claim = ROOT } }
+			set_country_flag = I26_down_the_river_I
+			country_event = {
+				id = flavor_salla_elyn.500
+				days = 1460
+				random = 365
+			}
+		}
+		else_if = {
+			limit = { 
+				has_country_flag = I26_down_the_river_I 
+				NOT = { has_country_flag = I26_down_the_river_II }
+			}
+			if = {
+				limit = { 3048 = { is_empty = yes } }
+				3048 = { add_siberian_construction = 1 }
+			}
+			else = { 3048 = { add_permanent_claim = ROOT } }
+			if = {
+				limit = { 450 = { is_empty = yes } }
+				450 = { add_siberian_construction = 1 }
+			}
+			else = { 450 = { add_permanent_claim = ROOT } }
+			set_country_flag = I26_down_the_river_II
+			country_event = {
+				id = flavor_salla_elyn.500
+				days = 1460
+				random = 365
+			}
+		}
+		else = {
+			if = {
+				limit = { 3721 = { is_empty = yes } }
+				3721 = { add_siberian_construction = 1 }
+			}
+			else = { 3721 = { add_permanent_claim = ROOT } }
+			if = {
+				limit = { 449 = { is_empty = yes } }
+				449 = { add_siberian_construction = 1 }
+			}
+			else = { 449 = { add_permanent_claim = ROOT } }
+			if = {
+				limit = { 448 = { is_empty = yes } }
+				448 = { add_siberian_construction = 1 }
+			}
+			else = { 448 = { add_permanent_claim = ROOT } }
+			clr_country_flag = I26_down_the_river_I
+			clr_country_flag = I26_down_the_river_II
+		}
 	}
 }

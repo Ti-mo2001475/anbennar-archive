@@ -329,8 +329,8 @@ country_event = {
 		trigger = {
 			ROOT = {
 				NOT = { 
-					has_personal_deity = tale_of_leif_snaketongue
-					has_personal_deity = emp_tale_of_leif_snaketongue
+					has_personal_deity = tale_of_leiv_snaketongue
+					has_personal_deity = emp_tale_of_leiv_snaketongue
 				}
 			}
 		}
@@ -350,11 +350,11 @@ country_event = {
 			}
 		}
 		if = {
-			limit = { has_country_flag = skald_leif }
-			change_personal_deity = emp_tale_of_leif_snaketongue
+			limit = { has_country_flag = skald_leiv }
+			change_personal_deity = emp_tale_of_leiv_snaketongue
 		}
 		else = {
-			change_personal_deity = tale_of_leif_snaketongue
+			change_personal_deity = tale_of_leiv_snaketongue
 		}
 		set_country_flag = skaldhyrric_faith_deity_switch_cooldown
 	}
@@ -627,8 +627,8 @@ country_event = { #Skald Reform 1
 	option = {
 		name = skaldhyrric.3.i
 		
-		set_country_flag = skald_leif
-		change_personal_deity = emp_tale_of_leif_snaketongue
+		set_country_flag = skald_leiv
+		change_personal_deity = emp_tale_of_leiv_snaketongue
 	}
 	
 }
@@ -756,11 +756,11 @@ country_event = { #Skald Reform 3
 	option = {
 		name = skaldhyrric.5.i
 		trigger = {
-			NOT = { has_country_flag = skald_leif }
+			NOT = { has_country_flag = skald_leiv }
 		}
 		
-		set_country_flag = skald_leif
-		change_personal_deity = emp_tale_of_leif_snaketongue
+		set_country_flag = skald_leiv
+		change_personal_deity = emp_tale_of_leiv_snaketongue
 	}
 	option = {
 		name = skaldhyrric.5.j
@@ -768,7 +768,7 @@ country_event = { #Skald Reform 3
 			has_country_flag = skald_ebonfrost
 		}
 		
-		set_country_flag = skald_leif_emp
+		set_country_flag = skald_leiv_emp
 		clr_country_flag = skald_ebonfrost
 		change_personal_deity = emp_castan_ebonfrost
 	}
@@ -1375,9 +1375,7 @@ country_event = { #Outreach with Regent Court/Corinite
 		}
 	}
 	
-	mean_time_to_happen = {
-		years = 25
-	}
+	is_triggered_only = yes
 	
 	immediate = {
 		random_owned_province = {
@@ -1422,9 +1420,8 @@ country_event = { #infestation
 	trigger = {
 		religion = skaldhyrric_faith
 	}
-	mean_time_to_happen = {
-		years = 50
-	}
+	
+	is_triggered_only = yes
 	
 	immediate = {
 		random_owned_province = {
@@ -1551,9 +1548,7 @@ country_event = { #skaldic singing competition
 		religion = skaldhyrric_faith
 	}
 	
-	mean_time_to_happen = {
-		years = 40
-	}
+	is_triggered_only = yes
 	
 	option = { #enter competition!
 		name = skaldhyrric.25.a
@@ -1593,8 +1588,8 @@ country_event = { #skaldic singing competition
 			add_country_modifier = { name = recite_master_boat duration = 7300 }
 		}
 		else_if = {
-			limit = { OR = { has_personal_deity = tale_of_leif_snaketongue has_personal_deity = emp_tale_of_leif_snaketongue } }
-			add_country_modifier = { name = recite_leif duration = 7300 }
+			limit = { OR = { has_personal_deity = tale_of_leiv_snaketongue has_personal_deity = emp_tale_of_leiv_snaketongue } }
+			add_country_modifier = { name = recite_leiv duration = 7300 }
 		}
 		else_if = {
 			limit = { OR = { has_personal_deity = castan_ebonfrost has_personal_deity = emp_castan_ebonfrost } }
@@ -1631,10 +1626,7 @@ country_event = { #skaldic singing competition
 	}
 	option = { #do not interfere
 		name = skaldhyrric.25.b
-		random = {
-			chance = 25
-			add_stability_or_adm_power = yes
-		}
+		add_stability_or_adm_power = yes #gonna delete the 75% chance to do nothing because that's weird design
 	}
 }
 
@@ -1648,9 +1640,7 @@ country_event = { #unorthodox tales
 		religion = skaldhyrric_faith
 	}
 	
-	mean_time_to_happen = {
-		years = 30
-	}
+	is_triggered_only = yes
 	
 	immediate = {
 		hidden_effect = {
@@ -1667,15 +1657,10 @@ country_event = { #unorthodox tales
 		name = skaldhyrric.29.a
 		if = {
 			limit = { has_saved_event_target = skald_unorthodox_tales }
-			event_target:skald_unorthodox_tales ={
+			event_target:skald_unorthodox_tales = {
 				add_province_modifier = { name = skald_unorthodox_discontent duration = 5475 }
-				add_local_autonomy = 5
 			}
 		}
-		add_adm_power = -15
-		add_dip_power = -15
-		add_mil_power = -15
-		add_legitimacy_equivalent = { amount = 5 republican_tradition = 2 }
 		add_estate_loyalty = {
 			estate = estate_church
 			loyalty = 5
@@ -1690,7 +1675,6 @@ country_event = { #unorthodox tales
 				add_local_autonomy = 15
 			}
 		}
-		add_legitimacy_equivalent = { amount = -10 republican_tradition = -5 }
 		add_estate_loyalty = {
 			estate = estate_church
 			loyalty = -5
@@ -1710,10 +1694,9 @@ country_event = { #unorthodox tales
 		if = {
 			limit = { has_saved_event_target = skald_unorthodox_tales }
 			event_target:skald_unorthodox_tales ={
-				add_province_modifier = { name = skald_unorthodox_celebrations duration = 5475 }
+				add_province_modifier = { name = skald_unorthodox_allowed duration = 5475 }
 			}
 		}
-		add_treasury = -25
 	}
 }
 
@@ -1727,17 +1710,7 @@ country_event = { #good hunting season
 		religion = skaldhyrric_faith
 	}
 	
-	mean_time_to_happen = {
-		years = 30
-		
-		modifier = {
-			factor = 0.75
-			estate_loyalty = {
-				estate = estate_church
-				loyalty = 65
-			}
-		}
-	}
+	is_triggered_only = yes
 	
 	option = { #use opportunity
 		name = skaldhyrric.30.a
@@ -1784,22 +1757,14 @@ country_event = { #cold year
 		religion = skaldhyrric_faith
 	}
 	
-	mean_time_to_happen = {
-		years = 50
-		
-		modifier = {
-			factor = 0.5
-			NOT = { has_legitimacy_equivalent = { VAL = 50 } }
-		}
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = skaldhyrric.31.a
-		add_years_of_income = -0.5
 		add_legitimacy_equivalent = { amount = -10 republican_tradition = -5 }
-		random = {
-			chance = 25
-			add_stability = -1
+		add_country_modifier = {
+			name = skald_elkaesals_wrath
+			duration = 3600
 		}
 	}
 }
@@ -1814,27 +1779,15 @@ country_event = { #doubt in ruler
 		religion = skaldhyrric_faith
 		AND = {
 			NOT = { stability = 1 }
-			NOT = { has_legitimacy_equivalent = { VAL = 85 } }
+			NOT = { has_legitimacy_equivalent = { VAL = 50 } }
 		}
 	}
 	
-	mean_time_to_happen = {
-		years = 50
-		
-		modifier = {
-			factor = 0.75
-			NOT = { has_legitimacy_equivalent = { VAL = 50 } }
-		}
-		modifier = {
-			factor = 0.5
-			NOT = { has_legitimacy_equivalent = { VAL = 33 } }
-		}
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = skaldhyrric.32.a
 		
-		add_stability = -1
 		random_owned_province = {
 			limit = {
 				superregion = gerudia_superregion

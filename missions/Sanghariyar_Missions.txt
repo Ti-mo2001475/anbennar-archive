@@ -2082,7 +2082,7 @@ davharral_1_palace_missions = {
 		required_missions = { sanghariyar_palace_for_a_god }
 
 		provinces_to_highlight = {
-			culture_group = harpy
+			culture_is_harpy = yes
 			has_discovered = ROOT
 		}
 
@@ -2092,7 +2092,7 @@ davharral_1_palace_missions = {
 				medium_tolerance_harpy_race_trigger = yes
 			}
 			OR = {
-				any_owned_province = { culture_group = harpy }
+				any_owned_province = { culture_is_harpy = yes }
 				AND = {
 					treasury = 10000
 					adm_power = 150
@@ -2102,7 +2102,7 @@ davharral_1_palace_missions = {
 
 		effect = {
 			if = {
-				limit = { NOT = { any_owned_province = { culture_group = harpy } } }
+				limit = { NOT = { any_owned_province = { culture_is_harpy = yes } } }
 				add_treasury = -10000
 				add_adm_power = -150
 			}
@@ -4022,8 +4022,6 @@ sanghariyar_4_post_secure_jungle_missions = {
 			arawkelin_area = { add_permanent_claim = ROOT }
 			binhrunghin_area = { add_permanent_claim = ROOT }
 			4716 = { add_permanent_claim = ROOT }
-			custom_tooltip = sanghariyar_around_the_peninsula_effect_tt
-			hidden_effect = { set_country_flag = aksa_sanuyego_MT_subject_bypass_flag }
 			add_country_modifier = { name = sanghariyar_merchant_busy duration = 1825 }
 			hoangdesinh_area = {
 				custom_tooltip = create_trade_state_tt
@@ -4088,6 +4086,7 @@ sanghariyar_4_post_secure_jungle_missions = {
 
 		effect = {
 			add_mercantilism = 3
+			upgrade_aksa_sanuyego_scripted_effect = yes
 			iongsim_area = { add_permanent_claim = ROOT }
 			hungngon_area = { add_permanent_claim = ROOT }
 			add_country_modifier = { name = sanghariyar_treasure_fleet_connections duration = 10950 }
