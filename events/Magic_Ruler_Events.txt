@@ -359,6 +359,7 @@ country_event = { # War Magic Death - Early Game
 		NOT = { current_age = age_of_revolutions }
 		is_at_war = yes
 		has_cast_war_magic = yes
+		is_monarch_leader = yes
 		ruler_is_not_immortal = yes
 		NOT = { special_life_extension = yes }
 	}
@@ -380,24 +381,33 @@ country_event = { # War Magic Death - Early Game
 
 	option = {	#Abjuration 1
 		name = magic_ruler.110.b
-		trigger = { is_ruler_abjuration_level_1_minimum = yes }
+		trigger = { 
+			is_ruler_abjuration_level_1_minimum = yes 
+			has_mana = { amount = 25 }
+		}
 		highlight = yes
 
-		add_mil_power = -50
 
-		random_list = {
-			3 = {
-				modifier = {
-					factor = 1.67
-					is_ruler_abjuration_level_2 = yes
-				}
-				modifier = {
-					factor = 3
-					is_ruler_abjuration_level_3 = yes
-				}
+		if = { #if you still have mana
+			limit = { has_mana = { amount = 25 } }
+			change_mana = { amount = -25 }
+			random_list = {
+				3 = {
+					modifier = {
+						factor = 1.67
+						is_ruler_abjuration_level_2 = yes
+					}
+					modifier = {
+						factor = 3
+						is_ruler_abjuration_level_3 = yes
+					}
 
+				}
+				1 = { kill_ruler = yes }
 			}
-			1 = { kill_ruler = yes }
+		}
+		else = { #if you are suspiciously out of mana between receiving the event and picking the option
+			kill_ruler = yes
 		}
 	}
 }
@@ -413,6 +423,7 @@ country_event = { # War Magic Death - Black Damestear
 		current_age = age_of_revolutions
 		is_at_war = yes
 		has_cast_war_magic = yes
+		is_monarch_leader = yes
 		ruler_is_not_immortal = yes
 		NOT = { special_life_extension = yes }
 	}
@@ -435,13 +446,22 @@ country_event = { # War Magic Death - Black Damestear
 
 	option = {	#Abjuration 3
 		name = magic_ruler.111.b
-		trigger = { is_ruler_abjuration_level_3 = yes }
+		trigger = { 
+			is_ruler_abjuration_level_3 = yes 
+			has_mana = { amount = 25 }
+		}
 		highlight = yes
+		if = { #if you still have mana
+			limit = { has_mana = { amount = 25 } }
 
-		add_mil_power = -50
+			change_mana = { amount = -25 }
 
-		random = {
-			chance = 50
+			random = {
+				chance = 50
+				kill_ruler = yes
+			}
+		}
+		else = {
 			kill_ruler = yes
 		}
 	}
@@ -547,7 +567,7 @@ country_event = { #Rise of a Witch-King
 		hidden_effect = {
 			make_spell_half_off = { school = conjuration level = 3 id = extraplanar_contact ruler = yes }
 			remove_country_modifier = necromancy_2_speak_with_dead_cooldown_mod
-			remove_country_modifier = necromancy_2_speak_with_dead_cooldown_mod_05
+			remove_country_modifier = necromancy_2_speak_with_dead_cooldown_mod_0
 		}
 	}
 }
@@ -670,8 +690,10 @@ country_event = { #Ruler Reforms
 	option = { #nah
 		name = magic_ruler.68.b
 		ai_chance = { factor = 1 }
-
-		set_variable = { ruler_witch_king_points = 16 }
+		custom_tooltip = ruler_infamy_will_stay_witch_king_tt
+		hidden_effect = {
+			set_variable = { ruler_witch_king_points = 16 }
+		}
 		# since they are already a witch king, just set their infamy back to the minimum for a witch king
 		# no need to do the full effect
 	}
@@ -717,7 +739,11 @@ country_event = { #Evil Ruler Removed Through Peace Deal (Witch-King, Lich, Vamp
 		}
 
 		#Lich Stuff
-		kill_a_lich_effect = yes
+		if = {
+			limit = { ruler_is_lich = yes }
+			kill_a_lich_effect = yes
+			ban_necromancy = yes
+		}
 
 		#Vampire stuff
 		remove_vampire_immortality = yes
