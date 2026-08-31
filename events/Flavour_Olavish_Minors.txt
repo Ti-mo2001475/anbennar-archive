@@ -9,10 +9,6 @@ country_event = {
 
 	is_triggered_only = yes
 
-	trigger = {
-		always = yes
-	}
-
 	option = {
 		name = olavish_minor.1.a
 		ai_chance = {
@@ -49,10 +45,6 @@ country_event = {
 	picture = NOBLE_ESTATE_eventPicture
 
 	is_triggered_only = yes
-
-	trigger = {
-		always = yes
-	}
 
 	option = {
 		name = olavish_minor.2.a
@@ -149,10 +141,6 @@ country_event = {
 	picture = CITY_VIEW_eventPicture
 
 	is_triggered_only = yes
-	
-	trigger = {
-		always = yes
-	}
 
 	option = {
 		name = olavish_minor.3.a
@@ -182,10 +170,6 @@ country_event = {
 
 	is_triggered_only = yes
 
-	trigger = {
-		always = yes
-	}
-
 	# We fight
 	option = {
 		name = redgarhavn.1.a
@@ -193,7 +177,7 @@ country_event = {
 			factor = 100
 		}
 		save_event_target_as = plunder_victim
-		Z13 = { #Redgarhavn
+		FROM = {
 			add_casus_belli = {
 				type = cb_reaver_invasion
 				target = ROOT
@@ -240,10 +224,6 @@ country_event = {
 
 	is_triggered_only = yes
 
-	trigger = {
-		always = yes
-	}
-
 	option = {
 		name = redgarhavn.2.a
 		ai_chance = {
@@ -279,10 +259,6 @@ country_event = {
 
 	is_triggered_only = yes
 
-	trigger = {
-		always = yes
-	}
-
 	option = {
 		name = redgarhavn.3.a
 		ai_chance = {
@@ -302,32 +278,35 @@ country_event = {
 
 # Paying With Steel
 # Hidden pulse
-country_event = {
-    id = redgarhavn.4
-    hidden = yes
-	fire_only_once = yes
+# country_event = {
+#     id = redgarhavn.4
+# 	title = none
+# 	desc = none
+# 	picture = none
+#     hidden = yes
+# 	fire_only_once = yes
 
-    trigger = {
-        is_in_war = {
-			casus_belli = cb_reaver_invasion
-			attacker_leader = ROOT
-			defender_leader = Z08 #Bjarnrik	
-		}
-    }
+#     trigger = {
+#         is_in_war = {
+# 			casus_belli = cb_reaver_invasion
+# 			attacker_leader = ROOT
+# 			defender_leader = Z08 #Bjarnrik	
+# 		}
+#     }
 
-    mean_time_to_happen = {
-        days = 1
-    }
+#     mean_time_to_happen = {
+#         days = 1
+#     }
 
-    immediate = {
-        country_event = {
-            id = redgarhavn.5
-            days = 150    # Fire the real event ~5 months later
-        }
-    }
+#     immediate = {
+#         country_event = {
+#             id = redgarhavn.5
+#             days = 150    # Fire the real event ~5 months later
+#         }
+#     }
 
-	option = {}
-}
+# 	option = {}
+# }
 # Actual Event
 country_event = {
 	id = redgarhavn.5
@@ -337,10 +316,6 @@ country_event = {
 
 	is_triggered_only = yes
 
-	trigger = {
-		always = yes
-	}
-
 	option = {
 		name = redgarhavn.5.a
 		ai_chance = {
@@ -349,10 +324,6 @@ country_event = {
 		Z08 = { #Bjarnrik
 			capital_scope = {
 				change_controller = ROOT
-				# add_province_modifier = {
-				# 	name = redgarhavn_reaver_occupation
-				# 	duration = 1095
-				# }
 			}
 		}
 	}
@@ -367,16 +338,7 @@ country_event = {
 
 	fire_only_once = yes
 
-	trigger = {
-		tag = Z13 #Redgarhavn
-		Z08 = { #Bjarnrik
-			has_country_flag = has_been_plundered
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 1
-	}
+	is_triggered_only = yes
 
 	option = {
 		name = redgarhavn.6.a
@@ -404,16 +366,7 @@ country_event = {
 
 	fire_only_once = yes
 
-	trigger = {
-		tag = Z13 #Redgarhavn
-		Z18 = { #Frozenmaw
-			has_country_flag = has_been_plundered
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 1
-	}
+	is_triggered_only = yes
 
 	option = {
 		name = redgarhavn.7.a
@@ -443,16 +396,7 @@ country_event = {
 
 	fire_only_once = yes
 
-	trigger = {
-		tag = Z13 #Redgarhavn
-		Z22 = { #Celmaldor
-			has_country_flag = has_been_plundered
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 1
-	}
+	is_triggered_only = yes
 
 	option = {
 		name = redgarhavn.8.a
@@ -484,10 +428,6 @@ country_event = {
 
 	is_triggered_only = yes
 
-	trigger = {
-		always = yes
-	}
-
 	option = {
 		name = avnkaup.1.a
 		ai_chance = {
@@ -507,10 +447,6 @@ country_event = {
 	picture = indiangfx_COUNTRY_COLLAPSE_eventPicture
 
 	is_triggered_only = yes
-
-	trigger = {
-		always = yes
-	}
 
 	option = {
 		name = avnkaup.2.a
@@ -533,24 +469,13 @@ country_event = {
 
 	fire_only_once = yes
 
-	trigger = {
-		has_country_flag = looking_for_key
-		any_hired_mercenary_company = {
-			mercenary_company = merc_saga_troll_hunters
-			location = { province_id = 4182 } #Sashkras
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 1
-	}
+	is_triggered_only = yes
 
 	option = {
 		name = avnkaup.3.a
 		ai_chance = {
 			factor = 100
 		}
-		clr_country_flag = looking_for_key
 		custom_tooltip = avnkaup_kill_sashkras_natives
 		set_country_flag = better_kill_those_ogres
 	}
@@ -565,22 +490,7 @@ country_event = {
 
 	fire_only_once = yes
 
-	trigger = {
-		has_country_flag = better_kill_those_ogres
-		any_hired_mercenary_company = {
-			mercenary_company = merc_saga_troll_hunters
-			location = { province_id = 4182 } #Sashkras
-		}
-		4182 = { #Sashkras
-			NOT = {
-				native_size = 1
-			}
-		}
-	}
-
-	mean_time_to_happen = {
-		days = 1
-	}
+	is_triggered_only = yes
 
 	option = {
 		name = avnkaup.4.a
@@ -601,10 +511,6 @@ country_event = {
 	picture = BIG_BOOK_eventPicture
 
 	is_triggered_only = yes
-
-	trigger = {
-		always = yes
-	}
 
 	option = {
 		name = avnkaup.5.a
