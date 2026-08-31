@@ -345,7 +345,7 @@ country_event = {
 						id = ogre_flavour_events.16
 				}
 			}
-
+			# Surplus of Tiny Swords
 			10 = {
 				trigger = {
 					culture_group = ogre
@@ -355,7 +355,7 @@ country_event = {
 					id = ogre_flavour_events.17
 				}
 			}
-
+			# Crippling Hunger
 			5 = {
 				trigger = {
 					culture_group = ogre
@@ -366,6 +366,49 @@ country_event = {
 				}
 				country_event = {
 					id = ogre_flavour_events.18
+				}
+			}
+
+			10 = {
+				trigger = {
+					culture_group = ogre
+					has_country_flag = removing_monstrous
+					OR = {
+						religion = feast_of_the_gods
+						religion = reformed_feast_of_the_gods
+					}
+					NOT = { 
+						has_country_flag = no_demonsterization_events_till_tech_7 
+					}
+				}
+				country_event = {
+					id = ogre_flavour_events.19
+				}
+			}
+
+			5 = {
+				trigger = {
+					culture_group = ogre
+					religion = feast_of_the_gods
+				}
+				country_event = {
+					id = ogre_flavour_events.20
+				}
+			}
+
+			10 = {
+				trigger = {
+					culture_group = ogre
+					OR = {
+						religion = reformed_feast_of_the_gods
+						AND = {
+							religion = feast_of_the_gods
+							feast_of_the_gods_2_reforms_passed = yes
+						}
+					}
+				}
+				country_event = {
+					id = ogre_flavour_events.21
 				}
 			}
 		}
@@ -1581,6 +1624,9 @@ country_event = {
 
 	option = {
 		name = ogre_flavour_events.15.a
+		ai_chance = {
+			factor = 30
+		}
 		add_country_modifier = {
 			name = ogre_flavour_heretic_shaman
 			duration = 1825
@@ -1598,6 +1644,9 @@ country_event = {
 	}
 	option = {
 		name = ogre_flavour_events.15.b
+		ai_chance = {
+			factor = 70
+		}
 		add_manpower = -7.5
 		add_treasury = -100
 		add_country_modifier = {
@@ -1616,7 +1665,7 @@ country_event = {
 		}
 	}
 }
-
+# Cattle Thief
 country_event = {
 	id = ogre_flavour_events.16
 	title = ogre_flavour_events.16.t
@@ -1638,6 +1687,9 @@ country_event = {
 		}
 	option = {
 		name = ogre_flavour_events.16.a
+		ai_chance = {
+			factor = 70
+		}
 		add_dip_power = -25
 		random_list = {
 			20 = {
@@ -1660,6 +1712,9 @@ country_event = {
 	}
 	option = {
 		name = ogre_flavour_events.16.b
+		ai_chance = {
+			factor = 30
+		}
 		event_target:ogre_cattle_thief_target = {
 						add_province_modifier = {
 							name = ogre_flavour_thief_ignored_no_effort
@@ -1669,6 +1724,9 @@ country_event = {
 			}
 	option = {
 		name = ogre_flavour_events.16.c
+		ai_chance = {
+			factor = 100
+		}
 		highlight = yes
 		trigger = {
 			dip = 3
@@ -1681,7 +1739,7 @@ country_event = {
 				}
 		}
 	}
-
+# Surplus of Tiny Swords
 country_event = {
 	id = ogre_flavour_events.17
 	title = ogre_flavour_events.17.t
@@ -1690,6 +1748,9 @@ country_event = {
 	picture = FORGE_eventPicture
 	option = {
 		name = ogre_flavour_events.17.a
+		ai_chance = {
+			factor = 30
+		}
 		add_country_modifier = {
 			name = ogre_flavour_comically_small_swords
 			duration = 1825
@@ -1698,6 +1759,9 @@ country_event = {
 
 	option = {
 		name = ogre_flavour_events.17.b
+		ai_chance = {
+			factor = 30
+		}
 		add_country_modifier = {
 			name = ogre_flavour_bigger_is_better
 			duration = 1825
@@ -1706,11 +1770,17 @@ country_event = {
 
 	option = {
 		name = ogre_flavour_events.17.c
+		ai_chance = {
+			factor = 40
+		}
 		add_treasury = 50
 	}
 
 	option = {
 		name = ogre_flavour_events.17.e
+		ai_chance = {
+			factor = 100
+		}
 		highlight = yes
 		trigger = {
 			has_country_modifier = goblin_military
@@ -1722,7 +1792,7 @@ country_event = {
 	}
 
 }
-
+# Crippling Hunger
 country_event = {
 	id = ogre_flavour_events.18
 	title = ogre_flavour_events.18.t
@@ -1732,6 +1802,9 @@ country_event = {
 
 	option = {
 		name = ogre_flavour_events.18.a
+		ai_chance = {
+			factor = 30
+		}
 		trigger = {
 			has_heir = yes
 		}
@@ -1753,6 +1826,9 @@ country_event = {
 
 	option = {
 		name = ogre_flavour_events.18.b
+		ai_chance = {
+			factor = 30
+		}
 		trigger = {
 			has_consort = yes
 		}
@@ -1773,7 +1849,6 @@ country_event = {
 				limit = {
 					has_foreign_consort = yes
 				}
-				remove_consort = yes
 				every_country = {
 					limit = {
 						has_given_consort_to = ROOT
@@ -1784,6 +1859,7 @@ country_event = {
 						years = 5
 					}
 				}
+				remove_consort = yes
 				add_country_modifier = {
 					name = ogre_flavour_bad_optics
 					duration = 1825
@@ -1793,6 +1869,9 @@ country_event = {
 
 	option = {
 		name = ogre_flavour_events.18.c
+		ai_chance = {
+			factor = 70
+		}
 		if = {
 			limit = {
 				religion = feast_of_the_gods
@@ -1807,6 +1886,153 @@ country_event = {
 				name = ogre_flavour_voracious_ruler
 				duration = 1825
 			}
+		}
+	}
+}
+# Education of the Ogres
+country_event = {
+	id = ogre_flavour_events.19
+	title = ogre_flavour_events.19.t
+	desc = ogre_flavour_events.19.d
+	is_triggered_only = yes
+	picture = school_eventPicture
+
+	option = {
+		name = ogre_flavour_events.19.a
+		ai_chance = {
+			factor = 40
+		}
+		add_country_modifier = {
+			name = ogre_flavour_ogre_literacy
+			duration = 1825
+		}
+		decrease_monstrous_1 = yes
+	}
+
+	option = {
+		name = ogre_flavour_events.19.b
+		ai_chance = {
+			factor = 40
+		}
+		add_country_modifier = {
+			name = ogre_flavour_ogre_tactics
+			duration = 1825
+		}
+		decrease_monstrous_1 = yes
+	}
+
+	option = {
+		name = ogre_flavour_events.19.c
+		ai_chance = {
+			factor = 20
+		}
+		add_treasury = 200
+		add_corruption = 2
+		increase_monstrous_2 = yes
+	}
+}
+# What Remains of the Giants
+country_event = {
+	id = ogre_flavour_events.20
+	title = ogre_flavour_events.20.t
+	desc = ogre_flavor_events.20.d
+	picture = PIETY_eventPicture # what do i even put for this one rofl
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = ogre_flavour_events.20.a
+		ai_chance = {
+			factor = 50
+		}
+		if = {
+			limit = {
+				ruler_has_personality = scholar_personality
+			}
+			add_country_modifier = {
+				name = ogre_flavour_pride
+				duration = 10950
+			}
+		}
+
+		else = {
+			add_country_modifier = {
+				name = ogre_flavour_pride
+				duration = 5475
+			}
+		}
+	}
+
+	option = {
+		name = ogre_flavour_events.20.b
+		ai_chance = {
+			factor = 50
+		}
+		if = {
+			limit = {
+				ruler_has_personality = scholar_personality
+			}
+			add_country_modifier = {
+				name = ogre_flavour_resilience
+				duration = 10950
+			}
+		}
+
+		else = {
+			add_country_modifier = {
+				name = ogre_flavour_resilience
+				duration = 5475
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ogre_flavour_events.21
+	title = ogre_flavour_events.21.t
+	desc = ogre_flavour_events.21.d
+ 	picture = GREAT_FIRE_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = ogre_flavour_events.21.a
+		ai_chance = {
+			factor = 50
+		}
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 20
+		}
+		add_estate_influence_modifier = {
+			estate = estate_church
+			desc = ""
+			influence = 10
+			duration = 1825
+		}
+		add_country_modifier = {
+			name = ogre_flavour_no_heresy
+			duration = 1825
+		}
+	}
+
+	option = {
+		name = ogre_flavour_events.21.b
+		ai_chance = {
+			factor = 50
+		}
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -20
+		}
+		add_estate_influence_modifier = {
+			estate = estate_church
+			desc = ""
+			influence = -10
+			duration = 1825
+		}
+		add_country_modifier = {
+			name = ogre_flavour_heresy
+			duration = 1825
 		}
 	}
 }
