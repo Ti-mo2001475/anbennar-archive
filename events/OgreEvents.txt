@@ -11,7 +11,7 @@ country_event = {
 	desc = race_setup_events.1.d
 	picture = BORDER_TENSION_eventPicture
 	is_triggered_only = yes
-	hidden = yes
+	# hidden = yes
 	trigger = {
 		has_country_modifier = ogre_administration
 		fast_owns_num_pops_of_race = {
@@ -321,8 +321,8 @@ country_event = {
 					id = ogre_flavour_events.14
 				}
 			}
-
-			15 = {
+			# Heretic Shaman
+			5 = {
 				trigger = {
 					culture_group = ogre
 					religion = feast_of_the_gods
@@ -331,8 +331,45 @@ country_event = {
 					id = ogre_flavour_events.15
 				}
 			}
+
+			# Cattle Thief
+			10 = {
+				trigger = {
+					any_owned_province = {
+						trade_goods = livestock
+						culture_group = ogre
+						religion = feast_of_the_gods
+					}
+				}
+				country_event = {
+						id = ogre_flavour_events.16
+				}
+			}
+
+			10 = {
+				trigger = {
+					culture_group = ogre
+					religion = feast_of_the_gods
+				}
+				country_event = {
+					id = ogre_flavour_events.17
+				}
+			}
+
+			5 = {
+				trigger = {
+					culture_group = ogre
+					OR = {
+						religion = feast_of_the_gods
+						religion = reformed_feast_of_the_gods
+					}
+				}
+				country_event = {
+					id = ogre_flavour_events.18
+				}
+			}
+		}
 	}
-}
 }
 
 # Building Costs Run Tall
@@ -1576,6 +1613,200 @@ country_event = {
 			desc = ""
 			influence = 10
 			duration = 1825
+		}
+	}
+}
+
+country_event = {
+	id = ogre_flavour_events.16
+	title = ogre_flavour_events.16.t
+	desc = ogre_flavour_events.16.d
+	is_triggered_only = yes
+	picture = FARMING_eventPicture
+	goto = ogre_cattle_thief_target
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					culture_group = ogre
+					religion = feast_of_the_gods
+					trade_goods = livestock
+					}
+				}
+				save_event_target_as = ogre_cattle_thief_target
+			}
+		}
+	option = {
+		name = ogre_flavour_events.16.a
+		add_dip_power = -25
+		random_list = {
+			20 = {
+				event_target:ogre_cattle_thief_target = {
+					add_province_modifier = {
+						name = ogre_flavour_thief_ignored
+						duration = 730
+					}
+				}
+			}
+			80 = {
+					event_target:ogre_cattle_thief_target = {
+						add_province_modifier = {
+							name = ogre_flavour_thief_arrested
+							duration = 730
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = ogre_flavour_events.16.b
+		event_target:ogre_cattle_thief_target = {
+						add_province_modifier = {
+							name = ogre_flavour_thief_ignored_no_effort
+							duration = 730
+					}
+				}
+			}
+	option = {
+		name = ogre_flavour_events.16.c
+		highlight = yes
+		trigger = {
+			dip = 3
+		}
+		event_target:ogre_cattle_thief_target = {
+						add_province_modifier = {
+							name = ogre_flavour_thief_arrested
+							duration = 730
+					}
+				}
+		}
+	}
+
+country_event = {
+	id = ogre_flavour_events.17
+	title = ogre_flavour_events.17.t
+	desc = ogre_flavour_events.17.d
+	is_triggered_only = yes
+	picture = FORGE_eventPicture
+	option = {
+		name = ogre_flavour_events.17.a
+		add_country_modifier = {
+			name = ogre_flavour_comically_small_swords
+			duration = 1825
+		}
+	}
+
+	option = {
+		name = ogre_flavour_events.17.b
+		add_country_modifier = {
+			name = ogre_flavour_bigger_is_better
+			duration = 1825
+		}
+	}
+
+	option = {
+		name = ogre_flavour_events.17.c
+		add_treasury = 50
+	}
+
+	option = {
+		name = ogre_flavour_events.17.e
+		highlight = yes
+		trigger = {
+			has_country_modifier = goblin_military
+		}
+		add_country_modifier = {
+			name = ogre_flavour_little_brothers
+			duration = 1825
+		}
+	}
+
+}
+
+country_event = {
+	id = ogre_flavour_events.18
+	title = ogre_flavour_events.18.t
+	desc = ogre_flavour_events.18.d
+	is_triggered_only = yes
+	picture = LOOMING_DEATH_eventPicture
+
+	option = {
+		name = ogre_flavour_events.18.a
+		trigger = {
+			has_heir = yes
+		}
+		kill_heir = {}
+		if = {
+			limit = {
+				religion = feast_of_the_gods
+			}
+			add_doom = -15
+		}
+		else_if = {
+			limit = {
+				religion = reformed_feast_of_the_gods
+			}
+			add_stability = -1
+			add_prestige = -20
+		}
+	}
+
+	option = {
+		name = ogre_flavour_events.18.b
+		trigger = {
+			has_consort = yes
+		}
+		if = {
+			limit = {
+				religion = feast_of_the_gods
+			}
+			add_doom = -10
+		}
+		else_if = {
+			limit = {
+				religion = reformed_feast_of_the_gods
+			}
+			add_stability = -2
+			add_prestige = -20
+		}
+		if = {
+				limit = {
+					has_foreign_consort = yes
+				}
+				remove_consort = yes
+				every_country = {
+					limit = {
+						has_given_consort_to = ROOT
+					}
+					add_opinion = {
+						who = ROOT
+						modifier = ogre_flavour_he_ate_them
+						years = 5
+					}
+				}
+				add_country_modifier = {
+					name = ogre_flavour_bad_optics
+					duration = 1825
+				}
+			}
+	}
+
+	option = {
+		name = ogre_flavour_events.18.c
+		if = {
+			limit = {
+				religion = feast_of_the_gods
+			}
+			add_doom = 10
+		}
+		else_if = {
+			limit = {
+				religion = reformed_feast_of_the_gods
+			}
+			add_country_modifier = {
+				name = ogre_flavour_voracious_ruler
+				duration = 1825
+			}
 		}
 	}
 }
