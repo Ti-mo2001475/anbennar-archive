@@ -15671,6 +15671,14 @@ on_five_year_pulse_3 = {
 	random_events = { #TO be massively expanded ideally, potentially becoming a handler instead.
 		500 = aelantir_immigration.0
 	}
+
+	random_events = { #Beast memory events.
+		100 = beast_memory.21
+		50 = beast_memory.22
+		100 = beast_memory.25
+		50 = beast_memory.26
+		50 = beast_memory.27
+	}
 }
 	
 on_five_year_pulse_4 = {
@@ -30734,14 +30742,14 @@ on_adm_exploited = {
 			is_core = A72
 			base_tax = 2
 		}
-		save_global_event_target_as = celliande_cash_tax
+		set_province_flag = celliande_cash_tax
 		owner = {
 			add_owned_provinces_development_ducats = { #Not working without global event target
 				multiplier = 2.25
-				trigger = { province_id = event_target:celliande_cash_tax }
+				trigger = { has_province_flag = celliande_cash_tax }
 			}
 		}
-		clear_global_event_target = celliande_cash_tax
+		clr_province_flag = celliande_cash_tax
 		add_base_tax = -1
 	}
 }
