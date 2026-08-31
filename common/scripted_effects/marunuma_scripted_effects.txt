@@ -129,88 +129,49 @@ N93_prepare_lineage_helper = {
 	set_variable = { N93_slot_$slot$_lineage = $lineage$ }
 	set_country_flag = N93_prepared_lineage_$lineage$
 }
-# binary tree (min:0 max:14)
-# technically 14 isn't used but I left it in case
 # slot: which election option (0-3)
 N93_add_lineage = {
-	if = { # 7 < x <= 14
-		limit = { check_variable = { N93_slot_$slot$_lineage = 8 } }
-		if = { # 11 < x <= 14
-			limit = { check_variable = { N93_slot_$slot$_lineage = 12 } }
-			if = { # 12 < x <= 14
-				limit = { check_variable = { N93_slot_$slot$_lineage = 13 } }
-				if = { # x = 14
-					limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 14 } }
-					add_ruler_modifier = { name = N93_lineage_14 duration = -1 }
-				}
-				else = { # x = 13
-					add_ruler_modifier = { name = N93_lineage_13 duration = -1 }
-				}
-			}
-			else = { # x = 12
-				add_ruler_modifier = { name = N93_lineage_12 duration = -1 }
-			}
-		}
-		else_if = { # 7 < x < 11
-			limit = { NOT = { check_variable = { N93_slot_$slot$_lineage = 11 } } }
-			if = { # 8 < x < 11
-				limit = { check_variable = { N93_slot_$slot$_lineage = 9 } }
-				if = { # x = 10
-					limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 10 } }
-					add_ruler_modifier = { name = N93_lineage_10 duration = -1 }
-				}
-				else = { # x = 9
-					add_ruler_modifier = { name = N93_lineage_9 duration = -1 }
-				}
-			}
-			else = { # x = 8
-				add_ruler_modifier = { name = N93_lineage_8 duration = -1 }
-			}
-		}
-		else = { # x = 11
-			add_ruler_modifier = { name = N93_lineage_11 duration = -1 }
-		}
+	if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 0 } }
+		add_ruler_modifier = { name = N93_lineage_0 duration = -1 }
 	}
-	else_if = { # 0 <= x < 7
-		limit = { NOT = { check_variable = { N93_slot_$slot$_lineage = 7 } } }
-		if = { # 3 < x < 7
-			limit = { check_variable = { N93_slot_$slot$_lineage = 4 } }
-			if = { # 5 <= x < 7
-				limit = { check_variable = { N93_slot_$slot$_lineage = 5 } }
-				if = { # x = 6
-					limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 6 } }
-					add_ruler_modifier = { name = N93_lineage_6 duration = -1 }
-				}
-				else = { # x = 5
-					add_ruler_modifier = { name = N93_lineage_5 duration = -1 }
-				}
-			}
-			else = { # x = 4
-				add_ruler_modifier = { name = N93_lineage_4 duration = -1 }
-			}
-		}
-		else_if = { # 0 <= x < 3
-			limit = { NOT = { check_variable = { N93_slot_$slot$_lineage = 3 } } }
-			if = { # 1 <= x < 3
-				limit = { check_variable = { N93_slot_$slot$_lineage = 1 } }
-				if = { # x = 2
-					limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 2 } }
-					add_ruler_modifier = { name = N93_lineage_2 duration = -1 }
-				}
-				else = { # x = 1
-					add_ruler_modifier = { name = N93_lineage_1 duration = -1 }
-				}
-			}
-			else = { # x = 0
-				add_ruler_modifier = { name = N93_lineage_0 duration = -1 }
-			}
-		}
-		else = { # x = 3
-			add_ruler_modifier = { name = N93_lineage_3 duration = -1 }
-		}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 1 } }
+		add_ruler_modifier = { name = N93_lineage_1 duration = -1 }
 	}
-	else = { # x = 7
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 2 } }
+		add_ruler_modifier = { name = N93_lineage_2 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 3 } }
+		add_ruler_modifier = { name = N93_lineage_3 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 4 } }
+		add_ruler_modifier = { name = N93_lineage_4 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 5 } }
+		add_ruler_modifier = { name = N93_lineage_5 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 6 } }
+		add_ruler_modifier = { name = N93_lineage_6 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 7 } }
 		add_ruler_modifier = { name = N93_lineage_7 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 8 } }
+		add_ruler_modifier = { name = N93_lineage_8 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 9 } }
+		add_ruler_modifier = { name = N93_lineage_9 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 10 } }
+		add_ruler_modifier = { name = N93_lineage_10 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 11 } }
+		add_ruler_modifier = { name = N93_lineage_11 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 12 } }
+		add_ruler_modifier = { name = N93_lineage_12 duration = -1 }
+	}
+	else_if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 13 } }
+		add_ruler_modifier = { name = N93_lineage_13 duration = -1 }
 	}
 }
 

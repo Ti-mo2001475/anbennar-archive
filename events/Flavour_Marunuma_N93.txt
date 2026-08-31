@@ -93,12 +93,14 @@ country_event = {
         hidden_effect = {
             N91 = {
                 ROOT = {
-                    export_to_variable = { which = temp value = total_development who = PREV }
+                    export_to_variable = { which = tempVassalDev value = total_development who = PREV }
                 }
             }
-            while = { limit = { check_variable = { temp = 1 } }
-                subtract_variable = { temp = 1 }
-                add_dip_power = -4
+            multiply_variable = { tempVassalDev = 4 }
+            var_effect = {
+                effect = add_dip_power
+                var = tempVassalDev
+                sign = -
             }
             inherit = N91
             change_variable = { N91_mission_sway = 1 }

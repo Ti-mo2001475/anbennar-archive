@@ -57,9 +57,15 @@ N93_col_1 = {
             N91 = {
                 NOT = {
                     AND = {
-                        alliance_with = ROOT
+                        OR = {
+                            alliance_with = ROOT
+                            is_subject_of = ROOT
+                        }
                         trust = { who = ROOT value = 70 }
-                        has_opinion = { who = ROOT value = 200 }
+                        OR = {
+                            has_opinion = { who = ROOT value = 200 }
+                            has_100_opinion_improved_relation = { target = ROOT }
+                        }
                     }
                 }
             }
@@ -486,7 +492,7 @@ N93_col_5 = {
                 }
             }
             else_if = { limit = { owns = 3666 }
-                add_local_autonomy = -25
+                3666 = { add_local_autonomy = -25 }
             }
             else = {
                 3666 = {

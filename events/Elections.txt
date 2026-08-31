@@ -2081,6 +2081,8 @@ country_event = {
 			mil = 1
 			culture = skyfall_ogre
 		}
+		# jank below because the old ruler is still alive during death elections
+		# adding ruler modifier doesn't show in tooltip if it already exists on old ruler
 		hidden_effect = { add_ruler_modifier = { name = N93_lineage_14 duration = -1 } }
 		tooltip = { add_country_modifier = { name = N93_lineage_14 duration = -1 desc = N93_until_ruler_death_tt } }
 	}
@@ -3442,7 +3444,7 @@ country_event = {
 		}
 	}
 	option = {
-		name = elections.800.f
+		name = elections.800.clan_guilds
 		trigger = { has_country_flag = N93_ogre_ruler_enabled }
 		define_ruler = {
 			min_age = 50
@@ -3487,6 +3489,14 @@ country_event = { #Technocracy Election
 			has_reform = bazuneizar_clockwork_republic
 		}
 		NOT = { has_country_flag = no_elections }
+	}
+
+	immediate = {
+		hidden_effect = {
+			if = { limit = { mission_completed = N93_lineage_of_marunuma }
+				N93_prepare_all_lineages = yes
+			}
+		}
 	}
 	
 	option = {
@@ -3599,6 +3609,7 @@ country_event = { #Technocracy Election
 				value = 100
 			}
 		}
+
 	}
 	option = {
 		name = elections.900.b # Brillite Ruler
@@ -3748,6 +3759,10 @@ country_event = { #Technocracy Election
 				loyalty = 10
 			}
 		}
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 0 }
+		}
+
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -3905,6 +3920,10 @@ country_event = { #Technocracy Election
 				loyalty = 10
 			}
 		}
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 1 }
+		}
+
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -4060,6 +4079,9 @@ country_event = { #Technocracy Election
 			add_estate_loyalty_by_class_mil = {
 				loyalty = 10
 			}
+		}
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 2 }
 		}
 		ai_chance = {
 			factor = 1
