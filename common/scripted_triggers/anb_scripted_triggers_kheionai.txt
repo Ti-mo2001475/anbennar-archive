@@ -663,7 +663,10 @@ windwards_area_subtrigger = {
  #Why is basically every trigger inside a custom tooltip? 
  #Because otherwise it's shown as "Province Owner: \n	<trigger>" which looks bad, isn't necessary or helpful, and I don't want it
 windward_upgrade_triggers = {
-	hidden_trigger = { owned_by = FROM }
+	if = {
+		limit = { NOT = { owned_by = FROM } }
+		owned_by = FROM
+	}
 	if = { #Can't upgrade further if the province has a level 10 Windward
 		limit = { has_province_modifier = windward_level_10 }
 		custom_trigger_tooltip = {
@@ -682,7 +685,7 @@ windward_upgrade_triggers = {
 		limit = { has_province_modifier = windward_level_8 }
 		
 		if = { #If you have the magical project, show it's level trigger
-			limit = { has_full_deathwinds_system = yes }
+			limit = { owner = { has_full_deathwinds_system = yes } }
 			custom_trigger_tooltip = {
 				tooltip = owner_has_magic_project_level_2_tt
 				owner = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 2 } }
@@ -711,21 +714,10 @@ windward_upgrade_triggers = {
 				tooltip = owner_has_treasury_2500_tt
 				owner = { treasury = 2500 }
 			}
-
-			if = { #If they have access to the magical project, show a tooltip that tells them about the discounted triggers
-				limit = { has_full_deathwinds_system = yes }
-				custom_trigger_tooltip = {
-					tooltip = owner_has_mana_100_hint_tt
-					owner = { has_mana = { amount = 100 } }
-				}
+			custom_trigger_tooltip = {
+				tooltip = owner_has_mana_100_hint_tt
+				owner = { has_mana = { amount = 100 } }
 			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = owner_has_mana_100_tt
-					owner = { has_mana = { amount = 100 } }
-				}
-			}
-
 		}
 	}
 	#-------------------------------------------------------------------------------------------------------------
@@ -733,7 +725,7 @@ windward_upgrade_triggers = {
 		limit = { has_province_modifier = windward_level_7 }
 
 		if = { #If you have the magical project, show it's level trigger
-			limit = { has_full_deathwinds_system = yes }
+			limit = { owner = { has_full_deathwinds_system = yes } }
 			custom_trigger_tooltip = {
 				tooltip = owner_has_magic_project_level_1_tt
 				owner = { at_least_magic_project_level = { project = deathwinds_kheion_and_kaydhano level = 1 } }
@@ -762,21 +754,10 @@ windward_upgrade_triggers = {
 				tooltip = owner_has_treasury_2000_tt
 				owner = { treasury = 2000 }
 			}
-
-			if = { #If they have access to the magical project, show a tooltip that tells them about the discounted triggers
-				limit = { has_full_deathwinds_system = yes }
-				custom_trigger_tooltip = {
-					tooltip = owner_has_mana_100_hint_tt
-					owner = { has_mana = { amount = 100 } }
-				}
+			custom_trigger_tooltip = {
+				tooltip = owner_has_mana_100_hint_tt
+				owner = { has_mana = { amount = 100 } }
 			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = owner_has_mana_100_tt
-					owner = { has_mana = { amount = 100 } }
-				}
-			}
-
 		}
 	}
 	#-------------------------------------------------------------------------------------------------------------
@@ -810,15 +791,8 @@ windward_upgrade_triggers = {
 					owner = { manpower = 20 }
 				}
 				custom_trigger_tooltip = {
-					tooltip = owner_has_mana_200_tt
+					tooltip = owner_has_mana_200_hint_tt
 					owner = { has_mana = { amount = 200 } }
-				}
-				if = { #If they have access to the magical project, show a tooltip that tells them about the discounted triggers
-					limit = { has_full_deathwinds_system = yes }
-					custom_trigger_tooltip = {
-						tooltip = deathwinds_tease_magical_project_tt
-						always = no
-					}
 				}
 			}
 		}
@@ -854,15 +828,8 @@ windward_upgrade_triggers = {
 					owner = { manpower = 15 }
 				}
 				custom_trigger_tooltip = {
-					tooltip = owner_has_mana_150_tt
+					tooltip = owner_has_mana_150_hint_tt
 					owner = { has_mana = { amount = 150 } }
-				}
-				if = { #If they have access to the magical project, show a tooltip that tells them about the discounted triggers
-					limit = { has_full_deathwinds_system = yes }
-					custom_trigger_tooltip = {
-						tooltip = deathwinds_tease_magical_project_tt
-						always = no
-					}
 				}
 			}
 		}
@@ -895,18 +862,9 @@ windward_upgrade_triggers = {
 			}
 		}
 		else = {
-			if = { #If they have access to the magical project, show a tooltip that tells them about the discounted triggers
-				limit = { has_full_deathwinds_system = yes }
-				custom_trigger_tooltip = {
-					tooltip = owner_has_manpower_10_hint_tt
-					owner = { manpower = 10 }
-				}
-			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = owner_has_manpower_10_tt
-					owner = { manpower = 10 }
-				}
+			custom_trigger_tooltip = {
+				tooltip = owner_has_manpower_10_hint_tt
+				owner = { manpower = 10 }
 			}
 		}
 	}
@@ -943,7 +901,10 @@ windward_upgrade_triggers = {
 
 #Trigger for the 2nd Deathwinds aPUI button
 windwards_reinforce_with_manpower_trigger = {
-	hidden_trigger = { owned_by = FROM }
+	if = {
+		limit = { NOT = { owned_by = FROM } }
+		owned_by = FROM
+	}
 	has_full_deathwinds_system_button = yes
 	#Requires manpower equal to 5 + (2 * Maximum Potential Deathwind Level) 
 	if = {
@@ -982,7 +943,10 @@ windwards_reinforce_with_manpower_trigger = {
 
 #Trigger for the 3rd Deathwinds aPUI button
 windwards_reinforce_with_mana_trigger = {
-	hidden_trigger = { owned_by = FROM }
+	if = {
+		limit = { NOT = { owned_by = FROM } }
+		owned_by = FROM
+	}
 	has_full_deathwinds_system_button = yes
 	has_deathwind_modifier = yes
 	custom_trigger_tooltip = {
@@ -997,7 +961,10 @@ windwards_reinforce_with_mana_trigger = {
 
 #Trigger for the 4th Deathwinds aPUI button
 reduce_windward_triggers = {
-	hidden_trigger = { owned_by = FROM }
+	if = {
+		limit = { NOT = { owned_by = FROM } }
+		owned_by = FROM
+	}
 	has_full_deathwinds_system_button = yes
 	has_windward_modifier = yes
 	NOT = { province_group = alecandi_capital_provinces }
