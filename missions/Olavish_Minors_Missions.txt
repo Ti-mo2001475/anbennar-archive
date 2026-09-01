@@ -577,7 +577,7 @@ olavish_minor_2 = {
 					is_or_was_tag = { tag = Z13 } #Redgarhavn
 				}
 				if = {
-					limit = { capital_scope = { province_id = 977 } } #Olavsborg
+					limit = { capital = 977 } #Olavsborg
 					capital_scope = {
 						change_trade_goods = gems
 					}
@@ -1401,11 +1401,26 @@ redgarhavn_1 = {
 						}
 					}
 				}
+				AND = {
+					NOT = { exists = Z22 } #Celmaldor
+					province_id = 696 #Celmaldor
+					NOT = { owned_by = ROOT }
+				}
 			}
 			
 		}
 
 		trigger = {
+			if = {
+				limit = { exists = Z22 } #Celmaldor
+				has_spy_network_in = {
+					who = Z22 #Celmaldor
+					value = 30
+				}
+			}
+			else = {
+				owns = 696 #Celmaldor
+			}
 			OR = {
 				696 = { #Celmaldor
 					has_privateer_share_in_trade_node = {
@@ -1437,26 +1452,38 @@ redgarhavn_1 = {
 						}
 					}
 				}
-			}
-			has_spy_network_in = {
-				who = Z22 #Celmaldor
-				value = 30
 			}
 			3187 = { #Drekkodr
 				country_or_non_sovereign_subject_holds = ROOT
 			}
-			has_won_war_against = {
-				who = Z08 #Bjarnrik
+			if = {
+				limit = {
+					OR = {
+						exists = Z08 #Bjarnrik
+						has_won_war_against = {
+							who = Z08 #Bjarnrik
+						}
+					}
+				}
+				has_won_war_against = {
+					who = Z08 #Bjarnrik
+				}
 			}
 		}
 
 		effect = {
-			Z22 = { #Celmaldor
-				country_event = { id = redgarhavn.1 }
-				add_country_modifier = {
-					name = redgarhavn_navy_sabotaged
-					duration = 1825
+			if = {
+				limit = { exists = Z22 } #Celmaldor
+				Z22 = { #Celmaldor
+					country_event = { id = redgarhavn.1 }
+					add_country_modifier = {
+						name = redgarhavn_navy_sabotaged
+						duration = 1825
+					}
 				}
+			}
+			else = {
+				country_event = { id = redgarhavn.8 }
 			}
 		}
 	}
@@ -1475,16 +1502,24 @@ redgarhavn_2 = {
 		required_missions = {}
 
 		provinces_to_highlight = {
-			AND = {
-				ROOT = {
-					NOT = {
-						has_spy_network_in = {
-							who = Z08 #Bjarnrik
-							value = 30
+			OR = {
+				AND = {
+					exists = Z08 #Bjarnrik
+					ROOT = {
+						NOT = {
+							has_spy_network_in = {
+								who = Z08 #Bjarnrik
+								value = 30
+							}
 						}
 					}
+					is_capital_of = Z08 #Bjarnrik
 				}
-				is_capital_of = Z08 #Bjarnrik
+				AND = {
+					NOT = { exists = Z08 } #Bjarnrik
+					province_id = 956 #Konungrhavn
+					NOT = { owned_by = ROOT }
+				}
 			}
 		}
 
@@ -1496,14 +1531,22 @@ redgarhavn_2 = {
 					who = Z08 #Bjarnrik
 					value = 30
 				}
+			} else = {
+				owns = 956 #Konungrhavn
 			}
 		}
 
 		effect = {
-			Z08 = { #Bjarnrik
-				country_event = { id = redgarhavn.1 }
+			if = {
+				limit = { exists = Z08 } #Bjarnrik
+				Z08 = { #Bjarnrik
+					country_event = { id = redgarhavn.1 }
+				}
+				custom_tooltip = redgarhavn_konungrhavn_coup
 			}
-			custom_tooltip = redgarhavn_konungrhavn_coup
+			else = {
+				country_event = { id = redgarhavn.6 }
+			}
 		}
 	}
 
@@ -1534,7 +1577,7 @@ redgarhavn_2 = {
 							}
 						}
 					}
-					owned_by = Z18 #Frozenmaw
+					is_capital_of = Z18 #Frozenmaw
 				}
 				AND = {
 					province_id = 3187 #Drekkodr
@@ -1552,45 +1595,74 @@ redgarhavn_2 = {
 					}
 					is_capital_of = Z08 #Bjarnrik
 				}
+				AND = {
+					NOT = { exists = Z18 } #Frozenmaw
+					province_id = 740 #Bal Vroren
+					NOT = { owned_by = ROOT }
+				}
 			}
 			
 		}
 
 		trigger = {
 			if = {
-				limit = {
-					Z18 = { #Frozenmaw
-						num_of_subjects = 2
-					}
-				}
-				Z18 = { #Frozenmaw
-					calc_true_if = {
-						all_subject_country = {
-							has_75_opinion_improved_relation = { target = ROOT }
+				limit = { exists = Z18 } #Frozenmaw
+				if = {
+					limit = {
+						Z18 = { #Frozenmaw
+							num_of_subjects = 2
 						}
-						amount = 2
+					}
+					Z18 = { #Frozenmaw
+						calc_true_if = {
+							all_subject_country = {
+								has_75_opinion_improved_relation = { target = ROOT }
+							}
+							amount = 2
+						}
 					}
 				}
 				has_spy_network_in = {
 					who = Z18 #Frozenmaw
 					value = 30
 				}
-				3187 = { #Drekkodr
-					country_or_non_sovereign_subject_holds = ROOT
+			}
+			else = {
+				owns = 740 #Bal Vroren
+			}
+
+			3187 = { #Drekkodr
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			if = {
+				limit = {
+					OR = {
+						exists = Z08 #Bjarnrik
+						has_won_war_against = {
+							who = Z08 #Bjarnrik
+						}
+					}
 				}
 				has_won_war_against = {
 					who = Z08 #Bjarnrik
 				}
 			}
+			
 		}
 
 		effect = {
-			Z18 = { #Frozenmaw
-				country_event = { id = redgarhavn.1 }
-				add_country_modifier = {
-					name = redgarhavn_poisoned_rations
-					duration = 1825
+			if = {
+				limit = { exists = Z18 } #Frozenmaw
+				Z18 = { #Frozenmaw
+					country_event = { id = redgarhavn.1 }
+					add_country_modifier = {
+						name = redgarhavn_poisoned_rations
+						duration = 1825
+					}
 				}
+			}
+			else = {
+				country_event = { id = redgarhavn.7 }
 			}
 		}
 	}
@@ -1641,18 +1713,40 @@ redgarhavn_2 = {
 		}
 
 		trigger = {
-			OR = {
-				has_country_modifier = olavish_minor_olavish_dominance_2
-				has_country_modifier = olavish_minor_olavish_dominance_3
-				has_country_modifier = olavish_minor_reaver_king_2
-				has_country_modifier = olavish_minor_reaver_king_3
+			custom_trigger_tooltip = {
+				tooltip = olavish_minor_has_won_10_battles_tt
+				check_variable = {
+					which = olavish_minor_dominance_battles_won
+					value = 10
+				}
 			}
+			
 			prestige = 30
-			has_won_war_against = {
-				who = Z18 #Frozenmaw
+			if = {
+				limit = {
+					OR = {
+						exists = Z18 #Frozenmaw
+						has_won_war_against = {
+							who = Z18 #Frozenmaw
+						}
+					}
+				}
+				has_won_war_against = {
+					who = Z18 #Frozenmaw
+				}
 			}
-			has_won_war_against = {
-				who = Z22 #Celmaldor
+			if = {
+				limit = {
+					OR = {
+						exists = Z22 #Celmaldor
+						has_won_war_against = {
+							who = Z22 #Celmaldor
+						}
+					}
+				}
+				has_won_war_against = {
+					who = Z22 #Celmaldor
+				}
 			}
 			698 = { #Eyegard
 				country_or_non_sovereign_subject_holds = ROOT
@@ -1670,7 +1764,10 @@ redgarhavn_2 = {
 			}
 			if = {
 				limit = { 
-					has_country_modifier = olavish_minor_olavish_dominance_3
+					check_variable = {
+						which = olavish_minor_dominance_battles_won
+						value = 20
+					}
 				}
 				add_adm_power = 50
 				add_dip_power = 50
