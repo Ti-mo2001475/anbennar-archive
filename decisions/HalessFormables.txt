@@ -1444,8 +1444,9 @@ country_decisions = {
 			}
 			if = {
 				limit = { ai = no }
-				num_of_owned_provinces_with = {
-					value = 6
+				spirit_forts_province_group = {
+					type = all
+					owned_by = ROOT
 					custom_trigger_tooltip = {
 						tooltip = kimni_solenh_exalted_forts.tt
 						has_province_flag = bom_fort_exalted
@@ -1453,15 +1454,9 @@ country_decisions = {
 				}
 			}
 			else = {
-				calc_true_if = {
-					amount = 6
-					owns = 4576
-					owns = 4580
-					owns = 4802
-					owns = 4565
-					owns = 4941
-					owns = 4600
-					owns = 4703
+				spirit_forts_province_group = {
+					type = all
+					owned_by = ROOT
 				}
 			}
 		}
@@ -1498,6 +1493,17 @@ country_decisions = {
 						province_is_in_bom_cultural_sphere = yes
 					}
 					change_culture = exalted_harimari
+				}
+				# If AI manages to form the tag, exalt the spirit forts.
+				if = { 
+					limit = { ai = yes }
+					4703 = { spirit_fort_exaltation_effect = { province = tuan_caoban} }
+					4576 = { spirit_fort_exaltation_effect = { province = skarkaophe } }
+					4580 = { spirit_fort_exaltation_effect = { province = khabtei_teleni } }
+					4565 = { spirit_fort_exaltation_effect = { province = bim_lau } }
+					4600 = { spirit_fort_exaltation_effect = { province = semphrerong } }
+					4941 = { spirit_fort_exaltation_effect = { province = lapnam_amrik } }
+					4802 = { spirit_fort_exaltation_effect = { province = risrong } }
 				}
 			}
 		}
