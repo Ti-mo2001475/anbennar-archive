@@ -4541,9 +4541,30 @@ country_event = { #The Hunter's Gambit Tournament Start
 			type = all
 			owner = { primary_culture = wood_elf }
 		}
+		OR = {
+			tag = I26
+			tag = I27
+			tag = I28
+			tag = I29
+			tag = I30
+			tag = I31
+			tag = I32
+			tag = I33
+			tag = I34
+		}
 		any_known_country = {
 			primary_culture = wood_elf
-			capital_scope = { superregion = deepwoods_superregion }
+			OR = {
+				tag = I26
+				tag = I27
+				tag = I28
+				tag = I29
+				tag = I30
+				tag = I31
+				tag = I32
+				tag = I33
+				tag = I34
+			}
 		}
 	}
 
@@ -4552,11 +4573,22 @@ country_event = { #The Hunter's Gambit Tournament Start
 		ai_chance = { factor = 1 }
 
 		set_country_flag = hunters_gambit_contender
+		set_country_flag = hunters_gambit_participated_in_tournament
 		custom_tooltip = hunters_gambit_tutorial_tt
 		every_known_country = {
 			limit = {
 				primary_culture = wood_elf
-				capital_scope = { superregion = deepwoods_superregion }
+				OR = {
+					tag = I26
+					tag = I27
+					tag = I28
+					tag = I29
+					tag = I30
+					tag = I31
+					tag = I32
+					tag = I33
+					tag = I34
+				}
 			}
 			country_event = { id = deepwoods.101 days = 7 }
 		}
@@ -4584,6 +4616,7 @@ country_event = { #The Hunter's Gambit Tournament Start
 		name = deepwoods.101.a
 		ai_chance = { factor = 1 }
 		set_country_flag = hunters_gambit_contender
+		set_country_flag = hunters_gambit_participated_in_tournament
 		custom_tooltip = hunters_gambit_tutorial_tt
 	}
 
@@ -4654,6 +4687,7 @@ country_event = { #The Hunter's Gambit Tournament Preparations
 
 	option = { #Train Only
 		name = deepwoods.103.a
+		custom_tooltip = hunters_gambit_results
 		add_manpower = -1.5
 		custom_tooltip = hunters_gambit_need_at_tt
 		if = {
@@ -4707,6 +4741,7 @@ country_event = { #The Hunter's Gambit Tournament Preparations
 
 	option = { #Equipment Only
 		name = deepwoods.103.b
+		custom_tooltip = hunters_gambit_results
 		if = {
 			limit = { monthly_income = 111.11 }
 			add_treasury = -200
@@ -4764,6 +4799,7 @@ country_event = { #The Hunter's Gambit Tournament Preparations
 
 	option = { #Equipment and Train
 		name = deepwoods.103.c
+		custom_tooltip = hunters_gambit_results
 		add_manpower = -1.5
 		if = {
 			limit = { monthly_income = 111.11 }
@@ -4825,6 +4861,7 @@ country_event = { #The Hunter's Gambit Tournament Preparations
 
 	option = { #Sabotage!
 		name = deepwoods.103.e
+		custom_tooltip = hunters_gambit_results
 		add_corruption = 2
 		if = {
 			limit = { monthly_income = 104.17 }
@@ -4870,7 +4907,7 @@ country_event = { #The Hunter's Gambit Tournament Preparations
 					custom_tooltip = hunters_gambit_negative_two_VP_tt
 				}
 				35 = {}
-				20 = { country_event = { id = deepwoods.104 } } # CHEATERS
+				20 = { country_event = { id = deepwoods.104 } } #CHEATERS
 			}
 		}
 		else = {
@@ -4962,7 +4999,7 @@ province_event = { #The Hunter's Gambit Round Handler
 				}
 			}
 			save_event_target_as = hunters_gambit_round_winner
-		} # select an actual random winner in case of ties
+		} #Select an actual random winner in case of ties.
 		random_country = {
 			limit = {
 				has_country_flag = hunters_gambit_contender
@@ -4993,7 +5030,7 @@ province_event = { #The Hunter's Gambit Round Handler
 				NOT = { tag = event_target:hunters_gambit_round_winner }
 			}
 			save_event_target_as = hunters_gambit_round_loser
-		} # select an actual random loser in case of ties
+		} #Select an actual random loser in case of ties.
 	}
 
 
@@ -5136,49 +5173,23 @@ country_event = { #The Hunter's Gambit Round Results with loc
 country_event = { #The Hunter's Gambit Last Round
 	id = deepwoods.108
 	title = deepwoods.108.t
-#	desc = {
-#		trigger = { tag = I26 }
-#		desc = deepwoods.108.desc_elyn
-#	}
-#	desc = {
-#		trigger = { tag = I27 }
-#		desc = deepwoods.108.desc_myna
-#	}
-#	desc = {
-#		trigger = { tag = I28 }
-#		desc = deepwoods.108.desc_drennen
-#	}
-#	desc = {
-#		trigger = { tag = I29 }
-#		desc = deepwoods.108.desc_cenag
-#	}
-#	desc = {
-#		trigger = { tag = I30 }
-#		desc = deepwoods.108.desc_fealgarn
-#	}
-#	desc = {
-#		trigger = { tag = I31 }
-#		desc = deepwoods.108.desc_scotha
-#	}
-#	desc = {
-#		trigger = { tag = I32 }
-#		desc = deepwoods.108.desc_ahain
-#	}
-#	desc = {
-#		trigger = { tag = I33 }
-#		desc = deepwoods.108.desc_ayeth
-#	}
-#	desc = {
-#		trigger = { tag = I34 }
-#		desc = deepwoods.108.desc_ghul
-#	}
-	desc = deepwoods.108.desc_default
+	desc = deepwoods.108.d
 	picture = MULTI_RACIAL_MERC_eventPicture
 	
 	is_triggered_only = yes
 
+	immediate = {
+		hidden_effect = {
+			random_known_country = {
+				limit = { has_country_flag = hunters_gambit_contender }
+				save_event_target_as = event_country
+			}
+		}
+	}
+
 	option = { #Train Only
 		name = deepwoods.108.a
+		custom_tooltip = hunters_gambit_last_round_contender
 		add_yearly_manpower = -0.33
 		custom_tooltip = hunters_gambit_need_at_tt
 		if = {
@@ -5232,6 +5243,7 @@ country_event = { #The Hunter's Gambit Last Round
 
 	option = { #Buy Equipment Only
 		name = deepwoods.108.b
+		custom_tooltip = hunters_gambit_last_round_contender
 		if = {
 			limit = { monthly_income = 126.26 }
 			add_treasury = -500
@@ -5289,6 +5301,7 @@ country_event = { #The Hunter's Gambit Last Round
 
 	option = { #Train and Buy Equipment
 		name = deepwoods.108.c
+		custom_tooltip = hunters_gambit_last_round_contender
 		add_yearly_manpower = -0.33
 		if = {
 			limit = { monthly_income = 126.26 }
