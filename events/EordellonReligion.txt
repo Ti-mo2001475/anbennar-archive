@@ -297,6 +297,37 @@ country_event = {
 	picture = FEAST_eventPicture
 	
 	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = { has_church_aspect = dip_summer_Nereid }
+				export_to_variable = {
+					which = nereids_current_trade_income
+					value = monthly_income
+				}
+				export_to_variable = {
+					which = trade_income_share
+					value = trigger_value:trade_income_percentage
+				}
+				multiply_variable = {
+					which = nereids_current_trade_income
+					which = trade_income_share
+				}
+				multiply_variable = {
+					which = nereids_current_trade_income
+					value = 12
+				}
+				if = {
+					limit = { has_summer_celebration = yes }
+					multiply_variable = {
+						which = nereids_current_trade_income
+						value = 3
+					}
+				}
+			}
+		}
+	}
 	
 	after = {
 		clr_country_flag = seasonal_adm_spring_aspect
@@ -414,10 +445,8 @@ country_event = {
 					add_prosperity = 100
 				}
 			}
-			add_years_of_trade_income = {
-				years = 3
-				custom_tooltip = eordellon.summer.festival.tooltip.3
-			}
+			hidden_effect = { var_effect_granular = { effect = add_treasury var = nereids_current_trade_income sign = + } }
+			custom_tooltip = eordellon.summer.festival.tooltip.3
 		}
 		#autumn 
 		if = {
@@ -768,10 +797,8 @@ country_event = {
 		#Summer
 		if = {
 			limit = { has_church_aspect = dip_summer_Nereid }
-			add_years_of_trade_income = {
-				years = 1
-				custom_tooltip = eordellon.summer.festival.tooltip.1
-			}
+			hidden_effect = { var_effect_granular = { effect = add_treasury var = nereids_current_trade_income sign = + } }
+			custom_tooltip = eordellon.summer.festival.tooltip.1
 		}
 		if = {
 			limit = { has_church_aspect = adm_summer_brownies }
