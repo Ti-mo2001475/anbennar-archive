@@ -872,17 +872,7 @@ railskulker_column_2_pt2 = {
 			has_country_modifier = railskulker_a_soothing_effect
 			num_of_owned_provinces_with = {
 				value = 10
-				has_terrain = cavern
-				NOT = {
-					trade_goods = gold
-					trade_goods = iron
-					trade_goods = copper
-					trade_goods = mithril
-					trade_goods = gems
-					trade_goods = coal
-					trade_goods = damestear
-					has_province_modifier = railskulker_state_backed_food_security
-				}
+				railskulker_can_change_trade_goods = yes
 			}
 		}
 		
@@ -893,19 +883,7 @@ railskulker_column_2_pt2 = {
 					amount = 10
 					effect = "
 						random_owned_province = {
-							limit = {
-								NOT = {
-									has_province_modifier = railskulker_state_backed_food_security 
-									trade_goods = iron
-									trade_goods = coal
-									trade_goods = copper
-									trade_goods = gold
-									trade_goods = gems
-									trade_goods = damestear
-									trade_goods = mithril
-								}
-								has_terrain = cavern
-							}
+							limit = { railskulker_can_change_trade_goods = yes }
 							change_trade_goods = fungi
 							add_permanent_province_modifier = {
 								name = railskulker_state_backed_food_security
@@ -1120,7 +1098,7 @@ railskulker_column_4_pt2 = {
 			custom_trigger_tooltip = {
 				tooltip = railskulker_skip_offer_tt
 			}
-C
+
 			if = {
 				limit = {
 					any_known_country = {
@@ -1137,9 +1115,8 @@ C
 				}
 				treasury = 500
 			}
-				
 		}
-		
+
 		effect = {
 			if = {
 				limit = {
@@ -1373,12 +1350,21 @@ railskulker_column_2_pt3 = {
 
 		trigger = {
 			has_country_modifier = railskulker_improved_mushrooms
-			num_of_owned_provinces_with = {
-				value = 12
-				AND = {
+			OR = {
+				num_of_owned_provinces_with = {
+					value = 13
 					trade_goods = fungi
 					development = 6
 					has_production_building_trigger = yes
+				}
+				all_owned_province = {
+					OR = {
+						NOT = { trade_goods = fungi }
+						AND = {
+							development = 6
+							has_production_building_trigger = yes
+						}
+					}
 				}
 			}
 		}
