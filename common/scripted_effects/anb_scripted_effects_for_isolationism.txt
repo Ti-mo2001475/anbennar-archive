@@ -1545,54 +1545,46 @@ nsc_chosens_duty_effect = {
 	every_owned_province = {
 		if = {
 			limit = {
-				owner = {
-					isolationism = 0
-					NOT = { isolationism = 1 }
-				}
 				OR = {
-					holy_order = order_of_judges_order
-					holy_order = servants_of_surael_order
-					holy_order = order_of_exemplars_order
-					holy_order = sundancers_order
-					holy_order = avengers_order
+					AND = {
+						owner = {
+							isolationism = 0
+							NOT = { isolationism = 1 }
+						}
+						OR = {
+							holy_order = order_of_judges_order
+							holy_order = servants_of_surael_order
+							holy_order = order_of_exemplars_order
+							holy_order = sundancers_order
+							holy_order = avengers_order
+						}
+					}
+					AND = {
+						owner = {
+							isolationism = 2
+							NOT = { isolationism = 3 }
+						}
+						OR = {
+							has_fort_building_trigger = yes
+							has_manufactory_trigger = yes
+						}
+					}
+					AND = {
+						owner = {
+							isolationism = 3
+							NOT = { isolationism = 4 }
+						}
+						has_owner_religion = yes
+					}
+					AND = {
+						owner = {
+							isolationism = 4
+							NOT = { isolationism = 5 }
+						}
+						has_owner_accepted_culture = yes
+						NOT = { has_owner_culture = yes }
+					}
 				}
-				NOT = { has_elven_minority_trigger = yes }
-			}
-			add_elven_minority_size_effect = yes
-		}
-		if = {
-			limit = {
-				owner = {
-					isolationism = 2
-					NOT = { isolationism = 3 }
-				}
-				OR = {
-					has_fort_building_trigger = yes
-					has_manufactory_trigger = yes
-				}
-				NOT = { has_elven_minority_trigger = yes }
-			}
-			add_elven_minority_size_effect = yes
-		}
-		if = {
-			limit = {
-				owner = {
-					isolationism = 3
-					NOT = { isolationism = 4 }
-				}
-				has_owner_religion = yes
-				NOT = { has_elven_minority_trigger = yes }
-			}
-			add_elven_minority_size_effect = yes
-		}
-		if = {
-			limit = {
-				owner = {
-					isolationism = 4
-					NOT = { isolationism = 5 }
-				}
-				has_owner_accepted_culture = yes
-				NOT = { has_owner_culture = yes }
 				NOT = { has_elven_minority_trigger = yes }
 			}
 			add_elven_minority_size_effect = yes
@@ -1689,6 +1681,9 @@ nsc_chosens_duty_sub_effect = {
 			}
 		}
 	]
+}
+
+nsc_chosens_duty_refund_effect = {
 	[[adm_refund]
 		if = {
 			limit = {
@@ -1798,63 +1793,38 @@ nsc_chosens_duty_pulse = {
 			NOT = { is_or_was_tag = { tag = H67 } }	
 		}
 		every_owned_province = {
-			limit = {
-				fast_has_pop_of_race = { race = elven }
-				NOT = { culture_is_elven = yes }
-				NOT = {
-					OR = {
-						AND = {
-							owner = { isolationism = 4 }
-							has_province_modifier = nsc_chosens_duty_5
-						}
-						AND = {
-							owner = {
-								isolationism = 3
-								NOT = { isolationism = 4 }
+			if = {
+				limit = {
+					fast_has_pop_of_race = { race = elven }
+					NOT = { culture_is_elven = yes }
+				}
+				if = {
+					limit = {
+						NOT = {
+							OR = {
+								has_province_modifier = nsc_chosens_duty_5
+								has_province_modifier = nsc_chosens_duty_4
+								has_province_modifier = nsc_chosens_duty_3
+								has_province_modifier = nsc_chosens_duty_2
+								has_province_modifier = nsc_chosens_duty_1
 							}
-							has_province_modifier = nsc_chosens_duty_4
-						}
-						AND = {
-							owner = {
-								isolationism = 2
-								NOT = { isolationism = 3 }
-							}
-							has_province_modifier = nsc_chosens_duty_3
-						}
-						AND = {
-							owner = {
-								isolationism = 1
-								NOT = { isolationism = 2 }
-							}
-							has_province_modifier = nsc_chosens_duty_2
-						}
-						AND = {
-							owner = {
-								isolationism = 0
-								NOT = { isolationism = 1 }
-							}
-							has_province_modifier = nsc_chosens_duty_1
 						}
 					}
+					nsc_chosens_duty_add_isolationism_mods = yes
 				}
 			}
-			nsc_chosens_duty_add_isolationism_mods = yes
-		}
-		every_owned_province = {
-			limit = {
-				OR = {
-					NOT = { fast_has_pop_of_race = { race = elven } }
-					culture_is_elven = yes
+			else_if = {
+				limit = {
+					OR = {
+						has_province_modifier = nsc_chosens_duty_5
+						has_province_modifier = nsc_chosens_duty_4
+						has_province_modifier = nsc_chosens_duty_3
+						has_province_modifier = nsc_chosens_duty_2
+						has_province_modifier = nsc_chosens_duty_1
+					}
 				}
-				OR = {
-					has_province_modifier = nsc_chosens_duty_5
-					has_province_modifier = nsc_chosens_duty_4
-					has_province_modifier = nsc_chosens_duty_3
-					has_province_modifier = nsc_chosens_duty_2
-					has_province_modifier = nsc_chosens_duty_1
-				}
+				nsc_chosens_duty_removed_isolationism_mods = yes
 			}
-			nsc_chosens_duty_removed_isolationism_mods = yes
 		}
 	}
 }
