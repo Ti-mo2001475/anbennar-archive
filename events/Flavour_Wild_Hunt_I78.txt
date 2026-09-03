@@ -700,19 +700,27 @@ country_event = {
 			}
 			every_known_country = {
 				limit = {
-					OR = {
-						religious_school = {
-							group = centaur_religion
-							school = maslekhuga_school
-						}
-						religious_school = {
-							group = centaur_religion
-							school = irdukhuga_school
-						}
-					}
+					religion = irdaeos_worship
+				#	OR = {
+				#		religious_school = {
+				#			group = centaur_religion
+				#			school = maslekhuga_school
+				#		}
+				#		religious_school = {
+				#			group = centaur_religion
+				#			school = irdukhuga_school
+				#		}
+				#	}
 				}
 				ROOT = { vassalize = PREV }
 				add_liberty_desire = -100
+			}
+			forbidden_lands_superregion = { #Sometimes every_known_country fails for reasons unknown to me. This is a fallback that seems to fix the issue.
+				limit = { owner = { religion = irdaeos_worship } NOT = { tag = ROOT } }
+				owner = {
+					ROOT = { vassalize = PREV }
+					add_liberty_desire = -100
+				}
 			}
 		}
 
