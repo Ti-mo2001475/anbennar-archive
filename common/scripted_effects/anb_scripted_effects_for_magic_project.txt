@@ -42,6 +42,54 @@ magical_fortress_grant_bonus = {
 	}
 }
 
+# Province scope, intended for MT usage.
+permaward_province = {
+	custom_tooltip = permanently_ward_province
+	if = {
+		limit = { PREV = { at_least_magic_project_level = { project = magical_fortress level = 3 } } }
+		add_province_modifier = { name = abjuration_1_ward_mod_3 duration = 1 }
+		custom_tooltip = abjuration_1_ward_upgrade_3
+	}
+	else_if = {
+		limit = { PREV = { at_least_magic_project_level = { project = magical_fortress level = 2 } } }
+		add_province_modifier = { name = abjuration_1_ward_mod_2 duration = 1 }
+		custom_tooltip = abjuration_1_ward_upgrade_2
+	}
+	else_if = {
+		limit = { PREV = { at_least_magic_project_level = { project = magical_fortress level = 1 } } }
+		add_province_modifier = { name = abjuration_1_ward_mod_1 duration = 1 }
+		custom_tooltip = abjuration_1_ward_upgrade_1
+	}
+	else = {
+		add_province_modifier = { name = abjuration_1_ward_mod_0 duration = 1 }
+		custom_tooltip = abjuration_1_ward_upgrade_0
+	}
+	hidden_effect = {
+		set_province_flag = permaward
+		owner = { set_country_flag = has_permawarded_province }
+	}
+}
+remove_permaward_from_province = {
+	clr_province_flag = permaward
+	remove_province_modifier = abjuration_1_ward_mod_3
+	remove_province_modifier = abjuration_1_ward_mod_2
+	remove_province_modifier = abjuration_1_ward_mod_1
+	remove_province_modifier = abjuration_1_ward_mod_0
+	hidden_effect = {
+		owner = {
+			clr_country_flag = has_permawarded_province
+			if = {
+				limit = {
+					any_owned_province = {
+						has_province_flag = permaward
+					}
+				}
+				set_country_flag = has_permawarded_province
+			}
+		}
+	}
+}
+
 summon_extraplanars_school_check = {
 	increase_magic_experience = { amount = $xp$ }
 	custom_tooltip = magic_effect_separator_tt

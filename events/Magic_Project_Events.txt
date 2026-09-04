@@ -1225,10 +1225,29 @@ country_event = { #Magical Fortress 4 - Complete Foundation
 		capital_scope = {
 			add_province_modifier = { name = magical_fortress_mod_1 duration = -1 }
 			add_province_modifier = { name = abjuration_1_ward_mod_1 duration = -1 }
+			remove_province_modifier = abjuration_1_ward_mod_0
 		}
 		magical_fortress_grant_bonus = { mod = prestige }
 		add_prestige = 10
 		custom_tooltip = tooltip_magic_project_advance
+
+		if = {
+			limit = {
+				has_country_flag = has_permawarded_province
+			}
+			custom_tooltip = magical_fortress_permaward_upgrade
+
+			hidden_effect = {
+				# Upgrade permawarded provinces.
+				every_owned_province = {
+					limit = { 
+						has_province_flag = permaward
+					}
+					remove_province_modifier = abjuration_1_ward_mod_0
+					add_province_modifier = { name = abjuration_1_ward_mod_1 duration = -1 }
+				}
+			}
+		}
 	}
 }
 
@@ -1314,6 +1333,18 @@ country_event = { #Magical Fortress 8 - Complete Castle
 		magical_fortress_grant_bonus = { mod = splendor }
 		add_splendor = 50
 		custom_tooltip = tooltip_magic_project_advance
+
+		hidden_effect = {
+			# Upgrade permawarded provinces.
+			every_owned_province = {
+				limit = { 
+					has_province_flag = permaward
+				}
+				remove_province_modifier = abjuration_1_ward_mod_0
+				remove_province_modifier = abjuration_1_ward_mod_1
+				add_province_modifier = { name = abjuration_1_ward_mod_2 duration = -1 }
+			}
+		}
 	}
 }
 
@@ -1408,6 +1439,19 @@ country_event = { #Magical Fortress 12 - Complete Palace
 		change_mana = { amount = 50 }
 		custom_tooltip = tooltip_magic_project_complete
 		change_variable = { magic_projects_completed = 1 }
+
+		hidden_effect = {
+			# Upgrade permawarded provinces.
+			every_owned_province = {
+				limit = { 
+					has_province_flag = permaward
+				}
+				remove_province_modifier = abjuration_1_ward_mod_0
+				remove_province_modifier = abjuration_1_ward_mod_1
+				remove_province_modifier = abjuration_1_ward_mod_2
+				add_province_modifier = { name = abjuration_1_ward_mod_3 duration = -1 }
+			}
+		}
 	}
 }
 
