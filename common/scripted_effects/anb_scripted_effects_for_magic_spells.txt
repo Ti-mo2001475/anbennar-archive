@@ -3269,6 +3269,7 @@ clr_centaur_spell_lists = {
 		limit = { has_any_custom_spell_list_in_group = { group = centaur } }
 		clr_custom_spell_list = { group = centaur subgroup = default }
 		clr_custom_spell_list = { group = centaur subgroup = black_herd }
+		clr_custom_spell_list = { group = centaur subgroup = thunderborn }
 	}
 }
 
@@ -4614,4 +4615,45 @@ abjuration_1_invoke_the_grave_earth_effect = {
 }
 conjuration_1_channel_chi_effect = {
 	add_country_modifier = { name = chi_default_channel_chi_mod duration = 1825 }
+}
+
+evocation_1_centaur_thunderborn_5_effect = { 
+	custom_tooltip = centaur_thunderborn_spell_conduit_removal_tooltip
+	hidden_effect = {
+		every_owned_province = {
+			remove_province_modifier = I49_conduit_1
+			remove_province_modifier = I49_conduit_2
+		}
+	}
+	custom_tooltip = centaur_thunderborn_spell_devastation_tooltip
+	tooltip = {
+        add_country_modifier = {
+            name = I49_gathering_storms
+            duration = 1825
+        }
+    }
+	custom_tooltip = centaur_thunderborn_spell_army_tradition_tooltip
+	hidden_effect = {
+		capital_scope = {
+			every_neighbor_province = {
+				limit = {
+					NOT = {
+						country_or_subject_holds = ROOT
+					}
+				}
+				add_devastation = 50
+				owner = {
+					add_country_modifier = {
+						name = I49_gathering_storms
+						duration = 1825
+					}
+				}
+				ROOT = {
+					add_army_tradition_or_mil_power = {
+						amount = 3
+					}
+				}
+			}
+		}
+	}
 }
