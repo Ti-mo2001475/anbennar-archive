@@ -1145,7 +1145,7 @@ railskulker_column_4_pt2 = {
 		required_missions = {
 			railskulker_make_them_an_offer
 		}
-			
+
 		provinces_to_highlight = {
 			province_group = hold_province	
 			NOT = {
@@ -1156,8 +1156,7 @@ railskulker_column_4_pt2 = {
 				}
 			}
 		}
-							
-			
+
 		trigger = {
 			has_adm_advisor_3 = yes
 			has_mil_advisor_3 = yes				
@@ -1169,7 +1168,7 @@ railskulker_column_4_pt2 = {
 				NOT = { province_id = 2931 }
 			}
 		}
-		
+
 		effect = {
 			custom_tooltip = railskulker_technocrat_tooltip
 			hold_province = {
@@ -1178,21 +1177,14 @@ railskulker_column_4_pt2 = {
 					owner = { dwarovar_goblin_culture_primary = yes }
 				}
 
-				H75 = {
-					change_government_reform_progress = 10
-				}
-			}
+				ROOT = { change_government_reform_progress = 10 }
 
-			hold_province = {
-				limit = {
-					country_or_non_sovereign_subject_holds = ROOT
-					owner = { dwarovar_goblin_culture_primary = yes }
-					development = 40
-				}
-
-				add_permanent_province_modifier = {
-					name = "railskulker_seat_of_major_technocrat_councils" 
-					duration = -1 
+				IF = {
+					limit = { development = 40 }
+					add_permanent_province_modifier = {
+						name = "railskulker_seat_of_major_technocrat_councils" 
+						duration = -1 
+					}
 				}
 			}
 		}
@@ -1460,17 +1452,10 @@ railskulker_column_3_pt3 = {
 		}
 			
 		effect = {
-			hidden_effect = {
-				west_dwarovar_region = {
-					limit = { 
-						NOT = { owned_by = ROOT }
-					}
-					add_permanent_claim = ROOT
-				}
-			}
+			west_dwarovar_region = { add_permanent_claim = ROOT }
 		}
 	}
-		
+
 	railskulker_the_last_threat = {
 		icon = mission_mountain_castle
 		position = 14
