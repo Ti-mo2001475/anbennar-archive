@@ -2583,7 +2583,7 @@ has_cast_abjuration_war_magic = {
 		OR = {
 			has_cast_combat_ward = yes
 			has_cast_mage_armor = yes
-			has_country_modifier = H14_icewardery_magic
+			has_country_modifier = chi_default_invoke_the_grave_earth_mod
 		}
 	}
 }
@@ -3422,9 +3422,15 @@ illusion_1_bread_and_circuses_trigger = { # Bread and Circuses
 		limit = { has_government_attribute = blocked_call_diet }
 		NOT = { has_government_attribute = blocked_call_diet }
 	}
-	OR = {
-		NOT = { has_any_active_estate_agenda = yes } #Needs a NOT or it won't work as a NOT
-		can_auto_complete_active_agenda = yes
+	if = {
+		limit = { has_reform = U39_kavalali_theo_democracy }
+		has_active_debate = yes
+	}
+	else = {
+		OR = {
+			NOT = { has_any_active_estate_agenda = yes } #Needs a NOT or it won't work as a NOT
+			can_auto_complete_active_agenda = yes
+		}
 	}
 	[[player] #The ai will not be in a state where this can apply
 		if = {
@@ -3592,10 +3598,7 @@ necromancy_1_contagion_trigger = { #Contagion
 	has_not_banned_necromancy = yes
 	is_overall_necromancy_level_1_minimum = yes
 	[[player] has_mana_to_cast_spell = { school = necromancy level = 1 id = contagion } ]
-	siege_magic_trigger = { [[menu] menu = yes defense_trigger = "necromancy_1_contagion_local_trigger = yes" ] }
-}
-necromancy_1_contagion_local_trigger = { # Contagion
-	province_has_not_contagion = yes	#might be that this trigger need this particular syntax, so I'm putting the scripted trigger inside, rather than replacing
+	siege_magic_trigger = { [[menu] menu = yes defense_trigger = "province_has_not_contagion = yes" ] }
 }
 necromancy_2_speak_with_dead_trigger = { # Speak With Dead
 	has_not_banned_necromancy = yes
@@ -3773,10 +3776,7 @@ transmutation_1_plant_growth_trigger = { # Plant Growth
 transmutation_1_mass_enlarge_trigger = { # Mass Enlarge
 	is_overall_transmutation_level_1_minimum = yes
 	[[player] has_mana_to_cast_spell = { school = transmutation level = 1 id = mass_enlarge } ]
-	siege_magic_trigger = { offense = yes [[menu] menu = yes offense_trigger = "transmutation_1_mass_enlarge_local_trigger = yes" ] }
-}
-transmutation_1_mass_enlarge_local_trigger = {
-	NOT = { has_province_modifier = transmutation_1_mass_enlarge_local_mod }
+	siege_magic_trigger = { offense = yes [[menu] menu = yes offense_trigger = "province_has_not_mass_enlarge = yes" ] }
 }
 transmutation_2_transmute_to_gold_trigger = { # Transmute to Gold
 	is_overall_transmutation_level_2_minimum = yes
@@ -3855,6 +3855,18 @@ has_not_cast_plant_growth = {
 	custom_trigger_tooltip = {
 		tooltip = has_not_cast_plant_growth
 		NOT = { has_cast_plant_growth = yes }
+	}
+}
+province_has_mass_enlarge = {
+	custom_trigger_tooltip = {
+		tooltip = province_has_mass_enlarge
+		has_province_modifier = transmutation_1_mass_enlarge_local_mod
+	}
+}
+province_has_not_mass_enlarge = {
+	custom_trigger_tooltip = {
+		tooltip = province_has_not_mass_enlarge
+		NOT = { province_has_mass_enlarge = yes }
 	}
 }
 has_cast_reshape_terrain = {
@@ -5214,6 +5226,37 @@ evocation_2_centaur_black_herd_5_trigger = {
 }
 
 
+#Thunderborn
+custom_spell_centaur_thunderborn_5_trigger = {
+	evocation_1_centaur_thunderborn_5_trigger = { [[player] player = $player$ ] }
+}
+
+evocation_1_centaur_thunderborn_5_trigger = {
+	[[player]
+		has_mana_to_cast_magical_tradition_spell = {
+			school = evocation
+			level = 1
+			id = centaur_thunderborn_5
+			has_spell_specific_discounts = yes
+		}
+	]
+	any_owned_province = {
+		OR = {
+			has_province_modifier = I49_conduit_1
+			has_province_modifier = I49_conduit_2
+		}
+	}
+	capital_scope = {
+		any_neighbor_province = {
+			NOT = {
+				owned_by = I49
+				owned_by_subject_of = I49
+				is_empty = yes
+			}
+		}
+	}
+}
+
 #Bulwar
 custom_spell_bulwar_default_1_trigger = {
 	transmutation_3_bulwar_default_1_trigger = { [[player] player = $player$ ] }
@@ -5435,7 +5478,6 @@ custom_spell_eordand_eighard_5_trigger = {
 }
 
 abjuration_1_eordand_eighard_5_trigger = {
-	war_magic_trigger = yes
 	[[player]
 		has_mana_to_cast_magical_tradition_spell = {
 			school = abjuration
@@ -5443,7 +5485,6 @@ abjuration_1_eordand_eighard_5_trigger = {
 			id = eordand_eighard_5
 		}
 	]
-	is_at_war = yes
 	NOT = { has_country_modifier = H14_icewardery_magic }
 }
 
@@ -5590,6 +5631,68 @@ enchantment_3_bardic_default_4_subtrigger = {
 		tooltip = bardic_magic_spell_4_unlocked_tt
 		has_country_flag = bardic_magic_spell_4_unlocked
 	}
+}
+
+#Chi
+can_access_haless_chi_magic = {
+	OR = {
+		culture_is_yan = yes
+		culture_group = kai
+	}
+	NOT = {
+		primary_culture = tamran
+		religion = devouring_path
+		#NOT has Shadowmancy
+	}
+}
+custom_spell_chi_default_rite_of_upright_nourishment_trigger = {
+	[[player] has_mana_to_cast_magical_tradition_spell = { school = divination level = 1 } ]
+	OR = {
+		is_overall_divination_level_1_minimum = yes
+		is_overall_transmutation_level_1_minimum = yes
+	}
+	custom_trigger_tooltip = {
+		tooltip = chi_default_rite_of_upright_nourishment_trigger_tt
+		OR = {
+			AND = {
+				national_focus = ADM
+				employed_advisor = { category = ADM }
+			}
+			AND = {
+				national_focus = DIP
+				employed_advisor = { category = DIP }
+			}
+			AND = {
+				national_focus = MIL
+				employed_advisor = { category = MIL }
+			}
+		}
+	}
+	NOT = { has_country_modifier = chi_default_rite_of_upright_nourishment_tracker_mod }
+}
+custom_spell_chi_default_harmonize_feng_shui_trigger = {
+	[[player] has_mana_to_cast_magical_tradition_spell = { school = illusion level = 1 } ]
+	OR = {
+		is_overall_enchantment_level_1_minimum = yes
+		is_overall_illusion_level_1_minimum = yes
+	}
+}
+custom_spell_chi_default_invoke_the_grave_earth_trigger = {
+	[[player] has_mana_to_cast_magical_tradition_spell = { school = abjuration level = 1 } ]
+	OR = {
+		is_overall_abjuration_level_1_minimum = yes
+		is_overall_necromancy_level_1_minimum = yes
+	}
+	war_magic_trigger = yes
+	NOT = { has_country_modifier = chi_default_invoke_the_grave_earth_mod }
+}
+custom_spell_chi_default_channel_chi_trigger = {
+	[[player] has_mana_to_cast_magical_tradition_spell = { school = conjuration level = 1 } ]
+	OR = {
+		is_overall_conjuration_level_1_minimum = yes
+		is_overall_evocation_level_1_minimum = yes
+	}
+	NOT = { has_country_modifier = chi_default_channel_chi_mod }
 }
 
 ### STOP.

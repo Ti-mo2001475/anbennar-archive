@@ -11708,7 +11708,7 @@ siadan_add_province_permanent_claim = {
 	}
 }
 
-### VarainÃ© ###
+### Varainé ###
 A99_add_minority = { #Receives parameters 'race' and 'amount'. Adds/increases pop of 'race' in a random province (that doesn't have this race as a large/majoritary pop), repeats this 'amount' times. Code based on 'For' scripted effect
 	custom_tooltip = A99_add_minority_$race$_$amount$_tt	
 	hidden_effect = {
@@ -12596,6 +12596,197 @@ H89_remove_orc_pop_in_escann = {
 			# superregion = escann_superregion
 		}
 		H89_remove_orc_pop = yes
+	}
+}
+
+# Blue Reachmen
+
+# use on the province that is being upgraded
+Z21_place_branch_order_zoc_mods = {
+	custom_tooltip = Z21_place_zoc_mods_tt
+	tooltip = {
+		[[level_1] 5690 = { add_province_modifier = { name = Z21_branch_order_1_zoc duration = -1 } } ]
+		[[level_2] 5690 = { add_province_modifier = { name = Z21_branch_order_2_zoc duration = -1 } } ]
+		[[level_3] 5690 = { add_province_modifier = { name = Z21_branch_order_3_zoc duration = -1 } } ]
+	}
+	hidden_effect = {
+		owner = {
+			if = { limit = { overlord = { mission_completed = Z21_centralize_the_order } }
+				overlord = { save_event_target_as = Z21_branch_order_overlord }
+			}
+			else = {
+				save_event_target_as = Z21_branch_order_overlord
+			}
+		}
+		if = { limit = { has_saved_event_target = Z21_branch_order_overlord }
+			every_neighbor_province = {
+				limit = { country_or_subject_holds = event_target:Z21_branch_order_overlord }
+				[[level_1]
+				if = {
+					limit = {
+						NOT = {
+							has_province_modifier = Z21_head_branch_1_zoc
+							has_province_modifier = Z21_head_branch_2_zoc
+							has_province_modifier = Z21_head_branch_3_zoc
+							has_province_modifier = Z21_branch_order_1_zoc
+							has_province_modifier = Z21_branch_order_2_zoc
+							has_province_modifier = Z21_branch_order_3_zoc
+						}
+					}
+					add_province_modifier = { name = Z21_branch_order_1_zoc duration = -1 }
+				}
+				]
+				[[level_2]
+				if = {
+					limit = {
+						NOT = {
+							has_province_modifier = Z21_head_branch_1_zoc
+							has_province_modifier = Z21_head_branch_2_zoc
+							has_province_modifier = Z21_head_branch_3_zoc
+							has_province_modifier = Z21_branch_order_2_zoc
+							has_province_modifier = Z21_branch_order_3_zoc
+						}
+					}
+					remove_province_modifier = Z21_branch_order_1_zoc
+					add_province_modifier = { name = Z21_branch_order_2_zoc duration = -1 }
+				}
+				]
+				[[level_3]
+				if = {
+					limit = {
+						NOT = {
+							has_province_modifier = Z21_head_branch_1_zoc
+							has_province_modifier = Z21_head_branch_2_zoc
+							has_province_modifier = Z21_head_branch_3_zoc
+							has_province_modifier = Z21_branch_order_3_zoc
+						}
+					}
+					remove_province_modifier = Z21_branch_order_1_zoc
+					remove_province_modifier = Z21_branch_order_2_zoc
+					add_province_modifier = { name = Z21_branch_order_3_zoc duration = -1 }
+				}
+				]
+			}
+		}
+	}
+}
+
+# use on the province that is being upgraded
+# prioritize head branch zoc over branch order zoc
+Z21_place_head_branch_zoc_mods = {
+	custom_tooltip = Z21_place_zoc_mods_tt
+	tooltip = {
+		[[level_1] 5690 = { add_province_modifier = { name = Z21_head_branch_1_zoc duration = -1 } } ]
+		[[level_2] 5690 = { add_province_modifier = { name = Z21_head_branch_2_zoc duration = -1 } } ]
+		[[level_3] 5690 = { add_province_modifier = { name = Z21_head_branch_3_zoc duration = -1 } } ]
+	}
+	hidden_effect = {
+		owner = {
+			if = { limit = { overlord = { mission_completed = Z21_centralize_the_order } }
+				overlord = { save_event_target_as = Z21_branch_order_overlord }
+			}
+			else = {
+				save_event_target_as = Z21_branch_order_overlord
+			}
+		}
+		if = { limit = { has_saved_event_target = Z21_branch_order_overlord }
+			every_neighbor_province = {
+				limit = { country_or_subject_holds = event_target:Z21_branch_order_overlord }
+				[[level_1]
+				if = {
+					limit = {
+						NOT = {
+							has_province_modifier = Z21_head_branch_1_zoc
+							has_province_modifier = Z21_head_branch_2_zoc
+							has_province_modifier = Z21_head_branch_3_zoc
+						}
+					}
+					remove_province_modifier = Z21_branch_order_1_zoc
+					remove_province_modifier = Z21_branch_order_2_zoc
+					remove_province_modifier = Z21_branch_order_3_zoc
+					add_province_modifier = { name = Z21_head_branch_1_zoc duration = -1 }
+				}
+				]
+				[[level_2]
+				if = {
+					limit = {
+						NOT = {
+							has_province_modifier = Z21_head_branch_2_zoc
+							has_province_modifier = Z21_head_branch_3_zoc
+						}
+					}
+					remove_province_modifier = Z21_branch_order_1_zoc
+					remove_province_modifier = Z21_branch_order_2_zoc
+					remove_province_modifier = Z21_branch_order_3_zoc
+					remove_province_modifier = Z21_head_branch_1_zoc
+					add_province_modifier = { name = Z21_head_branch_2_zoc duration = -1 }
+				}
+				]
+				[[level_3]
+				if = {
+					limit = {
+						NOT = { has_province_modifier = Z21_head_branch_3_zoc }
+					}
+					remove_province_modifier = Z21_branch_order_1_zoc
+					remove_province_modifier = Z21_branch_order_2_zoc
+					remove_province_modifier = Z21_branch_order_3_zoc
+					remove_province_modifier = Z21_head_branch_1_zoc
+					remove_province_modifier = Z21_head_branch_2_zoc
+					add_province_modifier = { name = Z21_head_branch_3_zoc duration = -1 }
+				}
+				]
+			}
+		}
+	}
+}
+
+# looks complex, it's just edge case handling
+# removes branch order mods and neighboring zoc mods
+# re-applies zoc mods to applicable neighboring provinces (downgrades appropriately)
+Z21_remove_branch_order_and_zoc_mods = {
+	clr_province_flag = Z21_branch_order_built
+	remove_province_modifier = Z21_head_branch_3
+	remove_province_modifier = Z21_head_branch_2
+	remove_province_modifier = Z21_head_branch_1
+	remove_province_modifier = Z21_branch_order_3
+	remove_province_modifier = Z21_branch_order_2
+	remove_province_modifier = Z21_branch_order_1
+	every_neighbor_province = {
+		remove_province_modifier = Z21_head_branch_3_zoc
+		remove_province_modifier = Z21_head_branch_2_zoc
+		remove_province_modifier = Z21_head_branch_1_zoc
+		remove_province_modifier = Z21_branch_order_3_zoc
+		remove_province_modifier = Z21_branch_order_2_zoc
+		remove_province_modifier = Z21_branch_order_1_zoc
+		if = { # re-apply zoc mods if owner of neighbor province can use branch orders
+			limit = {
+				owner = {
+					OR = {
+						mission_completed = Z21_centralize_the_order
+						overlord = { mission_completed = Z21_centralize_the_order }
+					}
+				}
+				any_neighbor_province = { has_province_flag = Z21_branch_order_built }
+			}
+			if = { limit = { any_neighbor_province = { has_province_modifier = Z21_head_branch_3 } }
+				add_province_modifier = { name = Z21_head_branch_3_zoc duration = -1 }
+			}
+			else_if = { limit = { any_neighbor_province = { has_province_modifier = Z21_head_branch_2 } }
+				add_province_modifier = { name = Z21_head_branch_2_zoc duration = -1 }
+			}
+			else_if = { limit = { any_neighbor_province = { has_province_modifier = Z21_head_branch_1 } }
+				add_province_modifier = { name = Z21_head_branch_1_zoc duration = -1 }
+			}
+			else_if = { limit = { any_neighbor_province = { has_province_modifier = Z21_branch_order_3 } }
+				add_province_modifier = { name = Z21_branch_order_3_zoc duration = -1 }
+			}
+			else_if = { limit = { any_neighbor_province = { has_province_modifier = Z21_branch_order_2 } }
+				add_province_modifier = { name = Z21_branch_order_2_zoc duration = -1 }
+			}
+			else_if = { limit = { any_neighbor_province = { has_province_modifier = Z21_branch_order_1 } }
+				add_province_modifier = { name = Z21_branch_order_1_zoc duration = -1 }
+			}
+		}
 	}
 }
 
@@ -14097,127 +14288,6 @@ I98_apply_confoundment = {
 	}
 }
 
-I98_adm_tech_tracker = {
-	hidden_effect = {
-		if = {
-			limit = { adm_tech = 4 }
-			set_global_flag = adm_tech_4
-		}
-		else_if = {
-			limit = { adm_tech = 5 }
-			set_global_flag = adm_tech_5
-		}
-		else_if = {
-			limit = { adm_tech = 6 }
-			set_global_flag = adm_tech_6
-		}
-		else_if = {
-			limit = { adm_tech = 7 }
-			set_global_flag = adm_tech_7
-		}
-		else_if = {
-			limit = { adm_tech = 8 }
-			set_global_flag = adm_tech_8
-		}
-		else_if = {
-			limit = { adm_tech = 9 }
-			set_global_flag = adm_tech_9
-		}
-		else_if = {
-			limit = { adm_tech = 10 }
-			set_global_flag = adm_tech_10
-		}
-		else_if = {
-			limit = { adm_tech = 11 }
-			set_global_flag = adm_tech_11
-		}
-		else_if = {
-			limit = { adm_tech = 12 }
-			set_global_flag = adm_tech_12
-		}
-		else_if = {
-			limit = { adm_tech = 13 }
-			set_global_flag = adm_tech_13
-		}
-		else_if = {
-			limit = { adm_tech = 14 }
-			set_global_flag = adm_tech_14
-		}
-		else_if = {
-			limit = { adm_tech = 15 }
-			set_global_flag = adm_tech_15
-		}
-		else_if = {
-			limit = { adm_tech = 16 }
-			set_global_flag = adm_tech_16
-		}
-		else_if = {
-			limit = { adm_tech = 17 }
-			set_global_flag = adm_tech_17
-		}
-		else_if = {
-			limit = { adm_tech = 18 }
-			set_global_flag = adm_tech_18
-		}
-		else_if = {
-			limit = { adm_tech = 19 }
-			set_global_flag = adm_tech_19
-		}
-		else_if = {
-			limit = { adm_tech = 20 }
-			set_global_flag = adm_tech_20
-		}
-		else_if = {
-			limit = { adm_tech = 21 }
-			set_global_flag = adm_tech_21
-		}
-		else_if = {
-			limit = { adm_tech = 22 }
-			set_global_flag = adm_tech_22
-		}
-		else_if = {
-			limit = { adm_tech = 23 }
-			set_global_flag = adm_tech_23
-		}
-		else_if = {
-			limit = { adm_tech = 24 }
-			set_global_flag = adm_tech_24
-		}
-		else_if = {
-			limit = { adm_tech = 25 }
-			set_global_flag = adm_tech_25
-		}
-		else_if = {
-			limit = { adm_tech = 26 }
-			set_global_flag = adm_tech_26
-		}
-		else_if = {
-			limit = { adm_tech = 27 }
-			set_global_flag = adm_tech_27
-		}
-		else_if = {
-			limit = { adm_tech = 28 }
-			set_global_flag = adm_tech_28
-		}
-		else_if = {
-			limit = { adm_tech = 29 }
-			set_global_flag = adm_tech_29
-		}
-		else_if = {
-			limit = { adm_tech = 30 }
-			set_global_flag = adm_tech_30
-		}
-		else_if = {
-			limit = { adm_tech = 31 }
-			set_global_flag = adm_tech_31
-		}
-		else_if = {
-			limit = { adm_tech = 32 }
-			set_global_flag = adm_tech_32
-		}
-	}
-}
-
 I98_mission_sound_effect = {
 	hidden_effect = {
 		random_list = {
@@ -15655,12 +15725,12 @@ F23_copper_offer_effect_set_up = {
 					ROOT = { set_country_flag = F23_copper_offer_$prov_tag$_already_protectorate }
 				}
 				else_if = { limit = { is_subject_of = ROOT }
-					# Tag is non-trade protectorate subject of Ovdal TÃ»ngr, can turn them into a Trade Protectorate for free.
+					# Tag is non-trade protectorate subject of Ovdal Tûngr, can turn them into a Trade Protectorate for free.
 					ROOT = { set_country_flag = F23_copper_offer_$prov_tag$_make_subject_protectorate }
 				}
-				# Tag is subject of a country other than Ovdal TÃ»ngr or Crathanor.
+				# Tag is subject of a country other than Ovdal Tûngr or Crathanor.
 				else_if = { limit = { overlord = { OR = { is_enemy = ROOT is_rival = ROOT NOT = { has_opinion = { who = ROOT value = -100 } } } } }
-					# Tag overlord is enemy or rival of Ovdal TÃ»ngr, can do hostile takeover.
+					# Tag overlord is enemy or rival of Ovdal Tûngr, can do hostile takeover.
 					if = { limit = { overlord = { has_spy_network_from = { who = F23 value = 30 } } }
 						ROOT = { set_country_flag = F23_copper_offer_$prov_tag$_hostile_takeover_exists_spy_yes }
 						ROOT = { set_country_flag = F23_copper_offer_$prov_tag$_hostile_takeover }
@@ -15671,7 +15741,7 @@ F23_copper_offer_effect_set_up = {
 					}
 				}
 				else = {
-					# Tag is not subject of Ovdal TÃ»ngr, Crathanor, or a rival/enemy country. Copper offer can be made to overlord.
+					# Tag is not subject of Ovdal Tûngr, Crathanor, or a rival/enemy country. Copper offer can be made to overlord.
 					if = { limit = { overlord = { has_opinion = { who = ROOT value = 125 } } }
 						ROOT = { set_country_flag = F23_copper_offer_$prov_tag$_overlord_offer_will_accept }
 					}
@@ -15701,7 +15771,7 @@ F23_copper_offer_effect_set_up = {
 		$prov_num$ = {
 			owner = {
 				if = { limit = { tag = ROOT }
-					# Appropriate province owned by Ovdal TÃ»ngr.
+					# Appropriate province owned by Ovdal Tûngr.
 					if = { limit = { is_at_war = yes }
 						ROOT = { set_country_flag = F23_copper_offer_$prov_tag$_can_release_but_at_war }
 					}
@@ -15710,10 +15780,10 @@ F23_copper_offer_effect_set_up = {
 					}
 				}
 				else_if = { limit = { is_subject_of = ROOT }
-					# Owner is subject of Ovdal TÃ»ngr.
+					# Owner is subject of Ovdal Tûngr.
 					ROOT = { set_country_flag = F23_copper_offer_$prov_tag$_other_subject_owns_province }
 				}
-				# Owner is not Ovdal TÃ»ngr or one of their subjects.
+				# Owner is not Ovdal Tûngr or one of their subjects.
 				# Check whether owner is independent.
 				else_if = { limit = { is_free_or_tributary_trigger = yes }
 					# Owner is independent or sovereign subject.
@@ -15731,7 +15801,7 @@ F23_copper_offer_effect_set_up = {
 					else_if = {
 						# Relevant province is not the capital. Check whether owner is rival or enemy.
 						if = { limit = { OR = { is_rival = ROOT is_enemy = ROOT NOT = { has_opinion = { who = ROOT value = -100 } } } }
-							# Owner is rival or enemy of Ovdal TÃ»ngr, unwilling to sell. Hostile takeover, yay.
+							# Owner is rival or enemy of Ovdal Tûngr, unwilling to sell. Hostile takeover, yay.
 							if = { limit = { has_spy_network_from = { who = ROOT value = 30 } NOT = { truce_with = ROOT } NOT = { war_with = ROOT } } 
 								ROOT = { set_country_flag = F23_copper_offer_$prov_tag$_hostile_takeover_does_not_exist_spy_yes }
 								ROOT = { set_country_flag = F23_copper_offer_$prov_tag$_hostile_takeover }
@@ -23356,6 +23426,7 @@ anzara_gain_subjugation_cb = {
 	}
 }
 form_milcorissia = {
+	remove_country_modifier = celliande_until_milcori
 	add_country_modifier = {
 		name = A75_true_heirs_of_milcorissia
 		duration = -1
@@ -23404,5 +23475,73 @@ parushan_saya_reformation_center_flag = {
 				value = 1
 			}
 		}
+	}
+}
+
+rayaz_pacify_bloodcurse = {
+	if = {
+		limit = { 
+			nationalism = 10
+		}
+		add_province_modifier = {
+			name = rayaz_pacified_bloodcursed_guerillas
+			duration = 5475 # 15 years
+		}
+	} else = {
+		remove_province_modifier = rampaging_ashhana_hordes
+	}
+}
+
+thunderborn_upgrade_edeynes_insecurity_effect = {
+	if = {
+		limit = {
+			has_ruler_modifier = I49_edeynes_insecurity_1
+		}
+		remove_country_modifier = I49_edeynes_insecurity_1
+		add_ruler_modifier = {
+			name = I49_edeynes_insecurity_2
+		}
+	}
+	else_if = {
+		limit = {
+			has_ruler_modifier = I49_edeynes_insecurity_2
+		}
+		remove_country_modifier = I49_edeynes_insecurity_2
+		add_ruler_modifier = {
+			name = I49_edeynes_insecurity_3
+		}
+	}
+	else_if = {
+		limit = {
+			has_ruler_modifier = I49_edeynes_insecurity_3
+		}
+		remove_country_modifier = I49_edeynes_insecurity_3
+	}
+}
+
+thunderborn_ferrous_persuasions_effect = {
+	random_owned_or_subject_province = {
+		limit = {
+			trade_goods = iron
+			OR = {
+				region = nuzurbokh_region
+				region = east_forbidden_plains_region
+			}
+			OR = {
+				development = 7
+				has_tax_building_trigger = yes
+			}
+			has_any_ongoing_construction = no
+			NOT = {
+				has_province_flag = I49_ferrous_invalid
+			}
+		}
+		add_base_production = 1
+		add_building_construction = {
+			building = workshop
+			speed = 1
+			cost = 0
+		}
+		set_province_flag = I49_ferrous_invalid
 	}
 }

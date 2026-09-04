@@ -142,10 +142,60 @@ province_can_use_tabai_spirit_palace = {
 		has_owner_accepted_culture = yes
 	}
 	owner = {
-		culture_group = bom
 		OR = {
+			culture_group = bom
 			religion = mystic_accord
 			secondary_religion = mystic_accord
+		}
+	}
+}
+
+can_use_the_high_bastion = {
+	if = {
+		limit = { mission_completed = V05_shelter_from_sands } #Cangji
+		mission_completed = V05_shelter_from_sands
+	}
+	else = { religion = levaajan }
+}
+
+can_use_ghalorcander = {
+	ruler_is_powerful_mage = yes
+	if = {
+		limit = { mission_completed = V05_eagle_secrets } #Cangji
+		mission_completed = V05_eagle_secrets
+	}
+	else = {
+		OR = {
+			primary_culture = eagle_command
+			primary_culture = soulseeker_ogre
+			primary_culture = nuzenapu_harpy
+		}
+	}
+}
+province_can_use_holarohana = {
+	owner = {
+		OR = {
+			culture_group = harimari
+			accepted_culture = primal_harimari
+		}
+	}
+	owner = {
+		OR = {
+			religion = high_philosophy
+			religion = suhans_praxis
+		}
+	}
+}
+province_can_use_salvation_promise = {
+	owner = {
+		OR = {
+			primary_culture = soulseeker_ogre
+			accepted_culture = soulseeker_ogre
+		}
+	}
+	owner = {
+		capital_scope = {
+			region = nomsyulhan_region
 		}
 	}
 }

@@ -2393,10 +2393,6 @@ define_war_wizard_sub_effect = { #the levels here correspond with the war wizard
 
 create_war_wizard = { #the more general war-wizard function
 	custom_tooltip = create_war_wizard_tt
-	hidden_effect = { #RNG for names is broken unless we set saved name
-		set_saved_name = { key = ww_male_name type = leader }
-		set_saved_name = { key = ww_female_name type = leader female = yes }
-	}
 
 	if = { #all the tooltips go after this block!
 		limit = { exactly_magic_project_level = { project = battlemage_academy level = 3 } }
@@ -2423,19 +2419,15 @@ create_war_wizard = { #the more general war-wizard function
 	hidden_effect = { #We need the PRNG for situations like the evocation project
 		if = {
 			limit = { culture_is_harpy = yes }
-			create_general = { name = ww_female_name female = yes }
+			create_general = { female = yes }
 		}
 		else = {
 			randnum_effect = {
 				max = 2
-				case1 = "create_general = { name = ww_male_name }"
-				case2 = "create_general = { name = ww_female_name female = yes }"
+				case1 = "create_general = { }"
+				case2 = "create_general = { female = yes }"
 			}
 		}
-
-		#Clear names
-		clear_saved_name = ww_male_name
-		clear_saved_name = ww_female_name
 
 		#Clear war wizard modifiers
 		remove_country_modifier = war_wizard_3_mod

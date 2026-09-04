@@ -4037,3 +4037,76 @@ merc_emperors_flame = {
 		morale_damage_received = -0.1
 	}
 }
+
+#House of Fire and Water
+merc_war_alchemists = {
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+	regiments_per_development = 0.05
+	min_size = 10
+	cavalry_weight = 0
+	artillery_weight = 0.4
+	sprites = { asiangfx_sprite_pack }
+    trigger = {
+		owns_core_province = 4949
+		4949 = {
+			has_great_project = {
+				type = house_of_fire_and_water
+				tier = 2
+			}
+			can_use_house_of_fire_and_water_trigger = yes
+		}
+	}
+	cost_modifier = 0.7
+	modifier = {
+		infantry_fire = 0.2
+		land_attrition = -0.2
+	}
+}
+
+# Pinklady Band (Esmaria) - cruel and infamous mercs
+merc_pinklady_band = {
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+    regiments_per_development = 0.025
+	cavalry_weight = 0.2
+	cavalry_cap = 4
+	home_province = 280
+	sprites = { westerngfx_sprite_pack }
+    trigger = {
+		NOT = { has_country_modifier = monstrous_nation }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
+		}
+		NOT = { has_global_flag = new_pinklady_band }
+		owns_core_province = 280
+	}
+	cost_modifier = 1.2
+	modifier = {
+		shock_damage = 0.15		#ferocious
+		loot_amount = 0.5 		#and cruel
+	}
+}
+
+merc_reformed_pinklady_band = {
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
+	regiments_per_development = 0.05
+	artillery_weight = 0.4
+	cavalry_weight = 0.1
+	cavalry_cap = 2
+	home_province = 280
+	sprites = { westerngfx_sprite_pack }
+	trigger = {
+		NOT = { has_country_modifier = monstrous_nation }
+		if = {
+			limit = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_centaur }
+		}
+		has_unlocked_merc_company = { merc_company = merc_reformed_pinklady_band }
+		owns_core_province = 280
+	}
+	cost_modifier = 1.2
+	modifier = {
+		shock_damage = 0.2		#ferocious
+		shock_damage_received = -0.2		#hardened
+	}
+}
