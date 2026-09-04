@@ -910,10 +910,51 @@ kaino_1b_missions = {
 		}
 	}
 
+	kaino_1_8 = {
+		icon = mission_general_land_assessment
+		position = 8
+		required_missions = {
+			kaino_3_7
+		}
+
+		provinces_to_highlight = {
+			province_id = 5813 #sigilan
+		}
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = kaino_moved_capital
+				check_variable = { times_moved_capital = 1 }
+			}
+			if = {
+				limit = { has_dlc = "Leviathan" }
+				num_of_times_used_transfer_development = 5
+			}
+			else = {
+				adm_power = 100
+				dip_power = 100
+				mil_power = 100
+			}
+		}
+
+		effect = {
+			if = {
+				limit = {
+					NOT = { has_dlc = "Leviathan" }
+				}
+				add_adm_power = -100
+				add_dip_power = -100
+				add_mil_power = -100
+			}
+			custom_tooltip = kaino_1_8_tt
+		}
+	}
+
 	kaino_1_9 = {
 		icon = crush_heretic_strongholds
 		position = 9
 		required_missions = {
+			kaino_1_8
 			kaino_2_8
 		}
 
