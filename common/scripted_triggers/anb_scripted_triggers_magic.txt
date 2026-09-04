@@ -5233,6 +5233,37 @@ evocation_2_centaur_black_herd_5_trigger = {
 }
 
 
+#Thunderborn
+custom_spell_centaur_thunderborn_5_trigger = {
+	evocation_1_centaur_thunderborn_5_trigger = { [[player] player = $player$ ] }
+}
+
+evocation_1_centaur_thunderborn_5_trigger = {
+	[[player]
+		has_mana_to_cast_magical_tradition_spell = {
+			school = evocation
+			level = 1
+			id = centaur_thunderborn_5
+			has_spell_specific_discounts = yes
+		}
+	]
+	any_owned_province = {
+		OR = {
+			has_province_modifier = I49_conduit_1
+			has_province_modifier = I49_conduit_2
+		}
+	}
+	capital_scope = {
+		any_neighbor_province = {
+			NOT = {
+				owned_by = I49
+				owned_by_subject_of = I49
+				is_empty = yes
+			}
+		}
+	}
+}
+
 #Bulwar
 custom_spell_bulwar_default_1_trigger = {
 	transmutation_3_bulwar_default_1_trigger = { [[player] player = $player$ ] }

@@ -2123,6 +2123,7 @@ allianceaction = {
 		tooltip = NO_CENTAUR_ALLY #Proud Horse!
 		potential = {
 			has_country_modifier = centaur_administration
+			NOT = { culture = zhadshai_centaur }
 		}
 		allow = {
 			FROM = {
@@ -2144,7 +2145,10 @@ allianceaction = {
 		}
 		allow = {
 			FROM = {
-				NOT = { has_country_modifier = centaur_administration }
+				OR = {
+					culture = zhadshai_centaur
+					NOT = { has_country_modifier = centaur_administration }
+				}
 			}
 		}
 	}
@@ -2153,6 +2157,7 @@ allianceaction = {
 		tooltip = ogres_dumb
 		potential = {
 			has_country_modifier = centaur_administration
+			NOT = { culture = zhadshai_centaur }
 		}
 		allow = {
 			FROM = {
@@ -4452,6 +4457,10 @@ insultaction = {
 				}
 			}
 			FROM = {
+				add_trust = { # To counteract vanilla loss from Insult
+					who = ROOT
+					value = 5
+				}
 				remove_opinion = {
 					who = ROOT
 					modifier = scornfully_insulted
@@ -4464,14 +4473,14 @@ insultaction = {
 					who = ROOT
 					modifier = enchantment_bardic_aria_of_affection_reverse_insult
 				}
-				add_favors = {
-					who = ROOT
-					amount = 20
-				}
 				country_event = { # This will lose some trust and check trust threshold
 					id = magic_spell.406
 					days = 1825 # 5 years
 				}
+			}
+			add_favors = {
+				who = FROM
+				amount = 20
 			}
 		}
 	}
