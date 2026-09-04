@@ -54,29 +54,14 @@ N93_col_1 = {
         }
         provinces_to_highlight = {
             is_capital_of = N91
-            N91 = {
-                NOT = {
-                    AND = {
-                        OR = {
-                            alliance_with = ROOT
-                            is_subject_of = ROOT
-                        }
-                        trust = { who = ROOT value = 70 }
-                        OR = {
-                            has_opinion = { who = ROOT value = 200 }
-                            has_100_opinion_improved_relation = { target = ROOT }
-                        }
-                    }
-                }
-            }
         }
         trigger = {
             N91 = {
+                trust = { who = ROOT value = 70 }
                 OR = {
                     alliance_with = ROOT
                     is_subject_of = ROOT
                 }
-                trust = { who = ROOT value = 70 }
                 OR = {
                     has_opinion = { who = ROOT value = 200 }
                     has_100_opinion_improved_relation = { target = ROOT }
@@ -113,7 +98,9 @@ N93_col_1 = {
         required_missions = {
             N93_kobold_kinship
         }
-        provinces_to_highlight = {}
+        provinces_to_highlight = {
+            is_capital_of = N91
+        }
         trigger = {
             N91 = {
                 has_opinion = { who = ROOT value = 200 }
@@ -242,7 +229,13 @@ N93_col_3 = {
         provinces_to_highlight = {}
         trigger = {
             prestige = 20
-            months_of_ruling = 108 # ruler starts out ruling for 4 years so 5 years from game start
+            OR = {
+                months_of_ruling = 108 # ruler starts out ruling for 4 years so 5 years from game start
+                custom_trigger_tooltip = {
+                    tooltip = N93_starting_ruler_tt
+                    NOT = { has_ruler_flag = N93_starting_ruler }
+                }
+            }
         }
         effect = {
             country_event_with_insight = { id = flavour_marunuma.0 insight_tooltip = N93_insight_0_tt }
@@ -258,20 +251,6 @@ N93_col_3 = {
         }
         provinces_to_highlight = {
             province_id = 3673
-            NOT = { num_of_times_improved_by_owner = 2 }
-            if = { limit = { has_dlc = "Mandate of Heaven" }
-                gegebou_area = {
-                    NOT = { has_state_edict = edict_advancement_effort }
-                }
-            }
-            else = {
-                NOT = {
-                    num_of_units_in_province = {
-                        who = ROOT
-                        amount = 10
-                    }
-                }
-            }
         }
         trigger = {
             3673 = {

@@ -13,9 +13,9 @@ country_event = {
         hidden_effect = {
             random_variable = {
                 which = N93_slot_0_lineage
-                value = 13
+                value = 14
             }
-            round_variable = { N93_slot_0_lineage = 0 }
+            round_variable = { N93_slot_0_lineage = -1 }
         }
     }
     option = {
@@ -91,11 +91,7 @@ country_event = {
         name = flavour_marunuma.3.a
         custom_tooltip = N93_inherit_sirimadsik_4_dip_tt
         hidden_effect = {
-            N91 = {
-                ROOT = {
-                    export_to_variable = { which = tempVassalDev value = total_development who = PREV }
-                }
-            }
+            export_to_variable = { which = tempVassalDev value = total_development who = N91 }
             multiply_variable = { tempVassalDev = 4 }
             var_effect = {
                 effect = add_dip_power
@@ -184,9 +180,12 @@ country_event = {
         }
         add_stability = -1
         add_country_modifier = { name = N93_heroic_lineages duration = -1 }
-        every_owned_province = {
-            limit = { devastation = 0.01 }
-            add_devastation = -100
+        custom_tooltip = N93_lose_devastation_tt
+        hidden_effect = {
+            every_owned_province = {
+                limit = { devastation = 0.01 }
+                add_devastation = -100
+            }
         }
     }
     option = {
@@ -229,9 +228,12 @@ country_event = {
             custom_tooltip = N93_enable_ogre_ruler_tt
             set_country_flag = N93_ogre_ruler_enabled
         }
-        every_owned_province = {
-            limit = { devastation = 0.01 }
-            add_devastation = -100
+        custom_tooltip = N93_lose_devastation_tt
+        hidden_effect = {
+            every_owned_province = {
+                limit = { devastation = 0.01 }
+                add_devastation = -100
+            }
         }
         every_subject_country = {
             add_liberty_desire = -50
