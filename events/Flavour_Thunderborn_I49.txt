@@ -1,0 +1,365 @@
+namespace = flavour_thunderborn
+
+country_event = { #At the Edge of Everything
+	id = flavour_thunderborn.1
+	title = flavour_thunderborn.1.t
+	desc = flavour_thunderborn.1.d
+	picture = THE_HEROINE_eventPicture 
+	
+    is_triggered_only = yes
+	fire_only_once = yes
+
+	trigger = { tag = I49 } #Thunderborn
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = I49_no_forming_taryean
+			set_country_flag = anb_on_action_tracking_raze_flag
+			set_country_flag = disabled_heir_events
+			set_country_flag = centaur_tracking_capital_move_flag
+			set_variable = {
+				which = centaur_num_times_moved_capital
+				value = 0
+			}
+		}
+	}
+
+	option = { 
+		name = flavour_thunderborn.1.a
+		add_stability = -1
+		add_horde_unity = -30
+		define_consort = {
+			name = "Zaya"
+			country_of_origin = ROOT
+			religion = ROOT
+			culture = ROOT
+			dynasty = "Hollowseeker"
+			adm = 4
+			dip = 3
+			mil = 4
+			female = yes
+			age = 16
+		}
+		set_consort_flag = is_gay
+		define_powerful_mage = {
+			type = consort
+			evocation = 1
+		}
+		set_country_flag = I49_zaya_alive
+		add_exceptional_willpower_75 = yes
+		add_ruler_modifier = {
+			name = I49_edeynes_insecurity_1
+		}
+		custom_tooltip = I49_edeyne_alive_tooltip
+	}
+}
+
+country_event = { #The First to Kneel
+	id = flavour_thunderborn.2
+	title = flavour_thunderborn.2.t
+	desc = flavour_thunderborn.2.d
+	picture = NOBLE_ESTATE_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.2.a
+		remove_estate_privilege = estate_monstrous_tribes_free_clans
+		add_manpower = 5
+		thunderborn_upgrade_edeynes_insecurity_effect = yes
+	}
+}
+
+country_event = { #The Grandest Celebration
+	id = flavour_thunderborn.3
+	title = flavour_thunderborn.3.t
+	desc = flavour_thunderborn.3.d
+	picture = CENTAUR_CAMPFIRE_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.3.a
+		add_church_power = -100
+		custom_tooltip = I49_non_malukhuga_celebration_tooltip
+		set_country_flag = I49_non_malukhuga_celebration
+		set_country_flag = irdaeos_celebration
+		if = {
+			limit = { has_filustkhuga_religious_practice = yes }
+			country_event = {
+				id = irdaeos_worship.101
+			}
+		}
+		else_if = {
+			limit = { has_irduhuga_religious_practice = yes }
+			country_event = {
+				id = irdaeos_worship.102
+			}
+		}
+		else_if = {
+			limit = { has_maslekhuga_religious_practice = yes }
+			country_event = {
+				id = irdaeos_worship.103
+			}
+		}
+		hidden_effect = {
+			add_country_modifier = {
+				name = irdaeos_celebration_cooldown
+				duration = 3650
+				hidden = yes
+			}
+			add_innovativeness_or_monarch_power_anb = { amount = 3 }
+			every_subject_country = {
+				add_liberty_desire = -10
+			}
+		}
+	}
+}
+
+country_event = { #It's Dark Outside
+	id = flavour_thunderborn.4
+	title = flavour_thunderborn.4.t
+	desc = flavour_thunderborn.4.d
+	picture = muslimgfx_RAMADAN_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.4.a
+		add_country_modifier = {
+			name = I49_just_two_of_us
+			duration = 3650
+		}
+		thunderborn_upgrade_edeynes_insecurity_effect = yes
+	}
+}
+
+country_event = { #The Third Darkening
+	id = flavour_thunderborn.6
+	title = flavour_thunderborn.6.t
+	desc = flavour_thunderborn.6.d
+	picture = northamericagfx_ANGRY_MOB_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.6.a
+		add_ruler_modifier = {
+			name = I49_edeynes_insecurity_1
+		}
+		country_event = {
+			id = flavour_thunderborn.7
+			days = 33
+		}
+	}
+}
+
+country_event = { #At the Edge of Everything, Once More
+	id = flavour_thunderborn.7
+	title = flavour_thunderborn.7.t
+	desc = flavour_thunderborn.7.d
+	picture = northamericagfx_COMET_SIGHTED_eventPicture 
+	
+    is_triggered_only = yes
+
+	immediate = {
+		clr_country_flag = disabled_heir_events
+	}
+
+	option = { 
+		name = flavour_thunderborn.7.a
+		remove_country_modifier = I49_edeynes_insecurity_1
+		clr_country_flag = I49_no_forming_taryean
+		add_ruler_modifier = {
+			name = I49_the_storm_queen
+		}
+		increase_ruler_adm_effect = yes
+		increase_ruler_dip_effect = yes
+		increase_ruler_mil_effect = yes
+		remove_country_modifier = exceptional_willpower_75
+		add_exceptional_willpower_100 = yes
+		custom_tooltip = I49_edge_everything_may_form_taryean_tooltip
+	}
+}
+
+country_event = { #She Was Born of the Storm
+	id = flavour_thunderborn.8
+	title = flavour_thunderborn.8.t
+	desc = flavour_thunderborn.8.d
+	picture = MAGES_ESTATE_MAD_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.8.a
+		set_country_flag = I49_conduits_level_1
+		custom_tooltip = I49_conduits_unlock_tooltip
+	}
+}
+
+country_event = { #Cerulean
+	id = flavour_thunderborn.10
+	title = flavour_thunderborn.10.t
+	desc = flavour_thunderborn.10.d
+	picture = EP_ISLAND_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.10.a
+		thunderborn_upgrade_edeynes_insecurity_effect = yes
+		force_add_normal_ruler_personality = { personality = wind_planetouched_personality }
+		set_custom_spell_list = {
+			group = centaur
+			subgroup = thunderborn
+		}
+		start_count_specific_spell_effect = { 
+			id = centaur_thunderborn_5
+			level = 1
+			school = evocation
+		}
+	}
+}
+
+country_event = { #Deciphered Wreckage
+	id = flavour_thunderborn.11
+	title = flavour_thunderborn.11.t
+	desc = flavour_thunderborn.11.d
+	picture = TREASURE_FLEET_SHIP_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.11.a
+		add_country_modifier = {
+			name = I49_new_ideas
+			duration = 3650
+		}
+		if = {
+			limit = {
+				has_institution = feudalism
+			}
+			add_adm_power = 100
+			add_dip_power = 100
+			add_mil_power = 100
+		}
+		else = {
+			capital_scope = {
+				add_institution_embracement = {
+					which = feudalism
+					value = 100
+				}
+			}
+		}
+	}
+}
+
+country_event = { #A Stumble, a Fall
+	id = flavour_thunderborn.12
+	title = flavour_thunderborn.12.t
+	desc = flavour_thunderborn.12.d
+	picture = LOOMING_DEATH_eventPicture 
+	
+    is_triggered_only = yes
+
+	immediate = {
+		clr_country_flag = I49_zaya_alive
+		set_country_flag = I49_zaya_injured
+	}
+
+	option = { 
+		name = flavour_thunderborn.12.a
+	}
+}
+
+country_event = { #Cloud Cover
+	id = flavour_thunderborn.13
+	title = flavour_thunderborn.13.t
+	desc = flavour_thunderborn.13.d
+	picture = northamericagfx_DEATH_OF_HEIR_eventPicture 
+	
+    is_triggered_only = yes
+
+	immediate = {
+		clr_country_flag = I49_zaya_alive
+		clr_country_flag = I49_zaya_injured
+	}
+
+	option = { 
+		name = flavour_thunderborn.13.a
+		add_prestige = 10
+		add_splendor = 100
+	}
+}
+
+country_event = { #The Final Darkening
+	id = flavour_thunderborn.14
+	title = flavour_thunderborn.14.t
+	desc = {
+		trigger = {
+			has_country_flag = I49_no_forming_taryean
+		}
+		desc = flavour_thunderborn.14.d1
+	}
+	desc = {
+		trigger = {
+			NOT = { has_country_flag = I49_no_forming_taryean }
+		}
+		desc = flavour_thunderborn.14.d2
+	}
+	picture = northamericagfx_DEATH_OF_HEIR_eventPicture 
+	
+    is_triggered_only = yes
+	fire_only_once = yes
+
+	trigger = {
+		is_or_was_tag = {
+			tag = I49
+		}
+		has_country_flag = I49_edeyne_alive
+	}
+
+	immediate = {
+		clr_country_flag = I49_edeyne_alive
+	}
+
+	option = { 
+		name = flavour_thunderborn.14.a
+		trigger = {
+			has_country_flag = I49_no_forming_taryean
+		}
+		add_prestige = 10
+		add_splendor = 100
+		set_country_flag = I49_edeyne_dead_early
+		swap_non_generic_missions = yes
+	}
+	option = { 
+		name = flavour_thunderborn.14.b
+		trigger = {
+			NOT = { has_country_flag = I49_no_forming_taryean }
+		}
+		add_prestige = 10
+		add_splendor = 100
+		country_event = {
+			id = flavour_thunderborn.15
+			days = 36500
+		}
+	}
+}
+
+country_event = { #Sunbreak
+	id = flavour_thunderborn.15
+	title = flavour_thunderborn.15.t
+	desc = flavour_thunderborn.15.d
+	picture = MAGE_MOON_ALTER_eventPicture 
+	
+    is_triggered_only = yes
+
+	option = { 
+		name = flavour_thunderborn.15.a
+		add_country_modifier = {
+			name = I49_blessings_of_the_storm
+			duration = -1
+		}
+	}
+}

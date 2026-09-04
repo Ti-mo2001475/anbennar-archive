@@ -115,15 +115,13 @@ country_decisions = {
 			NOT = { exists = F64 }
 			is_at_war = no
 			is_free_or_tributary_trigger = yes
-			num_of_owned_provinces_with = {
-				value = 3
-				OR = {
-					province_id = 5881	# Samsumbat
-					province_id = 5481	# Niramit
-					province_id = 5483	# Muhaqaar
-					province_id = 5870	# Aramoole
-					province_id = 6022	# Duwarkani
-				}
+			calc_true_if = {
+				amount = 3
+				owns = 5881	# Samsumbat
+				owns = 5481	# Niramit
+				owns = 5483	# Muhaqaar
+				owns = 5870	# Aramoole
+				owns = 6022	# Duwarkani
 			}
 		}
 		
@@ -864,6 +862,7 @@ country_decisions = {
 			hidden_effect = { 
 				restore_country_name = yes 
 				set_country_flag = formed_kaino_flag
+				set_country_flag = count_times_moved_capital
 			}
 			swap_non_generic_missions = yes
 			increase_government_rank_scripted_effect = { rank = 2 }
@@ -1167,14 +1166,12 @@ country_decisions = {
 			}
 			NOT = { ruler_has_personality = xhazobs_chosen_personality }
 			owns_core_province = 475	# Kheterat
-			num_of_owned_provinces_with = {
-				value = 2
-				OR = {
-					province_id = 463 #Koroshesh
-					province_id = 473 #Nirat
-					province_id = 479 #Golkora
-					province_id = 5481 #Niramit
-				}
+			calc_true_if = {
+				amount = 2
+				owns = 463 #Koroshesh
+				owns = 473 #Nirat
+				owns = 479 #Golkora
+				owns = 5481 #Niramit
 			}
 			if = {
 				limit = { OR = { has_country_modifier = racial_pop_human_expulsion has_country_modifier = racial_pop_human_purge } }
