@@ -1,0 +1,74 @@
+country_decisions = {
+    Z21_call_for_support = {
+        major = yes
+        potential = {
+            is_or_was_tag = { tag = Z21 }
+            mission_completed = Z21_knights_assemble
+        }
+        allow = {
+            hidden_trigger = {
+                is_or_was_tag = { tag = Z21 }
+                mission_completed = Z21_knights_assemble
+            }
+            mil_power = 100
+            prestige = 20
+            capital_scope = {
+                controlled_by = ROOT
+            }
+            NOT = { has_country_modifier = Z21_call_for_support_cd }
+        }
+        provinces_to_highlight = {
+            OR = {
+                province_group = Z21_branch_order_provinces
+                province_id = 698
+                AND = {
+                    ROOT = { mission_completed = Z21_smart_kobold_pious_kobold }
+                    province_group = Z21_branch_order_kobold_provinces
+                }
+            }
+        }
+        effect = {
+            add_mil_power = -100
+            add_prestige = -20
+            hidden_effect = {
+                set_variable = { Z21_cavalry_recruit = 0 }
+                every_owned_or_subject_province = {
+                    limit = { has_province_flag = Z21_branch_order_built }
+                    trigger_switch = {
+                        on_trigger = has_province_modifier
+                        Z21_branch_order_1 = {
+                            ROOT = { change_variable = { Z21_cavalry_recruit = 0.2 } }
+                        }
+                        Z21_head_branch_1 = {
+                            ROOT = { change_variable = { Z21_cavalry_recruit = 0.2 } }
+                        }
+                        Z21_branch_order_2 = {
+                            ROOT = { change_variable = { Z21_cavalry_recruit = 0.5 } }
+                        }
+                        Z21_head_branch_2 = {
+                            ROOT = { change_variable = { Z21_cavalry_recruit = 0.5 } }
+                        }
+                        Z21_branch_order_3 = {
+                            ROOT = { change_variable = { Z21_cavalry_recruit = 1 } }
+                        }
+                        Z21_head_branch_3 = {
+                            ROOT = { change_variable = { Z21_cavalry_recruit = 1 } }
+                        }
+                    }
+                    add_province_modifier = { name = Z21_undermanned_order duration = 1825 } # 5 years
+                }
+                while = {
+                    limit = { check_variable = { which = Z21_cavalry_recruit value = 0 } }
+                    capital_scope = { cavalry = ROOT }
+                    change_variable = { Z21_cavalry_recruit = -1 }
+                }
+            }
+            custom_tooltip = Z21_call_for_support_tt
+            tooltip = {
+                5690 = { add_province_modifier = { name = Z21_undermanned_order duration = 1825 } } # 5 years
+            }
+            add_country_modifier = { name = Z21_call_for_support_cd duration = 7300 } # 20 years
+            custom_tooltip = Z21_call_for_support_highlight_tt
+        }
+    }
+}
