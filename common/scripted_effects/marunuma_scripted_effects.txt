@@ -17,120 +17,39 @@ N93_prepare_all_lineages = {
 	clr_country_flag = N93_prepared_lineage_13
 
 	N93_prepare_lineage = { slot = 0 }
-	N93_prepare_lineage = { slot = 1 }
-	N93_prepare_lineage = { slot = 2 }
+	N93_prepare_lineage = { slot = 1 check_0 = yes }
+	N93_prepare_lineage = { slot = 2 check_0 = yes check_1 = yes }
 	if = { limit = { has_government_attribute = enables_nepotism }
-		N93_prepare_lineage = { slot = 3 }
+		N93_prepare_lineage = { slot = 3 check_0 = yes check_1 = yes check_2 = yes }
 	}
 }
 N93_prepare_lineage = {
-	random_list = {
-		1 = {
-			trigger = {
-				NOT = { has_country_flag = N93_prepared_lineage_0 }
-				NOT = { has_ruler_modifier = N93_lineage_0 }
+	random_variable = { which = N93_slot_$slot$_lineage value = 14 }
+	round_variable = { N93_slot_$slot$_lineage = -1 }
+	while = {
+		limit = {
+			OR = {
+				is_variable_equal = { which = N93_slot_$slot$_lineage which = N93_chose_lineage }
+				[[check_0]
+				is_variable_equal = { which = N93_slot_$slot$_lineage which = N93_slot_0_lineage }
+				]
+				[[check_1]
+				is_variable_equal = { which = N93_slot_$slot$_lineage which = N93_slot_1_lineage }
+				]
+				[[check_2]
+				is_variable_equal = { which = N93_slot_$slot$_lineage which = N93_slot_2_lineage }
+				]
 			}
-			N93_prepare_lineage_helper = { slot = $slot$ lineage = 0 }
 		}
-		1 = {
-			trigger = {
-				NOT = { has_country_flag = N93_prepared_lineage_1 }
-				NOT = { has_ruler_modifier = N93_lineage_1 }
-			}
-			N93_prepare_lineage_helper = { slot = $slot$ lineage = 1 }
-		}
-		1 = {
-			trigger = {
-				NOT = { has_country_flag = N93_prepared_lineage_2 }
-				NOT = { has_ruler_modifier = N93_lineage_2 }
-			}
-			N93_prepare_lineage_helper = { slot = $slot$ lineage = 2 }
-		}
-		1 = {
-			trigger = {
-				NOT = { has_country_flag = N93_prepared_lineage_3 }
-				NOT = { has_ruler_modifier = N93_lineage_3 }
-			}
-			N93_prepare_lineage_helper = { slot = $slot$ lineage = 3 }
-		}
-		1 = {
-			trigger = {
-				NOT = { has_country_flag = N93_prepared_lineage_4 }
-				NOT = { has_ruler_modifier = N93_lineage_4 }
-			}
-			N93_prepare_lineage_helper = { slot = $slot$ lineage = 4 }
-		}
-		1 = {
-			trigger = {
-				NOT = { has_country_flag = N93_prepared_lineage_5 }
-				NOT = { has_ruler_modifier = N93_lineage_5 }
-			}
-			N93_prepare_lineage_helper = { slot = $slot$ lineage = 5 }
-		}
-		1 = {
-			trigger = {
-				NOT = { has_country_flag = N93_prepared_lineage_6 }
-				NOT = { has_ruler_modifier = N93_lineage_6 }
-			}
-			N93_prepare_lineage_helper = { slot = $slot$ lineage = 6 }
-		}
-		1 = {
-			trigger = {
-				NOT = { has_country_flag = N93_prepared_lineage_7 }
-				NOT = { has_ruler_modifier = N93_lineage_7 }
-			}
-			N93_prepare_lineage_helper = { slot = $slot$ lineage = 7 }
-		}
-		1 = {
-			trigger = {
-				NOT = { has_country_flag = N93_prepared_lineage_8 }
-				NOT = { has_ruler_modifier = N93_lineage_8 }
-			}
-			N93_prepare_lineage_helper = { slot = $slot$ lineage = 8 }
-		}
-		1 = {
-			trigger = {
-				NOT = { has_country_flag = N93_prepared_lineage_9 }
-				NOT = { has_ruler_modifier = N93_lineage_9 }
-			}
-			N93_prepare_lineage_helper = { slot = $slot$ lineage = 9 }
-		}
-		1 = {
-			trigger = {
-				NOT = { has_country_flag = N93_prepared_lineage_10 }
-				NOT = { has_ruler_modifier = N93_lineage_10 }
-			}
-			N93_prepare_lineage_helper = { slot = $slot$ lineage = 10 }
-		}
-		1 = {
-			trigger = {
-				NOT = { has_country_flag = N93_prepared_lineage_11 }
-				NOT = { has_ruler_modifier = N93_lineage_11 }
-			}
-			N93_prepare_lineage_helper = { slot = $slot$ lineage = 11 }
-		}
-		1 = {
-			trigger = {
-				NOT = { has_country_flag = N93_prepared_lineage_12 }
-				NOT = { has_ruler_modifier = N93_lineage_12 }
-			}
-			N93_prepare_lineage_helper = { slot = $slot$ lineage = 12 }
-		}
-		1 = {
-			trigger = {
-				NOT = { has_country_flag = N93_prepared_lineage_13 }
-				NOT = { has_ruler_modifier = N93_lineage_13 }
-			}
-			N93_prepare_lineage_helper = { slot = $slot$ lineage = 13 }
-		}
+		random_variable = { which = N93_slot_$slot$_lineage value = 14 }
+		round_variable = { N93_slot_$slot$_lineage = -1 }
 	}
-}
-N93_prepare_lineage_helper = {
-	set_variable = { N93_slot_$slot$_lineage = $lineage$ }
-	set_country_flag = N93_prepared_lineage_$lineage$
 }
 # slot: which election option (0-3)
 N93_add_lineage = {
+	hidden_effect = {
+		set_variable = { which = N93_chose_lineage = which = N93_slot_$slot$_lineage }
+	}
 	if = { limit = { is_variable_equal = { which = N93_slot_$slot$_lineage value = 0 } }
 		add_ruler_modifier = { name = N93_lineage_0 duration = -1 }
 	}
