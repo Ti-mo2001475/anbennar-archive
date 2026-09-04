@@ -8402,6 +8402,25 @@ on_province_culture_change_effect = {
 	}
 	if = {
 		limit = {
+			owner = { tag = B36 mission_completed = marrhold_feybane }
+			superregion = deepwoods_superregion
+			NOT = { has_province_modifier = marrhold_solidified_control }
+			OR = {
+				culture = marrodic
+				AND = {
+					culture = wood_elf
+					owner = { accepted_culture = wood_elf }
+				}
+			}
+		}
+		remove_province_modifier = marrhold_woods_province
+		add_province_modifier = {
+			name = marrhold_solidified_control
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
 			owner = { has_government_attribute = cheaper_goblin_governance }
 			culture_group = goblin
 			NOT = { has_province_modifier = goblin_citizens }
@@ -15498,6 +15517,37 @@ on_province_owner_change_effect = {
 			country_event = { id = escanni_wars.4 }
 		}
 	}
+
+	if = {
+		limit = {
+			owner = { tag = B36 mission_completed = marrhold_feybane }
+			superregion = deepwoods_superregion
+		}
+		
+		if = {
+			limit = {
+				OR = {
+					culture = marrodic
+					AND = {
+						culture = wood_elf
+						owner = { accepted_culture = wood_elf }
+					}
+				}
+			}
+
+			add_province_modifier = {
+				name = marrhold_solidified_control
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = marrhold_woods_province
+				duration = -1
+			}
+		}
+	}
+
 	#broken masquerade vampires t3 tier down
 	if = {
 		limit = {
