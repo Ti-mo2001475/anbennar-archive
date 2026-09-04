@@ -350,6 +350,43 @@ clear_religious_scholar_modifiers_effect = {
 	remove_country_modifier = danguranga_fire_water_scholar_modifier
 	remove_country_modifier = danguranga_fire_earth_scholar_modifier
 }
+#Mana cost of inviting schoolar
+raheni_cost_of_inviting_schoolar = {
+	if = {
+		limit = {
+			owns = 4384
+			4384 = {
+				has_great_project = {
+					type = holarohana
+					tier = 2
+				}
+				province_can_use_holarohana = yes
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_country_flag = no_scholar_adm_cost
+					4384 = {
+						has_great_project = {
+							type = holarohana
+							tier = 3
+						}
+					}
+				}
+			}
+			adm_power_cost = 25
+		}
+	}
+	else_if = {
+		limit = {
+			NOT = {
+				has_country_flag = no_scholar_adm_cost
+			}
+		}
+		adm_power_cost = 50
+	}
+}
 
 #Move capital along with all that also needs to be done. Used in capital decisions.
 #THIS = Province Scope, ROOT = Country Scope

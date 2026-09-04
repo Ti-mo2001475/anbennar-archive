@@ -1,0 +1,921 @@
+# generic
+BR_2 = {
+    slot = 2
+    generic = no
+    ai = yes
+    potential = {
+        BR_blue_reachmen_tag_at_start = yes
+    }
+}
+BR_3 = {
+    slot = 3
+    generic = no
+    ai = yes
+    potential = {
+        BR_blue_reachmen_tag_at_start = yes
+    }
+    BR_reaching_out = {
+        icon = mission_alliances
+        position = 1
+        provinces_to_highlight = {
+            is_capital = yes
+            NOT = { owned_by = ROOT }
+            owner = {
+                is_subject_of_type = vic_league_member
+                overlord = { overlord_of = ROOT }
+                NOT = {
+                    AND = {
+                        has_100_opinion_improved_relation = { target = ROOT }
+                        alliance_with = ROOT
+                    }
+                    has_opinion_modifier = {
+                        who = ROOT
+                        modifier = sent_gift
+                    }
+                }
+            }
+        }
+        trigger = {
+            overlord = {
+                calc_true_if = {
+                    all_subject_country = {
+                        is_subject_of_type = vic_league_member
+                        OR = {
+                            has_50_opinion_improved_relation = { target = ROOT }
+                            alliance_with = ROOT
+                        }
+                        has_opinion_modifier = {
+                            who = ROOT
+                            modifier = sent_gift
+                        }
+                    }
+                    amount = 2
+                }
+            }
+        }
+        effect = {
+            overlord = {
+                every_subject_country = {
+                    limit = {
+                        is_subject_of_type = vic_league_member
+                        OR = {
+                            has_100_opinion_improved_relation = { target = ROOT }
+                            alliance_with = ROOT
+                        }
+                        has_opinion_modifier = {
+                            who = ROOT
+                            modifier = sent_gift
+                        }
+                    }
+                    add_country_modifier = { name = BR_reached_out duration = 3650 }
+                }
+            }
+            add_country_modifier = { name = BR_vic_diplomacy duration = 3650 }
+        }
+    }
+    BR_reaching_in = {
+        icon = mission_dominate_home_trade_node
+        position = 3
+        required_missions = {
+            BR_4_2_swap
+        }
+        provinces_to_highlight = {
+            is_capital = yes
+            owner = {
+                is_subject_of_type = vic_league_member
+                is_subject_of = ROOT
+                NOT = {
+                    AND = {
+                        has_opinion = { who = ROOT value = 150 }
+                        has_divert_trade = yes
+                    }
+                }
+            }
+        }
+        trigger = {
+            calc_true_if = {
+                all_subject_country = {
+                    is_subject_of_type = vic_league_member
+                    has_opinion = { who = ROOT value = 150 }
+                    has_divert_trade = yes
+                }
+                amount = 3
+            }
+            1477 = { # bay of chills
+                trade_share = { country = ROOT share = 40 }
+            }
+        }
+        effect = {
+            add_government_power = {
+                mechanic_type = vic_league_mechanic
+                power_type = vic_league_adm_power
+                value = 50
+            }
+            add_country_modifier = { name = BR_commerical_networks duration = -1 }
+        }
+    }
+    BR_blue_seaway = {
+        icon = mission_hanseatic_city
+        position = 5
+        required_missions = {
+            BR_one_league_one_dream
+        }
+        provinces_to_highlight = {
+            province_group = blue_reachman_cities
+            country_or_non_sovereign_subject_holds = ROOT
+            NOT = { has_dock_building_trigger = yes }
+        }
+        trigger = {
+            num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+                value = 5
+                province_group = blue_reachman_cities
+                has_dock_building_trigger = yes
+            }
+            mercantilism = 15
+        }
+        effect = {
+            add_mercantilism = 5
+            custom_tooltip = BR_blue_seaway_effect_tt
+            hidden_effect = {
+                blue_reachman_cities = {
+                    limit = {
+                        country_or_non_sovereign_subject_holds = ROOT
+                        has_dock_building_trigger = yes
+                    }
+                    add_base_production = 1
+                }
+            }
+        }
+    }
+}
+BR_4 = {
+    slot = 4
+    generic = no
+    ai = yes
+    potential = {
+        BR_blue_reachmen_tag_at_start = yes
+    }
+    BR_something_is_stirring = {
+        icon = mission_whisper
+        position = 1
+        provinces_to_highlight = {
+            is_capital = yes
+            owner = {
+                overlord_of = ROOT
+                NOT = {
+                    has_spy_network_from = {
+                        who = ROOT
+                        value = 25
+                    }
+                }
+            }
+        }
+        trigger = {
+            num_of_mercenaries = 1
+            num_of_generals = 1
+            overlord = {
+                has_spy_network_from = {
+                    who = ROOT
+                    value = 25
+                }
+            }
+        }
+        effect = {
+            add_government_power = {
+                mechanic_type = vic_league_mechanic
+                power_type = vic_league_mil_power
+                value = 100
+            }
+            add_country_modifier = { name = BR_we_are_prepared duration = 3650 }
+        }
+    }
+    BR_4_2_swap = { # custom title and desc based on tag
+        icon = mission_noble_council
+        position = 2
+        required_missions = {
+            BR_reaching_out
+            BR_something_is_stirring
+        }
+        trigger = {
+            if = { limit = { tag = Z21 }
+                OR = {
+                    overlord_of = Z22
+                    AND = {
+                        Z22 = {
+                            OR = {
+                                is_at_war = yes
+                                has_spy_network_from = { who = ROOT value = 50 }
+                            }
+                            OR = {
+                                NOT = { army_size = ROOT }
+                                has_50_opinion_improved_relation = { target = ROOT }
+                            }
+                        }
+                        diplomatic_reputation = 1
+                    }
+                }
+            }
+            else = {
+                has_country_modifier = vic_league_leader_modifier
+                is_at_war = no
+            }
+        }
+        effect = {
+            if = { limit = { tag = Z21 }
+                Z22 = {
+                    country_event_with_insight = {
+                        id = flavour_blue_reachmen.4
+                        insight_tooltip = Z21_insight_4_tt
+                    }
+                }
+            }
+            else = {
+                add_government_power = {
+                    mechanic_type = vic_league_mechanic
+                    power_type = vic_league_dip_power
+                    value = 50
+                }
+                country_event_with_insight = {
+                    id = flavour_blue_reachmen.1
+                    insight_tooltip = BR_insight_1_tt
+                }
+            }
+        }
+    }
+    BR_one_league_one_dream = {
+        icon = mission_diplomacy_missive
+        position = 4
+        required_missions = {
+            BR_reaching_in
+            BR_expand_the_city_borders
+        }
+        provinces_to_highlight = {
+            OR = {
+                AND = {
+                    province_group = blue_reachman_cities
+                    NOT = { country_or_non_sovereign_subject_holds = ROOT }
+                }
+                AND = {
+                    is_capital = yes
+                    owner = {
+                        is_subject_of_type = vic_league_member
+                        is_subject_of = ROOT
+                        NOT = { has_opinion = { who = ROOT value = 50 } }
+                        liberty_desire = 40
+                    }
+                }
+            }
+        }
+        trigger = {
+            blue_reachman_cities = {
+                type = all
+                country_or_non_sovereign_subject_holds = ROOT
+            }
+            all_subject_country = {
+                OR = {
+                    NOT = { is_subject_of_type = vic_league_member }
+                    AND = {
+                        has_opinion = { who = ROOT value = 50 }
+                        NOT = { liberty_desire = 40 }
+                    }
+                }
+            }
+        }
+        effect = {
+            blue_reachman_cities = {
+                add_permanent_claim = ROOT
+            }
+            add_country_modifier = { name = BR_closer_ties duration = 10950 } # 30 years
+        }
+    }
+    BR_dream_reached = {
+        icon = mission_feast
+        position = 6
+        required_missions = {
+            BR_blue_seaway
+            BR_economic_unison
+        }
+        provinces_to_highlight = {
+            province_group = blue_reachman_cities
+            NOT = {
+                AND = {
+                    owned_by = ROOT
+                    is_core = ROOT
+                }
+            }
+        }
+        trigger = {
+            blue_reachman_cities = {
+                type = all
+                owned_by = ROOT
+                is_core = ROOT
+            }
+            prestige = 30
+            OR = {
+                mercantilism = 20
+                1477 = { # bay of chills
+                    trade_share = { country = ROOT share = 60 }
+                }
+            }
+        }
+        effect = {
+            country_event_with_insight = {
+                id = flavour_blue_reachmen.13
+                insight_tooltip = BR_insight_13_tt
+            }
+        }
+    }
+}
+BR_5 = {
+    slot = 5
+    generic = no
+    ai = yes
+    potential = {
+        BR_blue_reachmen_tag_at_start = yes
+    }
+    BR_expand_the_city_borders = {
+        icon = mission_unite_home_region
+        position = 3
+        required_missions = {
+            BR_4_2_swap
+        }
+        trigger = {
+            num_of_owned_provinces_with = {
+                value = 5
+                is_core = ROOT
+            }
+            any_owned_province = {
+                province_has_current_tech_fort_trigger = yes
+            }
+        }
+        effect = {
+            add_government_power = {
+                mechanic_type = vic_league_mechanic
+                power_type = vic_league_adm_power
+                value = 50
+            }
+            add_country_modifier = { name = BR_building_our_prominence duration = 3650 }
+        }
+    }
+    BR_adshaws = {
+        icon = mission_discussion_arch
+        position = 4
+        required_missions = {
+            BR_expand_the_city_borders
+        }
+        provinces_to_highlight = {
+            area = northern_greatwoods_area
+            OR = {
+                AND = {
+                    ROOT = { overlord_of = Z26 }
+                    NOT = { owned_by = Z26 }
+                }
+                AND = {
+                    NOT = { ROOT = { overlord_of = Z26 } }
+                    OR = {
+                        NOT = { owned_by = ROOT }
+                        nationalism = 1
+                    }
+                }
+            }
+        }
+        trigger = {
+            OR = {
+                northern_greatwoods_area = {
+                    type = all
+                    owned_by = ROOT
+                    NOT = { nationalism = 1 }
+                }
+                AND = {
+                    Z26 = {
+                        is_subject_of = Z21
+                        is_subject_other_than_tributary_trigger = yes
+                        has_opinion = { who = ROOT value = 50 }
+                        NOT = { liberty_desire = 40 }
+                    }
+                    northern_greatwoods_area = {
+                        type = all
+                        owned_by = Z26
+                    }
+                }
+            }
+        }
+        effect = {
+            country_event_with_insight = {
+                id = flavour_blue_reachmen.2
+                insight_tooltip = BR_insight_2_tt
+            }
+        }
+    }
+    BR_economic_unison = {
+        icon = mission_high_income
+        position = 5
+        required_missions = {
+            BR_one_league_one_dream
+        }
+        provinces_to_highlight = {
+            province_group = blue_reachman_cities
+            country_or_non_sovereign_subject_holds = ROOT
+            NOT = { has_trade_building_trigger = yes }
+        }
+        trigger = {
+            num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+                value = 5
+                has_trade_building_trigger = yes
+            }
+            mercantilism = 15
+        }
+        effect = {
+            capital_scope = {
+                add_or_upgrade_center_of_trade = yes
+            }
+            set_estate_privilege = estate_burghers_BR_mercantile_traditions
+        }
+    }
+}
+# serpentgard
+Z21_1 = {
+    slot = 1
+    generic = no
+    ai = yes
+    has_country_shield = yes
+    potential = {
+        tag = Z21
+    }
+    Z21_knights_assemble = {
+        icon = mission_conquer_5_states
+        position = 3
+        required_missions = {
+            Z21_equestrian_traditions
+        }
+        provinces_to_highlight = {
+            province_group = Z21_branch_order_provinces
+            country_or_non_sovereign_subject_holds = ROOT
+            NOT = { has_province_flag = Z21_branch_order_built }
+        }
+        trigger = {
+            num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+                value = 5
+                custom_trigger_tooltip = {
+                    tooltip = Z21_branch_order_built_tt
+                    has_province_flag = Z21_branch_order_built
+                }
+            }
+            is_at_war = yes
+        }
+        effect = {
+            custom_tooltip = Z21_unlock_call_for_support_tt
+            coddorran_heights_area = {
+                add_permanent_claim = ROOT
+            }
+            frostbridges_area = {
+                add_permanent_claim = ROOT
+            }
+        }
+    }
+    Z21_maldorians_heirs = {
+        icon = mission_galleys_in_port
+        position = 4
+        required_missions = {
+            Z21_knights_assemble
+            Z21_maldorians_harbour
+        }
+        provinces_to_highlight = {
+            province_id = 698
+            NOT = {
+                AND = {                
+                    light_ships_in_province = 5
+                    num_of_units_in_province = {
+                        who = ROOT
+                        type = infantry
+                        amount = 5
+                    }
+                }
+            }
+        }
+        trigger = {
+            698 = {
+                light_ships_in_province = 5
+                num_of_units_in_province = {
+                    who = ROOT
+                    type = infantry
+                    amount = 5
+                }
+            }
+        }
+        effect = {
+            698 = {
+                kill_units = {
+                    who = ROOT
+                    type = light_ship
+                    amount = 5
+                }
+                kill_units = {
+                    who = ROOT
+                    type = infantry
+                    amount = 5
+                }
+            }
+            country_event_with_insight = {
+                id = flavour_blue_reachmen.7
+                days = 200
+                random = 100
+                insight_tooltip = Z21_insight_7_tt
+            }
+        }
+    }
+    Z21_northern_raiders = {
+        icon = mission_viking
+        position = 5
+        required_missions = {
+            Z21_maldorians_heirs
+        }
+        provinces_to_highlight = {
+            OR = {
+                AND = {
+                    area = frostbridges_area
+                    NOT = {
+                        owned_by = ROOT
+                        is_core = ROOT
+                    }
+                }
+                AND = {
+                    province_id = 952
+                    NOT = {
+                        AND = {
+                            has_province_flag = Z21_branch_order_built
+                            has_owner_religion = yes
+                        }
+                    }
+                }
+            }
+        }
+        trigger = {
+            frostbridges_area = {
+                type = all
+                owned_by = ROOT
+                is_core = ROOT
+            }
+            952 = {
+                custom_trigger_tooltip = {
+                    tooltip = Z21_branch_order_built_tt
+                    has_province_flag = Z21_branch_order_built
+                }
+                has_owner_religion = yes
+            }
+        }
+        effect = {
+            952 = {
+                add_or_upgrade_center_of_trade = yes
+                add_culture_construction = { speed = 0.5 cost = 0 }
+                add_base_tax = 2
+                add_base_production = 2
+                add_base_manpower = 2
+            }
+        }
+    }
+}
+Z21_2 = {
+    slot = 2
+    generic = no
+    ai = yes
+    has_country_shield = yes
+    potential = {
+        tag = Z21
+    }
+    Z21_centralize_the_order = {
+        icon = mission_italian_condottiere
+        position = 1
+        provinces_to_highlight = {
+            province_id = 698
+            NOT = {
+                AND = {
+                    has_fort_building_trigger = yes
+                    num_of_units_in_province = {
+                        who = ROOT
+                        type = cavalry
+                        amount = 4
+                    }
+                    OR = {
+                        num_of_times_expanded_infrastructure = 1
+                        base_tax = 5
+                    }
+                }
+            }
+        }
+        trigger = {
+            698 = {
+                has_fort_building_trigger = yes
+                num_of_units_in_province = {
+                    who = ROOT
+                    type = cavalry
+                    amount = 4
+                }
+                OR = {
+                    num_of_times_expanded_infrastructure = 1
+                    base_tax = 5
+                }
+            }
+        }
+        effect = {
+            custom_tooltip = Z21_enable_branch_orders
+            698 = {
+                move_capital_effect = yes
+                kill_units = {
+                    who = ROOT
+                    type = cavalry
+                    amount = 4
+                }
+                add_permanent_province_modifier = { name = Z21_head_branch_1 duration = -1 }
+                Z21_place_head_branch_zoc_mods = { level_1 = yes }
+                set_province_flag = Z21_branch_order_built
+            }
+        }
+    }
+    Z21_equestrian_traditions = {
+        icon = mission_cossack_cavalry
+        position = 2
+        required_missions = {
+            Z21_centralize_the_order
+        }
+        provinces_to_highlight = {
+            owned_by = ROOT
+            NOT = {
+                AND = {
+                    base_production = 5
+                    OR = {
+                        base_manpower = 5
+                        has_manpower_building_trigger = yes
+                    }
+                }
+            }
+        }
+        trigger = {
+            num_of_owned_provinces_with = {
+                value = 2
+                base_production = 5
+                OR = {
+                    base_manpower = 5
+                    has_manpower_building_trigger = yes
+                }
+            }
+            employed_advisor = { category = MIL }
+        }
+        effect = {
+            custom_tooltip = Z21_equestrian_traditions_effect_tt
+            tooltip = {
+                5690 = { add_province_modifier = { name = Z21_warhorse_production duration = -1 } }
+            }
+            for = {
+                amount = 5
+                effect = "
+                random_owned_province = {
+                    limit = {
+                        NOT = { has_province_modifier = Z21_warhorse_production }
+                        base_production = 5
+                        OR = { base_manpower = 5 has_manpower_building_trigger = yes }
+                    }
+                    add_province_modifier = { name = Z21_warhorse_production duration = -1 }
+                }
+                "
+            }
+            set_estate_privilege = estate_nobles_Z21_serpentheader_horse
+        }
+    }
+    Z21_maldorians_harbour = {
+        icon = mission_elf_smiling
+        position = 3
+        required_missions = {
+            Z21_equestrian_traditions
+            BR_4_2_swap
+        }
+        provinces_to_highlight = {
+            OR = {
+                owned_by = Z22
+                AND = {
+                    province_id = 696
+                    NOT = {
+                        AND = {
+                            owned_by = ROOT
+                            is_core = ROOT
+                        }
+                    }
+                }
+            }
+        }
+        trigger = {
+            NOT = { exists = Z22 }
+            owns_core_province = 696
+            high_tolerance_elven_race_trigger = yes
+        }
+        effect = {
+            custom_tooltip = Z21_unlock_level_2_upgrades_tt
+            country_event_with_insight = {
+                id = flavour_blue_reachmen.5
+                insight_tooltip = Z21_insight_5_tt
+            }
+        }
+    }
+    Z21_self_education = {
+        icon = mission_science
+        position = 4
+        required_missions = {
+            Z21_knights_assemble
+            Z21_maldorians_harbour
+        }
+        trigger = {
+            if = { limit = { has_global_flag = castellos_is_dead }
+                OR = {
+                    religion = corinite
+                    has_personal_deity = adean
+                }
+            }
+            else = {
+                has_personal_deity = castellos
+            }
+            estate_influence = {
+                estate = estate_church
+                influence = 60
+            }
+            has_estate_privilege = estate_church_clerical_education
+            reform_level = 3
+        }
+        effect = {
+            country_event_with_insight = {
+                id = flavour_blue_reachmen.3
+                insight_tooltip = Z21_insight_3_tt
+            }
+        }
+    }
+    Z21_reaffirm_our_mission = {
+        icon = mission_warrior_gold
+        position = 5
+        required_missions = {
+            Z21_self_education
+        }
+        provinces_to_highlight = {
+            OR = {
+                AND = {
+                    area = coddorran_heights_area
+                    NOT = { owned_by = ROOT }
+                }
+                owner = {
+                    is_cannorian_kobold_primary_culture = yes
+                    has_been_insulted_by_root = no
+                }
+            }
+        }
+        trigger = {
+            coddorran_heights_area = {
+                type = all
+                owned_by = ROOT
+                is_core = ROOT
+            }
+            has_estate_privilege = estate_adventurers_sponsor_beast_slayers
+            OR = {
+                custom_trigger_tooltip = {
+                    tooltip = Z21_no_DC_kobold_tag_exists
+                    NOT = {
+                        any_country = {
+                            is_cannorian_kobold_primary_culture = yes
+                        }
+                    }
+                }
+                any_country = {
+                    is_cannorian_kobold_primary_culture = yes
+                    has_been_insulted_by_root = yes
+                }
+            }
+        }
+        effect = {
+            custom_tooltip = Z21_beast_slayers_upgrade_tt
+            dragon_coast_starting_kobold_provinces = {
+                add_permanent_claim = ROOT
+            }
+            westmoor_proper_area = {
+                add_permanent_claim = ROOT
+            }
+        }
+    }
+    Z21_knights_proclamation = {
+        position = 6
+        icon = mission_have_two_subjects
+        required_missions = {
+            Z21_northern_raiders
+            Z21_reaffirm_our_mission
+        }
+        provinces_to_highlight = {
+            OR = {
+                AND = {
+                    province_group = blue_reachman_cities
+                    NOT = { country_or_non_sovereign_subject_holds = ROOT }
+                }
+                AND = {
+                    province_group = Z21_branch_order_provinces
+                    country_or_non_sovereign_subject_holds = ROOT
+                    NOT = { has_province_flag = Z21_branch_order_built }
+                }
+            }
+            
+        }
+        trigger = {
+            blue_reachman_cities = {
+                type = all
+                country_or_non_sovereign_subject_holds = ROOT
+            }
+            num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+                value = 10
+                custom_trigger_tooltip = {
+                    tooltip = Z21_branch_order_built_tt
+                    has_province_flag = Z21_branch_order_built
+                }
+            }
+            prestige = 50
+        }
+        effect = {
+            add_government_reform = Z21_order_of_malliath
+        }
+    }
+    Z21_guardians_of_the_two_heads = {
+        position = 7
+        icon = mission_dragon_coast
+        required_missions = {
+            Z21_knights_proclamation
+            Z21_smart_kobold_pious_kobold
+        }
+        provinces_to_highlight = {
+            province_group = dragon_coast_starting_kobold_provinces
+            NOT = { owned_by = ROOT }
+        }
+        trigger = {
+            dragon_coast_starting_kobold_provinces = {
+                type = all
+                owned_by = ROOT
+            }
+            OR = {
+                num_of_religion = {
+                    religion = regent_court
+                    value = 0.6
+                }
+                num_of_religion = {
+                    religion = corinite
+                    value = 0.6
+                }
+            }
+        }
+        effect = {
+            custom_tooltip = Z21_kobold_return_tt
+            clr_global_flag = EOA_22_pulse_kobold_migration_flag
+            country_event_with_insight = {
+                id = flavour_blue_reachmen.9
+                insight_tooltip = Z21_insight_9_tt
+            }
+        }
+    }
+}
+Z21_3 = {
+    slot = 3
+    generic = no
+    ai = yes
+    has_country_shield = yes
+    potential = {
+        tag = Z21
+    }
+    Z21_smart_kobold_pious_kobold = {
+        position = 6
+        icon = mission_kobold
+        required_missions = {
+            Z21_reaffirm_our_mission
+        }
+        provinces_to_highlight = {
+            area = coddorran_heights_area
+            NOT = {
+                religion = regent_court
+                religion = corinite
+            }
+        }
+        trigger = {
+            OR = {
+				medium_tolerance_kobold_race_trigger = yes
+				high_tolerance_kobold_race_trigger = yes
+            }
+            NOT = {
+                has_country_modifier = racial_pop_kobold_expulsion
+                has_country_modifier = racial_pop_kobold_purge
+            }
+            coddorran_heights_area = {
+                type = all
+                OR = {
+                    religion = regent_court
+                    religion = corinite
+                }
+            }
+        }
+        effect = {
+            remove_country_modifier = Z21_lessons_of_malliath_1
+            add_country_modifier = { name = Z21_lessons_of_malliath_2 duration = -1 }
+            custom_tooltip = Z21_unlock_level_3_upgrades_tt
+            custom_tooltip = Z21_unlock_dragon_coast_branch_orders_tt
+        }
+    }
+}
