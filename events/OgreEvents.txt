@@ -11,7 +11,7 @@ country_event = {
 	desc = race_setup_events.1.d
 	picture = BORDER_TENSION_eventPicture
 	is_triggered_only = yes
-	# hidden = yes
+	hidden = yes
 	trigger = {
 		has_country_modifier = ogre_administration
 		fast_owns_num_pops_of_race = {
@@ -314,8 +314,10 @@ country_event = {
 			# OGRE MAGI! THE VERY SAME!
 			10 = {
 				trigger = {
-					culture_group = ogre
 					religion = feast_of_the_gods
+					NOT = {
+						has_country_flag = ogre_two_headed_happened
+					}
 				}
 				country_event = {
 					id = ogre_flavour_events.14
@@ -324,7 +326,6 @@ country_event = {
 			# Heretic Shaman
 			5 = {
 				trigger = {
-					culture_group = ogre
 					religion = feast_of_the_gods
 				}
 				country_event = {
@@ -337,18 +338,16 @@ country_event = {
 				trigger = {
 					any_owned_province = {
 						trade_goods = livestock
-						culture_group = ogre
 						religion = feast_of_the_gods
 					}
 				}
 				country_event = {
-						id = ogre_flavour_events.16
+					id = ogre_flavour_events.16
 				}
 			}
 			# Surplus of Tiny Swords
 			10 = {
 				trigger = {
-					culture_group = ogre
 					religion = feast_of_the_gods
 				}
 				country_event = {
@@ -358,7 +357,6 @@ country_event = {
 			# Crippling Hunger
 			5 = {
 				trigger = {
-					culture_group = ogre
 					OR = {
 						religion = feast_of_the_gods
 						religion = reformed_feast_of_the_gods
@@ -371,7 +369,6 @@ country_event = {
 			# Education of the Ogres
 			10 = {
 				trigger = {
-					culture_group = ogre
 					has_country_flag = removing_monstrous
 					OR = {
 						religion = feast_of_the_gods
@@ -388,8 +385,10 @@ country_event = {
 			# Fire Giant
 			5 = {
 				trigger = {
-					culture_group = ogre
 					religion = feast_of_the_gods
+					NOT = {
+						has_country_modifer = ogre_fire_giant_happened
+					}
 				}
 				country_event = {
 					id = ogre_flavour_events.20
@@ -398,7 +397,6 @@ country_event = {
 			# Combustion of Wicked
 			10 = {
 				trigger = {
-					culture_group = ogre
 					OR = {
 						religion = reformed_feast_of_the_gods
 						AND = {
@@ -1588,8 +1586,8 @@ country_event = {
 			factor = 70
 		}
 		add_country_modifier = {
-		name = ogre_flavour_rare_delicacy
-		duration = 3650
+			name = ogre_flavour_rare_delicacy
+			duration = 3650
 		}
 	}
 	option = {
@@ -1603,13 +1601,16 @@ country_event = {
 		}
 		if = {
 			limit = {
-				MIL = 6
+				mil = 6
 			}
 			add_mil_power = 100
 		}
 		else = {
 			change_mil = 1
 		}
+	}
+	after = {
+		set_country_flag = ogre_two_headed_happened
 	}
 }
 
@@ -1680,11 +1681,11 @@ country_event = {
 					culture_group = ogre
 					religion = feast_of_the_gods
 					trade_goods = livestock
-					}
 				}
-				save_event_target_as = ogre_cattle_thief_target
 			}
+			save_event_target_as = ogre_cattle_thief_target
 		}
+	}
 	option = {
 		name = ogre_flavour_events.16.a
 		ai_chance = {
@@ -1701,10 +1702,10 @@ country_event = {
 				}
 			}
 			80 = {
-					event_target:ogre_cattle_thief_target = {
-						add_province_modifier = {
-							name = ogre_flavour_thief_arrested
-							duration = 730
+				event_target:ogre_cattle_thief_target = {
+					add_province_modifier = {
+						name = ogre_flavour_thief_arrested
+						duration = 730
 					}
 				}
 			}
@@ -1716,12 +1717,12 @@ country_event = {
 			factor = 30
 		}
 		event_target:ogre_cattle_thief_target = {
-						add_province_modifier = {
-							name = ogre_flavour_thief_ignored_no_effort
-							duration = 730
-					}
-				}
+			add_province_modifier = {
+				name = ogre_flavour_thief_ignored_no_effort
+				duration = 730
 			}
+		}
+	}
 	option = {
 		name = ogre_flavour_events.16.c
 		ai_chance = {
@@ -1732,13 +1733,13 @@ country_event = {
 			dip = 3
 		}
 		event_target:ogre_cattle_thief_target = {
-						add_province_modifier = {
-							name = ogre_flavour_thief_arrested
-							duration = 730
-					}
-				}
+			add_province_modifier = {
+				name = ogre_flavour_thief_arrested
+				duration = 730
+			}
 		}
 	}
+}
 # Surplus of Tiny Swords
 country_event = {
 	id = ogre_flavour_events.17
@@ -1846,25 +1847,25 @@ country_event = {
 			add_prestige = -20
 		}
 		if = {
+			limit = {
+				has_foreign_consort = yes
+			}
+			every_country = {
 				limit = {
-					has_foreign_consort = yes
+					has_given_consort_to = ROOT
 				}
-				every_country = {
-					limit = {
-						has_given_consort_to = ROOT
-					}
-					add_opinion = {
-						who = ROOT
-						modifier = ogre_flavour_he_ate_them
-						years = 5
-					}
-				}
-				remove_consort = yes
-				add_country_modifier = {
-					name = ogre_flavour_bad_optics
-					duration = 1825
+				add_opinion = {
+					who = ROOT
+					modifier = ogre_flavour_he_ate_them
+					years = 5
 				}
 			}
+			remove_consort = yes
+			add_country_modifier = {
+				name = ogre_flavour_bad_optics
+				duration = 1825
+			}
+		}
 	}
 
 	option = {
@@ -1939,27 +1940,19 @@ country_event = {
 	picture = PIETY_eventPicture # what do i even put for this one rofl
 	is_triggered_only = yes
 	fire_only_once = yes
-
+	trigger = {
+		NOT = {
+			ruler_has_personality = scholar_personality
+		}
+	}
 	option = {
 		name = ogre_flavour_events.20.a
 		ai_chance = {
 			factor = 50
 		}
-		if = {
-			limit = {
-				ruler_has_personality = scholar_personality
-			}
-			add_country_modifier = {
-				name = ogre_flavour_pride
-				duration = 10950
-			}
-		}
-
-		else = {
-			add_country_modifier = {
-				name = ogre_flavour_pride
-				duration = 5475
-			}
+		add_country_modifier = {
+			name = ogre_flavour_pride
+			duration = 5475
 		}
 	}
 
@@ -1968,22 +1961,41 @@ country_event = {
 		ai_chance = {
 			factor = 50
 		}
-		if = {
-			limit = {
-				ruler_has_personality = scholar_personality
-			}
-			add_country_modifier = {
-				name = ogre_flavour_resilience
-				duration = 10950
-			}
+		add_country_modifier = {
+			name = ogre_flavour_resilience
+			duration = 5475
 		}
+	}
 
-		else = {
-			add_country_modifier = {
-				name = ogre_flavour_resilience
-				duration = 5475
-			}
+	trigger = {
+		ruler_has_personality = scholar_personality
+	}
+	
+	option = {
+		name = ogre_flavour_events.20.a
+		highlight = yes
+		ai_chance = {
+			factor = 50
 		}
+		add_country_modifier = {
+			name = ogre_flavour_pride
+			duration = 10950
+		}
+	}
+
+	option = {
+		name = ogre_flavour_events.20.b
+		highlight = yes
+		ai_chance = {
+			factor = 50
+		}
+		add_country_modifier = {
+			name = ogre_flavour_resilience
+			duration = 10950
+		}
+	}
+	after = {
+		set_country_flag = ogre_fire_giant_happened
 	}
 }
 
