@@ -1,0 +1,52 @@
+country_decisions = {
+	search_sashkras = {
+		potential = {
+			tag = Z14 #Avnkaup
+			has_country_flag = looking_for_key
+		}
+
+		allow = {
+			hidden_trigger = {
+				tag = Z14 #Avnkaup
+				has_country_flag = looking_for_key
+			}
+			any_hired_mercenary_company = {
+				template = merc_saga_troll_hunters
+				location = { province_id = 4182 } #Sashkras
+			}
+		}
+
+		effect = {
+			clr_country_flag = looking_for_key
+			country_event = { id = avnkaup.3 }
+		}
+	}
+	grab_key = {
+		potential = {
+			tag = Z14 #Avnkaup
+			has_country_flag = better_kill_those_ogres
+		}
+
+		allow = {
+			hidden_trigger = {
+				tag = Z14 #Avnkaup
+				has_country_flag = better_kill_those_ogres
+			}
+
+			any_hired_mercenary_company = {
+				template = merc_saga_troll_hunters
+				location = { province_id = 4182 } #Sashkras
+			}
+			4182 = { #Sashkras
+				NOT = {
+					native_size = 1
+				}
+			}
+		}
+
+		effect = {
+			clr_country_flag = better_kill_those_ogres
+			country_event = { id = avnkaup.4 }
+		}
+	}
+}

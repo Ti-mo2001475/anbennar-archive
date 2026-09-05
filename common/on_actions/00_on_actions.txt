@@ -3881,6 +3881,37 @@ on_battle_won_country = {
 		}
 		clr_country_flag = mask_enchantment_effect_flag
 	}
+
+	if = { #Olavish Minors
+		limit = {
+			mission_completed = olavish_minor_olavish_dominance
+		}
+		change_variable = {
+			which = olavish_minor_dominance_battles_won
+			value = 1
+		}
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						has_country_modifier = olavish_minor_olavish_dominance_1
+						check_variable = {
+							which = olavish_minor_dominance_battles_won
+							value = 10
+						}
+					}
+					AND = {
+						has_country_modifier = olavish_minor_olavish_dominance_2
+						check_variable = {
+							which = olavish_minor_dominance_battles_won
+							value = 20
+						}
+					}
+				}
+			}
+			country_event = { id = olavish_minor.1 }
+		}
+	}
 	
 	dragon_turtles_casualty_friendship_effect = yes
 }
@@ -21367,6 +21398,17 @@ on_mercenary_recruited = {
 			}
 		}
 	}
+	#Avnkaup Troll hunters come with a conquistador
+	if = {
+		limit = {
+			ROOT = {
+				mercenary_company = merc_saga_troll_hunters
+			}
+		}
+		FROM = {
+			country_event = { id = avnkaup.1}
+		}
+	}
 }
 
 # THIS = One province in the state
@@ -26057,6 +26099,18 @@ on_raid_coast = {
 		A56 = {
 			country_event = {
 				id = celliande.1
+			}
+		}
+	}
+	# Olavish Minors
+	if = {
+		limit = {
+			mission_completed = olavish_minor_in_search_of_new_ideas
+		}
+		capital_scope = {
+			add_institution_embracement = {
+				which = renaissance
+				value = 5
 			}
 		}
 	}
