@@ -1601,7 +1601,11 @@ maghargma_three = {
 		provinces_to_highlight = {  
 			superregion = forbidden_lands_superregion
 			is_city = yes
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+				area = ilabomar_area
+				area = baizoi_area
+			}
 		} 
 
 		trigger = {
@@ -1610,6 +1614,8 @@ maghargma_three = {
 				OR = {
 					is_city = no
 					country_or_non_sovereign_subject_holds = ROOT 
+					area = ilabomar_area
+					area = baizoi_area
 				}
 			}
 			legitimacy = 90
@@ -2283,6 +2289,10 @@ maghargma_four = {
 		required_missions = { maghargma_ordering_the_steppes } 
 		provinces_to_highlight = {  
 			region = nuzurbokh_region
+			NOT = {
+				area = ilabomar_area
+				area = baizoi_area
+			}
 			OR = {
 				NOT = { country_or_non_sovereign_subject_holds = ROOT }
 				AND = {
@@ -2300,12 +2310,20 @@ maghargma_four = {
 			NOT = {
 				nuzurbokh_region = {
 					is_city = yes
-					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+					NOT = {
+						country_or_non_sovereign_subject_holds = ROOT
+						area = ilabomar_area
+						area = baizoi_area
+					}
 				}
 			}
 			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
 				value = 3
 				region = nuzurbokh_region
+				NOT = {
+					area = ilabomar_area
+					area = baizoi_area
+				}
 				has_building = weapons
 			}
 		}
@@ -2326,6 +2344,10 @@ maghargma_four = {
 							trade_goods = iron
 							trade_goods = mithril
 						}
+						NOT = {
+							area = ilabomar_area
+							area = baizoi_area
+						}
 					}
 					add_permanent_province_modifier = {
 						name = I90_strip_mining
@@ -2335,9 +2357,21 @@ maghargma_four = {
 			}
 			if = {
 				limit = { ROOT = { mission_completed = maghargma_new_subjects } }
-				nuzurbokh_region = { add_goblin_minority_size_effect = yes }
+				nuzurbokh_region = {
+					limit = {
+						area = ilabomar_area
+						area = baizoi_area
+					}
+					add_goblin_minority_size_effect = yes
+				}
 			}
-			nuzurbokh_region = { add_ogre_minority_size_effect = yes }
+			nuzurbokh_region = {
+				limit = {
+					area = ilabomar_area
+					area = baizoi_area
+				}
+				add_ogre_minority_size_effect = yes
+			}
 		}
 	}
 }
