@@ -19,15 +19,10 @@ country_event = {
 	fire_only_once = yes
 	hidden = yes
 	
-	trigger = {
-		owns = 2728 #Arpedifer
-		NOT = { has_country_flag = deathwinds_setup }
-	}
+	trigger = { owns = 2728 } #Arpedifer
 	
 	option = {
 		name = none
-		set_country_flag = deathwinds_setup
-		
 		#Deathwinds aPUI bar setup
 		alecand_region = {
 			set_province_flag = aPUI_deathwinds_flag
@@ -36,11 +31,6 @@ country_event = {
 			
 			#Define variables to appropriate values for UI tooltips
 			set_variable = { deathwinds_warded_var = -1 }
-			set_variable = { deathwinds_var = -1 }
-			set_variable = { deathwinds_rand_var = -1 }
-			set_variable = { deathwinds_previous_var = 8 } #Lore!
-			set_variable = { deathwinds_high_level_var = 4 }
-			set_variable = { deathwinds_low_level_var = 1 }
 			set_variable = { deathwinds_months_var = 13 } #Time left until next Deathwind, 13 months
 			set_variable = { deathwinds_active_months_var = -71 }
 		}
@@ -48,6 +38,10 @@ country_event = {
 			#Do the first storm on Jan 1st 1446
 			2728 = { #Arpedifer
 				set_province_flag = deathwinds_warning_event
+				set_variable = { deathwinds_var = -1 }
+				set_variable = { deathwinds_previous_var = 8 } #Lore!
+				set_variable = { deathwinds_high_level_var = 4 }
+				set_variable = { deathwinds_low_level_var = 1 }
 				province_event = {
 					id = kheionai.2 #Warning event happens 6 months before
 					days = 225 #June 1st 1445 (minus 6 days)
