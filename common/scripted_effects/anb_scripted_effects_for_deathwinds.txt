@@ -315,61 +315,35 @@ remove_all_windward_modifiers = {
 	remove_province_modifier = windward_level_1
 }
 
-#Startup effect that assigns every province a unique flag and event target
- #to be referenced later in the button area effects (deathwind_button_effect, windwards_area_trigger, etc.)
-assign_deathwind_targets = {
-	alecand_region = {
-		type = random
-		amount = 1
-		limit = { not_has_alecand_area_flags = yes }
-		set_province_flag = alecand_area_$area$
-		save_global_event_target_as = alecand_area_$area$_prov_1
-		set_province_flag = alecand_area_prov_1
-		random_area_province = {
-			limit = { not_has_alecand_area_flags = yes }
-			set_province_flag = alecand_area_$area$
-			set_province_flag = alecand_area_prov_2
-			save_global_event_target_as = alecand_area_$area$_prov_2
-		}
-		random_area_province = {
-			limit = { not_has_alecand_area_flags = yes }
-			set_province_flag = alecand_area_$area$
-			set_province_flag = alecand_area_prov_3
-			save_global_event_target_as = alecand_area_$area$_prov_3
-		}
-		random_area_province = {
-			limit = { not_has_alecand_area_flags = yes }
-			set_province_flag = alecand_area_$area$
-			set_province_flag = alecand_area_prov_4
-			save_global_event_target_as = alecand_area_$area$_prov_4
-		}
-		random_area_province = {
-			limit = { not_has_alecand_area_flags = yes }
-			set_province_flag = alecand_area_$area$
-			set_province_flag = alecand_area_prov_5
-			save_global_event_target_as = alecand_area_$area$_prov_5
-		}
-	}
-}
-
 #Button effect to show the effect based on what flag it has.
  #This is to have the provinces show up individually on the effect instead of showing "All provinces in the X area:\n	<effect>"
  #Because each province can have a different effect and the <effect> shown is a random one of the different province effects
  #ex. If three provinces are upgrading from 0 > 1 and one province is upgrading from 1 > 2 it would show 
  #"All provinces in the X area:\n	<0 > 1 effect>" and not tell you about the 1 > 2 effect
 deathwind_button_effect = {
-	deathwind_button_subeffect = { effect = $effect$ num = 1 }
-	deathwind_button_subeffect = { effect = $effect$ num = 2 }
-	deathwind_button_subeffect = { effect = $effect$ num = 3 }
-	deathwind_button_subeffect = { effect = $effect$ num = 4 }
-	deathwind_button_subeffect = { effect = $effect$ num = 5 }
+	deathwind_button_subeffect = { effect = $effect$ area = geneltik_area	prov_1 = 2751 prov_2 = 2748 prov_3 = 2779 prov_4 = 2780 }
+	deathwind_button_subeffect = { effect = $effect$ area = lokegentia_area	prov_1 = 2752 prov_2 = 2753 prov_3 = 2782 }
+	deathwind_button_subeffect = { effect = $effect$ area = lokemeion_area	prov_1 = 2746 prov_2 = 2745 prov_3 = 2743 prov_4 = 2744 prov_5 = 2778 }
+	deathwind_button_subeffect = { effect = $effect$ area = ormam_area		prov_1 = 2738 prov_2 = 2739 prov_3 = 2775 }
+	deathwind_button_subeffect = { effect = $effect$ area = kherka_area		prov_1 = 2772 prov_2 = 2773 prov_3 = 2776 prov_4 = 2777 }
+	deathwind_button_subeffect = { effect = $effect$ area = eltikan_area	prov_1 = 2785 prov_2 = 2786 prov_3 = 2754 prov_4 = 2766 }
+	deathwind_button_subeffect = { effect = $effect$ area = degakheion_area	prov_1 = 2737 prov_2 = 2771 prov_3 = 2770 prov_4 = 2769 prov_5 = 2736 }
+	deathwind_button_subeffect = { effect = $effect$ area = kimanis_area	prov_1 = 2732 prov_2 = 2733 prov_3 = 2734 }
+	deathwind_button_subeffect = { effect = $effect$ area = oktikheion_area	prov_1 = 2730 prov_2 = 2731 prov_3 = 2762 prov_4 = 2763 }
+	deathwind_button_subeffect = { effect = $effect$ area = mtelian_area	prov_1 = 2756 prov_2 = 2758 prov_3 = 2755 prov_4 = 2760 }
+	deathwind_button_subeffect = { effect = $effect$ area = arpedifer_area	prov_1 = 2759 prov_2 = 2761 prov_3 = 2728 prov_4 = 2727 prov_5 = 2726 }
+	deathwind_button_subeffect = { effect = $effect$ area = arpenisi_area	prov_1 = 2735 prov_2 = 2725 prov_3 = 2724 }
+	deathwind_button_subeffect = { effect = $effect$ area = kheinos_area	prov_1 = 2764 prov_2 = 2765 prov_3 = 2767 prov_4 = 2768 }
 }
 
 deathwind_button_subeffect = {
-	random_area_province = {
-		limit = { has_province_flag = alecand_area_prov_$num$ owned_by = FROM }
-		custom_tooltip = pop_military_separator_tt
-		$effect$_tt_effect = yes
+	if = {
+		limit = { area = $area$ }
+		$prov_1$ = { if = { limit = { owned_by = FROM } custom_tooltip = pop_military_separator_tt $effect$_tt_effect = yes } }
+		$prov_2$ = { if = { limit = { owned_by = FROM } custom_tooltip = pop_military_separator_tt $effect$_tt_effect = yes } }
+		$prov_3$ = { if = { limit = { owned_by = FROM } custom_tooltip = pop_military_separator_tt $effect$_tt_effect = yes } }
+		[[prov_4] $prov_4$ = { if = { limit = { owned_by = FROM } custom_tooltip = pop_military_separator_tt $effect$_tt_effect = yes } } ]
+		[[prov_5] $prov_5$ = { if = { limit = { owned_by = FROM } custom_tooltip = pop_military_separator_tt $effect$_tt_effect = yes } } ]
 	}
 }
 

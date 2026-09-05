@@ -614,47 +614,36 @@ has_full_deathwinds_system_button = {
 	}
 }
 
-#Used in assign_deathwind_targets trigger
-not_has_alecand_area_flags = {
-	NOT = {
-		has_province_flag = alecand_area_prov_1
-		has_province_flag = alecand_area_prov_2
-		has_province_flag = alecand_area_prov_3
-		has_province_flag = alecand_area_prov_4
-		has_province_flag = alecand_area_prov_5
-	}
-}
-
 #Button trigger to show the trigger based on what event target it has.
  #This is to have the provinces show up individually on the trigger instead of showing "All provinces in the X area:\n	<trigger>"
  #Because each province can have a different trigger and the <trigger> shown is a random one of the different province triggers
  #ex. If three provinces are upgrading from 0 > 1 and one province is upgrading from 1 > 2 it would show 
  #"All provinces in the X area:\n	<0 > 1 trigger>" and not tell you about the 1 > 2 trigger
 windwards_area_trigger = {
-	windwards_area_subtrigger = { area = 1 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 2 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 3 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 4 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 5 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 6 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 7 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 8 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 9 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 10 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 11 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 12 trigger = $trigger$ }
-	windwards_area_subtrigger = { area = 13 trigger = $trigger$ } #Alecand has 13 areas in it
+	windwards_area_subtrigger = { trigger = $trigger$ area = geneltik_area		prov_1 = 2751 prov_2 = 2748 prov_3 = 2779 prov_4 = 2780 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = lokegentia_area	prov_1 = 2752 prov_2 = 2753 prov_3 = 2782 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = lokemeion_area		prov_1 = 2746 prov_2 = 2745 prov_3 = 2743 prov_4 = 2744 prov_5 = 2778 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = ormam_area			prov_1 = 2738 prov_2 = 2739 prov_3 = 2775 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = kherka_area		prov_1 = 2772 prov_2 = 2773 prov_3 = 2776 prov_4 = 2777 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = eltikan_area		prov_1 = 2785 prov_2 = 2786 prov_3 = 2754 prov_4 = 2766 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = degakheion_area	prov_1 = 2737 prov_2 = 2771 prov_3 = 2770 prov_4 = 2769 prov_5 = 2736 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = kimanis_area		prov_1 = 2732 prov_2 = 2733 prov_3 = 2734 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = oktikheion_area	prov_1 = 2730 prov_2 = 2731 prov_3 = 2762 prov_4 = 2763 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = mtelian_area		prov_1 = 2756 prov_2 = 2758 prov_3 = 2755 prov_4 = 2760 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = arpedifer_area		prov_1 = 2759 prov_2 = 2761 prov_3 = 2728 prov_4 = 2727 prov_5 = 2726 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = arpenisi_area		prov_1 = 2735 prov_2 = 2725 prov_3 = 2724 }
+	windwards_area_subtrigger = { trigger = $trigger$ area = kheinos_area		prov_1 = 2764 prov_2 = 2765 prov_3 = 2767 prov_4 = 2768 }
 }
 
 windwards_area_subtrigger = {
 	if = {
-		limit = { has_province_flag = alecand_area_$area$ }
+		limit = { area = $area$ }
 		OR = {
-			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_1 } event_target:alecand_area_$area$_prov_1 = { $trigger$ = yes } } else = { hidden_trigger = { always = no } }
-			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_2 } event_target:alecand_area_$area$_prov_2 = { $trigger$ = yes } } else = { hidden_trigger = { always = no } }
-			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_3 } event_target:alecand_area_$area$_prov_3 = { $trigger$ = yes } } else = { hidden_trigger = { always = no } }
-			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_4 } event_target:alecand_area_$area$_prov_4 = { $trigger$ = yes } } else = { hidden_trigger = { always = no } }
-			if = { limit = { has_saved_global_event_target = alecand_area_$area$_prov_5 } event_target:alecand_area_$area$_prov_5 = { $trigger$ = yes } } else = { hidden_trigger = { always = no } }
+			$prov_1$ = { $trigger$ = yes }
+			$prov_2$ = { $trigger$ = yes }
+			$prov_3$ = { $trigger$ = yes }
+			[[prov_4] $prov_4$ = { $trigger$ = yes } ]
+			[[prov_5] $prov_5$ = { $trigger$ = yes } ]
 		}
 	}
 }
