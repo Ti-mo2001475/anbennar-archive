@@ -6445,8 +6445,9 @@ shaz_the_amlvihte = { #Shazstundihr's Amlvihte Council
 
 	modifiers = {
 		build_cost = -0.15
-		development_cost = -0.05
+		development_cost = -0.10
 		ae_impact = -0.1
+		global_unrest = -3
 	}
 
 	custom_attributes = {
@@ -6867,6 +6868,8 @@ cultural_colonies = {
 					duration = -1
 				}
 			}
+			end_all_purge = yes
+			end_all_expel = yes
 		}
 	}
 	post_removed_effect = {
@@ -7174,6 +7177,12 @@ saqraxat_pyre_promise = {
 		disabled_purging_gnollish = yes
 		disabled_expelling_gnollish = yes
 	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = gnollish }
+			generic_end_purge = { race = gnollish }
+		}
+	}
 }
 
 book_of_stone = {
@@ -7199,6 +7208,12 @@ book_of_stone = {
 	}
 	ai = {
 		factor = 500
+	}
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
 	}
 }
 
@@ -7653,6 +7668,8 @@ z22_acts_of_deland = {
 			set_global_flag = z22_acts_human
 			set_global_flag = z22_acts_half_elf
 			set_global_flag = z22_acts_ruinborn
+			end_all_expel = yes
+			end_all_purge = yes
 		}
 	}
 
@@ -8056,6 +8073,12 @@ mission_to_love_the_world_reform = {
 	government_abilities = {
 		lelanan_love_mechanic
 	}
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
+	}
 }
 
 new_god_of_halann = {
@@ -8185,7 +8208,39 @@ new_god_of_halann = {
 		factor = 1
 	}
 }
+#T4 Jadd
+the_nature_of_the_struggle = {
+	icon = "mandala_system"
+	allow_normal_conversion = yes
+	lock_level_when_selected = no
+	potential = {
+		religion = the_jadd
+	}
+	trigger = {
+		religion = the_jadd
+		
+	}
+	modifiers = {
+		monthly_fervor_increase = 1
+		tolerance_own = 1
+		global_prosperity_growth = 2
+	}
+	custom_attributes = {
+		jadd_holy_order_upgrade = yes
+	}
+	effect = { 
+		hidden_effect = { 
+			jadd_holy_order_reformed = yes
+		}
+	}	
+	removed_effect = {
+		hidden_effect = {	
+			jadd_holy_order_deformed = yes  
+		}
+	}	
+}
 
+#Elven forebearers reform
 gov_reform_elven_forebears = {
 	icon = "merchant_ship"
 	potential = {

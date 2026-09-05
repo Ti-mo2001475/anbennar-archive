@@ -216,6 +216,18 @@ custom_window = { #template default
 	}
 }
 
+#Bardic Spells
+custom_window = {
+	name = magic_list_bardic
+	potential = { has_custom_spell_list_of_group = { group = bardic } }
+}
+custom_window = {
+	name = magic_list_bardic_default
+	potential = {
+		has_bardic_spell_list_default = yes
+	}
+}
+
 #End custom spell book/list containers
 
 #Template spell buttons
@@ -463,6 +475,34 @@ custom_button = {
 	}
 	tooltip = magic_list_centaur_spell_5_black_herd_desc
 }
+
+#Thunderborn
+custom_window = { #template tag_specific_example
+	name = magic_list_centaur_thunderborn
+	potential = { has_custom_spell_list_of_group_with_subgroup = { group = centaur subgroup = thunderborn } }
+}
+custom_text_box = { name = magic_list_centaur_5_button_thunderborn }
+custom_button = {
+	name = magic_list_centaur_5_button_thunderborn
+	trigger = {
+		magical_tradition_spell_trigger = {
+			group = centaur
+			subgroup = thunderborn
+			slot = 5
+			player = yes
+		}
+	}
+	effect = {
+		magical_tradition_cast_spell = {
+			school = evocation
+			level = 1
+			id = centaur_thunderborn_5
+			has_spell_specific_discounts = yes
+		}
+		magical_tradition_on_spell_cast_effect = { group = centaur }
+	}
+	tooltip = magic_list_centaur_spell_5_thunderborn_desc
+}
 #Eighard
 custom_window = {
 	name = magic_list_eordand_eighard
@@ -671,4 +711,145 @@ custom_button = {
 		magical_tradition_on_spell_cast_effect = { group = fangaula }
 	}
 	tooltip = magic_list_fangaula_spell_1_kaino_desc
+}
+# Bardic
+# Bardic Inspiration
+custom_text_box = { name = magic_list_bardic_1_button_default }
+custom_button = {
+	name = magic_list_bardic_1_button_default
+	trigger = {
+		magical_tradition_spell_trigger = { group = bardic subgroup = default slot = 1 player = yes }
+	}
+	effect = {
+		magical_tradition_cast_spell = { school = enchantment level = 0 id = bardic_default_1 war = yes }
+		magical_tradition_on_spell_cast_effect = { group = bardic }
+	}
+	tooltip = magic_list_bardic_spell_1_default_desc
+}
+# Aria of Affection
+custom_text_box = { name = magic_list_bardic_2_button_default }
+custom_button = {
+	name = magic_list_bardic_2_button_default
+	trigger = {
+		magical_tradition_spell_trigger = { group = bardic subgroup = default slot = 2 player = yes }
+	}
+	effect = {
+		magical_tradition_cast_spell = { school = enchantment level = 1 id = bardic_default_2 }
+		magical_tradition_on_spell_cast_effect = { group = bardic }
+	}
+	tooltip = magic_list_bardic_spell_2_default_desc
+}
+# Hymn of History
+custom_text_box = { name = magic_list_bardic_3_button_default }
+custom_button = {
+	name = magic_list_bardic_3_button_default
+	trigger = {
+		magical_tradition_spell_trigger = { group = bardic subgroup = default slot = 3 player = yes }
+	}
+	effect = {
+		magical_tradition_cast_spell = { school = enchantment level = 2 id = bardic_default_3 }
+		magical_tradition_on_spell_cast_effect = { group = bardic }
+	}
+	tooltip = magic_list_bardic_spell_3_default_desc
+}
+# Elegy of Exhaustion
+custom_text_box = { name = magic_list_bardic_4_button_default }
+custom_button = {
+	name = magic_list_bardic_4_button_default
+	trigger = {
+		magical_tradition_spell_trigger = { group = bardic subgroup = default slot = 4 player = yes }
+	}
+	effect = {
+		magical_tradition_cast_spell = { school = enchantment level = 3 id = bardic_default_4 }
+		magical_tradition_on_spell_cast_effect = { group = bardic }
+	}
+	tooltip = magic_list_bardic_spell_4_default_desc
+}
+
+
+#Chi Spells
+custom_window = { #Chi container
+	name = magic_list_chi
+	potential = { has_custom_spell_list_of_group = { group = chi } }
+}
+custom_window = { #Chi subgroup
+	name = magic_list_chi_default
+	potential = { has_custom_spell_list_of_group_with_subgroup = { group = chi subgroup = default } }
+}
+custom_button = { #Spellbook Cast Rite of Upright Nourishment Button
+	name = magic_cast_chi_default_rite_of_upright_nourishment_button
+	tooltip = magic_list_chi_default_rite_of_upright_nourishment_spell_desc
+	trigger = {
+		magical_tradition_spell_trigger = {
+			group = chi
+			subgroup = default
+			slot = rite_of_upright_nourishment
+			player = yes
+		}
+	}
+	effect = {
+		magical_tradition_cast_spell = {
+			school = divination
+			level = 1
+			id = rite_of_upright_nourishment
+		}
+	}
+}
+custom_button = { #Spellbook Cast Harmonize Feng Shui Button
+	name = magic_cast_chi_default_harmonize_feng_shui_button
+	tooltip = magic_list_chi_default_harmonize_feng_shui_spell_desc
+	trigger = {
+		magical_tradition_spell_trigger = {
+			group = chi
+			subgroup = default
+			slot = harmonize_feng_shui
+			player = yes
+		}
+	}
+	effect = {
+		magical_tradition_cast_spell = {
+			school = illusion
+			level = 1
+			id = harmonize_feng_shui
+		}
+	}
+}
+custom_button = { #Spellbook Cast Invoke the Grave Earth Button
+	name = magic_cast_chi_default_invoke_the_grave_earth_button
+	tooltip = magic_list_chi_default_invoke_the_grave_earth_spell_desc
+	trigger = {
+		magical_tradition_spell_trigger = {
+			group = chi
+			subgroup = default
+			slot = invoke_the_grave_earth
+			player = yes
+		}
+	}
+	effect = {
+		magical_tradition_cast_spell = {
+			school = abjuration
+			level = 1
+			id = invoke_the_grave_earth
+			war = yes
+		}
+	}
+}
+custom_button = { #Spellbook Cast Channel Chi Button
+	name = magic_cast_chi_default_channel_chi_button
+	tooltip = magic_list_chi_default_channel_chi_spell_desc
+	trigger = {
+		magical_tradition_spell_trigger = {
+			group = chi
+			subgroup = default
+			slot = channel_chi
+			player = yes
+		}
+	}
+	effect = {
+		magical_tradition_cast_spell = {
+			school = conjuration
+			level = 1
+			id = channel_chi
+		}
+	}
 }

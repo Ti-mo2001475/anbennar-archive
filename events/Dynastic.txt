@@ -147,6 +147,7 @@ country_event = {
 		name = orb_of_omniscience_no_hunting_accident
 		highlight = yes
 		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		change_mana = { amount = -8 }
 		add_splendor = 1
 	}
 }
@@ -202,6 +203,7 @@ country_event = {
 		name = orb_of_omniscience_no_hunting_accident
 		highlight = yes
 		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		change_mana = { amount = -8 }
 		add_splendor = 1
 	}
 }
@@ -252,6 +254,7 @@ country_event = {
 		name = orb_of_omniscience_generic_event_avoidance
 		highlight = yes
 		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		change_mana = { amount = -8 }
 		add_splendor = 1
 	}
 }
@@ -555,6 +558,7 @@ country_event = {
 		name = orb_of_omniscience_no_hunting_accident
 		highlight = yes
 		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		change_mana = { amount = -8 }
 		add_splendor = 1
 	}
 }
@@ -591,16 +595,16 @@ country_event = {
 	
 	option = {
 		name = "EVTOPTA9457"
-		if = { limit = { NOT = { culture_group = harpy } }
-		define_heir = {
-			claim = 20
-			dynasty = ROOT
-			change_adm = 1
-			change_dip = 1
-			change_mil = 1
-			male = yes
-			no_consort_with_heir = yes
-		}
+		if = { limit = { NOT = { culture_is_harpy = yes } }
+			define_heir = {
+				claim = 20
+				dynasty = ROOT
+				change_adm = 1
+				change_dip = 1
+				change_mil = 1
+				male = yes
+				no_consort_with_heir = yes
+			}
 		}
 		else = {
 			define_heir = {
@@ -741,6 +745,7 @@ country_event = {
 		name = orb_of_omniscience_no_hunting_accident
 		highlight = yes
 		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		change_mana = { amount = -8 }
 		add_splendor = 1
 	}
 }
@@ -783,6 +788,7 @@ country_event = {
 		name = orb_of_omniscience_generic_event_avoidance
 		highlight = yes
 		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		change_mana = { amount = -8 }
 		add_splendor = 1
 	}
 }
@@ -831,6 +837,7 @@ country_event = {
 		name = orb_of_omniscience_generic_event_avoidance
 		highlight = yes
 		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		change_mana = { amount = -8 }
 		add_splendor = 1
 	}
 }
@@ -941,6 +948,7 @@ country_event = {
 		name = orb_of_omniscience_no_hunting_accident
 		highlight = yes
 		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		change_mana = { amount = -8 }
 		add_splendor = 1
 	}
 }
@@ -958,7 +966,7 @@ country_event = {
 		NOT = { has_government_attribute = has_harem_events }
 		# NOT = { has_reform = mamluk_government }
 		NOT = { has_government_attribute = is_harpy_matriarchy }
-		NOT = { culture_group = harpy }
+		NOT = { culture_is_harpy = yes }
 		# NOT = { has_reform = elective_monarchy }
 		# NOT = { has_reform = polish_elective_monarchy }
 		is_lesser_in_union = no
@@ -1105,7 +1113,7 @@ country_event = {
 	}
 	option = {
 		name = "EVTOPTAy9469"
-		trigger = { culture_group = centaur }
+		trigger = { culture_group = centaur NOT = { culture = zhadshai_centaur } }
 		define_6heir_male = { stat = mil name = "Naegol" }
 	}
 	option = {
@@ -1125,7 +1133,7 @@ country_event = {
 	}
 	option = {
 		name = "EVTOPTAac9469"
-		trigger = { culture_group = khantaar }
+		trigger = { OR = { culture_group = khantaar culture = zhadshai_centaur } }
 		random_list = {
 			1 = { 
 				define_6heir_male = { stat = adm name = "Oedek" }
@@ -1484,7 +1492,7 @@ province_event = {
 		name = orb_of_omniscience_no_hunting_accident
 		highlight = yes
 		trigger = { owner = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } } }
-		owner = { add_splendor = 1 }
+		owner = { change_mana = { amount = -8 } add_splendor = 1 }
 	}
 }
 
@@ -1523,6 +1531,7 @@ country_event = {
 		name = orb_of_omniscience_generic_event_avoidance
 		highlight = yes
 		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		change_mana = { amount = -8 }
 		add_splendor = 1
 	}
 }
@@ -1565,6 +1574,7 @@ country_event = {
 		name = orb_of_omniscience_generic_event_avoidance
 		highlight = yes
 		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		change_mana = { amount = -8 }
 		add_splendor = 1
 	}
 }
@@ -1695,7 +1705,7 @@ country_event = {
 		}
 		government = monarchy
 		is_lesser_in_union = no
-		NOT = { culture_group = harpy }
+		NOT = { culture_is_harpy = yes }
 		NOT = { has_country_flag = disabled_consort_events }
 	}
 	
@@ -1850,6 +1860,7 @@ country_event = {
 		name = orb_of_omniscience_cucked_avoidance
 		highlight = yes
 		trigger = { at_least_magic_project_level = { project = orb_of_omniscience level = 3 } }
+		change_mana = { amount = -8 }
 		add_splendor = 1
 	}
 }

@@ -769,6 +769,21 @@ country_event = {
 	
 	immediate = {
 		hidden_effect = {
+			if = { 
+				limit = {
+					2909 = {
+						owned_by = ROOT
+						has_great_project = {
+							type = ebbusubtu
+							tier = 2
+						}
+					}	
+				}		
+				country_event = {
+					id = bulwar_flavour.61
+					days = 547 
+				}
+			}
 			random_owned_province = {
 				limit = {
 					NOT = { religion = the_jadd }
@@ -3249,6 +3264,47 @@ country_event = {
 		set_country_flag = whitestone_cult_unlocked
 	}
 }
+
+#The People of [ROOT.GetName] See the Light!
+country_event = {
+	id = bulwar_flavour.61
+	title = bulwar_flavour.10.t
+	desc = bulwar_flavour.10.d
+	picture = STREET_SPEECH_eventPicture
+	goto = target_province
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		religion = the_jadd
+		NOT = { tag = F78 }
+		any_owned_province = {
+			NOT = { religion = the_jadd }
+			NOT = { has_any_oppressed_pop_trigger = yes }
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					NOT = { religion = the_jadd }
+					NOT = { has_any_oppressed_pop_trigger = yes }
+				}
+				save_event_target_as = target_province
+			}
+		}
+	}
+
+	option = { #Welcome to the arms of truth!
+		name = bulwar_flavour.10.a
+		ai_chance = {
+			factor = 1
+		}
+		event_target:target_province = { change_religion = the_jadd }
+	}
+}
+
 #OSC Refugees
 country_event = {
 	id = bulwar_flavour.62
@@ -4974,22 +5030,22 @@ country_event = {
 		add_treasury = -50
 		random_owned_province = {
 			limit = {	
-			trade_goods = wool
-			region = harpy_hills_region
-			NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
-			OR = {
-				culture = gelkar
+				trade_goods = wool
+				region = harpy_hills_region
+				NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
 				OR = {
-					AND = {
-						culture_group = harpy
-						has_human_minority_trigger = yes
-					}
-					AND = {
-						culture_group = goblin
-						has_human_minority_trigger = yes
+					culture = gelkar
+					OR = {
+						AND = {
+							culture_group = harpy
+							has_human_minority_trigger = yes
+						}
+						AND = {
+							culture_group = goblin
+							has_human_minority_trigger = yes
+						}
 					}
 				}
-			}
 			}
 			add_province_modifier = {
 				name = bulwar_gelkar_goat_shearing
@@ -5020,22 +5076,22 @@ country_event = {
 				40 = {
 					random_owned_province = {
 						limit = {	
-						trade_goods = wool
-						region = harpy_hills_region
-						NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
-						OR = {
-							culture = gelkar
+							trade_goods = wool
+							region = harpy_hills_region
+							NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
 							OR = {
-								AND = {
-									culture_group = harpy
-									has_human_minority_trigger = yes
-								}
-								AND = {
-									culture_group = goblin
-									has_human_minority_trigger = yes
+								culture = gelkar
+								OR = {
+									AND = {
+										culture_group = harpy
+										has_human_minority_trigger = yes
+									}
+									AND = {
+										culture_group = goblin
+										has_human_minority_trigger = yes
+									}
 								}
 							}
-						}
 						}
 						add_province_modifier = {
 							name = bulwar_gelkar_goat_shearing
@@ -5047,22 +5103,22 @@ country_event = {
 					add_prestige = 10
 					random_owned_province = {
 						limit = {	
-						trade_goods = wool
-						region = harpy_hills_region
-						NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
-						OR = {
-							culture = gelkar
+							trade_goods = wool
+							region = harpy_hills_region
+							NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
 							OR = {
-								AND = {
-									culture_group = harpy
-									has_human_minority_trigger = yes
-								}
-								AND = {
-									culture_group = goblin
-									has_human_minority_trigger = yes
+								culture = gelkar
+								OR = {
+									AND = {
+										culture_group = harpy
+										has_human_minority_trigger = yes
+									}
+									AND = {
+										culture_group = goblin
+										has_human_minority_trigger = yes
+									}
 								}
 							}
-						}
 						}
 						add_province_modifier = {
 							name = bulwar_gelkar_goat_shearing
@@ -5098,22 +5154,22 @@ country_event = {
 				80 = {
 					random_owned_province = {
 						limit = {	
-						trade_goods = wool
-						region = harpy_hills_region
-						NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
-						OR = {
-							culture = gelkar
+							trade_goods = wool
+							region = harpy_hills_region
+							NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
 							OR = {
-								AND = {
-									culture_group = harpy
-									has_human_minority_trigger = yes
-								}
-								AND = {
-									culture_group = goblin
-									has_human_minority_trigger = yes
+								culture = gelkar
+								OR = {
+									AND = {
+										culture_group = harpy
+										has_human_minority_trigger = yes
+									}
+									AND = {
+										culture_group = goblin
+										has_human_minority_trigger = yes
+									}
 								}
 							}
-						}
 						}
 						add_province_modifier = {
 							name = bulwar_gelkar_goat_shearing
@@ -5125,22 +5181,22 @@ country_event = {
 					add_prestige = 10
 					random_owned_province = {
 						limit = {	
-						trade_goods = wool
-						region = harpy_hills_region
-						NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
-						OR = {
-							culture = gelkar
+							trade_goods = wool
+							region = harpy_hills_region
+							NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
 							OR = {
-								AND = {
-									culture_group = harpy
-									has_human_minority_trigger = yes
-								}
-								AND = {
-									culture_group = goblin
-									has_human_minority_trigger = yes
+								culture = gelkar
+								OR = {
+									AND = {
+										culture_group = harpy
+										has_human_minority_trigger = yes
+									}
+									AND = {
+										culture_group = goblin
+										has_human_minority_trigger = yes
+									}
 								}
 							}
-						}
 						}
 						add_province_modifier = {
 							name = bulwar_gelkar_goat_shearing
@@ -5182,22 +5238,22 @@ country_event = {
 				95 = {
 					random_owned_province = {
 						limit = {	
-						trade_goods = wool
-						region = harpy_hills_region
-						NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
-						OR = {
-							culture = gelkar
+							trade_goods = wool
+							region = harpy_hills_region
+							NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
 							OR = {
-								AND = {
-									culture_group = harpy
-									has_human_minority_trigger = yes
-								}
-								AND = {
-									culture_group = goblin
-									has_human_minority_trigger = yes
+								culture = gelkar
+								OR = {
+									AND = {
+										culture_group = harpy
+										has_human_minority_trigger = yes
+									}
+									AND = {
+										culture_group = goblin
+										has_human_minority_trigger = yes
+									}
 								}
 							}
-						}
 						}
 						add_province_modifier = {
 							name = bulwar_gelkar_goat_shearing
@@ -5209,22 +5265,22 @@ country_event = {
 					add_prestige = 10
 					random_owned_province = {
 						limit = {	
-						trade_goods = wool
-						region = harpy_hills_region
-						NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
-						OR = {
-							culture = gelkar
+							trade_goods = wool
+							region = harpy_hills_region
+							NOT = { has_province_modifier = bulwar_gelkar_goat_shearing }
 							OR = {
-								AND = {
-									culture_group = harpy
-									has_human_minority_trigger = yes
-								}
-								AND = {
-									culture_group = goblin
-									has_human_minority_trigger = yes
+								culture = gelkar
+								OR = {
+									AND = {
+										culture_group = harpy
+										has_human_minority_trigger = yes
+									}
+									AND = {
+										culture_group = goblin
+										has_human_minority_trigger = yes
+									}
 								}
 							}
-						}
 						}
 						add_province_modifier = {
 							name = bulwar_gelkar_goat_shearing
@@ -6927,6 +6983,428 @@ country_event = { #The Death of Arantir
 		ai_chance = { factor = 80 }
 		add_stability = 1
 		add_legitimacy = -30
+	}
+}
+country_event = { #An Insidious Inheritance
+	id = bulwar_flavour.159
+	title = bulwar_flavour.159.t
+	desc = bulwar_flavour.159.desc
+	picture = BIG_BOOK_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		capital_scope = {
+			OR = {
+				region = bulwar_proper_region
+				region = far_bulwar_region
+			}
+		}
+	}
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				save_event_target_as = event_province
+			}
+		}
+	}
+	
+	option = {
+		name = bulwar_flavour.159.a
+		ai_chance = { factor = 40 }
+		goto = event_province
+		event_target:event_province = {
+			area = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_province_modifier = {
+					name = bulwar_sign_of_loyalty
+					duration = 3650 #10 Years
+				}
+			}
+		}
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 5
+		}
+		add_estate_loyalty = {
+			estate = estate_mages
+			loyalty = -5
+		}
+	}
+	option = {
+		name = bulwar_flavour.159.b
+		ai_chance = { factor = 20 }
+		goto = event_province
+		event_target:event_province = {
+			add_province_modifier = {
+				name = bulwar_arcane_secrets
+				duration = 3650 #10 Years
+			}
+		}
+		add_estate_loyalty = {
+			estate = estate_mages
+			loyalty = 5
+		}
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -5
+		}
+	}
+	option = {
+		name = bulwar_flavour.159.c
+		trigger = {
+			OR = {
+				ruler_has_personality = scholar_personality
+				ruler_has_personality = patron_of_arts_personality
+			}
+		}
+		highlight = yes
+		ai_chance = { factor = 80 }
+		add_prestige = 20
+		add_country_modifier = {
+			name = bulwar_restricted_access
+			duration = 3650 #10 Years
+		}
+	}
+}
+country_event = { #Sculpted by the Wind
+	id = bulwar_flavour.160
+	title = bulwar_flavour.160.t
+	desc = bulwar_flavour.160.desc
+	picture = EP_MOAIS_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		capital_scope = {
+			superregion = bulwar_superregion
+		}
+	}
+	
+	option = {
+		name = bulwar_flavour.160.a
+		ai_chance = { factor = 20 }
+		define_advisor = {
+			type = artist
+			skill = 3
+			cost_multiplier = 0.5
+		}
+		add_estate_loyalty = {
+			estate = estate_nobles
+			loyalty = -5
+		}
+	}
+	option = {
+		name = bulwar_flavour.160.b
+		ai_chance = { factor = 20 }
+		capital_scope = {
+			add_province_modifier = {
+				name = bulwar_wind_sculptor
+				duration = 10950 #30 Years
+			}
+		}
+		add_prestige = 10
+	}
+	option = {
+		name = bulwar_flavour.160.c
+		ai_chance = { factor = 80 }
+		highlight = yes
+		trigger = {
+			ruler_has_personality = patron_of_arts_personality
+		}
+		define_advisor = {
+			type = artist
+			skill = 3
+			cost_multiplier = 0.5
+		}
+	}
+}
+country_event = { #The Gift of the Sands
+	id = bulwar_flavour.161
+	title = bulwar_flavour.161.t
+	desc = bulwar_flavour.161.desc
+	picture = muslimgfx_COMET_SIGHTED_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		capital_scope = {
+			OR = {
+				region = bulwar_proper_region
+				region = far_bulwar_region
+			}
+		}
+		type_is_advancing_magic = { type = country }
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				save_event_target_as = event_province
+			}
+		}
+	}
+	
+	option = {
+		name = bulwar_flavour.161.a
+		goto = event_province
+		ai_chance = { factor = 20 }
+		add_estate_loyalty = {
+			estate = estate_mages
+			loyalty = 5
+		}
+		increase_magic_experience = { unmodified_amount = 50 }
+		event_target:event_province = {
+			area = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_province_modifier = {
+					name = bulwar_sibargal
+					duration = 3650 #10 Years
+				}
+			}
+		}
+	}
+	option = {
+		name = bulwar_flavour.161.b
+		goto = event_province
+		ai_chance = { factor = 20 }
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 5
+		}
+		event_target:event_province = {
+			area = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_province_modifier = {
+					name = bulwar_peaceful_sands
+					duration = 3650 #10 Years
+				}
+			}
+		}
+	}
+	option = {
+		name = bulwar_flavour.161.c
+		ai_chance = { factor = 80 }
+		add_prestige = 10
+		capital_scope = {
+			add_province_modifier = {
+				name = bulwar_peculiar_ornaments
+				duration = 3650 #10 Years
+			}
+		}
+	}
+}
+country_event = { #The Topaz Eye
+	id = bulwar_flavour.162
+	title = bulwar_flavour.162.t
+	desc = bulwar_flavour.162.desc
+	picture = muslimgfx_ADVISOR_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		has_estate_privilege = estate_mages_organization_magi_clans
+		NOT = { has_country_flag = bulwar_topaz_eye_happen }
+	}
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = bulwar_topaz_eye_happen
+		}
+	}
+	
+	option = {
+		name = bulwar_flavour.162.a
+		ai_chance = { factor = 20 }
+		add_country_modifier = {
+			name = bulwar_mystery_topaz_eye
+			duration = 7300 #20 Years
+		}
+		custom_tooltip = after_20_years_following_modifier
+		tooltip = {
+			add_country_modifier = {
+				name = bulwar_mastery_topaz_eye
+				duration = -1
+			}
+		}
+		hidden_effect = {
+			country_event = {
+				id = bulwar_flavour.165
+				days = 7300 #20 Years
+			}
+		}
+	}
+	option = {
+		name = bulwar_flavour.162.b
+		ai_chance = { factor = 1 }
+		add_prestige = -1
+	}
+	option = {
+		name = bulwar_flavour.162.c
+		ai_chance = { factor = 80 }
+		highlight = yes
+		trigger = {
+			ruler_is_powerful_mage = yes
+		}
+		random_list = {
+			40 = {
+				add_country_modifier = {
+					name = bulwar_ruler_mystery_topaz_eye
+					duration = 7300 #20 Years
+				}
+				custom_tooltip = after_20_years_following_modifier
+				tooltip = {
+					add_country_modifier = {
+						name = bulwar_mastery_topaz_eye
+						duration = -1
+					}
+				}
+				hidden_effect = {
+					country_event = {
+						id = bulwar_flavour.165
+						days = 7300 #20 Years
+					}
+				}
+			}
+			60 = {
+				add_country_modifier = {
+					name = bulwar_mastery_topaz_eye
+					duration = -1
+				}
+				add_country_modifier = {
+					name = bulwar_ruler_mastery_topaz_eye
+					duration = -1
+				}
+			}
+		}
+	}
+}
+country_event = { #Whispers Out of the Dark
+	id = bulwar_flavour.163
+	title = bulwar_flavour.163.t
+	desc = bulwar_flavour.163.desc
+	picture = muslimgfx_RELIGIOUS_TURMOIL_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		has_estate_privilege = estate_mages_organization_magi_clans
+	}
+	
+	option = {
+		name = bulwar_flavour.163.a
+		ai_chance = { factor = 20 }
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 5
+		}
+		add_estate_influence_modifier = {
+			influence = 5
+			estate = estate_church
+			duration = 3650
+		}
+	}
+	option = {
+		name = bulwar_flavour.163.b
+		ai_chance = { factor = 40 }
+		add_estate_loyalty = {
+			estate = estate_mages
+			loyalty = 5
+		}
+		add_estate_influence_modifier = {
+			influence = 5
+			estate = estate_mages
+			duration = 3650
+		}
+	}
+	option = {
+		name = bulwar_flavour.163.c
+		ai_chance = { factor = 10 }
+		add_prestige = 10
+		add_manpower = -0.5
+	}
+	option = {
+		name = bulwar_flavour.163.d
+		ai_chance = { factor = 80 }
+		highlight = yes
+		trigger = {
+			ruler_has_personality = zealot_personality
+		}
+		add_prestige = 20
+	}
+}
+country_event = { #Ruthless Recruitment
+	id = bulwar_flavour.164
+	title = bulwar_flavour.164.t
+	desc = bulwar_flavour.164.desc
+	picture = SUN_CULT_DEBATE_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		has_estate_privilege = estate_mages_organization_magi_clans
+	}
+	
+	option = {
+		name = bulwar_flavour.164.a
+		ai_chance = { factor = 20 }
+		add_treasury = 200
+	}
+	option = {
+		name = bulwar_flavour.164.b
+		ai_chance = { factor = 80 }
+		add_country_modifier = {
+			name = bulwar_favor_of_clan_b
+			duration = 3650 #Ten years
+		}
+	}
+	option = {
+		name = bulwar_flavour.164.c
+		ai_chance = { factor = 80 }
+		add_treasury = -100
+		add_estate_loyalty = {
+			estate = estate_mages
+			loyalty = 5
+		}
+	}
+	option = {
+		name = bulwar_flavour.164.d
+		ai_chance = { factor = 80 }
+		highlight = yes
+		trigger = {
+			OR = {
+				ruler_has_personality = silver_tongue_personality
+				ruler_has_personality = righteous_personality
+			}
+		}
+		add_estate_loyalty = {
+			estate = estate_mages
+			loyalty = 5
+		}
+	}
+}
+country_event = { #Hidden
+	id = bulwar_flavour.165
+	title = hidden_event
+	desc = hidden_event.desc
+	picture = SUN_CULT_DEBATE_eventPicture
+
+	is_triggered_only = yes
+
+	hidden = yes
+	
+	option = {
+		name = hidden_event
+		add_country_modifier = {
+			name = bulwar_mastery_topaz_eye
+			duration = -1
+		}
 	}
 }
 #Monument ebbusubtu_tier_2/3

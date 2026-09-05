@@ -5,6 +5,7 @@
 @custom_diplomacy_religion_shadowpact_number = 3030
 @custom_diplomacy_cultural_blank_container_number = 4010
 @custom_diplomacy_vampires_container_number = 5010
+@custom_diplomacy_mages_container_number = 5020
 @custom_diplomacy_Y20_number = 6010
 @custom_diplomacy_Y10_number = 6020
 @custom_diplomacy_Z99_number = 6030
@@ -25,6 +26,7 @@
 @custom_diplomacy_S37_number = 6180
 @custom_diplomacy_A80_number = 6190
 @custom_diplomacy_F98_number = 6200
+@custom_diplomacy_F60_number = 6210
 
 #Scripted triggers for custom UI diploactions go here
 #Example uses of these are for frame triggers + and button triggers for ai_acceptance
@@ -153,6 +155,7 @@ custdip_estates_button_trigger = {
 		OR = {
 			#Put scripted triggers for any subcategories in here
 			custdip_estates_vampires_trigger = yes
+			custdip_estates_mages_trigger = yes
 			# has_global_flag = custdip_debug
 		}
 	}
@@ -166,6 +169,7 @@ custdip_has_multiple_estates_tabs_trigger = {
 			#They must be inside an OR to ensure each scripted trigger only counts once
 
 			OR = { custdip_estates_vampires_trigger = yes }
+			OR = { custdip_estates_mages_trigger = yes }
 			# has_global_flag = custdip_debug
 		}
 	}
@@ -194,6 +198,7 @@ custdip_unique_button_trigger = {
 			custdip_unique_S37_trigger = yes
 			custdip_unique_A80_trigger = yes
 			custdip_unique_F98_trigger = yes
+			custdip_unique_F60_trigger = yes
 			# has_global_flag = custdip_debug
 		}
 	}
@@ -225,6 +230,7 @@ custdip_has_multiple_unique_tabs_trigger = {
 			OR = { custdip_unique_S37_trigger = yes }
 			OR = { custdip_unique_A80_trigger = yes }
 			OR = { custdip_unique_F98_trigger = yes }
+			OR = { custdip_unique_F60_trigger = yes }
 			# has_global_flag = custdip_debug
 		}
 	}
@@ -283,6 +289,15 @@ custdip_estates_vampires_trigger = {
 		has_country_flag = has_vampires_estate
 		has_estate = estate_vampires
 	}
+}
+# placeholder actually might be bad because Harafic elves can't use and lot of people with mages will see nothing
+custdip_estates_mages_potential = {
+	is_variable_equal = { which = show_diplo_container value = @custom_diplomacy_mages_container_number }
+}
+custdip_estates_mages_trigger = {
+	# I don't wat this to show for everyone with a mage estate, but this category seems the most appropriate
+	has_estate = estate_mages
+	has_custom_spell_list_of_group = { group = bardic }
 }
 custdip_unique_Y20_potential = {
 	is_variable_equal = { which = show_diplo_container value = @custom_diplomacy_Y20_number }
@@ -428,6 +443,13 @@ custdip_unique_F98_potential = {
 custdip_unique_F98_trigger = {
 	tag = F98
 	mission_completed = F98_laying_groundwork
+}
+custdip_unique_F60_potential = {
+	is_variable_equal = { which = show_diplo_container value = @custom_diplomacy_F60_number }
+}
+custdip_unique_F60_trigger = {
+	is_or_was_tag = { tag = F60 }
+	mission_completed = F60_liberate_the_old_colonies
 }
 
 

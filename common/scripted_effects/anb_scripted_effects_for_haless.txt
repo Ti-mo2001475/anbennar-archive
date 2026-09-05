@@ -3,6 +3,7 @@ warlord_of_haless_check = { #Am I the new Warlord of Haless?
 		limit = {
 			capital_scope = { continent = asia NOT = { superregion = forbidden_lands_superregion } } #independent nation with capital in Haless
 			is_subject = no
+			NOT = { has_global_flag = delay_warlord_of_haless } #Prevents errors in sundering
 			OR = {
 				NOT = { has_saved_global_event_target = warlord_of_haless }
 				AND = {
@@ -20,6 +21,7 @@ anti_warlord_of_haless_check = { #Am I no longer the Warlord of Haless?
 		limit = {
 			has_saved_global_event_target = warlord_of_haless
 			tag = event_target:warlord_of_haless #I am the current Warlord
+			NOT = { has_global_flag = delay_warlord_of_haless } #Prevents errors in sundering
 			OR = { #I am disqualified on one of the following grounds
 				capital_scope = { #My capital is outside Haless
 					NOT = {
@@ -629,6 +631,14 @@ add_facestealer_effect = {
 	custom_tooltip = add_facestealer_tt
 	hidden_effect = {
 		if = {
+			limit = {
+				has_province_modifier = facestealer_2
+				province_id = 5204 #Huujoolgin
+			}
+			remove_province_modifier = facestealer_2
+			add_permanent_province_modifier = { name = facestealer_mooneater duration = -1 }
+		}
+		else_if = {
 			limit = { has_province_modifier = facestealer_1 }
 			remove_province_modifier = facestealer_1
 			add_permanent_province_modifier = { name = facestealer_2 duration = -1 }
@@ -653,6 +663,11 @@ subtract_facestealer_effect = {
 			limit = { has_province_modifier = facestealer_2 }
 			remove_province_modifier = facestealer_2
 			add_permanent_province_modifier = { name = facestealer_1 duration = -1 }
+		}
+		else_if = {
+			limit = { has_province_modifier = facestealer_mooneater }
+			remove_province_modifier = facestealer_mooneater
+			add_permanent_province_modifier = { name = facestealer_2 duration = -1 }
 		}
 		owner = {
 			change_variable = {
@@ -1315,4 +1330,137 @@ pajeong_end_effects = {
 	remove_estate_privilege = estate_burghers_disobedience_of_the_merchants
 	remove_estate_privilege = estate_nobles_disobedience_of_the_hwalbaek
 	remove_estate_privilege = estate_church_disobedience_of_the_neoksamaji
+}
+
+negate_nomsyulhan_terrain_penalties = {
+	nomsyulhan_region = {
+		trigger_switch = {
+			on_trigger = has_terrain
+			glacier = { 		add_permanent_province_modifier = { name = negate_terrain_penalties_glacier 		duration = 3650 } }
+			desert = { 			add_permanent_province_modifier = { name = negate_terrain_penalties_desert 			duration = 3650 } }
+			mountain = { 		add_permanent_province_modifier = { name = negate_terrain_penalties_mountain 		duration = 3650 } }
+			highlands = { 		add_permanent_province_modifier = { name = negate_terrain_penalties_highlands 		duration = 3650 } }
+			hills = { 			add_permanent_province_modifier = { name = negate_terrain_penalties_hills 			duration = 3650 } }
+			drylands = { 		add_permanent_province_modifier = { name = negate_terrain_penalties_drylands 		duration = 3650 } }
+			ancient_forest = {	add_permanent_province_modifier = { name = negate_terrain_penalties_ancient_forest 	duration = 3650 } }
+		}
+	}
+}
+
+double_manufactory_modifiers = {
+	if = {
+		limit = { has_production_manufactory_trigger = yes }
+		add_province_modifier = { name = double_manufactory_modifiers_production duration = -1 }
+	}
+	if = {
+		limit = { has_building = furnace }
+		add_province_modifier = { name = double_manufactory_modifiers_furnace duration = -1 }
+	}
+	if = {
+		limit = { has_building = ramparts }
+		add_province_modifier = { name = double_manufactory_modifiers_ramparts duration = -1 }
+	}
+	if = {
+		limit = { has_building = soldier_households }
+		if = {
+			limit = { has_soldier_households_bonus_trade_good = yes }
+			add_province_modifier = { name = double_manufactory_modifiers_soldier_households_bonus duration = -1 }
+		}
+		else = {
+			add_province_modifier = { name = double_manufactory_modifiers_soldier_households duration = -1 }
+		}
+	}
+	if = {
+		limit = { has_building = impressment_offices }
+		if = {
+			limit = { has_impressment_offices_bonus_trade_good = yes }
+			add_province_modifier = { name = double_manufactory_modifiers_impressment_offices_bonus duration = -1 }
+		}
+		else = {
+			add_province_modifier = { name = double_manufactory_modifiers_impressment_offices duration = -1 }
+		}
+	}
+	if = {
+		limit = { has_building = state_house }
+		if = {
+			limit = { has_state_house_bonus_trade_good = yes }
+			add_province_modifier = { name = double_manufactory_modifiers_state_house_bonus duration = -1 }
+		}
+		else = {
+			add_province_modifier = { name = double_manufactory_modifiers_state_house duration = -1 }
+		}
+	}
+	if = {
+		limit = { has_building = mage_tower }
+		if = {
+			limit = { has_mage_tower_bonus_trade_good = yes }
+			add_province_modifier = { name = double_manufactory_modifiers_mage_tower_bonus duration = -1 }
+		}
+		else = {
+			add_province_modifier = { name = double_manufactory_modifiers_mage_tower duration = -1 }
+		}
+	}
+	if = {
+		limit = { has_building = automatory has_automatory_bonus_trade_good = yes }
+		add_province_modifier = { name = double_manufactory_modifiers_automatory_bonus duration = -1 }
+	}
+}
+
+ghalorcander_on_built_manufactory_with_bonus_effect = {
+	if = {
+		limit = {
+			has_great_project = {
+				type = ghalorcander
+				tier = 3
+			}
+			owner = { can_use_ghalorcander = yes }
+		}
+		if = {
+			limit = { has_$manufactory$_bonus_trade_good = yes }
+			add_province_modifier = { name = double_manufactory_modifiers_$manufactory$_bonus duration = -1 }
+		}
+		else = { add_province_modifier = { name = double_manufactory_modifiers_$manufactory$ duration = -1 } }
+	}
+}
+
+ghalorcander_on_built_manufactory_effect = {
+	if = {
+		limit = {
+			has_great_project = {
+				type = ghalorcander
+				tier = 3
+			}
+			owner = { can_use_ghalorcander = yes }
+		}
+		add_province_modifier = { name = double_manufactory_modifiers_$manufactory$ duration = -1 }
+	}
+}
+salvation_promise_yearly_pulse = {
+	if = { #Salvation Tier 3 effect
+		limit = {
+			owns = 6844
+			6844 = {
+				has_great_project = {
+					type = salvation_promise
+					tier = 3
+				}
+				province_can_use_salvation_promise = yes
+			}
+		}
+		if = {
+			limit = {
+				5085 = {
+					is_strongest_trade_power = ROOT
+				}
+			}
+			add_country_modifier = {
+				name = salvation_promise_tier_3_hidden_modifier
+				duration = 400 #A little more than year, we wont need to check if you lost monument because it will simply expire
+				hidden = yes
+			}
+		}
+		else = {
+			remove_country_modifier = salvation_promise_tier_3_hidden_modifier
+		}
+	}
 }

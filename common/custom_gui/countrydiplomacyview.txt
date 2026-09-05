@@ -708,7 +708,7 @@ custom_button = { #raja_make_senapti
 					tooltip = make_senapti_trigger_tooltip
 					OR = {
 						AND = {
-							FROM = { culture_group = harimari }
+							FROM = { culture_is_harimari = yes }
 							fast_ruler_is_harimari = yes # ROOT
 						}
 						AND = {
@@ -1107,9 +1107,11 @@ custom_button = { #vampire_spread_action
 	effect = {
 		ROOT = { hidden_effect = { set_country_flag = spread_vamps_@FROM } }
 		FROM = {
-			capital_scope = {
-				#Event uses random_owned_province
-				add_province_triggered_modifier = custom_diplo_ui_vampire_spread_action_ptm
+			hidden_effect = {
+				capital_scope = {
+					#Event uses random_owned_province
+					add_province_triggered_modifier = custom_diplo_ui_vampire_spread_action_ptm
+				}
 			}
 			change_estate_land_share = {
 				estate = estate_vampires
@@ -1277,6 +1279,128 @@ custom_button = { #vampire_blood_invitation_action #Friendly version
 	}
 }
 
+# Mages
+custom_window = {
+	name = custom_diplomacy_mages_container
+	potential = {
+		FROM = { custdip_estates_mages_potential = yes }
+	}
+}
+custom_button = { # Bardic Magic - Bardic Exchange
+	name = bardic_exchange_action
+	tooltip = bardic_exchange_action_tt
+	potential = {
+		FROM = {
+			has_custom_spell_list_of_group = { group = bardic }
+		}
+	}
+	trigger = {
+		FROM = {
+			has_country_modifier = enchantment_0_bardic_inspiration_spell_mod
+		}
+		# Scope to ROOT so the tooltip is clearer who it's referring to
+		# Have this trigger on its own so you can see immediately if they have access
+		# to bardic magic
+		ROOT = {
+			has_custom_spell_list_of_group = { group = bardic }
+		}
+		ROOT = {
+			if = {
+				limit = { # These DLCs adds the favours mechanic
+					OR = {
+						has_dlc = "Leviathan"
+						has_dlc = "The Cossacks"
+					}
+				}
+				has_50_opinion_improved_relation = {
+					target = FROM
+				}
+				owes_favors = {
+					who = FROM
+					value = 10
+				}
+			}
+			else = {
+				has_75_opinion_improved_relation = {
+					target = FROM
+				}
+			}
+		}
+	}
+	effect = {
+		FROM = {
+			# Bardic magic unlock
+			if = {
+				limit = {
+					ROOT = {
+						is_vyzemby_primary_culture = yes
+					}
+					NOT = { has_country_flag = bardic_magic_spell_2_unlocked }
+				}
+				# Unlock Aria of Affection
+				custom_tooltip = bardic_exchange_action_spend_10_favours_tt
+				hidden_effect = {
+					add_favors = {
+						who = ROOT
+						amount = -10
+					}
+				}
+				set_country_flag = bardic_magic_spell_2_unlocked
+				custom_tooltip = bardic_exchange_action_halfling_tt
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						culture_group = harafic_ruinborn_elf
+					}
+					NOT = { has_country_flag = bardic_magic_spell_3_unlocked }
+				}
+				# Unlock Hymn of History
+				custom_tooltip = bardic_exchange_action_spend_10_favours_tt
+				hidden_effect = {
+					add_favors = {
+						who = ROOT
+						amount = -10
+					}
+				}
+				set_country_flag = bardic_magic_spell_3_unlocked
+				custom_tooltip = bardic_exchange_action_harafic_tt
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						religion = skaldhyrric_faith
+					}
+					NOT = { has_country_flag = bardic_magic_spell_4_unlocked }
+				}
+				# Unlock Elegy of Exhaustion
+				custom_tooltip = bardic_exchange_action_spend_10_favours_tt
+				hidden_effect = {
+					add_favors = {
+						who = ROOT
+						amount = -10
+					}
+				}
+				set_country_flag = bardic_magic_spell_4_unlocked
+				custom_tooltip = bardic_exchange_action_skaldyrric_tt
+			}
+			# If you've already unlocked their spell, get a neat modifier
+			else = {
+				custom_tooltip = bardic_exchange_action_spend_10_favours_tt
+				hidden_effect = {
+					add_favors = {
+						who = ROOT
+						amount = -10
+					}
+				}
+				add_country_modifier = {
+					name = multicultural_melody_mod
+					duration = 7300 # 20 years
+				}
+			}
+		}
+	}
+}
 
 
 #####
@@ -3134,15 +3258,13 @@ custom_button = { # U39_assassination_action
 		}
 	}
 	effect = {
-		hidden_effect = {
-			set_country_flag = orenvalyam_assassination_target_flag
-			FROM = {
-				clr_country_flag = U39_assassination_success_flag
-				clr_country_flag = U39_assassination_fail_flag
-				set_country_flag = U39_assassination_ongoing
-				tooltip = { country_event = { id = orenvalyam_events.400 days = 1 } }
-				hidden_effect = { capital_scope = { add_province_triggered_modifier = orenvalyam_randomness_ptm } }
-			}
+		set_country_flag = orenvalyam_assassination_target_flag
+		FROM = {
+			clr_country_flag = U39_assassination_success_flag
+			clr_country_flag = U39_assassination_fail_flag
+			set_country_flag = U39_assassination_ongoing
+			tooltip = { country_event = { id = orenvalyam_events.400 days = 1 } }
+			hidden_effect = { capital_scope = { add_province_triggered_modifier = orenvalyam_randomness_ptm } }
 		}
 		FROM = {
 			if = {
@@ -3550,6 +3672,95 @@ custom_button = {
 					name = F98_harpylen_soothe_ruffled_feathers_cooldown
 					duration = 1825 # 5 years
 					hidden = yes
+				}
+			}
+		}
+	}
+}
+# F60 Samsumbat
+# Remember, FROM is me (Samsumbat) and ROOT is the target country
+custom_window = {
+	name = custom_diplomacy_F60
+	potential = {
+		FROM = {
+			custdip_unique_F60_potential = yes
+		}
+	}
+}
+custom_button = {
+	name = F60_samsumbat_satrapy_decentralise_subject_action
+	tooltip = F60_samsumbat_satrapy_decentralise_subject_action_tt
+	potential = { }
+	trigger = {
+		ROOT = { # For a more explicit tooltip
+			can_create_vassals = yes
+			is_subject_of = FROM
+			is_subject_of_type = tributary_state
+		}
+		FROM = {
+			NOT = { has_country_modifier = F60_decentralising_subject }
+		}
+	}
+	effect = {
+		FROM = {
+			add_country_modifier = {
+				name = F60_decentralising_subject # placeholder
+				duration = 1825 # 5 years
+			}
+		}
+		country_event = {
+			id = flavour_samsumbat.27
+			days = 1825 # 5 years
+		}
+	}
+}
+custom_button = {
+	name = F60_support_slave_or_republic_agitators_action
+	tooltip = F60_support_slave_or_republic_agitators_action_tt
+	potential = { }
+	trigger = {
+		FROM = { mission_completed = F60_topple_the_phoenix_kings }
+		ROOT = { # For a more explicit tooltip
+			NOT = {
+				is_subject_of = FROM
+			}
+			OR = {
+				slaves = 1
+				NOT = { government = republic }
+			}
+			has_spy_network_from = {
+				who = FROM
+				value = 30
+			}
+			if = {
+				limit = {
+					slaves = 1
+				}
+				NOT = { capital_scope = { has_province_modifier = F60_slave_agitators_capital } }
+			}
+			else = {
+				NOT = { capital_scope = { has_province_modifier = F60_republic_agitators_capital } }
+			}
+		}
+	}
+	effect = {
+		FROM = { add_mil_power = -25 }
+		if = {
+			limit = {
+				slaves = 1
+			}
+			capital_scope = {
+				add_province_modifier = {
+					name = F60_slave_agitators_capital
+					duration = 3650
+				}
+			}
+		}
+		else = {
+			capital_scope = {
+				add_province_modifier = {
+					name = F60_republic_agitators_capital
+					duration = 3650
 				}
 			}
 		}

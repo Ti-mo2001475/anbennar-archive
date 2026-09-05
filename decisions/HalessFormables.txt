@@ -613,11 +613,17 @@ country_decisions = {
 					has_country_flag = formed_yanshen_flag
 					has_country_flag = formed_liang_flag
 					has_country_flag = formed_di_yichan_flag
-					primary_culture = szitu
-					primary_culture = pinghoi
-					primary_culture = haiwai
 				}
 			}
+			OR = {
+				primary_culture = jiangyang
+				primary_culture = gangim
+				primary_culture = jiangszun
+				primary_culture = beikling
+				primary_culture = naamjyut
+				primary_culture = szitu
+				primary_culture = kuldaakin
+			}			
 			normal_or_historical_nations = yes
 			was_never_end_game_tag_trigger = yes
 		}
@@ -667,10 +673,10 @@ country_decisions = {
 			if = {
 				limit = {
 					NOT = {
-						capital = 4871
 						OR = {
 							primary_culture = naamjyut
 							primary_culture = gangim
+							primary_culture = szitu
 						}
 					}
 				}
@@ -680,9 +686,6 @@ country_decisions = {
 			}
 			else_if = {
 				limit = {
-					NOT = {
-						capital = 4871
-					}
 					primary_culture = naamjyut
 				}
 				capital_scope = {
@@ -691,10 +694,10 @@ country_decisions = {
 			}
 			else_if = {
 				limit = {
-					NOT = {
-						capital = 4871
+					OR = {
+						primary_culture = gangim
+						primary_culture = szitu
 					}
-					primary_culture = gangim
 				}
 				capital_scope = {
 					change_province_name = "Chiaubeng"
@@ -709,13 +712,18 @@ country_decisions = {
 				override_country_name = DAAIFAI
 			}
 			else_if = {
-				limit = { primary_culture = gangim }
+				limit = { 
+					OR = {
+						primary_culture = gangim
+						primary_culture = szitu
+					}
+				 }
 				override_country_name = DUAHUI
 			}
-			if = {
-				limit = { NOT = { has_reform = eunuch_dynasty_reform } }
-				add_government_reform = yan_empire_reform
-			}
+			#if = {
+			#	limit = { NOT = { has_reform = eunuch_dynasty_reform } }
+			add_government_reform = yan_empire_reform
+			#}
 			yanshen_superregion = {
 				add_permanent_claim = ROOT
 			}
@@ -847,6 +855,7 @@ country_decisions = {
 			NOT = { tag = F97 }
 			NOT = { has_country_flag = formed_sunrise_empire_flag }
 			normal_or_historical_nations = yes
+			was_never_end_game_tag_trigger = yes
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -1293,6 +1302,8 @@ country_decisions = {
 				primary_culture = teplin
 			}
 			NOT = { has_country_flag = formed_bim_lau_flag }
+			NOT = { tag = Y58 }
+			NOT = { tag = Y55 }
 			OR = {
 				ai = no
 				is_playing_custom_nation = no
@@ -1310,26 +1321,28 @@ country_decisions = {
 			was_never_end_game_tag_trigger = yes
 		}
 		provinces_to_highlight = {
-			OR = {
-				province_id = 4565 # Bim Lau
-				province_id = 4594 # Telesraa
-				province_id = 4560 # Bieng Phang
-				province_id = 4563 # Senuutphro
-				province_id = 4593 # Taiver
-				province_id = 4582 # Kuokedtan
-			}
+			area = bim_lau_area
 			OR = {
 				NOT = { owned_by = ROOT }
 				NOT = { is_core = ROOT }
 			}
 		}
 		allow = {
-			owns_core_province = 4565 # Bim Lau
-			owns_core_province = 4594 # Telesraa
-			owns_core_province = 4560 # Bieng Phang
-			owns_core_province = 4563 # Senuutphro
-			owns_core_province = 4593 # Taiver
-			owns_core_province = 4582 # Kuokedtan
+			bim_lau_area = {
+				type = all
+				owned_by = ROOT
+				is_core = ROOT
+			}
+			NOT = { has_disaster = bim_lau_spirit_disaster }
+			custom_trigger_tooltip = {
+				tooltip = bim_lau_nation_necropolis.tt
+				4565 = {
+					NOT = {
+						has_province_modifier = Y51_necropolis_derelict
+						has_province_modifier = Y51_necropolis_repairs
+					}
+				}
+			}
 			is_at_war = no
 			is_free_or_tributary_trigger = yes		
 			NOT = { exists = Y51 }
@@ -1351,17 +1364,20 @@ country_decisions = {
 				duration = 7300
 			}
 			increase_government_rank_scripted_effect = { rank = 2 }
-			primary_and_ruler_culture_change = { race = human new_culture = ranilau }
 			4565 = { move_capital_effect = yes }
-			bim_lau_area = { add_permanent_claim = Y51 }
-			reanthung_area = { add_permanent_claim = Y51 }
-			li_btei_area = { add_permanent_claim = Y51 }
-			taiver_area = { add_permanent_claim = Y51 }
-			middle_telebei_area = { add_permanent_claim = Y51 }
-			lower_telebei_area = { add_permanent_claim = Y51 }
 			hidden_effect = {
 				complete_mission = Y51_spirits_return
 				complete_mission = Y51_the_succession
+			}
+			add_country_modifier = {
+				name = "Y51_rulers_of_the_necropolis_country"
+				duration = 10950
+			}
+			4565 = {
+				add_province_modifier = {
+					name = "Y51_rulers_of_the_necropolis_province"
+					duration = 10950
+				}
 			}
 		}
 		ai_will_do = {
@@ -1668,5 +1684,154 @@ country_decisions = {
 				}
 			}
 		}
+	}
+	
+	#Hinphat - Y88
+	hinphat_nation = {
+		major = yes
+		potential = {
+			primary_culture = hinphat
+			NOT = { tag = Y88 }
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_hinphat }
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 5424
+				AND = {
+					culture = hinphat
+					region = thidinkai_region
+				}
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}	
+		allow = {
+			hidden_trigger = {
+				primary_culture = hinphat
+			}
+			owns_core_province = 5424
+			NOT = { exists = Y88 }
+			custom_trigger_tooltip = {
+				tooltip = hinphat_nation_provinces.tt
+				thidinkai_region = {
+					type = all
+					OR = {
+						NOT = { culture = hinphat }
+						AND = {
+							owned_by = ROOT
+							is_core = ROOT
+						}
+					}
+				}
+			}
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+		}
+		effect = {
+			change_tag = Y88
+			hidden_effect = { restore_country_name = yes }
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_prestige = 25
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			set_country_flag = formed_hinphat
+			#swap_non_generic_missions = yes
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}
+	
+	#Sirtan - Y73
+	sirtan_nation = {
+		major = yes
+		potential = {
+			culture_group = yanglam
+			NOT = { tag = Y73 }
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_sirtan }
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+		}		
+		provinces_to_highlight = {
+			OR = {
+				area = sirtan_area
+				area = loratana_area
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}		
+		allow = {
+			hidden_trigger = {
+				culture_group = yanglam
+			}
+			NOT = { exists = Y73 }
+			sirtan_area = {
+				type = all
+				owned_by = ROOT
+				is_core = ROOT
+			}
+			loratana_area = {
+				type = all
+				owned_by = ROOT
+				is_core = ROOT
+			}
+			accepted_culture = sirtana
+			religion = mystic_accord
+			custom_trigger_tooltip = {
+				tooltip = sirtan_nation_spirit.tt
+				has_country_flag = gehet_ketine_pact_unlocked
+			}
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+		}
+		effect = {
+			change_tag = Y73
+			hidden_effect = { restore_country_name = yes }
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_prestige = 25
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			set_country_flag = formed_sirtan_flag
+			if = {
+				limit = { NOT = { has_reform = tribal_federation } }
+				change_government = tribal
+				add_government_reform = tribal_federation
+			}
+			4740 = { move_capital_effect = yes }
+			#swap_non_generic_missions = yes
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
 	}
 }

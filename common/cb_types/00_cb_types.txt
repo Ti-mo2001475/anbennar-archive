@@ -1699,7 +1699,7 @@ cb_humiliate_rotw = {
 					is_rival = FROM
 				}
 				mission_completed = the_empires_second_sons
-				mission_completed = reign_in_the_knight_errants
+				mission_completed = reign_in_the_knights_errant
 			}
 		}
 	}
@@ -1786,7 +1786,7 @@ cb_take_mandate = {
 			religion_group = gnollish
 			religion_group = bulwari
 			religion_group = tanibic_religion
-			# has_country_flag = can_claim_mandate
+			has_country_flag = can_claim_mandate
 			religion = dalcabba
 			AND = {
 				religion = the_hunt
@@ -1826,6 +1826,7 @@ cb_force_satrapy = {
 		has_dlc = "Mandate of Heaven"
 		is_emperor_of_china = yes
 		NOT = { ruler_has_personality = xhazobs_chosen_personality }
+		NOT = { has_country_flag = A29_cant_make_tribbies }
 	}
 
 	prerequisites = {
@@ -1838,6 +1839,31 @@ cb_force_satrapy = {
 	war_goal = take_capital_force_tributary
 }
 
+# Used in MTs so you can give out Force Satrapy without being neighbours
+cb_force_satrapy_mission_no_adjacency = {
+	valid_for_subject = no
+	is_triggered_only = yes
+
+	prerequisites_self = {
+		has_dlc = "Mandate of Heaven"
+		is_emperor_of_china = yes
+		NOT = { ruler_has_personality = xhazobs_chosen_personality }
+		NOT = { has_country_flag = A29_cant_make_tribbies }
+	}
+
+	prerequisites = {
+		FROM = { is_subject = no }
+		# I want this so we don't double up on what is effectively the same CB
+		NOT = {
+			has_casus_belli = {
+				type = cb_force_satrapy
+				target = FROM
+			}
+		}
+	}
+	
+	war_goal = take_capital_force_tributary
+}
 
 cb_force_tributary_anb = {
 
