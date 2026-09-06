@@ -59,13 +59,44 @@ A93_silk_missions_slot = {
 				}
 				NOT = { exists = A03 }
 			}
+			has_cast_invisibility = yes
+			OR = {
+				spymaster = 2
+				spy_ideas = 3
+			}
 		}
 		
 		effect = {
-			280 = {
-				add_base_production = 2
-				add_center_of_trade_level  = 1
-				change_trade_goods = silk
+			if = {
+				limit = {
+					280 = {
+						province_has_center_of_trade_of_level = 3
+					}
+				}
+				280 = {
+					add_building = trade_depot
+					change_trade_goods = silk
+				}
+			}
+			else = {
+				280 = {
+					add_center_of_trade_level = 1
+					change_trade_goods = silk
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						mission_completed = A93_ramp_up_silk
+					}
+				}
+				custom_tooltip = A93_not_completed_produce_more_silk
+				280 = {
+					add_permanent_province_modifier = {
+						name = A93_learning_the_method
+						duration = -1
+					}
+				}
 			}
 			add_spy_network_in = {
 				who = A03
@@ -90,12 +121,16 @@ A93_silk_missions_slot = {
 		position = 3
 		
 		provinces_to_highlight = {
-			province_id = 280
+			OR = {
+				province_id = 280
+				province_id = 301
+			}
 			OR = {
 				NOT = { owned_by = ROOT }
 				NOT = { is_core = ROOT }
-				NOT = { development = 40 }
+				NOT = { development = 35 }
 				NOT = { has_production_building_trigger = yes }
+				NOT = { has_manufactory_trigger = yes }
 			}
 		}
 		
@@ -103,15 +138,51 @@ A93_silk_missions_slot = {
 			280 = {
 				owned_by = ROOT
 				is_core = ROOT
-				development = 40
+				development = 35
 				has_production_building_trigger = yes
+				has_manufactory_trigger = yes
+			}
+			301 = {
+				owned_by = ROOT
+				is_core = ROOT
+				development = 35
+				has_production_building_trigger = yes
+				has_manufactory_trigger = yes
+			}
+			low_esmar_area = {
+				prosperity = 100
+			}
+			OR = {
+				1926 = { #damescrown
+					trade_share = {
+						country = ROOT
+						share = 15
+					}
+				}
+				901 = { #leslinpar
+					trade_share = {
+						country = ROOT
+						share = 50
+					}
+				}
+			}
+			any_owned_province = {
+				trade_goods = dyes
 			}
 		}
 		
 		effect = {
 			280 = {
+				remove_province_modifier = A93_learning_the_method
 				add_permanent_province_modifier = {
-					name = "estalleni_silks"
+					name = estalleni_silks
+					duration = -1
+				}
+			}
+			301 = {
+				remove_province_modifier = A93_learning_the_method
+				add_permanent_province_modifier = {
+					name = A93_prestenn_prismatics
 					duration = -1
 				}
 			}
@@ -122,18 +193,69 @@ A93_silk_missions_slot = {
 		icon = mission_dancing_with_dead
 		required_missions = { }
 		position = 4
+		provinces_to_highlight = {
+			province_id = 576
+			has_manpower_building_trigger = no
+		}
 		
 		trigger = {
-			dip_power = 100
+			num_of_mercenaries = 20
+			is_in_deficit = no
+			has_not_summoned_conjuration_mercenaries = yes
+			576 = {
+				has_manpower_building_trigger = yes
+			}
 		}
 		
 		effect = {
-			add_dip_power = -100
 			add_country_modifier = {
 				name = "estalleni_mercenary_relations"
-				duration = 7300
+				duration = -1
 			}
-		}	
+			custom_tooltip = A93_merc_ideas_tt
+			if = {
+				limit = {
+					mercenary_ideas = 7
+				}
+				add_mil_power = 350
+			}
+			else_if = {
+				limit = {
+					mercenary_ideas = 6
+				}
+				add_mil_power = 300
+			}
+			else_if = {
+				limit = {
+					mercenary_ideas = 5
+				}
+				add_mil_power = 250
+			}
+			else_if = {
+				limit = {
+					mercenary_ideas = 4
+				}
+				add_mil_power = 200
+			}
+			else_if = {
+				limit = {
+					mercenary_ideas = 3
+				}
+				add_mil_power = 150
+			}
+			else_if = {
+				limit = {
+					mercenary_ideas = 2
+				}
+				add_mil_power = 100
+			}
+			else_if = {
+				limit = {
+					mercenary_ideas = 1
+				}
+				add_mil_power = 50
+			}
+		}
 	}
 	
 	A93_new_pinklady_band = {
@@ -141,15 +263,44 @@ A93_silk_missions_slot = {
 		required_missions = { A93_mercenary_relations }
 		position = 4
 		
+		provinces_to_highlight = {
+			province_id = 576
+			NOT = {
+				AND = {
+					has_forcelimit_building_trigger = yes
+					has_manpower_building_trigger = yes
+					base_manpower = 10
+				}
+			}
+		}
+
 		trigger = {
-			mil_tech = 8
+			OR = {
+				mercenary_ideas = 7
+				has_global_modifier_value = {
+					which = mercenary_discipline
+					value = 0.15
+				}
+			}
+			576 = {
+				has_forcelimit_building_trigger = yes
+				has_manpower_building_trigger = yes
+				base_manpower = 10
+			}
+			num_of_mercenaries = 40
+			is_in_deficit = no
+			has_not_summoned_conjuration_mercenaries = yes
 		}
 		
 		effect = {
 			unlock_merc_company = {
 				merc_company = merc_reformed_pinklady_band
 			}
-		}	
+			add_country_modifier = {
+				name = A93_well_paid_mercs
+				duration = -1
+			}
+		}
 	}
 }
 
@@ -170,13 +321,27 @@ A93_western_missions_slot = {
 		
 		provinces_to_highlight = {
 			area = songbarges_area
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			NOT = {
+				AND = {
+					country_or_non_sovereign_subject_holds = ROOT
+					OR = {
+						NOT = { local_autonomy = 10 }
+						has_province_modifier = autonomy_decreased
+					}
+				}
+			}
 		}
 		
 		trigger = {
 			songbarges_area = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
+				OR = {
+					NOT = {
+						local_autonomy = 10
+					}
+					has_province_modifier = autonomy_decreased
+				}
 			}
 		}
 		
@@ -187,6 +352,50 @@ A93_western_missions_slot = {
 					NOT = { is_permanent_claim = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+			simple_dynamic_effect = {
+				first_custom_tooltip = A93_doesnt_have_ren
+				first_limit = "
+					NOT = {
+						280 = {
+							renaissance = 100
+						}
+						916 = {
+							renaissance = 100
+						}
+					}
+				"
+				first_effect = "
+					280 = {
+						add_institution_embracement = {
+							which = renaissance
+							value = 50
+						}
+					}
+					916 = {
+						add_institution_embracement = {
+							which = renaissance
+							value = 50
+						}
+					}
+				"
+				second_custom_tooltip = A93_does_have_ren
+				second_limit = "
+					280 = {
+						renaissance = 100
+					}
+					916 = {
+						renaissance = 100
+					}
+				"
+				second_effect = "
+					songbarges_area = {
+						add_prosperity = 50
+					}
+				"
+			}
+			songbarges_area = {
+				remove_province_modifier = unlawful_territory
 			}
 		}
 	}
@@ -213,6 +422,11 @@ A93_western_missions_slot = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
 			}
+			navy_size_percentage = 0.50
+			OR = {
+				has_personal_deity = ryala
+				dip_power = 100
+			}
 		}
 		
 		effect = {
@@ -231,8 +445,16 @@ A93_western_missions_slot = {
 				add_permanent_claim = ROOT
 			}
 			add_country_modifier = {
-				name = "lovers_of_ryala"
-				duration = 7300
+				name = lovers_of_ryala
+				duration = -1
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_personal_deity = ryala
+					}
+				}
+				add_dip_power = -100
 			}
 		}
 	}
@@ -254,8 +476,27 @@ A93_central_missions_slot = {
 		required_missions = { }
 		position = 1
 		
+		provinces_to_highlight = {
+			is_capital = yes
+			owner = {
+				has_country_flag = lilac_wars_rose_party
+				NOT = {
+					alliance_with = ROOT
+				}
+			}
+		}
+
 		trigger = {
 			army_size_percentage = 0.8
+			calc_true_if = {
+				amount = 2
+				all_ally = {
+					custom_trigger_tooltip = {
+						tooltip = A93_lilac_allies_tt
+						has_country_flag = lilac_wars_rose_party
+					}
+				}
+			}
 		}
 		
 		effect = {
@@ -275,6 +516,10 @@ A93_central_missions_slot = {
 					add_permanent_claim = ROOT
 				}
 			}
+			add_country_modifier = {
+				name = A93_rose_party_relations
+				duration = 7300
+			}
 		}
 	}
 	
@@ -285,12 +530,30 @@ A93_central_missions_slot = {
 		
 		provinces_to_highlight = {
 			province_id = 301
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			NOT = {
+                AND = {
+                    country_or_non_sovereign_subject_holds = ROOT
+                    OR = {
+                        NOT = { local_autonomy = 10 }
+                        has_province_modifier = autonomy_decreased
+                    }
+                    NOT = { devastation = 1 }
+                }
+            }
 		}
 		
 		trigger = {
 			301 = {
 				country_or_non_sovereign_subject_holds = ROOT
+				OR = {
+					NOT = {
+						local_autonomy = 10
+					}
+					has_province_modifier = autonomy_decreased
+				}
+				NOT = {
+					devastation = 1
+				}
 			}
 		}
 		
@@ -321,6 +584,13 @@ A93_central_missions_slot = {
 					}
 					add_permanent_claim = ROOT
 				}
+			}
+			add_country_modifier = {
+				name = A93_pretentious_rabble_routed
+				duration = 10950
+			}
+			301 = {
+				remove_province_modifier = unlawful_territory
 			}
 		}
 	}
@@ -396,10 +666,18 @@ A93_central_missions_slot = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
 			}
+			num_of_estate_agendas_completed = {
+				estate = estate_church
+				value = 2
+			}
+			OR = {
+				has_personal_deity = esmaryal
+				adm_power = 100
+			}
 		}
 		
 		effect = {
-			heartland_borders_area = {
+			crownshields_area = {
 				limit = {
 					NOT = { is_core = ROOT }
 					NOT = { is_permanent_claim = ROOT }
@@ -408,7 +686,15 @@ A93_central_missions_slot = {
 			}
 			add_country_modifier = {
 				name = "children_of_esmaryal"
-				duration = 7300
+				duration = -1
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_personal_deity = esmaryal
+					}
+				}
+				add_adm_power = -100
 			}
 		}
 	}
@@ -419,47 +705,76 @@ A93_central_missions_slot = {
 		position = 4
 		
 		provinces_to_highlight = {
-			OR = {
-				area = heartland_borders_area
-				area = upper_luna_area
-				area = the_commons_area
-				area = wexhills_area
-				area = ashfields_area
+			is_capital = yes
+			owner = {
+				is_part_of_hre = yes
+				OR = {
+					army_size = ROOT
+					total_development = ROOT
+				}
 			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
-			heartland_borders_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			upper_luna_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			the_commons_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			wexhills_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-			ashfields_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			OR = {
+				AND = {
+					is_emperor = yes
+					calc_true_if = {
+						amount = 4
+						all_elector = {
+							preferred_emperor = ROOT
+						}
+					}
+					all_known_country = {
+						OR = {
+							is_part_of_hre = no
+							NOT = {
+								army_size = ROOT
+								total_development = ROOT
+							}
+						}
+					}
+				}
+				AND = {
+					NOT = { hre_size = 1 }
+					total_development = 800
+					army_size = 100
+				}
 			}
 		}
 		
 		effect = {
-			add_country_modifier = {
-				name = "estallen_imperial_heartland"
-				duration = -1
+			simple_dynamic_effect = {
+				first_custom_tooltip = A93_empire_exists
+				first_limit = "
+					hre_size = 1
+				"
+				first_effect = "
+					add_country_modifier = {
+						name = estallen_imperial_heartland
+						duration = -1
+					}
+					custom_tooltip = A93_when_we_form_eoa_tt
+					tooltip = {
+						add_country_modifier = {
+							name = A93_eoa_modifier
+							duration = -1
+						}
+					}
+				"
+				second_custom_tooltip = A93_not_empire_exists
+				second_limit = "
+					NOT = { hre_size = 1 }
+				"
+				second_effect = "
+					add_country_modifier = {
+						name = A93_eoa_modifier
+						duration = -1
+					}
+				"
 			}
 		}
 	}
-	
 }
 
 A93_diplomacy_missions_slot = {
@@ -478,32 +793,63 @@ A93_diplomacy_missions_slot = {
 		position = 1
 		
 		trigger = {
-			personal_union = 3
+			personal_union = 1
+			num_of_subjects = 3
 		}
 		
 		effect = {
 			add_country_modifier = {
 				name = "estalleni_courtesans"
-				duration = 7300
+				duration = -1
 			}
+			custom_tooltip = A93_no_lib_from_integration_policy_tt
 		}	
 	}
 	
 	A93_value_of_friendship = {
 		icon = mission_merchant_trip
-		required_missions = { }
+		required_missions = { A93_lovely_ladies_of_estallen }
 		position = 2
 		
+		provinces_to_highlight = {
+			is_capital = yes
+			owner = {
+				is_subject_of = ROOT
+				liberty_desire = 50
+			}
+		}
+
 		trigger = {
-			num_of_allies = 7
+			num_of_allies = 6
+			num_of_free_diplomatic_relations = 1
+			NOT = {
+				any_subject_country = {
+					liberty_desire = 50
+				}
+			}
 		}
 		
 		effect = {
 			every_ally = { 
 				add_trust = {
 					who = ROOT
-					value = 40
+					value = 25
 					mutual = yes 
+				}
+			}
+			every_subject_country = {
+				add_trust = {
+					who = ROOT
+					value = 25
+					mutual = yes 
+				}
+			}
+			custom_tooltip = A93_upgrade_relations_mod_tt
+			hidden_effect = {
+				remove_country_modifier = estalleni_courtesans
+				add_country_modifier = {
+					name = up_estalleni_courtesans
+					duration = -1
 				}
 			}
 		}
@@ -519,11 +865,17 @@ A93_diplomacy_missions_slot = {
 			OR = {
 				NOT = { owned_by = ROOT }
 				NOT = { is_core = ROOT }
+				has_production_building_trigger = no
+				NOT = { base_production = 10 }
 			}
 		}
 		
 		trigger = {
 			owns_core_province = 301
+			301 = {
+				has_production_building_trigger = yes
+				base_production = 10
+			}
 			OR = {
 				A07 = {
 					overlord = {
@@ -566,9 +918,23 @@ A93_diplomacy_missions_slot = {
 		
 		effect = {
 			301 = {
-				add_base_production = 2
 				change_trade_goods = dyes
 			}
+			if = {
+				limit = {
+					NOT = {
+						mission_completed = A93_ramp_up_silk
+					}
+				}
+				custom_tooltip = A93_not_completed_produce_more_silk
+				301 = {
+					add_permanent_province_modifier = {
+						name = A93_learning_the_method
+						duration = -1
+					}
+				}
+			}
+			add_prestige = 15
 			add_spy_network_in = {
 				who = A07
 				value = -40
@@ -622,6 +988,14 @@ A93_diplomacy_missions_slot = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
 			}
+			OR = {
+				has_personal_deity = balgar
+				mil_power = 100
+			}
+			num_of_owned_provinces_with = {
+				value = 15
+				num_of_buildings_in_province = 4
+			}
 		}
 		
 		effect = {
@@ -641,7 +1015,36 @@ A93_diplomacy_missions_slot = {
 			}
 			add_country_modifier = {
 				name = "heirs_of_balgar"
-				duration = 7300
+				duration = -1
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_personal_deity = balgar
+					}
+				}
+				add_mil_power = -100
+			}
+			if = {
+				limit = {
+					A73 = {
+						is_subject_of = ROOT
+					}
+				}
+				custom_tooltip = A93_has_silver_subject_tt
+				A73 = {
+					elector = no
+				}
+				elector = yes
+			}
+			else = {
+				custom_tooltip = A93_no_silver_subject_tt
+				tooltip = {
+					A73 = {
+						elector = no
+					}
+					elector = yes
+				}
 			}
 		}
 	}

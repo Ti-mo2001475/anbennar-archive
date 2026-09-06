@@ -199,7 +199,7 @@ province_event = { #The Suhanic Reformation
 		name = rahen.6.a
 		add_reform_center = suhans_praxis
 		hidden_effect = {
-			set_province_flag = had_reformation_center
+			parushan_saya_reformation_center_flag = yes
 		}
 	}
 
@@ -257,7 +257,7 @@ province_event = { #Suhan on da move to Rahen Coast
 		name = rahen.7.a
 		add_reform_center = suhans_praxis
 		hidden_effect = {
-			set_province_flag = had_reformation_center
+			parushan_saya_reformation_center_flag = yes
 		}
 	}
 }
@@ -318,7 +318,7 @@ province_event = { #Suhan on da move to Dhujat
 		name = rahen.8.a
 		add_reform_center = suhans_praxis
 		hidden_effect = {
-			set_province_flag = had_reformation_center
+			parushan_saya_reformation_center_flag = yes
 		}
 	}
 }
@@ -379,7 +379,7 @@ province_event = { #Suhan on da move to Bomdan
 		name = rahen.9.a
 		add_reform_center = suhans_praxis
 		hidden_effect = {
-			set_province_flag = had_reformation_center
+			parushan_saya_reformation_center_flag = yes
 		}
 	}
 }
@@ -1564,3 +1564,702 @@ province_event = {
 		add_permanent_province_modifier = { name = rahen_monument_to_glory duration = -1 }
 	}
 }
+
+country_event = {
+	id = rahen.201
+	title = rahen.201.t
+	desc = rahen.201.d
+	picture = indiangfx_REFORM_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		employed_advisor = {
+			category = adm
+		}
+		has_estate = estate_raj_ministries
+		NOT = {
+			has_country_modifier = rahen_extra_bureacrats_aided_admin_advisor
+			has_country_modifier = rahen_extra_bureaucrats_ministries_at_work
+			has_country_modifier = rahen_direct_assistance_mage
+			has_country_modifier = rahen_direct_assistance_reformer
+		}
+	}
+
+	option = {
+		name  = rahen.201.a
+		add_country_modifier = {
+			name = rahen_extra_bureacrats_aided_admin_advisor
+			duration = 3650
+		}
+		add_adm_power = 25
+	}
+
+	option = {
+		name = rahen.201.b
+		add_country_modifier = {
+			name  = rahen_extra_bureaucrats_ministries_at_work
+			duration = 3650
+		}
+		add_estate_loyalty = {
+			estate = estate_raj_ministries
+			loyalty = 10
+		}
+		add_estate_influence_modifier = {
+			estate = estate_raj_ministries
+			influence = 5
+			duration = 3650
+		}
+	}
+
+	option = {
+		highlight = yes 
+		name = rahen.201.c
+		trigger = {
+			OR = {
+				ruler_has_personality = reformer_personality
+				ruler_is_powerful_mage = yes
+			}
+		}
+		if = {
+			limit = {
+				ruler_has_personality = reformist_personality
+			}
+			add_adm_power = 50
+			add_country_modifier = {
+				name = rahen_direct_assistance_reformer
+				duration = 3650
+			}
+		}
+		if = {
+			limit = {
+				ruler_is_powerful_mage = yes
+			}
+			add_country_modifier = {
+				name = rahen_direct_assistance_mage
+				duration = 3650
+			}
+		}
+	}
+}
+
+country_event = {
+	id = rahen.202
+	title = rahen.202.t
+	desc = rahen.202.d
+	picture = indiangfx_CULTURE_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		capital_scope = {
+			superregion = rahen_superregion
+		}
+		OR = {
+			silk = 1
+			cloth = 1
+		}
+		NOT = { has_country_modifier = rahen_event_202_cooldown }
+	}
+
+	option = {
+		name  = rahen.202.a
+		add_mercantilism = 1
+		add_prestige = 5
+	}
+
+	option = {
+		name = rahen.202.b
+		add_prestige = -5
+		every_known_country = {
+			limit = {
+				capital_scope = {
+					OR = {
+						region = bomdan_region
+						region = thidinkai_region
+					}
+				}
+			}
+			add_opinion = {
+				who = ROOT
+				modifier = foreign_sari_plus_opinion
+			}
+			add_country_modifier = {
+    			name = rahen_event_202_cooldown
+    			duration = 3650
+    			hidden = yes
+			}
+		}
+	}
+
+	option = {
+		highlight = yes
+		name = rahen.202.c
+		trigger = {
+			ruler_has_personality = entrepeneur_personality
+		}
+		every_owned_province = {
+			limit = {
+				OR = {
+					trade_goods = silk
+					trade_goods = cloth
+				}
+			}
+			add_province_modifier = {
+				name = homegrown_sari_industry
+				duration = 3650
+			}
+		}
+		add_prestige = 5
+		add_country_modifier = {
+    		name = rahen_event_202_cooldown
+    		duration = 3650
+    		hidden = yes
+		}
+	}
+
+}
+
+country_event = {
+	id = rahen.203
+	title = rahen.203.t
+	desc = rahen.203.d
+	picture = indiangfx_BAD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		capital_scope = {
+			superregion = rahen_superregion
+		}
+		fast_owns_num_pops_of_race = { race = human amount = 1 }
+		fast_owns_num_pops_of_race = { race = harimari amount = 1 }
+		NOT = {
+			any_owned_province = {
+				OR = {
+					has_province_modifier = rahen_food_harimari_snubbed
+					has_province_modifier = rahen_food_human_snubbed
+				}
+			}
+		}		
+	}
+
+	option = {
+		name  = rahen.203.a
+		add_adm_power = -15
+		add_years_of_income = -0.2		
+	}
+
+	option = {
+		name = rahen.203.b
+		custom_tooltip = rahen_food_harimari_snubbed_explained_tt
+		small_decrease_of_harimari_tolerance_effect = yes
+		hidden_effect = {
+       	 every_owned_province = {
+				limit = { fast_has_pop_of_race = { race = harimari } }
+				add_province_modifier = {
+					name = rahen_food_harimari_snubbed
+					duration = 1825
+				}
+			}
+		}
+	}
+	
+
+	option = {
+		name = rahen.203.c
+		custom_tooltip = rahen_food_human_snubbed_explained_tt
+		small_decrease_of_human_tolerance_effect = yes
+		hidden_effect = {
+			every_owned_province = {
+				limit = { fast_has_pop_of_race = { race = human } }
+				add_province_modifier = {
+					name = rahen_food_human_snubbed
+					duration = 1825
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	id = rahen.204
+	title = rahen.204.t
+	desc = rahen.204.d
+	picture = indiangfx_COURT_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		has_estate = estate_uppercastes
+		capital_scope = {
+			superregion = rahen_superregion
+			NOT = {
+				region = shamakhad_region
+			}
+		}
+		NOT = {
+			has_country_modifier = shamakhadi_refugees_snubbed
+			has_country_modifier = shamakhadi_refugees_placated
+		}
+	}
+
+	option = {
+		name  = rahen.204.a
+		custom_tooltip = shamakhadi_refugee_autonomy_explained_tt
+		add_country_modifier = {
+			name = shamakhadi_refugees_placated
+			duration = 3650
+		}
+		add_estate_loyalty = {
+			estate = estate_uppercastes
+			loyalty = -5
+		}
+		for = {
+			amount = 5
+			effect = "random_owned_province = {
+				limit = {
+					NOT = { has_province_flag = refugee_autonomy }
+				}
+				add_local_autonomy = 25
+				set_province_flag = refugee_autonomy
+			}"
+		}
+		every_owned_province = {
+			clr_province_flag = refugee_autonomy
+		}
+	}
+
+	option = {
+		name = rahen.204.b
+		add_country_modifier = {
+			name = shamakhadi_refugees_snubbed
+			duration = 3650
+		}
+	}
+
+	option = {
+		highlight = yes 
+		name = rahen.204.c
+		trigger = {
+			ruler_has_personality = humane_personality
+		}
+		custom_tooltip = shamakhadi_refugees_helped_tt
+		for = {
+			amount = 2
+			effect = "random_owned_province = {
+				limit = {
+					NOT = {has_province_flag = refugees_helped}
+				}
+				add_base_production = 1
+				set_province_flag = refugees_helped
+			}"	
+		}
+		every_owned_province = {
+			clr_province_flag = refugees_helped
+		}
+		add_estate_loyalty = {
+			estate = estate_uppercastes
+			loyalty = -10
+		}
+	}
+}
+
+country_event = {
+	id = rahen.205
+	title = rahen.205.t
+	desc = rahen.205.d
+	picture = indiangfx_DIPLOMACY_eventPicture
+
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	immediate = {
+		prepare_months_of_trade_income = { months = 1}
+	}
+
+	trigger = {
+		ai = no
+		has_estate = estate_uppercastes
+		has_estate = estate_middlecastes
+		has_estate = estate_lowercastes
+		is_year = 1520
+		4500 = {
+			any_trade_node_member_province = {
+				owned_by = ROOT
+			}
+		}
+	}
+
+	option = {
+		name = rahen.205.a
+		add_prestige = 10
+		add_estate_loyalty = {
+			estate = estate_uppercastes
+			loyalty = 10
+		}
+		add_estate_loyalty = {
+			estate = estate_middlecastes
+			loyalty = -5
+		}
+		add_estate_loyalty = {
+			estate = estate_lowercastes
+			loyalty = -5
+		}
+		add_estate_influence_modifier = {
+			estate = estate_middlecastes
+			influence = -5
+			duration = 3650
+		}
+		add_estate_influence_modifier = {
+			estate = estate_lowercastes
+			influence = -5
+			duration = 3650
+		}
+		add_estate_influence_modifier = {
+			estate = estate_uppercastes
+			influence = 5
+			duration = 3650
+		}
+	}
+
+	option = {
+		name = rahen.205.b
+		add_country_modifier = {
+			name = rahen_strong_companies
+			duration = 1825
+		}
+		add_estate_loyalty = {
+			estate = estate_uppercastes
+			loyalty = -5
+		}
+		add_estate_loyalty = {
+			estate = estate_middlecastes
+			loyalty = 10
+		}
+		add_estate_loyalty = {
+			estate = estate_lowercastes
+			loyalty = -5
+		}
+		add_estate_influence_modifier = {
+			estate = estate_uppercastes
+			influence = -5
+			duration = 3650
+		}
+		add_estate_influence_modifier = {
+			estate = estate_lowercastes
+			influence = -5
+			duration = 3650
+		}
+		add_estate_influence_modifier = {
+			estate = estate_middlecastes
+			influence = 5
+			duration = 3650
+		}
+		remove_prepared_months_of_trade_income = yes 
+	}
+
+	option = {
+		name = rahen.205.c
+		add_country_modifier = {
+			name = rahen_unions_pleased
+			duration = 1825
+		}
+		add_estate_loyalty = {
+			estate = estate_uppercastes
+			loyalty = -5
+		}
+		add_estate_loyalty = {
+			estate = estate_middlecastes
+			loyalty = -5
+		}
+		add_estate_loyalty = {
+			estate = estate_lowercastes
+			loyalty = 10
+		}
+		add_estate_influence_modifier = {
+			estate = estate_middlecastes
+			influence = -5
+			duration = 3650
+		}
+		add_estate_influence_modifier = {
+			estate = estate_uppercastes
+			influence = -5
+			duration = 3650
+		}
+		add_estate_influence_modifier = {
+			estate = estate_lowercastes
+			influence = 5
+			duration = 3650
+		}
+	}
+
+	option = {
+		name = rahen.205.e
+		custom_tooltip = riverboat_madness_foreshadow_tt
+		add_legitimacy_equivalent = { amount = 10 republican_tradition = 5 }
+		add_ruler_modifier = {
+			name = destressed_ruler
+			duration = -1
+		}
+		add_estate_loyalty = {
+			estate = estate_uppercastes
+			loyalty = -5
+		}
+		add_estate_loyalty = {
+			estate = estate_middlecastes
+			loyalty = -5
+		}
+		add_estate_loyalty = {
+			estate = estate_lowercastes
+			loyalty = -5
+		}
+		add_estate_influence_modifier = {
+			estate = estate_middlecastes
+			influence = -5
+			duration = 3650
+		}
+		add_estate_influence_modifier = {
+			estate = estate_lowercastes
+			influence = -5
+			duration = 3650
+		}
+		add_estate_influence_modifier = {
+			estate = estate_uppercastes
+			influence = -5
+			duration = 3650
+		}
+		hidden_effect = {
+			country_event = {
+				id = rahen.206
+				days = 7300
+			}
+		}
+	}
+}
+
+country_event = {
+	id = rahen.206
+	title = rahen.206.t
+	desc = rahen.206.d
+	picture = indiangfx_ECONOMY_eventPicture 
+
+	is_triggered_only = yes
+
+	option = {
+		name = rahen.206.a
+		add_estate_loyalty = {
+			estate = estate_adventurers
+			loyalty = 5
+		}
+		add_estate_loyalty = {
+			estate = estate_mages
+			loyalty = -5
+		}
+		add_estate_loyalty = {
+			estate = estate_uppercastes
+			loyalty = -5
+		}
+		add_estate_influence_modifier = {
+			estate = estate_mages
+			influence = -5
+			duration = 3650
+		}
+		add_estate_influence_modifier = {
+			estate = estate_uppercastes
+			influence = -5
+			duration = 3650
+		}
+		every_known_country = {
+			limit = {
+				religion = new_sun_cult
+			}
+			add_opinion = {
+				who = ROOT
+				modifier = exemplars_snubbed_1
+			}
+		}
+	}
+
+	option = {
+		name = rahen.206.b
+		add_estate_loyalty = {
+			estate = estate_adventurers
+			loyalty = -5
+		}
+		add_estate_influence_modifier = {
+			estate = estate_adventurers
+			influence = -5
+			duration = 3650
+		}
+		every_known_country = {
+			limit = {
+				religion = new_sun_cult
+			}
+			add_opinion = {
+				who = ROOT
+				modifier = exemplars_snubbed_1
+			}
+		}
+	}
+
+	option = {
+		name = rahen.206.c
+		# add_country_modifier = {
+		# 	name = exemplars_heeded
+		# 	duration = 3650
+		# }
+		add_estate_loyalty = {
+			estate = estate_uppercastes
+			loyalty = -5
+		}
+		add_estate_loyalty = {
+			estate = estate_mages
+			loyalty = -5
+		}
+		add_estate_influence_modifier = {
+			estate = estate_uppercastes
+			influence = -5
+			duration = 3650
+		}
+		add_estate_influence_modifier = {
+			estate = estate_mages
+			influence = -5
+			duration = 3650
+		}
+		every_known_country = {
+			limit = {
+				religion = new_sun_cult
+			}
+			add_opinion = {
+				who = ROOT
+				modifier = exemplars_heeded_opinion
+			}
+		}
+	}
+
+	option = {
+		name = rahen.206.e
+		custom_tooltip = camelback_madness_foreshadow_tt
+		add_ruler_modifier = {
+			name = destressed_ruler_electric_boogaloo
+			duration = -1
+		}
+		add_estate_loyalty = {
+			estate = estate_uppercastes
+			loyalty = -5
+		}
+		add_estate_loyalty = {
+			estate = estate_mages
+			loyalty = -5
+		}
+		add_estate_loyalty = {
+			estate = estate_adventurers
+			loyalty = -5
+		}
+		add_estate_influence_modifier = {
+			estate = estate_adventurers
+			influence = -5
+			duration = 3650
+		}
+		add_estate_influence_modifier = {
+			estate = estate_uppercastes
+			influence = -5
+			duration = 3650
+		}
+		add_estate_influence_modifier = {
+			estate = estate_mages
+			influence = -5
+			duration = 3650
+		}
+		add_prestige = 15
+		hidden_effect = {
+			country_event = {
+				id = rahen.207
+				days = 7300
+			}
+		}
+		every_known_country = {
+			limit = {
+				religion = new_sun_cult
+			}
+			add_opinion = {
+				who = ROOT
+				modifier = exemplars_snubbed_3
+			}
+		}
+	}
+}
+
+country_event = {
+	id = rahen.207
+	title = rahen.207.t
+	desc = rahen.207.d
+	picture = indiangfx_GOOD_WITH_MONARCH_eventPicture
+
+	is_triggered_only = yes
+
+	immediate = {
+		prepare_months_of_trade_income = { months = 3 }
+	}
+
+	option = {
+		name = rahen.207.a
+		add_prepared_months_of_trade_income = yes
+		every_known_country = {
+			limit = {
+				capital_scope = {
+					region = shamakhad_region
+				}
+			}
+			add_opinion = {
+				who = ROOT
+				modifier = shamakhad_heeded
+			}	
+		}
+		add_estate_loyalty = {
+			estate = estate_mages
+			loyalty = 10
+		}
+		add_estate_loyalty = {
+			estate = estate_uppercastes
+			loyalty = 10
+		}
+	}
+
+	option = {
+		name = rahen.207.b
+		add_prestige = 10
+		remove_prepared_months_of_trade_income = yes
+		add_ruler_modifier = {
+			name = destressed_ruler_third_times_the_charm
+			duration = -1
+		}
+		add_country_modifier = {
+			name = rahen_nationally_endorsed_tour_company
+			duration = 14600
+		}
+	}
+
+	option = {
+		highlight = yes 
+		name = rahen.207.c
+		trigger = {
+			OR = {
+				ruler_has_personality = well_advised_personality
+				ruler_has_personality = entrepeneur_personality	
+			}
+		}
+		define_advisor = {
+			type = trader
+			name = "Rujda Devanath"
+			skill = 4
+			culture = sarniryabsad
+			religion = high_philosophy
+			cost_multiplier = 0.25
+		}
+	}
+}
+
+
+

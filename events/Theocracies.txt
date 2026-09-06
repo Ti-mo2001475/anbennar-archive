@@ -23,6 +23,7 @@ country_event = {
 		NOT = { has_reform = papacy_reform }
 		NOT = { has_country_flag = in_theocracy_heir_selection }
 		NOT = { has_country_flag = is_selecting_stat_bonus_for_heir }
+		is_lesser_in_union = no # edge case if theocracy (with heirs) was made a junior PU
 
 		# Anbennar - use anb_theocracy_unique_heir_election = yes, if you have unique elections for your heirs
 		NOT = { has_government_attribute = anb_theocracy_unique_heir_election }
@@ -148,8 +149,51 @@ country_event = {
 			}
 		}
 		set_country_flag = theo_local_noble_flag # USED IN DEVOTION.TXT
-		if = {
-			limit = { has_government_attribute = can_see_theocratic_heir_stats }
+		# force half-elven local noble heir for serpentgard
+		if = { limit = { has_country_flag = Z21_half_elven_local_noble_heir }
+			if = { # female heir
+				limit = {
+					has_global_modifier_value = {
+						which = female_advisor_chance
+						value = 1
+					}
+				}
+				if = { limit = { can_see_theocratic_heir_stats_trigger = yes }
+					define_heir = {
+						age = 35
+						female = yes
+						culture = alenic_half_elf
+					}
+				}
+				else = {
+					define_heir = {
+						age = 35
+						female = yes
+						hidden = yes
+						culture = alenic_half_elf
+					}
+				}
+			}
+			else = { # random gender
+				if = { limit = { can_see_theocratic_heir_stats_trigger = yes }
+					define_heir_random_gender = {
+						age = 35
+						culture = alenic_half_elf
+						number = 1
+					}
+				}
+				else = {
+					define_heir_random_gender = {
+						age = 35
+						hidden = yes
+						culture = alenic_half_elf
+						number = 1
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { can_see_theocratic_heir_stats_trigger = yes }
 			if = {
 				limit = {
 					has_saved_event_target = noble_province
@@ -159,7 +203,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -176,7 +220,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -211,7 +255,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -229,7 +273,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -328,9 +372,9 @@ country_event = {
 			}
 			ROOT = {
 				if = {
-					limit = { has_government_attribute = can_see_theocratic_heir_stats }
+					limit = { can_see_theocratic_heir_stats_trigger = yes }
 					if = {
-						limit = { NOT = { culture_group = harpy } }
+						limit = { NOT = { culture_is_harpy = yes } }
 						define_heir_random_gender = { 
 							dynasty = PREV 
 							age = 35
@@ -349,7 +393,7 @@ country_event = {
 				}
 				else = {
 					if = {
-						limit = { NOT = { culture_group = harpy } }
+						limit = { NOT = { culture_is_harpy = yes } }
 						define_heir_random_gender = { 
 							dynasty = PREV 
 							age = 35
@@ -428,7 +472,7 @@ country_event = {
 		set_country_flag = theo_merchants_son_flag # USED IN DEVOTION.TXT
 		
 		if = {
-			limit = { has_government_attribute = can_see_theocratic_heir_stats }
+			limit = { can_see_theocratic_heir_stats_trigger = yes }
 			if = {
 				limit = {
 					has_saved_event_target = burgher_province
@@ -438,7 +482,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -455,7 +499,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -490,7 +534,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -508,7 +552,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -587,7 +631,7 @@ country_event = {
 		}
 		set_country_flag = theo_talented_theologian_flag # USED IN DEVOTION.TXT
 		if = {
-			limit = { has_government_attribute = can_see_theocratic_heir_stats }
+			limit = { can_see_theocratic_heir_stats_trigger = yes }
 			if = {
 				limit = {
 					has_saved_event_target = church_province
@@ -597,7 +641,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -614,7 +658,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -649,7 +693,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -667,7 +711,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -756,7 +800,7 @@ country_event = {
 		set_country_flag = theo_local_preacher_flag # USED IN DEVOTION.TXT
 		
 		if = {
-			limit = { has_government_attribute = can_see_theocratic_heir_stats }
+			limit = { can_see_theocratic_heir_stats_trigger = yes }
 			if = {
 				limit = {
 					has_saved_event_target = church_province
@@ -766,7 +810,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -783,7 +827,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -818,7 +862,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -836,7 +880,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -933,7 +977,7 @@ country_event = {
 		set_country_flag = theo_papal_protege_flag # USED IN DEVOTION.TXT
 		
 		if = {
-			limit = { has_government_attribute = can_see_theocratic_heir_stats }
+			limit = { can_see_theocratic_heir_stats_trigger = yes }
 			if = {
 				limit = {
 					has_saved_event_target = papal_protoge_country
@@ -943,7 +987,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -960,7 +1004,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -996,7 +1040,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -1014,7 +1058,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -1107,7 +1151,7 @@ country_event = {
 
 		
 		if = {
-			limit = { has_government_attribute = can_see_theocratic_heir_stats }
+			limit = { can_see_theocratic_heir_stats_trigger = yes }
 			if = {
 				limit = {
 					OR = {
@@ -1116,7 +1160,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -1140,7 +1184,7 @@ country_event = {
 							value = 1
 						}
 						# Anbennar - Female priests by culture or religion
-						culture_group = harpy
+						culture_is_harpy = yes
 					}
 				}
 				define_heir = {
@@ -1205,7 +1249,7 @@ country_event = {
 			}
 		}
 		if = {
-			limit = { has_government_attribute = can_see_theocratic_heir_stats }
+			limit = { can_see_theocratic_heir_stats_trigger = yes }
 			if = {
 				limit = { has_country_modifier = elven_administration }
 				anb_define_random_long_lived_heir = { age = 175 number = 8 }
@@ -1255,7 +1299,7 @@ country_event = {
 		}
 		
 		if = {
-			limit = { has_government_attribute = can_see_theocratic_heir_stats }
+			limit = { can_see_theocratic_heir_stats_trigger = yes }
 			if = {
 				limit = {
 					culture_group = harpy

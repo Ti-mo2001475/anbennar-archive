@@ -170,13 +170,6 @@ transfer_trade_power = {
 			set_country_flag = trade_power_count_4
 			clr_country_flag = trade_power_count_3
 		}
-		if = {
-			limit = { has_saved_global_event_target = feiten_or_was_feiten_target }
-			if = {
-				limit = { tag = event_target:feiten_or_was_feiten_target }
-				FROM = { set_country_flag = transfers_trade_to_feiten }
-			}
-		}
 	}
 }
 
@@ -357,7 +350,7 @@ declarewar = {
 	condition = {
 		tooltip = COMMAND_DISLOYAL_RULING_COMMAND
 		potential = {
-			has_government_attribute = is_hobgoblin_stratocracy
+			has_reform = hobgoblin_stratocracy_reform
 			ai = no
 		}
 		allow = {
@@ -1409,10 +1402,10 @@ declarewar = {
 				has_country_flag = J84_lizardfolk_expedition_flag
 				FROM = {
 					OR = {
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 						num_of_owned_provinces_with = {
 							value = 10
-							culture_group = lizardfolk
+							culture_is_lizardfolk = yes
 						}
 					}
 				}
@@ -1580,8 +1573,8 @@ declarewar = {
 					spawn_rebels = {
 						type = samsumbat_slave_agitators
 						size = 2
-						friend = ROOT # This makes them not fight me
-						separatists_target = ROOT # This makes them blue
+						# Normally I'd use friend = ROOT, but sometimes players will annex this country
+						# while the rebels are still running around, and then you cannot get rid of them
 					}
 				}
 			}
@@ -1937,6 +1930,21 @@ declarewar = {
 			limit = { ROOT = { religion = askaeorg } }
 			add_church_power = 10
 		}
+
+		if = { #Redgarhavn Bjarnrik war
+			limit = {
+				FROM = { tag = Z08 } #Bjarnrik
+				is_in_war = {
+					attacker_leader = ROOT
+					defender_leader = Z08 #Bjarnrik
+					casus_belli = cb_reaver_invasion
+				}
+			}
+			country_event = {
+				id = redgarhavn.5
+				days = 150
+			}
+		}
 	}
 }
 
@@ -2130,6 +2138,7 @@ allianceaction = {
 		tooltip = NO_CENTAUR_ALLY #Proud Horse!
 		potential = {
 			has_country_modifier = centaur_administration
+			NOT = { culture = zhadshai_centaur }
 		}
 		allow = {
 			FROM = {
@@ -2151,7 +2160,10 @@ allianceaction = {
 		}
 		allow = {
 			FROM = {
-				NOT = { has_country_modifier = centaur_administration }
+				OR = {
+					culture = zhadshai_centaur
+					NOT = { has_country_modifier = centaur_administration }
+				}
 			}
 		}
 	}
@@ -2160,6 +2172,7 @@ allianceaction = {
 		tooltip = ogres_dumb
 		potential = {
 			has_country_modifier = centaur_administration
+			NOT = { culture = zhadshai_centaur }
 		}
 		allow = {
 			FROM = {
@@ -4262,7 +4275,7 @@ insultaction = {
 			limit = {
 				OR = {
 					tag = H89
-					tag = S45
+					is_or_was_tag = { tag = S45 }
 				}
 			}
 			ROOT = { change_variable = { insult_counter = 1 } }
@@ -4332,6 +4345,7 @@ insultaction = {
 					limit = {
 						is_great_power = no
 						NOT = { num_of_subjects = 1 }
+						NOT = { is_subject = yes }
 					}
 					reverse_add_casus_belli = { type = cb_vassalize_mission target = ROOT months = 120 }
 				}
@@ -4444,6 +4458,46 @@ insultaction = {
 			dragon_turtle_change_friendship = { dragon_turtle = kealakys_ever_hungry amount = -5 }
 		}
 		else = { dragon_turtle_change_friendship = { dragon_turtle = kealakys_ever_hungry amount = -3 } }
+		
+		# Bardic Magic
+		if = {
+			limit = {
+				has_country_modifier = enchantment_1_aria_of_affection_spell_mod
+				OR = {
+					reverse_has_opinion_modifier = {
+						who = FROM
+						modifier = scornfully_insulted
+					}
+					NOT = { has_dlc = "Dharma" }
+				}
+			}
+			FROM = {
+				add_trust = { # To counteract vanilla loss from Insult
+					who = ROOT
+					value = 5
+				}
+				remove_opinion = {
+					who = ROOT
+					modifier = scornfully_insulted
+				}
+				remove_opinion = {
+					who = ROOT
+					modifier = insulted
+				}
+				add_opinion = {
+					who = ROOT
+					modifier = enchantment_bardic_aria_of_affection_reverse_insult
+				}
+				country_event = { # This will lose some trust and check trust threshold
+					id = magic_spell.406
+					days = 1825 # 5 years
+				}
+			}
+			add_favors = {
+				who = FROM
+				amount = 20
+			}
+		}
 	}
 }
 
@@ -4776,31 +4830,6 @@ requestpeace = {
         }
 	}
 	pre_effect = { # This happens before any of the peace effects like on_province_owner_change, on_country_released, etc
-		if = {
-			limit = { # If I am Samsumbat, and I make a peace offer to the defending war leader of a war with the special CB, set
-			# a flag that is checked on_country_released
-				is_or_was_tag = { tag = F60 }
-				FROM = {
-					is_in_war = {
-						defender_leader = THIS
-						participants = PREV
-						casus_belli = cb_samsumbat_liberation_of_oppressed_people
-					}
-				}
-			}
-			set_country_flag = F60_custom_liberation_cb_target_country
-		}
-		# If they send a peace offer to Samsumbat during this CB war, give the flag to Samsumbat
-		if = {
-			limit = {
-				is_in_war = {
-					casus_belli = cb_samsumbat_liberation_of_oppressed_people
-					defender_leader = THIS
-				}
-				NOT = { is_or_was_tag = { tag = F60 } }
-			}
-			FROM = { set_country_flag = F60_custom_liberation_cb_target_country }
-		}
 		#Besolaki - Set flag if using Support Rebels cb for special event
 		if = {
 			limit = {
@@ -4840,20 +4869,6 @@ requestpeace = {
 		}
 	}
 	effect = { # This happens after all of the peace effects like on_province_owner_change, on_country_released, etc
-		if = {
-			limit = {
-				is_or_was_tag = { tag = F60 }
-			}
-			clr_country_flag = F60_custom_liberation_cb_target_country
-		}
-		FROM = {
-			if = {
-				limit = {
-					is_or_was_tag = { tag = F60 }
-				}
-				clr_country_flag = F60_custom_liberation_cb_target_country
-			}
-		}
 		#Besolaki - Clear flag if using Support Rebels cb for special event
 		clr_country_flag = G54_supporting_peasant_rebels_flag
 		FROM = { clr_country_flag = G54_supporting_peasant_rebels_flag }

@@ -585,20 +585,20 @@ country_event = { #Sceposmatists Question the Franchise
 		name = kheionai_flavour.11.a
 		
 		add_country_modifier = { 
-			name = kheionai_civil_rights_supported
+			name = kheionai_civil_rights_denied
 			duration = 18250 #50 years
 		}
-		add_stability = -1
+		add_stability_or_adm_power = yes
 	}
 	
 	option = {
 		name = kheionai_flavour.11.b
 		
 		add_country_modifier = { 
-			name = kheionai_civil_rights_denied
+			name = kheionai_civil_rights_supported
 			duration = 18250 #50 years
 		}
-		add_stability_or_adm_power = yes
+		add_stability = -1
 	}
 }
 
@@ -606,7 +606,7 @@ country_event = { #Muistaxia
 	id = kheionai_flavour.12
 	title = kheionai_flavour.12.t
 	desc = kheionai_flavour.12.d
-	picture = FEMALE_SCHOLAR_eventPicture
+	picture = wihgfx_FEMALE_SCHOLAR_eventPicture
 	
 	is_triggered_only = yes
 	fire_only_once = yes
@@ -1622,6 +1622,318 @@ country_event = { #the tyrant acts
 				type = noble_rebels
 				size = 2
 				win = yes
+			}
+		}
+	}
+}
+
+province_event = { #Lions in the Hills
+	id = kheionai_flavour.32
+	title = kheionai_flavour.32.t
+	desc = kheionai_flavour.32.d
+	picture = NATIVES_eventPicture
+	
+	is_triggered_only = yes
+	trigger = {
+		is_colony = yes
+		region = devand_region
+
+		owner = {
+			culture_group = kheionai_ruinborn_elf
+			capital_scope = { region = devand_region }
+		}
+	}
+
+	goto = root
+	
+	option = { # Approach with respect
+		name = kheionai_flavour.32.a
+		highlight = yes
+		trigger = {
+			owner = {
+				OR = {
+					has_kheionist_deity = { deity = dip }
+					dip = 4
+					ruler_has_personality = tolerant_personality
+					ruler_has_personality = free_thinker_personality
+				}
+			}
+		}
+
+		owner = {
+			add_treasury = -25
+			add_dip_power = -25
+		}
+		
+		change_native_hostileness = -2
+		add_province_modifier = {
+			name = kheionai_basobhar_amends #50% native assimilation
+			duration = 9125 #25 years
+		}
+	}
+	
+	option = { # They will pay
+		name = kheionai_flavour.32.b
+
+		owner = {
+			add_mil_power = -25
+			add_manpower = -0.5
+		}
+		
+		add_devastation = 5
+		change_native_hostileness = 2
+		change_native_ferocity = 2
+	}
+
+	option = { # We don't care
+		name = kheionai_flavour.32.c
+
+		owner = {
+			add_prestige = -10
+		}
+		
+		add_devastation = 10
+		add_colonysize = -100 
+		change_native_hostileness = 2
+		change_native_ferocity = 2
+	}
+}
+
+country_event = { # Merchants from the Lands of Summer
+	id = kheionai_flavour.33
+	title = kheionai_flavour.33.t
+	desc = kheionai_flavour.33.d
+	picture = PORT_BLOCKADED_eventPicture
+	
+	is_triggered_only = yes
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+		capital_scope = { region = alecand_region }
+		NOT = { has_country_flag = recieved_caamas_merchants } 
+	}
+
+	mean_time_to_happen = {
+		days = 1
+		modifier = {
+			factor = 0.1
+			NOT = { is_year = 1600 }
+		}
+		modifier = {
+			factor = 1.5
+			is_year = 1680
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = recieved_caamas_merchants
+		}
+	}
+	
+	option = { # Can't scam the scammer
+		name = kheionai_flavour.33.a
+		highlight = yes
+		trigger = {
+			OR = {
+				is_or_was_tag = { tag = G50 } # Ormam
+				ruler_has_personality = charismatic_negotiator_personality
+				ruler_has_personality = fierce_negotiator_personality
+				has_idea_group = trade_ideas
+				has_idea_group = spy_ideas
+			}
+		}
+
+		add_treasury = -25
+		add_country_modifier = {
+			name = kheionai_caamas_great_deal
+			duration = 3650 # 10 years
+		}
+	}
+
+	option = { # We know how to haggle
+		name = kheionai_flavour.33.b
+		highlight = yes
+		trigger = {
+			OR = {
+				has_kheionist_deity = { deity = dip }
+				dip = 4
+			}
+		}
+
+		add_treasury = -50
+		add_country_modifier = {
+			name = kheionai_caamas_good_deal
+			duration = 3650 # 10 years
+		}
+	}
+
+	option = { #  Fine, you win
+		name = kheionai_flavour.33.c
+
+		add_treasury = -100
+		add_country_modifier = {
+			name = kheionai_caamas_good_deal
+			duration = 3650 # 10 years
+		}
+	}
+
+	option = { #  Never come back here
+		name = kheionai_flavour.33.dd
+
+		add_prestige = -20
+		add_country_modifier = {
+			name = kheionai_caamas_no_deal
+			duration = 3650 # 10 years
+		}
+	}
+}
+
+country_event = { # Influx of Taychendi Slaves
+	id = kheionai_flavour.34
+	title = kheionai_flavour.34.t
+	desc = kheionai_flavour.34.d
+	picture = LOADING_SHIP_eventPicture
+	
+	is_triggered_only = yes
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+		OR = {
+			capital_scope = { region = alecand_region }
+			is_or_was_tag = { tag = G53 } # Empkeios
+		}
+		NOT = { 
+			OR = {
+				is_or_was_tag = { tag = G52 } # Ameion
+				has_country_modifier = the_abolish_slavery_act
+			}
+		}
+		slaves = 1
+		any_known_country = {
+			capital_scope = { superregion = taychend_superregion }
+			religion = gods_of_the_taychend
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+		modifier = {
+			factor = 3.0
+			any_known_country = {
+				capital_scope = { superregion = taychend_superregion }
+				religion = gods_of_the_taychend
+				overextension_percentage = 0.01
+			}
+		}
+	}
+	
+	option = { # Hell yeah, baby!
+		name = kheionai_flavour.34.a
+
+		add_treasury = -50
+		every_owned_province = {
+			limit = {
+				trade_goods = slaves 
+			}
+			add_province_modifier = {
+				name = kheionai_influx_of_taychendi_slaves
+				duration = 3650 # 10 years
+			}
+		}
+	}
+
+	option = { # We don't want these.
+		name = kheionai_flavour.34.b
+
+		add_prestige = 10
+	}
+}
+
+country_event = { # Devandi Slaves Rise in Revolt (Kheionai version)
+	id = kheionai_flavour.35
+	title = kheionai_flavour.35.t
+	desc = kheionai_flavour.35.d
+	picture = northamericagfx_LIBERUM_VETO_eventPicture
+	
+	is_triggered_only = yes
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+		capital_scope = { 
+			OR = {
+				region = devand_region 
+				region = andic_reach_region 
+			}
+		}
+		NOT = { 
+			any_owned_province = { 
+				has_province_modifier = kheionai_recent_slave_revolt
+			} 
+		}
+		any_owned_province = { # Slave province not in Alecand
+			OR = {
+				superregion = kheionai_superregion
+				superregion = taychend_superregion
+			}
+			NOT = { region = alecand_region }
+			trade_goods = slaves 
+		}
+		OR = { # Any bordering nation or province is of Devandic religious group
+			any_neighbor_country = {
+				religion_group = devandi
+			}
+			any_neighbor_province = {
+				religion_group = devandi
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+		modifier = {
+			factor = 0.25
+			NOT = {
+				any_neighbor_country = {
+					religion_group = devandi
+				}
+			}
+		}
+		modifier = {
+			factor = 0.75
+			is_or_was_tag = { tag = G52 } # Ameion
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					OR = {
+						superregion = kheionai_superregion
+						superregion = taychend_superregion
+					}
+					NOT = { region = alecand_region }
+					trade_goods = slaves 
+				}
+				save_event_target_as = event_province
+			}
+		}
+	}
+	goto = event_province
+	
+	option = { # Buy domestic next time.
+		name = kheionai_flavour.35.a
+
+		event_target:event_province = {
+			add_devastation = 10
+			add_base_production = -1
+			add_base_manpower = -1
+			spawn_rebels = {
+				type = particularist_rebels
+				size = 2
+				win = yes
+			}
+			add_province_modifier = {
+				name = kheionai_recent_slave_revolt
+				duration = 3650 # 10 years
 			}
 		}
 	}

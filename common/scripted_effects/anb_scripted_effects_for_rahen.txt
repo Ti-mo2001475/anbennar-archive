@@ -845,7 +845,7 @@ check_if_caste_is_shared = {
 				has_country_flag = centaur_in_$caste$castes
 				has_country_flag = dwarven_in_$caste$castes
 				has_country_flag = elven_in_$caste$castes
-				has_country_flag = gnoll_in_$caste$castes
+				has_country_flag = gnollish_in_$caste$castes
 				has_country_flag = gnomish_in_$caste$castes
 				has_country_flag = goblin_in_$caste$castes
 				has_country_flag = half_elven_in_$caste$castes
@@ -2273,7 +2273,7 @@ command_move_orc_slave_state = { #tag = R63 OR R64   target = command_move_targe
 						if = {
 							limit = {
 								continent = asia
-								NOT = { culture_group = wuhyun }
+								NOT = { culture_is_wuhyun = yes }
 							}
 							export_to_variable = {
 								which = original_wuhyun_culture
@@ -2395,7 +2395,10 @@ command_brorc_gain_hubris_from_battle = {
 		}
 		R62 = {
 			every_subject_country = {
-				limit = { ROOT = { num_of_units_in_province = { who = PREV amount = 5 } } }
+				limit = {
+					has_government_mechanic = brorc_slave_mechanic
+					ROOT = { num_of_units_in_province = { who = PREV amount = 5 } }
+				}
 				add_government_power = { mechanic_type = brorc_slave_mechanic power_type = brorc_slave_resource value = 4 }
 			}
 		}
@@ -4233,6 +4236,22 @@ raj_become_prabhi = {
     }
 }
 
+raj_become_umsadhri = {
+	if = {
+		limit = { NOT = { government = monarchy } }
+		change_government = monarchy
+	}
+	hidden_effect = {
+		event_target:raj_raja_global_target = {
+			create_subject = {
+				subject_type = umsadhri_vassal
+				subject = PREV
+			}
+		}
+    }
+	add_government_reform = umsadhri_reform
+}
+
 raj_become_vizier = {
 	hidden_effect = {
 		if = {
@@ -4334,6 +4353,7 @@ raj_dismantling_effect = {
 					is_subject_of_type = daimyo_vassal
 					is_subject_of_type = great_daimyo_vassal
 					is_subject_of_type = vizier_vassal
+					is_subject_of_type = umsadhri_vassal
 				}
 			}
 			#Grant freedom from old raja

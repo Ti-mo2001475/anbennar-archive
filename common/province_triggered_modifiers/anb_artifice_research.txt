@@ -33,159 +33,9 @@ artifice_research_ptm = {
 			limit = { has_province_modifier = artifice_block_research_event_transferring_between_countries }
 			remove_province_modifier = artifice_block_research_event_transferring_between_countries
 			owner = {
-				#Fast Research Variable Setup - decides # of options from each tier
-				if = {
-					limit = {
-						OR = {
-							ai = yes
-							has_country_flag = artifice_research_random
-						}
-					}
-					#Tier 2
-					if = {
-						limit = {
-							has_country_flag = artifice_unlocked_advanced
-						}
-						set_variable = {
-							which = artificeResearchOptionsTier1
-							value = 1
-						}
-						set_variable = {
-							which = artificeResearchOptionsTier2
-							value = 1
-						}
-					}
-					#Tier 3
-					else_if = {
-						limit = {
-							has_country_flag = artifice_unlocked_expert
-						}
-						set_variable = {
-							which = artificeResearchOptionsTier1
-							value = 1
-						}
-						set_variable = {
-							which = artificeResearchOptionsTier2
-							value = 1
-						}
-						set_variable = {
-							which = artificeResearchOptionsTier3
-							value = 1
-						}
-					}
-					#Tier 1 - baseline
-					else = {
-						set_variable = {
-							which = artificeResearchOptionsTier1
-							value = 1
-						}
-					}
-				}
-				else_if = {
-					limit = {
-						has_country_flag = artifice_research_fast
-					}
-					#Tier 2
-					if = {
-						limit = {
-							has_country_flag = artifice_unlocked_advanced
-						}
-						set_variable = {
-							which = artificeResearchOptionsTier1
-							value = 3
-						}
-						set_variable = {
-							which = artificeResearchOptionsTier2
-							value = 1
-						}
-					}
-					#Tier 3
-					else_if = {
-						limit = {
-							has_country_flag = artifice_unlocked_expert
-						}
-						set_variable = {
-							which = artificeResearchOptionsTier1
-							value = 3
-						}
-						set_variable = {
-							which = artificeResearchOptionsTier2
-							value = 2
-						}
-						set_variable = {
-							which = artificeResearchOptionsTier3
-							value = 1
-						}
-					}
-					#Tier 1 - baseline
-					else = {
-						set_variable = {
-							which = artificeResearchOptionsTier1
-							value = 2
-						}
-					}
-				}
-				#Normal And Slow Research Variable Setup - decides # of options from each tier
-				else_if = {
-					limit = {
-						OR = {
-							has_country_flag = artifice_research_normal
-							has_country_flag = artifice_research_slow
-						}
-	
-					}
-					#Tier 2
-					if = {
-						limit = {
-							has_country_flag = artifice_unlocked_advanced
-						}
-						set_variable = {
-							which = artificeResearchOptionsTier1
-							value = 3
-						}
-						set_variable = {
-							which = artificeResearchOptionsTier2
-							value = 2
-						}
-					}
-					#Tier 3
-					else_if = {
-						limit = {
-							has_country_flag = artifice_unlocked_expert
-						}
-						set_variable = {
-							which = artificeResearchOptionsTier1
-							value = 4
-						}
-						set_variable = {
-							which = artificeResearchOptionsTier2
-							value = 3
-						}
-						set_variable = {
-							which = artificeResearchOptionsTier3
-							value = 2
-						}
-					}
-					#Tier 1 - baseline
-					else = {
-						set_variable = {
-							which = artificeResearchOptionsTier1
-							value = 3
-						}
-					}
-				}
-				if = {
-					limit = {
-						OR = {
-							tag = Y20
-							was_tag = Y20
-						}
-					}
-					set_variable = {
-						which = artificeResearchOptionsFeiten
-						value = 2
-					}
-				}
+				# choose how many inventions of each tier will be selected as possible research options
+				artifice_research_pick_num_inventions_per_tier = yes
+
 				#Tier options left checker
 				if = {
 					limit = {
@@ -242,6 +92,27 @@ artifice_research_ptm = {
 					}
 					artifice_research_select_innovation_options_effect = yes
 				}
+
+				# separate unique selection for feiten
+				if = {
+					limit = {
+						is_or_was_tag = { tag = Y20 }
+					}
+					set_variable = {
+						which = artificeResearchOptionsFeiten
+						value = 2
+					}
+					while = {
+						limit = {
+							check_variable = {
+								which = artificeResearchOptionsFeiten
+								value = 1
+							}
+						}
+						artifice_research_feiten_select_innovation_options_effect = yes
+					}
+				}
+
 				country_event = {
 					id = artifice_research.3
 					#days = 10

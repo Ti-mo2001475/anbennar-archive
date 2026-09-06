@@ -276,9 +276,9 @@ country_decisions = {
 	}
 
 	khatalasya_nation = { #333rd empire
-        major = yes
-        potential = {
-            culture_group = lizardfolk
+		major = yes
+		potential = {
+			culture_is_lizardfolk = yes
 			OR = {
 				has_estate_privilege = estate_church_naga_mutation
 				has_estate_privilege = estate_church_naga_upgraded_mutation
@@ -296,13 +296,12 @@ country_decisions = {
 				NOT = { tag = L70 }
 				mission_completed = L70_khugra_decree_of_unification
 			}
-            was_never_end_game_tag_trigger = yes
-            
-        }
+			was_never_end_game_tag_trigger = yes
+		}
 
-        provinces_to_highlight = {
+		provinces_to_highlight = {
 			OR = {
-                AND = {
+				AND = {
 					superregion = taneyas_superregion
 					NOT = { owned_by = ROOT }
 					NOT = {
@@ -324,7 +323,7 @@ country_decisions = {
 					}
 				}
 				AND = {
-                    OR = {
+					OR = {
 						province_id = 5921
 						province_id = 5650
 						province_id = 5898
@@ -335,34 +334,32 @@ country_decisions = {
 						province_id = 5646
 						province_id = 5908
 						province_id = 5863
-                    }
-                    NOT = { owned_by = ROOT }
-                }
-            }
-        }
+					}
+					NOT = { owned_by = ROOT }
+				}
+			}
+		}
 
-        allow = {
+		allow = {
 			hidden_trigger = {
-				culture_group = lizardfolk
+				culture_is_lizardfolk = yes
 			}
 			is_at_war = no
 			is_free_or_tributary_trigger = yes                        
-            #Required provinces
-            num_of_owned_provinces_with = {
-                value = 6
-                OR = {
-					province_id = 5921
-					province_id = 5650
-					province_id = 5898
-					province_id = 5914
-					province_id = 5941
-					province_id = 5951 
-					province_id = 5947
-					province_id = 5646
-					province_id = 5908
-					province_id = 5863
-                }
-            }
+			#Required provinces
+			calc_true_if = {
+				amount = 6
+				owns = 5921
+				owns = 5650
+				owns = 5898
+				owns = 5914
+				owns = 5941
+				owns = 5951
+				owns = 5947
+				owns = 5646
+				owns = 5908
+				owns = 5863
+			}
 			if = {
 				limit = { tag = L70 } # Khugra
 				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
@@ -376,31 +373,31 @@ country_decisions = {
 					value = 75
 					superregion = taneyas_superregion
 				}
-            }                        
-        }
+			}
+		}
 
-        effect = {
-            change_tag = S81
-            hidden_effect = {
+		effect = {
+			change_tag = S81
+			hidden_effect = {
 				restore_country_name = yes
 				set_country_flag = formed_end_game_tag_flag
 			}
-            increase_government_rank_scripted_effect = { rank = 3 }
-            taneyas_superregion = {
-                limit = {
-                    NOT = { owned_by = ROOT }
-                }
-                add_permanent_claim = S81
-            }
-            if = {
-                limit = { has_custom_ideas = no }
-                country_event = { id = ideagroups.1 } #Swap Ideas
-            }
-            add_prestige = 50
-            add_country_modifier = {
-                name = "centralization_modifier"
-                duration = 7300
-            }
+			increase_government_rank_scripted_effect = { rank = 3 }
+			taneyas_superregion = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				add_permanent_claim = S81
+			}
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_prestige = 50
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
 			swap_non_generic_missions = yes
 			hidden_effect = {
 				if = {
@@ -462,7 +459,7 @@ country_decisions = {
 					set_variable = { which = totalVassalDev value = 0 }
 					every_subject_country = {
 						limit = {
-							culture_group = lizardfolk
+							culture_is_lizardfolk = yes
 							capital_scope = {
 								superregion = taneyas_superregion
 							}
@@ -483,7 +480,7 @@ country_decisions = {
 				custom_tooltip = integrating_vassals_cost_2_dip_tt
 				every_subject_country = {
 					limit = {
-						culture_group = lizardfolk
+						culture_is_lizardfolk = yes
 						capital_scope = {
 							superregion = taneyas_superregion
 						}
@@ -718,7 +715,7 @@ country_decisions = {
 		major = yes
 		potential = {
 			religion = zaradyrra
-			culture_group = lizardfolk
+			culture_is_lizardfolk = yes
 			NOT = { has_country_flag = adzalan_formed }
 			was_never_end_game_tag_trigger = yes
 		}
@@ -817,7 +814,7 @@ country_decisions = {
 				religion = zaradyrra
 				religion = shadow_pact
 			}
-			culture_group = lizardfolk
+			culture_is_lizardfolk = yes
 			NOT = { has_country_flag = shyarayan_formed }
 			was_never_end_game_tag_trigger = yes
 		}

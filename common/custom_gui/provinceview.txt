@@ -1210,7 +1210,7 @@ custom_button = {
 	potential = { 
 		owner = {
 			tag = FROM
-			culture_group = harpy
+			culture_is_harpy = yes
 			has_country_flag = harpy_roost_setup_completed # Won't work properly if setup hasn't been completed.
 		}
 		OR = {
@@ -2851,6 +2851,392 @@ custom_button = { #Cangji
 	}
 	tooltip = V05_call_the_flames
 }
+
+custom_button = { # Serpentgard Branch Order
+	name = Z21_expand_branch_order
+	tooltip = Z21_expand_branch_order_tt
+	potential = {
+		FROM = { mission_completed = Z21_centralize_the_order }
+		if = { limit = { FROM = { mission_completed = Z21_smart_kobold_pious_kobold } }
+			OR = {
+				province_group = Z21_branch_order_provinces
+				province_group = Z21_branch_order_kobold_provinces
+			}
+		}
+		else = {
+			province_group = Z21_branch_order_provinces
+		}
+	}
+	trigger = {
+		if = { limit = { has_province_modifier = Z21_branch_order_1 }
+			FROM = {
+				mission_completed = Z21_maldorians_harbour
+				adm_power = 50
+			}
+			OR = {
+				has_tax_building_trigger = yes
+				num_of_times_expanded_infrastructure = 1
+			}
+			num_of_units_in_province = {
+				who = FROM
+				type = cavalry
+				amount = 3
+			}
+			NOT = { has_province_modifier = Z21_expanding_the_branch }
+		}
+		else_if = { limit = { has_province_modifier = Z21_branch_order_2 }
+			FROM = {
+				mission_completed = Z21_smart_kobold_pious_kobold
+				mil_power = 50
+			}
+			has_manpower_building_trigger = yes
+			num_of_units_in_province = {
+				who = FROM
+				type = cavalry
+				amount = 5
+			}
+			NOT = { has_province_modifier = Z21_expanding_the_branch }
+		}
+		else_if = { limit = { has_province_modifier = Z21_branch_order_3 }
+			hidden_trigger = { always = no }
+		}
+		else = { # create level 1
+			fort_level = 1
+			num_of_units_in_province = {
+				who = FROM
+				type = cavalry
+				amount = 1
+			}
+			FROM = { mil_power = 50 }
+		}
+	}
+	effect = {
+		if = { limit = { has_province_modifier = Z21_branch_order_1 }
+			kill_units = {
+				who = FROM
+				type = cavalry
+				amount = 3
+			}
+			FROM = { add_adm_power = -50 }
+			add_province_modifier = { name = Z21_expanding_the_branch duration = 365 }
+			hidden_effect = { province_event = { id = flavour_blue_reachmen.14 days = 364 } }
+			custom_tooltip = Z21_branch_order_expand_delay_tt
+			tooltip = {
+				add_permanent_province_modifier = { name = Z21_branch_order_2 duration = -1 }
+				Z21_place_branch_order_zoc_mods = { level_2 = yes }
+				add_base_tax = 1
+				random_list = {
+					1 = {
+						trigger = {
+							has_elven_majority_trigger = no
+							has_large_elven_minority_trigger = no
+						}
+						add_elven_minority_size_effect = yes
+					}
+					1 = {
+						trigger = {
+							has_half_elven_majority_trigger = no
+							has_large_half_elven_minority_trigger = no
+						}
+						add_half_elven_minority_size_effect = yes
+					}
+				}
+			}
+		}
+		else_if = { limit = { has_province_modifier = Z21_branch_order_2 }
+			kill_units = {
+				who = FROM
+				type = cavalry
+				amount = 5
+			}
+			FROM = { add_mil_power = -50 }
+			add_province_modifier = { name = Z21_expanding_the_branch duration = 365 }
+			hidden_effect = { province_event = { id = flavour_blue_reachmen.14 days = 364 } }
+			custom_tooltip = Z21_branch_order_expand_delay_tt
+			tooltip = {
+				add_permanent_province_modifier = { name = Z21_branch_order_3 duration = -1 }
+				Z21_place_branch_order_zoc_mods = { level_3 = yes }
+				add_base_manpower = 1
+				add_kobold_minority_size_effect = yes
+			}
+		}
+		else_if = { limit = { has_province_modifier = Z21_branch_order_3 }
+			custom_tooltip = Z21_branch_order_fully_upgraded_tt
+			extend_province_modifier = { name = Z21_branch_order_3 duration = -1 }
+			custom_tooltip = Z21_branch_order_fully_upgraded_zoc_tt
+			tooltip = {
+				5690 = { add_province_modifier = { name = Z21_branch_order_3_zoc duration = -1 } }
+			}
+		}
+		else = { # create level 1
+			kill_units = {
+				who = FROM
+				type = cavalry
+				amount = 1
+			}
+			FROM = { add_mil_power = -50 }
+			add_permanent_province_modifier = { name = Z21_branch_order_1 duration = -1 }
+			Z21_place_branch_order_zoc_mods = { level_1 = yes }
+			add_human_minority_size_effect = yes
+			add_base_manpower = 1
+			set_province_flag = Z21_branch_order_built
+		}
+	}
+}
+
+custom_button = { # Serpentgard Head Branch
+	name = Z21_expand_head_branch
+	tooltip = Z21_expand_head_branch_tt
+	potential = {
+		FROM = { mission_completed = Z21_centralize_the_order }
+		province_id = 698 # Eyegard
+	}
+	trigger = {
+		if = { limit = { has_province_modifier = Z21_head_branch_1 }
+			FROM = {
+				mission_completed = Z21_maldorians_harbour
+				adm_power = 50
+			}
+			OR = {
+				has_tax_building_trigger = yes
+				num_of_times_expanded_infrastructure = 1
+			}
+			num_of_units_in_province = {
+				who = FROM
+				type = cavalry
+				amount = 3
+			}
+			NOT = { has_province_modifier = Z21_expanding_the_branch }
+		}
+		else_if = { limit = { has_province_modifier = Z21_head_branch_2 }
+			FROM = {
+				mission_completed = Z21_smart_kobold_pious_kobold
+				mil_power = 50
+			}
+			has_manpower_building_trigger = yes
+			num_of_units_in_province = {
+				who = FROM
+				type = cavalry
+				amount = 5
+			}
+			NOT = { has_province_modifier = Z21_expanding_the_branch }
+		}
+		else_if = { limit = { has_province_modifier = Z21_head_branch_3 }
+			hidden_trigger = { always = no }
+		}
+		else = { # create level 1
+			fort_level = 1
+			num_of_units_in_province = {
+				who = FROM
+				type = cavalry
+				amount = 1
+			}
+			FROM = { mil_power = 50 }
+		}
+	}
+	effect = {
+		if = { limit = { has_province_modifier = Z21_head_branch_1 }
+			kill_units = {
+				who = FROM
+				type = cavalry
+				amount = 3
+			}
+			FROM = { add_adm_power = -50 }
+			add_province_modifier = { name = Z21_expanding_the_branch duration = 365 }
+			hidden_effect = { province_event = { id = flavour_blue_reachmen.14 days = 364 } }
+			custom_tooltip = Z21_branch_order_expand_delay_tt
+			tooltip = {
+				add_permanent_province_modifier = { name = Z21_head_branch_2 duration = -1 }
+				Z21_place_head_branch_zoc_mods = { level_2 = yes }
+				add_base_tax = 1
+				random_list = {
+					1 = {
+						trigger = {
+							has_elven_majority_trigger = no
+							has_large_elven_minority_trigger = no
+						}
+						add_elven_minority_size_effect = yes
+					}
+					1 = {
+						trigger = {
+							has_half_elven_majority_trigger = no
+							has_large_half_elven_minority_trigger = no
+						}
+						add_half_elven_minority_size_effect = yes
+					}
+				}
+			}
+		}
+		else_if = { limit = { has_province_modifier = Z21_head_branch_2 }
+			kill_units = {
+				who = FROM
+				type = cavalry
+				amount = 5
+			}
+			FROM = { add_mil_power = -50 }
+			add_province_modifier = { name = Z21_expanding_the_branch duration = 365 }
+			hidden_effect = { province_event = { id = flavour_blue_reachmen.14 days = 364 } }
+			custom_tooltip = Z21_branch_order_expand_delay_tt
+			tooltip = {
+				add_permanent_province_modifier = { name = Z21_head_branch_3 duration = -1 }
+				Z21_place_head_branch_zoc_mods = { level_3 = yes }
+				add_base_manpower = 1
+				add_kobold_minority_size_effect = yes
+			}
+		}
+		else_if = { limit = { has_province_modifier = Z21_head_branch_3 }
+			custom_tooltip = Z21_branch_order_fully_upgraded_tt
+			extend_province_modifier = { name = Z21_head_branch_3 duration = -1 }
+			custom_tooltip = Z21_branch_order_fully_upgraded_zoc_tt
+			tooltip = {
+				5690 = { add_province_modifier = { name = Z21_head_branch_3_zoc duration = -1 } }
+			}
+		}
+		else = { # create level 1
+			kill_units = {
+				who = FROM
+				type = cavalry
+				amount = 1
+			}
+			FROM = { add_mil_power = -50 }
+			add_permanent_province_modifier = { name = Z21_head_branch_1 duration = -1 }
+			Z21_place_head_branch_zoc_mods = { level_1 = yes }
+			add_human_minority_size_effect = yes
+			add_base_manpower = 1
+			set_province_flag = Z21_branch_order_built
+		}
+	}
+}
+
+custom_button = { #Celliande Archeology
+	name = celliande_province_button
+	tooltip = celliande_province_button_tt
+	potential = {
+		OR = {
+			province_id = 419
+			province_id = 919
+			province_id = 312
+			province_id = 332
+		}
+		owned_by = A56 #Celliande
+	}
+	trigger = {
+		if = {
+			limit = {
+				province_id = 419 #Varlosen
+			}
+			custom_trigger_tooltip = {
+				tooltip = mission_completed_celliande_first_many_tt
+				owner = {
+					mission_completed = celliande_first_many
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				province_id = 919 #Rhinmond
+			}
+			custom_trigger_tooltip = {
+				tooltip = mission_completed_celliande_first_many_tt
+				owner = {
+					mission_completed = celliande_first_many
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				province_id = 312 #Quintenbury
+			}
+			custom_trigger_tooltip = {
+				tooltip = mission_completed_celliande_treachery_gisdenese_tt
+				owner = {
+					mission_completed = celliande_treachery_gisdenese
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				province_id = 332 #Corseton
+			}
+			custom_trigger_tooltip = {
+				tooltip = mission_completed_celliande_great_necropolis_tt
+				owner = {
+					mission_completed = celliande_great_necropolis
+				}
+			}
+		}
+		owner = {
+			manpower = 2
+			mil_power = 50
+		}
+		has_building = mage_tower
+		if = {
+			limit = { has_province_flag = celliande_already_explored }
+			custom_trigger_tooltip = {
+				tooltip = celliande_already_explored.tt
+				always = no
+			}
+		}
+		else_if = {
+			limit = { has_province_flag = celliande_is_exploring }
+			custom_trigger_tooltip = {
+				tooltip = celliande_is_exploring.tt
+				always = no
+			}
+		}
+		else_if = {
+			limit = { owner = { has_country_flag = celliande_is_exploring_country } }
+			custom_trigger_tooltip = {
+				tooltip = celliande_is_exploring2.tt
+				always = no
+			}
+		}
+	}
+	effect = {
+		owner = {
+			add_manpower = -2
+			add_mil_power = -50
+		}
+		trigger_switch = {
+			on_trigger = province_id
+			419 = {
+				owner = {
+					country_event = {
+						id = celliande.150
+					}
+				}
+			}
+			919 = {
+				owner = {
+					country_event = {
+						id = celliande.152
+					}
+				}
+			}
+			312 = {
+				owner = {
+					country_event = {
+						id = celliande.157
+					}
+				}
+			}
+			332 = {
+				owner = {
+					country_event = {
+						id = celliande.161
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			set_province_flag = celliande_is_exploring
+			owner = {
+				set_country_flag = celliande_is_exploring_country
+			}
+		}
+	}
+}
+
 #################################
 # Anbennar Province UI Expanded #
 #################################
@@ -2985,7 +3371,6 @@ custom_button = {
 		}
 	}
 	effect = {
-		custom_tooltip = " " #Linebreak
 		FROM = { add_church_power = -200 }
 		cultivate_province_xia_path = yes
 	}

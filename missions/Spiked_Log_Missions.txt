@@ -129,6 +129,10 @@ spiked_log_1 = {
 				first_limit = "alliance_with = I35"
 				first_effect = "
 					custom_tooltip = spiked_log_punish_the_traitor_effect_tt_1
+					if = {
+						limit = { exists = U12 }
+						U12 = { every_owned_province = { cede_province = I35 } }
+					}
 					I35 = { country_event = { id =  flavor_spiked_log.3 } }
 				"
 				second_limit = "NOT = { alliance_with = I35 }"
@@ -1532,7 +1536,7 @@ spiked_log_5 = {
 		trigger = {
 			OR = {
 				any_ally = {
-					culture_group = harpy
+					culture_is_harpy = yes
 					capital_scope = { superregion = bulwar_superregion }
 					has_opinion = {
 						who = ROOT

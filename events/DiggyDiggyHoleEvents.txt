@@ -159,7 +159,7 @@ province_event = {
 	id = diggy.13
 	title = diggy.13.t
 	desc = diggy.13.d
-	picture = FEMALE_GENERAL_eventPicture
+	picture = wihgfx_FEMALE_GENERAL_eventPicture
 	goto = root
 
 	is_triggered_only = yes
@@ -1661,6 +1661,16 @@ country_event = {
 				change_trade_goods = grain
 				add_permanent_province_modifier = { name = efficient_irrigation duration = -1 }
 				set_province_flag = efficient_irrigation
+
+				if = {
+					limit = { 
+						ROOT = { has_country_flag = railskulker_vale_taken }
+					} 
+					add_province_modifier = {
+						name = "railskulker_population_boom" 
+						duration = 3650 # 10 years
+					}
+				}
 			}
 		}
 		hidden_effect = { set_global_flag = irrigation_north_done clr_country_flag = repairing_irrigation_north }
@@ -1690,6 +1700,16 @@ country_event = {
 				change_trade_goods = grain
 				add_permanent_province_modifier = { name = efficient_irrigation duration = -1 }
 				set_province_flag = efficient_irrigation
+
+				if = {
+					limit = { 
+						ROOT = { has_country_flag = railskulker_vale_taken }
+					} 
+					add_province_modifier = {
+						name = "railskulker_population_boom" 
+						duration = 3650 # 10 years
+					}
+				}
 			}
 		}
 		hidden_effect = { set_global_flag = irrigation_south_done clr_country_flag = repairing_irrigation_south }
@@ -1717,6 +1737,16 @@ country_event = {
 			change_trade_goods = grain
 			add_permanent_province_modifier = { name = efficient_irrigation duration = -1 }
 			set_province_flag = efficient_irrigation
+
+			if = {
+				limit = { 
+					ROOT = { has_country_flag = railskulker_vale_taken }
+				} 
+				add_province_modifier = {
+					name = "railskulker_population_boom" 
+					duration = 3650 # 10 years
+				}
+			}
 		}
 		hidden_effect = { set_global_flag = irrigation_west_done clr_country_flag = repairing_irrigation_west }
 	}
@@ -1744,6 +1774,16 @@ country_event = {
 			change_trade_goods = grain
 			add_permanent_province_modifier = { name = efficient_irrigation duration = -1 }
 			set_province_flag = efficient_irrigation
+
+			if = {
+				limit = { 
+					ROOT = { has_country_flag = railskulker_vale_taken }
+				} 
+				add_province_modifier = {
+					name = "railskulker_population_boom" 
+					duration = 3650 # 10 years
+				}
+			}
 		}
 		hidden_effect = { set_global_flag = irrigation_east_done clr_country_flag = repairing_irrigation_east }
 	}
@@ -6132,7 +6172,7 @@ country_event = {
 
 	immediate = { 
 		hidden_effect = { 
-			random_owned_province = { limit = { OR = { culture_group = orcish has_orcish_minority_trigger = yes } } save_event_target_as = event_province }
+			random_owned_province = { limit = { OR = { culture_is_orcish = yes has_orcish_minority_trigger = yes } } save_event_target_as = event_province }
 			random_known_country = { limit = { capital_scope = { superregion = escann_superregion } NOT = { culture_group = orcish culture_group = goblin } } save_event_target_as = event_country } 
 		} 
 	}
@@ -6145,7 +6185,7 @@ country_event = {
 		large_decrease_of_orcish_tolerance_effect = yes
 		event_target:event_province = {
 			if = {
-				limit = { culture_group = orcish }
+				limit = { culture_is_orcish = yes }
 				change_culture = ROOT
 				change_religion = ROOT 
 			}
@@ -6153,7 +6193,7 @@ country_event = {
 		}
 		event_target:event_country = {
 			random_owned_province = {
-				limit = { superregion = escann_superregion NOT = { culture_group = orcish } }
+				limit = { superregion = escann_superregion NOT = { culture_is_orcish = yes } }
 				add_orcish_minority_size_effect = yes
 			}
 		}
@@ -7258,7 +7298,7 @@ country_event = {
 	id = diggy.518
 	title = diggy.518.t
 	desc = diggy.518.d
-	picture = CONQUEST__eventPicture
+	picture = CONQUEST_eventPicture
 	
 	mean_time_to_happen = {
 		years = 10
@@ -7705,7 +7745,7 @@ country_event = {
 	id = diggy.525
 	title = diggy.525.t
 	desc = diggy.525.d
-	picture = SIERRA_DE_LA_PLATA
+	picture = SIERRA_DE_LA_PLATA_eventPicture
 	
 	mean_time_to_happen = {
 		years = 10
@@ -9816,8 +9856,8 @@ country_event = {
 		name = diggy.576.b
 		trigger = {
 			OR = {
-				culture_group = goblin
-				culture_group = kobold
+				culture_is_goblin = yes
+				culture_is_kobold = yes
 			}
 		}
 		highlight = yes
@@ -9881,15 +9921,15 @@ country_event = {
 			add_base_manpower = 1
 			if = {
 				limit = { 
-					ROOT = { culture_group = dwarven high_tolerance_goblin_race_trigger = yes } #you disgust me
-					NOT = { culture_group = goblin }
+					ROOT = { culture_is_dwarven = yes high_tolerance_goblin_race_trigger = yes } #you disgust me
+					NOT = { culture_is_goblin = yes }
 				}
 				add_goblin_minority_size_effect = yes
 			}
 			else_if = {
 				limit = { 
-					ROOT = { culture_group = goblin high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
-					NOT = { culture_group = dwarven }
+					ROOT = { culture_is_goblin = yes high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
+					NOT = { culture_is_dwarven = yes }
 				}
 				add_dwarven_minority_size_effect = yes
 			}
@@ -9900,15 +9940,15 @@ country_event = {
 			add_base_manpower = 1
 			if = {
 				limit = { 
-					ROOT = { culture_group = dwarven high_tolerance_goblin_race_trigger = yes } #you disgust me
-					NOT = { culture_group = goblin }
+					ROOT = { culture_is_dwarven = yes high_tolerance_goblin_race_trigger = yes } #you disgust me
+					NOT = { culture_is_goblin = yes }
 				}
 				add_goblin_minority_size_effect = yes
 			}
 			else_if = {
 				limit = { 
-					ROOT = { culture_group = goblin high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
-					NOT = { culture_group = dwarven }
+					ROOT = { culture_is_goblin = yes high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
+					NOT = { culture_is_dwarven = yes }
 				}
 				add_dwarven_minority_size_effect = yes
 			}
@@ -9919,15 +9959,15 @@ country_event = {
 			add_base_manpower = 1
 			if = {
 				limit = { 
-					ROOT = { culture_group = dwarven high_tolerance_goblin_race_trigger = yes } #you disgust me
-					NOT = { culture_group = goblin }
+					ROOT = { culture_is_dwarven = yes high_tolerance_goblin_race_trigger = yes } #you disgust me
+					NOT = { culture_is_goblin = yes }
 				}
 				add_goblin_minority_size_effect = yes
 			}
 			else_if = {
 				limit = { 
-					ROOT = { culture_group = goblin high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
-					NOT = { culture_group = dwarven }
+					ROOT = { culture_is_goblin = yes high_tolerance_dwarven_race_trigger = yes } #you disgust me a bit less
+					NOT = { culture_is_dwarven = yes }
 				}
 				add_dwarven_minority_size_effect = yes
 			}
@@ -10879,8 +10919,8 @@ country_event = {
 		highlight = yes
 		trigger = { 
 			OR = {
-			culture_group = goblin 
-			culture_group = kobold 
+				culture_is_goblin = yes
+				culture_is_kobold = yes
 			}
 		}
 		event_target:event_province = { 
@@ -11862,9 +11902,9 @@ country_event = {
 	trigger = {
 		capital_scope = { continent = serpentspine }
 		OR = {
-			culture_group = dwarven
-			culture_group = goblin
-			culture_group = orcish
+			culture_is_dwarven = yes
+			culture_is_goblin = yes
+			culture_is_orcish = yes
 		}
 		any_owned_province = {
 			is_city = yes
@@ -12007,17 +12047,17 @@ country_event = {
 						is_city = yes
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin	
+							culture_is_dwarven = yes
+							culture_is_goblin = yes	
 						}
 						OR = {
 							AND = {
 								has_dwarven_minority_trigger = yes
-								ROOT = { NOT = { has_country_modifier = racial_pop_dwarven_purge has_country_modifier = racial_pop_dwarven_expulsion culture_group = dwarven } }
+								ROOT = { NOT = { has_country_modifier = racial_pop_dwarven_purge has_country_modifier = racial_pop_dwarven_expulsion culture_is_dwarven = yes } }
 							}
 							AND = {
 								has_goblin_minority_trigger = yes
-								ROOT = { NOT = { has_country_modifier = racial_pop_goblin_purge has_country_modifier = racial_pop_goblin_expulsion culture_group = goblin } }
+								ROOT = { NOT = { has_country_modifier = racial_pop_goblin_purge has_country_modifier = racial_pop_goblin_expulsion culture_is_goblin = yes } }
 							}
 							AND = {
 								has_orcish_minority_trigger = yes
@@ -12031,17 +12071,17 @@ country_event = {
 						is_city = yes
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin	
+							culture_is_dwarven = yes
+							culture_is_goblin = yes	
 						}
 						OR = {
 							AND = {
 								has_dwarven_minority_trigger = yes
-								ROOT = { NOT = { has_country_modifier = racial_pop_dwarven_purge has_country_modifier = racial_pop_dwarven_expulsion culture_group = dwarven } }
+								ROOT = { NOT = { has_country_modifier = racial_pop_dwarven_purge has_country_modifier = racial_pop_dwarven_expulsion culture_is_dwarven = yes } }
 							}
 							AND = {
 								has_goblin_minority_trigger = yes
-								ROOT = { NOT = { has_country_modifier = racial_pop_goblin_purge has_country_modifier = racial_pop_goblin_expulsion culture_group = goblin } }
+								ROOT = { NOT = { has_country_modifier = racial_pop_goblin_purge has_country_modifier = racial_pop_goblin_expulsion culture_is_goblin = yes } }
 							}
 							AND = {
 								has_orcish_minority_trigger = yes
@@ -12060,9 +12100,9 @@ country_event = {
 					any_owned_province = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -12084,9 +12124,9 @@ country_event = {
 					limit = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -12114,9 +12154,9 @@ country_event = {
 					any_owned_province = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -12138,9 +12178,9 @@ country_event = {
 					limit = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -12168,9 +12208,9 @@ country_event = {
 					any_owned_province = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -12193,9 +12233,9 @@ country_event = {
 					limit = {
 						continent = serpentspine
 						OR = {
-							culture_group = dwarven
-							culture_group = goblin
-							culture_group = orcish
+							culture_is_dwarven = yes
+							culture_is_goblin = yes
+							culture_is_orcish = yes
 						}
 						OR = {
 							AND = {
@@ -13400,20 +13440,32 @@ country_event = { #The People do not Yearn for the Mines
 	option = { #Work in the mines!
 		name = diggy.769.a
 		ai_chance = { factor = 100 }
-		every_owned_province = {
-			limit = {
-				continent = serpentspine
-				OR = {
-					trade_goods = iron
-					trade_goods = copper
-					trade_goods = gold
-					trade_goods = mithril
+		custom_tooltip = dwarovar_more_mines_province_tt
+		tooltip = {
+			5690 = {
+				add_local_autonomy = -5
+				add_province_modifier = {
+					name = dwarovar_more_mines_province
+					duration = 3650 #10 years
 				}
 			}
-			add_local_autonomy = -5
-			add_province_modifier = {
-				name = dwarovar_more_mines_province
-				duration = 3650 #10 years
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					continent = serpentspine
+					OR = {
+						trade_goods = iron
+						trade_goods = copper
+						trade_goods = gold
+						trade_goods = mithril
+					}
+				}
+				add_local_autonomy = -5
+				add_province_modifier = {
+					name = dwarovar_more_mines_province
+					duration = 3650 #10 years
+				}
 			}
 		}
 		add_country_modifier = {

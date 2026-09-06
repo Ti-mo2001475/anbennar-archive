@@ -5,6 +5,7 @@
 @custom_diplomacy_religion_shadowpact_number = 3030
 @custom_diplomacy_cultural_blank_container_number = 4010
 @custom_diplomacy_vampires_container_number = 5010
+@custom_diplomacy_mages_container_number = 5020
 @custom_diplomacy_Y20_number = 6010
 @custom_diplomacy_Y10_number = 6020
 @custom_diplomacy_Z99_number = 6030
@@ -25,6 +26,7 @@
 @custom_diplomacy_S37_number = 6180
 @custom_diplomacy_A80_number = 6190
 @custom_diplomacy_F98_number = 6200
+@custom_diplomacy_F60_number = 6210
 
 
 #Place scripted triggers in common\scripted_triggers\anb_scripted_triggers_custom_diplo_ui.txt
@@ -242,6 +244,13 @@ custdip_category_sort_estates = {
 		}
 		set_variable = { which = show_diplo_container value = @custom_diplomacy_vampires_container_number }
 	}
+	else_if = { #custom_diplomacy_mages_container
+		limit = {
+			[[ascending] custdip_sort_ascending = { window_number = @custom_diplomacy_mages_container_number } ]
+			custdip_estates_mages_trigger = yes
+		}
+		set_variable = { which = show_diplo_container value = @custom_diplomacy_mages_container_number }
+	}
 	# else_if = { #Label_me
 	# 	limit = {
 	# 		[[ascending] custdip_sort_ascending = { window_number = 5020 } ]
@@ -403,6 +412,13 @@ custdip_category_sort_unique = {
 			custdip_unique_F98_trigger = yes
 		}
 		set_variable = { which = show_diplo_container value = @custom_diplomacy_F98_number }
+	}
+	else_if = { #custom_diplomacy_F60 #Samsumbat
+		limit = {
+			[[ascending] custdip_sort_ascending = { window_number = @custom_diplomacy_F60_number } ]
+			custdip_unique_F60_trigger = yes
+		}
+		set_variable = { which = show_diplo_container value = @custom_diplomacy_F60_number }
 	}
 	else = {
 		[[ascending] #First
@@ -1515,7 +1531,7 @@ L80_fealty_ai_acceptance_calc_effect = {
 					}
 				}
 				change_variable = { which = custdip_gov_rank value = 20 }
-				change_variable = { which = ai_accept_var_button_1_pos value = custdip_gov_rank }
+				change_variable = { which = ai_accept_var_button_1_pos which = custdip_gov_rank }
 			}
 			else_if = {
 				limit = {
@@ -1529,7 +1545,7 @@ L80_fealty_ai_acceptance_calc_effect = {
 					}
 				}
 				change_variable = { which = custdip_gov_rank value = -20 }
-				change_variable = { which = ai_accept_var_button_1_neg value = custdip_gov_rank }
+				change_variable = { which = ai_accept_var_button_1_neg which = custdip_gov_rank }
 			}
 			else_if = {
 				limit = {
@@ -1554,7 +1570,7 @@ L80_fealty_ai_acceptance_calc_effect = {
 					}
 				}
 				change_variable = { which = custdip_gov_rank value = 10 }
-				change_variable = { which = ai_accept_var_button_1_pos value = custdip_gov_rank }
+				change_variable = { which = ai_accept_var_button_1_pos which = custdip_gov_rank }
 			}
 			else_if = {
 				limit = {
@@ -1579,7 +1595,7 @@ L80_fealty_ai_acceptance_calc_effect = {
 					}
 				}
 				change_variable = { which = custdip_gov_rank value = -10 }
-				change_variable = { which = ai_accept_var_button_1_neg value = custdip_gov_rank }
+				change_variable = { which = ai_accept_var_button_1_neg which = custdip_gov_rank }
 			}
 			
 			

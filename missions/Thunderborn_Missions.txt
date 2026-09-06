@@ -1,0 +1,1059 @@
+#designed, written, and coded by amber
+#reviewed by Blaziy, Irtakus, Ditto, TheForsaken, and kar
+thunderborn_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = {
+		tag = I49
+		NOT = { has_country_flag = I49_edeyne_dead_early } 
+	}
+
+	I49_to_wander_with_purpose = {
+		icon = mission_forest_pilgrim
+		position = 2
+		required_missions = { I49_to_begin_she_begins } 
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+			NOT = { development = 7 } 
+		}
+
+		trigger = {
+			check_variable = {
+				which = centaur_num_times_moved_capital
+				value = 2
+			}
+			capital_scope = {
+				development = 7
+			}
+			treasury = 100
+		}
+
+		effect = {
+			add_treasury = -100
+			capital_scope = { add_building = temple } 
+			custom_tooltip = I49_wander_purpose_move_capital_tooltip
+		}
+	}
+
+	I49_edge_of_the_endless_plain = {
+		icon = mission_moon_moon
+		position = 3
+		required_missions = { I49_to_wander_with_purpose } 
+		provinces_to_highlight = {
+            region = east_forbidden_plains_region
+            NOT = {
+                country_or_non_sovereign_subject_holds = ROOT
+            }
+        }
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 5
+				region = east_forbidden_plains_region
+			}
+			capital_scope = { region = east_forbidden_plains_region } 
+			NOT = { has_country_modifier = I49_the_first_darkening } 
+		}
+
+		effect = {
+			add_horde_unity = 10
+			add_country_modifier = {
+				name = "I49_the_second_darkening"
+				duration = 3650
+			}
+			custom_tooltip = I49_endless_plain_cb_tooltip
+			hidden_effect = {
+				every_known_country = {
+					limit = {
+						religion = irdaeos_worship
+						NOT = {
+							religious_school = {
+								group = centaur_religion
+								school = malukhuga_school
+							}
+						}
+						NOT = { capital_scope = { region = nuzurbokh_region }  } 
+					}
+					ROOT = {
+						add_casus_belli = {
+							target = PREV
+							type = cb_vassalize_mission
+							months = 600
+						}
+					}
+				}
+				set_country_flag = thunderborn_has_filustkhuga_cb
+				set_country_flag = thunderborn_has_irdukhuga_cb
+				set_country_flag = thunderborn_has_maslekhuga_cb
+			}
+		}
+	}
+
+	I49_bring_them_to_heel = {
+		icon = mission_confrontation
+		position = 4
+		required_missions = { I49_edge_of_the_endless_plain } 
+		provinces_to_highlight = {
+			owned_by = ROOT
+			area_for_scope_province = { is_capital_of = ROOT }
+			NOT = { has_state_edict = edict_centralization_effort } 
+		}
+
+		trigger = {
+			stability = 1
+			OR = {
+				estate_loyalty = {
+					estate = estate_monstrous_tribes
+					loyalty = 60
+				}
+				NOT = {
+					estate_influence = {
+						estate = estate_monstrous_tribes
+						influence = 30
+					}
+				}
+			}
+			reform_level = 2
+			if = {
+				limit = { has_dlc = "Mandate of Heaven" } 
+				capital_scope = { has_state_edict = edict_centralization_effort } 
+			}
+		}
+
+		effect = { country_event = { id = flavour_thunderborn.2 }  } 
+	}
+}
+thunderborn_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = {
+		tag = I49
+		NOT = { has_country_flag = I49_edeyne_dead_early } 
+	}
+
+	I49_to_begin_she_begins = {
+		icon = mission_nomad
+		position = 1
+		provinces_to_highlight = {  } 
+
+		trigger = {
+			num_of_cities = 10
+			num_of_estate_privileges = {
+				estate = estate_monstrous_tribes
+				value = 3
+			}
+		}
+
+		effect = {
+			add_horde_unity = 10
+			add_country_modifier = {
+				name = "I49_the_first_darkening"
+				duration = 3650
+			}
+		}
+	}
+
+	I49_barter_for_your_thoughts = {
+		icon = mission_monarch_diplomacy
+		position = 4
+		required_missions = { I49_edge_of_the_endless_plain } 
+		provinces_to_highlight = {  } 
+
+		trigger = {
+			church_power = 100
+			calc_true_if = {
+				all_subject_country = {
+					NOT = {
+						religious_school = {
+							group = centaur_religion
+							school = malukhuga_school
+						}
+					}
+				}
+				amount = 2
+			}
+			custom_trigger_tooltip = {
+				tooltip = I49_barter_thoughts_focused_practice_tooltip
+				has_any_irdaeos_worship_religious_practice = yes
+				NOT = { has_malukhuga_religious_practice = yes } 
+			}
+		}
+
+		effect = { country_event = { id = flavour_thunderborn.3 }  } 
+	}
+
+	I49_to_be_reckoned_with = {
+		icon = mission_centaur_shooting
+		position = 5
+		required_missions = {
+			I49_bring_them_to_heel
+			I49_barter_for_your_thoughts
+			I49_step_by_step
+		}
+		provinces_to_highlight = {
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			superregion = forbidden_lands_superregion
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 75
+				superregion = forbidden_lands_superregion
+			}
+			OR = {
+				army_tradition = 60
+				AND = {
+					army_tradition = 50
+					mil_power = 100
+				}
+			}
+		}
+
+		effect = {
+			if = {
+				limit = { NOT = { army_tradition = 60 }  } 
+				add_mil_power = -100
+			}
+			custom_tooltip = I49_reckoned_with_pp_tooltip
+			custom_tooltip = I49_reckoned_with_seperatism_tooltip
+			hidden_effect = { 
+				every_owned_or_non_tributary_subject_province = { add_nationalism = -5 }  
+				add_power_projection = {
+					type = thunderborn_force_reckoned_with
+					amount = 10
+				}
+			} 
+		}
+	}
+}
+thunderborn_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = {
+		tag = I49
+		NOT = { has_country_flag = I49_edeyne_dead_early } 
+	}
+
+	I49_the_false_claimant = {
+		icon = mission_heated_battle
+		position = 2
+		required_missions = {
+			I49_to_begin_she_begins
+			I49_approach_the_shamans
+		}
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					province_id = 5195
+					NOT = { exists = I80 } 
+				}
+				AND = {
+					exists = I80
+					is_capital_of = I80
+					NOT = { I80 = { has_been_insulted_by_root = yes }  } 
+				}
+			}
+		}
+
+		trigger = {
+			OR = {
+				AND = {
+					army_size_percentage = 0.85
+					total_development = 30
+					I80 = { has_been_insulted_by_root = yes } 
+				}
+				AND = {
+					NOT = { exists = I80 } 
+					5195 = {
+						owned_by = I49
+						OR = {
+							anb_has_been_razed = yes
+							is_core = I49
+						}
+					}
+				}
+			}
+		}
+
+		effect = {
+			if = {
+				limit = {
+					I80 = { has_been_insulted_by_root = yes } 
+					army_size_percentage = 0.85
+					total_development = 30
+				}
+				custom_tooltip = I49_false_claimant_effect_tooltip_1_yes
+				tooltip = {
+					kalgazuur_area = { add_permanent_claim = I49 } 
+					add_country_modifier = {
+						name = "I49_against_false_king"
+						duration = 1825
+					}
+				}
+				hidden_effect = {
+					kalgazuur_area = { add_permanent_claim = I49 } 
+					add_country_modifier = {
+						name = "I49_against_false_king"
+						duration = 1825
+					}
+				}
+			}
+			else = {
+				custom_tooltip = I49_false_claimant_effect_tooltip_1_no
+				tooltip = {
+					kalgazuur_area = { add_permanent_claim = I49 } 
+					add_country_modifier = {
+						name = "I49_against_false_king"
+						duration = 1825
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						exists = I80
+					}
+					5195 = {
+						owned_by = I49
+						OR = {
+							anb_has_been_razed = yes
+							is_core = I49
+						}
+					}
+				}
+				custom_tooltip = I49_false_claimant_effect_tooltip_2_yes
+				tooltip = {
+					add_estate_loyalty = {
+						estate = estate_monstrous_tribes
+						loyalty = 10
+					}
+					add_prestige = 20
+				}
+				hidden_effect = {
+					add_estate_loyalty = {
+						estate = estate_monstrous_tribes
+						loyalty = 10
+					}
+					add_prestige = 20
+				}
+			}
+			else = {
+				custom_tooltip = I49_false_claimant_effect_tooltip_2_no
+				tooltip = {
+					add_estate_loyalty = {
+						estate = estate_monstrous_tribes
+						loyalty = 10
+					}
+					add_prestige = 20
+				}
+			}
+		}
+	}
+
+	I49_ferrous_persuasions = {
+		icon = mission_iron_and_copper
+		position = 3
+		required_missions = { I49_the_false_claimant } 
+		provinces_to_highlight = {
+			OR = {
+				region = nuzurbokh_region
+				region = east_forbidden_plains_region
+			}
+			trade_goods = iron
+			OR = {
+				owned_by = I49
+				owned_by_subject_of = I49
+			}
+			NOT = {
+				AND = {
+					OR = {
+						development = 7
+						has_tax_building_trigger = yes
+					}
+					has_any_ongoing_construction = no
+				}
+			}
+		}
+
+		trigger = {
+			treasury = 50
+			num_of_provinces_owned_or_owned_by_subjects_with = {
+				value = 2
+				trade_goods = iron
+				OR = {
+					region = nuzurbokh_region
+					region = east_forbidden_plains_region
+				}
+				OR = {
+					development = 7
+					has_tax_building_trigger = yes
+				}
+				has_any_ongoing_construction = no
+			}
+		}
+
+		effect = {
+			add_treasury = -50
+			custom_tooltip = I49_ferrous_persuasions_tooltip
+			for = {
+				amount = 2
+				effect = "
+					thunderborn_ferrous_persuasions_effect = yes
+				"
+			}
+			every_owned_province = {
+				clr_province_flag = I49_ferrous_invalid
+			}
+		}
+	}
+
+	I49_step_by_step = {
+		icon = mission_venus
+		position = 4
+		required_missions = { I49_ferrous_persuasions } 
+		provinces_to_highlight = {
+			region = nuzurbokh_region
+			NOT = {
+				country_or_subject_holds = ROOT
+				is_empty = yes
+				owner = { NOT = { culture_group = centaur }  } 
+			}
+		}
+
+		trigger = {
+			nuzurbokh_region = {
+				type = all
+				OR = {
+					country_or_subject_holds = ROOT
+					is_empty = yes
+					NOT = { owner = { culture_group = centaur }  } 
+				}
+			}
+			check_variable = {
+				which = nbReligiousActions
+				value = 2
+			}
+		}
+
+		effect = { country_event = { id = flavour_thunderborn.4 }  } 
+	}
+
+	I49_eye_of_the_storm = {
+		icon = mission_green_village
+		position = 5
+		required_missions = {
+			I49_barter_for_your_thoughts
+			I49_step_by_step
+			I49_skies_darken_rain_falls
+		}
+		provinces_to_highlight = {
+			owner = {
+				is_subject_of = ROOT
+				NOT = {
+					AND = {
+						has_90_opinion_improved_relation = { target = ROOT } 
+						has_25_opinion_sent_gift = { target = ROOT } 
+					}
+				}
+				OR = {
+					religious_school = {
+						group = centaur_religion
+						school = filustkhuga_school
+					}
+					religious_school = {
+						group = centaur_religion
+						school = irdukhuga_school
+					}
+					religious_school = {
+						group = centaur_religion
+						school = maslekhuga_school
+					}
+				}
+			}
+			is_capital = yes
+		}
+
+		trigger = {
+			any_subject_country = {
+				custom_trigger_tooltip = {
+					tooltip = I49_eye_storm_filustkhuga_tooltip
+					religious_school = {
+						group = centaur_religion
+						school = filustkhuga_school
+					}
+				}
+				has_90_opinion_improved_relation = { target = ROOT } 
+				has_25_opinion_sent_gift = { target = ROOT } 
+			}
+			any_subject_country = {
+				custom_trigger_tooltip = {
+					tooltip = I49_eye_storm_irdukhuga_tooltip
+					religious_school = {
+						group = centaur_religion
+						school = irdukhuga_school
+					}
+				}	
+				has_90_opinion_improved_relation = { target = ROOT } 
+				has_25_opinion_sent_gift = { target = ROOT } 
+			}
+			any_subject_country = {
+				custom_trigger_tooltip = {
+					tooltip = I49_eye_storm_maslekhuga_tooltip
+					religious_school = {
+						group = centaur_religion
+						school = maslekhuga_school
+					}
+				}
+				has_90_opinion_improved_relation = { target = ROOT } 
+				has_25_opinion_sent_gift = { target = ROOT } 
+			}
+			OR = {
+				diplomat = 1
+				has_dip_advisor_2 = yes
+			}
+		}
+
+		effect = {
+			custom_tooltip = I49_eye_storm_effect_tooltip
+			hidden_effect = { 
+				random_subject_country = {
+					limit = {
+						OR = {
+							religious_school = {
+								group = centaur_religion
+								school = filustkhuga_school
+							}
+							religious_school = {
+								group = centaur_religion
+								school = irdukhuga_school
+							}
+							religious_school = {
+								group = centaur_religion
+								school = maslekhuga_school
+							}
+						}
+					}
+					save_event_target_as = I49_highest_dev_vassal
+				}
+				if = {
+					limit = {
+						has_saved_event_target = I49_highest_dev_vassal
+					}
+					every_subject_country = { 
+						limit = {
+							OR = {
+								religious_school = {
+									group = centaur_religion
+									school = filustkhuga_school
+								}
+								religious_school = {
+									group = centaur_religion
+									school = irdukhuga_school
+								}
+								religious_school = {
+									group = centaur_religion
+									school = maslekhuga_school
+								}
+							}
+							total_development = event_target:I49_highest_dev_vassal
+						}
+						save_event_target_as = I49_highest_dev_vassal
+					}
+					event_target:I49_highest_dev_vassal = {
+						if = {
+							limit = {
+								religious_school = {
+									group = centaur_religion
+									school = filustkhuga_school
+								}
+							}
+							overlord = {
+								add_manpower = 15
+								add_church_power = 100
+								home_trade_node_effect_scope = {
+									add_trade_node_income = 12
+								}
+							}
+						}
+						else_if = {
+							limit = {
+								religious_school = {
+									group = centaur_religion
+									school = irdukhuga_school
+								}
+							}
+							overlord = {
+								add_manpower = 10
+								add_church_power = 100
+								home_trade_node_effect_scope = {
+									add_trade_node_income = 18
+								}
+							}
+						}
+						else = {
+							overlord = {
+								add_manpower = 10
+								add_church_power = 150
+								home_trade_node_effect_scope = {
+									add_trade_node_income = 12
+								}
+							}
+						}
+					}
+				}
+			} 
+		}
+	}
+
+	I49_to_be_true = {
+		icon = mission_pray_light
+		position = 6
+		required_missions = {
+			I49_to_be_reckoned_with
+			I49_eye_of_the_storm
+			I49_to_be_the_conduit
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 5195
+				province_id = 5184
+				province_id = 5179
+				province_id = 5161
+				province_id = 5081
+				province_id = 5152
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				has_tax_building_trigger = no
+			}
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 4
+				has_tax_building_trigger = yes
+				OR = {
+					province_id = 5195
+					province_id = 5184
+					province_id = 5179
+					province_id = 5161
+					province_id = 5081
+					province_id = 5152
+				}
+			}
+			reform_level = 3
+			check_variable = {
+				which = nbReligiousActions
+				value = 4
+			}
+			I49_ideas = 1
+		}
+
+		effect = { country_event = { id = flavour_thunderborn.6 }  } 
+	}
+}
+thunderborn_4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = {
+		tag = I49
+		NOT = { has_country_flag = I49_edeyne_dead_early } 
+	}
+
+	I49_approach_the_shamans = {
+		icon = mission_delighted_mage
+		position = 1
+		provinces_to_highlight = {  } 
+
+		trigger = {
+			num_of_estate_privileges = {
+				estate = estate_mages
+				value = 2
+			}
+			estate_loyalty = {
+				estate = estate_mages
+				loyalty = 60
+			}
+			has_mana = { amount = 25 } 
+		}
+
+		effect = { country_event = { id = flavour_thunderborn.8 }  } 
+	}
+
+	I49_skies_darken_rain_falls = {
+		icon = mission_star_comet
+		position = 4
+		required_missions = { I49_edge_of_the_endless_sea } 
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+			NOT = {
+				num_of_units_in_province = {
+					amount = 10
+					who = ROOT
+				}
+			}
+		}
+
+		trigger = {
+			capital_scope = {
+				has_province_modifier = I49_conduit_1
+				num_of_units_in_province = {
+					who = I49
+					amount = 10
+				}
+			}
+			num_of_estate_privileges = {
+				estate = estate_mages
+				value = 2
+			}
+			estate_influence = {
+				estate = estate_mages
+				influence = 40
+			}
+			estate_loyalty = {
+				estate = estate_mages
+				loyalty = 65
+			}
+		}
+
+		effect = {
+			set_country_flag = I49_conduits_level_2
+			custom_tooltip = I49_conduits_upgrade_tooltip
+		}
+	}
+
+	I49_to_be_the_conduit = {
+		icon = mission_stormy_seas
+		position = 5
+		required_missions = { I49_skies_darken_rain_falls } 
+		provinces_to_highlight = {  } 
+
+		trigger = {
+			OR = {
+				is_overall_num_school_level_1 = { amount = 2 }
+				is_overall_num_school_level_2 = { amount = 1 }
+			}
+			is_overall_advancing_magic = yes
+			check_variable = {
+				which = evocation_1_centaur_thunderborn_5_spell_count
+				value = 2
+			}
+		}
+
+		effect = {
+			define_advisor = {
+				type = court_mage
+				skill = 3
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = I49_to_be_conduit_effect_tooltip
+			if = {
+				limit = { army_tradition = 100 }
+				change_mana = { amount = 100 }
+				increase_magic_experience = { unmodified_amount = 100 }
+			}
+			else_if = {
+				limit = { army_tradition = 90 }
+				change_mana = { amount = 90 }
+				increase_magic_experience = { unmodified_amount = 90 }
+			}
+			else_if = {
+				limit = { army_tradition = 80 }
+				change_mana = { amount = 80 }
+				increase_magic_experience = { unmodified_amount = 80 }
+			}
+			else_if = {
+				limit = { army_tradition = 70 }
+				change_mana = { amount = 70 }
+				increase_magic_experience = { unmodified_amount = 70 }
+			}
+			else_if = {
+				limit = { army_tradition = 60 }
+				change_mana = { amount = 60 }
+				increase_magic_experience = { unmodified_amount = 60 }
+			}
+			else_if = {
+				limit = { army_tradition = 50 }
+				change_mana = { amount = 50 }
+				increase_magic_experience = { unmodified_amount = 50 }
+			}
+			else_if = {
+				limit = { army_tradition = 40 }
+				change_mana = { amount = 40 }
+				increase_magic_experience = { unmodified_amount = 40 }
+			}
+			else_if = {
+				limit = { army_tradition = 30 }
+				change_mana = { amount = 30 }
+				increase_magic_experience = { unmodified_amount = 30 }
+			}
+			else_if = {
+				limit = { army_tradition = 20 }
+				change_mana = { amount = 20 }
+				increase_magic_experience = { unmodified_amount = 20 }
+			}
+			else_if = {
+				limit = { army_tradition = 10 }
+				change_mana = { amount = 10 }
+				increase_magic_experience = { unmodified_amount = 10 }
+			}
+		}
+	}
+}
+thunderborn_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = {
+		tag = I49
+		NOT = { has_country_flag = I49_edeyne_dead_early } 
+	}
+
+	I49_crook_of_the_mountain = {
+		icon = mission_mountain_castle
+		position = 2
+		required_missions = { I49_approach_the_shamans } 
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					has_dlc = "Mandate of Heaven"
+					area = zarmiklon_area
+					owned_by = ROOT
+					NOT = { has_state_edict = edict_advancement_effort } 
+				}
+				province_id = 5161
+			}
+		}
+
+		trigger = {
+			if = {
+				limit = { has_dlc = "Mandate of Heaven" } 
+				zarmiklon_area = { has_state_edict = edict_advancement_effort } 
+			}
+			5161 = {
+				development = 6
+				has_any_ongoing_construction = no
+			}
+			treasury = 200
+		}
+
+		effect = {
+			add_treasury = -200
+			5161 = {
+				change_trade_goods = incense
+				add_province_modifier = {
+					name = "I49_cliffside_shrine"
+					duration = 9125
+				}
+				add_building_construction = {
+					building = mage_tower
+					speed = 0.5
+					cost = 0
+				}
+			}
+		}
+	}
+
+	I49_edge_of_the_endless_sea = {
+		icon = mission_invade_island
+		position = 3
+		required_missions = {
+			I49_the_false_claimant
+			I49_crook_of_the_mountain
+		}
+		provinces_to_highlight = {  } 
+
+		trigger = {
+			NOT = { exists = I80 } 
+			capital_scope = { has_port = yes } 
+			is_overall_num_school_level_1 = { amount = 1 }
+			OR = {
+				court_mage = 1
+				has_adm_advisor_2 = yes
+			}
+		}
+
+		effect = { country_event = { id = flavour_thunderborn.10 }  } 
+	}
+
+	I49_under_cover_of_thunder = {
+		icon = mission_fleet_arrival
+		position = 4
+		required_missions = { I49_edge_of_the_endless_sea } 
+		provinces_to_highlight = {
+			province_id = 5188
+			NOT = {
+				AND = {
+					is_capital_of = ROOT
+					num_of_units_in_province = {
+						amount = 10
+						who = ROOT
+					}
+				}
+			}
+		}
+
+		trigger = {
+			5188 = {
+				is_capital_of = ROOT
+				num_of_units_in_province = {
+					amount = 10
+					who = I49
+				}
+			}
+			if = {
+				limit = {
+					5259 = {
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				5259 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+			else = {
+				5259 = { owner = { has_been_insulted_by_root = yes }  }
+			}
+			if = {
+				limit = {
+					5261 = {
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				5261 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+			else = {
+				5261 = { owner = { has_been_insulted_by_root = yes }  }
+			}
+			if = {
+				limit = {
+					5262 = {
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				5262 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+			else = {
+				5262 = { owner = { has_been_insulted_by_root = yes }  }
+			}
+			has_mana = { amount = 25 } 
+		}
+
+		effect = {
+			change_mana = { amount = -25 } 
+			custom_tooltip = I49_cover_thunder_devastation_ae_tooltip
+			hidden_effect = {
+				if = {
+					limit = {
+						5259 = {
+							NOT = {
+								country_or_subject_holds = ROOT
+							}
+						}
+					}
+					5259 = {
+						add_devastation = 50
+						if = {
+							limit = {
+								owner = {
+									NOT = {
+										has_country_flag = I49_cover_thunder_ae_flag
+									}
+								}
+							}
+							owner = {
+								add_opinion = {
+									who = ROOT
+									modifier = aggressive_expansion
+									multiplier = 25
+								}
+								set_country_flag = I49_cover_thunder_ae_flag
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						5261 = {
+							NOT = {
+								country_or_subject_holds = ROOT
+							}
+						}
+					}
+					5261 = {
+						add_devastation = 50
+						if = {
+							limit = {
+								owner = {
+									NOT = {
+										has_country_flag = I49_cover_thunder_ae_flag
+									}
+								}
+							}
+							owner = {
+								add_opinion = {
+									who = ROOT
+									modifier = aggressive_expansion
+									multiplier = 25
+								}
+								set_country_flag = I49_cover_thunder_ae_flag
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						5262 = {
+							NOT = {
+								country_or_subject_holds = ROOT
+							}
+						}
+					}
+					5262 = {
+						add_devastation = 50
+						if = {
+							limit = {
+								owner = {
+									NOT = {
+										has_country_flag = I49_cover_thunder_ae_flag
+									}
+								}
+							}
+							owner = {
+								add_opinion = {
+									who = ROOT
+									modifier = aggressive_expansion
+									multiplier = 25
+								}
+								set_country_flag = I49_cover_thunder_ae_flag
+							}
+						}
+					}
+				}
+				5259 = { owner = { clr_country_flag = I49_cover_thunder_ae_flag }  } 
+				5261 = { owner = { clr_country_flag = I49_cover_thunder_ae_flag }  } 
+				5262 = { owner = { clr_country_flag = I49_cover_thunder_ae_flag }  } 
+			}
+			country_event = {
+				id = flavour_thunderborn.11
+				days = 1095
+			}
+			custom_tooltip = I49_deciphered_wreckage_event_insight_tooltip
+		}
+	}
+}

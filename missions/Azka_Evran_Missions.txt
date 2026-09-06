@@ -57,7 +57,7 @@ slot = 1
 				owner = { has_country_modifier = goblin_administration }
 				AND = {
 					area = aqatbahar_area
-					culture_group = goblin
+					culture_is_goblin = yes
 				}
 			}
 		}
@@ -67,7 +67,7 @@ slot = 1
 				owner = { NOT = { has_country_modifier = goblin_administration } }
 				type = all 
 			}
-			aqatbahar_area = { NOT = { culture_group = goblin } type = all }
+			aqatbahar_area = { NOT = { culture_is_goblin = yes } type = all }
 		}
 		effect = {
 			add_stability_or_adm_power = yes
@@ -168,8 +168,8 @@ slot = 1
 				NOT = { religion = bulwari_sun_cult }
 				nationalism = 1
 				AND = {
-					NOT = { culture_group = dwarven }
-					NOT = { culture_group = elven }
+					culture_is_dwarven = no
+					culture_is_elven = no
 					culture_is_human = no
 				}
 			}
@@ -180,8 +180,8 @@ slot = 1
 				is_core = ROOT
 				owned_by = ROOT
 				OR = {
-					culture_group = dwarven
-					culture_group = elven
+					culture_is_dwarven = yes
+					culture_is_elven = yes
 					custom_trigger_tooltip = {
 						tooltip = azka_evran_culture_is_human_tt
 						culture_is_human = yes
@@ -678,7 +678,7 @@ slot = 3
 		provinces_to_highlight = {
 			superregion = bulwar_superregion
 			OR = {
-				culture_group = gnollish
+				culture_is_gnollish = yes
 				has_any_gnollish_pop_trigger = yes
 			}
 		}
@@ -692,7 +692,7 @@ slot = 3
 			custom_trigger_tooltip = {
 				tooltip =  azka_evran_no_gnollish_pop_in_bulwar_tt
 				bulwar_superregion = {
-					NOT = { culture_group = gnollish }
+					NOT = { culture_is_gnollish = yes }
 					has_any_gnollish_pop_trigger = no
 					type = all
 				}

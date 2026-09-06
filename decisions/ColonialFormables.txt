@@ -620,9 +620,11 @@ country_decisions = {
 					tag = H67 #Rezankand
 					ai = no
 				}
+				set_country_flag = block_ecaris_death_event #Election event is called when reform is set
 				change_government = theocracy
 				add_government_reform = exemplar_state
 				swap_non_generic_missions = yes
+				clr_country_flag = block_ecaris_death_event
 			}
 			else = {
 				country_event = { id = marcher.1 days = 1 }
@@ -1912,7 +1914,10 @@ country_decisions = {
 				restore_old_nation_on_formation_effect = yes
 				remove_non_electors_emperors_from_empire_effect = yes
 			}
-			set_capital = 2255 #Nesting Cove
+			if = {
+				limit = { owns = 2255 }
+				set_capital = 2255 #Nesting Cove
+			}
 			increase_government_rank_scripted_effect = { rank = 2 }
 			turtleback_isle_region = {
 				limit = {

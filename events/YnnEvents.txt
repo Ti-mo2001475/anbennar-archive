@@ -8235,13 +8235,23 @@ country_event = {	#The gauntlet has been thrown
 		}
 		add_splendor = 5
 		
-		save_global_event_target_as = ynn_joust_opponent_2
+		save_event_target_as = ynn_joust_opponent_2
 		FROM = {
-			save_global_event_target_as = ynn_joust_opponent_1
+			save_event_target_as = ynn_joust_opponent_1
 		}
-		country_event = {
-			id = ynn_joust_events.1
-			days = 2
+		tooltip = {
+			country_event = {
+				id = ynn_joust_events.13
+				days = 2
+			}
+		}
+		hidden_effect = {
+			1171 = {
+				province_event = {
+					id = ynn_joust_events.1
+					days = 2
+				}
+			}
 		}
 	}
 
@@ -8379,25 +8389,6 @@ country_event = { #Joust is won
 				}
 			}
 		}
-		set_global_flag = winnerclear
-	}
-
-	after = {
-		hidden_effect = {
-			if = {
-				limit = { has_saved_global_event_target = ynn_joust_loser  has_global_flag = winnerclear has_global_flag = loserclear }
-			clear_global_event_target = ynn_joust_loser
-			}
-			if = {
-				limit = { has_saved_global_event_target = ynn_joust_winner  has_global_flag = winnerclear has_global_flag = loserclear }
-			clear_global_event_target = ynn_joust_winner
-			}
-			if = {
-				limit = { has_global_flag = winnerclear has_global_flag = loserclear }
-			clr_global_flag = winnerclear
-			clr_global_flag = loserclear
-			}
-		}
 	}
 }
 
@@ -8482,27 +8473,7 @@ country_event = { #Joust is lost
 				}
 			}
 		}
-		set_global_flag = loserclear
 	}
-
-	after = {
-		hidden_effect = {
-			if = {
-				limit = { has_saved_global_event_target = ynn_joust_loser  has_global_flag = winnerclear has_global_flag = loserclear }
-			clear_global_event_target = ynn_joust_loser
-			}
-			if = {
-				limit = { has_saved_global_event_target = ynn_joust_winner  has_global_flag = winnerclear has_global_flag = loserclear }
-			clear_global_event_target = ynn_joust_winner
-			}
-			if = {
-				limit = { has_global_flag = winnerclear has_global_flag = loserclear }
-			clr_global_flag = winnerclear
-			clr_global_flag = loserclear
-			}
-		}
-	}
-
 }
 
 country_event = { #The coward refused our challenge

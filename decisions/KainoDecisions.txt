@@ -1,0 +1,65 @@
+country_decisions = {
+	
+	kaino_cure_adze_poisoning = {
+		color = { 161 43 32 }
+		potential = {
+			has_country_flag = kaino_can_click_decision_for_cure			 
+			ai = no
+		}
+		
+		allow = {
+			hidden_trigger = {
+				has_country_flag = kaino_can_click_decision_for_cure			 
+				ai = no
+			}
+			treasury = 20
+			adm_power = 20
+			dip_power = 20
+			mil_power = 20
+			has_country_modifier = kaino_steward_of_kainos_vestiges
+		}
+		
+		effect = {
+			add_treasury = -20
+			add_adm_power = -20
+			add_dip_power = -20
+			add_mil_power = -20
+			
+			clr_country_flag = kaino_can_click_decision_for_cure
+			clr_country_flag = kaino_has_the_artefacts
+			country_event = {
+				id = flavour_kaino.12
+				days = 30
+			}
+		}
+		
+		ai_will_do = { 
+			factor = 0
+		}
+	}
+
+	kaino_study_remains = {
+		potential = {
+			tag = L49			 
+			mission_completed = kaino_1_8
+			ai = no
+		}
+		
+		allow = {
+			hidden_trigger = {
+				tag = L49			 
+				mission_completed = kaino_1_8
+				ai = no
+			}
+			OR = {
+				adm_power = 300
+				dip_power = 300
+				mil_power = 300
+			}
+		}
+		
+		effect = {
+			country_event = { id = flavour_kaino.60 }
+		}
+	}
+}

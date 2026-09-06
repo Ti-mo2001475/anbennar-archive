@@ -1194,15 +1194,41 @@ J53_3 = {
 		position = 12
 		
 		provinces_to_highlight = {
-			superregion = bulwar_superregion
+			# superregion = bulwar_superregion
+			# OR = {
+			# 	NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			# 	NOT = {
+			# 		religion = yudunyovi
+			# 		religion = the_hunt
+			# 	}
+			# }
+			# 
 			OR = {
-				NOT = { country_or_non_sovereign_subject_holds = ROOT }
-				NOT = {
-					religion = yudunyovi
-					religion = the_hunt
+				AND = {
+					region = bulwar_proper_region
+					has_discovered = ROOT
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+					NOT = {
+						ROOT = {
+							num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+								value = 50
+								region = bulwar_proper_region
+							}
+						}
+					}
+				}
+				AND = {
+					OR = {
+						province_id = 616
+						province_id = 591
+						province_id = 560
+					}
+					NOT = {
+						development = 30
+						religion = yudunyovi
+					}
 				}
 			}
-			has_discovered = ROOT
 		}
 		
 		trigger = {
@@ -1458,11 +1484,38 @@ J53_4 = {
 		
 		provinces_to_highlight = {
 			OR = {
-				region = far_bulwar_region
-				region = far_salahad_region
+				AND = {
+					OR = {
+						region = far_bulwar_region
+						region = far_salahad_region
+					}
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+					has_discovered = ROOT
+					NOT = {
+						ROOT = {
+							num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+								value = 50
+								OR = {
+									region = far_bulwar_region
+									region = far_salahad_region
+								}
+							}
+						}
+					}
+				}
+				AND = {
+					OR = {
+						province_id = 2916
+						province_id = 2919
+						province_id = 2918
+						province_id = 2922
+					}
+					NOT = {
+						country_or_non_sovereign_subject_holds = ROOT
+						development = 10
+					}
+				}
 			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
-			has_discovered = ROOT
 		}
 		
 		trigger = {
