@@ -664,7 +664,7 @@ estate_adventurers_free_company_rosters = {
 }
 
 estate_adventurers_ennoblement_of_adventurers = {
-	icon = privilege_royal_authority
+	icon = privilege_grant_autonomy
 	max_absolutism = -5
 	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
 	loyalty = 0.05
@@ -1332,6 +1332,10 @@ estate_adventurers_sponsor_beast_slayers = {
 	}
 	benefits = {
 
+	}
+	conditional_modifier = {
+		trigger = { mission_completed = Z21_reaffirm_our_mission }
+		modifier = { global_unrest = -1 }
 	}
 	on_granted = {
 		custom_tooltip = estate_adventurers_beast_slayers_tooltip
@@ -2670,6 +2674,7 @@ estate_monstrous_tribes_free_clans = {
 		NOT = { tag = I95 }
 		NOT = { tag = I96 }
 		NOT = { tag = I97 }
+		NOT = { tag = V32 } #Sunhungak
 	}
 	can_select = { always = no }
 	can_revoke = { always = no }
@@ -7502,18 +7507,6 @@ estate_church_dictate_understanding = { #pure bait
 			religion_group = bulwari
 			has_country_flag = updating_isolationism_window
 		}
-		OR = {
-			primary_culture = sun_elf
-			culture_group = bulwari
-		}
-		NOT = {
-			capital_scope = {
-				OR = {
-					continent = north_america
-					continent = south_america
-				}
-			}
-		}
 		NOT = {
 			tag = F46
 			tag = F51
@@ -9331,7 +9324,7 @@ estate_nobility_scaleguard_minor_houses = {
 	}
 	can_revoke = {
 		stability = 3
-		crown_land_share = 0.4
+		crown_land_share = 40
 	}
 	on_revoked = {
 	}
@@ -11271,7 +11264,7 @@ estate_burghers_alashakan_mutation = {
 		has_global_flag = khatalashya_zulkanez_2
 	}
 	can_select = {
-		culture_group = lizardfolk
+		culture_is_lizardfolk = yes
 		can_have_more_mutations = yes
 	}
 	can_revoke = {
@@ -11329,7 +11322,7 @@ estate_nobility_glidz_mutation = {
 		has_country_modifier = 333_kuvunika_citadel_colony
 	}
 	can_select = {
-		culture_group = lizardfolk
+		culture_is_lizardfolk = yes
 		can_have_more_mutations = yes
 	}
 	on_granted = {
@@ -20031,6 +20024,34 @@ estate_adventurers_U39_order_of_exemplars = { #Orenvalyam
 		}
 	}
 }
+
+
+
+#kaino magical project privilege
+estate_mages_kaino_bringers_of_mercy = {
+	icon = estate_eunuchs_royal_intrigue_keepers_privilege
+	loyalty = 0.1
+	influence = 0.1
+	max_absolutism = 0
+	land_share = 0
+
+	is_valid = { has_estate_privilege = estate_mages_kaino_bringers_of_mercy }
+	can_select = { has_estate_privilege = estate_mages_kaino_bringers_of_mercy }
+
+	benefits = {
+		core_creation = -0.1
+	}
+	ai_will_do = { factor = 10 }
+
+	can_revoke = {
+		always = no
+	}
+
+	on_granted = {
+		#tooltip here
+	}
+}
+
 
 #Landslide Infantry (Yanacotle culture group)
 estate_church_landslide_inquisitors = {

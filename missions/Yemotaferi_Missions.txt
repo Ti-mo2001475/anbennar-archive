@@ -1308,9 +1308,12 @@ yemo_three = {
 
 			num_of_cawa = 10
 
-			check_variable = {
-				which = S50_troll_battles_won
-				value = 20
+			OR = {
+				check_variable = {
+					which = S50_troll_battles_won
+					value = 20
+				}
+				NOT = { exists = S70 }
 			} 
 		 } 
 
@@ -1486,9 +1489,8 @@ yemo_three = {
 				AND = {
 					is_capital = yes
 					owner = {
-						NOT = { culture = ashhana_lizardfolk }
 						NOT = { is_subject_of = ROOT }
-						culture_group = lizardfolk
+						is_mainline_lizardfolk_culture = yes
 						NOT = { has_been_insulted_by_root = yes }
 					}
 				}
@@ -1514,8 +1516,7 @@ yemo_three = {
 			OR = {
 				all_known_country = {
 					OR = {
-						culture = ashhana_lizardfolk
-						NOT = { culture_group = lizardfolk }
+						NOT = { is_mainline_lizardfolk_primary_culture = yes }
 						has_been_insulted_by_root = yes
 						is_subject_of = ROOT
 					}
@@ -1523,9 +1524,8 @@ yemo_three = {
 				calc_true_if = {
 					amount = 5
 					all_known_country = {
-						NOT = { culture = ashhana_lizardfolk }
-						NOT = { is_subject_of = ROOT}
-						culture_group = lizardfolk
+						NOT = { is_subject_of = ROOT }
+						is_mainline_lizardfolk_primary_culture = yes
 						has_been_insulted_by_root = yes
 					}
 				}
@@ -2623,12 +2623,13 @@ yemo_four = {
 			any_subject_country = {
 				culture = ashhana_lizardfolk
 				total_development = 250
-				num_of_owned_provinces_with = {
-					value = 10
-					OR = {
-						has_building = university
-						has_building = mage_tower
-					}
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				owner = { culture = ashhana_lizardfolk }
+				OR = {
+					has_building = university
+					has_building = mage_tower
 				}
 			}
 			has_cast_summon_familiars = yes

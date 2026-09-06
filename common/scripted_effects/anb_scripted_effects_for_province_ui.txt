@@ -13,6 +13,7 @@ clear_all_aPUI_flags = {
 		clr_country_flag = aPUI_zena_medakas_majestic_menagerie_flag
 		clr_country_flag = aPUI_kobold_citadel_flag
 		clr_country_flag = aPUI_gene_pillar_interaction_flag
+		clr_country_flag = aPUI_deathwinds_flag
 	}
 }
 
@@ -67,14 +68,22 @@ change_aPUI_var_provincial = {
 	hidden_effect = {
 		cap_aPUI_var = { name = $name$ }
 		if = {
-			limit = { ai = no }
+			limit = { owner = { ai = no } }
 			update_aPUI_var_bar = { name = $name$ }
 		}
 	}
-	# Copy the framevariable to the province for the progress bar
-	set_variable = {
-		which = aPUI_$name$_framevar
-		which = FROM
+}
+set_aPUI_var_provincial = {
+	# To change the 'currency' use  'change_aPUI_var = { name = <name> amount = 10 }' to increase it by 10.
+	# You can also specify the name of a variable if you wish to calculate the quantity instead of using a static value
+	[[amount] set_variable = { aPUI_$name$_var = $amount$ } ]
+	[[var_amount] set_variable = { which = aPUI_$name$_var which = $var_amount$ } ]
+	hidden_effect = {
+		cap_aPUI_var = { name = $name$ }
+		if = {
+			limit = { FROM = { ai = no } }
+			update_aPUI_var_bar = { name = $name$ }
+		}
 	}
 }
 set_aPUI_cap = {

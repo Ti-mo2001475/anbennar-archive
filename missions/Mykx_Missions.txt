@@ -410,7 +410,10 @@ mykx_3 = {
 						province_id = 1052
 						province_id = 1055
 					}
-					NOT = { has_province_modifier = slaves_raided }
+					NOT = {
+						has_province_modifier = slaves_raided
+						owned_by = ROOT
+					}
 				}
 			}
 		}
@@ -421,9 +424,24 @@ mykx_3 = {
 				owned_by = ROOT
 				is_core = ROOT
 			}
-			1086 = { has_province_modifier = slaves_raided }
-			1052 = { has_province_modifier = slaves_raided }
-			1055 = { has_province_modifier = slaves_raided }
+			1086 = {
+				OR = {
+					has_province_modifier = slaves_raided
+					owned_by = ROOT
+				}
+			}
+			1052 = {
+				OR = {
+					has_province_modifier = slaves_raided
+					owned_by = ROOT
+				}
+			}
+			1055 = {
+				OR = {
+					has_province_modifier = slaves_raided
+					owned_by = ROOT
+				}
+			}
 		}
 
 		effect = { 
@@ -1030,9 +1048,9 @@ mykx_1_B = {
 				amount = 10
 			}
 			alecand_region = {
-				remove_permanent_windward_level = {
-					level = 3
-				}
+				reduce_windward_level = yes
+				reduce_windward_level = yes
+				reduce_windward_level = yes
 			}
 			random_owned_province = {
 				limit = {

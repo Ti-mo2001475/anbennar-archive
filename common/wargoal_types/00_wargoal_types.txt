@@ -5120,7 +5120,7 @@ three_commands_wargoal = {
 	war_name = THREE_COMMANDS_WAR_NAME
 }
 
-dissolve_command_wargoal = {
+dissolve_warlord_wargoal = {
 	type = superiority
 
 	attacker = {
@@ -5131,7 +5131,7 @@ dissolve_command_wargoal = {
 		allowed_provinces_are_eligible = yes
 		allowed_provinces = { always = no }
 		peace_options = {
-			po_dissolve_command
+			po_dissolve_warlord
 		}
 	}
 	
@@ -6347,18 +6347,14 @@ vic_supremacy_wargoal = {
 	}
 	
 	defender = {
-		badboy_factor = 1
+		badboy_factor = 0.5
 		prestige_factor = 1
 		peace_cost_factor = 1
-	
+
+		allowed_provinces_are_eligible = yes
+		allowed_provinces = { always = no }
 		peace_options = {
-			po_revoke_cores
-			po_release_vassals
-			po_release_annexed
-			po_gold
-			po_annul_treaties
-			po_concede_defeat
-			po_demand_provinces
+			po_vic_enforce_supremacy
 		}
 	}
 
@@ -6665,48 +6661,6 @@ emancipate_colony_take_capital = {
 	}
 
 	war_name = WAR_OF_COLONIAL_EMANCIPATION_WAR_NAME
-}
-
-# F60 Samsumbat MT
-samsumbat_release_nations = {
-	type = take_capital
-	
-	attacker = {
-		badboy_factor = 1
-		prestige_factor = 1
-		peace_cost_factor = 0.5
-		
-		allowed_provinces = {
-			always = no
-		}
-		allowed_provinces_are_eligible = yes
-
-		peace_options = {
-			po_release_vassals
-			po_release_annexed
-			po_change_government
-		}
-
-		country_desc = ALL_DESPOTS_AND_TYRANTS
-		prov_desc = NO_PROVS
-	}
-	
-	defender = {
-		badboy_factor = 1
-		prestige_factor = 1
-		peace_cost_factor = 1
-		
-		allowed_provinces = {
-			always = yes
-		}
-
-		peace_options = {
-			po_demand_provinces
-		}
-	}
-
-	war_name = SAMSUMBAT_LIBERATION_OPPRESSED_WAR
-	
 }
 
 # Only used in the cb_ashhana_freedom_of_expression in the Ashhana 'Agony of Expression' disaster
@@ -7094,4 +7048,48 @@ shadowdreamer_destroy_dwarves_war = {
 		}
 	}
 	war_name = SHADOWDREAMER_DOOKANS_GREAT_CRUSADE
+}
+
+anb_busilar_rav_war = {
+	type = superiority
+
+	attacker = {
+		badboy_factor = 0.5
+		prestige_factor = 1.5
+		peace_cost_factor = 0.5	
+		allowed_provinces = {
+			always = yes
+		}
+		peace_options = {
+			po_take_empire 
+		}
+	}
+	defender = {
+		badboy_factor = 0.5
+		prestige_factor = 1.5
+		peace_cost_factor = 0.5	
+		allowed_provinces = {
+			always = yes
+		}
+		peace_options = {
+		}
+	}
+	war_name = BUSILAR_FOR_ONE_EMPIRE 
+}
+
+wargoal_reaver_invasion = {
+	type = blockade_ports
+
+	attacker = {
+		peace_options = { 
+			po_take_everything
+		}
+	}
+
+	defender = {
+		allowed_provinces = {
+			always = no
+		}
+	}
+	war_name = PIRATE_WAR_NAME
 }

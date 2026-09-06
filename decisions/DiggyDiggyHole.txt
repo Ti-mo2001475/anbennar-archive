@@ -256,7 +256,7 @@ country_decisions = {
 					add_dip_power = -75
 					capital_scope = {
 						remove_province_modifier = blorc_plunder_camp
-						remove_province_modifier = blorc_war_camp
+						remove_blorc_war_camp = yes
 						repair_hold_ai = yes 
 					}
 				}
@@ -484,6 +484,14 @@ country_decisions = {
 				}
 			}
 			if = {
+				limit = { has_country_flag = railskulker_earlier_repair }
+				adm_tech = 12
+				custom_trigger_tooltip = {
+					tooltip = rebuild_road_early_unlock_tt
+					has_country_flag = railskulker_earlier_repair
+				}
+			}
+			else_if = {
 				limit = { has_country_flag = rail_repair_knowledge }
 				adm_tech = 14
 				custom_trigger_tooltip = {

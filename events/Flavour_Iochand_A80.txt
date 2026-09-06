@@ -858,11 +858,11 @@ country_event = { #Our Friends, The Gommo
 		}
 		tooltip = {
 			U31 = {
-				add_accepted_culture = kooras
-				add_accepted_culture = creek_gnome
-				add_accepted_culture = iochander
-				add_accepted_culture = creekfoot_halfling
-				add_accepted_culture = dragonmask_kobold
+				anb_add_accepted_culture_or_dip_power = { culture = kooras free = yes }
+				anb_add_accepted_culture_or_dip_power = { culture = creek_gnome free = yes }
+				anb_add_accepted_culture_or_dip_power = { culture = iochander free = yes }
+				anb_add_accepted_culture_or_dip_power = { culture = creekfoot_halfling free = yes }
+				anb_add_accepted_culture_or_dip_power = { culture = dragonmask_kobold free = yes }
 			}
 			haraf_region = {
 				add_permanent_claim = U31
@@ -1442,6 +1442,10 @@ country_event = { #Subjected to Paradise
 				subject_type = aelantir_hezoggdoum
 				subject = ROOT
 			}
+		}
+		if = {
+			limit = { owns = 1028 }
+			1028 = { cede_province = A19 }
 		}
 	}
 
@@ -2895,6 +2899,14 @@ country_event = { #Establish Cannor Hezoggdoum Menu
 		name = iochand.60.z
 		ai_chance = { factor = 1 }
 	}
+	option = { #Aelantir
+		name = iochand.60.zz
+		ai_chance = { factor = 0 }
+		trigger = { A19 = { is_subject_of = ROOT has_country_flag = iochand_establish_hezoggdoum_flag } }
+		hidden_effect = {
+			country_event = { id = iochand.61 }
+		}
+	}
 
 
 	option = { #Small Country no
@@ -3140,8 +3152,857 @@ country_event = { #Establish Cannor Hezoggdoum Menu
 	}
 
 
+	option = { #Aelantir
+		name = iochand.60.zz
+		ai_chance = { factor = 0 }
+		trigger = { A19 = { is_subject_of = ROOT has_country_flag = iochand_establish_hezoggdoum_flag } }
+		hidden_effect = {
+			country_event = { id = iochand.61 }
+		}
+	}
 	option = { #Go Back
 		name = iochand.60.z
+		ai_chance = { factor = 1 }
+	}
+}
+
+country_event = { #Establish Aelantir Hezoggdoum Menu
+	id = iochand.61
+	title = iochand.61.t 
+	desc = iochand.61.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = A80_establish_hezoggdoum_menu_open
+		}
+	}
+
+	after = {
+		clr_country_flag = A80_establish_hezoggdoum_menu_open
+	}
+
+	option = { #Go Back
+		name = iochand.61.z
+		ai_chance = { factor = 1 }
+	}
+	option = { #Cannor
+		name = iochand.61.zz
+		ai_chance = { factor = 0 }
+		trigger = { is_or_was_tag = { tag = A80 } }
+		hidden_effect = {
+			country_event = { id = iochand.60 }
+		}
+	}
+
+
+	option = { #Sornicande no
+		name = iochand.61.a
+		ai_chance = { factor = 0 }
+		trigger = {
+			NOT = {
+				exists = H40
+				exists = H41
+				south_dalairey_coast_area = {
+					type = all
+					OR = {
+						country_or_non_sovereign_subject_holds = ROOT
+						country_or_non_sovereign_subject_holds = A19
+					}
+				}
+			}
+			
+		}
+		custom_tooltip = A80_establish_sornicande
+		custom_tooltip = BONUS_REWARD_NO
+		tooltip = {
+			A19 = { create_subject = { subject_type = aelantir_hezoggdoum subject = H41 } }
+		}
+		hidden_effect = {
+			country_event = { id = iochand.71 }
+		}
+	}
+	option = { #Sornicande yes
+		name = iochand.61.a
+		ai_chance = { factor = 1000 }
+		highlight = yes
+		trigger = {
+			NOT = {
+				exists = H40
+				exists = H41
+			}
+			south_dalairey_coast_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+		}
+		custom_tooltip = A80_establish_sornicande
+		custom_tooltip = BONUS_REWARD_YES
+		A19 = { establish_hezoggdoum_effect = { tag = H41 limit = "area = south_dalairey_coast_area" daccasded = yes } }
+		if = {
+			limit = { exists = H40 }
+			H41 = { inherit = H40 }
+		}
+	}
+
+	option = { #Kwineh no
+		name = iochand.61.b
+		ai_chance = { factor = 0 }
+		trigger = {
+			NOT = {
+				exists = G05
+				AND = {
+					bloodbrook_area = {
+						type = all
+						OR = {
+							country_or_non_sovereign_subject_holds = ROOT
+							country_or_non_sovereign_subject_holds = A19
+						}
+					}
+					inner_groves_area = {
+						type = all
+						OR = {
+							country_or_non_sovereign_subject_holds = ROOT
+							country_or_non_sovereign_subject_holds = A19
+						}
+					}
+					nurthannkost_area = {
+						type = all
+						OR = {
+							country_or_non_sovereign_subject_holds = ROOT
+							country_or_non_sovereign_subject_holds = A19
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = A80_establish_kwineh
+		custom_tooltip = BONUS_REWARD_NO
+		tooltip = {
+			A19 = { create_subject = { subject_type = aelantir_hezoggdoum subject = G05 } }
+		}
+		hidden_effect = {
+			country_event = { id = iochand.71 }
+		}
+	}
+	option = { #Kwineh yes
+		name = iochand.61.b
+		ai_chance = { factor = 1000 }
+		highlight = yes
+		trigger = {
+			NOT = { exists = G05 }
+			bloodbrook_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+			inner_groves_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+			nurthannkost_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+		}
+		custom_tooltip = A80_establish_kwineh
+		custom_tooltip = BONUS_REWARD_YES
+		A19 = { establish_hezoggdoum_effect = { tag = G05 limit = "OR = { area = bloodbrook_area area = inner_groves_area area = nurthannkost_area }" daccasded = yes } }
+	}
+
+	option = { #Inek no
+		name = iochand.61.c
+		ai_chance = { factor = 0 }
+		trigger = {
+			NOT = {
+				exists = G42
+				ynnsmouth_area = {
+					type = all
+					OR = {
+						country_or_non_sovereign_subject_holds = ROOT
+						country_or_non_sovereign_subject_holds = A19
+					}
+				}
+			}
+		}
+		custom_tooltip = A80_establish_inek
+		custom_tooltip = BONUS_REWARD_NO
+		tooltip = {
+			A19 = { create_subject = { subject_type = aelantir_hezoggdoum subject = G42 } }
+		}
+		hidden_effect = {
+			country_event = { id = iochand.71 }
+		}
+	}
+	option = { #Inek yes
+		name = iochand.61.c
+		ai_chance = { factor = 1000 }
+		highlight = yes
+		trigger = {
+			NOT = { exists = G42 }
+			ynnsmouth_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+		}
+		custom_tooltip = A80_establish_inek
+		custom_tooltip = BONUS_REWARD_YES
+		A19 = { establish_hezoggdoum_effect = { tag = G42 limit = "area = ynnsmouth_area" daccasded = yes } }
+	}
+
+	option = { #Yanek no
+		name = iochand.61.e
+		ai_chance = { factor = 0 }
+		trigger = {
+			NOT = {
+				exists = G04
+				yanekin_area = {
+					type = all
+					OR = {
+						country_or_non_sovereign_subject_holds = ROOT
+						country_or_non_sovereign_subject_holds = A19
+					}
+				}
+			}
+		}
+		custom_tooltip = A80_establish_yanek
+		custom_tooltip = BONUS_REWARD_NO
+		tooltip = {
+			A19 = { create_subject = { subject_type = aelantir_hezoggdoum subject = G04 } }
+		}
+		hidden_effect = {
+			country_event = { id = iochand.71 }
+		}
+	}
+	option = { #Yanek yes
+		name = iochand.61.e
+		ai_chance = { factor = 1000 }
+		highlight = yes
+		trigger = {
+			NOT = { exists = G04 }
+			yanekin_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+		}
+		custom_tooltip = A80_establish_yanek
+		custom_tooltip = BONUS_REWARD_YES
+		A19 = { establish_hezoggdoum_effect = { tag = G04 limit = "area = yanekin_area" daccasded = yes } }
+	}
+
+	option = { #Boek no
+		name = iochand.61.f
+		ai_chance = { factor = 0 }
+		trigger = {
+			NOT = {
+				exists = G01
+				boek_river_area = {
+					type = all
+					OR = {
+						country_or_non_sovereign_subject_holds = ROOT
+						country_or_non_sovereign_subject_holds = A19
+					}
+				}
+			}
+		}
+		custom_tooltip = A80_establish_boek
+		custom_tooltip = BONUS_REWARD_NO
+		tooltip = {
+			A19 = { create_subject = { subject_type = aelantir_hezoggdoum subject = G01 } }
+		}
+		hidden_effect = {
+			country_event = { id = iochand.71 }
+		}
+	}
+	option = { #Boek yes
+		name = iochand.61.f
+		ai_chance = { factor = 1000 }
+		highlight = yes
+		trigger = {
+			NOT = { exists = G01 }
+			boek_river_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+		}
+		custom_tooltip = A80_establish_boek
+		custom_tooltip = BONUS_REWARD_YES
+		A19 = { establish_hezoggdoum_effect = { tag = G01 limit = "area = boek_river_area" daccasded = yes } }
+	}
+
+	option = { #Zanlib no
+		name = iochand.61.g
+		ai_chance = { factor = 0 }
+		trigger = {
+			NOT = {
+				exists = H38
+				AND = {
+					zanlib_area = {
+						type = all
+						OR = {
+							country_or_non_sovereign_subject_holds = ROOT
+							country_or_non_sovereign_subject_holds = A19
+						}
+					}
+					umuhit_area = {
+						type = all
+						OR = {
+							country_or_non_sovereign_subject_holds = ROOT
+							country_or_non_sovereign_subject_holds = A19
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = A80_establish_zanlib
+		custom_tooltip = BONUS_REWARD_NO
+		tooltip = {
+			A19 = { create_subject = { subject_type = aelantir_hezoggdoum subject = H38 } }
+		}
+		hidden_effect = {
+			country_event = { id = iochand.71 }
+		}
+	}
+	option = { #Zanlib yes
+		name = iochand.61.g
+		ai_chance = { factor = 1000 }
+		highlight = yes
+		trigger = {
+			NOT = { exists = H38 }
+			zanlib_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+			umuhit_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+		}
+		custom_tooltip = A80_establish_zanlib
+		custom_tooltip = BONUS_REWARD_YES
+		A19 = { establish_hezoggdoum_effect = { tag = H38 limit = "OR = { area = zanlib_area area = umuhit_area }" daccasded = yes } }
+	}
+
+	option = { #Cestirmark no
+		name = iochand.61.h
+		ai_chance = { factor = 0 }
+		trigger = {
+			NOT = {
+				exists = H33
+				AND = {
+					cestirmark_area = {
+						type = all
+						OR = {
+							country_or_non_sovereign_subject_holds = ROOT
+							country_or_non_sovereign_subject_holds = A19
+						}
+					}
+					vincenton_area = {
+						type = all
+						OR = {
+							country_or_non_sovereign_subject_holds = ROOT
+							country_or_non_sovereign_subject_holds = A19
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = A80_establish_cestirmark
+		custom_tooltip = BONUS_REWARD_NO
+		tooltip = {
+			A19 = { create_subject = { subject_type = aelantir_hezoggdoum subject = H33 } }
+		}
+		hidden_effect = {
+			country_event = { id = iochand.71 }
+		}
+	}
+	option = { #Cestirmark yes
+		name = iochand.61.h
+		ai_chance = { factor = 1000 }
+		highlight = yes
+		trigger = {
+			NOT = { exists = H33 }
+			cestirmark_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+			vincenton_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+		}
+		custom_tooltip = A80_establish_cestirmark
+		custom_tooltip = BONUS_REWARD_YES
+		A19 = { establish_hezoggdoum_effect = { tag = H33 limit = "OR = { area = cestirmark_area area = vincenton_area }" daccasded = yes } }
+	}
+
+	option = { #Isobelin no
+		name = iochand.61.i
+		ai_chance = { factor = 0 }
+		trigger = {
+			NOT = {
+				exists = G91
+				AND = {
+					coast_of_isobel_area = {
+						type = all
+						OR = {
+							country_or_non_sovereign_subject_holds = ROOT
+							country_or_non_sovereign_subject_holds = A19
+						}
+					}
+					trollsmaw_swamp_area = {
+						type = all
+						OR = {
+							country_or_non_sovereign_subject_holds = ROOT
+							country_or_non_sovereign_subject_holds = A19
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = A80_establish_isobelin
+		custom_tooltip = BONUS_REWARD_NO
+		tooltip = {
+			A19 = { create_subject = { subject_type = aelantir_hezoggdoum subject = G91 } }
+		}
+		hidden_effect = {
+			country_event = { id = iochand.71 }
+		}
+	}
+	option = { #Isobelin yes
+		name = iochand.61.i
+		ai_chance = { factor = 1000 }
+		highlight = yes
+		trigger = {
+			NOT = { exists = G91 }
+			coast_of_isobel_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+			trollsmaw_swamp_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+		}
+		custom_tooltip = A80_establish_isobelin
+		custom_tooltip = BONUS_REWARD_YES
+		A19 = { establish_hezoggdoum_effect = { tag = G91 limit = "OR = { area = coast_of_isobel_area area = trollsmaw_swamp_area }" daccasded = yes } }
+	}
+
+	option = { #Thilvis no
+		name = iochand.61.j
+		ai_chance = { factor = 0 }
+		trigger = {
+			NOT = {
+				exists = G96
+				AND = {
+					thilvis_area = {
+						type = all
+						OR = {
+							country_or_non_sovereign_subject_holds = ROOT
+							country_or_non_sovereign_subject_holds = A19
+						}
+					}
+					laneksfield_area = {
+						type = all
+						OR = {
+							country_or_non_sovereign_subject_holds = ROOT
+							country_or_non_sovereign_subject_holds = A19
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = A80_establish_thilvis
+		custom_tooltip = BONUS_REWARD_NO
+		tooltip = {
+			A19 = { create_subject = { subject_type = aelantir_hezoggdoum subject = G96 } }
+		}
+		hidden_effect = {
+			country_event = { id = iochand.71 }
+		}
+	}
+	option = { #Thilvis yes
+		name = iochand.61.j
+		ai_chance = { factor = 1000 }
+		highlight = yes
+		trigger = {
+			NOT = { exists = G96 }
+			thilvis_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+			laneksfield_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+		}
+		custom_tooltip = A80_establish_thilvis
+		custom_tooltip = BONUS_REWARD_YES
+		A19 = { establish_hezoggdoum_effect = { tag = G96 limit = "OR = { area = thilvis_area area = laneksfield_area }" daccasded = yes } }
+	}
+
+	option = { #Cheshoshoanta no
+		name = iochand.61.k
+		ai_chance = { factor = 0 }
+		trigger = {
+			NOT = {
+				exists = G06
+				cheshosh_area = {
+					type = all
+					OR = {
+						country_or_non_sovereign_subject_holds = ROOT
+						country_or_non_sovereign_subject_holds = A19
+					}
+				}
+			}
+		}
+		custom_tooltip = A80_establish_cheshoshoanta
+		custom_tooltip = BONUS_REWARD_NO
+		tooltip = {
+			A19 = { create_subject = { subject_type = aelantir_hezoggdoum subject = G06 } }
+		}
+		hidden_effect = {
+			country_event = { id = iochand.71 }
+		}
+	}
+	option = { #Cheshoshoanta yes
+		name = iochand.61.k
+		ai_chance = { factor = 1000 }
+		highlight = yes
+		trigger = {
+			NOT = { exists = G06 }
+			cheshosh_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+		}
+		custom_tooltip = A80_establish_cheshoshoanta
+		custom_tooltip = BONUS_REWARD_YES
+		A19 = { establish_hezoggdoum_effect = { tag = G06 limit = "area = cheshosh_area" daccasded = yes } }
+	}
+
+	option = { #Saamirses no
+		name = iochand.61.l
+		ai_chance = { factor = 0 }
+		trigger = {
+			NOT = {
+				exists = G92
+				saamirses_area = {
+					type = all
+					OR = {
+						country_or_non_sovereign_subject_holds = ROOT
+						country_or_non_sovereign_subject_holds = A19
+					}
+				}
+			}
+		}
+		custom_tooltip = A80_establish_saamirses
+		custom_tooltip = BONUS_REWARD_NO
+		tooltip = {
+			A19 = { create_subject = { subject_type = aelantir_hezoggdoum subject = G92 } }
+		}
+		hidden_effect = {
+			country_event = { id = iochand.71 }
+		}
+	}
+	option = { #Saamirses yes
+		name = iochand.61.l
+		ai_chance = { factor = 1000 }
+		highlight = yes
+		trigger = {
+			NOT = { exists = G92 }
+			saamirses_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+		}
+		custom_tooltip = A80_establish_saamirses
+		custom_tooltip = BONUS_REWARD_YES
+		A19 = { establish_hezoggdoum_effect = { tag = G92 limit = "area = saamirses_area" daccasded = yes } }
+	}
+
+	option = { #Calasanni Trading Company no
+		name = iochand.61.m
+		ai_chance = { factor = 0 }
+		trigger = {
+			NOT = {
+				exists = G98
+				the_bend_area = {
+					type = all
+					OR = {
+						country_or_non_sovereign_subject_holds = ROOT
+						country_or_non_sovereign_subject_holds = A19
+					}
+				}
+			}
+		}
+		custom_tooltip = A80_establish_calasanni_trading_company
+		custom_tooltip = BONUS_REWARD_NO
+		tooltip = {
+			A19 = { create_subject = { subject_type = aelantir_hezoggdoum subject = G98 } }
+		}
+		hidden_effect = {
+			country_event = { id = iochand.71 }
+		}
+	}
+	option = { #Calasanni Trading Company yes
+		name = iochand.61.m
+		ai_chance = { factor = 1000 }
+		highlight = yes
+		trigger = {
+			NOT = { exists = G98 }
+			the_bend_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+		}
+		custom_tooltip = A80_establish_calasanni_trading_company
+		custom_tooltip = BONUS_REWARD_YES
+		A19 = { establish_hezoggdoum_effect = { tag = G98 limit = "area = the_bend_area" daccasded = yes } }
+	}
+
+	option = { #Asraport no
+		name = iochand.61.n
+		ai_chance = { factor = 0 }
+		trigger = {
+			NOT = {
+				exists = G90
+				wanderers_gate_area = {
+					type = all
+					OR = {
+						country_or_non_sovereign_subject_holds = ROOT
+						country_or_non_sovereign_subject_holds = A19
+					}
+				}
+			}
+		}
+		custom_tooltip = A80_establish_asraport
+		custom_tooltip = BONUS_REWARD_NO
+		tooltip = {
+			A19 = { create_subject = { subject_type = aelantir_hezoggdoum subject = G90 } }
+		}
+		hidden_effect = {
+			country_event = { id = iochand.71 }
+		}
+	}
+	option = { #Asraport yes
+		name = iochand.61.n
+		ai_chance = { factor = 1000 }
+		highlight = yes
+		trigger = {
+			NOT = { exists = G90 }
+			wanderers_gate_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+		}
+		custom_tooltip = A80_establish_asraport
+		custom_tooltip = BONUS_REWARD_YES
+		A19 = { establish_hezoggdoum_effect = { tag = G90 limit = "area = wanderers_gate_area" daccasded = yes } }
+	}
+
+	option = { #Ozgarom no
+		name = iochand.61.o
+		ai_chance = { factor = 0 }
+		trigger = {
+			NOT = {
+				exists = H39
+				AND = {
+					galindas_point_area = {
+						type = all
+						OR = {
+							country_or_non_sovereign_subject_holds = ROOT
+							country_or_non_sovereign_subject_holds = A19
+						}
+					}
+					overgrown_area = {
+						type = all
+						OR = {
+							country_or_non_sovereign_subject_holds = ROOT
+							country_or_non_sovereign_subject_holds = A19
+						}
+					}
+					obscured_approach_area = {
+						type = all
+						OR = {
+							country_or_non_sovereign_subject_holds = ROOT
+							country_or_non_sovereign_subject_holds = A19
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = A80_establish_ozgarom
+		custom_tooltip = BONUS_REWARD_NO
+		tooltip = {
+			A19 = { create_subject = { subject_type = aelantir_hezoggdoum subject = H39 } }
+		}
+		hidden_effect = {
+			country_event = { id = iochand.71 }
+		}
+	}
+	option = { #Ozgarom yes
+		name = iochand.61.o
+		ai_chance = { factor = 1000 }
+		highlight = yes
+		trigger = {
+			NOT = { exists = H39 }
+			galindas_point_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+			overgrown_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+			obscured_approach_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+		}
+		custom_tooltip = A80_establish_ozgarom
+		custom_tooltip = BONUS_REWARD_YES
+		A19 = { establish_hezoggdoum_effect = { tag = H39 limit = "OR = { area = galindas_point_area area = overgrown_area area = obscured_approach_area }" daccasded = yes } }
+	}
+
+	option = { #Ae'n Saldayno no
+		name = iochand.61.p
+		ai_chance = { factor = 0 }
+		trigger = {
+			NOT = {
+				exists = G16
+				AND = {
+					green_river_area = {
+						type = all
+						OR = {
+							country_or_non_sovereign_subject_holds = ROOT
+							country_or_non_sovereign_subject_holds = A19
+						}
+					}
+					trisfersland_area = {
+						type = all
+						OR = {
+							country_or_non_sovereign_subject_holds = ROOT
+							country_or_non_sovereign_subject_holds = A19
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = A80_establish_aen_saldayno
+		custom_tooltip = BONUS_REWARD_NO
+		tooltip = {
+			A19 = { create_subject = { subject_type = aelantir_hezoggdoum subject = G16 } }
+		}
+		hidden_effect = {
+			country_event = { id = iochand.71 }
+		}
+	}
+	option = { #Ae'n Saldayno yes
+		name = iochand.61.p
+		ai_chance = { factor = 1000 }
+		highlight = yes
+		trigger = {
+			NOT = { exists = G16 }
+			green_river_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+			trisfersland_area = {
+				type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					country_or_non_sovereign_subject_holds = A19
+				}
+			}
+		}
+		custom_tooltip = A80_establish_aen_saldayno
+		custom_tooltip = BONUS_REWARD_YES
+		A19 = { establish_hezoggdoum_effect = { tag = G16 limit = "OR = { area = green_river_area area = trisfersland_area }" daccasded = yes } }
+	}
+
+
+	option = { #Cannor
+		name = iochand.61.zz
+		ai_chance = { factor = 0 }
+		trigger = { is_or_was_tag = { tag = A80 } }
+		hidden_effect = {
+			country_event = { id = iochand.60 }
+		}
+	}
+	option = { #Go Back
+		name = iochand.61.z
 		ai_chance = { factor = 1 }
 	}
 }
@@ -3158,6 +4019,21 @@ country_event = {
 	option = {
 		name = iochand.70.a
 		country_event = { id = iochand.60 }
+	}
+}
+
+country_event = {
+	id = iochand.71
+	title = iochand.71.t 
+	desc = iochand.71.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	hidden = yes
+
+	option = {
+		name = iochand.71.a
+		country_event = { id = iochand.61 }
 	}
 }
 

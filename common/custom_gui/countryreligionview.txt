@@ -8,6 +8,7 @@ custom_button = {
 					has_personal_deity = castellos
 					has_personal_deity = lightfather
 					has_personal_deity = the_dame
+					has_personal_deity = the_dame_upgraded
 					has_personal_deity = corin
 					has_personal_deity = corin_upgraded
 					has_personal_deity = adean
@@ -16,14 +17,17 @@ custom_button = {
 					has_personal_deity = munas_moonsinger
 					has_personal_deity = munas_upgraded
 					has_personal_deity = ara
+					has_personal_deity = ara_upgraded
 					has_personal_deity = balgar
 					has_personal_deity = balgar_upgraded
 					has_personal_deity = esmaryal
+					has_personal_deity = esmaryal_upgraded
 					has_personal_deity = esmaryal_upgraded_themarenn
 					has_personal_deity = ryala
 					has_personal_deity = ryala_upgraded
 					has_personal_deity = ryala_upgraded_themarenn
 					has_personal_deity = minara
+					has_personal_deity = minara_upgraded
 					has_personal_deity = falah
 					has_personal_deity = falah_upgraded
 					has_personal_deity = nerat
@@ -128,8 +132,8 @@ custom_button = {
 					has_personal_deity = emp_gjalund_and_the_giantslayers
 					has_personal_deity = master_boat_builders_of_far_gerudia_beyond
 					has_personal_deity = emp_master_boat_builders_of_far_gerudia_beyond
-					has_personal_deity = tale_of_leif_snaketongue
-					has_personal_deity = emp_tale_of_leif_snaketongue
+					has_personal_deity = tale_of_leiv_snaketongue
+					has_personal_deity = emp_tale_of_leiv_snaketongue
 					has_personal_deity = castan_ebonfrost
 					has_personal_deity = emp_castan_ebonfrost
 					has_personal_deity = skcorin
@@ -174,6 +178,8 @@ custom_button = {
 					has_personal_deity = death_mask
 					has_personal_deity = nurgai
 					has_personal_deity = personal_mask
+					has_personal_deity = personal_mask_upgraded
+					has_personal_deity = nurgai_upgraded
 				}
 			}
 			AND = {
@@ -2967,4 +2973,77 @@ custom_text_box = {
 custom_text_box = {
 	name = speaking_memory_ancestory_top_text
 	tooltip = speaking_memory_ancestory_top_text_desc
+}
+
+
+### Banbe Anem
+custom_window = {
+	name = banbe_anen_quest_for_reehanviza_window
+	potential = {
+		religion = banbe_anen
+	}
+}
+
+custom_button = {
+	name = banbe_anen_quest_for_reehanviza_button
+	tooltip = banbe_anen_quest_for_reehanviza_TT
+
+	potential = {
+		NOT = { has_ruler_flag = quest_for_reehanviza_completed }	
+	}
+
+	trigger = {
+		fervor = 75
+		ruler_has_personality = mage_personality
+		NOT = { has_ruler_modifier = banbe_anen_quest_for_reehanviza }
+	}
+
+	effect = {
+		if = {
+			limit = { NOT = { has_ruler_modifier = banbe_anen_quest_for_reehanviza } }
+			add_fervor = -75
+			country_event = { id = flavour_banbe_anen.1 } #Quest for Reehanviza Start
+
+			add_ruler_modifier = {
+				name = banbe_anen_quest_for_reehanviza
+				duration = -1
+			}
+			hidden_effect = {
+				set_variable = {
+					which = reehanviza_order
+					value = 0
+				}
+				set_variable = {
+					which = reehanviza_chaos
+					value = 0
+				}
+				set_variable = {
+					which = reehanviza_household_gods
+					value = 0
+				}
+				set_variable = {
+					which = reehanviza_outer_realms
+					value = 0
+				}
+				#The Random Events
+				country_event = { id = flavour_banbe_anen.0 days = 365 random = 180 }
+				set_variable = {
+					which = banbe_anen_quest_for_reehanviza_ruler_steps
+					value = 8
+				}
+			}
+		}
+		else = {
+			custom_tooltip = quest_for_reehanviza_counter_TT
+		}
+	}
+}
+
+custom_icon = {
+	name = banbe_anen_quest_for_reehanviza_achieved
+	tooltip = banbe_anen_quest_for_reehanviza_achieved_TT
+
+	potential = {
+		has_ruler_flag = quest_for_reehanviza_completed
+	}
 }

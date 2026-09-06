@@ -32,7 +32,7 @@ country_event = {
     id = flavor_cangji.2
     title = flavor_cangji.2.t
     desc = flavor_cangji.2.d
-    picture = MAGE_MOON_eventPicture.dds
+    picture = MAGE_MOON_eventPicture
     is_triggered_only = yes
     option = {
         name = flavor_cangji.2.a
@@ -59,8 +59,6 @@ country_event = {
     is_triggered_only = yes
     option = {
         name = flavor_cangji.3.a
-        set_country_flag = V05_syncretic_monasteries
-        clr_country_flag = V05_interfaith_dialogue
         anb_add_accepted_culture_or_dip_power = {
             free = yes
             dip_reward = yes
@@ -72,17 +70,7 @@ country_event = {
             culture = nuzenapu_harpy
         }
         add_country_modifier = { name = V05_way_of_the_wastes duration = 9125 }
-        hidden_effect = {
-            remove_estate_privilege = estate_church_monastic_schism
-            set_estate_privilege = estate_church_monastic_schism
-        }
-        custom_tooltip = V05_syncretic_upgrade
-		tooltip = {
-			add_province_modifier = {
-				name = estate_church_V05_interfaith_teachings_2
-				duration = -1
-			}
-		}
+        V05_syncretic_monasteries_activate_effect = yes
     }
 }
 country_event = {
@@ -203,7 +191,11 @@ country_event = {
             asia = {
                 discover_country = ROOT
             }
-        }  
+            northeast_haless_coast_area = {
+                discover_country = ROOT
+            }
+            set_country_flag = V05_yanshen_wars
+        }
         add_power_projection = {
             type = 10_permanent_power_projection
             amount = 10
@@ -224,6 +216,10 @@ country_event = {
              asia = {
                 discover_country = ROOT
             }
+            northeast_haless_coast_area = {
+                discover_country = ROOT
+            }
+            set_country_flag = V05_yanshen_wars
         }  
         add_power_projection = {
             type = 10_permanent_power_projection
@@ -243,7 +239,7 @@ country_event = {
     id = flavor_cangji.8
     title = flavor_cangji.8.t
     desc = flavor_cangji.8.d
-    picture = CAVE_eventPicture.dds
+    picture = CAVE_eventPicture
     is_triggered_only = yes
     option = {
         name = flavor_cangji.8.a
@@ -251,6 +247,7 @@ country_event = {
             limit = { NOT = { 6837 = { trade_goods = precursor_relics } } }
             6837 = {
                 change_trade_goods = damestear
+                set_province_flag = permanent_damestear
             }
         }
         custom_tooltip = V05_pmage_tt
@@ -264,7 +261,7 @@ country_event = {
     id = flavor_cangji.9
     title = flavor_cangji.9.t
     desc = flavor_cangji.9.d
-    picture = HIGH_TEMPLE_CITY_eventPicture.dds
+    picture = HIGH_TEMPLE_CITY_eventPicture
     is_triggered_only = yes
     option = {
         name = flavor_cangji.9.a
@@ -305,7 +302,7 @@ country_event = {
                     NOT = {
                         check_variable = {
                             which = V05_sunijalla_rebel_count
-                            value = 5
+                            value = 10
                         }
                     }
                 }
@@ -331,7 +328,7 @@ country_event = {
         else = {
             add_country_modifier = {
                 name = V05_high_tensions
-                duration = 9125
+                duration = 36500
             }
         }
     }
@@ -340,7 +337,7 @@ country_event = {
     id = flavor_cangji.11
     title = flavor_cangji.11.t
     desc = flavor_cangji.11.d
-    picture = TREASURE_FLEET_SHIP_eventPicture.dds
+    picture = TREASURE_FLEET_SHIP_eventPicture
     is_triggered_only = yes
     option = {
         name = flavor_cangji.11.a
@@ -362,14 +359,18 @@ country_event = {
             hidden_effect = { country_event = { id = anbennar_setup.3 } }
 			every_neighbor_province = { area = { add_permanent_claim = J50 } }
         }
-       create_march = J50
+		create_march = J50
+		custom_tooltip = V05_warscore_tt
+		hidden_effect = {
+			set_country_flag = V05_yarikhoi_wars
+		}
     }
 }
 country_event = {
     id = flavor_cangji.12
     title = flavor_cangji.12.t
     desc = flavor_cangji.12.d
-    picture = HIGH_TEMPLE_IN_DISTANCE_eventPicture.dds
+    picture = HIGH_TEMPLE_IN_DISTANCE_eventPicture
     is_triggered_only = yes
     option = {
         name = flavor_cangji.12.a
@@ -416,7 +417,7 @@ country_event = {
         if = {
             limit = { exists = R62 }
             declare_war_with_cb = {
-                casus_belli = cb_dissolve_command
+                casus_belli = cb_dissolve_warlord
                 who = R62
             }
             R62 = {
@@ -491,7 +492,7 @@ country_event = {
     id = flavor_cangji.16
     title = flavor_cangji.16.t
     desc = flavor_cangji.16.d
-    picture = MAGE_MOON_ALTER_eventPicture.dds
+    picture = MAGE_MOON_ALTER_eventPicture
     is_triggered_only = yes
     option = {
         name = flavor_cangji.16.a
@@ -507,7 +508,7 @@ country_event = {
     id = flavor_cangji.17
     title = flavor_cangji.17.t
     desc = flavor_cangji.17.d
-    picture = BIG_STAR_IN_SKY_eventPicture.dds
+    picture = BIG_STAR_IN_SKY_eventPicture
     is_triggered_only = yes
     option = {
         name = flavor_cangji.17.a
@@ -692,6 +693,131 @@ country_event = {
                 casus_belli = cb_annex
                 who = V05
             }
+        }
+    }
+}
+country_event = {
+    id = flavor_cangji.23
+    picture = east_asian_COLONIZATION_eventPicture
+    title = flavor_cangji.23.t
+    desc = flavor_cangji.23.d
+    is_triggered_only = yes
+    option = {
+        name = flavor_cangji.23.a
+        nurboesig_area = {
+            add_siberian_construction = 100
+        }
+        custom_tooltip = V05_colony_reminder
+        hidden_effect = {
+            set_country_flag = V05_troll_colonies
+            country_event = {
+                id = flavor_cangji.24
+                days = 1095
+            }
+        }
+    }
+}
+country_event = {
+    id = flavor_cangji.24
+    picture = KING_SICK_IN_BED_eventPicture
+    title = flavor_cangji.24.t
+    desc = flavor_cangji.24.d
+    is_triggered_only = yes
+    hidden = yes
+    option = {
+        name = flavor_cangji.24.a
+        kokevdan_area = {
+            add_siberian_construction = 100
+        }
+        country_event = {
+            id = flavor_cangji.25
+            days = 1095
+        }
+    }
+}
+country_event = {
+    id = flavor_cangji.25
+    picture = KING_SICK_IN_BED_eventPicture
+    title = flavor_cangji.25.t
+    desc = flavor_cangji.25.d
+    is_triggered_only = yes
+    hidden = yes
+    option = {
+        name = flavor_cangji.25.a
+        tuusbulak_area = {
+            add_siberian_construction = 100
+        }
+        country_event = {
+            id = flavor_cangji.26
+            days = 1095
+        }
+    }
+}
+country_event = {
+    id = flavor_cangji.26
+    picture = KING_SICK_IN_BED_eventPicture
+    title = flavor_cangji.26.t
+    desc = flavor_cangji.26.d
+    is_triggered_only = yes
+    hidden = yes
+    option = {
+        name = flavor_cangji.26.a
+        dolshob_area = {
+            add_siberian_construction = 100
+        }
+        country_event = {
+            id = flavor_cangji.27
+            days = 1095
+        }
+    }
+}
+country_event = {
+    id = flavor_cangji.27
+    picture = KING_SICK_IN_BED_eventPicture
+    title = flavor_cangji.27.t
+    desc = flavor_cangji.27.d
+    is_triggered_only = yes
+    hidden = yes
+    option = {
+        name = flavor_cangji.27.a
+        bagdagerin_area = {
+            add_siberian_construction = 100
+        }
+        country_event = {
+            id = flavor_cangji.28
+            days = 1095
+        }
+    }
+}
+country_event = {
+    id = flavor_cangji.28
+    picture = KING_SICK_IN_BED_eventPicture
+    title = flavor_cangji.28.t
+    desc = flavor_cangji.28.d
+    is_triggered_only = yes
+    hidden = yes
+    option = {
+        name = flavor_cangji.28.a
+        mogomorin_area = {
+            add_siberian_construction = 100
+        }
+        country_event = {
+            id = flavor_cangji.29
+            days = 1095
+        }
+    }
+}
+country_event = {
+    id = flavor_cangji.29
+    picture = KING_SICK_IN_BED_eventPicture
+    title = flavor_cangji.29.t
+    desc = flavor_cangji.29.d
+    is_triggered_only = yes
+    hidden = yes
+    option = {
+        name = flavor_cangji.29.a
+        red_vale_area = {
+            add_siberian_construction = 100
         }
     }
 }

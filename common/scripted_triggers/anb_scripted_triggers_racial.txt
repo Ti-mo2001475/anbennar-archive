@@ -284,6 +284,7 @@ has_unmatching_military_to_unit = {
 		AND = {
 			has_country_modifier = centaur_military
 			NOT = { unit_type = tech_centaur }
+			NOT = { unit_type = tech_zhadshai_centaur }
 		}
 		AND = {
 			has_country_modifier = ogre_military
@@ -814,6 +815,7 @@ ruler_is_human = {
 			ruler_culture = tefori
 			ruler_culture = ilatani
 			ruler_culture = nariandi
+			ruler_culture = milcori
 			#Escanni
 			ruler_culture = black_castanorian
 			ruler_culture = castanorian
@@ -1011,10 +1013,12 @@ ruler_is_human = {
 			ruler_culture = mantimatu
 			ruler_culture = ndurubu
 			ruler_culture = kaino
+			ruler_culture = aya
 			ruler_culture = tamajoba
 			ruler_culture = taafi
 			ruler_culture = jiromji
 			ruler_culture = binwarji
+			ruler_culture = mukarron
 			#Vurebindu
 			ruler_culture = zuvunwa
 			ruler_culture = kuivanhi
@@ -1149,7 +1153,7 @@ ruler_is_goblin = {
 			ruler_culture = soot_goblin
 			ruler_culture = bladesworn_goblin
 			ruler_culture = knightsworn_goblin
-			ruler_culture = orvitzyen_goblin 
+			ruler_culture = promised_goblin 
 		}
 	}
 }
@@ -1394,6 +1398,7 @@ ruler_is_centaur = {
 			ruler_culture = sochar_centaur
 			ruler_culture = anuar_centaur
 			ruler_culture = abalg_centaur
+			ruler_culture = zhadshai_centaur
 		}
 	}
 }
@@ -1800,6 +1805,7 @@ consort_is_human = {
 			consort_culture = tefori
 			consort_culture = ilatani
 			consort_culture = nariandi
+			consort_culture = milcori
 			#Escanni
 			consort_culture = black_castanorian
 			consort_culture = castanorian
@@ -1997,10 +2003,12 @@ consort_is_human = {
 			consort_culture = mantimatu
 			consort_culture = ndurubu
 			consort_culture = kaino
+			consort_culture = aya
 			consort_culture = tamajoba
 			consort_culture = taafi
 			consort_culture = jiromji
 			consort_culture = binwarji
+			consort_culture = mukarron
 			#Vurebindu
 			consort_culture = zuvunwa
 			consort_culture = kuivanhi
@@ -2132,7 +2140,7 @@ consort_is_goblin = {
 			consort_culture = soot_goblin
 			consort_culture = bladesworn_goblin
 			consort_culture = knightsworn_goblin
-			consort_culture = orvitzyen_goblin
+			consort_culture = promised_goblin
 		}
 	}
 }
@@ -2366,6 +2374,7 @@ consort_is_centaur = {
 			consort_culture = sochar_centaur
 			consort_culture = anuar_centaur
 			consort_culture = abalg_centaur
+			consort_culture = zhadshai_centaur
 		}
 	}
 }
@@ -2748,6 +2757,7 @@ heir_is_human = {
 			heir_culture = tefori
 			heir_culture = ilatani
 			heir_culture = nariandi
+			heir_culture = milcori
 			#Escanni
 			heir_culture = black_castanorian
 			heir_culture = castanorian
@@ -2945,10 +2955,12 @@ heir_is_human = {
 			heir_culture = mantimatu
 			heir_culture = ndurubu
 			heir_culture = kaino
+			heir_culture = aya
 			heir_culture = tamajoba
 			heir_culture = taafi
 			heir_culture = jiromji
 			heir_culture = binwarji
+			heir_culture = mukarron
 			#Vurebindu
 			heir_culture = zuvunwa
 			heir_culture = kuivanhi
@@ -3080,7 +3092,7 @@ heir_is_goblin = {
 			heir_culture = soot_goblin
 			heir_culture = bladesworn_goblin
 			heir_culture = knightsworn_goblin
-			heir_culture = orvitzyen_goblin
+			heir_culture = promised_goblin
 		}
 	}
 }
@@ -3314,6 +3326,7 @@ heir_is_centaur = {
 			heir_culture = sochar_centaur
 			heir_culture = anuar_centaur
 			heir_culture = abalg_centaur
+			heir_culture = zhadshai_centaur
 		}
 	}
 }
@@ -3559,95 +3572,64 @@ fast_heir_is_ruinborn = {
 
 monstrous_culture = {
 	OR = {
-		culture_group = kobold
+		AND = {
+			culture_group = kobold
+			NOT = { culture = goldscale_kobold }
+			NOT = { culture = yawasichya_kobold }
+			NOT = { culture = jatukyu_kobold }
+			NOT = { culture = unitsan_kobold }
+			NOT = { culture = sirimadsik_kobold }
+		}
 		culture_group = orcish
-		culture_group = gnollish
-		culture_group = goblin
-		culture_group = harpy
+		AND = {
+			culture_group = gnollish
+			NOT = { culture = dovesworn_gnoll }
+		}
+		AND = {
+			culture_group = goblin
+			NOT = { culture = city_goblin }
+		}
+		AND = {
+			culture_group = harpy
+			NOT = { culture = nzeri_harpy }
+			NOT = { culture = semifire_harpy }
+			NOT = { culture = jarnklo_harpy }
+			NOT = { culture = pezarangi_harpy }
+		}
 		culture_group = giantkind
 		culture_group = hobgoblin
 		culture_group = centaur
-		culture_group = ogre
+		AND = {
+			culture_group = ogre
+			NOT = { culture = skyfall_ogre }
+			NOT = { culture = seacrest_ogre }
+		}
 		culture_group = degenerated_elf
-		culture_group = lizardfolk
-	}
-	NOT = {
-		culture = pezarangi_harpy
-		culture = jarnklo_harpy
-		culture = goldscale_kobold
-		culture = cyazizeta_lizardfolk
-		culture = nzeri_harpy
-		culture = skyfall_ogre
-		culture = seacrest_ogre
-		culture = yawasichya_kobold
-		culture = jatukyu_kobold
-		culture = unitsan_kobold
-		culture = sirimadsik_kobold
-		culture = semifire_harpy
-		culture = dovesworn_gnoll
-		culture = city_goblin
+		AND = {
+			culture_group = lizardfolk
+			NOT = { culture = cyazizeta_lizardfolk }
+		}
 	}
 }
 
 culture_is_short_lived = {
 	OR = {
-		culture_group = anbennarian
-		culture_group = alenic
-		culture_group = businori
-		culture_group = escanni
-		culture_group = dostanorian_g
-		culture_group = kheteratan
-		culture_group = lencori
-		culture_group = reachman
-		culture_group = bulwari
-		culture_group = gerudian
-		culture_group = upper_raheni
-		culture_group = middle_raheni
-		culture_group = south_raheni
-		culture_group = triunic
-		culture_group = trollsbayer
-		culture_group = ynnsman
-		culture_group = halfling
-		culture_group = harimari
-		culture_group = kobold
-		culture_group = lizardfolk
-		culture_group = orcish
-		culture_group = gnollish
-		culture_group = goblin
-		culture_group = harpy
-		culture_group = giantkind
-		culture_group = hobgoblin
-		culture_group = centaur
-		culture_group = ogre
-		culture_group = north_ruinborn_elf
-		culture_group = south_ruinborn_elf
-		culture_group = ynnic_ruinborn_elf
-		culture_group = eordan_ruinborn_elf
-		culture_group = taychendi_ruinborn_elf
-		culture_group = kheionai_ruinborn_elf
-		culture_group = eltibhari_ruinborn_elf
-		culture_group = harafic_ruinborn_elf
-		culture_group = amadian_ruinborn_elf
-		culture_group = devandi_ruinborn_elf
-		culture_group = effelai_ruinborn_elf
-		culture_group = degenerated_elf
-		culture_group = bom
-		culture_group = kai
-		culture_group = kelino
-		culture_group = yanglam
-		culture_group = yan
-		culture_group = gowon
-		culture_group = khantaar
-		culture_group = besholgi
-		culture_group = khudi
-		culture_group = tyvorkan
-		culture_group = inyaswarosa
-		culture_group = baashidi
-		culture_group = mengi
-		culture_group = irsukuba
-		culture_group = vurebindu
-		culture_group = west_sarhaly
-		culture_group = akasi
+		culture_is_human = yes
+		culture_is_half_elven = yes
+		culture_is_half_orcish = yes
+		culture_is_halfling = yes
+		culture_is_harimari = yes
+		culture_is_kobold = yes
+		culture_is_lizardfolk = yes
+		culture_is_orcish = yes
+		culture_is_gnollish = yes
+		culture_is_goblin = yes
+		culture_is_harpy = yes
+		culture_is_troll = yes
+		culture_is_hobgoblin = yes
+		culture_is_centaur = yes
+		culture_is_ogre = yes
+		culture_is_ruinborn = yes
 	}
 }
 
@@ -3843,6 +3825,7 @@ has_centaur_advisor = {
 			employed_advisor = { culture = sochar_centaur }
 			employed_advisor = { culture = anuar_centaur }
 			employed_advisor = { culture = abalg_centaur }
+			employed_advisor = { culture = zhadshai_centaur }
 		}
 	}
 }
@@ -3859,6 +3842,7 @@ has_centaur_advisor_of_category = {
 			employed_advisor = { category = $category$ culture = sochar_centaur }
 			employed_advisor = { category = $category$ culture = anuar_centaur }
 			employed_advisor = { category = $category$ culture = abalg_centaur }
+			employed_advisor = { category = $category$ culture = zhadshai_centaur }
 		}
 	}
 }
@@ -4074,7 +4058,7 @@ has_goblin_advisor = {
 			employed_advisor = { culture = soot_goblin }
 			employed_advisor = { culture = bladesworn_goblin }
 			employed_advisor = { culture = knightsworn_goblin }
-			employed_advisor = { culture = orvitzyen_goblin }
+			employed_advisor = { culture = promised_goblin }
 		}
 	}
 }
@@ -4092,7 +4076,7 @@ has_goblin_advisor_of_category = {
 			employed_advisor = { category = $category$ culture = soot_goblin }
 			employed_advisor = { category = $category$ culture = bladesworn_goblin }
 			employed_advisor = { category = $category$ culture = knightsworn_goblin }
-			employed_advisor = { category = $category$ culture = orvitzyen_goblin }
+			employed_advisor = { category = $category$ culture = promised_goblin }
 		}
 	}
 }
@@ -4343,6 +4327,7 @@ has_human_advisor = {
 			employed_advisor = { culture = fiadionni }
 			employed_advisor = { culture = gliosine }
 			employed_advisor = { culture = arthaman }
+			employed_advisor = { culture = milcori }
 			employed_advisor = { culture = gawedi }
 			employed_advisor = { culture = old_alenic }
 			employed_advisor = { culture = blue_reachman }
@@ -4528,6 +4513,8 @@ has_human_advisor = {
 			employed_advisor = { culture = taafi }
 			employed_advisor = { culture = jiromji }
 			employed_advisor = { culture = binwarji }
+			employed_advisor = { culture = mukarron }
+			employed_advisor = { culture = aya }
 			employed_advisor = { culture = zuvunwa }
 			employed_advisor = { culture = kuivanhi }
 			employed_advisor = { culture = kudenta }
@@ -4616,6 +4603,7 @@ has_human_advisor_of_category = {
 			employed_advisor = { category = $category$ culture = arbarani }
 			employed_advisor = { category = $category$ culture = esmari }
 			employed_advisor = { category = $category$ culture = arannese }
+			employed_advisor = { category = $category$ culture = milcori }
 			employed_advisor = { category = $category$ culture = nathalairey }
 			employed_advisor = { category = $category$ culture = uelairey }
 			employed_advisor = { category = $category$ culture = aldresian }
@@ -4809,10 +4797,12 @@ has_human_advisor_of_category = {
 			employed_advisor = { category = $category$ culture = mantimatu }
 			employed_advisor = { category = $category$ culture = ndurubu }
 			employed_advisor = { category = $category$ culture = kaino }
+			employed_advisor = { category = $category$ culture = aya }
 			employed_advisor = { category = $category$ culture = tamajoba }
 			employed_advisor = { category = $category$ culture = taafi }
 			employed_advisor = { category = $category$ culture = jiromji }
 			employed_advisor = { category = $category$ culture = binwarji }
+			employed_advisor = { category = $category$ culture = mukarron }
 			employed_advisor = { category = $category$ culture = zuvunwa }
 			employed_advisor = { category = $category$ culture = kuivanhi }
 			employed_advisor = { category = $category$ culture = kudenta }
@@ -5579,6 +5569,7 @@ has_human_accepted_culture = {
 		accepted_culture = tefori
 		accepted_culture = ilatani
 		accepted_culture = nariandi
+		accepted_culture = milcori
 		#Escanni
 		accepted_culture = black_castanorian
 		accepted_culture = castanorian
@@ -5776,10 +5767,12 @@ has_human_accepted_culture = {
 		accepted_culture = mantimatu
 		accepted_culture = ndurubu
 		accepted_culture = kaino
+		accepted_culture = aya
 		accepted_culture = tamajoba
 		accepted_culture = taafi
 		accepted_culture = jiromji
 		accepted_culture = binwarji
+		accepted_culture = mukarron
 		#Vurebindu
 		accepted_culture = zuvunwa
 		accepted_culture = kuivanhi
@@ -6479,7 +6472,7 @@ has_goblin_accepted_culture = {
 			accepted_culture = soot_goblin
 			accepted_culture = bladesworn_goblin
 			accepted_culture = knightsworn_goblin
-			accepted_culture = orvitzyen_goblin
+			accepted_culture = promised_goblin
 		}
 	}
 }
@@ -6550,6 +6543,7 @@ has_centaur_accepted_culture = {
 			accepted_culture = sochar_centaur
 			accepted_culture = anuar_centaur
 			accepted_culture = abalg_centaur
+			accepted_culture = zhadshai_centaur
 		}
 	}
 }
@@ -7102,7 +7096,7 @@ has_any_elven_pop_trigger = {	#Any pop minority or majority
 max_tolerance_elven_race_trigger = {	# Is elven tolerance = 100
 	check_variable = {
 		which = elven_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_elven_race_trigger = {	# Is elven tolerance high? (integrated)
@@ -7298,7 +7292,7 @@ has_any_dwarven_pop_trigger = {	#Any pop minority or majority
 max_tolerance_dwarven_race_trigger = {	# Is dwarven tolerance = 100
 	check_variable = {
 		which = dwarven_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_dwarven_race_trigger = {	# Is dwarven tolerance high? (integrated)
@@ -7494,7 +7488,7 @@ has_any_halfling_pop_trigger = {	#Any pop minority or majority
 max_tolerance_halfling_race_trigger = {	# Is halfling tolerance = 100
 	check_variable = {
 		which = halfling_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_halfling_race_trigger = {	# Is halfling tolerance high? (integrated)
@@ -7690,7 +7684,7 @@ has_any_gnomish_pop_trigger = {	#Any pop minority or majority
 max_tolerance_gnomish_race_trigger = {	# Is gnomish tolerance = 100
 	check_variable = {
 		which = gnomish_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_gnomish_race_trigger = {	# Is gnomish tolerance high? (integrated)
@@ -7886,7 +7880,7 @@ has_any_half_orcish_pop_trigger = {	#Any pop minority or majority
 max_tolerance_half_orcish_race_trigger = {	# Is half_orcish tolerance = 100
 	check_variable = {
 		which = half_orcish_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_half_orcish_race_trigger = {	# Is half_orcish tolerance high? (integrated)
@@ -8082,7 +8076,7 @@ has_any_kobold_pop_trigger = {	#Any pop minority or majority
 max_tolerance_kobold_race_trigger = {	# Is kobold tolerance = 100
 	check_variable = {
 		which = kobold_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_kobold_race_trigger = {	# Is kobold tolerance high? (integrated)
@@ -8278,7 +8272,7 @@ has_any_human_pop_trigger = {	#Any pop minority or majority
 max_tolerance_human_race_trigger = {	# Is human tolerance = 100
 	check_variable = {
 		which = human_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_human_race_trigger = {	# Is human tolerance high? (integrated)
@@ -8474,7 +8468,7 @@ has_any_gnollish_pop_trigger = {	#Any pop minority or majority
 max_tolerance_gnollish_race_trigger = {	# Is gnollish tolerance = 100
 	check_variable = {
 		which = gnollish_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_gnollish_race_trigger = {	# Is gnollish tolerance high? (integrated)
@@ -8670,7 +8664,7 @@ has_any_ruinborn_pop_trigger = {	#Any pop minority or majority
 max_tolerance_ruinborn_race_trigger = {	# Is ruinborn tolerance = 100
 	check_variable = {
 		which = ruinborn_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_ruinborn_race_trigger = {	# Is ruinborn tolerance high? (integrated)
@@ -8883,7 +8877,7 @@ has_any_goblin_pop_trigger = {	#Any pop minority or majority
 max_tolerance_goblin_race_trigger = {	# Is goblin tolerance = 100
 	check_variable = {
 		which = goblin_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_goblin_race_trigger = {	# Is goblin tolerance high? (integrated)
@@ -9079,7 +9073,7 @@ has_any_harpy_pop_trigger = {	#Any pop minority or majority
 max_tolerance_harpy_race_trigger = {	# Is harpy tolerance = 100
 	check_variable = {
 		which = harpy_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_harpy_race_trigger = {	# Is harpy tolerance high? (integrated)
@@ -9275,7 +9269,7 @@ has_any_troll_pop_trigger = {	#Any pop minority or majority
 max_tolerance_troll_race_trigger = {	# Is troll tolerance = 100
 	check_variable = {
 		which = troll_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_troll_race_trigger = {	# Is troll tolerance high? (integrated)
@@ -9471,7 +9465,7 @@ has_any_half_elven_pop_trigger = {	#Any pop minority or majority
 max_tolerance_half_elven_race_trigger = {	# Is half_elven tolerance = 100
 	check_variable = {
 		which = half_elven_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_half_elven_race_trigger = {	# Is half_elven tolerance high? (integrated)
@@ -9667,7 +9661,7 @@ has_any_orcish_pop_trigger = {	#Any pop minority or majority
 max_tolerance_orcish_race_trigger = {	# Is orcish tolerance = 100
 	check_variable = {
 		which = orcish_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_orcish_race_trigger = {	# Is orcish tolerance high? (integrated)
@@ -9863,7 +9857,7 @@ has_any_ogre_pop_trigger = {	#Any pop minority or majority
 max_tolerance_ogre_race_trigger = {	# Is ogre tolerance = 100
 	check_variable = {
 		which = ogre_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_ogre_race_trigger = {	# Is ogre tolerance high? (integrated)
@@ -10059,7 +10053,7 @@ has_any_centaur_pop_trigger = {	#Any pop minority or majority
 max_tolerance_centaur_race_trigger = {	# Is centaur tolerance = 100
 	check_variable = {
 		which = centaur_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_centaur_race_trigger = {	# Is centaur tolerance high? (integrated)
@@ -10255,7 +10249,7 @@ has_any_harimari_pop_trigger = {	#Any pop minority or majority
 max_tolerance_harimari_race_trigger = {	# Is harimari tolerance = 100
 	check_variable = {
 		which = harimari_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_harimari_race_trigger = {	# Is harimari tolerance high? (integrated)
@@ -10451,7 +10445,7 @@ has_any_hobgoblin_pop_trigger = {	#Any pop minority or majority
 max_tolerance_hobgoblin_race_trigger = {	# Is hobgoblin tolerance = 100
 	check_variable = {
 		which = hobgoblin_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_hobgoblin_race_trigger = {	# Is hobgoblin tolerance high? (integrated)
@@ -10647,7 +10641,7 @@ has_any_lizardfolk_pop_trigger = {	#Any pop minority or majority
 max_tolerance_lizardfolk_race_trigger = {	# Is lizardfolk tolerance = 100
 	check_variable = {
 		which = lizardfolk_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_lizardfolk_race_trigger = {	# Is Orcish tolerance high? (integrated)
@@ -10843,7 +10837,7 @@ has_any_mechanim_pop_trigger = {	#Any pop minority or majority
 max_tolerance_mechanim_race_trigger = {	# Is mechanim tolerance = 100
 	check_variable = {
 		which = mechanim_race_tolerance
-		which = 100
+		value = 100
 	}
 }
 high_tolerance_mechanim_race_trigger = {	# Is mechanim tolerance high? (integrated)
@@ -11280,6 +11274,24 @@ is_long_lived_consort = {
 
 is_long_lived_country = {} #literally just for magic rework to pass arguments
 
+
+# "Long-Livedness" is a rather complex topic, because of how frequently the term is bandied about without care.
+# For a long time, harimari and kobolds were all referred to as "long-lived" despite the code not acknowledging them as such.
+# Instead, these races are "uncapped lifespan", a term that is not used outside of these belowtriggers
+# These triggers, in turn, are used only in the death calculations and nowhere else. It appears they only exist to unite kobold and harimari lifespan curves.
+
+# By comparison, being "truly long-lived" as elves, dwawrves, gnomes, and for a time half-elves were, comes with major gameplay consequences
+# You trigger the Elder Pact, and you get hit with study speed malus.
+# Therefore, this confusion of terminologies has resulted in a great big mess.
+
+# The normalization of nomenclature demands us to acknowledge the following:
+# Only elves, dwarves, and gnomes are now considered "long-lived"
+# Half-elves, kobolds, and harimari might be referred to as "uncapped lifespan"
+# However, half-elves do not share the mortality curve of kobolds and harimari (they have their own code), and are therefore not a part of the trigger
+# This makes the below trigger inaccurate for uses such as in mission triggers or other logic
+
+# All other species are "normal lifespan"
+
 #No tooltip, only use in hidden triggers or custom tooltips.
 is_uncapped_lifespan_ruler = {
 	OR = {
@@ -11674,6 +11686,7 @@ ruler_is_businori_human = {
 			ruler_culture = busilari
 			ruler_culture = tefori
 			ruler_culture = ilatani
+			ruler_culture = milcori
 		}
 	}
 }
@@ -11685,6 +11698,7 @@ consort_is_businori_human = {
 			consort_culture = busilari
 			consort_culture = tefori
 			consort_culture = ilatani
+			consort_culture = milcori
 		}
 	}
 }
@@ -12009,7 +12023,7 @@ is_cannorian_primary_culture = {
 					primary_culture = city_goblin
 					primary_culture = common_goblin
 					primary_culture = forest_goblin
-					primary_culture = orvitzyen_goblin
+					primary_culture = promised_goblin
 				}
 			}
 			AND = {
@@ -12150,11 +12164,66 @@ is_cannorian_kobold_primary_culture = {
 		tooltip = is_cannorian_kobold_primary_culture_tooltip
 		culture_group = kobold
 		OR = {
+			primary_culture = kobildzani_kobold
+			primary_culture = redscale_kobold
+			primary_culture = bluescale_kobold
+			primary_culture = greenscale_kobold
+			primary_culture = whitescale_kobold
+			primary_culture = dragonmask_kobold
+			primary_culture = vrendzani_kobold
+		}
+	}
+}
+
+is_cannorian_kobold_culture = {
+	custom_trigger_tooltip = {
+		tooltip = is_cannorian_kobold_culture_tooltip
+		culture_group = kobold
+		OR = {
 			culture = kobildzani_kobold
 			culture = redscale_kobold
 			culture = bluescale_kobold
 			culture = greenscale_kobold
+			culture = whitescale_kobold
+			culture = dragonmask_kobold
+			culture = vrendzani_kobold
 		}
+	}
+}
+
+is_mainline_lizardfolk_primary_culture = {
+	AND = {
+		culture_group = lizardfolk
+		NOT = { primary_culture = cyazizeta_lizardfolk }
+		NOT = { primary_culture = itayzemby_lizardfolk }
+		NOT = { primary_culture = ashhana_lizardfolk }
+		NOT = { primary_culture = adzalanas_lizardfolk }
+	}
+}
+
+is_mainline_lizardfolk_culture = {
+	AND = {
+		culture_group = lizardfolk
+		NOT = { culture = cyazizeta_lizardfolk }
+		NOT = { culture = itayzemby_lizardfolk }
+		NOT = { culture = ashhana_lizardfolk }
+		NOT = { culture = adzalanas_lizardfolk }
+	}
+}
+
+is_western_ogre_culture = {
+	OR = {
+		culture = mossmouth_ogre
+		culture = fathide_ogre
+		culture = bloodtooth_ogre
+	}
+}
+
+is_western_ogre_primary_culture = {
+	OR = {
+		culture = mossmouth_ogre
+		culture = fathide_ogre
+		culture = bloodtooth_ogre
 	}
 }
 

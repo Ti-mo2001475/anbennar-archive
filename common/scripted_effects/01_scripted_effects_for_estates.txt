@@ -2238,7 +2238,7 @@ on_province_culture_converted_estate_privilges_effect = {
 		if = {
 			limit = {
 				culture_is_human = yes
-				NOT = { culture_group = wuhyun }
+				NOT = { culture_is_wuhyun = yes }
 			}
 			add_province_modifier = {
 				name = hob_gerunanin_disarmed_populace
@@ -3607,7 +3607,7 @@ on_province_owner_change_estate_privileges_effect = {
 		if = {
 			limit = {
 				culture_is_human = yes
-				NOT = { culture_group = wuhyun }
+				NOT = { culture_is_wuhyun = yes }
 			}
 			add_province_modifier = {
 				name = hob_gerunanin_disarmed_populace
@@ -7955,6 +7955,66 @@ on_completed_agenda_effect_estate_nobles = {
 			amount = 1
 		}
 	}
+	hidden_effect = {
+		if = {
+			limit = {
+				is_or_was_tag = { tag = L22 }
+			}
+			if = {
+				limit = {
+					has_estate_privilege = L22_estate_nobles_landless_nobility
+				}
+				every_subject_country = {
+					if = {
+						limit = {
+							OR = { 
+								has_country_modifier = L22_estate_nobles_landless_nobility_liberty_desire_4
+								has_country_modifier = L22_estate_nobles_landless_nobility_liberty_desire_3
+							}
+						}
+						remove_country_modifier = L22_estate_nobles_landless_nobility_liberty_desire_3
+						remove_country_modifier = L22_estate_nobles_landless_nobility_liberty_desire_4
+						add_country_modifier = {
+							name = L22_estate_nobles_landless_nobility_liberty_desire_4
+							duration = 3650
+						}
+					}
+					else_if = {
+						limit = {
+							has_country_modifier = L22_estate_nobles_landless_nobility_liberty_desire_2
+						}
+						remove_country_modifier = L22_estate_nobles_landless_nobility_liberty_desire_2
+						add_country_modifier = {
+							name = L22_estate_nobles_landless_nobility_liberty_desire_3
+							duration = 3650
+						}
+					}
+					else_if = {
+						limit = {
+							has_country_modifier = L22_estate_nobles_landless_nobility_liberty_desire_1
+						}
+						remove_country_modifier = L22_estate_nobles_landless_nobility_liberty_desire_1
+						add_country_modifier = {
+							name = L22_estate_nobles_landless_nobility_liberty_desire_2
+							duration = 3650
+						}
+					}
+					else = {
+						add_country_modifier = {
+							name = L22_estate_nobles_landless_nobility_liberty_desire_1
+							duration = 3650
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_country_flag = L22_vassals_from_agenda
+				}
+				country_event = { id = binwarji.60 }
+			}
+		}
+	}
 }
 # on_completed_agenda_effect_estate_brahmins = {
 # 	if = {
@@ -7972,6 +8032,41 @@ on_completed_agenda_effect_estate_burghers = {
 		gain_pajeong_reassimilation_points = {
 			estate = burghers
 			amount = 1
+		}
+	}
+	if = {
+		limit = {
+			4859 = {
+				owned_by = ROOT
+				can_use_thousand_words_assembly_scripted_trigger = yes
+				has_great_project = {
+					type = thousand_words_assembly
+					tier = 2
+				}
+			}
+		}
+		if = {
+			limit = {
+				4859 = {
+					has_great_project = {
+						type = thousand_words_assembly
+						tier = 3
+					}
+				}
+			}
+			remove_country_modifier = thousand_words_assembly_merchant_buff_1
+			remove_country_modifier = thousand_words_assembly_merchant_buff_2
+			add_country_modifier = {
+				name = thousand_words_assembly_merchant_buff_2
+				duration = 5475
+			}
+		}
+		else = {
+			remove_country_modifier = thousand_words_assembly_merchant_buff_1
+			add_country_modifier = {
+				name = thousand_words_assembly_merchant_buff_1
+				duration = 5475
+			}
 		}
 	}
 }
@@ -8123,6 +8218,14 @@ on_completed_agenda_effect = {
 	# clr_auto_complete_flag = yes
 	
 	if = {
+		limit = { has_country_flag = count_estate_agendas_completed }
+		change_variable = {
+			which = total_completed_agendas 
+			value = 1
+		}
+	}
+
+	if = { #Vic Estates - Blue Reachman
 		limit = {
 			OR = {
 				has_government_attribute = expand_the_league_1_attribute
@@ -8147,7 +8250,8 @@ on_completed_agenda_effect = {
 			}
 		}
 	}
-	if = { 
+
+	if = { #Bazuneizar Clockwork Republic
 		limit = { has_reform = bazuneizar_clockwork_republic }
 		change_variable = {
 			which = bazuneizar_completed_agendas
@@ -8170,6 +8274,17 @@ on_completed_agenda_effect = {
 			limit = { has_ruler_flag = bazuneizar_incompleted_agenda }
 			clr_ruler_flag = bazuneizar_incompleted_agenda
 			set_ruler_flag = bazuneizar_has_done_agenda
+		}
+	}
+
+	if = { #Binwarji
+		limit = {
+			has_country_flag = L22_PP_from_agendas
+		}
+		add_splendor = 20
+		add_power_projection = {
+			type = L22_estate_agenda_power_projection
+			amount = 10
 		}
 	}
 }

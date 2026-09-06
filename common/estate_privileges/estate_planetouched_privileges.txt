@@ -14,9 +14,18 @@ estate_planetouched_organization_empowered = {
 		}
 	}
 	can_select = {
-		num_of_estate_privileges = {
-			estate = estate_planetouched
-			value = 7
+		if = {
+			limit = { mission_completed = kaino_bokiya_3 }
+			num_of_estate_privileges = {
+				estate = estate_planetouched
+				value = 6
+			}
+		}
+		else = {
+			num_of_estate_privileges = {
+				estate = estate_planetouched
+				value = 7
+			}
 		}
 		estate_loyalty = {
 			estate = estate_planetouched
@@ -438,7 +447,15 @@ estate_planetouched_scattered_aro = {
 							church_power = 200
 							patriarch_authority = 30
 							AND = {
-								religion = genie_cult
+								NOT = {
+									religion = fangaulan_pantheon
+								}
+								NOT = {
+									religion = xhazobkult
+								}
+								NOT = {
+									religion = kvangahga
+								}
 								religious_unity = 0.8
 							}
 						}
@@ -1670,7 +1687,7 @@ estate_planetouched_state_couriers = {
 		}
 		modifier = {
 			diplomatic_upkeep = 1
-			reduced_liberty_desire = 0.05
+			reduced_liberty_desire = 5
 			nobles_loyalty_modifier = -0.05
 		}
 	}
@@ -1684,3 +1701,81 @@ estate_planetouched_state_couriers = {
 ##############################################
 ### REGIONAL/CULTURAL/RELIGIOUS PRIVILEGES ###
 ##############################################
+
+
+
+##############################################
+##### MISSION TREE / BESPOKE PRIVILEGES ######
+##############################################
+
+estate_planetouched_L22_atoners_will = { #Binwarji_privilege
+	icon = privilege_promote_maratha_nobility
+	max_absolutism = 0
+	loyalty = 0.1
+	influence = 0.1
+	is_valid = {
+		has_country_flag = L22_atoners_will_flag
+	}
+	can_select = {
+		always = yes
+	}
+	can_revoke = {
+		always = no
+	}
+	on_granted = {
+		
+	}
+	on_invalid = {
+		
+	}
+	penalties = {
+		global_tax_modifier = -0.2
+	}
+	benefits = {
+		
+	}
+	loyalty_scaled_conditional_modifier = {
+		trigger = {
+			always = yes
+		}
+		modifier = {
+			state_maintenance_modifier = -0.2
+			administrative_efficiency = 0.05
+		}
+	}
+	ai_will_do = {
+		factor = 5
+	}
+}
+
+#MT
+
+estate_planetouched_A29_planetouched_production = {
+	icon = privilege_aghas
+	loyalty = 0.05
+	influence = 0.05
+	is_valid = { has_country_flag = A29_planetouched_production_unlock }
+	on_granted = {  }
+	benefits = {
+		production_efficiency = 0.1
+	}
+	
+	ai_will_do = {
+		factor = 5
+	}
+}
+
+estate_planetouched_A29_emperors_mantle = {
+	icon = privilege_royal_marriage
+	loyalty = 0.1
+	influence = 0
+	is_valid = { has_country_flag = A29_emperors_mantle_privilege_unlock }
+	on_granted = {  }
+	benefits = {
+		core_creation = -0.1
+	}
+	
+	ai_will_do = {
+		factor = 5
+	}
+}

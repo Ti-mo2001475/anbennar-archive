@@ -139,6 +139,7 @@ country_decisions = {
 		major = yes
 		potential = {
 			has_country_modifier = centaur_administration
+			NOT = { culture = zhadshai_centaur }
 			NOT = { has_global_flag = crimson_caehn_formed }
 			was_never_end_game_tag_trigger = yes
 			NOT = {
@@ -152,12 +153,9 @@ country_decisions = {
 				ai = yes
 				AND = {
 					NOT = { tag = I57 } #Golden Tremor
-					OR = {
-						NOT = { tag = I55 } #Black Herd
-						has_country_flag = I55_enable_formables_flag
-					}
 					NOT = { tag = I69 } #Star Rider
 					NOT = { tag = I80 } #Great Storm
+					NOT = { tag = I49 } #Thunderborn
 				}
 			}
 		}
@@ -239,6 +237,7 @@ country_decisions = {
 		major = yes
 		potential = {
 			has_country_modifier = centaur_administration
+			NOT = { culture = zhadshai_centaur }
 			was_never_end_game_tag_trigger = yes
 			NOT = { exists = J54 }
 			NOT = {
@@ -254,6 +253,7 @@ country_decisions = {
 					NOT = { tag = I57 } #Golden Tremor
 					NOT = { tag = I69 } #Star Rider
 					NOT = { tag = I80 } #Great Storm
+					NOT = { tag = I49 } #Thunderborn
 				}
 			}
 		}
@@ -377,6 +377,7 @@ country_decisions = {
 		major = yes
 		potential = {
 			has_country_modifier = centaur_administration
+			NOT = { culture = zhadshai_centaur }
 			was_never_end_game_tag_trigger = yes
 			NOT = { exists = J55 }
 			NOT = {
@@ -392,6 +393,7 @@ country_decisions = {
 					NOT = { tag = I57 } #Golden Tremor
 					NOT = { tag = I69 } #Star Rider
 					NOT = { tag = I80 } #Great Storm
+					NOT = { tag = I49 } #Thunderborn
 				}
 			}
 		}
@@ -475,6 +477,7 @@ country_decisions = {
 		major = yes
 		potential = {
 			has_country_modifier = centaur_administration
+			NOT = { culture = zhadshai_centaur }
 			was_never_end_game_tag_trigger = yes
 			NOT = { exists = J56 }
 			NOT = {
@@ -487,10 +490,6 @@ country_decisions = {
 				ai = yes
 				AND = {
 					NOT = { tag = I57 } #Golden Tremor
-					OR = {
-						NOT = { tag = I55 } #Black Herd
-						has_country_flag = I55_enable_formables_flag
-					}
 				}
 			}
 		}
@@ -542,6 +541,18 @@ country_decisions = {
 				custom_trigger_tooltip = {
 					tooltip = I80_formation_tooltip
 					always = no
+				}
+			}
+			else_if = {
+				limit = { #Thunderborn
+					tag = I49 
+					has_country_flag = I49_edeyne_alive
+				} 
+				custom_trigger_tooltip = {
+					tooltip = I49_no_forming_taryean_tooltip
+					NOT = {
+						has_country_flag = I49_no_forming_taryean
+					}
 				}
 			}
 			else = {
@@ -598,7 +609,15 @@ country_decisions = {
 				duration = 7300
 			}
 			country_event = { id = ideagroups.1 } #Swap Ideas
-		
+			hidden_effect = {
+				if = {
+					limit = { has_country_flag = I49_zaya_injured }
+					country_event = {
+						id = flavour_thunderborn.13
+						days = 1825
+					}
+				}
+			}
 		}
 		ai_will_do = {
 			factor = 400

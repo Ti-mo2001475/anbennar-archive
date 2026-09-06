@@ -16,7 +16,11 @@ parusahan_saya_1x1 = {
 		trigger = {
 			has_estate_privilege = estate_mages_seek_magical_advice
 			has_estate_privilege = estate_raj_ministries_extend_education_grants
-			has_cast_enchanting_envoy = yes
+			
+			OR = {
+				has_cast_enchanting_envoy_embassy = yes
+			}
+			
 			OR = {
 				is_estate_enchantment_level_1_minimum = yes
 				is_estate_divination_level_1_minimum = yes
@@ -825,20 +829,6 @@ parusahan_saya_1x4 = {
 		}
 
 		effect = {  
-			add_spy_network_in = {
-				who = event_target:raj_raja_global_target
-				value = -20
-			}
-
-			event_target:raj_raja_global_target = { 
-				ROOT = {
-					add_favors = { # this is the only way it works. I hate you pdx
-						who = PREV
-						amount = -10
-					}
-				}
-			}
-
 			maharaaja_area = {
 				random_area_province = {
 					spawn_rebels = {
@@ -2045,7 +2035,7 @@ parusahan_saya_3x2 = {
 
 		trigger = {
 			custom_trigger_tooltip = {
-				tooltip = R54_throne_war_and_sisters_tt3
+				tooltip = R54_throne_war_and_sisters_tt4
 				# if you haven't vassalized all countries with capitals in dhujat
 				if = {
 					limit = {
@@ -2552,32 +2542,9 @@ parusahan_saya_3x3 = {
 		} 
 
 		effect = {
-			add_ruler_modifier = {
-				name = R54_dawn_of_the_second_philosopher_king
+			country_event = {
+				id = flavor_parusahan_saya.20
 			}
-
-			
-			custom_tooltip = R54_the_third_harimraj_tt2
-			hidden_effect = {
-				add_power_projection = {
-					type = 10_permanent_power_projection
-					amount = 10
-				}
-			}
-
-			custom_tooltip = ARB_golden_age_renewal_tt
-			hidden_effect = {
-				if = {
-					limit = { has_had_golden_age = yes } 
-					reset_golden_age = yes 
-				}
-				else_if = {
-					limit = { in_golden_age = yes } 
-					extend_golden_age = 600
-				}
-			}
-
-			custom_tooltip = R54_the_third_harimraj_tt3
 		} 
 	}
 }
@@ -2732,7 +2699,7 @@ parusahan_saya_3x5 = {
 							who = ROOT
 							value = 75
 						}
-						liberty_desire = 1
+						NOT = { liberty_desire = 1 }
 					}
 				}
 			}

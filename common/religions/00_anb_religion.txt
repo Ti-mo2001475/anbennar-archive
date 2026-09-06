@@ -430,6 +430,7 @@ cannorian = {
 						name = "sanction_for_artificer_tax"
 						duration = 7300
 					}
+					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 13 }
 				}
 				ai_will_do = {
 					factor = 1
@@ -504,6 +505,7 @@ cannorian = {
 							25 = { change_mil = 1 }
 						}
 					}
+					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 50 }
 				}
 				ai_will_do = {
 					factor = 1
@@ -539,6 +541,15 @@ cannorian = {
 						add_dip_power = 10
 						add_mil_power = 10
 					}
+					if = {
+						limit = {
+							NOT = { 6063 = { has_province_modifier = ardimyan_rite_religious_centre_5 }  }
+							6063 = { has_great_project = { type = genie_palace_of_jinnakah tier = 3 } }
+							6063 = { owned_by = ROOT }
+						}
+						S91_upgrade_ardimyan_rite_centre = yes
+					}
+					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 13 }
 				}
 				ai_will_do = {
 					factor = 1
@@ -562,6 +573,7 @@ cannorian = {
 						name = "papal_blessing"
 						duration = 7300
 					}
+					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 13 }
 				}
 				ai_will_do = {
 					factor = 1
@@ -582,6 +594,7 @@ cannorian = {
 				}
 				effect = {
 					add_stability = 1
+					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 25 } 
 				}
 				ai_will_do = {
 					factor = 1
@@ -599,13 +612,23 @@ cannorian = {
 				allow = {
 				#	is_at_war = yes
 					NOT = { war_with = Z97 }
-					NOT = { has_country_modifier = warrior_automata }
+					NOT = { 
+						has_country_modifier = warrior_automata 
+					}
 				}
 				effect = {
+					if = {
+						limit = {
+							has_country_flag = A29_warrior_automata_buff
+						}
+						custom_tooltip = A29_warrior_automata_buff_effect_tt 
+						warrior_automata_A29 = yes
+					}
 					add_country_modifier = {
 						name = "warrior_automata"
 						duration = 7300
 					}
+					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 13 }
 				}
 				ai_will_do = {
 					factor = 0.5
@@ -629,6 +652,7 @@ cannorian = {
 						name = "holy_research"
 						duration = 7300
 					}
+					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 13 } 
 				}
 				ai_will_do = {
 					factor = 1
@@ -649,6 +673,7 @@ cannorian = {
 				}
 				effect = {
 					add_mercantilism = 1
+					if = { limit = { mission_completed = A29_one_god } add_papal_influence = 13 }
 				}
 				ai_will_do = {
 					factor = 1
@@ -662,7 +687,7 @@ cannorian = {
 	}
 	
 	dalcabba = {
-		color = { 192 102 60 }
+		color = { 210 129 100 }
 		icon = 77
 		allowed_conversion = {}
 		country = {
@@ -3920,12 +3945,12 @@ goblin = {
 		}
 	}
 	
-	eagle_worship = {
+	banbe_anen = {
 		color = { 185 50 110 }
 		icon = 127
 		country = {
+			mages_loyalty_modifier = 0.1
 			land_attrition = -0.2
-			shock_damage = 0.1
 		}
 		country_as_secondary = {
 			land_attrition = -0.2
@@ -3936,17 +3961,18 @@ goblin = {
 			local_missionary_strength = 0.02
 		}
 
-		on_convert = {
-			change_religion = eagle_worship
-			add_prestige = -100
+		fervor = yes
 
-		add_country_modifier = {
+		on_convert = {
+			change_religion = banbe_anen
+			add_prestige = -100
+			add_country_modifier = {
 				name = "conversion_zeal"
 				duration = 3650
 			}
 		}
-
-		heretic = { 
+		
+		heretic = {
 			CHAOS_WORSHIPPERS 
 		}
 	}
@@ -4263,6 +4289,31 @@ aelantiri = {
 		province = {
 			local_institution_spread = 0.2
 		}
+
+		uses_church_power = yes				
+		aspects = {
+			hawk_gazes
+			hawk_gazes_balanced
+			hawk_gazes_dominant
+			glowing_eyes
+			glowing_eyes_balanced
+			glowing_eyes_dominant
+			travel_wastes
+			travel_wastes_balanced
+			travel_wastes_dominant
+			nurture_bear
+			nurture_bear_balanced
+			nurture_bear_dominant
+			hermit_defiler
+			hermit_defiler_balanced
+			hermit_defiler_dominant
+			spirit_defiance
+			spirit_defiance_balanced
+			spirit_defiance_dominant
+		}
+		aspects_name = KINBOND_ASPECTS
+
+
 		on_convert = {
 			change_religion = kinbond
 
@@ -6138,21 +6189,11 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FROM = Nation that follows that school
 			can_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_have_cost_of_inviting_schoolar = yes
 				anb_has_not_religious_scholars_trigger = yes
 				OR = {
 					AND = {
-						reverse_has_opinion = { who = FROM value = 150 }
-						OR = {
-							alliance_with = FROM
-							is_subject_of = FROM
-							overlord_of = FROM
-						}
+						raheni_opinion_and_ties_to_invite_schoolar = yes
 						hidden_progressive_opinion_for_scholar_trigger = yes
 					}
 					any_owned_province = {
@@ -6163,12 +6204,7 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FORM = Nation that sends scholar
 			on_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_cost_of_inviting_schoolar = yes
 				set_country_flag = invited_scholar_starry_eye_once
 				#Pasiragha_scholar_system
 				pasiragha_scholar_system = { HP_SCHOOL = starry_eye }
@@ -6199,21 +6235,11 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FROM = Nation that follows that school
 			can_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_have_cost_of_inviting_schoolar = yes
 				anb_has_not_religious_scholars_trigger = yes
 				OR = {
 					AND = {
-						reverse_has_opinion = { who = FROM value = 150 }
-						OR = {
-							alliance_with = FROM
-							is_subject_of = FROM
-							overlord_of = FROM
-						}
+						raheni_opinion_and_ties_to_invite_schoolar = yes
 						hidden_progressive_opinion_for_scholar_trigger = yes
 					}
 					any_owned_province = {
@@ -6224,12 +6250,7 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FORM = Nation that sends scholar
 			on_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_cost_of_inviting_schoolar = yes
 				set_country_flag = invited_scholar_radiant_sun_once
 				#Pasiragha_scholar_system
 				pasiragha_scholar_system = { HP_SCHOOL = radiant_sun }
@@ -6260,21 +6281,11 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FROM = Nation that follows that school
 			can_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_have_cost_of_inviting_schoolar = yes
 				anb_has_not_religious_scholars_trigger = yes
 				OR = {
 					AND = {
-						reverse_has_opinion = { who = FROM value = 150 }
-						OR = {
-							alliance_with = FROM
-							is_subject_of = FROM
-							overlord_of = FROM
-						}
+						raheni_opinion_and_ties_to_invite_schoolar = yes
 						hidden_progressive_opinion_for_scholar_trigger = yes
 					}
 					any_owned_province = {
@@ -6285,12 +6296,7 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FORM = Nation that sends scholar
 			on_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_cost_of_inviting_schoolar = yes
 				set_country_flag = invited_scholar_orange_sash_once
 				#Pasiragha_scholar_system
 				pasiragha_scholar_system = { HP_SCHOOL = orange_sash }
@@ -6323,21 +6329,11 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FROM = Nation that follows that school
 			can_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_have_cost_of_inviting_schoolar = yes
 				anb_has_not_religious_scholars_trigger = yes
 				OR = {
 					AND = {
-						reverse_has_opinion = { who = FROM value = 150 }
-						OR = {
-							alliance_with = FROM
-							is_subject_of = FROM
-							overlord_of = FROM
-						}
+						raheni_opinion_and_ties_to_invite_schoolar = yes
 						hidden_progressive_opinion_for_scholar_trigger = yes
 					}
 					any_owned_province = {
@@ -6348,12 +6344,7 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FORM = Nation that sends scholar
 			on_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_cost_of_inviting_schoolar = yes
 				set_country_flag = invited_scholar_golden_palace_once
 				#Pasiragha_scholar_system
 				pasiragha_scholar_system = { HP_SCHOOL = golden_palace }
@@ -6384,21 +6375,11 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FROM = Nation that follows that school
 			can_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_have_cost_of_inviting_schoolar = yes
 				anb_has_not_religious_scholars_trigger = yes
 				OR = {
 					AND = {
-						reverse_has_opinion = { who = FROM value = 150 }
-						OR = {
-							alliance_with = FROM
-							is_subject_of = FROM
-							overlord_of = FROM
-						}
+						raheni_opinion_and_ties_to_invite_schoolar = yes
 						hidden_progressive_opinion_for_scholar_trigger = yes
 					}
 					any_owned_province = {
@@ -6409,12 +6390,7 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FORM = Nation that sends scholar
 			on_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_cost_of_inviting_schoolar = yes
 				set_country_flag = invited_scholar_unbroken_claw_once
 				#Pasiragha_scholar_system
 				pasiragha_scholar_system = { HP_SCHOOL = unbroken_claw }
@@ -6445,21 +6421,11 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FROM = Nation that follows that school
 			can_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_have_cost_of_inviting_schoolar = yes
 				anb_has_not_religious_scholars_trigger = yes
 				OR = {
 					AND = {
-						reverse_has_opinion = { who = FROM value = 150 }
-						OR = {
-							alliance_with = FROM
-							is_subject_of = FROM
-							overlord_of = FROM
-						}
+						raheni_opinion_and_ties_to_invite_schoolar = yes
 						hidden_progressive_opinion_for_scholar_trigger = yes
 					}
 					any_owned_province = {
@@ -6470,12 +6436,7 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FORM = Nation that sends scholar
 			on_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_cost_of_inviting_schoolar = yes
 				set_country_flag = invited_scholar_silk_turban_once
 				#Pasiragha_scholar_system
 				pasiragha_scholar_system = { HP_SCHOOL = silk_turban }
@@ -6506,21 +6467,11 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FROM = Nation that follows that school
 			can_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_have_cost_of_inviting_schoolar = yes
 				anb_has_not_religious_scholars_trigger = yes
 				OR = {
 					AND = {
-						reverse_has_opinion = { who = FROM value = 150 }
-						OR = {
-							alliance_with = FROM
-							is_subject_of = FROM
-							overlord_of = FROM
-						}
+						raheni_opinion_and_ties_to_invite_schoolar = yes
 						hidden_progressive_opinion_for_scholar_trigger = yes
 					}
 					any_owned_province = {
@@ -6531,12 +6482,7 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FORM = Nation that sends scholar
 			on_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_cost_of_inviting_schoolar = yes
 				set_country_flag = invited_scholar_ascendant_soul_once
 				#Pasiragha_scholar_system
 				pasiragha_scholar_system = { HP_SCHOOL = ascendant_soul }
@@ -6567,21 +6513,11 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FROM = Nation that follows that school
 			can_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_have_cost_of_inviting_schoolar = yes
 				anb_has_not_religious_scholars_trigger = yes
 				OR = {
 					AND = {
-						reverse_has_opinion = { who = FROM value = 150 }
-						OR = {
-							alliance_with = FROM
-							is_subject_of = FROM
-							overlord_of = FROM
-						}
+						raheni_opinion_and_ties_to_invite_schoolar = yes
 						hidden_progressive_opinion_for_scholar_trigger = yes
 					}
 					any_owned_province = {
@@ -6592,12 +6528,7 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FORM = Nation that sends scholar
 			on_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_cost_of_inviting_schoolar = yes
 				set_country_flag = invited_scholar_synthetic_truth_once
 				#Pasiragha_scholar_system
 				pasiragha_scholar_system = { HP_SCHOOL = synthetic_truth }
@@ -6628,21 +6559,11 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FROM = Nation that follows that school
 			can_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_have_cost_of_inviting_schoolar = yes
 				anb_has_not_religious_scholars_trigger = yes
 				OR = {
 					AND = {
-						reverse_has_opinion = { who = FROM value = 150 }
-						OR = {
-							alliance_with = FROM
-							is_subject_of = FROM
-							overlord_of = FROM
-						}
+						raheni_opinion_and_ties_to_invite_schoolar = yes
 						hidden_progressive_opinion_for_scholar_trigger = yes
 					}
 					any_owned_province = {
@@ -6653,12 +6574,7 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FORM = Nation that sends scholar
 			on_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_cost_of_inviting_schoolar = yes
 				set_country_flag = invited_scholar_final_paradigm_once
 
 				if = { limit = { has_country_flag = L62_invite_scholar } vandipha_retreat_of_scholars_effect = yes } #Vandipha
@@ -6691,21 +6607,11 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FROM = Nation that follows that school
 			can_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_have_cost_of_inviting_schoolar = yes
 				anb_has_not_religious_scholars_trigger = yes
 				OR = {
 					AND = {
-						reverse_has_opinion = { who = FROM value = 150 }
-						OR = {
-							alliance_with = FROM
-							is_subject_of = FROM
-							overlord_of = FROM
-						}
+						raheni_opinion_and_ties_to_invite_schoolar = yes
 						hidden_progressive_opinion_for_scholar_trigger = yes
 					}
 					any_owned_province = {
@@ -6716,12 +6622,7 @@ raheni = {
 
 			# THIS = Nation wanting to invite the scholar, FORM = Nation that sends scholar
 			on_invite_scholar = {
-				if = {
-					limit = {
-						NOT = { has_country_flag = no_scholar_adm_cost }
-					}
-					adm_power_cost = 50
-				}
+				raheni_cost_of_inviting_schoolar = yes
 				set_country_flag = invited_scholar_piercing_fang_once
 
 				if = { limit = { has_country_flag = L62_invite_scholar } vandipha_retreat_of_scholars_effect = yes } #Vandipha
@@ -6823,13 +6724,12 @@ raheni = {
 			}
 			if = {
 				limit = {
-					NOT = {
-						calc_true_if = {
-							all_province = {
-								religion = suhans_praxis
-								is_reformation_center = yes
+					4411 = {
+						NOT = {
+							check_variable = {
+								which = reformation_center_count
+								value = 3
 							}
-							amount = 3
 						}
 					}
 				}
@@ -6842,8 +6742,14 @@ raheni = {
 						}
 						change_religion = suhans_praxis
 						add_reform_center = suhans_praxis
-						
 						set_province_flag = had_reformation_center
+
+						4411 = {
+							change_variable = {
+								which = reformation_center_count
+								value = 1
+							}
+						}
 					}
 				}
 				custom_tooltip = CENTER_OF_REFORMATION_POSSIBLE
@@ -7704,6 +7610,75 @@ halessi = {
 						}
 						custom_tooltip = takta_lupulan_festivals_explainer_tt
 						add_innovativeness_or_monarch_power_anb = { amount = 5 }
+					}
+				}
+				hidden_effect = {
+					if = {
+						limit = {
+							owns = 4801
+							4801 = {
+								has_great_project = {
+									type = tabai_spirit_palace
+									tier = 2
+								}
+								province_can_use_tabai_spirit_palace = yes
+							}
+						}
+						if = {
+							limit = {
+								4801 = {
+									has_great_project = {
+										type = tabai_spirit_palace
+										tier = 3
+									}
+								}
+							}
+							every_owned_province = {
+								limit = {
+									has_terrain = jungle
+									religion = mystic_accord
+								}
+								add_province_modifier = {
+									name = haless_tabai_spirit_palace_celebrating_2
+									duration = 1095
+								}
+							}
+						}
+						else = {
+							every_owned_province = {
+								limit = {
+									has_terrain = jungle
+									religion = mystic_accord
+								}
+								add_province_modifier = {
+									name = haless_tabai_spirit_palace_celebrating_1
+									duration = 1095
+								}
+							}
+						}
+					}
+				}
+				if = { #Port of Two Spirits
+					limit = {
+						OR = {
+							has_church_aspect = lupulan_dip_aspect
+							has_church_aspect = lupulan_mil_aspect
+							has_church_aspect = cinulau_dip_aspect
+							has_church_aspect = cinulau_mil_aspect
+						}
+						4774 = {
+							owned_by = ROOT
+							has_great_project = {
+								type = port_of_two_spirits
+								tier = 3
+							}
+						}
+					}
+					add_stability = 1
+					random_owned_province = {
+						add_devastation = -20
+						add_prosperity = 25
+						add_random_development = 1
 					}
 				}
 			}

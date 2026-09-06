@@ -117,10 +117,7 @@ country_event = {
 		custom_tooltip = I78_caehns_authority_enable_tt
 		if = {
 			limit = { has_ruler_flag = I78_starting_ruler_flag }
-			add_ruler_modifier = {
-				name = exceptional_willpower_100
-				duration = -1
-			}
+			add_exceptional_willpower_100 = yes
 			change_adm = 2
 			change_dip = 2
 			change_mil = 2
@@ -200,9 +197,25 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			random_country = {
-				limit = { is_lake_federation_leader = yes }
-				save_event_target_as = event_country
+			if = {
+				limit = { any_country = { is_lake_federation_leader = yes } }
+				random_country = {
+					limit = { is_lake_federation_leader = yes }
+					save_event_target_as = event_country
+				}
+			}
+			else = {
+				random_country = {
+					limit = { culture = triunic }
+					save_event_target_as = event_country
+				}
+				every_country = {
+					limit = { culture = triunic }
+					if = {
+						limit = { total_own_and_non_tributary_subject_development = event_target:event_country }
+						save_event_target_as = event_country
+					}
+				}
 			}
 		}
 	}

@@ -289,3 +289,849 @@ defined_text = {
 
     text = { localisation_key = degariesDesc }
 }
+
+#Besolaki
+defined_text = {
+    name = BesolakiMagicOpinionCheck
+	random = no
+
+    text = {
+        localisation_key = yes_mark
+		trigger = {
+			any_known_country = {
+				OR = {
+					tag = A85 #Magisterium
+					has_reform = magocracy_reform
+					ruler_is_powerful_mage = yes
+				}
+				has_opinion = {
+					who = ROOT
+					value = 50
+				}
+			}
+		}
+    }
+
+    text = { localisation_key = no_mark }
+}
+
+defined_text = {
+    name = BesolakiMagicDamestearCheck
+	random = no
+
+    text = {
+        localisation_key = yes_mark
+		trigger = {
+			any_known_country = {
+				NOT = { culture_group = kheionai_ruinborn_elf }
+				damestear = 1
+				OR = {
+					has_opinion = {
+						who = ROOT
+						value = 200
+					}
+					AND = {
+						ROOT = { faction_in_power = beso_nautabhen }
+						has_opinion = {
+							who = ROOT
+							value = 175
+						}
+					}
+				}
+			}
+		}
+    }
+
+    text = { localisation_key = no_mark }
+}
+
+defined_text = {
+    name = BesolakiKheionaiOpinionCheck
+	random = no
+
+    text = {
+        localisation_key = yes_mark
+		trigger = {
+			G49 = { #Lokemeion
+				has_opinion = {
+					who = ROOT
+					value = 100
+				}
+			}
+			G55 = { #Eneion
+				has_opinion = {
+					who = ROOT
+					value = 100
+				}
+			}
+		}
+    }
+
+    text = { localisation_key = no_mark }
+}
+
+defined_text = {
+    name = BesolakiKheionaiOpinion2Check
+	random = no
+
+    text = {
+        localisation_key = yes_mark
+		trigger = {
+			OR = {
+				G49 = { #Lokemeion
+					has_opinion = {
+						who = ROOT
+						value = 100
+					}
+				}
+				G55 = { #Eneion
+					has_opinion = {
+						who = ROOT
+						value = 100
+					}
+				}
+			}
+		}
+    }
+
+    text = { localisation_key = no_mark }
+}
+
+defined_text = {
+    name = NautabhenPowerCheck
+	random = no
+
+    text = {
+        localisation_key = yes_mark
+		trigger = { faction_in_power = beso_nautabhen }
+    }
+
+    text = { localisation_key = no_mark }
+}
+
+defined_text = {
+    name = SkighubhenPowerCheck
+	random = no
+
+    text = {
+        localisation_key = yes_mark
+		trigger = { faction_in_power = beso_skighubhen }
+    }
+
+    text = { localisation_key = no_mark }
+}
+
+defined_text = {
+    name = EneionBuildCheck
+	random = no
+
+    text = {
+        localisation_key = yes_mark
+		trigger = {
+			2674 = { #Eneion
+				NOT = { devastation = 1 }
+				has_trade_building_trigger = yes
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				grown_by_development = 6
+				if = {
+					limit = { NOT = { owned_by = ROOT } }
+					owner = {
+						is_subject_of = ROOT
+						NOT = { liberty_desire = 50 }
+					}
+				}
+			}
+		}
+    }
+
+    text = { localisation_key = no_mark }
+}
+
+defined_text = {
+    name = KeyolionBuildCheck
+	random = no
+
+    text = {
+        localisation_key = yes_mark
+		trigger = {
+			2669 = { #Keyolion
+				NOT = { devastation = 1 }
+				has_trade_building_trigger = yes
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				grown_by_development = 6
+				if = {
+					limit = { NOT = { owned_by = ROOT } }
+					owner = {
+						is_subject_of = ROOT
+						NOT = { liberty_desire = 50 }
+					}
+				}
+			}
+		}
+    }
+
+    text = { localisation_key = no_mark }
+}
+
+defined_text = {
+    name = EmpkeiosBuildCheck
+	random = no
+
+    text = {
+        localisation_key = yes_mark
+		trigger = {
+			2595 = { #Empkeios
+				NOT = { devastation = 1 }
+				has_trade_building_trigger = yes
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				grown_by_development = 6
+				if = {
+					limit = { NOT = { owned_by = ROOT } }
+					owner = {
+						is_subject_of = ROOT
+						NOT = { liberty_desire = 50 }
+					}
+				}
+			}
+		}
+    }
+
+    text = { localisation_key = no_mark }
+}
+
+#Deathwinds
+
+defined_text = { #So I only need to add the description once instead of 10 times
+    name = windward_modifier_desc
+	random = no
+
+    text = { localisation_key = desc_windward_level }
+}
+
+
+defined_text = { #So I only need to add the description once instead of 10 times
+    name = deathwind_modifier_desc
+	random = no
+
+    text = { localisation_key = desc_deathwind_level }
+}
+
+defined_text = {
+    name = GetWindwardValue
+	random = no
+
+    text = {
+        localisation_key = value_1
+		trigger = { has_province_modifier = windward_level_1 }
+    }
+
+    text = {
+        localisation_key = value_2
+		trigger = { has_province_modifier = windward_level_2 }
+    }
+
+    text = {
+        localisation_key = value_3
+		trigger = { has_province_modifier = windward_level_3 }
+    }
+
+    text = {
+        localisation_key = value_4
+		trigger = { has_province_modifier = windward_level_4 }
+    }
+
+    text = {
+        localisation_key = value_5
+		trigger = { has_province_modifier = windward_level_5 }
+    }
+
+    text = {
+        localisation_key = value_6
+		trigger = { has_province_modifier = windward_level_6 }
+    }
+
+    text = {
+        localisation_key = value_7
+		trigger = { has_province_modifier = windward_level_7 }
+    }
+
+    text = {
+        localisation_key = value_8
+		trigger = { has_province_modifier = windward_level_8 }
+    }
+
+    text = {
+        localisation_key = value_9
+		trigger = { has_province_modifier = windward_level_9 }
+    }
+
+    text = {
+        localisation_key = value_10
+		trigger = { has_province_modifier = windward_level_10 }
+    }
+
+    text = { localisation_key = value_0 }
+}
+
+defined_text = {
+    name = GetWindwardModifiers
+	random = no
+
+    text = {
+        localisation_key = windward_1_modifiers
+		trigger = { has_province_modifier = windward_level_1 }
+    }
+
+    text = {
+        localisation_key = windward_2_modifiers
+		trigger = { has_province_modifier = windward_level_2 }
+    }
+
+    text = {
+        localisation_key = windward_3_modifiers
+		trigger = { has_province_modifier = windward_level_3 }
+    }
+
+    text = {
+        localisation_key = windward_4_modifiers
+		trigger = { has_province_modifier = windward_level_4 }
+    }
+
+    text = {
+        localisation_key = windward_5_modifiers
+		trigger = { has_province_modifier = windward_level_5 }
+    }
+
+    text = {
+        localisation_key = windward_6_modifiers
+		trigger = { has_province_modifier = windward_level_6 }
+    }
+
+    text = {
+        localisation_key = windward_7_modifiers
+		trigger = { has_province_modifier = windward_level_7 }
+    }
+
+    text = {
+        localisation_key = windward_8_modifiers
+		trigger = { has_province_modifier = windward_level_8 }
+    }
+
+    text = {
+        localisation_key = windward_9_modifiers
+		trigger = { has_province_modifier = windward_level_9 }
+    }
+
+    text = {
+        localisation_key = windward_10_modifiers
+		trigger = { has_province_modifier = windward_level_10 }
+    }
+
+    text = { localisation_key = windward_0_modifiers }
+}
+
+defined_text = {
+    name = GetDeathwindsValue
+	random = no
+
+    text = {
+        localisation_key = deathwinds_active
+		trigger = { check_variable = { deathwinds_warded_var = 0 } }
+    }
+	
+	text = { localisation_key = deathwinds_not_active }
+}
+
+defined_text = {
+    name = GetDeathwindModifiers
+	random = no
+
+    text = {
+        localisation_key = deathwind_1_modifiers
+		trigger = { has_province_modifier = deathwind_level_1 }
+    }
+
+    text = {
+        localisation_key = deathwind_2_modifiers
+		trigger = { has_province_modifier = deathwind_level_2 }
+    }
+
+    text = {
+        localisation_key = deathwind_3_modifiers
+		trigger = { has_province_modifier = deathwind_level_3 }
+    }
+
+    text = {
+        localisation_key = deathwind_4_modifiers
+		trigger = { has_province_modifier = deathwind_level_4 }
+    }
+
+    text = {
+        localisation_key = deathwind_5_modifiers
+		trigger = { has_province_modifier = deathwind_level_5 }
+    }
+
+    text = {
+        localisation_key = deathwind_6_modifiers
+		trigger = { has_province_modifier = deathwind_level_6 }
+    }
+
+    text = {
+        localisation_key = deathwind_7_modifiers
+		trigger = { has_province_modifier = deathwind_level_7 }
+    }
+
+    text = {
+        localisation_key = deathwind_8_modifiers
+		trigger = { has_province_modifier = deathwind_level_8 }
+    }
+
+    text = {
+        localisation_key = deathwind_9_modifiers
+		trigger = { has_province_modifier = deathwind_level_9 }
+    }
+
+    text = {
+        localisation_key = deathwind_10_modifiers
+		trigger = { has_province_modifier = deathwind_level_10 }
+    }
+
+    text = { localisation_key = deathwind_0_modifiers }
+}
+
+defined_text = {
+    name = OriginalDeathwindsValue
+	random = no
+
+    text = {
+        localisation_key = og_deathwinds_tt
+		trigger = { check_variable = { deathwinds_var = 0 } }
+    }
+}
+
+#Area Text Highlight if the province is in that area
+defined_text = {
+    name = DWKheionHLf
+	random = no
+
+    text = {
+        localisation_key = mult_zero
+		trigger = { province_group = alecandi_capital_provinces }
+    }
+}
+
+defined_text = {
+    name = DWP3HLf
+	random = no
+
+    text = {
+        localisation_key = mult_zero
+		trigger = { province_group = deathwinds_plus3_group }
+    }
+}
+
+defined_text = {
+    name = DWP1HLf
+	random = no
+
+    text = {
+        localisation_key = mult_zero
+		trigger = { province_group = deathwinds_plus1_group }
+    }
+}
+
+defined_text = {
+    name = DWP0HLf
+	random = no
+
+    text = {
+        localisation_key = mult_zero
+		trigger = { province_group = deathwinds_plus0_group }
+    }
+}
+
+defined_text = {
+    name = DWR1HLf
+	random = no
+
+    text = {
+        localisation_key = mult_zero
+		trigger = { province_group = deathwinds_minus1_group }
+    }
+}
+
+defined_text = {
+    name = DWR2HLf
+	random = no
+
+    text = {
+        localisation_key = mult_zero
+		trigger = { province_group = deathwinds_minus2_group }
+    }
+}
+
+defined_text = {
+    name = DWR3HLf
+	random = no
+
+    text = {
+        localisation_key = mult_zero
+		trigger = { province_group = deathwinds_minus3_group }
+    }
+}
+
+defined_text = {
+    name = DWKheionHLb
+	random = no
+
+    text = {
+        localisation_key = lake_fed_color_end
+		trigger = { province_group = alecandi_capital_provinces }
+    }
+}
+
+defined_text = {
+    name = DWP3HLb
+	random = no
+
+    text = {
+        localisation_key = lake_fed_color_end
+		trigger = { province_group = deathwinds_plus3_group }
+    }
+}
+
+defined_text = {
+    name = DWP1HLb
+	random = no
+
+    text = {
+        localisation_key = lake_fed_color_end
+		trigger = { province_group = deathwinds_plus1_group }
+    }
+}
+
+defined_text = {
+    name = DWP0HLb
+	random = no
+
+    text = {
+        localisation_key = lake_fed_color_end
+		trigger = { province_group = deathwinds_plus0_group }
+    }
+}
+
+defined_text = {
+    name = DWR1HLb
+	random = no
+
+    text = {
+        localisation_key = lake_fed_color_end
+		trigger = { province_group = deathwinds_minus1_group }
+    }
+}
+
+defined_text = {
+    name = DWR2HLb
+	random = no
+
+    text = {
+        localisation_key = lake_fed_color_end
+		trigger = { province_group = deathwinds_minus2_group }
+    }
+}
+
+defined_text = {
+    name = DWR3HLb
+	random = no
+
+    text = {
+        localisation_key = lake_fed_color_end
+		trigger = { province_group = deathwinds_minus3_group }
+    }
+}
+
+defined_text = {
+    name = DestroyWindwardMonthLoc
+	random = no
+
+    text = {
+        localisation_key = December
+		trigger = { is_variable_equal = { which = DestroyWindwardMonthVar value = 11 } }
+    }
+
+    text = {
+        localisation_key = November
+		trigger = { is_variable_equal = { which = DestroyWindwardMonthVar value = 10 } }
+    }
+
+    text = {
+        localisation_key = October
+		trigger = { is_variable_equal = { which = DestroyWindwardMonthVar value = 9 } }
+    }
+
+    text = {
+        localisation_key = September
+		trigger = { is_variable_equal = { which = DestroyWindwardMonthVar value = 8 } }
+    }
+
+    text = {
+        localisation_key = August
+		trigger = { is_variable_equal = { which = DestroyWindwardMonthVar value = 7 } }
+    }
+
+    text = {
+        localisation_key = July
+		trigger = { is_variable_equal = { which = DestroyWindwardMonthVar value = 6 } }
+    }
+
+    text = {
+        localisation_key = June
+		trigger = { is_variable_equal = { which = DestroyWindwardMonthVar value = 5 } }
+    }
+
+    text = {
+        localisation_key = May
+		trigger = { is_variable_equal = { which = DestroyWindwardMonthVar value = 4 } }
+    }
+
+    text = {
+        localisation_key = April
+		trigger = { is_variable_equal = { which = DestroyWindwardMonthVar value = 3 } }
+    }
+
+    text = {
+        localisation_key = March
+		trigger = { is_variable_equal = { which = DestroyWindwardMonthVar value = 2 } }
+    }
+
+    text = {
+        localisation_key = February
+		trigger = { is_variable_equal = { which = DestroyWindwardMonthVar value = 1 } }
+    }
+
+    text = {
+        localisation_key = January
+		trigger = { is_variable_equal = { which = DestroyWindwardMonthVar value = 0 } }
+    }
+}
+
+defined_text = {
+	name = GetOverallAbjurationLevelNumber
+	random = no
+	text = { localisation_key = value_3 trigger = { is_overall_abjuration_level_3 = yes } }
+	text = { localisation_key = value_2 trigger = { is_overall_abjuration_level_2 = yes } }
+	text = { localisation_key = value_1 trigger = { is_overall_abjuration_level_1 = yes } }
+	text = { localisation_key = value_0 }
+}
+
+defined_text = {
+	name = getDeathwindsBarActivity
+	random = no
+
+	text = {
+		localisation_key = deathwinds_bar_active_timer_tt
+		trigger = {
+			check_variable = {
+				which = deathwinds_active_months_var
+				value = 0
+			}
+		}
+	}
+
+	text = { localisation_key = deathwinds_bar_inactive_timer_tt }
+}
+
+#Displays the name of each province in the area for the bottom Deathwinds box
+defined_text = {
+    name = GetAlecandAreaProv1
+	random = no
+
+    text = { localisation_key = "[alecand_area_1_prov_1.GetName]:" trigger = { has_province_flag = alecand_area_1 has_saved_global_event_target = alecand_area_1_prov_1 } }
+    text = { localisation_key = "[alecand_area_2_prov_1.GetName]:" trigger = { has_province_flag = alecand_area_2 has_saved_global_event_target = alecand_area_2_prov_1 } }
+    text = { localisation_key = "[alecand_area_3_prov_1.GetName]:" trigger = { has_province_flag = alecand_area_3 has_saved_global_event_target = alecand_area_3_prov_1 } }
+    text = { localisation_key = "[alecand_area_4_prov_1.GetName]:" trigger = { has_province_flag = alecand_area_4 has_saved_global_event_target = alecand_area_4_prov_1 } }
+    text = { localisation_key = "[alecand_area_5_prov_1.GetName]:" trigger = { has_province_flag = alecand_area_5 has_saved_global_event_target = alecand_area_5_prov_1 } }
+    text = { localisation_key = "[alecand_area_6_prov_1.GetName]:" trigger = { has_province_flag = alecand_area_6 has_saved_global_event_target = alecand_area_6_prov_1 } }
+    text = { localisation_key = "[alecand_area_7_prov_1.GetName]:" trigger = { has_province_flag = alecand_area_7 has_saved_global_event_target = alecand_area_7_prov_1 } }
+    text = { localisation_key = "[alecand_area_8_prov_1.GetName]:" trigger = { has_province_flag = alecand_area_8 has_saved_global_event_target = alecand_area_8_prov_1 } }
+    text = { localisation_key = "[alecand_area_9_prov_1.GetName]:" trigger = { has_province_flag = alecand_area_9 has_saved_global_event_target = alecand_area_9_prov_1 } }
+    text = { localisation_key = "[alecand_area_10_prov_1.GetName]:" trigger = { has_province_flag = alecand_area_10 has_saved_global_event_target = alecand_area_10_prov_1 } }
+    text = { localisation_key = "[alecand_area_11_prov_1.GetName]:" trigger = { has_province_flag = alecand_area_11 has_saved_global_event_target = alecand_area_11_prov_1 } }
+    text = { localisation_key = "[alecand_area_12_prov_1.GetName]:" trigger = { has_province_flag = alecand_area_12 has_saved_global_event_target = alecand_area_12_prov_1 } }
+    text = { localisation_key = "[alecand_area_13_prov_1.GetName]:" trigger = { has_province_flag = alecand_area_13 has_saved_global_event_target = alecand_area_13_prov_1 } }
+}
+
+defined_text = {
+    name = GetAlecandAreaProv2
+	random = no
+
+    text = { localisation_key = "[alecand_area_1_prov_2.GetName]:" trigger = { has_province_flag = alecand_area_1 has_saved_global_event_target = alecand_area_1_prov_2 } }
+    text = { localisation_key = "[alecand_area_2_prov_2.GetName]:" trigger = { has_province_flag = alecand_area_2 has_saved_global_event_target = alecand_area_2_prov_2 } }
+    text = { localisation_key = "[alecand_area_3_prov_2.GetName]:" trigger = { has_province_flag = alecand_area_3 has_saved_global_event_target = alecand_area_3_prov_2 } }
+    text = { localisation_key = "[alecand_area_4_prov_2.GetName]:" trigger = { has_province_flag = alecand_area_4 has_saved_global_event_target = alecand_area_4_prov_2 } }
+    text = { localisation_key = "[alecand_area_5_prov_2.GetName]:" trigger = { has_province_flag = alecand_area_5 has_saved_global_event_target = alecand_area_5_prov_2 } }
+    text = { localisation_key = "[alecand_area_6_prov_2.GetName]:" trigger = { has_province_flag = alecand_area_6 has_saved_global_event_target = alecand_area_6_prov_2 } }
+    text = { localisation_key = "[alecand_area_7_prov_2.GetName]:" trigger = { has_province_flag = alecand_area_7 has_saved_global_event_target = alecand_area_7_prov_2 } }
+    text = { localisation_key = "[alecand_area_8_prov_2.GetName]:" trigger = { has_province_flag = alecand_area_8 has_saved_global_event_target = alecand_area_8_prov_2 } }
+    text = { localisation_key = "[alecand_area_9_prov_2.GetName]:" trigger = { has_province_flag = alecand_area_9 has_saved_global_event_target = alecand_area_9_prov_2 } }
+    text = { localisation_key = "[alecand_area_10_prov_2.GetName]:" trigger = { has_province_flag = alecand_area_10 has_saved_global_event_target = alecand_area_10_prov_2 } }
+    text = { localisation_key = "[alecand_area_11_prov_2.GetName]:" trigger = { has_province_flag = alecand_area_11 has_saved_global_event_target = alecand_area_11_prov_2 } }
+    text = { localisation_key = "[alecand_area_12_prov_2.GetName]:" trigger = { has_province_flag = alecand_area_12 has_saved_global_event_target = alecand_area_12_prov_2 } }
+    text = { localisation_key = "[alecand_area_13_prov_2.GetName]:" trigger = { has_province_flag = alecand_area_13 has_saved_global_event_target = alecand_area_13_prov_2 } }
+}
+
+defined_text = {
+    name = GetAlecandAreaProv3
+	random = no
+
+    text = { localisation_key = "[alecand_area_1_prov_3.GetName]:" trigger = { has_province_flag = alecand_area_1 has_saved_global_event_target = alecand_area_1_prov_3 } }
+    text = { localisation_key = "[alecand_area_2_prov_3.GetName]:" trigger = { has_province_flag = alecand_area_2 has_saved_global_event_target = alecand_area_2_prov_3 } }
+    text = { localisation_key = "[alecand_area_3_prov_3.GetName]:" trigger = { has_province_flag = alecand_area_3 has_saved_global_event_target = alecand_area_3_prov_3 } }
+    text = { localisation_key = "[alecand_area_4_prov_3.GetName]:" trigger = { has_province_flag = alecand_area_4 has_saved_global_event_target = alecand_area_4_prov_3 } }
+    text = { localisation_key = "[alecand_area_5_prov_3.GetName]:" trigger = { has_province_flag = alecand_area_5 has_saved_global_event_target = alecand_area_5_prov_3 } }
+    text = { localisation_key = "[alecand_area_6_prov_3.GetName]:" trigger = { has_province_flag = alecand_area_6 has_saved_global_event_target = alecand_area_6_prov_3 } }
+    text = { localisation_key = "[alecand_area_7_prov_3.GetName]:" trigger = { has_province_flag = alecand_area_7 has_saved_global_event_target = alecand_area_7_prov_3 } }
+    text = { localisation_key = "[alecand_area_8_prov_3.GetName]:" trigger = { has_province_flag = alecand_area_8 has_saved_global_event_target = alecand_area_8_prov_3 } }
+    text = { localisation_key = "[alecand_area_9_prov_3.GetName]:" trigger = { has_province_flag = alecand_area_9 has_saved_global_event_target = alecand_area_9_prov_3 } }
+    text = { localisation_key = "[alecand_area_10_prov_3.GetName]:" trigger = { has_province_flag = alecand_area_10 has_saved_global_event_target = alecand_area_10_prov_3 } }
+    text = { localisation_key = "[alecand_area_11_prov_3.GetName]:" trigger = { has_province_flag = alecand_area_11 has_saved_global_event_target = alecand_area_11_prov_3 } }
+    text = { localisation_key = "[alecand_area_12_prov_3.GetName]:" trigger = { has_province_flag = alecand_area_12 has_saved_global_event_target = alecand_area_12_prov_3 } }
+    text = { localisation_key = "[alecand_area_13_prov_3.GetName]:" trigger = { has_province_flag = alecand_area_13 has_saved_global_event_target = alecand_area_13_prov_3 } }
+}
+
+defined_text = {
+    name = GetAlecandAreaProv4
+	random = no
+
+    text = { localisation_key = "[alecand_area_1_prov_4.GetName]:" trigger = { has_province_flag = alecand_area_1 has_saved_global_event_target = alecand_area_1_prov_4 } }
+    text = { localisation_key = "[alecand_area_2_prov_4.GetName]:" trigger = { has_province_flag = alecand_area_2 has_saved_global_event_target = alecand_area_2_prov_4 } }
+    text = { localisation_key = "[alecand_area_3_prov_4.GetName]:" trigger = { has_province_flag = alecand_area_3 has_saved_global_event_target = alecand_area_3_prov_4 } }
+    text = { localisation_key = "[alecand_area_4_prov_4.GetName]:" trigger = { has_province_flag = alecand_area_4 has_saved_global_event_target = alecand_area_4_prov_4 } }
+    text = { localisation_key = "[alecand_area_5_prov_4.GetName]:" trigger = { has_province_flag = alecand_area_5 has_saved_global_event_target = alecand_area_5_prov_4 } }
+    text = { localisation_key = "[alecand_area_6_prov_4.GetName]:" trigger = { has_province_flag = alecand_area_6 has_saved_global_event_target = alecand_area_6_prov_4 } }
+    text = { localisation_key = "[alecand_area_7_prov_4.GetName]:" trigger = { has_province_flag = alecand_area_7 has_saved_global_event_target = alecand_area_7_prov_4 } }
+    text = { localisation_key = "[alecand_area_8_prov_4.GetName]:" trigger = { has_province_flag = alecand_area_8 has_saved_global_event_target = alecand_area_8_prov_4 } }
+    text = { localisation_key = "[alecand_area_9_prov_4.GetName]:" trigger = { has_province_flag = alecand_area_9 has_saved_global_event_target = alecand_area_9_prov_4 } }
+    text = { localisation_key = "[alecand_area_10_prov_4.GetName]:" trigger = { has_province_flag = alecand_area_10 has_saved_global_event_target = alecand_area_10_prov_4 } }
+    text = { localisation_key = "[alecand_area_11_prov_4.GetName]:" trigger = { has_province_flag = alecand_area_11 has_saved_global_event_target = alecand_area_11_prov_4 } }
+    text = { localisation_key = "[alecand_area_12_prov_4.GetName]:" trigger = { has_province_flag = alecand_area_12 has_saved_global_event_target = alecand_area_12_prov_4 } }
+    text = { localisation_key = "[alecand_area_13_prov_4.GetName]:" trigger = { has_province_flag = alecand_area_13 has_saved_global_event_target = alecand_area_13_prov_4 } }
+}
+
+defined_text = {
+    name = GetAlecandAreaProv5
+	random = no
+
+    text = { localisation_key = "[alecand_area_1_prov_5.GetName]:" trigger = { has_province_flag = alecand_area_1 has_saved_global_event_target = alecand_area_1_prov_5 } }
+    text = { localisation_key = "[alecand_area_2_prov_5.GetName]:" trigger = { has_province_flag = alecand_area_2 has_saved_global_event_target = alecand_area_2_prov_5 } }
+    text = { localisation_key = "[alecand_area_3_prov_5.GetName]:" trigger = { has_province_flag = alecand_area_3 has_saved_global_event_target = alecand_area_3_prov_5 } }
+    text = { localisation_key = "[alecand_area_4_prov_5.GetName]:" trigger = { has_province_flag = alecand_area_4 has_saved_global_event_target = alecand_area_4_prov_5 } }
+    text = { localisation_key = "[alecand_area_5_prov_5.GetName]:" trigger = { has_province_flag = alecand_area_5 has_saved_global_event_target = alecand_area_5_prov_5 } }
+    text = { localisation_key = "[alecand_area_6_prov_5.GetName]:" trigger = { has_province_flag = alecand_area_6 has_saved_global_event_target = alecand_area_6_prov_5 } }
+    text = { localisation_key = "[alecand_area_7_prov_5.GetName]:" trigger = { has_province_flag = alecand_area_7 has_saved_global_event_target = alecand_area_7_prov_5 } }
+    text = { localisation_key = "[alecand_area_8_prov_5.GetName]:" trigger = { has_province_flag = alecand_area_8 has_saved_global_event_target = alecand_area_8_prov_5 } }
+    text = { localisation_key = "[alecand_area_9_prov_5.GetName]:" trigger = { has_province_flag = alecand_area_9 has_saved_global_event_target = alecand_area_9_prov_5 } }
+    text = { localisation_key = "[alecand_area_10_prov_5.GetName]:" trigger = { has_province_flag = alecand_area_10 has_saved_global_event_target = alecand_area_10_prov_5 } }
+    text = { localisation_key = "[alecand_area_11_prov_5.GetName]:" trigger = { has_province_flag = alecand_area_11 has_saved_global_event_target = alecand_area_11_prov_5 } }
+    text = { localisation_key = "[alecand_area_12_prov_5.GetName]:" trigger = { has_province_flag = alecand_area_12 has_saved_global_event_target = alecand_area_12_prov_5 } }
+    text = { localisation_key = "[alecand_area_13_prov_5.GetName]:" trigger = { has_province_flag = alecand_area_13 has_saved_global_event_target = alecand_area_13_prov_5 } }
+}
+
+#Displays the windward level of each province in the area for the bottom Deathwinds box
+defined_text = {
+    name = GetAlecandAreaProvWard1
+	random = no
+
+    text = { localisation_key = "[alecand_area_1_prov_1.GetWindwardValue]" trigger = { has_province_flag = alecand_area_1 has_saved_global_event_target = alecand_area_1_prov_1 } }
+    text = { localisation_key = "[alecand_area_2_prov_1.GetWindwardValue]" trigger = { has_province_flag = alecand_area_2 has_saved_global_event_target = alecand_area_2_prov_1 } }
+    text = { localisation_key = "[alecand_area_3_prov_1.GetWindwardValue]" trigger = { has_province_flag = alecand_area_3 has_saved_global_event_target = alecand_area_3_prov_1 } }
+    text = { localisation_key = "[alecand_area_4_prov_1.GetWindwardValue]" trigger = { has_province_flag = alecand_area_4 has_saved_global_event_target = alecand_area_4_prov_1 } }
+    text = { localisation_key = "[alecand_area_5_prov_1.GetWindwardValue]" trigger = { has_province_flag = alecand_area_5 has_saved_global_event_target = alecand_area_5_prov_1 } }
+    text = { localisation_key = "[alecand_area_6_prov_1.GetWindwardValue]" trigger = { has_province_flag = alecand_area_6 has_saved_global_event_target = alecand_area_6_prov_1 } }
+    text = { localisation_key = "[alecand_area_7_prov_1.GetWindwardValue]" trigger = { has_province_flag = alecand_area_7 has_saved_global_event_target = alecand_area_7_prov_1 } }
+    text = { localisation_key = "[alecand_area_8_prov_1.GetWindwardValue]" trigger = { has_province_flag = alecand_area_8 has_saved_global_event_target = alecand_area_8_prov_1 } }
+    text = { localisation_key = "[alecand_area_9_prov_1.GetWindwardValue]" trigger = { has_province_flag = alecand_area_9 has_saved_global_event_target = alecand_area_9_prov_1 } }
+    text = { localisation_key = "[alecand_area_10_prov_1.GetWindwardValue]" trigger = { has_province_flag = alecand_area_10 has_saved_global_event_target = alecand_area_10_prov_1 } }
+    text = { localisation_key = "[alecand_area_11_prov_1.GetWindwardValue]" trigger = { has_province_flag = alecand_area_11 has_saved_global_event_target = alecand_area_11_prov_1 } }
+    text = { localisation_key = "[alecand_area_12_prov_1.GetWindwardValue]" trigger = { has_province_flag = alecand_area_12 has_saved_global_event_target = alecand_area_12_prov_1 } }
+    text = { localisation_key = "[alecand_area_13_prov_1.GetWindwardValue]" trigger = { has_province_flag = alecand_area_13 has_saved_global_event_target = alecand_area_13_prov_1 } }
+}
+
+defined_text = {
+    name = GetAlecandAreaProvWard2
+	random = no
+
+    text = { localisation_key = "[alecand_area_1_prov_2.GetWindwardValue]" trigger = { has_province_flag = alecand_area_1 has_saved_global_event_target = alecand_area_1_prov_2 } }
+    text = { localisation_key = "[alecand_area_2_prov_2.GetWindwardValue]" trigger = { has_province_flag = alecand_area_2 has_saved_global_event_target = alecand_area_2_prov_2 } }
+    text = { localisation_key = "[alecand_area_3_prov_2.GetWindwardValue]" trigger = { has_province_flag = alecand_area_3 has_saved_global_event_target = alecand_area_3_prov_2 } }
+    text = { localisation_key = "[alecand_area_4_prov_2.GetWindwardValue]" trigger = { has_province_flag = alecand_area_4 has_saved_global_event_target = alecand_area_4_prov_2 } }
+    text = { localisation_key = "[alecand_area_5_prov_2.GetWindwardValue]" trigger = { has_province_flag = alecand_area_5 has_saved_global_event_target = alecand_area_5_prov_2 } }
+    text = { localisation_key = "[alecand_area_6_prov_2.GetWindwardValue]" trigger = { has_province_flag = alecand_area_6 has_saved_global_event_target = alecand_area_6_prov_2 } }
+    text = { localisation_key = "[alecand_area_7_prov_2.GetWindwardValue]" trigger = { has_province_flag = alecand_area_7 has_saved_global_event_target = alecand_area_7_prov_2 } }
+    text = { localisation_key = "[alecand_area_8_prov_2.GetWindwardValue]" trigger = { has_province_flag = alecand_area_8 has_saved_global_event_target = alecand_area_8_prov_2 } }
+    text = { localisation_key = "[alecand_area_9_prov_2.GetWindwardValue]" trigger = { has_province_flag = alecand_area_9 has_saved_global_event_target = alecand_area_9_prov_2 } }
+    text = { localisation_key = "[alecand_area_10_prov_2.GetWindwardValue]" trigger = { has_province_flag = alecand_area_10 has_saved_global_event_target = alecand_area_10_prov_2 } }
+    text = { localisation_key = "[alecand_area_11_prov_2.GetWindwardValue]" trigger = { has_province_flag = alecand_area_11 has_saved_global_event_target = alecand_area_11_prov_2 } }
+    text = { localisation_key = "[alecand_area_12_prov_2.GetWindwardValue]" trigger = { has_province_flag = alecand_area_12 has_saved_global_event_target = alecand_area_12_prov_2 } }
+    text = { localisation_key = "[alecand_area_13_prov_2.GetWindwardValue]" trigger = { has_province_flag = alecand_area_13 has_saved_global_event_target = alecand_area_13_prov_2 } }
+}
+
+defined_text = {
+    name = GetAlecandAreaProvWard3
+	random = no
+
+    text = { localisation_key = "[alecand_area_1_prov_3.GetWindwardValue]" trigger = { has_province_flag = alecand_area_1 has_saved_global_event_target = alecand_area_1_prov_3 } }
+    text = { localisation_key = "[alecand_area_2_prov_3.GetWindwardValue]" trigger = { has_province_flag = alecand_area_2 has_saved_global_event_target = alecand_area_2_prov_3 } }
+    text = { localisation_key = "[alecand_area_3_prov_3.GetWindwardValue]" trigger = { has_province_flag = alecand_area_3 has_saved_global_event_target = alecand_area_3_prov_3 } }
+    text = { localisation_key = "[alecand_area_4_prov_3.GetWindwardValue]" trigger = { has_province_flag = alecand_area_4 has_saved_global_event_target = alecand_area_4_prov_3 } }
+    text = { localisation_key = "[alecand_area_5_prov_3.GetWindwardValue]" trigger = { has_province_flag = alecand_area_5 has_saved_global_event_target = alecand_area_5_prov_3 } }
+    text = { localisation_key = "[alecand_area_6_prov_3.GetWindwardValue]" trigger = { has_province_flag = alecand_area_6 has_saved_global_event_target = alecand_area_6_prov_3 } }
+    text = { localisation_key = "[alecand_area_7_prov_3.GetWindwardValue]" trigger = { has_province_flag = alecand_area_7 has_saved_global_event_target = alecand_area_7_prov_3 } }
+    text = { localisation_key = "[alecand_area_8_prov_3.GetWindwardValue]" trigger = { has_province_flag = alecand_area_8 has_saved_global_event_target = alecand_area_8_prov_3 } }
+    text = { localisation_key = "[alecand_area_9_prov_3.GetWindwardValue]" trigger = { has_province_flag = alecand_area_9 has_saved_global_event_target = alecand_area_9_prov_3 } }
+    text = { localisation_key = "[alecand_area_10_prov_3.GetWindwardValue]" trigger = { has_province_flag = alecand_area_10 has_saved_global_event_target = alecand_area_10_prov_3 } }
+    text = { localisation_key = "[alecand_area_11_prov_3.GetWindwardValue]" trigger = { has_province_flag = alecand_area_11 has_saved_global_event_target = alecand_area_11_prov_3 } }
+    text = { localisation_key = "[alecand_area_12_prov_3.GetWindwardValue]" trigger = { has_province_flag = alecand_area_12 has_saved_global_event_target = alecand_area_12_prov_3 } }
+    text = { localisation_key = "[alecand_area_13_prov_3.GetWindwardValue]" trigger = { has_province_flag = alecand_area_13 has_saved_global_event_target = alecand_area_13_prov_3 } }
+}
+
+defined_text = {
+    name = GetAlecandAreaProvWard4
+	random = no
+
+    text = { localisation_key = "[alecand_area_1_prov_4.GetWindwardValue]" trigger = { has_province_flag = alecand_area_1 has_saved_global_event_target = alecand_area_1_prov_4 } }
+    text = { localisation_key = "[alecand_area_2_prov_4.GetWindwardValue]" trigger = { has_province_flag = alecand_area_2 has_saved_global_event_target = alecand_area_2_prov_4 } }
+    text = { localisation_key = "[alecand_area_3_prov_4.GetWindwardValue]" trigger = { has_province_flag = alecand_area_3 has_saved_global_event_target = alecand_area_3_prov_4 } }
+    text = { localisation_key = "[alecand_area_4_prov_4.GetWindwardValue]" trigger = { has_province_flag = alecand_area_4 has_saved_global_event_target = alecand_area_4_prov_4 } }
+    text = { localisation_key = "[alecand_area_5_prov_4.GetWindwardValue]" trigger = { has_province_flag = alecand_area_5 has_saved_global_event_target = alecand_area_5_prov_4 } }
+    text = { localisation_key = "[alecand_area_6_prov_4.GetWindwardValue]" trigger = { has_province_flag = alecand_area_6 has_saved_global_event_target = alecand_area_6_prov_4 } }
+    text = { localisation_key = "[alecand_area_7_prov_4.GetWindwardValue]" trigger = { has_province_flag = alecand_area_7 has_saved_global_event_target = alecand_area_7_prov_4 } }
+    text = { localisation_key = "[alecand_area_8_prov_4.GetWindwardValue]" trigger = { has_province_flag = alecand_area_8 has_saved_global_event_target = alecand_area_8_prov_4 } }
+    text = { localisation_key = "[alecand_area_9_prov_4.GetWindwardValue]" trigger = { has_province_flag = alecand_area_9 has_saved_global_event_target = alecand_area_9_prov_4 } }
+    text = { localisation_key = "[alecand_area_10_prov_4.GetWindwardValue]" trigger = { has_province_flag = alecand_area_10 has_saved_global_event_target = alecand_area_10_prov_4 } }
+    text = { localisation_key = "[alecand_area_11_prov_4.GetWindwardValue]" trigger = { has_province_flag = alecand_area_11 has_saved_global_event_target = alecand_area_11_prov_4 } }
+    text = { localisation_key = "[alecand_area_12_prov_4.GetWindwardValue]" trigger = { has_province_flag = alecand_area_12 has_saved_global_event_target = alecand_area_12_prov_4 } }
+    text = { localisation_key = "[alecand_area_13_prov_4.GetWindwardValue]" trigger = { has_province_flag = alecand_area_13 has_saved_global_event_target = alecand_area_13_prov_4 } }
+}
+
+defined_text = {
+    name = GetAlecandAreaProvWard5
+	random = no
+
+    text = { localisation_key = "[alecand_area_1_prov_5.GetWindwardValue]" trigger = { has_province_flag = alecand_area_1 has_saved_global_event_target = alecand_area_1_prov_5 } }
+    text = { localisation_key = "[alecand_area_2_prov_5.GetWindwardValue]" trigger = { has_province_flag = alecand_area_2 has_saved_global_event_target = alecand_area_2_prov_5 } }
+    text = { localisation_key = "[alecand_area_3_prov_5.GetWindwardValue]" trigger = { has_province_flag = alecand_area_3 has_saved_global_event_target = alecand_area_3_prov_5 } }
+    text = { localisation_key = "[alecand_area_4_prov_5.GetWindwardValue]" trigger = { has_province_flag = alecand_area_4 has_saved_global_event_target = alecand_area_4_prov_5 } }
+    text = { localisation_key = "[alecand_area_5_prov_5.GetWindwardValue]" trigger = { has_province_flag = alecand_area_5 has_saved_global_event_target = alecand_area_5_prov_5 } }
+    text = { localisation_key = "[alecand_area_6_prov_5.GetWindwardValue]" trigger = { has_province_flag = alecand_area_6 has_saved_global_event_target = alecand_area_6_prov_5 } }
+    text = { localisation_key = "[alecand_area_7_prov_5.GetWindwardValue]" trigger = { has_province_flag = alecand_area_7 has_saved_global_event_target = alecand_area_7_prov_5 } }
+    text = { localisation_key = "[alecand_area_8_prov_5.GetWindwardValue]" trigger = { has_province_flag = alecand_area_8 has_saved_global_event_target = alecand_area_8_prov_5 } }
+    text = { localisation_key = "[alecand_area_9_prov_5.GetWindwardValue]" trigger = { has_province_flag = alecand_area_9 has_saved_global_event_target = alecand_area_9_prov_5 } }
+    text = { localisation_key = "[alecand_area_10_prov_5.GetWindwardValue]" trigger = { has_province_flag = alecand_area_10 has_saved_global_event_target = alecand_area_10_prov_5 } }
+    text = { localisation_key = "[alecand_area_11_prov_5.GetWindwardValue]" trigger = { has_province_flag = alecand_area_11 has_saved_global_event_target = alecand_area_11_prov_5 } }
+    text = { localisation_key = "[alecand_area_12_prov_5.GetWindwardValue]" trigger = { has_province_flag = alecand_area_12 has_saved_global_event_target = alecand_area_12_prov_5 } }
+    text = { localisation_key = "[alecand_area_13_prov_5.GetWindwardValue]" trigger = { has_province_flag = alecand_area_13 has_saved_global_event_target = alecand_area_13_prov_5 } }
+}

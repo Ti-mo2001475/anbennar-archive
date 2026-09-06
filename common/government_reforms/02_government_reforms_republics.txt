@@ -698,6 +698,7 @@ ar_callein_reform = {
 		disables_regular_estates = yes
 		locked_T1_reform = yes
 		anb_special_elections = yes
+		better_vampire_ruler = yes
 	}
 }
 
@@ -2201,6 +2202,9 @@ cossacks_reform = {
 		disables_estate_mages = yes
 		disables_estate_eunuchs_anb = yes
 		disables_estate_adventurers = yes
+		enables_horde_idea_group = yes
+		disables_estate_nobles = yes
+		disables_estate_mages = yes
 	}
 	valid_for_nation_designer = yes
 	nation_designer_cost = 60
@@ -2219,12 +2223,7 @@ cossacks_reform = {
 		custom_attributes = {
 			enables_estate_cossacks = yes
 		}
-	}
-	custom_attributes = {
-		enables_horde_idea_group = yes
-		disables_estate_nobles = yes
-		disables_estate_mages = yes
-	}
+	} #Don't add a custom_attributes block below here, there's one just above.
 
 	duration = 4
 }
@@ -2475,6 +2474,12 @@ free_slave_reform = {
 	}
 	has_term_election = yes
 	duration = 10
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
+	}
 }
 
 praxic_meritocracy_reform = {
@@ -2511,6 +2516,12 @@ praxic_meritocracy_reform = {
 	}
 	has_term_election = yes
 	duration = 10
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
+	}
 }
 
 
@@ -2578,6 +2589,9 @@ lake_republic = {
 		enables_aristocratic_idea_group = no
 		republican_name = yes
 		locked_T1_reform = yes
+	}
+	government_abilities = {
+		lakefed_authority_mechanic
 	}
 	duration = 4
 }
@@ -2895,6 +2909,9 @@ eternal_council = {
 		is_magocracy = yes   
 		anb_special_elections = yes
 		locked_T1_reform = yes
+		increased_mage_chance_ruler = yes
+		increased_mage_chance_consort = yes
+		increased_mage_chance_heir = yes
 	}
 	duration = 40
 	effect = {
@@ -3067,6 +3084,26 @@ kai_diligent_bureucracy = {
 		halved_parliament_bribes = yes
 		manufactory_development_discount = yes
 	}
+	effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					has_manufactory_trigger = yes
+				}
+				anb_manufactory_discount = yes
+			}
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					has_manufactory_trigger = yes
+				}
+				anb_manufactory_discount_remove = yes
+			}
+		}
+	}
 }
 
 kai_diligent_bureucracy_no_dlc = {
@@ -3128,6 +3165,12 @@ azkare_court = {
 		locked_T1_reform = yes
 	}
 	has_term_election = no
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
+	}
 }
 
 sunrise_court_reform = {
@@ -3169,7 +3212,13 @@ sunrise_court_reform = {
 		anb_special_seats = yes
 		locked_T1_reform = yes
 	}
-	duration = 30
+	duration = 10
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
+	}
 }
 
 beikdugang_plutocracy_reform = {
@@ -5431,6 +5480,12 @@ autonomous_epednar_tribes_reform = {
 	ai = {
 		factor = 5
 	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = ruinborn }
+			generic_end_purge = { race = ruinborn }
+		}
+	}
 }
 
 #Parliamentary vs Presidential
@@ -5713,6 +5768,12 @@ trollsbayer_pluralism_reform = {
 		disabled_purging_halfling = yes
 		blocked_call_diet = yes
 	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = halfling }
+			generic_end_purge = { race = halfling }
+		}
+	}
 }
 
 circle_of_hands_reform = {
@@ -5738,7 +5799,12 @@ circle_of_hands_reform = {
 		disabled_expelling = yes
 		disabled_purging = yes
 	}
-
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
+	}
 }
 
 #Consolidation of Power
@@ -7911,6 +7977,12 @@ matriarchal_pirate_republic = {
 		disabled_purging_human = yes
 		locked_T1_reform = yes
 	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = human }
+			generic_end_purge = { race = human }
+		}
+	}
 }
 
 #Orlghelovar
@@ -9357,7 +9429,13 @@ grombari_council_reform = {
 		disabled_purging_troll = yes
 		grombari_council_advisor_modifier = yes
 		locked_T1_reform = yes
-	} 
+	}
+	effect = {
+		hidden_effect = {
+			generic_end_expulsion = { race = troll }
+			generic_end_purge = { race = troll }
+		}
+	}
 }
 
 #silver republic
@@ -9815,6 +9893,12 @@ floodborn_council_reform_republics = {
 	}
 	ai = {
 		factor = 0.75 #generic
+	}
+	effect = {
+		hidden_effect = {
+			end_all_purge = yes
+			end_all_expel = yes
+		}
 	}
 }
 
@@ -10459,6 +10543,31 @@ kheionai_the_kheionolyklos = {
 
 	effect = {
 		custom_tooltip = kheionai_the_kheionolyklos_effect_tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					has_seat_in_parliament = yes
+				}
+				if = {
+					limit = {
+						OR = {
+							has_terrain = city_terrain
+							development = 20
+						} 
+					}
+					add_province_modifier = {
+						name = kheionai_the_kheionolyklos_good_mod
+						duration = -1
+					}
+				}
+				else = {
+					add_province_modifier = {
+						name = kheionai_the_kheionolyklos_bad_mod
+						duration = -1
+					}
+				}
+			}
+		}
 	}
 	
 	removed_effect = {
@@ -10641,35 +10750,30 @@ mangrove_dictatorship = {
 
 magical_oversight_reform = {
 	icon = "indian_crown"
-	lock_level_when_selected = yes
 	allow_normal_conversion = yes
 	potential = {
 		has_estate = estate_mages
 	}
 	modifiers = {
 		max_estate_spell_levels = 1
-		global_autonomy = -0.05
-		mages_estate_experience_mod = 0.2
+		mages_estate_experience_mod = 0.15
 	}
 	removed_effect = {
  		if = {
 			limit = { has_estate_privilege = estate_mages_development_of_mage_towers }
-				every_owned_province = {
-					limit = {
-                        has_building = mage_tower
-					}
-					add_province_modifier = { 
-						name = estate_mages_development_of_mage_towers_mod
-						duration = -1
-					}
-					remove_province_modifier = estate_mages_development_of_mage_towers_improved_mod
+			every_owned_province = {
+				limit = {
+					has_building = mage_tower
+				}
+				add_province_modifier = { 
+					name = estate_mages_development_of_mage_towers_mod
+					duration = -1
+				}
+				remove_province_modifier = estate_mages_development_of_mage_towers_improved_mod
 			}
 		}
-		remove_magical_infrastructure_perm_bypass = yes
-
  	}
 	effect = {
- 		give_magical_infrastructure_perm_bypass = yes
 		hidden_effect = {
  			if = {
 				limit = { has_estate_privilege = estate_mages_development_of_mage_towers }
@@ -10960,9 +11064,33 @@ overseas_governorate = {
 		anb_special_elections = yes
 	}
 
-	#government_abilities = {
-	#	end_overseas_governorate
-	#}
+	government_abilities = {
+		end_foreign_influence_mechanic
+	}
 	effect = {
 	}
+}
+peasants_republic_m26 = { #Change when adding mission tree
+	allow_normal_conversion = yes
+	icon = "peasant_republic"
+	potential = {
+		is_or_was_tag = { tag = M26 }
+	}
+	valid_for_nation_designer = no
+	modifiers = {
+		production_efficiency = 0.1
+		land_morale = 0.05
+		max_absolutism = -10
+		raze_power_gain = 0.25
+	}
+	effect = {
+		custom_tooltip = peasants_republic_m26_tt
+	}
+	custom_attributes = {
+		raze_province = yes
+		enables_plutocratic_idea_group = yes
+		enables_aristocratic_idea_group = no
+		disables_estate_nobles = yes
+	}
+	duration = 4
 }

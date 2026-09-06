@@ -159,7 +159,18 @@ country_event = { #	Orda Aldresia religion conflict
 		emperor = {
 			remove_country_modifier = supporting_orda_aldresia
 		}
-		set_country_flag = broken_oath		
+		set_country_flag = broken_oath
+		if = { # kick them out of the empire so emperor can dec post realm peace
+			limit = {
+				OR = {
+					hre_reform_passed = anbennar_mages_peace
+					hre_reform_passed = anbennar_empower_imperial_diet
+				}
+			}
+			capital_scope = {
+				set_in_empire = no
+			}
+		}
 	}
 
 	option = { # Stay loyal
@@ -1047,7 +1058,7 @@ country_event = { #Legacy of Aldresia
 	id = flavor_orda_aldresia.22
 	title = flavor_orda_aldresia.22.t
 	desc = flavor_orda_aldresia.22.d
-	picture = FEMALE_GENERAL_eventPicture
+	picture = wihgfx_FEMALE_GENERAL_eventPicture
 
 	fire_only_once = yes
 	is_triggered_only = yes
@@ -1482,6 +1493,13 @@ country_event = { #Heirs of Aldresia
 		add_legitimacy = 100
 		clr_country_flag = second_aldresian_crusade
 		441 = { remove_province_triggered_modifier = A77_no_move_ptm }
+		custom_tooltip = A77_missions_tease_tt
+		hidden_effect = {
+			country_event = {
+				id = flavor_orda_aldresia.39
+				days = 90 #3 months
+			}
+		}
 	}
 }
 
@@ -1511,6 +1529,13 @@ country_event = { #RIP FAIL EDGE CASE
 		add_prestige = -100
 		add_legitimacy = -100
 		clr_country_flag = second_aldresian_crusade
+		custom_tooltip = A77_missions_tease_tt
+		hidden_effect = {
+			country_event = {
+				id = flavor_orda_aldresia.39
+				days = 90 #3 months
+			}
+		}
 	}
 }
 
@@ -1819,6 +1844,33 @@ country_event = { # Hear me roar!
 		else = {
 			custom_tooltip = A77_second_sons_revolt_fails
 		}
+	}
+}
+
+country_event = { #The Emperor’s Anger
+	id = flavor_orda_aldresia.39
+	title = flavor_orda_aldresia.39.t
+	desc = flavor_orda_aldresia.39.d
+	picture = DIPLOMAT_INTERROGATION_eventPicture
+
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_orda_aldresia.39.a
+		custom_tooltip = A77_eoa_insults_tt
+		hidden_effect = {
+			every_country_in_hre = {
+				effect = "
+					add_opinion = {
+						who = ROOT
+						modifier = scornfully_insulted
+					}
+				"
+			}
+		}
+		set_country_flag = A77_reveal_ravelian_mission_flag
+		swap_non_generic_missions = yes
 	}
 }
 
@@ -2143,7 +2195,7 @@ country_event = { # .46 SPIRIT LOSES DUEL Event
 			}
 			europe = {
 				limit = { is_part_of_hre = yes }
-				add_permanent_claim = A77
+				add_permanent_claim = Z01
 			}
 		}	
 		dismantle_hre = yes

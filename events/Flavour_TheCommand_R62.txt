@@ -3097,9 +3097,12 @@ country_event = { #Command demands subjugation from the Oni!
 		}
 		Y01 = {
 			release_all_subjects = yes
-			every_owned_province = {
-				limit = { NOT = { region = demon_hills_region } }
-				cede_province = R62
+			custom_tooltip = command_onis_cede_all_land
+			hidden_effect = {
+				every_owned_province = {
+					limit = { NOT = { region = demon_hills_region } }
+					cede_province = R62
+				}
 			}
 		}
 	}
@@ -4254,7 +4257,7 @@ country_event = { #Rise of the Shamans Start (Hidden)
 			add_stability = 3
 			add_treasury = 5000
 			add_manpower = 50
-			declare_war_with_cb = { who = R62 casus_belli = cb_dissolve_command }
+			declare_war_with_cb = { who = R62 casus_belli = cb_dissolve_warlord }
 			command_spawn_troops_for_shamans_effect = yes
 		}
 		hidden_effect = {
@@ -4694,7 +4697,7 @@ country_event = { #Another Temple Joins the Revolt
 				limit = { country_or_non_sovereign_subject_holds = R62 NOT = { has_province_flag = command_has_had_shaman_uprising_flag } }
 				temple_area_joins_shaman_revolt = yes
 			}
-			V98 = { declare_war_with_cb = { who = R62 casus_belli = cb_dissolve_command } }
+			V98 = { declare_war_with_cb = { who = R62 casus_belli = cb_dissolve_warlord } }
 		}
 	}
 
@@ -5067,7 +5070,7 @@ country_event = { #The Betrayal of the Oni!
 				set_ruler_flag = devouring_life_extension
 				set_ruler_flag = dvp_life_extension_2
 				add_country_modifier = { name = mage_rebel_country_mod duration = 9125 }
-				declare_war_with_cb = { who = R62 casus_belli = cb_dissolve_command }
+				declare_war_with_cb = { who = R62 casus_belli = cb_dissolve_warlord }
 				country_event = { id = the_command.93 } #delays effect
 			}
 			four_starting_shirgrii = { add_province_modifier = { name = mage_rebel_temple_mod duration = -1 } add_latest_building = { fort = yes builder = Y01 } }
@@ -5181,23 +5184,23 @@ country_event = { #Command Dissolution Event
 		add_war_exhaustion = -20
 
 		if = {
-			limit = { FROM = { total_own_and_non_tributary_subject_development = 3000 } }
+			limit = { R62 = { total_own_and_non_tributary_subject_development = 3000 } }
 			add_treasury = 6000
 		}
 		else_if = {
-			limit = { FROM = { total_own_and_non_tributary_subject_development = 2500 } }
+			limit = { R62 = { total_own_and_non_tributary_subject_development = 2500 } }
 			add_treasury = 5000
 		}
 		else_if = {
-			limit = { FROM = { total_own_and_non_tributary_subject_development = 2000 } }
+			limit = { R62 = { total_own_and_non_tributary_subject_development = 2000 } }
 			add_treasury = 4000
 		}
 		else_if = {
-			limit = { FROM = { total_own_and_non_tributary_subject_development = 1500 } }
+			limit = { R62 = { total_own_and_non_tributary_subject_development = 1500 } }
 			add_treasury = 3000
 		}
 		else_if = {
-			limit = { FROM = { total_own_and_non_tributary_subject_development = 1000 } }
+			limit = { R62 = { total_own_and_non_tributary_subject_development = 1000 } }
 			add_treasury = 2000
 		}
 		else = {
@@ -5205,6 +5208,7 @@ country_event = { #Command Dissolution Event
 		}
 
 		hidden_effect = {
+			set_global_flag = delay_warlord_of_haless #so there aren't lots of event pop-ups
 			if = {
 				limit = { R62 = { has_country_modifier = dwarovkron_jade } }
 				R62 = { remove_country_modifier = dwarovkron_jade }
@@ -5555,6 +5559,9 @@ country_event = { #Command Dissolution Event
 					inherit = R96
 				}
 			}
+			clear_global_event_target = warlord_of_haless
+			clr_global_flag = delay_warlord_of_haless
+			4411 = { province_event = { id = haless.1010 } } #Find the new warlord
 		}
 	}
 }
@@ -16936,6 +16943,7 @@ country_event = { # disaster ends
 			clr_country_flag = R62_tiger_subdued
 			clr_country_flag = R62_elephant_subdued
 			clr_country_flag = R62_dragon_subdued
+			clr_country_flag = insubordination_start_flag # if the disaster gets aborted by foreign subjugation, we need to clear this flag, so the release events don't happen anymore
 		}
 	}
 
@@ -17220,7 +17228,7 @@ country_event = {
 			every_country = {
 				limit = {
 					primary_culture = eagle_command
-					religion = eagle_worship
+					religion = banbe_anen
 				}
 				country_event = { id = the_command.4002 }
 				}
@@ -17239,7 +17247,7 @@ country_event = {
 			every_province = {
 				limit = {
 					culture = eagle_command
-					religion = eagle_worship
+					religion = banbe_anen
 				}
 				add_permanent_claim = ROOT
 			}

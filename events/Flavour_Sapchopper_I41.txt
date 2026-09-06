@@ -34,8 +34,7 @@ country_event = {
 
 		hidden_effect = {
 			define_ruler_to_general  = { fire = 1	shock = 5	manuever = 2	siege = 0 }
-			add_country_modifier = {
-				name = exceptional_willpower_75
+			add_exceptional_willpower_75 = {
 				duration = 18250 #Lasts until 50 years
 			}
 		}
@@ -309,7 +308,9 @@ country_event = {
 		custom_tooltip = sapchopper.10.tt
 		
 		hidden_effect = { 
-			set_country_flag = unlocked_deepwoods_orcs_rangers
+			unlock_merc_company = {
+				merc_company = merc_deepwoods_orc_rangers
+			}
 			set_country_flag = ashentree_fey_investigation
 		}
 	}
@@ -440,44 +441,7 @@ country_event = {
 		add_yearly_manpower = 2
 		custom_tooltip = emerald_orc_appearance
 		hidden_effect = {
-			change_tag = I46
-			hidden_effect = {
-				restore_country_name = yes
-				set_country_flag = formed_end_game_tag_flag
-			}
-			swap_non_generic_missions = yes
-			if = {
-				limit = { NOT = { government = tribal } }
-				change_government = tribal
-			}
-			add_government_reform = emerald_horde
-			change_mil = 6
-			define_powerful_mage = { type = ruler }
-			add_ruler_modifier = {
-				name = emerald_orc_fey_blessing
-				duration = -1
-			}
-			hidden_effect = {
-				export_to_variable = {
-					variable_name = preEmeraldReligion
-					value = religion
-				}
-			}
-			primary_and_ruler_culture_change = { race = orcish new_culture = emerald_orc }
-			set_ruler_religion = ashentree_pact
-			change_religion = ashentree_pact
-			hidden_effect = { set_country_flag = supernaturally_bound_faith }
-			every_owned_province = {
-				if = {
-					limit = { culture = green_orc }
-					change_culture = emerald_orc
-					change_religion = ashentree_pact
-				}
-			}
-
-			set_global_flag = emerald_orcs_enabled
-			set_country_flag = fey_offering_accepted
-			country_event = { id = ideagroups.1 } #Swap Ideas
+			tugund_darakh_first_formation_effect = yes
 		}
 	}
 }

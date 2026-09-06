@@ -40,6 +40,8 @@ has_mages_special_organization_privilege = { #For tag-unique orgs
 		has_estate_privilege = estate_mages_organization_acolytes
 		has_estate_privilege = estate_mages_organization_hydromancers_guild
 		has_estate_privilege = estate_mages_organization_decimated_shamans
+		has_estate_privilege = estate_mages_kaino_dao_nako_magecraft
+		has_estate_privilege = estate_mages_kaino_shadow_lich_chosen
 	}
 }
 
@@ -1770,7 +1772,6 @@ heir_is_not_immortal = {
 }
 
 country_is_immortal = {} #literally just for magic rework to pass arguments
-
 ruler_can_revive = {
 	OR = {
 		ruler_is_vampire = yes
@@ -2313,11 +2314,13 @@ province_with_arable_goods = {
 		trade_goods = grain
 		trade_goods = wine
 		trade_goods = spices
+
 		trade_goods = tea
 		trade_goods = coffee
 		trade_goods = cocoa
 		trade_goods = cotton
 		trade_goods = sugar
+		
 		trade_goods = tobacco
 		trade_goods = cloves
 		trade_goods = incense
@@ -2480,6 +2483,7 @@ damestear_can_spawn = {
 			province_group = hold_province
 			has_terrain = cavern
 			has_terrain = dwarven_road
+			has_province_modifier = haless_khantaari_treasure
 		}
 	}
 }
@@ -2531,6 +2535,7 @@ has_multiple_manufactory_trigger = {
 			has_building = impressment_offices
 			has_building = state_house
 			has_building = mage_tower
+			has_building = automatory
 		}
 	}
 }
@@ -2725,17 +2730,7 @@ is_temple = {
 is_monstrous_horde = {
 	custom_trigger_tooltip = {
 		tooltip = is_monstrous_horde
-		OR = {
-			has_government_attribute = is_monstrous_horde
-			AND = {
-				has_reform = harpy_matriarchy_reform
-				government = tribal
-			}
-			AND = {
-				has_reform = harpy_matriarchy_ayarallen_early_gov_mechanic_reform
-				government = tribal
-			}
-		}
+		has_government_attribute = is_monstrous_horde
 	}
 }
 is_a_hold = {
@@ -3380,6 +3375,22 @@ has_production_manufactory_or_gold_trigger = { #Province Scope
 	}
 }
 
+has_production_manufactory_trigger = { #Province Scope
+	custom_trigger_tooltip = {
+		tooltip = has_production_manufactory_trigger_tooltip
+		OR = {
+			has_building = wharf
+			has_building = weapons
+			has_building = textile
+			has_building = tradecompany
+			has_building = farm_estate
+			has_building = mills
+			has_building = furnace
+			has_building = plantations
+		}
+	}
+}
+
 eoa_is_dismantled = {
 	custom_trigger_tooltip = {
 		tooltip = eoa_dismantled_tooltip
@@ -3701,7 +3712,27 @@ checked_has_great_project = {
 
 }
 
-has_divine_call_palace_monument = {
+has_divine_call_palace_monument_tier2 = {
+	OR = {
+		4871 = { 
+			checked_has_great_project = {
+				type = palace_of_divine_call
+				tier = 2
+			}
+			owned_by = PREV
+			can_use_palace_of_the_divine_call_trigger = yes
+		}
+		4844 = {
+			checked_has_great_project = {
+				type = palace_of_divine_call_tsukqiao
+				tier = 2
+			}
+			owned_by = PREV
+		}
+	}
+}
+
+has_divine_call_palace_monument_tier3 = {
 	OR = {
 		4871 = { 
 			checked_has_great_project = {
@@ -3709,6 +3740,7 @@ has_divine_call_palace_monument = {
 				tier = 3
 			}
 			owned_by = PREV
+			can_use_palace_of_the_divine_call_trigger = yes
 		}
 		4844 = {
 			checked_has_great_project = {
@@ -3765,13 +3797,14 @@ has_ash_palace_monument = {
 has_golden_highway_discount_25_percent = {
 	OR = { 
 		has_ash_palace_monument = yes
+		has_divine_call_palace_monument_tier3 = yes
 		has_country_flag = golden_highway_discount25_flag
 	}
 }
 
 has_golden_highway_discount_50_percent = {
 	OR = { 
-		has_divine_call_palace_monument = yes
+		has_divine_call_palace_monument_tier2 = yes
 		has_country_flag = golden_highway_discount50_flag
 	}
 }
@@ -5025,7 +5058,10 @@ nimsnoms_theatre_is_active = {
 	owner = {
 		OR = {
 			culture_group = lencori
-			culture_group = halfling
+			AND = {
+                culture_group = halfling # for speed
+                is_cannorian_halfling_primary_culture = yes
+            }
 			culture_group = gnomish
 		}
 		high_tolerance_gnomish_race_trigger = yes
@@ -5087,6 +5123,33 @@ has_any_manufactory_construction = { #Province Scope
 		has_construction = impressment_offices
 		has_construction = state_house
 		has_construction = mage_tower
+		has_construction = automatory
+	}
+}
+
+has_latest_manpower_building_trigger = {
+	custom_trigger_tooltip = {
+		tooltip = has_latest_manpower_building_trigger_tt
+		OR = {
+			has_building = training_fields
+			AND = {
+				NOT = { owner = { mil_tech = 16 } }
+				has_building = barracks
+			}
+		}
+	}
+}
+
+has_latest_forcelimit_building_trigger = {
+	custom_trigger_tooltip = {
+		tooltip = has_latest_forcelimit_building_trigger_tt
+		OR = {
+			has_building = conscription_center
+			AND = {
+				NOT = { owner = { mil_tech = 22 } }
+				has_building = regimental_camp
+			}
+		}
 	}
 }
 
@@ -6074,5 +6137,184 @@ has_any_state_edict = {
 		has_state_edict = yanification_edict
 		has_state_edict = yezel_mora_misery_edict
 		has_state_edict = edict_castanor_patrician_administration
+	}
+}
+
+banbe_anen_quest_for_reehanviza_mastery_trigger = {
+	OR = {
+		check_variable = {
+			which = reehanviza_$which$
+			value = 7
+		}
+		AND = {
+			check_variable = {
+				which = reehanviza_$which$
+				value = 5
+			}
+			has_active_fervor = banbe_anen_$which$
+		}
+	}
+}
+
+land_units_in_province = {
+	OR = {
+		infantry_in_province = $effect$
+		cavalry_in_province = $effect$
+		artillery_in_province = $effect$
+	}
+}
+
+can_see_theocratic_heir_stats_trigger = {
+	OR = {
+		has_government_attribute = can_see_theocratic_heir_stats
+		has_country_modifier = homunculus_attendant
+	}
+}
+
+can_use_thousand_words_assembly_scripted_trigger = {
+	owner = {
+		OR = {
+			custom_trigger_tooltip = {
+				tooltip = is_member_of_yanszin_league_TT
+				has_country_flag = is_member_of_yanszin_league_flag
+			}
+			full_idea_group = trade_ideas
+		}
+		OR = {
+			primary_culture = jiangszun
+			accepted_culture = jiangszun
+		}
+		has_estate = estate_eunuchs_anb
+	}
+}
+
+can_use_the_defiant_trigger = {
+	owner = {
+		capital_scope = { superregion = yanshen_superregion }
+		OR = {
+			primary_culture = jiangyang
+			accepted_culture = jiangyang
+		}
+		NOT = { religion = devouring_path }
+		NOT = { religion = black_doctrine }
+	}
+}
+
+can_use_house_of_fire_and_water_trigger = {
+	owner = {
+		capital_scope = {
+			OR = {
+				superregion = yanshen_superregion
+				region = xianjie_region
+			}
+		}
+		OR = {
+			culture_group = yan
+			primary_culture = serene_harimari
+			primary_culture = pezarangi_harpy
+			primary_culture = semifire_harpy
+			primary_culture = dragon_command
+			primary_culture = sunrise_elf
+			primary_culture = goldscale_kobold
+		}
+		OR = {
+			has_estate = estate_mages
+			has_estate = estate_artificers
+		}
+	}
+	has_owner_accepted_culture = yes
+}
+
+can_use_palace_of_the_divine_call_trigger = {
+	4871 = { has_owner_accepted_culture = yes }
+	if = {
+		limit = { owner = { tag = L62 } } 
+		owner = { mission_completed = L62_protectors_of_seas }
+	}
+	else_if = {
+		limit = { owner = { is_or_was_tag = { tag = Y09 } } } 
+		owner = { mission_completed = bianfang_city_of_temples }
+	}
+	else_if = {
+		limit = { owner = { is_or_was_tag = { tag = Y00 } } } 
+		owner = { mission_completed = azkare_worthy_tomb }
+	}
+	else = {
+		is_capital = yes
+	}
+	owner = { government_rank = 2 }
+}
+
+can_use_port_of_two_spirits = {
+	owner = {
+		NOT = { tag = Y65 }
+		NOT = { religion = devouring_path }
+		NOT = { religion = black_doctrine }
+	}
+}
+
+has_soldier_households_bonus_trade_good = {
+	OR = {
+		trade_goods = grain
+		trade_goods = fish
+		trade_goods = livestock
+		trade_goods = wine
+		trade_goods = fungi
+		trade_goods = serpentbloom
+	}
+}
+
+has_impressment_offices_bonus_trade_good = {
+	OR = {
+		trade_goods = salt
+		trade_goods = fish
+		trade_goods = naval_supplies
+		trade_goods = tropical_wood
+	}
+}
+
+has_state_house_bonus_trade_good = {
+	OR = {
+		trade_goods = paper
+		trade_goods = glass
+		trade_goods = gems
+	}
+}
+
+has_mage_tower_bonus_trade_good = {
+	OR = {
+		trade_goods = damestear
+		trade_goods = precursor_relics
+		trade_goods = incense
+		trade_goods = chinaware
+		trade_goods = ivory
+	}
+}
+
+has_automatory_bonus_trade_good = {
+	OR = {
+		trade_goods = mithril
+		trade_goods = damestear
+		trade_goods = iron
+		trade_goods = copper
+		trade_goods = gold
+	}
+}
+
+has_ramparts_bonus_trade_good = { always = no } #Needed for scripted effect
+has_furnace_bonus_trade_good = { always = no }
+has_production_bonus_trade_good = { always = no }
+
+railskulker_can_change_trade_goods = {
+	NOT = {
+		trade_goods = gold
+		trade_goods = iron
+		trade_goods = copper
+		trade_goods = mithril
+		trade_goods = gems
+		trade_goods = coal
+		has_latent_trade_goods = coal # wouldn't get overwritten but +1 goods produced on coal is hmmge
+		trade_goods = damestear
+		has_province_modifier = railskulker_state_backed_food_security
 	}
 }
