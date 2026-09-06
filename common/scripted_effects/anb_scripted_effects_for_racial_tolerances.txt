@@ -4460,23 +4460,6 @@ generic_start_expulsion = {
 				limit = { ai = no }
 				country_event = { id = race_setup_events.9 days = 1 }
 			}
-
-			if = { # Trigger events for EoA members expelling imperial races
-				limit = {
-					is_part_of_hre = yes
-					any_elector = {
-						has_country_modifier = $race$_administration
-					}
-					all_elector = {
-						NOT = { has_country_flag = eoa_protector_elector } # Event chain not already going on
-					}
-				}
-				random_elector = {
-					limit = { has_country_modifier = $race$_administration }
-					set_country_flag = eoa_protector_elector
-					country_event = { id = flavor_empire.40 days = 100 }
-				}
-			}
 				
 			every_owned_province = {
 				limit = { has_small_$race$_minority_trigger = yes }
