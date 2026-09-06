@@ -3517,7 +3517,7 @@ soldier_households = {
 			}
 		}
 
-		ghalorcander_on_built_manufactory_effect = { manufactory = soldier_households }
+		ghalorcander_on_built_manufactory_with_bonus_effect = { manufactory = soldier_households }
 	}
 
 	on_destroyed = {
@@ -3676,7 +3676,7 @@ impressment_offices = {
 
 		on_built_manufactory_effect = yes
 
-		ghalorcander_on_built_manufactory_effect = { manufactory = impressment_offices }
+		ghalorcander_on_built_manufactory_with_bonus_effect = { manufactory = impressment_offices }
 	}
 	on_destroyed = {
 		on_destroyed_manufactory_effect = yes
@@ -3825,7 +3825,7 @@ state_house = {
 			}
 		}
 
-		ghalorcander_on_built_manufactory_effect = { manufactory = state_house }
+		ghalorcander_on_built_manufactory_with_bonus_effect = { manufactory = state_house }
 	}
 	on_destroyed = {
 		on_destroyed_manufactory_effect = yes
@@ -4318,7 +4318,7 @@ mage_tower = {
 			}
 		}
 
-		ghalorcander_on_built_manufactory_effect = { manufactory = mage_tower }
+		ghalorcander_on_built_manufactory_with_bonus_effect = { manufactory = mage_tower }
 	}
 	on_destroyed = {
 		on_destroyed_manufactory_effect = yes
@@ -4721,7 +4721,20 @@ automatory = {
 			}
 		}
 
-		ghalorcander_on_built_manufactory_effect = { manufactory = automatory }
+		if = { #Ghalorcandor Monument
+			limit = {
+				has_great_project = {
+					type = ghalorcander
+					tier = 3
+				}
+				owner = { can_use_ghalorcander = yes }
+				has_automatory_bonus_trade_good = yes
+			}
+			add_province_modifier = {
+				name = double_manufactory_modifiers_automatory_bonus
+				duration = -1
+			}
+		}
 	}
 
 	on_destroyed = {

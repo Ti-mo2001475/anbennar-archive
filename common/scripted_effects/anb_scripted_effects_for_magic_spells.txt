@@ -3269,6 +3269,7 @@ clr_centaur_spell_lists = {
 		limit = { has_any_custom_spell_list_in_group = { group = centaur } }
 		clr_custom_spell_list = { group = centaur subgroup = default }
 		clr_custom_spell_list = { group = centaur subgroup = black_herd }
+		clr_custom_spell_list = { group = centaur subgroup = thunderborn }
 	}
 }
 
@@ -3305,7 +3306,7 @@ clr_bardic_spell_lists = {
 clr_chi_spell_lists = {
 	if = {
 		limit = { has_any_custom_spell_list_in_group = { group = chi } }
-		clr_custom_spell_list = { group = haless subgroup = default }
+		clr_custom_spell_list = { group = chi subgroup = default }
 	}
 }
 
@@ -4501,8 +4502,8 @@ enchantment_3_bardic_default_4_effect = {
 		add_rebel_progress = {
 			value = -100 # Set all rebel progress to 0
 		}
-		add_stability = 1
-		add_war_exhaustion = -2
+		add_stability = 3
+		add_war_exhaustion = -10
 		add_country_modifier = {
 			name = enchantment_3_elegy_of_exhaustion_spell_mod
 			duration = 3650 # 10 years
@@ -4529,11 +4530,15 @@ necromancy_0_fangaula_kaino_1_effect = { #drain life spell
 			development = 4
 		}
 		remove_random_development = yes
+		if = {
+			limit = { ROOT = { mission_completed = kaino_1_8 } }
+			infantry = ROOT
+		}
 	}
 	custom_tooltip = linebreak_tt
-	add_adm_power = 10
-	add_dip_power = 10
-	add_mil_power = 10
+	add_adm_power = 5
+	add_dip_power = 5
+	add_mil_power = 5
 	increase_witch_king_points_medium = yes
 }
 
@@ -4610,4 +4615,45 @@ abjuration_1_invoke_the_grave_earth_effect = {
 }
 conjuration_1_channel_chi_effect = {
 	add_country_modifier = { name = chi_default_channel_chi_mod duration = 1825 }
+}
+
+evocation_1_centaur_thunderborn_5_effect = { 
+	custom_tooltip = centaur_thunderborn_spell_conduit_removal_tooltip
+	hidden_effect = {
+		every_owned_province = {
+			remove_province_modifier = I49_conduit_1
+			remove_province_modifier = I49_conduit_2
+		}
+	}
+	custom_tooltip = centaur_thunderborn_spell_devastation_tooltip
+	tooltip = {
+        add_country_modifier = {
+            name = I49_gathering_storms
+            duration = 1825
+        }
+    }
+	custom_tooltip = centaur_thunderborn_spell_army_tradition_tooltip
+	hidden_effect = {
+		capital_scope = {
+			every_neighbor_province = {
+				limit = {
+					NOT = {
+						country_or_subject_holds = ROOT
+					}
+				}
+				add_devastation = 50
+				owner = {
+					add_country_modifier = {
+						name = I49_gathering_storms
+						duration = 1825
+					}
+				}
+				ROOT = {
+					add_army_tradition_or_mil_power = {
+						amount = 3
+					}
+				}
+			}
+		}
+	}
 }

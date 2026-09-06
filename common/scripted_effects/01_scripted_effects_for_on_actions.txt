@@ -7835,6 +7835,92 @@ on_war_declaration_effect = {
 			}
 		}
 	}
+	#Thunderborn
+	if = {
+		limit = {
+			tag = I49
+			mission_completed = I49_edge_of_the_endless_plain
+			is_in_war = { casus_belli = cb_vassalize_mission } 
+		}
+		if = {
+			limit = {
+				FROM = {
+					religious_school = {
+						group = centaur_religion
+						school = filustkhuga_school
+					}
+				}
+				has_country_flag = thunderborn_has_filustkhuga_cb
+			}
+			clr_country_flag = thunderborn_has_filustkhuga_cb
+			every_known_country = {
+				limit = {
+					religious_school = {
+						group = centaur_religion
+						school = filustkhuga_school
+					}
+				}
+				ROOT = {
+					remove_casus_belli = {
+						target = PREV
+						type = cb_vassalize_mission
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					religious_school = {
+						group = centaur_religion
+						school = irdukhuga_school
+					}
+				}
+				has_country_flag = thunderborn_has_irdukhuga_cb
+			}
+			clr_country_flag = thunderborn_has_irdukhuga_cb
+			every_known_country = {
+				limit = {
+					religious_school = {
+						group = centaur_religion
+						school = irdukhuga_school
+					}
+				}
+				ROOT = {
+					remove_casus_belli = {
+						target = PREV
+						type = cb_vassalize_mission
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					religious_school = {
+						group = centaur_religion
+						school = maslekhuga_school
+					}
+				}
+				has_country_flag = thunderborn_has_maslekhuga_cb
+			}
+			clr_country_flag = thunderborn_has_maslekhuga_cb
+			every_known_country = {
+				limit = {
+					religious_school = {
+						group = centaur_religion
+						school = maslekhuga_school
+					}
+				}
+				ROOT = {
+					remove_casus_belli = {
+						target = PREV
+						type = cb_vassalize_mission
+					}
+				}
+			}
+		}
+	}
 }
 
 remove_all_age_of_discovery_modifiers = {
@@ -7884,6 +7970,11 @@ remove_all_age_of_discovery_modifiers = {
 		if = {
 			limit = { has_country_modifier = I55_vanishing_migration }
 			remove_country_modifier = I55_vanishing_migration
+		}
+		#Thunderborn
+		if = {
+			limit = { has_country_flag = I49_non_malukhuga_celebration }
+			clr_country_flag = I49_non_malukhuga_celebration
 		}
 	}
 	if = {
@@ -8419,6 +8510,25 @@ on_province_culture_change_effect = {
 	}
 	if = {
 		limit = {
+			owner = { tag = B36 mission_completed = marrhold_feybane }
+			superregion = deepwoods_superregion
+			NOT = { has_province_modifier = marrhold_solidified_control }
+			OR = {
+				culture = marrodic
+				AND = {
+					culture = wood_elf
+					owner = { accepted_culture = wood_elf }
+				}
+			}
+		}
+		remove_province_modifier = marrhold_woods_province
+		add_province_modifier = {
+			name = marrhold_solidified_control
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
 			owner = { has_government_attribute = cheaper_goblin_governance }
 			culture_group = goblin
 			NOT = { has_province_modifier = goblin_citizens }
@@ -8767,6 +8877,23 @@ on_province_culture_change_effect = {
 		limit = { has_province_modifier = zerat_the_last_stand_of_ashhana }
 		remove_province_modifier = zerat_the_last_stand_of_ashhana
 	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = celliande_convert_wexara
+			}
+		}
+		if = {
+			limit = { OR = { culture = wexonard culture = arannese } }
+			add_province_modifier = {
+				name = celliande_revival
+				duration = -1
+			}
+		}
+		else = {
+			remove_province_modifier = celliande_revival
+		}
+	}
 }
 
 on_province_culture_converted_effect = {
@@ -8805,23 +8932,6 @@ on_province_culture_converted_effect = {
 			owner = { has_country_flag = random_dev_on_culture_conversion }
 		}
 		add_random_development = 1
-	}
-	if = {
-		limit = {
-			owner = {
-				has_country_flag = celliande_convert_wexara
-			}
-		}
-		if = {
-			limit = { OR = { culture = wexonard culture = arannese } }
-			add_province_modifier = {
-				name = celliande_revival
-				duration = -1
-			}
-		}
-		else = {
-			remove_province_modifier = celliande_revival
-		}
 	}
 }
 
@@ -10409,6 +10519,17 @@ on_mercenary_recruited_effect = {
 		clr_country_flag = recruited_merc_company
 		set_country_flag = recruited_merc_company	#flag to check for when you last hired mercs
 	}
+	if = { #Sunhungak Spiritbinders Merc Company
+		limit = { mercenary_company = merc_sunhungak_spiritbinders }
+		FROM = {
+			country_event = { id = shuvuush.1002 }
+			set_country_flag = sunhungak_spiritbinders_hired
+		}
+		V32 = { #Sunhungak
+			add_treasury = 50 #Adding it here in case anotehr person hires it while Sunhungak still has the event open
+			country_event = { id = shuvuush.1002 }
+		}
+	}
 }
 
 on_parliament_debate_reset_effect = {
@@ -10796,7 +10917,7 @@ on_main_war_won_effect = {
 			value = -5
 		}
 	}
-	if = {
+	if = { # won against heretic
 		limit = {
 			FROM = {
 				religion_group = ROOT
@@ -10808,7 +10929,7 @@ on_main_war_won_effect = {
 			value = 1
 		}
 	}
-	if = {
+	if = { # won against heretic and heathen
 		limit = {
 			FROM = {
 				NOT = { religion = ROOT }
@@ -10817,6 +10938,10 @@ on_main_war_won_effect = {
 		change_variable = {
 			which = num_of_wars_won_against_non_believers
 			value = 1
+		}
+		if = {
+			limit = { has_government_attribute = order_of_malliath_war_boost }
+			add_country_modifier = { name = Z21_order_of_malliath_boost duration = 1825 } # 5 years
 		}
 	}
 	if = {
@@ -12528,6 +12653,28 @@ on_capital_moved_effect = {
 	owner = {
 		warlord_of_haless_check = yes
 		anti_warlord_of_haless_check = yes
+
+		if = {
+			limit = { has_country_flag = count_times_moved_capital }
+			change_variable = { times_moved_capital = 1 }
+		}
+	}
+	if = {
+		limit = { 
+			owner = {
+				tag = I49
+				mission_completed = I49_to_wander_with_purpose
+			}
+			current_age = age_of_discovery
+		}
+		owner = {
+			add_adm_power = 25
+			add_dip_power = 25
+			add_mil_power = 25
+			capital_scope = {
+				add_random_development = 1
+			}
+		}
 	}
 }
 
@@ -14425,6 +14572,47 @@ on_province_owner_change_effect = {
 		}
 	}
 
+	if = { # serpentgard - remove branch order mods upon conquering
+		limit = {
+			has_province_flag = Z21_branch_order_built
+			owner = {
+				NOT = {
+					mission_completed = Z21_centralize_the_order
+					overlord = { mission_completed = Z21_centralize_the_order }
+				}
+			}
+		}
+		Z21_remove_branch_order_and_zoc_mods = yes
+	}
+	if = { # serpentgard - place zoc modifiers upon conquering bordering province
+		limit = {
+			owner = {
+				OR = {
+					mission_completed = Z21_centralize_the_order
+					overlord = { mission_completed = Z21_centralize_the_order }
+				}
+			}
+			any_neighbor_province = { has_province_flag = Z21_branch_order_built }
+		}
+		if = { limit = { any_neighbor_province = { has_province_modifier = Z21_head_branch_3 } }
+			add_province_modifier = { name = Z21_head_branch_3_zoc duration = -1 }
+		}
+		else_if = { limit = { any_neighbor_province = { has_province_modifier = Z21_head_branch_2 } }
+			add_province_modifier = { name = Z21_head_branch_2_zoc duration = -1 }
+		}
+		else_if = { limit = { any_neighbor_province = { has_province_modifier = Z21_head_branch_1 } }
+			add_province_modifier = { name = Z21_head_branch_1_zoc duration = -1 }
+		}
+		else_if = { limit = { any_neighbor_province = { has_province_modifier = Z21_branch_order_3 } }
+			add_province_modifier = { name = Z21_branch_order_3_zoc duration = -1 }
+		}
+		else_if = { limit = { any_neighbor_province = { has_province_modifier = Z21_branch_order_2 } }
+			add_province_modifier = { name = Z21_branch_order_2_zoc duration = -1 }
+		}
+		else_if = { limit = { any_neighbor_province = { has_province_modifier = Z21_branch_order_1 } }
+			add_province_modifier = { name = Z21_branch_order_1_zoc duration = -1 }
+		}
+	}
 
 	#ANBENNAR
 	#Cleaning up holy order upgrade modifiers
@@ -15515,6 +15703,37 @@ on_province_owner_change_effect = {
 			country_event = { id = escanni_wars.4 }
 		}
 	}
+
+	if = {
+		limit = {
+			owner = { tag = B36 mission_completed = marrhold_feybane }
+			superregion = deepwoods_superregion
+		}
+		
+		if = {
+			limit = {
+				OR = {
+					culture = marrodic
+					AND = {
+						culture = wood_elf
+						owner = { accepted_culture = wood_elf }
+					}
+				}
+			}
+
+			add_province_modifier = {
+				name = marrhold_solidified_control
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = marrhold_woods_province
+				duration = -1
+			}
+		}
+	}
+
 	#broken masquerade vampires t3 tier down
 	if = {
 		limit = {
@@ -20547,6 +20766,21 @@ on_consort_death_effects = {
 			has_country_flag = harpy_tolerance_harpy_wife_happy_life
 		}
 		clr_country_flag = harpy_tolerance_harpy_wife_happy_life
+	}
+	if = { #Thunderborn
+		limit = { has_country_flag = I49_zaya_alive }
+		if = {
+			limit = { NOT = { tag = J56 } }
+			country_event = {
+				id = flavour_thunderborn.12
+			}
+		}
+		if = {
+			limit = { tag = J56 }
+			country_event = {
+				id = flavour_thunderborn.13
+			}
+		}
 	}
 }
 

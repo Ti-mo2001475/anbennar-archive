@@ -756,6 +756,12 @@ country_event = {
 		clr_country_flag = kaino_barracks_bonuses_flag
 		clr_country_flag = kaino_temple_bonuses_flag
 	}
+	option = {
+		name = flavour_kaino.50.b
+		country_event = {
+			id = flavour_kaino.58
+		}
+	}
 }
 
 #stab kaino - denial
@@ -944,6 +950,71 @@ country_event = {
 	}
 }
 
+country_event = {
+	id = flavour_kaino.58
+	title = flavour_kaino.58.t
+	desc = flavour_kaino.58.d
+	picture = APOSTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavour_kaino.58.a
+		add_country_modifier = {
+			name = necromancy_spell_half
+			duration = -1
+		}
+	}	
+}
+
+country_event = {
+	id = flavour_kaino.60
+	title = kaino_study_remains_title
+	desc = flavour_kaino.60.d
+	picture = MAGES_ESTATE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		trigger = {
+			adm_power = 300
+			NOT = { has_country_modifier = kaino_magic_boost_adm }
+		}
+		name = kaino_magic_boost_adm
+		add_adm_power = -300
+		add_country_modifier = {
+			name = kaino_magic_boost_adm
+			duration = 9125
+		}
+	}
+	option = {
+		trigger = {
+			dip_power = 300
+			NOT = { has_country_modifier = kaino_magic_boost_dip }
+		}
+		name = kaino_magic_boost_dip
+		add_dip_power = -300
+		add_country_modifier = {
+			name = kaino_magic_boost_dip
+			duration = 9125
+		}
+	}
+	option = {
+		trigger = {
+			mil_power = 300
+			NOT = { has_country_modifier = kaino_magic_boost_mil }
+		}
+		name = kaino_magic_boost_mil
+		add_mil_power = -300
+		add_country_modifier = {
+			name = kaino_magic_boost_mil
+			duration = 9125
+		}
+	}
+	option = {
+		name = flavour_kaino.60.dd
+	}
+}
 
 country_event = { #this event should never fire, just a debug option if the disaster fires
 	id = flavour_kaino.100

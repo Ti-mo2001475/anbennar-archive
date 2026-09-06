@@ -1,0 +1,491 @@
+namespace = olavish_minor
+
+# Olavish Dominance Upgrade
+country_event = {
+	id = olavish_minor.1
+	title = olavish_minor.1.t
+	desc = olavish_minor.1.d
+	picture = VIKING_KING_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = olavish_minor.1.a
+		ai_chance = {
+			factor = 100
+		}
+		if = {
+			limit = {
+				has_country_modifier = olavish_minor_olavish_dominance_1
+			}
+			remove_country_modifier = olavish_minor_olavish_dominance_1
+			add_country_modifier = {
+				name = olavish_minor_olavish_dominance_2
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_modifier = olavish_minor_olavish_dominance_2
+			}
+			remove_country_modifier = olavish_minor_olavish_dominance_2
+			add_country_modifier = {
+				name = olavish_minor_olavish_dominance_3
+				duration = -1
+			}
+		}
+	}
+}
+
+# Crowning of The Olavish King
+country_event = {
+	id = olavish_minor.2
+	title = olavish_minor.2.t
+	desc = olavish_minor.2.d
+	picture = NOBLE_ESTATE_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = olavish_minor.2.a
+		ai_chance = {
+			factor = 100
+		}
+		olavslund_area = {
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		nyrford_area = {
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		naugsvol_area = {
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		drekkiskali_area = {
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		esfjall_area = {
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		6271 = { #vaengheim
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		6270 = { #Smidafjall
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		6269 = { #Djupfyri
+			cede_province = ROOT
+			add_core = ROOT
+		}
+		if = {
+			limit = {
+				has_country_modifier = olavish_minor_olavish_dominance_1
+			}
+			remove_country_modifier = olavish_minor_olavish_dominance_1
+			add_country_modifier = {
+				name = olavish_minor_reaver_king_1
+				duration = 18250
+			}
+		}
+		if = {
+			limit = {
+				has_country_modifier = olavish_minor_olavish_dominance_2
+			}
+			remove_country_modifier = olavish_minor_olavish_dominance_2
+			add_country_modifier = {
+				name = olavish_minor_reaver_king_2
+				duration = 18250	
+			}
+		}
+		if = {
+			limit = {
+				has_country_modifier = olavish_minor_olavish_dominance_3
+			}
+			remove_country_modifier = olavish_minor_olavish_dominance_3
+			add_country_modifier = {
+				name = olavish_minor_reaver_king_3
+				duration = 18250
+			}
+		}
+		add_prestige = 10
+		if = {
+			limit = {
+				NOT = {
+					government_rank = 2
+				}
+
+			}
+			set_government_rank = 2
+		}
+		set_country_flag = olavlund_formable_tech_bypass
+		custom_tooltip = olavish_minor_can_form_olavlund
+	}
+}
+
+# Olavsborg Reborn
+country_event = {
+	id = olavish_minor.3
+	title = olavish_minor.3.t
+	desc = olavish_minor.3.d
+	picture = CITY_VIEW_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = olavish_minor.3.a
+		ai_chance = {
+			factor = 100
+		}
+		set_capital = 977 #Olavsborg
+	}
+
+	option = {
+		name = olavish_minor.3.b
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+# Redgarhavn specific events
+namespace = redgarhavn
+
+# Ultimatum From Redgarhavn
+country_event = {
+	id = redgarhavn.1
+	title = redgarhavn.1.t
+	desc = redgarhavn.1.d
+	picture = DIPLOMACY_eventPicture
+
+	is_triggered_only = yes
+
+	# We fight
+	option = {
+		name = redgarhavn.1.a
+		ai_chance = {
+			factor = 100
+		}
+		save_event_target_as = plunder_victim
+		FROM = {
+			add_casus_belli = {
+				type = cb_reaver_invasion
+				target = ROOT
+				months = 240
+			}
+			country_event = { id = redgarhavn.3 }
+		}
+	}
+
+	# Give them what they want
+	option = {
+		name = redgarhavn.1.b
+		ai_chance = {
+			factor = 0
+		}
+		save_event_target_as = plunder_victim
+		ROOT = {
+			add_years_of_income = -0.6
+			capital_scope = {
+				add_base_tax = -1
+				add_base_production = -1
+				add_base_manpower = -1
+			}
+		}
+		Z13 = { #Redgarhavn
+			add_years_of_income = 1
+			capital_scope = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+			country_event = { id = redgarhavn.2 }
+		}
+		
+	}
+}
+
+# Country paid us off
+country_event = {
+	id = redgarhavn.2
+	title = redgarhavn.2.t
+	desc = redgarhavn.2.d
+	picture = DIPLOMACT_SIGNING_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = redgarhavn.2.a
+		ai_chance = {
+			factor = 100
+		}
+		tooltip = {
+			ROOT = {
+				add_years_of_income = -0.6
+				capital_scope = {
+					add_base_tax = -1
+					add_base_production = -1
+					add_base_manpower = -1
+				}
+			}
+			Z13 = { #Redgarhavn
+				add_years_of_income = 1
+				capital_scope = {
+					add_base_tax = 1
+					add_base_production = 1
+					add_base_manpower = 1
+				}
+			}
+		}
+	}
+}
+
+# Country decided to fight
+country_event = {
+	id = redgarhavn.3
+	title = redgarhavn.3.t
+	desc = redgarhavn.3.d
+	picture = GENERALS_DISCUSSING_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = redgarhavn.3.a
+		ai_chance = {
+			factor = 100
+		}
+		tooltip = {
+			ROOT = {
+				add_casus_belli = {
+					type = cb_reaver_invasion
+					target = event_target:plunder_victim
+					months = 240
+				}
+			}
+		}
+	}
+}
+
+# Paying With Steel
+country_event = {
+	id = redgarhavn.5
+	title = redgarhavn.5.t
+	desc = redgarhavn.5.d
+	picture = CONQUEST_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = redgarhavn.5.a
+		ai_chance = {
+			factor = 100
+		}
+		Z08 = { #Bjarnrik
+			capital_scope = {
+				change_controller = ROOT
+			}
+		}
+	}
+}
+
+# Konungrhavn Plundered
+country_event = {
+	id = redgarhavn.6
+	title = redgarhavn.6.t
+	desc = redgarhavn.6.d
+	picture = COUNTRY_COLLAPSE_eventPicture
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = redgarhavn.6.a
+		ai_chance = {
+			factor = 100
+		}
+		3187 = { #Drekkodr
+			cede_province = ROOT
+		}
+		capital_scope = {
+			add_province_modifier = {
+				name = redgarhavn_plundered_naval_supplies
+				duration = -1
+			}
+		}
+	}
+}
+
+# Bal Vroren Plundered
+country_event = {
+	id = redgarhavn.7
+	title = redgarhavn.7.t
+	desc = redgarhavn.7.d
+	picture = COUNTRY_COLLAPSE_eventPicture
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = redgarhavn.7.a
+		ai_chance = {
+			factor = 100
+		}
+		736 = { #Isle Vroren
+			cede_province = ROOT
+			change_culture = ROOT
+			change_religion = ROOT
+		}
+		capital_scope = {
+			add_province_modifier = {
+				name = redgarhavn_plundered_weapons
+				duration = -1
+			}
+		}
+	}
+}
+
+# Celmaldor Plundered
+country_event = {
+	id = redgarhavn.8
+	title = redgarhavn.8.t
+	desc = redgarhavn.8.d
+	picture = COUNTRY_COLLAPSE_eventPicture
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = redgarhavn.8.a
+		ai_chance = {
+			factor = 100
+		}
+		698 = { #Eyegard
+			cede_province = ROOT
+			change_culture = ROOT
+			change_religion = ROOT
+		}
+		capital_scope = {
+			add_province_modifier = {
+				name = redgarhavn_plundered_trade_secrets
+				duration = -1
+			}
+		}
+	}
+}
+#Avnkaup Specific Events
+namespace = avnkaup
+
+# Troll Hunter Captain Recruited
+country_event = {
+	id = avnkaup.1
+	title = avnkaup.1.t
+	desc = avnkaup.1.d
+	picture = USA_EXPLORERS_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = avnkaup.1.a
+		ai_chance = {
+			factor = 100
+		}
+		create_conquistador = {
+			tradition = 50
+		}
+	}
+}
+
+# Ruins in Raudrsten
+country_event = {
+	id = avnkaup.2
+	title = avnkaup.2.t
+	desc = avnkaup.2.d
+	picture = indiangfx_COUNTRY_COLLAPSE_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = avnkaup.2.a
+		ai_chance = {
+			factor = 100
+		}
+		discover_province = 4182 #Sashkras
+		set_country_flag = looking_for_key
+		custom_tooltip = avnkaup_search_sashkras
+	}
+	
+}
+
+# The Search in Sashkras
+country_event = {
+	id = avnkaup.3
+	title = avnkaup.3.t
+	desc = avnkaup.3.d
+	picture = OGRE_FEAST_eventPicture
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = avnkaup.3.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_tooltip = avnkaup_kill_sashkras_natives
+		set_country_flag = better_kill_those_ogres
+	}
+}
+
+# The Key Acquired
+country_event = {
+	id = avnkaup.4
+	title = avnkaup.4.t
+	desc = avnkaup.4.d
+	picture = LAKE_TREASURE_eventPicture
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = avnkaup.4.a
+		ai_chance = {
+			factor = 100
+		}
+		add_prestige = 10
+		set_country_flag = has_treasure_key
+		custom_tooltip = avnkaup_treasure_key_acquired
+	}
+}
+
+# The Big Reveal
+country_event = {
+	id = avnkaup.5
+	title = avnkaup.5.t
+	desc = avnkaup.5.d
+	picture = BIG_BOOK_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = avnkaup.5.a
+		ai_chance = {
+			factor = 100
+		}
+		add_treasury = 200
+		add_army_professionalism = 0.05
+		add_country_modifier = {
+			name = avnkaup_adventurers_guide
+			duration = -1
+		}
+	}
+}
