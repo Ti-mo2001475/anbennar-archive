@@ -1935,17 +1935,19 @@ country_event = { #Elector - discover prince is expelling our species
 	is_triggered_only = yes
 
 	immediate = {
-		random_owned_province = {
-			limit = { OR = { has_owner_culture = yes has_owner_accepted_culture = yes } }
-			save_event_target_as = prov_adm_relief
-		}
-		random_owned_province = {
-			limit = { OR = { has_owner_culture = yes has_owner_accepted_culture = yes } }
-			save_event_target_as = prov_dip_relief
-		}
-		random_owned_province = {
-			limit = { OR = { has_owner_culture = yes has_owner_accepted_culture = yes } }
-			save_event_target_as = prov_mil_relief
+		hidden_effect = {
+			random_owned_province = {
+				limit = { OR = { has_owner_culture = yes has_owner_accepted_culture = yes } }
+				save_event_target_as = prov_adm_relief
+			}
+			random_owned_province = {
+				limit = { OR = { has_owner_culture = yes has_owner_accepted_culture = yes } }
+				save_event_target_as = prov_dip_relief
+			}
+			random_owned_province = {
+				limit = { OR = { has_owner_culture = yes has_owner_accepted_culture = yes } }
+				save_event_target_as = prov_mil_relief
+			}
 		}
 	}
 
@@ -2039,42 +2041,42 @@ country_event = { # Offender trigger event
 	}
 
 	immediate = {
-		random_elector = { # Save the relevant elector
-			limit = {
-				OR = {
-					AND = {
-						ROOT = { has_country_modifier = racial_pop_elven_expulsion }
-						has_country_modifier = elven_administration
-					}
-					AND = {
-						ROOT = { has_country_modifier = racial_pop_half_elven_expulsion }
-						has_country_modifier = half_elven_administration
-					}
-					AND = {
-						ROOT = { has_country_modifier = racial_pop_human_expulsion }
-						has_country_modifier = human_administration
-					}
-					AND = {
-						ROOT = { has_country_modifier = racial_pop_dwarven_expulsion }
-						has_country_modifier = dwarven_administration
-					}
-					AND = {
-						ROOT = { has_country_modifier = racial_pop_gnomish_expulsion }
-						has_country_modifier = gnomish_administration
-					}
-					AND = {
-						ROOT = { has_country_modifier = racial_pop_halfling_expulsion }
-						has_country_modifier = halfling_administration
+		hidden_effect = {
+			random_elector = { # Save the relevant elector
+				limit = {
+					OR = {
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_elven_expulsion }
+							has_country_modifier = elven_administration
+						}
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_half_elven_expulsion }
+							has_country_modifier = half_elven_administration
+						}
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_human_expulsion }
+							has_country_modifier = human_administration
+						}
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_dwarven_expulsion }
+							has_country_modifier = dwarven_administration
+						}
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_gnomish_expulsion }
+							has_country_modifier = gnomish_administration
+						}
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_halfling_expulsion }
+							has_country_modifier = halfling_administration
+						}
 					}
 				}
+				set_country_flag = eoa_protector_elector
+				save_event_target_as = expelled_elector
 			}
-			set_country_flag = eoa_protector_elector
-			save_event_target_as = expelled_elector
-		}
-		clr_global_flag = eoa_protector_elector_cooldown
-		set_global_flag = eoa_protector_elector_cooldown
-		save_event_target_as = expelling_country
-		hidden_effect = {
+			clr_global_flag = eoa_protector_elector_cooldown
+			set_global_flag = eoa_protector_elector_cooldown
+			save_event_target_as = expelling_country
 			event_target:expelled_elector = {
 				country_event = { id = flavor_empire.40 } # Flavour event for elector
 			}
@@ -2088,12 +2090,49 @@ country_event = { # Offender trigger event
 			name = EOA_41_expel_reputation
 			duration = 1460
 		}
-		if = { 
-			limit = { # Otherwise tooltip says every owned province received the modifier
-				any_owned_province = { target_culture_is_expelled_trigger = yes } 
+		custom_tooltip = eoa_expelled_imperial_unrest_tt
+		tooltip = {
+			add_province_modifier = {
+				name = EOA_41_expel_unrest
+				duration = 1460
 			}
+		}
+		hidden_effect = {
 			every_owned_province = {
-				limit = { target_culture_is_expelled_trigger = yes }
+				limit = {
+					OR = {
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_elven_expulsion }
+							event_target:expelled_elector = { has_country_modifier = elven_administration }
+							has_any_elven_pop_trigger = yes
+						}
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_half_elven_expulsion }
+							event_target:expelled_elector = { has_country_modifier = half_elven_administration }
+							has_any_half_elven_pop_trigger = yes
+						}
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_human_expulsion }
+							event_target:expelled_elector = { has_country_modifier = human_administration }
+							has_any_human_pop_trigger = yes
+						}
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_dwarven_expulsion }
+							event_target:expelled_elector = { has_country_modifier = dwarven_administration }
+							has_any_dwarven_pop_trigger = yes
+						}
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_gnomish_expulsion }
+							event_target:expelled_elector = { has_country_modifier = gnomish_administration }
+							has_any_gnomish_pop_trigger = yes
+						}
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_halfling_expulsion }
+							event_target:expelled_elector = { has_country_modifier = halfling_administration }
+							has_any_halfling_pop_trigger = yes
+						}
+					}
+				}
 				add_province_modifier = {
 					name = EOA_41_expel_unrest
 					duration = 1460
@@ -2161,19 +2200,8 @@ country_event = { #Elector - they refused to stop
 	is_triggered_only = yes
 
 	trigger = {
-		emperor = { exists = yes } # EoA still exists
-	}
-
-	immediate = {
-		export_to_variable = {
-			which = eoa_bribe
-			value = monthly_income
-			who = FROM
-		}
-		multiply_variable = {
-			which = eoa_bribe
-			value = 6
-		}
+		hre_size = 1 # EoA still exists
+		FROM = { exists = yes }
 	}
 	
 	option = { # Escalate to the Emperor
@@ -2195,29 +2223,18 @@ country_event = { #Elector - they refused to stop
 		name = flavor_empire.42.b
 		trigger = { has_country_flag = eoa_sent_a_bribe }
 		if = {
-			limit = {
-				NOT = { check_variable = { which = eoa_bribe value = 50 } }
-			}
+			limit = { NOT = { FROM = { monthly_income = 8.33 } } }
 			add_treasury = 50
 		}
-		if = {
-			limit = {
-				check_variable = { which = bribe value = 50 }
-				NOT = { check_variable = { which = eoa_bribe value = 100 } }
-			}
+		else_if = {
+			limit = { NOT = { FROM = { monthly_income = 16.66 } } }
 			add_treasury = 100
 		}
-		if = {
-			limit = {
-				check_variable = { which = bribe value = 100 }
-				NOT = { check_variable = { which = eoa_bribe value = 150 } }
-			}
+		else_if = {
+			limit = { NOT = { FROM = { monthly_income = 25 } } }
 			add_treasury = 150
 		}
-		if = {
-			limit = {
-				check_variable = { which = eoa_bribe value = 150 }
-			}
+		else = {
 			add_treasury = 200
 		}
 		clr_country_flag = eoa_protector_elector
@@ -2265,6 +2282,8 @@ country_event = { # Emperor - elector asked our help
 
 	trigger = {
 		is_emperor = yes
+		event_target:expelling_country = { exists = yes }
+		FROM = { exists = yes }
 	}
 
 	is_triggered_only = yes
@@ -2338,13 +2357,22 @@ country_event = { # Effects of success within 5 years (triggered from on_war_won
 	is_triggered_only = yes
 
 	trigger = {
-		emperor = { exists = yes } # EoA still exists
+		hre_size = 1 # EoA still exists
 	}
 
 	immediate = {
-		random_elector = {
-			limit = { has_country_flag = eoa_protector_elector }
-			save_event_target_as = expelled_elector
+		hidden_effect = { # Find the relevant elector again
+			random_elector = {
+				limit = { has_country_flag = eoa_protector_elector }
+				save_event_target_as = expelled_elector
+			}
+			if = {
+				limit = { NOT = { has_saved_event_target = expelled_elector } }
+				random_country = {
+					limit = { has_country_flag = eoa_protector_elector }
+					save_event_target_as = expelled_elector
+				}
+			}
 		}
 	}
 
@@ -2352,8 +2380,11 @@ country_event = { # Effects of success within 5 years (triggered from on_war_won
 		name = flavor_empire.44.a
 		if = {  # Emperor
 			limit = { is_emperor = yes }
-			if = { # Increase tolerance to the race if we aren't the protector elector
-				limit = { event_target:expelled_elector = { is_emperor = no } } 
+			if = { # Increase tolerance to the race if we aren't the protector elector and if they still exist
+				limit = { 
+					has_saved_event_target = expelled_elector
+					event_target:expelled_elector = { is_emperor = no } 
+				} 
 				generic_increase_of_target_primary_racial_tolerance = {
 					target = event_target:expelled_elector
 					size = small
@@ -2367,6 +2398,7 @@ country_event = { # Effects of success within 5 years (triggered from on_war_won
 				duration = 3650
 			}
 		}
+		custom_tooltip = eoa_end_expel_imperial_race_tt
 		hidden_effect = {
 			event_target:expelling_country = {
 				eoa_end_expel_imperial_race = yes
