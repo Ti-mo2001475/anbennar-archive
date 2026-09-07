@@ -1923,3 +1923,325 @@ country_event = {
 	}
 
 }
+
+country_event = {
+	id = flavor_empire.27
+	title = flavor_empire.27.t
+	desc = flavor_empire.27.d
+	picture = PRAYING_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		tag = A43
+		is_part_of_hre = yes
+		religion_group = cannorian
+		any_known_country = {
+			is_part_of_hre = yes
+			religion_group = cannorian
+			NOT = {
+				OR = {
+					tag = A43
+					is_enemy = ROOT
+					is_rival = ROOT
+					ai_attitude = {
+						who = ROOT
+						attitude = attitude_hostile
+					}
+				}
+			}
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			random_known_country = {
+				limit = { 
+					is_part_of_hre = yes
+					religion_group = cannorian
+					NOT = {
+						OR = {
+							tag = A43
+							is_enemy = ROOT
+							is_rival = ROOT
+							ai_attitude = {
+								who = ROOT
+								attitude = attitude_hostile
+							}
+						}
+					} 
+				}
+				save_event_target_as = wedding_target
+			}
+		}
+	}
+	
+	option = {
+		name = flavor_empire.27.a
+		add_devotion = 10
+		add_opinion = {
+			who = event_target:wedding_target
+			modifier = EOA_pulse_27_wedding_bells
+		}
+		reverse_add_opinion = {
+			who = event_target:wedding_target
+			modifier = EOA_pulse_27_wedding_bells
+		}	
+	}
+	
+	option = {
+		name = flavor_empire.27.b
+		add_devotion = -10
+		add_prestige = 10
+		add_opinion = {
+			who  = event_target:wedding_target
+			modifier = EOA_pulse_27_wedding_rebuffed
+		}
+		reverse_add_opinion = {
+			who  = event_target:wedding_target
+			modifier = EOA_pulse_27_wedding_rebuffed
+		}
+	}
+	
+	option = {
+		name = flavor_empire.27.c
+		trigger = {
+			event_target:wedding_target = {
+				NOT = {
+					has_matching_religion = ROOT
+				}
+			}
+		}
+		hidden_effect = {
+			every_known_country = {
+				limit = { is_part_of_hre = yes }
+				if = {
+					limit = { has_matching_religion = ROOT }
+					add_opinion = {
+						who = ROOT
+						modifier = EOA_pulse_27_faithful_conduct
+					}
+					reverse_add_opinion = {
+						who = ROOT
+						modifier = EOA_pulse_27_faithful_conduct
+					}
+				}
+				else = {
+					add_opinion = {
+						who = ROOT
+						modifier = EOA_pulse_27_heretical_conduct
+					}
+					reverse_add_opinion = {
+						who = ROOT
+						modifier = EOA_pulse_27_heretical_conduct
+					}
+				}
+			}
+		}
+		custom_tooltip = flavor_empire.27.c.tt
+		
+	}
+	
+	option = {
+		name = flavor_empire.27.e
+		highlight = yes
+		trigger = { 
+			OR = {
+				ruler_has_personality = pious_personality
+				ruler_has_personality = zealot_personality
+			}
+			event_target:wedding_target = {
+				has_matching_religion = ROOT
+			}
+		}
+		add_devotion = 15
+		add_opinion = {
+			who  = event_target:wedding_target
+			modifier = EOA_pulse_27_holy_wedding
+		}
+		reverse_add_opinion = {
+			who  = event_target:wedding_target
+			modifier = EOA_pulse_27_holy_wedding
+		}
+	}
+	
+	option = {
+		name = flavor_empire.27.f
+		highlight = yes
+		trigger = {
+			event_target:wedding_target = {
+				NOT = {
+					has_matching_religion = ROOT
+				}
+			}
+			ruler_has_personality = tolerant_personality
+		}
+		add_opinion = {
+			who = event_target:wedding_target
+			modifier = EOA_pulse_27_faithful_conduct
+		}
+		reverse_add_opinion = {
+			who = event_target:wedding_target
+			modifier = EOA_pulse_27_faithful_conduct
+		}
+	}
+}
+
+country_event = {
+	id = flavor_empire.28
+	title = flavor_empire.28.t
+	desc = flavor_empire.28.d
+	picture = PRAYING_eventPicture
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		is_part_of_hre = yes
+		religion_group = cannorian
+		NOT = {
+			tag = A43
+		}
+		A43 = {
+			is_part_of_hre = yes
+			religion_group = cannorian
+			NOT = {
+				OR = {
+					is_enemy = ROOT
+					is_rival = ROOT
+					ai_attitude = {
+						who = ROOT
+						attitude = attitude_hostile
+					}
+				}
+			}
+		}
+	}
+		
+	option = {
+		name = flavor_empire.28.a
+		add_prestige = 10
+		add_opinion = {
+			who  = A43
+			modifier = EOA_pulse_27_wedding_bells
+		}
+		reverse_add_opinion = {
+			who  = A43
+			modifier = EOA_pulse_27_wedding_bells
+		}
+	}
+	
+	option = {
+		name = flavor_empire.28.b
+		add_estate_church_loyalty_effect = yes
+		add_opinion = {
+			who  = A43
+			modifier = EOA_pulse_27_wedding_rebuffed
+		}
+		reverse_add_opinion = {
+			who  = A43
+			modifier = EOA_pulse_27_wedding_rebuffed
+		}
+	}
+	
+	option = {
+		name = flavor_empire.28.c
+		trigger = {
+			A43 = {
+				NOT = {
+					has_matching_religion = ROOT
+				}
+			}
+		}
+		hidden_effect = {
+			every_known_country = {
+				limit = { is_part_of_hre = yes }
+				if = {
+					limit = { has_matching_religion = ROOT }
+					add_opinion = {
+						who = ROOT
+						modifier = EOA_pulse_27_faithful_conduct
+					}
+					reverse_add_opinion = {
+						who = ROOT
+						modifier = EOA_pulse_27_faithful_conduct
+					}
+				}
+				else = {
+					add_opinion = {
+						who = ROOT
+						modifier = EOA_pulse_27_heretical_conduct
+					}
+					reverse_add_opinion = {
+						who = ROOT
+						modifier = EOA_pulse_27_heretical_conduct
+					}
+				}
+			}
+		}
+		custom_tooltip = flavor_empire.27.c.tt
+	}
+	
+	option = {
+		name = flavor_empire.28.e
+		highlight = yes
+		trigger = { 
+			OR = {
+				ruler_has_personality = pious_personality
+				ruler_has_personality = zealot_personality
+			}
+			A43 = {
+				has_matching_religion = ROOT
+			}
+		}
+		add_opinion = {
+			who  = A43
+			modifier = EOA_pulse_27_holy_wedding
+		}
+		reverse_add_opinion = {
+			who  = A43
+			modifier = EOA_pulse_27_holy_wedding
+		}
+		add_country_modifier = { 
+			name = EOA_28_pulse_true_faith
+			duration = 3650
+		}
+	}
+	
+	option = {
+		name = flavor_empire.28.f
+		highlight = yes
+		trigger = {
+			ruler_has_personality = drunkard_personality
+		}
+		add_prestige = 10
+		add_opinion = {
+			who  = A43
+			modifier = EOA_pulse_27_wedding_bells
+		}
+		reverse_add_opinion = {
+			who  = A43
+			modifier = EOA_pulse_27_wedding_bells
+		}
+		add_estate_nobles_loyalty_effect = yes
+	}
+	
+	option = {
+		name = flavor_empire.28.g
+		highlight = yes
+		trigger = {
+			ruler_has_personality = sinner_personality
+		}
+		add_opinion = {
+			who  = A43
+			modifier = EOA_pulse_27_heretical_conduct
+		}
+		reverse_add_opinion = {
+			who  = A43
+			modifier = EOA_pulse_27_heretical_conduct
+		}
+		add_country_modifier = { 
+			name = EOA_28_pulse_adultery
+			duration = 3650
+		}
+	}
+}
