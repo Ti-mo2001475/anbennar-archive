@@ -19077,7 +19077,32 @@ on_province_owner_change = {
 		limit = {
 			province_group = spirit_forts_province_group
 		}
-		province_event = { id = spirit_forts.04 }
+		province_event = { id = spirit_forts.04 } # Regular or Exalted Spirit Fortress conquered by people who can't use it.
+		province_event = { id = spirit_forts.05 } # Exalted Spirit Fortress conquered by people who can use it.
+	}
+
+	# Kimni Solenh conquering cultures within cultural sphere of influence.
+	if = {
+		limit = {
+			owner = {
+				tag = V99
+			}
+		}
+		if = {
+			limit = { culture = chengrong }
+			change_culture = toelnran
+		}
+		if = {
+			limit = { culture = tamran }
+			change_culture = khethakran
+		}
+		if = {
+			limit = { 
+				culture_group = harimari
+				province_is_in_bom_cultural_sphere = yes
+			}
+			change_culture = exalted_harimari
+		}
 	}
 
 	#hisost yamok

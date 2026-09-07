@@ -4613,9 +4613,26 @@ on_battle_won_country_effect = {
 		limit = {
 			owns = 4941
 		}
+		set_variable = {
+			which = total_battle_casualties
+			which = land_units_lost
+		}
 		change_variable = {
-			which = lapnam_amrik_battle_counter
-			value = 1
+			which = total_battle_casualties
+			which = land_units_killed
+		}
+
+		if = { 
+			limit = { 
+				check_variable = { 
+					which = total_battle_casualties 
+					value = 10000
+				}
+			}
+			change_variable = {
+				which = lapnam_amrik_battle_counter
+				value = 1
+			}
 		}
 	}
 	# Raj rework

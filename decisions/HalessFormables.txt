@@ -1391,6 +1391,19 @@ country_decisions = {
 			culture_group = bom
 			NOT = { religion = devouring_path }
 			was_never_end_game_tag_trigger = yes
+			OR = { # AI needs to own two spirit forts to see the decision to prevent rampant AI belligerence.
+				ai = no
+				calc_true_if = {
+					amount = 2
+					owns = 4576
+					owns = 4580
+					owns = 4802
+					owns = 4565
+					owns = 4941
+					owns = 4600
+					owns = 4703
+				}
+			}
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -1439,12 +1452,19 @@ country_decisions = {
 			}
 			if = {
 				limit = { ai = no }
-				num_of_owned_provinces_with = {
-					value = 6
+				spirit_forts_province_group = {
+					type = all
+					owned_by = ROOT
 					custom_trigger_tooltip = {
 						tooltip = kimni_solenh_exalted_forts.tt
 						has_province_flag = bom_fort_exalted
 					}
+				}
+			}
+			else = {
+				spirit_forts_province_group = {
+					type = all
+					owned_by = ROOT
 				}
 			}
 		}
@@ -1465,6 +1485,7 @@ country_decisions = {
 				duration = 7300
 			}
 			custom_tooltip = bom_empire_cultural_influence.tt
+			anb_add_accepted_culture_or_dip_power = { culture = exalted_harimari free = yes }
 			hidden_effect = {
 				every_owned_province = {
 					limit = { culture = chengrong }
@@ -1473,6 +1494,24 @@ country_decisions = {
 				every_owned_province = {
 					limit = { culture = tamran }
 					change_culture = khethakran
+				}
+				every_owned_province = {
+					limit = {
+						culture_group = harimari
+						province_is_in_bom_cultural_sphere = yes
+					}
+					change_culture = exalted_harimari
+				}
+				# If AI manages to form the tag, exalt the spirit forts.
+				if = { 
+					limit = { ai = yes }
+					4703 = { spirit_fort_exaltation_effect = { province = tuan_caoban} }
+					4576 = { spirit_fort_exaltation_effect = { province = skarkaophe } }
+					4580 = { spirit_fort_exaltation_effect = { province = khabtei_teleni } }
+					4565 = { spirit_fort_exaltation_effect = { province = bim_lau } }
+					4600 = { spirit_fort_exaltation_effect = { province = semphrerong } }
+					4941 = { spirit_fort_exaltation_effect = { province = lapnam_amrik } }
+					4802 = { spirit_fort_exaltation_effect = { province = risrong } }
 				}
 			}
 		}
