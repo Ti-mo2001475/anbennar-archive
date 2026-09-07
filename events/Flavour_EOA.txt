@@ -2245,3 +2245,550 @@ country_event = {
 		}
 	}
 }
+
+
+# Protector Elector event chain 40-46 - begins at 41 triggered by the EoA 4 year pulse
+country_event = { #Elector - discover prince is expelling our species
+	id = flavor_empire.40
+	title = flavor_empire.40.t
+	desc = flavor_empire.40.d
+	picture = CITY_DEVELOPMENT_eventPicture
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = { OR = { has_owner_culture = yes has_owner_accepted_culture = yes } }
+				save_event_target_as = prov_adm_relief
+			}
+			random_owned_province = {
+				limit = { OR = { has_owner_culture = yes has_owner_accepted_culture = yes } }
+				save_event_target_as = prov_dip_relief
+			}
+			random_owned_province = {
+				limit = { OR = { has_owner_culture = yes has_owner_accepted_culture = yes } }
+				save_event_target_as = prov_mil_relief
+			}
+		}
+	}
+
+	option = { # Relief
+		name = flavor_empire.40.a
+		if = { # Max 200
+			limit = { monthly_income = 33 }
+			add_treasury = -200
+		}
+		else = { add_years_of_income = -0.5 }
+		random = {
+			chance = 50
+			event_target:prov_adm_relief = { add_base_tax = 1 }
+		}
+		random = {
+			chance = 50
+			event_target:prov_dip_relief = { add_base_production = 1 }
+		}
+		random = {
+			chance = 50
+			event_target:prov_mil_relief = { add_base_manpower = 1 }
+		}
+		ai_chance = {
+			factor = 50
+			modifier = { factor = 2 ruler_has_personality = kind_hearted_personality }
+			modifier = { factor = 2 ruler_has_personality = benevolent_personality }
+		}
+	}
+	option = { # Draft
+		name = flavor_empire.40.b
+		if = { # Max 2000
+			limit = { max_manpower = 40 }
+			add_manpower = 2
+		}
+		else = { add_yearly_manpower = 0.5 }
+		add_country_modifier = {
+			name = EOA_40_drafted_refugees
+			duration = 1825
+		}
+		ai_chance = {
+			factor = 50
+			modifier = { factor = 5 personality = ai_militarist }
+		}
+	}
+
+}
+
+country_event = { # Offender trigger event
+	id = flavor_empire.41
+	title = flavor_empire.41.t
+	desc = flavor_empire.41.d
+	picture = ACCUSATION_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		is_part_of_hre = yes
+		OR = { # Expelling an elector's primary imperial race
+			AND = { 
+				has_country_modifier = racial_pop_elven_expulsion
+				any_elector = { has_country_modifier = elven_administration }
+			}
+			AND = {
+				has_country_modifier = racial_pop_half_elven_expulsion
+				any_elector = { has_country_modifier = half_elven_administration }
+			}
+			AND = {
+				has_country_modifier = racial_pop_human_expulsion
+				any_elector = { has_country_modifier = human_administration }
+			}
+			AND = {
+				has_country_modifier = racial_pop_dwarven_expulsion
+				any_elector = { has_country_modifier = dwarven_administration }
+			}
+			AND = {
+				has_country_modifier = racial_pop_gnomish_expulsion
+				any_elector = { has_country_modifier = gnomish_administration }
+			}
+			AND = {
+				has_country_modifier = racial_pop_halfling_expulsion
+				any_elector = { has_country_modifier = halfling_administration }
+			}
+		}
+		OR = { # Ensure event chain is not ongoing
+			NOT = { has_global_flag = eoa_protector_elector_cooldown }
+			had_global_flag = {
+				flag = eoa_protector_elector_cooldown
+				days = 7300 # 20 Years
+			}
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_elector = { # Save the relevant elector
+				limit = {
+					OR = {
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_elven_expulsion }
+							has_country_modifier = elven_administration
+						}
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_half_elven_expulsion }
+							has_country_modifier = half_elven_administration
+						}
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_human_expulsion }
+							has_country_modifier = human_administration
+						}
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_dwarven_expulsion }
+							has_country_modifier = dwarven_administration
+						}
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_gnomish_expulsion }
+							has_country_modifier = gnomish_administration
+						}
+						AND = {
+							ROOT = { has_country_modifier = racial_pop_halfling_expulsion }
+							has_country_modifier = halfling_administration
+						}
+					}
+				}
+				set_country_flag = eoa_protector_elector
+				save_event_target_as = expelled_elector
+			}
+			clr_global_flag = eoa_protector_elector_cooldown
+			set_global_flag = eoa_protector_elector_cooldown
+			save_event_target_as = expelling_country
+			event_target:expelled_elector = {
+				country_event = { id = flavor_empire.40 } # Flavour event for elector
+			}
+		}
+	}
+
+	option = { # Ignore
+		name = flavor_empire.41.a
+		if = { limit = { is_emperor = yes } add_imperial_influence = -1 }
+		add_country_modifier = {
+			name = EOA_41_expel_reputation
+			duration = 1460
+		}
+		custom_tooltip = eoa_expelled_imperial_unrest_tt
+		tooltip = {
+			add_province_modifier = {
+				name = EOA_41_expel_unrest
+				duration = 1460
+			}
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						AND = {
+							event_target:expelled_elector = { has_country_modifier = elven_administration }
+							fast_has_pop_of_race = { race = elven }
+						}
+						AND = {
+							event_target:expelled_elector = { has_country_modifier = half_elven_administration }
+							fast_has_pop_of_race = { race = half_elven }
+						}
+						AND = {
+							event_target:expelled_elector = { has_country_modifier = human_administration }
+							fast_has_pop_of_race = { race = human }
+						}
+						AND = {
+							event_target:expelled_elector = { has_country_modifier = dwarven_administration }
+							fast_has_pop_of_race = { race = dwarven }
+						}
+						AND = {
+							event_target:expelled_elector = { has_country_modifier = gnomish_administration }
+							fast_has_pop_of_race = { race = gnomish }
+						}
+						AND = {
+							event_target:expelled_elector = { has_country_modifier = halfling_administration }
+							fast_has_pop_of_race = { race = halfling }
+						}
+					}
+				}
+				add_province_modifier = {
+					name = EOA_41_expel_unrest
+					duration = 1460
+				}
+			}
+		}
+		hidden_effect = {
+			event_target:expelled_elector = {
+				country_event = { id = flavor_empire.42 days = 28 }
+			}
+		}
+		ai_chance = {
+			factor = 40
+			modifier = { factor = 0.5 is_emperor = yes }
+			modifier = { factor = 2 NOT = { has_opinion = { who = FROM value = 0 } } } 
+		}
+	}
+	option = { # Bribe
+		name = flavor_empire.41.b
+		if = { # Max 200
+			limit = { monthly_income = 33 }
+			add_treasury = -200
+		}
+		else = { add_years_of_income = -0.5 }
+		add_corruption = 0.5
+		hidden_effect = {
+			event_target:expelled_elector = {
+				set_country_flag = eoa_sent_a_bribe
+				country_event = { id = flavor_empire.42 days = 28 }
+			}
+		}
+		ai_chance = {
+			factor = 50
+			modifier = { factor = 2 ruler_has_personality = careful_personality }
+			modifier = { factor = 0.1 ruler_has_personality = greedy_personality }
+		}
+	}
+	option = { # Give up
+		name = flavor_empire.41.c
+		custom_tooltip = eoa_end_expel_imperial_race_tt
+		hidden_effect = {
+			eoa_end_expel_imperial_race = yes # Cannot expel/purge this race for 40 years
+			add_country_modifier = { # Visible modifier to help keep track, and counteract diplomatic reputation loss
+				name = EOA_41_diplomatically_stopped_expelling
+				duration = 14600 # 40 years
+			}
+		}
+		event_target:expelled_elector = { clr_country_flag = eoa_protector_elector }
+		ai_chance = {
+			factor = 10
+			modifier = { factor = 0.1 ruler_has_personality = cruel_personality }
+			modifier = { factor = 5 ruler_has_personality = tolerant_personality }
+			modifier = { factor = 2 ruler_has_personality = craven_personality }
+		}
+	}
+
+}
+
+country_event = { #Elector - they refused to stop
+	id = flavor_empire.42
+	title = flavor_empire.42.t
+	desc = flavor_empire.42.d
+	picture = OVEREXTENSION_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		hre_size = 1 # EoA still exists
+		FROM = { exists = yes }
+	}
+	
+	option = { # Escalate to the Emperor
+		name = flavor_empire.42.a
+		trigger = {
+			is_emperor = no
+			FROM = { is_emperor = no }
+		}
+		emperor = {
+			country_event = { id = flavor_empire.43 days = 14 }
+		}
+		ai_chance = {
+			factor = 50
+			modifier = { factor = 2 personality = ai_diplomat }
+			modifier = { factor = 2 ruler_has_personality = lawgiver_personality }
+		}
+	}
+	option = { # Accept bribe
+		name = flavor_empire.42.b
+		trigger = { has_country_flag = eoa_sent_a_bribe }
+		if = {
+			limit = { NOT = { FROM = { monthly_income = 8.33 } } }
+			add_treasury = 50
+		}
+		else_if = {
+			limit = { NOT = { FROM = { monthly_income = 16.66 } } }
+			add_treasury = 100
+		}
+		else_if = {
+			limit = { NOT = { FROM = { monthly_income = 25 } } }
+			add_treasury = 150
+		}
+		else = {
+			add_treasury = 200
+		}
+		clr_country_flag = eoa_protector_elector
+		ai_chance = {
+			factor = 30
+			modifier = { factor = 10 ruler_has_personality = greedy_personality }
+			modifier = { factor = 0.1 ruler_has_personality = incorruptible_personality }
+		}
+	}
+	option = { # Fight them
+		name = flavor_empire.42.c
+		add_casus_belli = {
+			target = FROM
+			type = cb_insult
+			months = 60
+		}
+		if = {
+			limit = { is_emperor = yes }
+			custom_tooltip = emperor_fight_expeller
+		}
+		else = {
+			custom_tooltip = elector_fight_expeller
+		}
+		if = { 
+			limit = { ai = no } # Rare case where this is the only option (when emperor = elector and there is no bribe) 
+			set_country_flag = eoa_fight_expeller
+			FROM = { set_country_flag = eoa_expeller }
+		}
+		hidden_effect = {
+			country_event = { id = flavor_empire.45 days = 1825 } # Check for failure in 5 years
+		}
+		ai_chance = { # AI won't understand the stakes so shouldn't do this
+			factor = 0
+		}
+	}
+
+	after = { clr_country_flag = eoa_sent_a_bribe }
+}
+
+country_event = { # Emperor - elector asked our help
+	id = flavor_empire.43
+	title = flavor_empire.43.t
+	desc = flavor_empire.43.d
+	picture = DIPLOMACY_eventPicture
+
+	trigger = {
+		is_emperor = yes
+		event_target:expelling_country = { exists = yes }
+		FROM = { exists = yes }
+	}
+
+	is_triggered_only = yes
+
+	option = { # Ignore
+		name = flavor_empire.43.a
+		add_imperial_influence = -1
+		reverse_add_opinion = {
+			who = FROM
+			modifier = EOA_didnt_protect_expelled
+			years = 20
+		}
+		add_country_modifier = {
+			name = EOA_43_ignored_elector
+			duration = 730
+		}
+		FROM = { clr_country_flag = eoa_protector_elector }
+		ai_chance = {
+			factor = 20
+			modifier = { factor = 0.5 has_opinion = { who = FROM value = 100 } } 
+			modifier = { factor = 2 ruler_has_personality = malevolent_personality }
+		}
+	}
+	option = { # Send soldiers
+		name = flavor_empire.43.b
+		if = { # Max 2000
+			limit = { max_manpower = 40 }
+			add_manpower = -2
+		}
+		else = { add_yearly_manpower = -0.5 }
+		generic_increase_of_target_primary_racial_tolerance = {
+			target = FROM
+			size = small
+		}
+		gain_minorities_of_target_country_primary_race = {
+			custom_tooltip = gain_minority_of_elector_primary_race_tt
+			target = FROM
+			amount = 1
+		}
+		FROM = { clr_country_flag = eoa_protector_elector }
+		ai_chance = {
+			factor = 60
+			modifier = { factor = 2 personality = ai_balanced }
+		}
+	}
+	option = { # Fight them
+		name = flavor_empire.43.c
+		add_casus_belli = {
+			target = event_target:expelling_country
+			type = cb_insult
+			months = 60
+		}
+		custom_tooltip = emperor_fight_expeller
+		set_country_flag = eoa_fight_expeller
+		event_target:expelling_country = { set_country_flag = eoa_expeller }
+		hidden_effect = {
+			country_event = { id = flavor_empire.45 days = 1825 }
+		}
+		ai_chance = { # AI won't understand the stakes so shouldn't do this
+			factor = 0 
+		}
+	}
+}
+
+country_event = { # Effects of success within 5 years (triggered from on_war_won)
+	id = flavor_empire.44
+	title = flavor_empire.44.t
+	desc = flavor_empire.44.d
+	picture = DIPLOMACY_SIGNING_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		hre_size = 1 # EoA still exists
+	}
+
+	immediate = {
+		hidden_effect = { # Find the relevant elector again
+			random_elector = {
+				limit = { has_country_flag = eoa_protector_elector }
+				save_event_target_as = expelled_elector
+			}
+			if = {
+				limit = { NOT = { has_saved_event_target = expelled_elector } }
+				random_country = {
+					limit = { has_country_flag = eoa_protector_elector }
+					save_event_target_as = expelled_elector
+				}
+			}
+		}
+	}
+
+	option = {
+		name = flavor_empire.44.a
+		if = {  # Emperor
+			limit = { is_emperor = yes }
+			if = { # Increase tolerance to the race if we aren't the protector elector and if they still exist
+				limit = { 
+					has_saved_event_target = expelled_elector
+					event_target:expelled_elector = { is_emperor = no } 
+				} 
+				generic_increase_of_target_primary_racial_tolerance = {
+					target = event_target:expelled_elector
+					size = small
+				}
+			}
+			add_imperial_influence = 5
+		}
+		else = { # Elector
+			add_country_modifier = {
+				name = EOA_44_protector_elector
+				duration = 3650
+			}
+		}
+		custom_tooltip = eoa_end_expel_imperial_race_tt
+		hidden_effect = {
+			event_target:expelling_country = {
+				eoa_end_expel_imperial_race = yes
+			}
+		}
+	}
+
+	after = {
+		event_target:expelled_elector = { clr_country_flag = eoa_protector_elector }
+		event_target:expelling_country = { clr_country_flag = eoa_expeller }
+		clr_country_flag = eoa_fight_expeller
+	}
+}
+
+country_event = { # Revisit promise after 5 years
+	id = flavor_empire.45
+	title = flavor_empire.45.t
+	desc = flavor_empire.45.d
+	picture = BLANK_eventPicture
+
+	hidden = yes # Hidden so that nothing happens if we succeeded.
+	is_triggered_only = yes
+
+	option = {	
+		name = flavor_empire.45.a
+		if = { # We didn't fail
+			limit = { 
+				OR = { 
+					NOT = { has_country_flag = eoa_fight_expeller } 
+					event_target:expelling_country = { is_not_expelling_any_race_trigger = yes }
+					emperor = { exists = no }
+				}
+			}			
+			clr_country_flag = eoa_fight_expeller
+			event_target:expelling_country = { clr_country_flag = eoa_expeller }
+			event_target:expelled_elector = { clr_country_flag = eoa_protector_elector }
+		}
+		else = { # Failure
+			country_event = { id = flavor_empire.46 }
+		}
+	}
+}
+
+country_event = { # Effects of failure
+	id = flavor_empire.46
+	title = flavor_empire.46.t
+	desc = flavor_empire.46.d
+	picture = OVEREXTENSION_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_empire.46.a
+		if = { # Emperor
+			limit = { is_emperor = yes }
+			generic_decrease_of_target_primary_racial_tolerance = {
+				target = event_target:expelled_elector
+				size = small
+			}
+			add_imperial_influence = -5
+			add_prestige = -20
+		}
+		else = { # Elector
+			add_prestige = -20
+			add_country_modifier = {
+				name = EOA_45_failure_to_prevent
+				duration = 1825
+			}
+		}
+	}
+
+	after = {
+		clr_country_flag = eoa_fight_expeller
+		event_target:expelling_country = { clr_country_flag = eoa_expeller }
+		event_target:expelled_elector = { clr_country_flag = eoa_protector_elector }
+	}
+}

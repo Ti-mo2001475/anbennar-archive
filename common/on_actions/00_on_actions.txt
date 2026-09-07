@@ -2943,6 +2943,15 @@ on_war_won = {
 		}
 	}
 
+	if = { # Stop EoA member expelling imperial race
+		limit = { 
+			has_country_flag = eoa_fight_expeller
+			FROM = { has_country_flag = eoa_expeller }
+		}
+		FROM = { save_event_target_as = expelling_country }
+		country_event = { id = flavor_empire.44 }
+	}
+
 	#Artificery
 	update_artifice_points = yes #needs to be last
 }
@@ -13719,6 +13728,7 @@ on_four_year_pulse_4 = {
 		100 = flavor_empire.26
 		100 = flavor_empire.27
 		100 = flavor_empire.28
+		1000 = flavor_empire.41 # Expelling Imperial Race -- rare trigger
 		#EscanniOrcsandGoblins
 		400 = escanntribal.1
 		600 = escanntribal.2
