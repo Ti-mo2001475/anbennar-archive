@@ -89,6 +89,9 @@ country_event = {
 					value = modifier:max_terms
 				}
 			}
+			if = { limit = { mission_completed = N93_lineage_of_marunuma }
+				N93_prepare_all_lineages = yes
+			}
 		}
 	}
 
@@ -486,6 +489,10 @@ country_event = {
 				dip = 1
 			}
 		}
+
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 0 }
+		}
 		if = {
 			limit = { has_government_attribute = elections_increase_factions_influence }
 			add_influence_to_adm_faction = {
@@ -599,6 +606,10 @@ country_event = {
 				adm = 1
 				mil = 1					
 			}
+		}
+
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 1 }
 		}
 		if = {
 			limit = { has_government_attribute = elections_increase_factions_influence }
@@ -719,6 +730,10 @@ country_event = {
 			add_influence_to_mil_faction = {
 				influence = 20
 			}
+		}
+
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 2 }
 		}
 		add_karma = 10
 		if = {
@@ -938,6 +953,10 @@ country_event = {
 				max_age = 50
 				name = "lastname"
 			}
+		}
+
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 3 }
 		}
 		if = {
 			limit = { 
@@ -1245,6 +1264,18 @@ country_event = {
 			}
 		}
 	}
+	option = { # Marunuma
+		name = "EVTOPTO700"
+		trigger = { has_country_flag = N93_ogre_ruler_enabled }
+		define_ruler = {
+			adm = 1
+			dip = 4
+			mil = 1
+			culture = skyfall_ogre
+		}
+		hidden_effect = { add_ruler_modifier = { name = N93_lineage_14 duration = -1 } }
+		tooltip = { add_country_modifier = { name = N93_lineage_14 duration = -1 desc = N93_until_ruler_death_tt } }
+	}
 	option = { #Yinquan, Holi retire
 		trigger = { 
 		    has_ruler_flag = is_holi
@@ -1326,6 +1357,9 @@ country_event = {
 					}
 				}
 			}
+			if = { limit = { mission_completed = N93_lineage_of_marunuma }
+				N93_prepare_all_lineages = yes
+			}
 		}
 	}
 	after = {
@@ -1393,6 +1427,10 @@ country_event = {
 				adm = 4
 				dip = 1					
 			}
+		}
+
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 0 }
 		}
 		if = {
 			limit = { has_government_attribute = elections_increase_factions_influence }
@@ -1471,6 +1509,10 @@ country_event = {
 				mil = 1					
 			}
 		}
+
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 1 }
+		}
 		if = {
 			limit = { has_government_attribute = elections_increase_factions_influence }
 			add_influence_to_dip_faction = {
@@ -1547,6 +1589,10 @@ country_event = {
 				adm = 1
 				dip = 1					
 			}
+		}
+
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 2 }
 		}
 		if = {
 			limit = { has_government_attribute = elections_increase_factions_influence }
@@ -1742,6 +1788,10 @@ country_event = {
 				max_age = 50
 				name = "lastname"
 			}
+		}
+
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 3 }
 		}
 		if = {
 			limit = { 
@@ -2021,6 +2071,20 @@ country_event = {
 				duration = 2920
 			}
 		}
+	}
+	option = { # Marunuma
+		name = "EVTOPTO700"
+		trigger = { has_country_flag = N93_ogre_ruler_enabled }
+		define_ruler = {
+			adm = 1
+			dip = 4
+			mil = 1
+			culture = skyfall_ogre
+		}
+		# jank below because the old ruler is still alive during death elections
+		# adding ruler modifier doesn't show in tooltip if it already exists on old ruler
+		hidden_effect = { add_ruler_modifier = { name = N93_lineage_14 duration = -1 } }
+		tooltip = { add_country_modifier = { name = N93_lineage_14 duration = -1 desc = N93_until_ruler_death_tt } }
 	}
 }
 
@@ -2729,6 +2793,9 @@ country_event = {
 	
 	immediate = {
 		hidden_effect = {
+			if = { limit = { mission_completed = N93_lineage_of_marunuma }
+				N93_prepare_all_lineages = yes
+			}
 			################### A Candidate ###################
 			if = {
 				limit = {
@@ -3084,6 +3151,9 @@ country_event = {
 				loyalty = 10
 			}
 		}
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 0 }
+		}
 	}
 	option = {
 		name = elections.800.b
@@ -3114,6 +3184,9 @@ country_event = {
 				loyalty = 10
 			}
 		}
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 1 }
+		}
 	}
 	option = {
 		name = elections.800.c
@@ -3143,6 +3216,9 @@ country_event = {
 			add_estate_loyalty_by_class_mil = {
 				loyalty = 10
 			}
+		}
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 2 }
 		}
 	}
 	option = { # lottery
@@ -3177,6 +3253,9 @@ country_event = {
 						loyalty = 10
 					}
 				}
+				if = { limit = { mission_completed = N93_lineage_of_marunuma }
+					N93_add_lineage = { slot = 0 }
+				}
 			}
 			33 = { 
 				set_ruler = lottery_candidate_b_@ROOT 
@@ -3204,6 +3283,9 @@ country_event = {
 						loyalty = 10
 					}
 				}
+				if = { limit = { mission_completed = N93_lineage_of_marunuma }
+					N93_add_lineage = { slot = 1 }
+				}
 			}
 			33 = { 
 				set_ruler = lottery_candidate_c_@ROOT 
@@ -3230,6 +3312,9 @@ country_event = {
 					add_estate_loyalty_by_class_mil = {
 						loyalty = 10
 					}
+				}
+				if = { limit = { mission_completed = N93_lineage_of_marunuma }
+					N93_add_lineage = { slot = 2 }
 				}
 			}
 		}
@@ -3332,6 +3417,9 @@ country_event = {
 				name = "lastname"
 			}
 		}
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 3 }
+		}
 		if = {
 			limit = { 
 				has_faction = mr_aristocrats 
@@ -3355,6 +3443,34 @@ country_event = {
 			custom_tooltip = bonus_stats_for_elected_ruler_tt
 		}
 	}
+	option = {
+		name = elections.800.clan_guilds
+		trigger = { has_country_flag = N93_ogre_ruler_enabled }
+		define_ruler = {
+			min_age = 50
+			max_age = 75
+			change_adm = -1
+			change_dip = 2
+			change_mil = -1
+			culture = skyfall_ogre
+		}
+		add_republican_tradition = -25
+		custom_tooltip = lottery_candidate_bonus_one
+		if = {
+			limit = {
+				has_government_attribute = bonus_stats_for_elected_ruler
+			}
+			custom_tooltip = bonus_stats_for_elected_ruler_tt
+		}
+		if = {
+			limit = { has_government_attribute = elections_influence_estates }
+			add_estate_loyalty_by_class_dip = {
+				loyalty = 10
+			}
+		}
+		hidden_effect = { add_ruler_modifier = { name = N93_lineage_14 duration = -1 } }
+		tooltip = { add_country_modifier = { name = N93_lineage_14 duration = -1 desc = N93_until_ruler_death_tt } }
+	}
 }
 
 country_event = { #Technocracy Election 
@@ -3373,6 +3489,14 @@ country_event = { #Technocracy Election
 			has_reform = bazuneizar_clockwork_republic
 		}
 		NOT = { has_country_flag = no_elections }
+	}
+
+	immediate = {
+		hidden_effect = {
+			if = { limit = { mission_completed = N93_lineage_of_marunuma }
+				N93_prepare_all_lineages = yes
+			}
+		}
 	}
 	
 	option = {
@@ -3634,6 +3758,10 @@ country_event = { #Technocracy Election
 				loyalty = 10
 			}
 		}
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 0 }
+		}
+
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -3791,6 +3919,10 @@ country_event = { #Technocracy Election
 				loyalty = 10
 			}
 		}
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 1 }
+		}
+
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -3946,6 +4078,9 @@ country_event = { #Technocracy Election
 			add_estate_loyalty_by_class_mil = {
 				loyalty = 10
 			}
+		}
+		if = { limit = { mission_completed = N93_lineage_of_marunuma }
+			N93_add_lineage = { slot = 2 }
 		}
 		ai_chance = {
 			factor = 1
