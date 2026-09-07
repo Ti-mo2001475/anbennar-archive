@@ -4753,6 +4753,28 @@ anb_manufactory_discount_remove = {
 }
 
 anb_on_development_effect = {
+	#Kheionai gos ref
+	if = {
+		limit = {
+			owner = { has_reform = xechtari_above_all }
+			region = alecand_region
+			NOT = { culture = eltibhar }
+		}
+		if = {
+			limit = { province_group = alecandi_capital_provinces }
+			random = {
+				chance = 25
+				add_base_$development$ = 1
+			}
+		}
+		else = {
+			random = {
+				chance = 15
+				add_base_$development$ = 1
+			}
+		}
+	}
+	
 	if = {
 		limit = { has_province_modifier = jaddari_blessed_land }
 		random = {
@@ -11119,7 +11141,6 @@ define_consort_to_general = { #this is basically just for the magic rework
 		else = { set_saved_name = { key = consort_name type = advisor scope = THIS } }
 	}
 	else = { clr_country_flag = has_consort_name }
-
 	define_general = {
 		shock = $shock$
 		fire = $fire$
@@ -14839,6 +14860,29 @@ upgrade_aksa_sanuyego_scripted_effect = {
 				name = aksa_sanuyego_modifier_upgrade
 				duration = -1
 			}
+		}
+	}
+}
+
+grant_random_advisor_gov_rank = {
+	if = {
+		limit = { government_rank = 1 }
+		define_random_advisor_effect = {
+			skill = 1
+			cost_multiplier = 0.75
+		}
+	}
+	else_if = {
+		limit = { government_rank = 2 }
+		define_random_advisor_effect = {
+			skill = 2
+			cost_multiplier = 0.5
+		}
+	}
+	else = {
+		define_random_advisor_effect = {
+			skill = 3
+			cost_multiplier = 0.25
 		}
 	}
 }

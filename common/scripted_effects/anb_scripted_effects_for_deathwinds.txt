@@ -156,6 +156,32 @@ calculate_deathwinds_level = {
 			windward_level_2 = { change_variable = { deathwinds_warded_var = -2 } }
 			windward_level_1 = { change_variable = { deathwinds_warded_var = -1 } }
 		}
+
+		#kheion gov reform
+		if = {
+			limit = { owner = { has_reform = tame_the_storm } }
+			if = {
+				limit = { has_province_modifier = abjuration_1_ward_mod_3 }
+				change_variable = { deathwinds_warded_var = -4 }
+			}
+			else_if = {
+				limit = { has_province_modifier = abjuration_1_ward_mod_2 }
+				change_variable = { deathwinds_warded_var = -3 }
+			}
+			else_if = {
+				limit = { has_province_modifier = abjuration_1_ward_mod_1 }
+				change_variable = { deathwinds_warded_var = -2 }
+			}
+			else_if = {
+				limit = { has_province_modifier = abjuration_1_ward_mod_0 }
+				change_variable = { deathwinds_warded_var = -1 }
+			}
+
+			if = {
+				limit = { has_building = mage_tower }
+				change_variable = { deathwinds_warded_var = -1 }
+			}
+		}
 		
 		#Assign the appropriate modifier
 		assign_deathwinds_modifier = yes

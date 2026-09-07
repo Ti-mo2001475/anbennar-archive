@@ -8261,3 +8261,79 @@ gov_reform_elven_forebears = {
 		}
 	}
 }
+
+# Tier 4 Religion within the Republic 
+absence_of_divinity = {
+    icon = "restoration_of_the_senate_reform"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	modifiers = {
+		idea_cost = -0.05
+		institution_spread_from_true_faith = 0.15
+	}
+	custom_attributes = {
+		absence_of_divinity = yes
+	}
+}
+
+
+# Tier 8  Economical Matters 
+tame_the_storm = {
+    icon = "kaydhano_storm"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+		capital_scope = { 
+			region = alecand_region
+		}
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+		capital_scope = { 
+			region = alecand_region
+		}
+	}
+	modifiers = {
+		global_monthly_devastation = -0.05
+	}
+	custom_attributes = {
+		tame_the_storm = yes
+	}
+	effect = {
+		add_country_modifier = {
+			name = abjuration_spell_three_quarter
+			duration = -1
+		}
+	}
+	removed_effect = {
+		remove_country_modifier = abjuration_spell_three_quarter
+	}
+}
+
+great_mariners_ruinborn = {
+    icon = "early_naval_focus"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	modifiers = {
+		global_ship_trade_power = 0.25
+		trade_company_investment_cost = -0.15
+		naval_forcelimit_modifier = 0.1
+	}
+	conditional = {
+		allow = {
+			has_dlc = "Res Publica"
+			has_dlc = "Mare Nostrum"
+		}
+		can_use_trade_post = yes
+	}
+}
