@@ -3312,6 +3312,8 @@ gnoll_the_weak_serve_the_strong = {
 				overlord = { change_variable = { gnoll_tributary_bonus_count = 1 } }
 			}
 		}
+		custom_tooltip = tribs_above_50_dev_counter_tooltip
+		custom_tooltip = " "
 		custom_tooltip = gnoll_the_weak_serve_the_strong_economy_tooltip
 		custom_tooltip = " "
 		custom_tooltip = gnoll_the_weak_serve_the_strong_diplomacy_tooltip_1
@@ -3532,6 +3534,8 @@ gnoll_the_weak_serve_the_strong_burghers = {
 				overlord = { change_variable = { gnoll_tributary_bonus_count = 1 } }
 			}
 		}
+		custom_tooltip = tribs_above_50_dev_counter_tooltip
+		custom_tooltip = " "
 		custom_tooltip = gnoll_the_weak_serve_the_strong_economy_tooltip
 		custom_tooltip = " "
 		custom_tooltip = gnoll_the_weak_serve_the_strong_diplomacy_tooltip_1
@@ -3754,7 +3758,17 @@ xhazobkult_organized_sacrifices = {
 		same_religion_advisor_cost = -0.1
 	}
 	on_granted = {
-		custom_tooltip = exclusive_organized_sacrifices_tooltip
+		if = {
+			limit = {
+				NOT = {
+					has_granted_organized_sacrifices_privilege = yes
+					has_granted_ritualized_cleansing_privilege = yes
+				}
+			}
+			custom_tooltip = exclusive_organized_sacrifices_tooltip
+			custom_tooltip = " "
+		}
+		custom_tooltip = tribs_above_50_dev_counter_tooltip
 		custom_tooltip = " "
 		custom_tooltip = xhazobkult_organized_sacrifices_tribute_tooltip
 		custom_tooltip = " "
@@ -3908,7 +3922,17 @@ xhazobkult_organized_sacrifices_clergy = {
 		same_religion_advisor_cost = -0.1
 	}
 	on_granted = {
-		custom_tooltip = exclusive_organized_sacrifices_tooltip
+		if = {
+			limit = {
+				NOT = {
+					has_granted_organized_sacrifices_privilege = yes
+					has_granted_ritualized_cleansing_privilege = yes
+				}
+			}
+			custom_tooltip = exclusive_organized_sacrifices_tooltip
+			custom_tooltip = " "
+		}
+		custom_tooltip = tribs_above_50_dev_counter_tooltip
 		custom_tooltip = " "
 		custom_tooltip = xhazobkult_organized_sacrifices_tribute_tooltip
 		custom_tooltip = " "
@@ -4066,7 +4090,17 @@ xhazobkult_ritualized_cleansing = {
 		tolerance_heathen = 1
 	}
 	on_granted = {
-		custom_tooltip = exclusive_ritualized_cleansing_tooltip
+		if = {
+			limit = {
+				NOT = {
+					has_granted_organized_sacrifices_privilege = yes
+					has_granted_ritualized_cleansing_privilege = yes
+				}
+			}
+			custom_tooltip = exclusive_ritualized_cleansing_tooltip
+			custom_tooltip = " "
+		}
+		custom_tooltip = tribs_above_50_dev_counter_tooltip
 		custom_tooltip = " "
 		add_patriarch_authority = -0.2
 		custom_tooltip = " "
@@ -4180,6 +4214,10 @@ xhazobkult_ritualized_cleansing = {
 			check_variable = { gnoll_tributary_bonus_count = 10 }
 		}
 		modifier = { technology_cost = -0.1 development_cost = -0.05 }
+	}
+	conditional_modifier = {
+		trigger = { has_government_attribute = sociocultural_synthesis_ritualized_cleansing_buff }
+		modifier = { tolerance_heathen = 1 }
 	}
 	ai_will_do = {
 		factor = 100
@@ -4221,7 +4259,17 @@ xhazobkult_ritualized_cleansing_clergy = {
 		tolerance_heathen = 1
 	}
 	on_granted = {
-		custom_tooltip = exclusive_ritualized_cleansing_tooltip
+		if = {
+			limit = {
+				NOT = {
+					has_granted_organized_sacrifices_privilege = yes
+					has_granted_ritualized_cleansing_privilege = yes
+				}
+			}
+			custom_tooltip = exclusive_ritualized_cleansing_tooltip
+			custom_tooltip = " "
+		}
+		custom_tooltip = tribs_above_50_dev_counter_tooltip
 		custom_tooltip = " "
 		add_patriarch_authority = -0.2
 		custom_tooltip = " "
@@ -4335,6 +4383,10 @@ xhazobkult_ritualized_cleansing_clergy = {
 			check_variable = { gnoll_tributary_bonus_count = 10 }
 		}
 		modifier = { technology_cost = -0.1 development_cost = -0.05 }
+	}
+	conditional_modifier = {
+		trigger = { has_government_attribute = sociocultural_synthesis_ritualized_cleansing_buff }
+		modifier = { tolerance_heathen = 1 }
 	}
 	ai_will_do = {
 		factor = 100
