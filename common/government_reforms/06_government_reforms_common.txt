@@ -8261,3 +8261,296 @@ gov_reform_elven_forebears = {
 		}
 	}
 }
+
+# Tier 4 Religion within the Republic 
+absence_of_divinity = {
+    icon = "restoration_of_the_senate_reform"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	modifiers = {
+		idea_cost = -0.05
+		institution_spread_from_true_faith = 0.15
+	}
+	custom_attributes = {
+		absence_of_divinity = yes
+	}
+}
+
+
+# Tier 8  Economical Matters 
+tame_the_storm = {
+    icon = "kaydhano_storm"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+		capital_scope = { 
+			region = alecand_region
+		}
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+		capital_scope = { 
+			region = alecand_region
+		}
+	}
+	modifiers = {
+		global_monthly_devastation = -0.05
+	}
+	custom_attributes = {
+		tame_the_storm = yes
+	}
+	effect = {
+		add_country_modifier = {
+			name = abjuration_spell_three_quarter
+			duration = -1
+		}
+	}
+	removed_effect = {
+		remove_country_modifier = abjuration_spell_three_quarter
+	}
+}
+
+great_mariners_ruinborn = {
+    icon = "early_naval_focus"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	modifiers = {
+		global_ship_trade_power = 0.25
+		trade_company_investment_cost = -0.15
+		naval_forcelimit_modifier = 0.1
+	}
+	conditional = {
+		allow = {
+			has_dlc = "Res Publica"
+			has_dlc = "Mare Nostrum"
+		}
+		can_use_trade_post = yes
+	}
+}
+
+#Kvangahga reform
+codified_kvangahga_rites = {
+	icon = "native_codified_power_reform"
+
+	potential = {
+		religion = kvangahga
+	}
+
+	trigger = {
+		religion = kvangahga
+	}
+
+	modifiers = {
+		tolerance_own = 2
+		church_loyalty_modifier = 0.05
+	}
+
+	custom_attributes = {
+		codified_kvangahga_rites_church_power_refund = yes
+		codified_kvangahga_rites_chain_advisor_buff = yes
+	}
+
+	ai = {
+		factor = 10
+	}
+}
+
+#Xhazobkult reforms
+feeding_the_flame = {
+	icon = "rioting_burning_2"
+
+	potential = {
+		religion = xhazobkult
+	}
+
+	trigger = {
+		religion = xhazobkult
+		has_granted_organized_sacrifices_privilege = yes
+	}
+
+	modifiers = {
+		yearly_patriarch_authority = 0.0020
+		church_loyalty_modifier = 0.1
+		church_influence_modifier = 0.05
+	}
+
+	effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = { has_state_patriach = yes }
+				add_province_modifier = { name = feeding_the_flame_local_cult_buff duration = -1 hidden = yes }
+			}
+		}
+	}
+
+	post_removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = { has_province_modifier = feeding_the_flame_local_cult_buff }
+				remove_province_modifier = feeding_the_flame_local_cult_buff
+			}
+		}
+	}
+
+	custom_attributes = {
+		feeding_the_flame_light_the_pyres_buff = yes
+		feeding_the_flame_local_cults_buff = yes
+	}
+
+	ai = {
+		factor = 10
+	}
+}
+
+sociocultural_synthesis = {
+	icon = "tribal_civil_society"
+
+	potential = {
+		religion = xhazobkult
+		culture_group = gnollish
+	}
+
+	trigger = {
+		religion = xhazobkult
+		has_granted_ritualized_cleansing_privilege = yes
+		custom_trigger_tooltip = {
+			tooltip = demonsterizing_tt
+			OR = {
+				has_country_flag = removing_monstrous
+				has_country_flag = no_longer_monstrous
+			}
+		}
+	}
+
+	modifiers = {
+		num_accepted_cultures = 1
+		tolerance_of_heathens_capacity = 2
+		church_influence_modifier = -0.05
+	}
+
+	effect = {
+		if = {
+			limit = { has_country_flag = removing_monstrous }
+			decrease_monstrous_5 = yes
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = { 
+					NOT = { religion_group = gnollish } 
+					NOT = { culture_group = gnollish }
+					has_owner_accepted_culture = yes
+				}
+				add_province_modifier = { name = sociocultural_synthesis_local_heathen_buff duration = -1 hidden = yes }
+			}
+		}
+	}
+
+	post_removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = { has_province_modifier = sociocultural_synthesis_local_heathen_buff }
+				remove_province_modifier = sociocultural_synthesis_local_heathen_buff
+			}
+		}
+	}
+
+	custom_attributes = {
+		sociocultural_synthesis_ritualized_cleansing_buff = yes
+		sociocultural_synthesis_heathen_provinces_buff = yes
+	}
+
+	ai = {
+		factor = 10
+	}
+}
+
+#T4 NSC
+nsc_chosens_duty = {
+	icon = "regionally_elected_commanders"
+	allow_normal_conversion = yes
+	lock_level_when_selected = no
+	potential = {
+		NOT = { is_or_was_tag = { tag = H67 } }
+		OR = {
+			religion = bulwari_sun_cult
+			has_country_flag = updating_isolationism_window
+		}
+		NOT = { is_adventurer = yes }
+	}
+	modifiers = {
+		church_loyalty_modifier = 0.1
+		num_accepted_cultures = 1
+	}
+	custom_attributes = {
+		disabled_expelling_elven = yes
+		disabled_purging_elven = yes
+		buffed_dictate_understanding = yes
+		nsc_chosens_duty = yes
+	}
+	effect = {
+		custom_tooltip = nsc_chosens_duty_tt
+		hidden_effect = {
+			nsc_chosens_duty_effect = yes
+			generic_end_expulsion = { race = elven }
+			generic_end_purge = { race = elven }
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				nsc_chosens_duty_removed_isolationism_mods = yes
+			}
+		}
+	}
+	ai = { factor = 0 }
+}
+
+nsc_chosens_duty_rezankand = {
+	icon = "regionally_elected_commanders"
+	allow_normal_conversion = yes
+	lock_level_when_selected = no
+	potential = {
+		is_or_was_tag = { tag = H67 }
+		OR = {
+			religion = bulwari_sun_cult
+			has_country_flag = updating_isolationism_window
+		}
+		NOT = { is_adventurer = yes }
+	}
+	modifiers = {
+		church_loyalty_modifier = 0.1
+		num_accepted_cultures = 1
+	}
+	custom_attributes = {
+		disabled_expelling_elven = yes
+		disabled_purging_elven = yes
+		buffed_dictate_understanding = yes
+		nsc_chosens_duty = yes
+	}
+	effect = {
+		custom_tooltip = nsc_chosens_duty_rezankand_tt
+		hidden_effect = {
+			nsc_chosens_duty_effect = yes
+			generic_end_expulsion = { race = elven }
+			generic_end_purge = { race = elven }
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				nsc_chosens_duty_removed_isolationism_mods = yes
+			}
+		}
+	}
+	ai = { factor = 0 }
+}

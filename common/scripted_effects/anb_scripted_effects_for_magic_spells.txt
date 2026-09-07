@@ -1072,7 +1072,7 @@ conjuration_1_summon_animals_effect = { # Summon Animals
 		custom_tooltip = conjuration_1_summon_animals_spell_effect_tt
 		add_country_modifier = { name = conjuration_1_summon_animals_mod duration = 1825 }
 	}
-	hidden_effect = { country_event = { id = magic_spell.202 days = 1826 } }
+	hidden_effect = { country_event = { id = magic_spell.202 days = 1827 } }
 }
 conjuration_1_conjure_supplies_effect = { # Conjure Supplies
 	add_country_modifier = { name = conjuration_1_conjure_supplies_mod duration = 3650 }
@@ -1105,7 +1105,7 @@ conjuration_2_summon_elementals_effect = { # Summon Elementals
 		}
 		else = { add_country_modifier = { name = conjuration_2_summon_elementals_mod duration = 3650 } }
 	}
-	hidden_effect = { country_event = { id = magic_spell.203 days = 3651 } } #Summoned elementals vanishing - we handle everything in one event because events don't like firing inside else-ifs
+	hidden_effect = { country_event = { id = magic_spell.203 days = 3652 } } #Summoned elementals vanishing - we handle everything in one event because events don't like firing inside else-ifs
 }
 conjuration_2_aid_construction_effect = { # Aid Construction
 	if = {
@@ -1615,10 +1615,12 @@ divination_2_scry_sub_effect = { #Scry sub-effect
 	tooltip = { remove_fow = $months$ }
 	hidden_effect = {
 		every_war_enemy_country = {
+			limit = { country_immune_to_sabotage_magic = no }
 			remove_fow = $months$
 			every_owned_province = { discover_country = ROOT }
 		}
 		every_rival_country = {
+			limit = { country_immune_to_sabotage_magic = no }
 			remove_fow = $months$
 			every_owned_province = { discover_country = ROOT }
 		}
@@ -2368,18 +2370,21 @@ illusion_1_fear_and_loathing_effect = { #Fear and Loathing
 			limit = {
 				capital_scope = { controlled_by = PREV has_siege = no } #No gimping self
 				PREV = { check_variable = { num_revolts_left = 1 } }
+				country_immune_to_sabotage_magic = no
 			}
 			PREV = { subtract_variable = { num_revolts_left = 1 } }
 			illusion_1_fear_and_loathing_sub_effect = { caster_scope = PREV }
 		}
 
 		every_war_enemy_country = {
+			limit = { country_immune_to_sabotage_magic = no }
 			add_country_modifier = { name = illusion_1_fear_and_loathing_sabotage_mod duration = 1825 }
-			hidden_effect = { country_event = { id = magic_spell.601 } }
+			country_event = { id = magic_spell.601 }
 		}
 		every_rival_country = {
+			limit = { country_immune_to_sabotage_magic = no }
 			add_country_modifier = { name = illusion_1_fear_and_loathing_sabotage_mod duration = 1825 }
-			hidden_effect = { country_event = { id = magic_spell.601 } }
+			country_event = { id = magic_spell.601 }
 		}
 	}
 	add_country_modifier = { name = illusion_1_fear_and_loathing_cooldown_mod duration = 1825 hidden = yes } #Sorry no spamming rebels
@@ -2609,8 +2614,16 @@ illusion_2_shadows_in_the_night_effect = { # Shadows in the Night
 	custom_tooltip = spell_sabotage_effect_tt
 	tooltip = { add_country_modifier = { name = illusion_2_shadows_in_the_night_sabotage_mod duration = 1825 } }
 	hidden_effect = {
-		every_war_enemy_country = { country_event = { id = magic_spell.600 } add_country_modifier = { name = illusion_2_shadows_in_the_night_sabotage_mod duration = 1825 } }
-		every_rival_country = { country_event = { id = magic_spell.600 } add_country_modifier = { name = illusion_2_shadows_in_the_night_sabotage_mod duration = 1825 } }
+		every_war_enemy_country = {
+			limit = { country_immune_to_sabotage_magic = no }
+			country_event = { id = magic_spell.600 }
+			add_country_modifier = { name = illusion_2_shadows_in_the_night_sabotage_mod duration = 1825 }
+		}
+		every_rival_country = {
+			limit = { country_immune_to_sabotage_magic = no }
+			country_event = { id = magic_spell.600 }
+			add_country_modifier = { name = illusion_2_shadows_in_the_night_sabotage_mod duration = 1825 }
+		}
 		add_country_modifier = { name = illusion_2_shadows_in_the_night_cooldown_mod duration = 1825 hidden = yes } #Prevent double-clicking, instant feedback you did something
 	}
 }
@@ -4385,6 +4398,8 @@ enchantment_1_bardic_default_2_effect = {
 				name = enchantment_1_aria_of_affection_spell_mod
 				duration = 1825 # 5 years
 			}
+			set_country_flag = enchantment_1_aria_of_affection_spell_flag # This goes away when you use scornful insult
+			# The modifier acts as the cooldown
 		}
 	}
 }
@@ -4521,9 +4536,6 @@ enchantment_1_eordand_gemradcurt_5_effect = { #Cold Command
 
 #Kaino Federation
 necromancy_0_fangaula_kaino_1_effect = { #drain life spell
-	hidden_effect = {
-		change_variable = { kaino_casted_drain_life = 1 }
-	}
 	random_owned_province = {
 		limit = {
 			holy_order = kainos_grasp_holy_order
@@ -4531,8 +4543,8 @@ necromancy_0_fangaula_kaino_1_effect = { #drain life spell
 		}
 		remove_random_development = yes
 		if = {
-			limit = { ROOT = { mission_completed = kaino_1_8 } }
-			infantry = ROOT
+			limit = { PREV = { mission_completed = kaino_1_8 } }
+			infantry = PREV
 		}
 	}
 	custom_tooltip = linebreak_tt

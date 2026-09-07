@@ -240,14 +240,14 @@ country_event = { # opening our arms
 
 province_event = { # hidden event for ek mechanes magos to add the province modifier
 	id = flavour_kimanis.8
-	title = flavour_kimanis.8.t
-	desc = flavour_kimanis.8.d
+	title = hidden_event.t
+	desc = hidden_event.d
 	picture = TODO
 	is_triggered_only = yes
 	hidden = yes
 
 	option = {
-		name = flavour_kimanis.8.a
+		name = hidden_event.a
 		ai_chance = { factor = 1 }
 
 		add_province_modifier = {
@@ -519,78 +519,80 @@ country_event = { # event to show G61_glorious_battle_buff
 
 country_event = { # winecultists spread - on biyearly pulse
 	id = flavour_kimanis.18
-	title = flavour_kimanis.18.t
-	desc = flavour_kimanis.18.d
+	title = hidden_event.t
+	desc = hidden_event.d
 	picture = TODO
 	is_triggered_only = yes
 	hidden = yes
 
 	option = {
-		name = flavour_kimanis.18.a
-		random_province = { # run one
-			limit = {
-				has_province_modifier = G61_wine_cult
-				any_neighbor_province = {
-					owner = {
-						has_spy_network_from = {
-							who = ROOT
-							value = 30
-						}
-					}
-					NOT = { has_province_modifier = G61_wine_cult_cooldown }
-					owner = {
-						NOT = { has_country_modifier = G61_wine_cult_cooldown_country }
-					}
-				}
-			}
-			random_neighbor_province = {
+		name = hidden_event.a
+		hidden_effect = {
+			random_province = { # run one
 				limit = {
-					owner = {
-						has_spy_network_from = {
-							who = ROOT
-							value = 30
+					has_province_modifier = G61_wine_cult
+					any_neighbor_province = {
+						owner = {
+							has_spy_network_from = {
+								who = ROOT
+								value = 30
+							}
+						}
+						NOT = { has_province_modifier = G61_wine_cult_cooldown }
+						owner = {
+							NOT = { has_country_modifier = G61_wine_cult_cooldown_country }
 						}
 					}
-					NOT = { has_province_modifier = G61_wine_cult_cooldown }
-					owner = {
-						NOT = { has_country_modifier = G61_wine_cult_cooldown_country }
-					}
 				}
-				G61_add_wine_cults = yes
-			}
-		}
-
-		random_province = { # run two
-			limit = {
-				has_province_modifier = G61_wine_cult
-				any_neighbor_province = {
-					owner = {
-						has_spy_network_from = {
-							who = ROOT
-							value = 30
+				random_neighbor_province = {
+					limit = {
+						owner = {
+							has_spy_network_from = {
+								who = ROOT
+								value = 30
+							}
+						}
+						NOT = { has_province_modifier = G61_wine_cult_cooldown }
+						owner = {
+							NOT = { has_country_modifier = G61_wine_cult_cooldown_country }
 						}
 					}
-					NOT = { has_province_modifier = G61_wine_cult_cooldown }
-					owner = {
-						NOT = { has_country_modifier = G61_wine_cult_cooldown_country }
-					}
+					G61_add_wine_cults = yes
 				}
 			}
-
-			random_neighbor_province = {
+	
+			random_province = { # run two
 				limit = {
-					owner = {
-						has_spy_network_from = {
-							who = ROOT
-							value = 30
+					has_province_modifier = G61_wine_cult
+					any_neighbor_province = {
+						owner = {
+							has_spy_network_from = {
+								who = ROOT
+								value = 30
+							}
+						}
+						NOT = { has_province_modifier = G61_wine_cult_cooldown }
+						owner = {
+							NOT = { has_country_modifier = G61_wine_cult_cooldown_country }
 						}
 					}
-					NOT = { has_province_modifier = G61_wine_cult_cooldown }
-					owner = {
-						NOT = { has_country_modifier = G61_wine_cult_cooldown_country }
-					}
 				}
-				G61_add_wine_cults = yes
+	
+				random_neighbor_province = {
+					limit = {
+						owner = {
+							has_spy_network_from = {
+								who = ROOT
+								value = 30
+							}
+						}
+						NOT = { has_province_modifier = G61_wine_cult_cooldown }
+						owner = {
+							NOT = { has_country_modifier = G61_wine_cult_cooldown_country }
+						}
+					}
+					G61_add_wine_cults = yes
+				}
 			}
 		}
 	}

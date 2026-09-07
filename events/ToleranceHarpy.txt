@@ -405,6 +405,68 @@ country_event = {
 					id = harpy_tolerance_events.22
 				}
 			}
+			10 = { #A Gift of Flight
+                trigger = {
+                    any_owned_province = {
+						has_harpy_minority_trigger = yes
+					}
+					medium_tolerance_harpy_race_trigger = yes
+                }
+                country_event = {
+                    id = harpy_tolerance_events.23
+                }
+			}
+            8 = { #A Flying Circus
+                trigger = {
+                    any_owned_province = {
+						has_harpy_minority_trigger = yes
+					}
+                }
+                country_event = {
+                    id = harpy_tolerance_events.24
+                }
+			}
+			5 = { #Winner Winner, Harpy Dinner!
+                trigger = {
+                    any_owned_province = {
+						has_harpy_minority_trigger = yes
+					}
+					spices = 1
+                }
+                country_event = {
+                    id = harpy_tolerance_events.25
+                }
+			}
+			1 = { #The Imposters Among Us
+                trigger = {
+                    NOT = {
+                        has_country_flag = harpy_tolerance_imposters_voted_out
+                    }
+                    any_owned_province = {
+                        has_human_majority_trigger = yes
+                    }
+                    fast_owns_num_pops_of_race = { race = harpy amount = 1 }
+                    high_tolerance_human_race_trigger = yes
+                    low_tolerance_harpy_race_trigger = yes
+                }
+                country_event = {
+                    id = harpy_tolerance_events.26
+                }
+            }
+            # Event 27: Hunting Harpies is a follow up on event 26: The Imposters Among Us
+            10 = { #A Nest of Exiles
+                trigger = {
+                    any_owned_province = {
+                        has_harpy_minority_trigger = yes
+                    }
+                    NOT = {
+                        manpower_percentage = 0.25
+                    }
+                }
+                country_event = {
+                    id = harpy_tolerance_events.28
+                }
+            }
 			30 = {
 				trigger = {
 					ai = no
@@ -3090,6 +3152,645 @@ country_event = { #Doctines to Delight
 		add_country_modifier = {
 			name = harpy_tolerance_neglected_consort
 			duration = 1825
+		}
+	}
+}
+
+# A Gift of Flight
+country_event = {
+	id = harpy_tolerance_events.23
+	title = harpy_tolerance_events.23.t
+	desc = harpy_tolerance_events.23.d
+	picture = {
+        trigger = { has_dlc = "Conquest of Paradise" }
+        picture = northamericagfx_COMET_SIGHTED_eventPicture
+    }
+    picture = {
+        trigger = { NOT = { has_dlc = "Conquest of Paradise" } }
+        picture = BIG_STAR_IN_SKY_eventPicture
+    }
+	goto = harpy_flying_province
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					has_harpy_minority_trigger = yes
+				}
+				save_event_target_as = harpy_flying_province
+			}
+		}
+	}
+
+	# This is just another harpy abduction waiting to happen.
+	option = {
+		name = harpy_tolerance_events.23.a
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_decrease_tolerance_harpy = yes
+			}
+		}
+		small_decrease_of_harpy_tolerance_effect = yes
+		add_prestige = 5
+
+	}
+	# I want a ride too!
+	option = {
+		name = harpy_tolerance_events.23.b
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_increase_tolerance_harpy = yes
+			}
+		}
+		small_increase_of_harpy_tolerance_effect = yes
+		add_adm_power = 5
+		add_dip_power = 5
+		add_mil_power = 5
+		add_years_of_income = -0.17 # 2 Months of Income
+		add_prestige = -10
+	}
+	# Maybe they can transport our soldiers instead?
+	option = {
+		name = harpy_tolerance_events.23.c
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_increase_tolerance_harpy = yes
+			}
+		}
+		medium_increase_of_harpy_tolerance_effect = yes
+		add_years_of_income = -0.25
+        add_country_modifier = {
+			name = harpy_tolerance_soldier_transport # 5% Movement Speed
+			duration = 7300
+		}
+	}
+    # Our letter could travel so much faster!
+	option = {
+		name = harpy_tolerance_events.23.e
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_increase_tolerance_harpy = yes
+			}
+		}
+		medium_increase_of_harpy_tolerance_effect = yes
+		add_adm_power = 20
+		add_years_of_income = -0.25
+        add_country_modifier = {
+			name = harpy_tolerance_harpy_messengers # -25% Envoy Travel Time
+			duration = 7300
+		}
+	}
+    # Collecting a toll, but not paying taxes!?
+	option = {
+		name = harpy_tolerance_events.23.f
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_decrease_tolerance_harpy = yes
+			}
+			modifier = {
+                factor = 3
+                OR = {
+                    ruler_has_personality = greedy_personality
+                    ruler_has_personality = embezzler_personality
+                }
+            }
+		}
+		highlight = yes
+		trigger = {
+                OR = {
+                    ruler_has_personality = greedy_personality
+                    ruler_has_personality = embezzler_personality
+                }
+		}
+		medium_decrease_of_harpy_tolerance_effect = yes
+		add_years_of_income = 0.33
+	}
+}
+
+# A Flying Circus
+country_event = {
+	id = harpy_tolerance_events.24
+	title = harpy_tolerance_events.24.t
+	desc = harpy_tolerance_events.24.d
+	picture = THEATRE_eventPicture
+	goto = harpy_circus_province
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					has_harpy_minority_trigger = yes
+				}
+				save_event_target_as = harpy_circus_province
+			}
+		}
+	}
+
+	# Fund them!
+	option = {
+		name = harpy_tolerance_events.24.a
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_increase_tolerance_harpy = yes
+			}
+		}
+		medium_decrease_of_harpy_tolerance_effect = yes
+		add_prestige = 10
+		add_years_of_income = -0.25
+        add_country_modifier = {
+			name = harpy_tolerance_flying_circus # -1.00 National Unrest
+			duration = 7300
+		}
+	}
+	# Hunt them and seize their assets!
+	option = {
+		name = harpy_tolerance_events.24.b
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_decrease_tolerance_harpy = yes
+			}
+		}
+		medium_decrease_of_harpy_tolerance_effect = yes
+		add_mil_power = 25
+		random_list = {
+            40 = {
+                add_years_of_income = 0.1
+            }
+            39 = {
+                add_years_of_income = 0.3
+            }
+            20 = {
+                add_years_of_income = 0.5
+            }
+            1 = {
+                add_years_of_income = 1
+            }
+        }
+        event_target:harpy_circus_province = {
+			remove_harpy_minority_size_effect = yes
+		}
+	}
+    # I want them at my palace now!
+	option = {
+		name = harpy_tolerance_events.24.c
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_increase_tolerance_harpy = yes
+			}
+			modifier = {
+                factor = 3
+                OR = {
+                    ruler_has_personality = patron_of_arts_personality
+                    advisor = artist
+                }
+            }
+		}
+		highlight = yes
+		trigger = {
+                OR = {
+                    ruler_has_personality = patron_of_arts_personality
+                    advisor = artist
+                }
+		}
+		large_increase_of_harpy_tolerance_effect = yes
+		add_prestige = 15
+		add_legitimacy = 10
+		add_years_of_income = -0.33
+		add_country_modifier = {
+			name = harpy_tolerance_state_circus # -1.50 National Unrest
+			duration = 7300
+		}
+	}
+}
+
+# Winner Winner, Harpy Dinner
+country_event = {
+	id = harpy_tolerance_events.25
+	title = harpy_tolerance_events.25.t
+	desc = harpy_tolerance_events.25.d
+	picture = FEAST_eventPicture
+	goto = harpy_master_chef_province
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					trade_goods = spices
+				}
+				save_event_target_as = harpy_master_chef_province
+			}
+		}
+	}
+
+	# Negotiate with the harpies.
+	option = {
+		name = harpy_tolerance_events.25.a
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_increase_tolerance_harpy = yes
+			}
+		}
+		small_increase_of_harpy_tolerance_effect = yes
+		add_dip_power = 5
+		add_prestige = -5
+		add_years_of_income = -0.17
+
+	}
+	# Give the locals all they need for the rescue!
+	option = {
+		name = harpy_tolerance_events.25.b
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_decrease_tolerance_harpy = yes
+			}
+		}
+		small_decrease_of_harpy_tolerance_effect = yes
+		add_manpower = -2
+		event_target:harpy_master_chef_province = {
+            add_province_modifier = {
+                name = harpy_tolerance_stopped_harpy_abductions # -2 Unrest, +10% Tax
+                duration = 3650
+            }
+        }
+	}
+	# They can rescue him on their own.
+	option = {
+		name = harpy_tolerance_events.25.c
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_decrease_tolerance_harpy = yes
+			}
+		}
+		small_decrease_of_harpy_tolerance_effect = yes
+		add_prestige = -10
+		event_target:harpy_master_chef_province = {
+            add_province_modifier = {
+                name = harpy_tolerance_harpy_abductions # +2 Unrest, -10% Manpower
+                duration = 3650
+            }
+        }
+	}
+    # Create spaces for them to eat our delicious food in exchange.
+	option = {
+		name = harpy_tolerance_events.25.e
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_increase_tolerance_harpy = yes
+			}
+		}
+		medium_increase_of_harpy_tolerance_effect = yes
+		add_years_of_income = -0.25
+        event_target:harpy_master_chef_province = {
+            add_province_modifier = {
+                name = harpy_tolerance_united_by_food # -5 Unrest, +10% Goods Produced
+                duration = 7300
+            }
+        }
+	}
+    # How about we bring the dwarf to our palace?
+	option = {
+		name = harpy_tolerance_events.25.f
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_decrease_tolerance_harpy = yes
+			}
+			modifier = {
+                factor = 3
+                OR = {
+                    ruler_has_personality = well_connected_personality
+                    ruler_has_personality = well_advised_personality
+                    has_country_modifier = halfling_administration
+                }
+            }
+		}
+		highlight = yes
+		trigger = {
+                OR = {
+                    ruler_has_personality = well_connected_personality
+                    ruler_has_personality = well_advised_personality
+                    has_country_modifier = halfling_administration
+                }
+		}
+		small_decrease_of_harpy_tolerance_effect = yes
+		add_years_of_income = -0.25
+		add_country_modifier = {
+			name = harpy_tolerance_exellent_state_cooks # -10% Advisor Cost, +1 Yearly Prestige
+			duration = 7300
+		}
+	}
+}
+
+# The Imposters Among Us
+country_event = {
+	id = harpy_tolerance_events.26
+	title = harpy_tolerance_events.26.t
+	desc = harpy_tolerance_events.26.d
+	picture = FEMALE_SPY_eventPicture
+	goto = harpy_sus_town
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+                    has_human_majority_trigger = yes
+				}
+				save_event_target_as = harpy_sus_town
+			}
+			set_country_flag = harpy_tolerance_imposters_voted_out
+		}
+	}
+
+	# They shouldn't have to hide. Promise their safety.
+	option = {
+		name = harpy_tolerance_events.26.a
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_increase_tolerance_harpy = yes
+			}
+		}
+		large_increase_of_harpy_tolerance_effect = yes
+		add_prestige = -10
+		event_target:harpy_sus_town = {
+            add_province_modifier = {
+                name = harpy_tolerance_the_monsters_among_us # 5 Unrest
+                duration = 3650
+            }
+        }
+
+	}
+	# They are just rumors. Ignore them.
+	option = {
+		name = harpy_tolerance_events.26.b
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_increase_tolerance_harpy = yes
+			}
+		}
+		small_increase_of_harpy_tolerance_effect = yes
+		add_prestige = -5
+		event_target:harpy_sus_town = {
+            add_province_modifier = {
+                name = harpy_tolerance_the_imposters_among_us # 2 Unrest
+                duration = 3650
+            }
+        }
+	}
+	# Encourage the locals to get rid of them.
+	option = {
+		name = harpy_tolerance_events.26.c
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_decrease_tolerance_harpy = yes
+			}
+		}
+		medium_decrease_of_harpy_tolerance_effect = yes
+        hidden_effect = {
+            country_event = {
+                id = harpy_tolerance_events.27
+                days = 730
+            }
+        }
+        custom_tooltip = harpy_tolerance_events.26.c_tt
+	}
+    # We'll find them and root them out.
+	option = {
+		name = harpy_tolerance_events.26.e
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_decrease_tolerance_harpy = yes
+			}
+			modifier = {
+                factor = 3
+                OR = {
+                    ruler_has_personality = intricate_web_weaver_personality
+                    advisor = spymaster
+                }
+            }
+		}
+		highlight = yes
+		trigger = {
+                OR = {
+                    ruler_has_personality = intricate_web_weaver_personality
+                    advisor = spymaster
+                }
+		}
+		medium_decrease_of_harpy_tolerance_effect = yes
+		event_target:harpy_sus_town = {
+            add_province_modifier = {
+                name = harpy_tolerance_harpies_rooted_out # -5 Unrest, 0.1 tax, 0.1 goods produced, -0.05 manpower
+                duration = 7300
+            }
+            remove_harpy_minority_size_effect = yes
+        }
+	}
+}
+
+# Hunting Harpies
+country_event = {
+	id = harpy_tolerance_events.27
+	title = harpy_tolerance_events.27.t
+	desc = harpy_tolerance_events.27.d
+	picture = VILLAGE_BURNING_eventPicture
+	goto = harpy_sus_town
+
+	is_triggered_only = yes
+
+	# Send our military to stop those crazy hunters.
+	option = {
+		name = harpy_tolerance_events.27.a
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_increase_tolerance_harpy = yes
+			}
+		}
+		small_increase_of_harpy_tolerance_effect = yes
+		add_mil_power = 5
+		add_prestige = -10
+		event_target:harpy_sus_town = {
+            add_province_modifier = {
+                name = harpy_tolerance_widespread_paranoia # 5 Unrest -20% Local Tax
+                duration = 3650
+            }
+            add_devastation = 20
+            remove_harpy_minority_size_effect = yes
+        }
+
+	}
+	# Send out military to conduct the searches.
+	option = {
+		name = harpy_tolerance_events.27.b
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_decrease_tolerance_harpy = yes
+			}
+		}
+		medium_decrease_of_harpy_tolerance_effect = yes
+		add_manpower = -2
+		add_prestige = -5
+		event_target:harpy_sus_town = {
+            add_province_modifier = {
+                name = harpy_tolerance_recovering_from_paranoia # -2 Unrest -15% Local Tax +15% Local Manpower
+                duration = 3650
+            }
+            add_devastation = 20
+            remove_harpy_minority_size_effect = yes
+            remove_harpy_minority_size_effect = yes
+        }
+	}
+	# Get me their leader! This organization is impressive!
+	option = {
+		name = harpy_tolerance_events.27.c
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_decrease_tolerance_harpy = yes
+			}
+		}
+		large_decrease_of_harpy_tolerance_effect = yes
+		define_advisor = {
+            type = inquisitor
+            skill = 3
+            discount = yes
+            cost_multiplier = 0.5
+        }
+		add_country_modifier = {
+			name =  harpy_tolerance_harpy_hunters_in_government # 2 Unrest, 10% National Manpower, 0.5% Missionary Strenght
+			duration = 5475
+		}
+		event_target:harpy_sus_town = {
+            add_devastation = 20
+            remove_harpy_minority_size_effect = yes
+            remove_harpy_minority_size_effect = yes
+        }
+	}
+}
+
+# A Nest of Exiles
+country_event = {
+	id = harpy_tolerance_events.28
+	title = harpy_tolerance_events.28.t
+	desc = harpy_tolerance_events.28.d
+	picture = WOUNDED_SOLDIERS_eventPicture
+    goto = harpy_healing_nest
+
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+                    has_harpy_minority_trigger = yes
+				}
+				save_event_target_as = harpy_healing_nest
+			}
+		}
+	}
+
+	# Maybe we could learn something from them?
+	option = {
+		name = harpy_tolerance_events.28.a
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_increase_tolerance_harpy = yes
+			}
+		}
+		medium_increase_of_harpy_tolerance_effect = yes
+        add_country_modifier = {
+			name =  harpy_tolerance_nests_of_exiles # +5% Manpower Recovery
+			duration = 1825
+		}
+	}
+	# As if monsters were able to show compassion.
+	option = {
+		name = harpy_tolerance_events.28.b
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_decrease_tolerance_harpy = yes
+			}
+		}
+		small_decrease_of_harpy_tolerance_effect = yes
+		add_prestige = 10
+	}
+	# We need to care for veterans ourselves.
+	option = {
+		name = harpy_tolerance_events.28.c
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				wants_to_increase_tolerance_harpy = yes
+			}
+            modifier = {
+                factor = 3
+                OR = {
+                    ruler_has_personality = kind_hearted_personality
+                    ruler_has_personality = reformist_personality
+                }
+            }
+		}
+		highlight = yes
+		trigger = {
+                OR = {
+                    ruler_has_personality = kind_hearted_personality
+                    ruler_has_personality = reformist_personality
+                }
+		}
+		small_increase_of_harpy_tolerance_effect = yes
+		add_years_of_income = -0.25
+		add_country_modifier = {
+			name =  harpy_tolerance_intensive_veteran_care # +10% Manpower Recovery
+			duration = 7300
 		}
 	}
 }

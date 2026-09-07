@@ -5128,28 +5128,22 @@ has_any_manufactory_construction = { #Province Scope
 }
 
 has_latest_manpower_building_trigger = {
-	custom_trigger_tooltip = {
-		tooltip = has_latest_manpower_building_trigger_tt
-		OR = {
-			has_building = training_fields
-			AND = {
-				NOT = { owner = { mil_tech = 16 } }
-				has_building = barracks
-			}
-		}
+	if = {
+		limit = { owner = { mil_tech = 16 } }
+		has_building = training_fields
+	}
+	else = {
+		has_manpower_building_trigger = yes
 	}
 }
 
 has_latest_forcelimit_building_trigger = {
-	custom_trigger_tooltip = {
-		tooltip = has_latest_forcelimit_building_trigger_tt
-		OR = {
-			has_building = conscription_center
-			AND = {
-				NOT = { owner = { mil_tech = 22 } }
-				has_building = regimental_camp
-			}
-		}
+	if = {
+		limit = { owner = { mil_tech = 22 } }
+		has_building = conscription_center
+	}
+	else = {
+		has_forcelimit_building_trigger = yes
 	}
 }
 

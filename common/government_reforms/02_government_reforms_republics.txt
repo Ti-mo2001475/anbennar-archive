@@ -11070,6 +11070,136 @@ overseas_governorate = {
 	effect = {
 	}
 }
+
+# Tier 2 republican virtues  
+sophocracy_republic = { 
+	icon = "parliament"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	modifiers = {
+		stability_cost_modifier = -0.2
+        reform_progress_growth = 0.1
+	}
+	custom_attributes = {
+		sophocracy = yes
+	}
+}
+
+# Tier 3 Frequency of Elections  
+duumvirate = {
+    icon = "sparapet_office"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	modifiers = {
+		all_estate_loyalty_equilibrium = 0.1
+		republican_tradition = 0.1
+		election_cycle = 2
+	}
+	queen = yes
+    custom_attributes = {
+		rulers_can_be_generals = no
+		duumvirate = yes
+	}
+	effect = {
+		hidden_effect = {
+			duumvirate_effect = yes
+		}
+	}
+}
+
+# Tier 6 Separation of Power. 
+three_branches = {
+    icon = "fiqh_laws"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+	}
+	modifiers = {
+		national_focus_years = -10
+		republican_tradition = 0.15
+	}
+	custom_attributes = {
+        cannot_become_dictatorship = yes
+		three_branches = yes
+	}
+}
+
+# Tier 7 Regionalism
+xechtari_above_all = {
+    icon = "hetra_gos_ref"
+	allow_normal_conversion = yes
+	potential = {
+		culture_group = kheionai_ruinborn_elf
+		capital_scope = { 
+			region = alecand_region
+		}
+	}
+	trigger = {
+		culture_group = kheionai_ruinborn_elf
+		capital_scope = { 
+			region = alecand_region
+		}
+	}
+	conditional = {
+		allow = {
+			has_dlc = "Res Publica"
+		}
+		can_use_trade_post = yes
+	}
+	conditional = {
+		allow = {
+			has_dlc = "Domination"
+		}
+		custom_attributes = {
+			can_establish_trade_protectorates = yes
+		}
+	}
+	boost_income = yes
+	modifiers = {
+		governing_capacity_modifier = -0.33
+		liberty_desire_from_subject_development = -0.25
+	}
+	custom_attributes = {
+		xechtari_above_all = yes
+	}
+	effect = {
+		hidden_effect = {
+			if = {
+				limit = { all_owned_province = { region = alecand_region } }
+				set_country_flag = xechtari_only_owns_alecand
+			}
+			else = {
+				clr_country_flag = xechtari_only_owns_alecand
+			}
+
+			every_owned_province = {
+				limit = { region = alecand_region }
+				xechtari_above_all_check_effect = yes
+			}
+		}
+	}
+	removed_effect = {
+		clr_country_flag = xechtari_only_owns_alecand
+		every_owned_province = {
+			limit = { region = alecand_region }
+			xechtari_above_all_check_effect = yes
+		}
+	}
+}
+
 peasants_republic_m26 = { #Change when adding mission tree
 	allow_normal_conversion = yes
 	icon = "peasant_republic"

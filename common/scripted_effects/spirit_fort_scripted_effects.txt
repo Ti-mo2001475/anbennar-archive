@@ -6,14 +6,19 @@ spirit_fort_awakening_effect = { #PROVINCE SCOPE
 			has_fort_building_trigger = yes
 			has_tax_building_trigger = yes
 			owner = {
-				OR = {
-					culture_group = bom
-					has_country_flag = unlocked_spirit_forts 
-				}
+				spirit_fort_country_can_use = yes
 			}
 			NOT = { has_province_modifier = awakened_fortress }
 			NOT = { has_province_flag = bom_fort_exalted }
 		}
 		province_event = { id = spirit_forts.03 }
 	}
+}
+spirit_fort_exaltation_effect = { #PROVINCE SCOPE
+	remove_province_modifier = awakened_fortress
+	add_permanent_province_modifier = {
+		name = exalted_fortress_$province$
+		duration = -1
+	}
+	set_province_flag = bom_fort_exalted
 }

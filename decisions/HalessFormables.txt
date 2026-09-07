@@ -734,7 +734,7 @@ country_decisions = {
 		}
 	}
 	
-	lianzhou_nation = {
+lianzhou_nation = {
 		major = yes
 		potential = {
 			primary_culture = serene_harimari
@@ -772,6 +772,32 @@ country_decisions = {
 			}
 		}
 		effect = {
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							is_or_was_tag = { tag = Y16 }
+							capital_scope = {
+								region = xianjie_region
+							}
+						}
+					}
+					set_country_flag = lianzhou_2_idea
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							is_or_was_tag = { tag = Y03 }
+							capital_scope = {
+								region = upper_yanshen_region
+							}
+						}
+					}
+					set_country_flag = lianzhou_3_idea
+				}
+			}
 			change_tag = Z67
 			hidden_effect = {
 				restore_country_name = yes
@@ -833,6 +859,7 @@ country_decisions = {
 			factor = 1
 		}
 	}
+
 	
 	form_sunrise_empire = {
 		major = yes
@@ -962,7 +989,7 @@ country_decisions = {
 			}
 		}
 		provinces_to_highlight = {
-			province_group = original_yanszin
+			province_group = yanszin_heartland_group
 			NOT = { owned_by = ROOT }
 		}
 		allow = {
@@ -982,7 +1009,7 @@ country_decisions = {
 			NOT = { exists = V19 }
 			is_at_war = no
 			is_free_or_tributary_trigger = yes
-			original_yanszin = {
+			yanszin_heartland_group = {
 				type = all
 				owned_by = ROOT
 			}
@@ -991,6 +1018,11 @@ country_decisions = {
 			change_tag = V19
 			swap_non_generic_missions = yes
 			country_event = { id = ideagroups.1 }
+			add_prestige = 25
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
 		}
 		ai_will_do = {
 			factor = 1
@@ -1391,6 +1423,19 @@ country_decisions = {
 			culture_group = bom
 			NOT = { religion = devouring_path }
 			was_never_end_game_tag_trigger = yes
+			OR = { # AI needs to own two spirit forts to see the decision to prevent rampant AI belligerence.
+				ai = no
+				calc_true_if = {
+					amount = 2
+					owns = 4576
+					owns = 4580
+					owns = 4802
+					owns = 4565
+					owns = 4941
+					owns = 4600
+					owns = 4703
+				}
+			}
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -1439,12 +1484,19 @@ country_decisions = {
 			}
 			if = {
 				limit = { ai = no }
-				num_of_owned_provinces_with = {
-					value = 6
+				spirit_forts_province_group = {
+					type = all
+					owned_by = ROOT
 					custom_trigger_tooltip = {
 						tooltip = kimni_solenh_exalted_forts.tt
 						has_province_flag = bom_fort_exalted
 					}
+				}
+			}
+			else = {
+				spirit_forts_province_group = {
+					type = all
+					owned_by = ROOT
 				}
 			}
 		}
@@ -1465,6 +1517,7 @@ country_decisions = {
 				duration = 7300
 			}
 			custom_tooltip = bom_empire_cultural_influence.tt
+			anb_add_accepted_culture_or_dip_power = { culture = exalted_harimari free = yes }
 			hidden_effect = {
 				every_owned_province = {
 					limit = { culture = chengrong }
@@ -1473,6 +1526,24 @@ country_decisions = {
 				every_owned_province = {
 					limit = { culture = tamran }
 					change_culture = khethakran
+				}
+				every_owned_province = {
+					limit = {
+						culture_group = harimari
+						province_is_in_bom_cultural_sphere = yes
+					}
+					change_culture = exalted_harimari
+				}
+				# If AI manages to form the tag, exalt the spirit forts.
+				if = { 
+					limit = { ai = yes }
+					4703 = { spirit_fort_exaltation_effect = { province = tuan_caoban} }
+					4576 = { spirit_fort_exaltation_effect = { province = skarkaophe } }
+					4580 = { spirit_fort_exaltation_effect = { province = khabtei_teleni } }
+					4565 = { spirit_fort_exaltation_effect = { province = bim_lau } }
+					4600 = { spirit_fort_exaltation_effect = { province = semphrerong } }
+					4941 = { spirit_fort_exaltation_effect = { province = lapnam_amrik } }
+					4802 = { spirit_fort_exaltation_effect = { province = risrong } }
 				}
 			}
 		}

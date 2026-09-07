@@ -5130,12 +5130,37 @@ improve_economy_azkare = { #Improve Haless's economy, protect the little man
 					}
 				}
 			}
-			num_of_owned_provinces_with = {
-				value = 5
-				culture = fenghuang_command
-				has_forcelimit_building_trigger = yes
-				has_manpower_building_trigger = yes
-				has_building = soldier_households
+			if = {
+				limit = {
+					calc_true_if = {
+						amount = 5
+						shamakhad_region = {
+							type = all
+							culture_group = hobgoblin
+							NOT = { culture = swallow_command }
+						}
+					}
+				}
+				num_of_owned_provinces_with = {
+					value = 5
+					culture = fenghuang_command
+					has_forcelimit_building_trigger = yes
+					has_manpower_building_trigger = yes
+					has_building = soldier_households
+				}
+			}
+			else = {
+				# not enough hobgoblins left
+				num_of_owned_provinces_with = {
+					value = 5
+					OR = {
+						area = tamvihar_area
+						area = kradhungur_area
+					}
+					has_forcelimit_building_trigger = yes
+					has_manpower_building_trigger = yes
+					has_building = soldier_households
+				}
 			}
 		}
 		

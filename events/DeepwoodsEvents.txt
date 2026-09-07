@@ -4427,3 +4427,1022 @@ country_event = {
 		add_stability_or_adm_power = yes
 	}
 }
+
+#########################################
+###    Hunter's Gambit Tournament     ###
+#########################################
+
+country_event = { #The Hunter's Gambit Tournament Start
+	id = deepwoods.100
+	title = deepwoods.100.t
+	desc = deepwoods.100.d
+	picture = WOOD_ELF_HUNT_eventPicture
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	trigger = {
+		owns = 7011
+		deepwoods_hunter_grove = {
+			type = all
+			owner = { primary_culture = wood_elf }
+		}
+		OR = {
+			tag = I26
+			tag = I27
+			tag = I28
+			tag = I29
+			tag = I30
+			tag = I31
+			tag = I32
+			tag = I33
+			tag = I34
+		}
+		any_known_country = {
+			primary_culture = wood_elf
+			OR = {
+				tag = I26
+				tag = I27
+				tag = I28
+				tag = I29
+				tag = I30
+				tag = I31
+				tag = I32
+				tag = I33
+				tag = I34
+			}
+		}
+	}
+
+	option = { #Host Start Event
+		name = deepwoods.100.a
+		ai_chance = { factor = 1 }
+
+		set_country_flag = hunters_gambit_contender
+		set_country_flag = hunters_gambit_participated_in_tournament
+		custom_tooltip = hunters_gambit_tutorial_tt
+		every_known_country = {
+			limit = {
+				primary_culture = wood_elf
+				OR = {
+					tag = I26
+					tag = I27
+					tag = I28
+					tag = I29
+					tag = I30
+					tag = I31
+					tag = I32
+					tag = I33
+					tag = I34
+				}
+			}
+			country_event = { id = deepwoods.101 days = 7 }
+		}
+		hidden_effect = {
+			7011 = { province_event = { id = deepwoods.102 days = 121 } }
+		}
+	}
+
+	option = { #Host is a loser
+		name = deepwoods.100.b #Does Nothing
+		ai_chance = { factor = 0 }
+	}
+}
+
+
+country_event = { #The Hunter's Gambit Tournament Start
+	id = deepwoods.101
+	title = deepwoods.101.t
+	desc = deepwoods.101.d
+	picture = MULTI_RACIAL_MERC_eventPicture
+	
+	is_triggered_only = yes
+
+	option = { #Contender accepts
+		name = deepwoods.101.a
+		ai_chance = { factor = 1 }
+		set_country_flag = hunters_gambit_contender
+		set_country_flag = hunters_gambit_participated_in_tournament
+		custom_tooltip = hunters_gambit_tutorial_tt
+	}
+
+	option = { #Contender is a loser
+		name = deepwoods.101.b #Does Nothing
+		ai_chance = { factor = 0 }
+	}
+}
+
+
+province_event = { #The Hunter's Gambit Tournament Start Handler
+	id = deepwoods.102
+	title = deepwoods.102.t
+	desc = deepwoods.102.d
+	picture = MULTI_RACIAL_MERC_eventPicture
+	
+	is_triggered_only = yes
+	hidden = yes
+
+	option = {
+		name = deepwoods.102.a
+		if = { #At least three contestants
+			limit = {
+				calc_true_if = {
+					amount = 3
+					all_country = { has_country_flag = hunters_gambit_contender }
+				}
+			}
+			every_country = {
+				limit = { has_country_flag = hunters_gambit_contender }
+				country_event = { id = deepwoods.103 }
+			}
+			7011 = { province_event = { id = deepwoods.105 days = 120 } } #Round Outcome
+		}
+		else_if = { #Exactly two contestants
+			limit = {
+				calc_true_if = {
+					amount = 2
+					all_country = { has_country_flag = hunters_gambit_contender }
+				}
+			}
+			every_country = {
+				limit = { has_country_flag = hunters_gambit_contender }
+				country_event = { id = deepwoods.108 days = 100 } #Final Gambit
+			}
+			7011 = { province_event = { id = deepwoods.109 days = 200 } } #Final Gambit Handler
+		}
+		else = { #Only one contestant
+			random_country = {
+				limit = { has_country_flag = hunters_gambit_contender }
+				country_event = { id = deepwoods.106 }
+			}
+		}
+	}
+}
+
+
+country_event = { #The Hunter's Gambit Tournament Preparations
+	id = deepwoods.103
+	title = deepwoods.103.t
+	desc = deepwoods.103.d
+	picture = MULTI_RACIAL_MERC_eventPicture
+
+	is_triggered_only = yes
+
+	
+	trigger = { has_country_flag = hunters_gambit_contender }
+
+	option = { #Train Only
+		name = deepwoods.103.a
+		custom_tooltip = hunters_gambit_results
+		add_manpower = -1.5
+		custom_tooltip = hunters_gambit_need_at_tt
+		if = {
+			limit = { army_tradition = 60 }
+			random_list = {
+				30 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 2
+						}
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				60 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 1
+						}
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				10 = {}
+			}
+		} 
+		else = {
+			random_list = {
+				20 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 2
+						}
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				50 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 1
+						}
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				30 = {}
+			}
+		}
+	}
+
+	option = { #Equipment Only
+		name = deepwoods.103.b
+		custom_tooltip = hunters_gambit_results
+		if = {
+			limit = { monthly_income = 111.11 }
+			add_treasury = -200
+		}
+		else = { add_years_of_income = -0.15 }
+		custom_tooltip = hunters_gambit_need_inno_tt
+		if = {
+			limit = { innovativeness = 5 }
+			random_list = {
+				35 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 2
+						}
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				35 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 1
+						}
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				30 = {}
+			}
+		} 
+		else = {
+			random_list = {
+				25 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 2
+						}
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				25 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 1
+						}
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				50 = {}
+			}
+		}
+	}
+
+	option = { #Equipment and Train
+		name = deepwoods.103.c
+		custom_tooltip = hunters_gambit_results
+		add_manpower = -1.5
+		if = {
+			limit = { monthly_income = 111.11 }
+			add_treasury = -200
+		}
+		else = { add_years_of_income = -0.15 }
+		custom_tooltip = hunters_gambit_need_both_tt
+		if = {
+			limit = {
+				innovativeness = 5
+				army_tradition = 60
+			}
+			random_list = {
+				50 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 2
+						}
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				40 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 1
+						}
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				10 = {}
+			}
+		} 
+		else = {
+			random_list = {
+				45 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 2
+						}
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				35 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 1
+						}
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				20 = {}
+			}
+		}
+	}
+
+	option = { #Sabotage!
+		name = deepwoods.103.e
+		custom_tooltip = hunters_gambit_results
+		add_corruption = 2
+		if = {
+			limit = { monthly_income = 104.17 }
+			add_treasury = -500
+		}
+		else = { add_years_of_income = -0.4 }
+		custom_tooltip = hunters_gambit_need_spy_tt
+		goto = 7011
+		if = {
+			limit = {
+				7011 = {
+					owner = {
+						has_spy_network_from = {
+							who = ROOT
+							value = 50
+						}
+					}
+				}
+			}
+			7011 = {
+				owner = {
+					add_spy_network_from = {
+						who = ROOT
+						value = -50
+					}
+				}
+			}
+			random_list = {
+				45 = {
+					hidden_effect = {
+						every_known_country = {
+							limit = { has_country_flag = hunters_gambit_contender }
+							change_variable = {
+								which = hunters_gambit_vp_tracker
+								value = -2
+							}
+						}
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 1
+						}
+					}
+					custom_tooltip = hunters_gambit_negative_two_VP_tt
+				}
+				35 = {}
+				20 = { country_event = { id = deepwoods.104 } } #CHEATERS
+			}
+		}
+		else = {
+			random_list = {
+				30 = {
+					hidden_effect = {
+						every_known_country = {
+							limit = { has_country_flag = hunters_gambit_contender }
+							change_variable = {
+								which = hunters_gambit_vp_tracker
+								value = -2
+							}
+						}
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 1
+						}
+					}
+					custom_tooltip = hunters_gambit_negative_two_VP_tt
+				}
+				50 = {}
+				20 = { country_event = { id = deepwoods.104 } } #CHEATERS
+			}
+		}
+	}
+}
+
+country_event = { #The Hunter's Gambit CHEATERS!
+	id = deepwoods.104
+	title = deepwoods.104.t
+	desc = deepwoods.104.d
+	picture = MULTI_RACIAL_MERC_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = { hidden_effect = { clr_country_flag = hunters_gambit_contender } }
+
+	option = { #Dishonor
+		name = deepwoods.104.a
+
+		every_known_country = {
+			limit = {
+				primary_culture = wood_elf
+				capital_scope = { superregion = deepwoods_superregion }
+			}
+			add_opinion = {
+				who = ROOT
+				modifier = hunters_gambit_discovered_as_cheaters
+			}
+		}
+		add_country_modifier = {
+			name = hunters_gambit_tournament_cheaters
+			duration = 3650 #10 years
+		}
+		custom_tooltip = hunters_gambit_eliminated_tt
+	}
+}
+
+province_event = { #The Hunter's Gambit Round Handler
+	id = deepwoods.105
+	title = deepwoods.105.t
+	desc = deepwoods.105.d
+	picture = MULTI_RACIAL_MERC_eventPicture
+	
+	is_triggered_only = yes
+	hidden = yes
+
+	immediate = {
+		random_country = {
+			limit = { has_country_flag = hunters_gambit_contender }
+			save_event_target_as = hunters_gambit_round_winner
+		}
+		every_country = {
+			limit = {
+				has_country_flag = hunters_gambit_contender
+				check_variable = {
+					which = hunters_gambit_vp_tracker
+					which = event_target:hunters_gambit_round_winner
+				}
+			}
+			save_event_target_as = hunters_gambit_round_winner
+		}
+		random_country = {
+			limit = {
+				has_country_flag = hunters_gambit_contender
+				is_variable_equal = {
+					which = hunters_gambit_vp_tracker
+					which = event_target:hunters_gambit_round_winner
+				}
+			}
+			save_event_target_as = hunters_gambit_round_winner
+		} #Select an actual random winner in case of ties.
+		random_country = {
+			limit = {
+				has_country_flag = hunters_gambit_contender
+				NOT = { tag = event_target:hunters_gambit_round_winner }
+			}
+			save_event_target_as = hunters_gambit_round_loser
+		}
+		every_country = {
+			limit = {
+				has_country_flag = hunters_gambit_contender
+				NOT = {
+					check_variable = {
+						which = hunters_gambit_vp_tracker
+						which = event_target:hunters_gambit_round_loser
+					}
+					tag = event_target:hunters_gambit_round_winner
+				}
+			}
+			save_event_target_as = hunters_gambit_round_loser
+		}
+		random_country = {
+			limit = {
+				has_country_flag = hunters_gambit_contender
+				is_variable_equal = {
+					which = hunters_gambit_vp_tracker
+					which = event_target:hunters_gambit_round_loser
+				}
+				NOT = { tag = event_target:hunters_gambit_round_winner }
+			}
+			save_event_target_as = hunters_gambit_round_loser
+		} #Select an actual random loser in case of ties.
+	}
+
+
+	option = { #Results
+		name = deepwoods.105.a
+
+		if = { #3+ contestants
+			limit = {
+				calc_true_if = {
+					amount = 3
+					all_country = {
+						has_country_flag = hunters_gambit_contender
+						NOT = { tag = event_target:hunters_gambit_round_loser }
+					}
+				}
+			}
+			every_country = {
+				limit = {
+					has_country_flag = hunters_gambit_contender
+					NOT = { tag = event_target:hunters_gambit_round_loser }
+				}
+				country_event = { id = deepwoods.103 days = 121 } #Round Reset
+			}
+			7011 = { province_event = { id = deepwoods.105 days = 241 } } #Round Outcome
+		}
+		else_if = { #2 contestants
+			limit = {
+				calc_true_if = {
+					amount = 2
+					all_country = {
+						has_country_flag = hunters_gambit_contender
+						NOT = { tag = event_target:hunters_gambit_round_loser }
+					}
+				}
+			}
+			every_country = {
+				limit = {
+					has_country_flag = hunters_gambit_contender
+					NOT = { tag = event_target:hunters_gambit_round_loser }
+				}
+				country_event = { id = deepwoods.108 days = 100 } #Final Gambit
+			}
+			7011 = { province_event = { id = deepwoods.109 days = 200 } } #Final Gambit Handler
+		}
+		else = { #0-1 contestants
+			random_country = {
+				limit = {
+					has_country_flag = hunters_gambit_contender
+					NOT = { tag = event_target:hunters_gambit_round_loser }
+				}
+				country_event = { id = deepwoods.110 days = 100 } #At least two people were found cheating at once, you won, go home.
+			}
+			#Nothing happens if everyone cheated, may the gods have mercy on your souls, go home.
+		}
+		every_country = {
+			limit = { has_country_flag = hunters_gambit_contender }
+			country_event = { id = deepwoods.107 }
+		}
+	}
+}
+
+country_event = { #The Hunter's Gambit Who Dares Wins!
+	id = deepwoods.106
+	title = deepwoods.106.t
+	desc = deepwoods.106.d
+	picture = MULTI_RACIAL_MERC_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = { hidden_effect = { clr_country_flag = hunters_gambit_contender } }
+
+	option = { #Victory by Default
+		name = deepwoods.106.a
+
+		add_country_modifier = {
+			name = hunters_gambit_tournament_default_winner
+			duration = -1
+		}
+	}
+}
+
+country_event = { #The Hunter's Gambit Round Results with loc
+	id = deepwoods.107
+	title = deepwoods.107.t
+	desc = deepwoods.107.d
+	picture = MULTI_RACIAL_MERC_eventPicture
+	
+	is_triggered_only = yes
+
+	option = { #We win!
+		name = deepwoods.107.a
+		trigger = { tag = event_target:hunters_gambit_round_winner }
+		add_adm_power = 25
+		add_dip_power = 25
+		add_mil_power = 25
+		add_prestige = 5
+		add_army_professionalism = 0.01
+		hidden_effect = {
+			set_variable = {
+				which = hunters_gambit_vp_tracker
+				value = 0
+			}
+		}
+	}
+
+	option = { #We survived
+		name = deepwoods.107.b
+		trigger = {
+			NOT = {
+				tag = event_target:hunters_gambit_round_winner
+				tag = event_target:hunters_gambit_round_loser
+			}
+		}
+		add_mil_power = 20
+		add_army_professionalism = 0.005
+		hidden_effect = {
+			set_variable = {
+				which = hunters_gambit_vp_tracker
+				value = 0
+			}
+		}
+	}
+
+	option = { #We lost!
+		name = deepwoods.107.c
+		trigger = { tag = event_target:hunters_gambit_round_loser }
+		add_prestige = -10
+		add_legitimacy = -10
+		clr_country_flag = hunters_gambit_contender
+		custom_tooltip = hunters_gambit_eliminated_tt
+		hidden_effect = {
+			set_variable = {
+				which = hunters_gambit_vp_tracker
+				value = 0
+			}
+		}
+	}
+}
+
+country_event = { #The Hunter's Gambit Last Round
+	id = deepwoods.108
+	title = deepwoods.108.t
+	desc = deepwoods.108.d
+	picture = MULTI_RACIAL_MERC_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_known_country = {
+				limit = { has_country_flag = hunters_gambit_contender }
+				save_event_target_as = event_country
+			}
+		}
+	}
+
+	option = { #Train Only
+		name = deepwoods.108.a
+		custom_tooltip = hunters_gambit_last_round_contender
+		add_yearly_manpower = -0.33
+		custom_tooltip = hunters_gambit_need_at_tt
+		if = {
+			limit = { army_tradition = 60 }
+			random_list = {
+				30 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 2
+						}
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				60 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 1
+						}
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				10 = {}
+			}
+		} 
+		else = {
+			random_list = {
+				20 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 2
+						}
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				50 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 1
+						}
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				30 = {}
+			}
+		}
+	}
+
+	option = { #Buy Equipment Only
+		name = deepwoods.108.b
+		custom_tooltip = hunters_gambit_last_round_contender
+		if = {
+			limit = { monthly_income = 126.26 }
+			add_treasury = -500
+		}
+		else = { add_years_of_income = -0.33 }
+		custom_tooltip = hunters_gambit_need_inno_tt
+		if = {
+			limit = { innovativeness = 5 }
+			random_list = {
+				35 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 2
+						}
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				35 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 1
+						}
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				30 = {}
+			}
+		} 
+		else = {
+			random_list = {
+				25 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 2
+						}
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				25 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 1
+						}
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				50 = {}
+			}
+		}
+	}
+
+	option = { #Train and Buy Equipment
+		name = deepwoods.108.c
+		custom_tooltip = hunters_gambit_last_round_contender
+		add_yearly_manpower = -0.33
+		if = {
+			limit = { monthly_income = 126.26 }
+			add_treasury = -500
+		}
+		else = { add_years_of_income = -0.33 }
+		custom_tooltip = hunters_gambit_need_both_tt
+		if = {
+			limit = { 
+				AND = {
+					innovativeness = 5
+					army_tradition = 60
+				}
+			}
+			random_list = {
+				50 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 2
+						}
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				40 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 1
+						}
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				10 = {}
+			}
+		} 
+		else = {
+			random_list = {
+				45 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 2
+						}
+					}
+					custom_tooltip = hunters_gambit_get_two_VP_tt
+				}
+				35 = {
+					hidden_effect = {
+						change_variable = {
+							which = hunters_gambit_vp_tracker
+							value = 1
+						}
+					}
+					custom_tooltip = hunters_gambit_get_one_VP_tt
+				}
+				20 = {}
+			}
+		}
+	}
+}
+
+province_event = { #The Hunter's Gambit Last Round Handler
+	id = deepwoods.109
+	title = deepwoods.109.t
+	desc = deepwoods.109.d
+	picture = MULTI_RACIAL_MERC_eventPicture
+	
+	is_triggered_only = yes
+	hidden = yes
+
+	option = {
+		name = deepwoods.109.a
+
+		random_country = {
+			limit = { has_country_flag = hunters_gambit_contender }
+			random_known_country = {
+				limit = {
+					has_country_flag = hunters_gambit_contender
+					NOT = { tag = PREV }
+				}
+				if = {
+					limit = {
+						is_variable_equal = {
+							which = hunters_gambit_vp_tracker
+							which = PREV
+						}
+					}
+					random_list = {
+						1 = {
+							save_event_target_as = hunters_gambit_final_round_winner
+							PREV = { save_event_target_as = hunters_gambit_final_round_loser }
+						}
+						1 = {
+							save_event_target_as = hunters_gambit_final_round_loser
+							PREV = { save_event_target_as = hunters_gambit_final_round_winner }
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							which = hunters_gambit_vp_tracker
+							which = PREV
+						}
+					}
+					save_event_target_as = hunters_gambit_final_round_winner
+					PREV = { save_event_target_as = hunters_gambit_final_round_loser }
+				}
+				else = {
+					save_event_target_as = hunters_gambit_final_round_loser
+					PREV = { save_event_target_as = hunters_gambit_final_round_winner }
+				}
+				country_event = {
+					id = deepwoods.110
+					days = 200
+				}
+			}
+			country_event = {
+				id = deepwoods.110
+				days = 200
+			}
+		}
+	}
+}
+
+country_event = { #The Hunter's Gambit Last Round Results
+	id = deepwoods.110
+	title = deepwoods.110.t
+	desc = {
+		trigger = { tag = event_target:hunters_gambit_final_round_winner }
+		desc = deepwoods.110.d_win
+	}
+	desc = deepwoods.110.d_lose
+	picture = WOOD_ELF_HUNT_eventPicture
+	
+	is_triggered_only = yes
+
+	option = { #Winner, option A
+		name = deepwoods.110.a
+		trigger = { tag = event_target:hunters_gambit_final_round_winner }
+		capital_scope = {
+			add_province_modifier = {
+				name = hunters_gambit_tournament_winner_mod_1
+				duration = -1
+			}
+		}
+	}
+
+	option = { #Winner, option B
+		name = deepwoods.110.b
+		trigger = { tag = event_target:hunters_gambit_final_round_winner }
+		add_country_modifier = {
+			name = hunters_gambit_tournament_winner_mod_2
+			duration = -1
+		}
+	}
+
+	option = { #Winner, option C
+		name = deepwoods.110.c
+		trigger = { tag = event_target:hunters_gambit_final_round_winner }
+		add_country_modifier = {
+			name = hunters_gambit_tournament_winner_mod_3
+			duration = -1
+		}
+	}
+
+	option = { #Loser
+		name = deepwoods.110.e
+		trigger = { tag = event_target:hunters_gambit_final_round_loser }
+		add_army_professionalism = 0.05
+		add_mil_power = 100
+	}
+
+	after = {
+		if = {
+			limit = { tag = event_target:hunters_gambit_final_round_winner }
+			every_known_country = {
+				limit = {
+					primary_culture = wood_elf
+					capital_scope = { superregion = deepwoods_superregion }
+					NOT = { tag = event_target:hunters_gambit_final_round_loser }
+				}
+				country_event = { id = deepwoods.111 }
+			}
+		}
+		clr_country_flag = hunters_gambit_contender
+	}
+}
+
+country_event = { #Results for Everyone (Flavour only)
+	id = deepwoods.111
+	title = deepwoods.111.t
+	desc = {
+		trigger = { FROM = { tag = I26 } }
+		desc = deepwoods.111.desc_elyn
+	}
+	desc = {
+		trigger = { FROM = { tag = I27 } }
+		desc = deepwoods.111.desc_myna
+	}
+	desc = {
+		trigger = { FROM = { tag = I28 } }
+		desc = deepwoods.111.desc_drennen
+	}
+	desc = {
+		trigger = { FROM = { tag = I29 } }
+		desc = deepwoods.111.desc_cenag
+	}
+	desc = {
+		trigger = { FROM = { tag = I30 } }
+		desc = deepwoods.111.desc_fealgarn
+	}
+	desc = {
+		trigger = { FROM = { tag = I31 } }
+		desc = deepwoods.111.desc_scotha
+	}
+	desc = {
+		trigger = { FROM = { tag = I32 } }
+		desc = deepwoods.111.desc_ahain
+	}
+	desc = {
+		trigger = { FROM = { tag = I33 } }
+		desc = deepwoods.111.desc_ayeth
+	}
+	desc = {
+		trigger = { FROM = { tag = I34 } }
+		desc = deepwoods.111.desc_ghul
+	}
+	desc = deepwoods.111.desc_default
+	picture = WOOD_ELF_HUNT_eventPicture
+	
+	is_triggered_only = yes
+
+	option = { #Result
+		name = deepwoods.111.a
+	}
+}
