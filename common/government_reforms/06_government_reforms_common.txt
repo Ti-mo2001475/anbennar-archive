@@ -8473,3 +8473,84 @@ sociocultural_synthesis = {
 		factor = 10
 	}
 }
+
+#T4 NSC
+nsc_chosens_duty = {
+	icon = "regionally_elected_commanders"
+	allow_normal_conversion = yes
+	lock_level_when_selected = no
+	potential = {
+		NOT = { is_or_was_tag = { tag = H67 } }
+		OR = {
+			religion = bulwari_sun_cult
+			has_country_flag = updating_isolationism_window
+		}
+		NOT = { is_adventurer = yes }
+	}
+	modifiers = {
+		church_loyalty_modifier = 0.1
+		num_accepted_cultures = 1
+	}
+	custom_attributes = {
+		disabled_expelling_elven = yes
+		disabled_purging_elven = yes
+		buffed_dictate_understanding = yes
+		nsc_chosens_duty = yes
+	}
+	effect = {
+		custom_tooltip = nsc_chosens_duty_tt
+		hidden_effect = {
+			nsc_chosens_duty_effect = yes
+			generic_end_expulsion = { race = elven }
+			generic_end_purge = { race = elven }
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				nsc_chosens_duty_removed_isolationism_mods = yes
+			}
+		}
+	}
+	ai = { factor = 0 }
+}
+
+nsc_chosens_duty_rezankand = {
+	icon = "regionally_elected_commanders"
+	allow_normal_conversion = yes
+	lock_level_when_selected = no
+	potential = {
+		is_or_was_tag = { tag = H67 }
+		OR = {
+			religion = bulwari_sun_cult
+			has_country_flag = updating_isolationism_window
+		}
+		NOT = { is_adventurer = yes }
+	}
+	modifiers = {
+		church_loyalty_modifier = 0.1
+		num_accepted_cultures = 1
+	}
+	custom_attributes = {
+		disabled_expelling_elven = yes
+		disabled_purging_elven = yes
+		buffed_dictate_understanding = yes
+		nsc_chosens_duty = yes
+	}
+	effect = {
+		custom_tooltip = nsc_chosens_duty_rezankand_tt
+		hidden_effect = {
+			nsc_chosens_duty_effect = yes
+			generic_end_expulsion = { race = elven }
+			generic_end_purge = { race = elven }
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				nsc_chosens_duty_removed_isolationism_mods = yes
+			}
+		}
+	}
+	ai = { factor = 0 }
+}

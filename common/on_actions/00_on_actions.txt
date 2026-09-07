@@ -10016,6 +10016,9 @@ on_yearly_pulse = {
 		}	
 	}
 
+	#NSC The Chosens Duty - elven minorities modifier cleanup
+	nsc_chosens_duty_pulse = yes
+
 	warlord_of_haless_check = yes #failsafe check for events and similar
 	salvation_promise_yearly_pulse = yes
 }
@@ -22379,6 +22382,13 @@ on_culture_promoted = {
 			add_province_modifier = { name = sociocultural_synthesis_local_heathen_buff duration = -1 hidden = yes }
 		}
 	}
+
+	#NSC The Chosens Duty
+	nsc_chosens_duty_sub_effect = {
+		isolationism = 4
+		not_isolationism = 5
+		culture_accepted = yes
+	}
 }
 
 # ROOT = country
@@ -25573,6 +25583,9 @@ on_holy_order_established = {
 					holy_order = order_of_exemplars_order
 				}
 			}
+			nsc_chosens_duty_refund_effect = {
+				adm_refund = 5
+			}
 			area = {
 				if = {
 					limit = {
@@ -25581,12 +25594,21 @@ on_holy_order_established = {
 					change_trade_goods = unknown
 				}
 				sareyand_expand_exorcist_priesthood_effect = yes
+				nsc_chosens_duty_sub_effect = {
+					isolationism = 0
+					not_isolationism = 1
+					add_pop = yes
+					add_pop_razenkand = yes
+				}
 			}
 		}
 		# New Sun Cult
 		else_if = {
 			limit = {
 				holy_order = sundancers_order
+			}
+			nsc_chosens_duty_refund_effect = {
+				dip_refund = 5
 			}
 			area = {
 				if = {
@@ -25616,12 +25638,21 @@ on_holy_order_established = {
 					}
 					change_trade_goods = unknown
 				}
+				nsc_chosens_duty_sub_effect = {
+					isolationism = 0
+					not_isolationism = 1
+					add_pop = yes
+					add_pop_razenkand = yes
+				}
 			}
 		}
 		# New Sun Cult
 		else_if = {
 			limit = {
 				holy_order = avengers_order
+			}
+			nsc_chosens_duty_refund_effect = {
+				mil_refund = 5
 			}
 			area = {
 				if = {
@@ -25643,6 +25674,12 @@ on_holy_order_established = {
 						trade_goods = slaves
 					}
 					change_trade_goods = unknown
+				}
+				nsc_chosens_duty_sub_effect = {
+					isolationism = 0
+					not_isolationism = 1
+					add_pop = yes
+					add_pop_razenkand = yes
 				}
 			}
 		}
