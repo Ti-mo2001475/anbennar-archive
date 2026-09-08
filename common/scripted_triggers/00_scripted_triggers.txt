@@ -2684,6 +2684,18 @@ has_a_primary_cult_selected = {
 	}
 }
 
+is_western_technology_group = { #Vanilla: technology_group = western
+	OR = { #All gold-gear tech groups outside of Aelantir
+		technology_group = tech_cannorian
+		technology_group = tech_gerudian
+		technology_group = tech_west_dwarven
+		technology_group = tech_east_dwarven
+		technology_group = tech_elven
+		technology_group = tech_gnomish
+		technology_group = tech_halfling
+	}
+}
+
 has_better_tech_than_westerns = {
 	custom_trigger_tooltip = {
 		tooltip = has_better_tech_than_westerns_tt
@@ -2691,15 +2703,7 @@ has_better_tech_than_westerns = {
 			any_country = {
 				tech_difference = 1
 				#technology_group = western #Vanilla
-				OR = { #All gold-gear tech groups outside of Aelantir
-					technology_group = tech_cannorian
-					technology_group = tech_gerudian
-					technology_group = tech_west_dwarven
-					technology_group = tech_east_dwarven
-					technology_group = tech_elven
-					technology_group = tech_gnomish
-					technology_group = tech_halfling
-				}
+				is_western_technology_group = yes #Anbennar
 				NOT = { tag = ROOT } #1.35
 			}
 		}
@@ -2717,15 +2721,7 @@ has_more_institutions_than_westerns = {
 						value = 1
 					}
 					#technology_group = western #Vanilla
-					OR = { #All gold-gear tech groups outside of Aelantir
-						technology_group = tech_cannorian
-						technology_group = tech_gerudian
-						technology_group = tech_west_dwarven
-						technology_group = tech_east_dwarven
-						technology_group = tech_elven
-						technology_group = tech_gnomish
-						technology_group = tech_halfling
-					}
+					is_western_technology_group = yes #Anbennar
 					NOT = { tag = ROOT } #1.35
 				}
 				amount = 1
