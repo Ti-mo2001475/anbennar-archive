@@ -100,7 +100,14 @@ setup_deathwinds = {
 		}
 	}
 	set_global_flag = deathwinds_active_flag
-	apply_current_deathwind_intensity = yes
+
+	#Apply the correct Deathwinds intensity to every province in Alecand
+	 #Arpedifer must be done last or it breaks the variable for every province after it
+	alecand_region = {
+		limit = { NOT = { province_id = 2728 } } #Arpedifer
+		apply_current_deathwind_intensity = yes
+	}
+	2728 = { apply_current_deathwind_intensity = yes } #Arpedifer
 }
 
 #Add the appropriate deathwinds modifiers to the region
@@ -156,41 +163,38 @@ set_next_deathwind_intensity = {
 }
 
 apply_current_deathwind_intensity = {
-	alecand_region = {
-		set_variable = { which = deathwinds_warded_var which = PREV } 
-
-		#Change it depending on where in the region the province is in
-		trigger_switch = {
-			on_trigger = province_group
-			alecandi_capital_provinces = { change_variable = { deathwinds_warded_var = -10 } }
-			deathwinds_minus1_group = { change_variable = { deathwinds_warded_var = -1 } }
-			deathwinds_minus2_group = { change_variable = { deathwinds_warded_var = -2 } }
-			deathwinds_minus3_group = { change_variable = { deathwinds_warded_var = -3 } }
-			deathwinds_plus1_group = { change_variable = { deathwinds_warded_var = 1 } }
-			deathwinds_plus3_group = { change_variable = { deathwinds_warded_var = 3 } }
-		}
-
-		#Reduce it by the provinces windward level
-		trigger_switch = {
-			on_trigger = has_province_modifier
-			windward_level_10 = { change_variable = { deathwinds_warded_var = -10 } }
-			windward_level_9 = { change_variable = { deathwinds_warded_var = -9 } }
-			windward_level_8 = { change_variable = { deathwinds_warded_var = -8 } }
-			windward_level_7 = { change_variable = { deathwinds_warded_var = -7 } }
-			windward_level_6 = { change_variable = { deathwinds_warded_var = -6 } }
-			windward_level_5 = { change_variable = { deathwinds_warded_var = -5 } }
-			windward_level_4 = { change_variable = { deathwinds_warded_var = -4 } }
-			windward_level_3 = { change_variable = { deathwinds_warded_var = -3 } }
-			windward_level_2 = { change_variable = { deathwinds_warded_var = -2 } }
-			windward_level_1 = { change_variable = { deathwinds_warded_var = -1 } }
-		}
-		
-		#Assign the appropriate modifier
-		assign_deathwinds_modifier = yes
-
-		#Reset the aPUI bar to 0
-		set_aPUI_var_bar_provincial = { name = deathwinds amount = 0 }
+	set_variable = { which = deathwinds_warded_var which = PREV }
+	#Change it depending on where in the region the province is in
+	trigger_switch = {
+		on_trigger = province_group
+		alecandi_capital_provinces = { change_variable = { deathwinds_warded_var = -10 } }
+		deathwinds_minus1_group = { change_variable = { deathwinds_warded_var = -1 } }
+		deathwinds_minus2_group = { change_variable = { deathwinds_warded_var = -2 } }
+		deathwinds_minus3_group = { change_variable = { deathwinds_warded_var = -3 } }
+		deathwinds_plus1_group = { change_variable = { deathwinds_warded_var = 1 } }
+		deathwinds_plus3_group = { change_variable = { deathwinds_warded_var = 3 } }
 	}
+
+	#Reduce it by the provinces windward level
+	trigger_switch = {
+		on_trigger = has_province_modifier
+		windward_level_10 = { change_variable = { deathwinds_warded_var = -10 } }
+		windward_level_9 = { change_variable = { deathwinds_warded_var = -9 } }
+		windward_level_8 = { change_variable = { deathwinds_warded_var = -8 } }
+		windward_level_7 = { change_variable = { deathwinds_warded_var = -7 } }
+		windward_level_6 = { change_variable = { deathwinds_warded_var = -6 } }
+		windward_level_5 = { change_variable = { deathwinds_warded_var = -5 } }
+		windward_level_4 = { change_variable = { deathwinds_warded_var = -4 } }
+		windward_level_3 = { change_variable = { deathwinds_warded_var = -3 } }
+		windward_level_2 = { change_variable = { deathwinds_warded_var = -2 } }
+		windward_level_1 = { change_variable = { deathwinds_warded_var = -1 } }
+	}
+	
+	#Assign the appropriate modifier
+	assign_deathwinds_modifier = yes
+
+	#Reset the aPUI bar to 0
+	set_aPUI_var_bar_provincial = { name = deathwinds amount = 0 }
 }
 
 #Effect to assign the appropriate deathwinds modifier based on the provinces current deathwinds level after warding
