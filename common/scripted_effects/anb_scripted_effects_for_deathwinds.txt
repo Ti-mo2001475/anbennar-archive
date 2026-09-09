@@ -193,6 +193,7 @@ apply_current_deathwind_intensity = {
 		#Reset the aPUI bar to 0
 		set_aPUI_var_bar_provincial = { name = deathwinds amount = 0 }
 	}
+	set_variable = { deathwinds_bar_tracking_var = 0 }
 }
 
 #Effect to assign the appropriate deathwinds modifier based on the provinces current deathwinds level after warding
@@ -242,8 +243,9 @@ gain_full_deathwinds_system = { # ***WARNING*** - This gives access to a regiona
 
 #Update the variables that show the bar progress in the aPUI and how many months are left before it starts or ends
 update_deathwinds_bar = {
-	alecand_region = { change_aPUI_var_bar_provincial = { name = deathwinds amount = 1 } }
 	2728 = { #Arpedifer
+		change_variable = { deathwinds_bar_tracking_var = 1 } #Tracks the value of the deathwinds aPUI bar
+
 		set_variable = { deathwinds_months_var = 108 } #Set variable to 9 years in months (total Deathwinds cycle time)
 		set_variable = { deathwinds_active_months_var = 24 } #Set variable to 2 years in months (total time Deathwinds are active)
 
@@ -255,6 +257,11 @@ update_deathwinds_bar = {
 			which = deathwinds_active_months_var
 			which = aPUI_deathwinds_var
 		}
+	}
+	
+	if = { #If a player has the deathwinds menu open, update the aPUI bar
+		limit = { has_global_flag = player_has_deathwinds_apui_open }
+		alecand_region = { set_aPUI_var_bar_provincial = { name = deathwinds var_amount = deathwinds_bar_tracking_var } }
 	}
 }
 
