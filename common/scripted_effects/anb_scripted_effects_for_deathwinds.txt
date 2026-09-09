@@ -71,42 +71,44 @@ setup_deathwinds = {
 	# 		high_level = 1
 	# 	}
 	# }
+
+	 #low_level inside calculate_current_deathwind_intensity is one below the lowest level for rounding
 	if = {
 		limit = { is_year = 1520 }
-		calculate_deathwinds_level = {
-			low_level = 2 #One below the lowest level for rounding
-			high_level = 10
-		}
+		calculate_current_deathwind_intensity = { low_level = 2 high_level = 10 }
+		set_next_deathwind_intensity = { low_level = 3 high_level = 10 }
 	}
 	else_if = {
 		limit = { is_year = 1480 }
-		calculate_deathwinds_level = {
-			low_level = 1 #One below the lowest level for rounding
-			high_level = 8
+		calculate_current_deathwind_intensity = { low_level = 1 high_level = 8 }
+		if = {
+			limit = { is_year = 1512 }
+			set_next_deathwind_intensity = { low_level = 3 high_level = 10 }
 		}
+		else = { set_next_deathwind_intensity = { low_level = 2 high_level = 8 } }
 	}
 	else_if = {
 		limit = { is_year = 1450 }
-		calculate_deathwinds_level = {
-			low_level = 0 #One below the lowest level for rounding
-			high_level = 4
+		calculate_current_deathwind_intensity = { low_level = 0 high_level = 4 }
+		if = {
+			limit = { is_year = 1512 }
+			set_next_deathwind_intensity = { low_level = 2 high_level = 8 }
 		}
+		else = { set_next_deathwind_intensity = { low_level = 0 high_level = 4 } }
 	}
 	#An easy one to start with
 	else = {
-		calculate_deathwinds_level = {
+		calculate_current_deathwind_intensity = {
 			low_level = 0 #One below the lowest level for rounding
 			high_level = 1
 		}
 	}
 	set_global_flag = deathwinds_active_flag
-	calc_next_deathwind_levels = yes
-	#Reset aPUI bar
-	alecand_region = { set_aPUI_var_bar_provincial = { name = deathwinds amount = 0 } }
+	apply_current_deathwind_intensity = yes
 }
 
 #Add the appropriate deathwinds modifiers to the region
-calculate_deathwinds_level = {
+calculate_current_deathwind_intensity = {
 	#Get the variables range
 	set_variable = { deathwinds_rand_var = $high_level$ }
 	change_variable = { deathwinds_rand_var = -$low_level$ }
@@ -127,7 +129,35 @@ calculate_deathwinds_level = {
 	change_variable = { which = deathwinds_var which = deathwinds_increase_var }
 	#Change to a different modifier so the other one can be used to display the unwarded deathwinds level
 	set_variable = { which = deathwinds_warded_var which = deathwinds_var } 
+}
 
+#Sets variables that say the possible low and high level that the next Deathwind can be. Used in aPUI_deathwinds_bar_tt
+set_next_deathwind_intensity = {
+	set_variable = { deathwinds_low_level_var = $low_level$ }
+	set_variable = { deathwinds_high_level_var = $high_level$ }
+
+	#If the Deathwinds have been increased in a seperate effect, increase it by that amount
+	change_variable = { which = deathwinds_low_level_var which = deathwinds_increase_var }
+	change_variable = { which = deathwinds_high_level_var which = deathwinds_increase_var }
+	if = { #Deathwinds can't go about 10
+		limit = { check_variable = { deathwinds_high_level_var = 11 } }
+		set_variable = { deathwinds_high_level_var = 10 }
+		if = {
+			limit = { check_variable = { deathwinds_low_level_var = 11 } }
+			set_variable = { deathwinds_low_level_var = 10 }
+		}
+	}
+	if = { #Deathwinds can't go below 0
+		limit = { NOT = { check_variable = { deathwinds_low_level_var = 1 } } }
+		set_variable = { deathwinds_low_level_var = 0 }
+		if = {
+			limit = { check_variable = { deathwinds_high_level_var = 1 } }
+			set_variable = { deathwinds_high_level_var = 0 }
+		}
+	}
+}
+
+apply_current_deathwind_intensity = {
 	alecand_region = {
 		set_variable = { which = deathwinds_warded_var which = PREV } 
 
@@ -159,6 +189,9 @@ calculate_deathwinds_level = {
 		
 		#Assign the appropriate modifier
 		assign_deathwinds_modifier = yes
+
+		#Reset the aPUI bar to 0
+		set_aPUI_var_bar_provincial = { name = deathwinds amount = 0 }
 	}
 }
 
@@ -205,44 +238,6 @@ permanently_end_deathwinds = {
 gain_full_deathwinds_system = { # ***WARNING*** - This gives access to a regional magical project in row 1. You cannot already have a project there or access to it must be removed 
 	custom_tooltip = gain_full_deathwinds_system_tt
 	set_country_flag = has_full_deathwinds_system_flag
-}
-
-#Sets variables that say the possible low and high level that the next Deathwind can be. Used in aPUI_deathwinds_bar_tt
-calc_next_deathwind_levels = {
-	if = {
-		limit = { is_year = 1512 }
-		set_variable = { deathwinds_low_level_var = 3 }
-		set_variable = { deathwinds_high_level_var = 10 }
-	}
-	else_if = {
-		limit = { is_year = 1472 }
-		set_variable = { deathwinds_low_level_var = 2 }
-		set_variable = { deathwinds_high_level_var = 8 }
-	}
-	else = {
-		set_variable = { deathwinds_low_level_var = 1 }
-		set_variable = { deathwinds_high_level_var = 4 }
-	}
-
-	#If the Deathwinds have been increased in a seperate effect, increase it by that amount
-	change_variable = { which = deathwinds_low_level_var which = deathwinds_increase_var }
-	change_variable = { which = deathwinds_high_level_var which = deathwinds_increase_var }
-	if = { #Deathwinds can't go about 10
-		limit = { check_variable = { deathwinds_high_level_var = 11 } }
-		set_variable = { deathwinds_high_level_var = 10 }
-		if = {
-			limit = { check_variable = { deathwinds_low_level_var = 11 } }
-			set_variable = { deathwinds_low_level_var = 10 }
-		}
-	}
-	if = { #Deathwinds can't go below 0
-		limit = { NOT = { check_variable = { deathwinds_low_level_var = 1 } } }
-		set_variable = { deathwinds_low_level_var = 0 }
-		if = {
-			limit = { check_variable = { deathwinds_high_level_var = 1 } }
-			set_variable = { deathwinds_high_level_var = 0 }
-		}
-	}
 }
 
 #Update the variables that show the bar progress in the aPUI and how many months are left before it starts or ends
