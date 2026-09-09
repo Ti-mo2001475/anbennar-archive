@@ -34,14 +34,19 @@ country_event = {
 		}
 		hidden_effect = {
 			#Do the first storm on Jan 1st 1446
-			2728 = { #Arpedifer
-				set_province_flag = deathwinds_warning_event
+			2936 = { #Metei
+				set_province_flag = aPUI_deathwinds_flag
+				set_aPUI_cap = { name = deathwinds amount = 108 } #9 years in months (9*12=108)
+				change_aPUI_var_bar_provincial = { name = deathwinds amount = 95 } #Next deathwind is 13 months away (108-13=95)
 				set_variable = { deathwinds_var = -1 }
 				set_variable = { deathwinds_previous_var = 8 } #Lore!
 				set_variable = { deathwinds_high_level_var = 4 }
 				set_variable = { deathwinds_low_level_var = 1 }
 				set_variable = { deathwinds_months_var = 13 } #Time left until next Deathwind, 13 months
 				set_variable = { deathwinds_active_months_var = -71 }
+			}
+			2728 = { #Arpedifer
+				set_province_flag = deathwinds_warning_event
 				province_event = {
 					id = kheionai.2 #Warning event happens 6 months before
 					days = 225 #June 1st 1445 (minus 6 days)
@@ -88,7 +93,7 @@ province_event = {
 			}
 			deathwinds_start_event = {
 				#Every country with a province in Alecand gets the deathwinds start event
-				setup_deathwinds = yes
+				2936 = { setup_deathwinds = yes } #Metei
 				alecand_region = { owner = { country_event = { id = kheionai.4 } } }
 
 				#Prep the deathwinds destruction event
