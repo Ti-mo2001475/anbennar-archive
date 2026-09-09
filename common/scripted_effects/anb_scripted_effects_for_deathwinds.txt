@@ -76,7 +76,6 @@ setup_deathwinds = {
 	if = {
 		limit = { is_year = 1520 }
 		calculate_current_deathwind_intensity = { low_level = 2 high_level = 10 }
-		set_next_deathwind_intensity = { low_level = 3 high_level = 10 }
 	}
 	else_if = {
 		limit = { is_year = 1480 }
@@ -85,16 +84,14 @@ setup_deathwinds = {
 			limit = { is_year = 1512 }
 			set_next_deathwind_intensity = { low_level = 3 high_level = 10 }
 		}
-		else = { set_next_deathwind_intensity = { low_level = 2 high_level = 8 } }
 	}
 	else_if = {
 		limit = { is_year = 1450 }
 		calculate_current_deathwind_intensity = { low_level = 0 high_level = 4 }
 		if = {
-			limit = { is_year = 1512 }
+			limit = { is_year = 1472 }
 			set_next_deathwind_intensity = { low_level = 2 high_level = 8 }
 		}
-		else = { set_next_deathwind_intensity = { low_level = 0 high_level = 4 } }
 	}
 	#An easy one to start with
 	else = {
@@ -151,7 +148,7 @@ set_next_deathwind_intensity = {
 		limit = { NOT = { check_variable = { deathwinds_low_level_var = 1 } } }
 		set_variable = { deathwinds_low_level_var = 0 }
 		if = {
-			limit = { check_variable = { deathwinds_high_level_var = 1 } }
+			limit = { NOT = { check_variable = { deathwinds_high_level_var = 1 } } }
 			set_variable = { deathwinds_high_level_var = 0 }
 		}
 	}
@@ -298,7 +295,7 @@ decrease_deathwinds_level = {
 				limit = { NOT = { check_variable = { deathwinds_low_level_var = 1 } } }
 				set_variable = { deathwinds_low_level_var = 0 }
 				if = {
-					limit = { check_variable = { deathwinds_high_level_var = 1 } }
+					limit = { NOT = { check_variable = { deathwinds_high_level_var = 1 } } }
 					set_variable = { deathwinds_high_level_var = 0 }
 				}
 			}
