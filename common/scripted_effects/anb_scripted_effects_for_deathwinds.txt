@@ -72,14 +72,13 @@ setup_deathwinds = {
 	# 	}
 	# }
 
-	 #low_level inside calculate_current_deathwind_intensity is one below the lowest level for rounding
 	if = {
 		limit = { is_year = 1520 }
-		calculate_current_deathwind_intensity = { low_level = 2 high_level = 10 }
+		calculate_current_deathwind_intensity = { low_level = 3 high_level = 10 }
 	}
 	else_if = {
 		limit = { is_year = 1480 }
-		calculate_current_deathwind_intensity = { low_level = 1 high_level = 8 }
+		calculate_current_deathwind_intensity = { low_level = 2 high_level = 8 }
 		if = {
 			limit = { is_year = 1512 }
 			set_next_deathwind_intensity = { low_level = 3 high_level = 10 }
@@ -87,7 +86,7 @@ setup_deathwinds = {
 	}
 	else_if = {
 		limit = { is_year = 1450 }
-		calculate_current_deathwind_intensity = { low_level = 0 high_level = 4 }
+		calculate_current_deathwind_intensity = { low_level = 1 high_level = 4 }
 		if = {
 			limit = { is_year = 1472 }
 			set_next_deathwind_intensity = { low_level = 2 high_level = 8 }
@@ -110,20 +109,22 @@ calculate_current_deathwind_intensity = {
 	set_variable = { deathwinds_rand_var = $high_level$ }
 	change_variable = { deathwinds_rand_var = -$low_level$ }
 	#Set it to a random number in that range
+	change_variable = { deathwinds_var = 1 } #Highest value is excluded in random_variable, so this way the max is [high_value].999
 	random_variable = { which = deathwinds_var which = deathwinds_rand_var }
-	#Ensure it's at or above the lowest allowed value
-	change_variable = { deathwinds_var = $low_level$ }
 	#Remove any decimals
-	 #Lowest level is actually $low_level$+1 but $low_level$ is set to that so
-	 #rounding up gives an equal chance to give the real lowest level as the other levels.
-	 #If someone does get the lowest possible value, set it to the real lowest level
-	if = {
-		limit = { is_variable_equal = { which = deathwinds_rand_var value = $low_level$ } }
-		change_variable = { deathwinds_var = 1 }
-	}
-	else = { round_variable = { which = deathwinds_var value = 1 } }
+	round_variable = { which = deathwinds_var value = -1 }
+	#Ensure it's at or above the lowest allowed value
+	change_variable = { deathwinds_rand_var = $low_level$ }
 	#If the Deathwinds have been increased in a seperate effect, increase it by that amount
 	change_variable = { which = deathwinds_var which = deathwinds_increase_var }
+	if = { #Deathwinds can't go about 10
+		limit = { check_variable = { deathwinds_var = 11 } }
+		set_variable = { deathwinds_var = 10 }
+	}
+	else_if = { #Deathwinds can't go below 0
+		limit = { NOT = { check_variable = { deathwinds_var = 1 } } }
+		set_variable = { deathwinds_var = 0 }
+	}
 	#Change to a different modifier so the other one can be used to display the unwarded deathwinds level
 	set_variable = { which = deathwinds_warded_var which = deathwinds_var } 
 }
@@ -190,13 +191,12 @@ apply_current_deathwind_intensity = {
 		#Reset the aPUI bar to 0
 		set_aPUI_var_bar_provincial = { name = deathwinds amount = 0 }
 	}
-	set_variable = { deathwinds_bar_tracking_var = 0 }
 }
 
 #Effect to assign the appropriate deathwinds modifier based on the provinces current deathwinds level after warding
  #A seperate scripted effect so the 'Reinforce with Mana' button can use it too
 assign_deathwinds_modifier = {
-	if = { limit = { check_variable = { deathwinds_warded_var = 10 } } add_permanent_province_modifier = { name = deathwind_level_10 duration = 730 } }
+	if = { limit = { check_variable = { deathwinds_warded_var = 10 } } add_permanent_province_modifier = { name = deathwind_level_10 duration = 730 } set_variable = { deathwinds_warded_var = 10 } }
 	else_if = { limit = { check_variable = { deathwinds_warded_var = 9 } } add_permanent_province_modifier = { name = deathwind_level_9 duration = 730 } }
 	else_if = { limit = { check_variable = { deathwinds_warded_var = 8 } } add_permanent_province_modifier = { name = deathwind_level_8 duration = 730 } }
 	else_if = { limit = { check_variable = { deathwinds_warded_var = 7 } } add_permanent_province_modifier = { name = deathwind_level_7 duration = 730 } }
@@ -241,7 +241,7 @@ gain_full_deathwinds_system = { # ***WARNING*** - This gives access to a regiona
 #Update the variables that show the bar progress in the aPUI and how many months are left before it starts or ends
 update_deathwinds_bar = {
 	2728 = { #Arpedifer
-		change_variable = { deathwinds_bar_tracking_var = 1 } #Tracks the value of the deathwinds aPUI bar
+		change_aPUI_var_bar_provincial = { name = deathwinds amount = 1 } #Tracks the value of the deathwinds aPUI bar
 
 		set_variable = { deathwinds_months_var = 108 } #Set variable to 9 years in months (total Deathwinds cycle time)
 		set_variable = { deathwinds_active_months_var = 24 } #Set variable to 2 years in months (total time Deathwinds are active)
@@ -254,11 +254,11 @@ update_deathwinds_bar = {
 			which = deathwinds_active_months_var
 			which = aPUI_deathwinds_var
 		}
-	}
 	
-	if = { #If a player has the deathwinds menu open, update the aPUI bar
-		limit = { has_global_flag = player_has_deathwinds_apui_open }
-		alecand_region = { set_aPUI_var_bar_provincial = { name = deathwinds var_amount = deathwinds_bar_tracking_var } }
+		if = { #If a player has the deathwinds menu open, update the aPUI bar
+			limit = { has_global_flag = player_has_deathwinds_apui_open }
+			alecand_region = { set_aPUI_var_bar_provincial = { name = deathwinds var_amount = PREV } }
+		}
 	}
 }
 
