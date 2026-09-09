@@ -102,7 +102,7 @@ setup_deathwinds = {
 	set_global_flag = deathwinds_active_flag
 	calc_next_deathwind_levels = yes
 	#Reset aPUI bar
-	alecand_region = { set_aPUI_var_provincial = { name = deathwinds amount = 0 } }
+	alecand_region = { set_aPUI_var_bar_provincial = { name = deathwinds amount = 0 } }
 }
 
 #Add the appropriate deathwinds modifiers to the region
@@ -229,19 +229,26 @@ calc_next_deathwind_levels = {
 	change_variable = { which = deathwinds_high_level_var which = deathwinds_increase_var }
 	if = { #Deathwinds can't go about 10
 		limit = { check_variable = { deathwinds_high_level_var = 11 } }
-		set_variable = { deathwinds_increase_var = 10 }
+		set_variable = { deathwinds_high_level_var = 10 }
+		if = {
+			limit = { check_variable = { deathwinds_low_level_var = 11 } }
+			set_variable = { deathwinds_low_level_var = 10 }
+		}
 	}
 	if = { #Deathwinds can't go below 0
 		limit = { NOT = { check_variable = { deathwinds_low_level_var = 1 } } }
 		set_variable = { deathwinds_low_level_var = 0 }
+		if = {
+			limit = { check_variable = { deathwinds_high_level_var = 1 } }
+			set_variable = { deathwinds_high_level_var = 0 }
+		}
 	}
 }
 
 #Update the variables that show the bar progress in the aPUI and how many months are left before it starts or ends
 update_deathwinds_bar = {
-	alecand_region = {
-		change_aPUI_var_provincial = { name = deathwinds amount = 1 }
-
+	alecand_region = { change_aPUI_var_bar_provincial = { name = deathwinds amount = 1 } }
+	2728 = { #Arpedifer
 		set_variable = { deathwinds_months_var = 108 } #Set variable to 9 years in months (total Deathwinds cycle time)
 		set_variable = { deathwinds_active_months_var = 24 } #Set variable to 2 years in months (total time Deathwinds are active)
 
@@ -267,7 +274,11 @@ increase_deathwinds_level = {
 			change_variable = { deathwinds_high_level_var = $amount$ }
 			if = { #Deathwinds can't go about 10
 				limit = { check_variable = { deathwinds_high_level_var = 11 } }
-				set_variable = { deathwinds_increase_var = 10 }
+				set_variable = { deathwinds_high_level_var = 10 }
+				if = {
+					limit = { check_variable = { deathwinds_low_level_var = 11 } }
+					set_variable = { deathwinds_low_level_var = 10 }
+				}
 			}
 		}
 	}
@@ -284,6 +295,10 @@ decrease_deathwinds_level = {
 			if = { #Deathwinds can't go below 0
 				limit = { NOT = { check_variable = { deathwinds_low_level_var = 1 } } }
 				set_variable = { deathwinds_low_level_var = 0 }
+				if = {
+					limit = { check_variable = { deathwinds_high_level_var = 1 } }
+					set_variable = { deathwinds_high_level_var = 0 }
+				}
 			}
 		}
 	}
