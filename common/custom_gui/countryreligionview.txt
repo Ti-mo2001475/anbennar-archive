@@ -3047,7 +3047,7 @@ custom_icon = {
 #Eordellon UI
 custom_button = {
 	name = eordand_window_button
-	potential = { religion_group = fey_religion }
+	potential = { is_eordand_season_religion = yes }
 	effect = {
 		if = { 
 			limit = {
@@ -3089,7 +3089,7 @@ custom_button = {
 custom_window = {
 	name = eordand_window
 	potential = {
-		religion_group = fey_religion
+		is_eordand_season_religion = yes
 		has_country_flag = eordand_window_open
 	}
 }
@@ -3202,6 +3202,7 @@ custom_button = {
 					duration = -1
 				}
 			"
+			second_limit = "NOT = { tolerance_of_heretics = { amount = 2 } }"
 			second_effect = "
 				add_country_modifier = {
 					name = eordand_eordellon_obj1a
@@ -3383,6 +3384,7 @@ custom_button = {
 					duration = -1
 				}
 			"
+			second_limit = "NOT = { winter_court = 2 }"
 			second_effect = "
 				add_country_modifier = {
 					name = eordand_autumn_obj1a
@@ -3467,6 +3469,7 @@ custom_button = {
 					duration = -1
 				}
 			"
+			second_limit = "NOT = { autumn_court = 2 }"
 			second_effect = "
 				add_country_modifier = {
 					name = eordand_winter_obj1a
@@ -3506,11 +3509,18 @@ custom_icon = {
 }
 custom_icon = {
 	name = eordand_objective_5_eordellon_frame
-	potential = {
-		OR = {
-			has_country_flag = eordellon_boon_unlocked
-			AND = { eordand_unlock_season_boon_trigger = { season = eordellon } }
+	frame = {
+		number = 1
+		trigger = {
+			OR = {
+				has_country_flag = eordellon_boon_unlocked
+				AND = { eordand_unlock_season_boon_trigger = { season = eordellon } }
+			}
 		}
+	}
+	frame = {
+		number = 2
+		trigger = { always = yes }
 	}
 }
 custom_icon = {
@@ -3544,11 +3554,18 @@ custom_icon = {
 }
 custom_icon = {
 	name = eordand_objective_5_spring_frame
-	potential = {
-		OR = {
-			has_country_flag = spring_boon_unlocked
-			eordand_unlock_season_boon_trigger = { season = spring_court }
+	frame = {
+		number = 1
+		trigger = {
+			OR = {
+				has_country_flag = spring_boon_unlocked
+				eordand_unlock_season_boon_trigger = { season = spring_court }
+			}
 		}
+	}
+	frame = {
+		number = 2
+		trigger = { always = yes }
 	}
 }
 custom_icon = {
@@ -3578,11 +3595,18 @@ custom_button = {
 
 custom_icon = {
 	name = eordand_objective_5_summer_frame
-	potential = {
-		OR = {
-			has_country_flag = summer_boon_unlocked
-			eordand_unlock_season_boon_trigger = { season = summer_court }
+	frame = {
+		number = 1
+		trigger = {
+			OR = {
+				has_country_flag = summer_boon_unlocked
+				eordand_unlock_season_boon_trigger = { season = summer_court }
+			}
 		}
+	}
+	frame = {
+		number = 2
+		trigger = { always = yes }
 	}
 }
 custom_icon = {
@@ -3616,18 +3640,25 @@ custom_button = {
 
 custom_icon = {
 	name = eordand_objective_5_autumn_frame
-	potential = {
-		OR = {
-			has_country_flag = autumn_boon_unlocked
-			AND = {
-				NOT = { religion = winter_court }
-				eordand_unlock_season_boon_trigger = { season = autumn_court }				
-			}
-			AND = {
-				tolerance_of_heretics = { amount = 2 }
-				NOT = { any_known_country = { religion = autumn_court } }
+	frame = {
+		number = 1
+		trigger = {
+			OR = {
+				has_country_flag = autumn_boon_unlocked
+				AND = {
+					NOT = { religion = winter_court }
+					eordand_unlock_season_boon_trigger = { season = autumn_court }				
+				}
+				AND = {
+					tolerance_of_heretics = { amount = 2 }
+					NOT = { any_known_country = { religion = autumn_court } }
+				}
 			}
 		}
+	}
+	frame = {
+		number = 2
+		trigger = { always = yes }
 	}
 }
 custom_icon = {
@@ -3673,18 +3704,25 @@ custom_button = {
 
 custom_icon = {
 	name = eordand_objective_5_winter_frame
-	potential = {
-		OR = {
-			has_country_flag = winter_boon_unlocked
-			AND = {
-				NOT = { religion = autumn_court }
-				eordand_unlock_season_boon_trigger = { season = winter_court }				
-			}
-			AND = {
-				tolerance_of_heretics = { amount = 2 }
-				NOT = { any_known_country = { religion = winter_court } }
+	frame = {
+		number = 1
+		trigger = {
+			OR = {
+				has_country_flag = winter_boon_unlocked
+				AND = {
+					NOT = { religion = autumn_court }
+					eordand_unlock_season_boon_trigger = { season = winter_court }				
+				}
+				AND = {
+					tolerance_of_heretics = { amount = 2 }
+					NOT = { any_known_country = { religion = winter_court } }
+				}
 			}
 		}
+	}
+	frame = {
+		number = 2
+		trigger = { always = yes }
 	}
 }
 custom_icon = {
