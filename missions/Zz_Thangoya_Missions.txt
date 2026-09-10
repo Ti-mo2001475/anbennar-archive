@@ -1793,7 +1793,7 @@ thangoya_4 = {
             yemakaibo_area = { add_permanent_claim = ROOT }
             ananhu_area = { add_permanent_claim = ROOT }
             phonan_area = { add_permanent_claim = ROOT }
-            4674 = { add_permanent_claim = ROOT } #Mo Hoang
+            4764 = { add_permanent_claim = ROOT } #Mo Hoang
 
             custom_tooltip = thangoya_khao_elnak_mission_tt
             if = {
@@ -2135,6 +2135,7 @@ thangoya_5 = {
             if = { 
                 limit = { khao_elnak_mission = yes }
                 OR = {
+					NOT = { exists = Y58 } #Lot Dekkhang
                     AND = {
                         is_subject_of = Y58 #Lot Dekkhang
                         has_opinion = {
@@ -2148,23 +2149,27 @@ thangoya_5 = {
                             value = 50
                         }
                         OR = {
+							custom_trigger_tooltip = {
+								tooltip = thangoya_5_5_tt_2
+								Y58 = { NOT = { any_owned_province = { unrest = 1 } } }
+							}
                             has_spawned_supported_rebels = Y58 #Lot Dekkhang
                             Y58 = { rebel_progress_at_least = { value = 100 } } #In case the rebels have no way of spawning
                         } 
                     }
                 }
-                else = {
-                    OR = {
-                        is_rival = Y58 #Lot Dekkhang
-                        NOT = { exists = Y58 } #Lot Dekkhang
-                    }
-                    army_size = Y58 #Lot Dekkhang
-                    custom_trigger_tooltip = { #The "spoiler"
-                        tooltip = thangoya_5_5_tt
-                        always = yes
-                    }
-                }
             }
+			else = {
+				OR = {
+					is_rival = Y58 #Lot Dekkhang
+					NOT = { exists = Y58 } #Lot Dekkhang
+				}
+				army_size = Y58 #Lot Dekkhang
+				custom_trigger_tooltip = { #The "spoiler"
+					tooltip = thangoya_5_5_tt
+					always = yes
+				}
+			}
         }
         
         effect = {

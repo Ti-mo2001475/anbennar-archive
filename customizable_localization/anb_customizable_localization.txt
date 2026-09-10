@@ -4825,3 +4825,38 @@ defined_text = {
 	}
 	text = { localisation_key = no_magisterium }
 }
+
+defined_text = {
+	name = GetHuntersGambitParticipant
+	random = no
+
+	text = {
+		trigger = { has_country_flag = hunters_gambit_participated_in_tournament }
+		localisation_key = hunters_gambit_status
+	}
+}
+
+defined_text = {
+	name = GetHuntersGambitStatus
+	random = no
+
+	text = {
+		trigger = { has_country_modifier = hunters_gambit_tournament_cheaters }
+		localisation_key = hunters_gambit_cheated
+	}
+	text = {
+		trigger = { tag = event_target:hunters_gambit_round_loser }
+		localisation_key = hunters_gambit_eliminated_this_round
+	}
+	text = {
+		trigger = { NOT = { AND = { has_country_flag = hunters_gambit_contender exists = yes } } }
+		localisation_key = hunters_gambit_eliminated
+	}
+	text = {
+		trigger = { tag = event_target:hunters_gambit_round_winner }
+		localisation_key = hunters_gambit_winner_this_round
+	}
+	text = {
+		localisation_key = hunters_gambit_participating
+	}
+}

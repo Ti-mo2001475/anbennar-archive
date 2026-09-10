@@ -716,3 +716,142 @@ sponsored_adventurers_building_reform_effect = {
 		set_province_flag = reform_from_$type$_building
 	}
 }
+
+xechtari_above_all_check_effect = {
+	if = {
+		# IF This province is in Alecand just recheck it individually.
+		limit = { region = alecand_region }
+
+		if = {
+			limit = {
+				NOT = { culture = eltibhar }
+				owner = {
+					has_reform = xechtari_above_all
+					has_country_flag = xechtari_only_owns_alecand
+				}
+			}
+			add_province_modifier = {
+				name = xechtari_above_all_mod
+				duration = -1
+			}
+		}
+		else = {
+			remove_province_modifier = xechtari_above_all_mod
+		}
+	}
+	else = {
+		# Province outside Alecand changed hands this can flip the 'Alecand-only' status for owner or FROM, so recheck both.
+		# Owner gained land outside Alecand: no longer Alecand-only, strip the flag and mods.
+		owner = {
+			if = {
+				limit = {
+					has_reform = xechtari_above_all
+					has_country_flag = xechtari_only_owns_alecand
+				}
+				every_owned_province = {
+					limit = { region = alecand_region }
+					remove_province_modifier = xechtari_above_all_mod
+				}
+				clr_country_flag = xechtari_only_owns_alecand
+			}
+		}
+
+		# FROM lost its last province outside Alecand: now Alecand-only, set the flag and mods.
+		FROM = {
+			if = {
+				limit = {
+					has_reform = xechtari_above_all
+					NOT = { has_country_flag = xechtari_only_owns_alecand }
+					all_owned_province = { region = alecand_region }
+				}
+				every_owned_province = {
+					limit = {
+						region = alecand_region
+						NOT = { culture = eltibhar }
+					}
+					add_province_modifier = {
+						name = xechtari_above_all_mod
+						duration = -1
+					}
+				}
+				set_country_flag = xechtari_only_owns_alecand
+			}
+		}
+	}
+}
+
+# culture check for on_action
+xechtari_above_all_culture_check_effect = {
+	if = {
+		limit = {
+			region = alecand_region
+			NOT = { culture = eltibhar }
+			owner = {
+				has_reform = xechtari_above_all
+				has_country_flag = xechtari_only_owns_alecand
+			}
+		}
+		add_province_modifier = {
+			name = xechtari_above_all_mod
+			duration = -1
+		}
+	}
+}
+
+three_branches_focus_bonus = {
+	hidden_effect = {
+		if = {
+			limit = { has_reform = three_branches }
+			remove_country_modifier = three_branches_legislative_mod
+			remove_country_modifier = three_branches_judicial_mod
+			remove_country_modifier = three_branches_executive_mod
+
+			trigger_switch = {
+				on_trigger = national_focus
+				ADM = {
+					add_country_modifier = {
+						name = three_branches_legislative_mod
+						duration = -1
+					}
+				}
+				DIP = {
+					add_country_modifier = {
+						name = three_branches_judicial_mod
+						duration = -1
+					}
+				}
+				MIL = {
+					add_country_modifier = {
+						name = three_branches_executive_mod
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+duumvirate_effect = {
+    set_saved_name = { key = consort_male_name type = leader }
+    kill_leader = { type = "Daftaterodegis" }
+    define_consort = {
+        name = consort_male_name
+        dynasty = " "
+        culture = ROOT
+        religion = ROOT
+        change_adm = -1
+        change_dip = -1
+        change_mil = 2
+        male = yes
+    }
+    create_general_with_current_tradition = {
+        add_fire = 1
+        add_shock = 2
+        add_manuever = 1
+        add_siege = 1
+        name = "Daftaterodegis"
+    }
+    hidden_effect = {
+        clear_saved_name = consort_male_name
+    }
+}

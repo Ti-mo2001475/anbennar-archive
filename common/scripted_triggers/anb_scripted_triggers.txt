@@ -5128,28 +5128,22 @@ has_any_manufactory_construction = { #Province Scope
 }
 
 has_latest_manpower_building_trigger = {
-	custom_trigger_tooltip = {
-		tooltip = has_latest_manpower_building_trigger_tt
-		OR = {
-			has_building = training_fields
-			AND = {
-				NOT = { owner = { mil_tech = 16 } }
-				has_building = barracks
-			}
-		}
+	if = {
+		limit = { owner = { mil_tech = 16 } }
+		has_building = training_fields
+	}
+	else = {
+		has_manpower_building_trigger = yes
 	}
 }
 
 has_latest_forcelimit_building_trigger = {
-	custom_trigger_tooltip = {
-		tooltip = has_latest_forcelimit_building_trigger_tt
-		OR = {
-			has_building = conscription_center
-			AND = {
-				NOT = { owner = { mil_tech = 22 } }
-				has_building = regimental_camp
-			}
-		}
+	if = {
+		limit = { owner = { mil_tech = 22 } }
+		has_building = conscription_center
+	}
+	else = {
+		has_forcelimit_building_trigger = yes
 	}
 }
 
@@ -6304,3 +6298,17 @@ has_automatory_bonus_trade_good = {
 has_ramparts_bonus_trade_good = { always = no } #Needed for scripted effect
 has_furnace_bonus_trade_good = { always = no }
 has_production_bonus_trade_good = { always = no }
+
+railskulker_can_change_trade_goods = {
+	NOT = {
+		trade_goods = gold
+		trade_goods = iron
+		trade_goods = copper
+		trade_goods = mithril
+		trade_goods = gems
+		trade_goods = coal
+		has_latent_trade_goods = coal # wouldn't get overwritten but +1 goods produced on coal is hmmge
+		trade_goods = damestear
+		has_province_modifier = railskulker_state_backed_food_security
+	}
+}

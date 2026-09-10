@@ -1811,6 +1811,7 @@ merc_landshark_flamemarked_gnoll = {
 
 # Gor Burad Engineering Corps
 merc_steam_baron_engineering_corps = {
+	mercenary_desc_key = FREE_OF_ARMY_PROFESSIONALISM_COST
     regiments_per_development = 0.02
     home_province = 4039 # Gor Burad
 	cavalry_weight = 0
@@ -2215,7 +2216,7 @@ merc_ashhana_berserkers = {
 	cavalry_weight = 0
 	cavalry_cap = 0
 	artillery_weight = 0
-	sprites = { centaur_sprafricangfx_sprite_packite_pack } #Must be centaur sprite pack
+	sprites = { africangfx_sprite_pack } #Must be centaur sprite pack
 	trigger = {
 		has_country_flag = zerat_ashhanna_berserkers
 	}
@@ -2231,10 +2232,13 @@ merc_sunhungak_spiritbinders = {
 	mercenary_desc_key = MERC_SUNHUNGAK_SPIRITBINDERS_DESC
 	regiments_per_development = 0.025
 	home_province = 5204 #Huujoolgin
-	sprites = { centaur_sprafricangfx_sprite_packite_pack } #Must be centaur sprite pack
+	sprites = { centaur_sprite_pack } #Must be centaur sprite pack
 	trigger = {
 		has_unlocked_merc_company = { merc_company = merc_sunhungak_spiritbinders }
-		NOT = { has_country_flag = sunhungak_spiritbinders_hired }
+		OR = {
+			any_hired_mercenary_company = { template = merc_sunhungak_spiritbinders }
+			NOT = { has_country_flag = sunhungak_spiritbinders_hired }
+		}
 	}
 	cavalry_weight = 1
 	cost_modifier = 0.5

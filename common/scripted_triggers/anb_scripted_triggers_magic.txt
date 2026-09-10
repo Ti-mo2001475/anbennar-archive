@@ -1392,6 +1392,10 @@ is_estate_conjuration_level_3 = {
 		has_country_flag = conjuration_3
 	}
 }
+# equivalent to the non-minimum version. just needed to make N91_merc_trigger simpler
+is_estate_conjuration_level_3_minimum = {
+	is_estate_conjuration_level_3 = yes
+}
 is_estate_divination_level_0 = {
 	custom_trigger_tooltip = {
 		tooltip = is_estate_divination_level_0
@@ -2309,6 +2313,12 @@ magical_fortress_proxy_trigger = { #If-limits in scripted triggers don't validat
 }
 porcelain_shields_proxy_trigger = { owner = { has_estate_privilege = estate_artificers_porcelain_shields } } #If-limits in scripted triggers don't validate their triggers two layers deep. See has_mana_to_cast_spell for more info
 
+country_immune_to_sabotage_magic = {
+	# OR = { #In case people want to add more in the future
+		at_least_magic_project_level = { project = magical_fortress level = 3 }
+	# }
+}
+
 siege_interface_defensive_trigger = { #This is the trigger for defensive siege spells in the interface
 	fort_level = 1
 	owned_by = FROM
@@ -2328,6 +2338,30 @@ level_requirement_lowered = { #use for tooltip when a spell has a level req lowe
 	custom_trigger_tooltip = {
 		tooltip = $cause$_lowered_req
 		always = yes
+	}
+}
+
+sabotage_spell_war_and_rival_trigger = {
+	custom_trigger_tooltip = {
+		tooltip = tooltip_sabotage_trigger
+		OR = {
+			any_rival_country = { country_immune_to_sabotage_magic = no }
+			any_war_enemy_country = { country_immune_to_sabotage_magic = no }
+		}
+	}
+}
+
+sabotage_spell_war_trigger = {
+	custom_trigger_tooltip = {
+		tooltip = tooltip_sabotage_trigger
+		any_war_enemy_country = { country_immune_to_sabotage_magic = no }
+	}
+}
+
+sabotage_spell_rival_trigger = {
+	custom_trigger_tooltip = {
+		tooltip = tooltip_sabotage_trigger
+		any_rival_country = { country_immune_to_sabotage_magic = no }
 	}
 }
 
@@ -2926,6 +2960,7 @@ divination_2_scry_trigger = { # Scry
 	}
 	else = { is_overall_divination_level_2_minimum = yes }
 	[[player] has_mana_to_cast_spell = { school = divination level = 2 id = scry } ]
+	sabotage_spell_war_and_rival_trigger = yes
 	has_not_cast_scry = yes
 }
 divination_2_manipulated_fortune_trigger = { # Manipulated Fortune
@@ -3406,6 +3441,7 @@ illusion_0_invisibility_trigger = { # Invisibility
 illusion_1_fear_and_loathing_trigger = { # Fear and Loathing
 	is_overall_illusion_level_1_minimum = yes
 	[[player] has_mana_to_cast_spell = { school = illusion level = 1 id = fear_and_loathing } ]
+	sabotage_spell_war_and_rival_trigger = yes
 	has_not_cast_fear_and_loathing = yes
 }
 illusion_1_bread_and_circuses_trigger = { # Bread and Circuses
@@ -3471,6 +3507,7 @@ illusion_2_assimilation_program_trigger = { # Assimilation Program
 illusion_2_shadows_in_the_night_trigger = { # Shadows in the Night
 	is_overall_illusion_level_2_minimum = yes
 	[[player] has_mana_to_cast_spell = { school = illusion level = 2 id = shadows_in_the_night } ]
+	sabotage_spell_war_and_rival_trigger = yes
 	has_not_cast_shadows_in_the_night = yes
 }
 illusion_3_lead_the_crowds_trigger = { # Lead the Crowds
@@ -5568,7 +5605,11 @@ enchantment_1_bardic_default_2_trigger = {
 		}
 		enchantment_1_bardic_default_2_subtrigger = yes
 	}
-	else = {
+	# Since we can't use has_country_modifier in the `else` in a scripted trigger
+	if = {
+		limit = {
+			enchantment_1_bardic_default_2_subtrigger = yes
+		}
 		is_overall_enchantment_level_1_minimum = yes
 		[[player] has_mana_to_cast_magical_tradition_spell = { school = enchantment level = 1 id = bardic_default_2 } ]
 		NOT = { has_country_modifier = enchantment_1_aria_of_affection_spell_mod }
@@ -5591,7 +5632,11 @@ enchantment_2_bardic_default_3_trigger = {
 		}
 		enchantment_2_bardic_default_3_subtrigger = yes
 	}
-	else = {
+	# Since we can't use has_country_modifier in the `else` in a scripted trigger
+	if = {
+		limit = {
+			enchantment_2_bardic_default_3_subtrigger = yes
+		}
 		is_overall_enchantment_level_2_minimum = yes
 		[[player] has_mana_to_cast_magical_tradition_spell = { school = enchantment level = 2 id = bardic_default_3 } ]
 		bardic_hymn_of_history_inactive = yes
@@ -5627,7 +5672,11 @@ enchantment_3_bardic_default_4_trigger = {
 		}
 		enchantment_3_bardic_default_4_subtrigger = yes
 	}
-	else = {
+	# Since we can't use has_country_modifier in the `else` in a scripted trigger
+	if = {
+		limit = {
+			enchantment_3_bardic_default_4_subtrigger = yes
+		}
 		is_overall_enchantment_level_3 = yes
 		[[player] has_mana_to_cast_magical_tradition_spell = { school = enchantment level = 3 id = bardic_default_4 } ]
 		NOT = { has_country_modifier = enchantment_3_elegy_of_exhaustion_spell_mod }

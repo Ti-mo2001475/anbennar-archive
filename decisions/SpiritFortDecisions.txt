@@ -2,25 +2,23 @@ country_decisions = {
 	spirit_fort_upgrade = {
 		major = yes
 		potential = {
-			OR = {
-				culture_group = bom
-				custom_trigger_tooltip = { 
-					tooltip = unlocked_spirit_forts_tt
-					has_country_flag = unlocked_spirit_forts 
-				}
-			}
+			spirit_fort_country_can_use = yes
 			spirit_forts_province_group = {
-				owned_by = ROOT
-				is_core = ROOT
+				type = any
+				NOT = {
+					has_province_flag = bom_fort_exalted
+				}
 			}
 			NOT = { has_country_flag = fortress_exaltation_menu_open }
 			OR = {
 				ai = no
 				NOT = { has_country_modifier = fortress_cooldown }
-			} 
+			}
+			
 		}
 		
 		provinces_to_highlight = {
+			province_group = spirit_forts_province_group
 			OR = {
 				has_province_modifier = latent_fortress
 				has_province_modifier = awakened_fortress
@@ -29,19 +27,8 @@ country_decisions = {
 		
 		allow = {
 			hidden_trigger = { 
-				OR = { 
-					culture_group = bom 
-					has_country_flag = unlocked_spirit_forts 
-				} 
+				spirit_fort_country_can_use = yes
 			}
-			spirit_forts_province_group = {
-                owned_by = ROOT
-                is_core = ROOT
-                OR = {
-                    has_province_modifier = latent_fortress
-                    has_province_modifier = awakened_fortress
-                }
-            }
 			is_at_war = no
 			is_subject = no
 		}

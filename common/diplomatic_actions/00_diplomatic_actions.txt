@@ -1930,6 +1930,21 @@ declarewar = {
 			limit = { ROOT = { religion = askaeorg } }
 			add_church_power = 10
 		}
+
+		if = { #Redgarhavn Bjarnrik war
+			limit = {
+				FROM = { tag = Z08 } #Bjarnrik
+				is_in_war = {
+					attacker_leader = ROOT
+					defender_leader = Z08 #Bjarnrik
+					casus_belli = cb_reaver_invasion
+				}
+			}
+			country_event = {
+				id = redgarhavn.5
+				days = 150
+			}
+		}
 	}
 }
 
@@ -4448,6 +4463,7 @@ insultaction = {
 		if = {
 			limit = {
 				has_country_modifier = enchantment_1_aria_of_affection_spell_mod
+				has_country_flag = enchantment_1_aria_of_affection_spell_flag
 				OR = {
 					reverse_has_opinion_modifier = {
 						who = FROM
@@ -4482,6 +4498,7 @@ insultaction = {
 				who = FROM
 				amount = 20
 			}
+			clr_country_flag = enchantment_1_aria_of_affection_spell_flag
 		}
 	}
 }

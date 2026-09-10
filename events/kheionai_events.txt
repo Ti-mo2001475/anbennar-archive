@@ -421,7 +421,42 @@ country_event = {
 	immediate = { hidden_effect = { set_country_flag = deathwinds_end_event_flag } }
 
 	option = {
+		trigger = {
+			NOT = { has_reform = tame_the_storm }
+		}
 		name = kheionai.6.a
+	}
+
+	option = { #kheion gov reform
+		name = kheionai.6.a
+		highlight = yes
+		trigger = {
+			has_reform = tame_the_storm
+		}
+		custom_tooltip = tame_the_storm_event_tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					region = alecand_region
+					OR = {
+						has_province_modifier = windward_level_5
+						has_province_modifier = windward_level_6
+						has_province_modifier = windward_level_7
+						has_province_modifier = windward_level_8
+						has_province_modifier = windward_level_9
+						has_province_modifier = windward_level_10
+						AND = {
+							has_province_modifier = windward_level_4
+							has_building = mage_tower
+						}
+					}
+				}
+				add_province_modifier = {
+					name = tame_the_storm_ward_bonus
+					duration = 1825
+				}
+			}
+		}
 	}
 
 	option = {
@@ -2043,5 +2078,39 @@ country_event = { #Urban Litea find highest dev in region event since the game h
 		clr_country_flag = has_tor_nayyi_region_prov
 		
 		clr_country_flag = has_ruined_isles_region_prov
+	}
+}
+
+# #Duumvirat stuff
+#If general die new duunvir rise
+country_event = {
+	id = kheionai.902
+	title = kheionai.902.t
+	desc = kheionai.902.d
+	picture = REFORM_eventPicture
+	
+	hidden = yes
+
+	trigger = {
+		has_reform = duumvirate
+		NOT = {
+			has_leader = "Daftaterodegis"
+		}
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		if = {
+			limit = { has_consort = yes }
+			kill_consort = yes
+		}
+	}
+	
+	option = {		
+		name = "kheionai.902.a"
+        duumvirate_effect = yes
 	}
 }
