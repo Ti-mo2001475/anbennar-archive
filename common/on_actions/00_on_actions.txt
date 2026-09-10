@@ -29946,11 +29946,18 @@ on_capital_moved = {
 			limit = { owner = { at_least_magic_project_level = { project = magical_fortress level = 3 } } }
 			FROM = {
 				remove_province_modifier = magical_fortress_mod_3
-				remove_province_modifier = abjuration_1_ward_mod_3
 				remove_province_modifier = magical_fortress_mod_2 #Some players were holding the project completion event open
-				remove_province_modifier = abjuration_1_ward_mod_2
 				remove_province_modifier = magical_fortress_mod_1
-				remove_province_modifier = abjuration_1_ward_mod_1
+				if = {
+					limit = {
+						NOT = {
+							has_province_modifier = permaward_dummy_mod
+						}
+					}
+					remove_province_modifier = abjuration_1_ward_mod_3
+					remove_province_modifier = abjuration_1_ward_mod_2
+					remove_province_modifier = abjuration_1_ward_mod_1
+				}
 			}
 			add_province_modifier = { name = magical_fortress_mod_3 duration = -1 }
 			add_province_modifier = { name = abjuration_1_ward_mod_3 duration = -1 }
@@ -29959,9 +29966,16 @@ on_capital_moved = {
 			limit = { owner = { at_least_magic_project_level = { project = magical_fortress level = 2 } } }
 			FROM = {
 				remove_province_modifier = magical_fortress_mod_2
-				remove_province_modifier = abjuration_1_ward_mod_2
 				remove_province_modifier = magical_fortress_mod_1
-				remove_province_modifier = abjuration_1_ward_mod_1
+				if = {
+					limit = {
+						NOT = {
+							has_province_modifier = permaward_dummy_mod
+						}
+					}
+					remove_province_modifier = abjuration_1_ward_mod_2
+					remove_province_modifier = abjuration_1_ward_mod_1
+				}
 			}
 			add_province_modifier = { name = magical_fortress_mod_2 duration = -1 }
 			add_province_modifier = { name = abjuration_1_ward_mod_2 duration = -1 }
