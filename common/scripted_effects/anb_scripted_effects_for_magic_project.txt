@@ -42,6 +42,19 @@ magical_fortress_grant_bonus = {
 	}
 }
 
+# Province scope
+remove_all_wards_from_province = {
+	remove_province_modifier = patron_abjuration_ward
+	remove_province_modifier = abjuration_1_ward_mod_3
+	remove_province_modifier = abjuration_1_ward_mod_2
+	remove_province_modifier = abjuration_1_ward_mod_1
+	remove_province_modifier = abjuration_1_ward_mod_0
+	remove_province_modifier = V05_devastation_ward
+	remove_province_modifier = V05_magic_fort_upgrade_3
+	remove_province_modifier = V05_magic_fort_upgrade_2
+	remove_province_modifier = V05_magic_fort_upgrade_1
+}
+
 # Province scope, intended for MT usage.
 # Be very careful if applying this to the capital, as it may have unexpected behavior if the player goes Magical Fortress.
 permaward_province = {
@@ -63,15 +76,8 @@ remove_permaward_from_province = {
 						owner = { at_least_magic_project_level = { project = magical_fortress level = 1 } }					
 					}
 				}
-			} 
-			remove_province_modifier = patron_abjuration_ward
-			remove_province_modifier = abjuration_1_ward_mod_3
-			remove_province_modifier = abjuration_1_ward_mod_2
-			remove_province_modifier = abjuration_1_ward_mod_1
-			remove_province_modifier = abjuration_1_ward_mod_0
-			remove_province_modifier = V05_magic_fort_upgrade_3
-			remove_province_modifier = V05_magic_fort_upgrade_2
-			remove_province_modifier = V05_magic_fort_upgrade_1
+			}
+			remove_all_wards_from_province = yes
 		}
 		remove_province_modifier = permaward_dummy_mod # Do remove dummy mod, so that moving the capital will still deward the province.
 	}
