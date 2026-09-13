@@ -31,59 +31,58 @@ open_aPUI_in_province = {
 		clear_all_aPUI_flags = yes
 	}
 }
+########################################################################################
+# !-- Effect doesn't work atm since aPUI_$name$_flag was changed to a country flag --! #
+ # To make work you would ideally check the eligibility trigger instead of the
+ # province flag from the old system but all those triggers hardcode FROM, you'd 
+ # have to change them all to take the scope as an argument
 
 #Use these scripted effects to properly manage the variable for a progress bar
 # Make sure you are in the right scope! - FROM = country for province GUI
-change_aPUI_var_country = {
-	# To change the 'currency' use  'change_aPUI_var = { name = <name> amount = 10 }' to increase it by 10.
-	# You can also specify the name of a variable if you wish to calculate the quantity instead of using a static value
-	[[amount] change_variable = { aPUI_$name$_var = $amount$ } ]
-	[[var_amount] change_variable = { which = aPUI_$name$_var which = $var_amount$ } ]
-	hidden_effect = {
-		cap_aPUI_var = { name = $name$ }
-		if = {
-			limit = { ai = no }
-			update_aPUI_var_bar = { name = $name$ }
-		}
-	}
-	# Check for provinces in which the aPUI is opened
-	# Copy the framevariable to the province for the progress bar
-	every_owned_province = {
-		limit = {
-			#This should be the flag specific to each aPUI system
-			has_province_flag = aPUI_$name$_flag
-		}
-		set_variable = {
-			which = aPUI_$name$_framevar
-			which = FROM
-		}
-	}
-}
+# change_aPUI_var_bar_country = {
+# 	# To change the 'currency' use  'change_aPUI_var = { name = <name> amount = 10 }' to increase it by 10.
+# 	# You can also specify the name of a variable if you wish to calculate the quantity instead of using a static value
+# 	[[amount] change_variable = { aPUI_$name$_var = $amount$ } ]
+# 	[[var_amount] change_variable = { which = aPUI_$name$_var which = $var_amount$ } ]
+# 	hidden_effect = {
+# 		cap_aPUI_var = { name = $name$ }
+# 		if = {
+# 			limit = { ai = no }
+# 			update_aPUI_var_bar = { name = $name$ }
+# 		}
+# 	}
+# 	# Check for provinces in which the aPUI is opened
+# 	# Copy the framevariable to the province for the progress bar
+# 	every_owned_province = {
+# 		limit = {
+# 			#This should be the flag specific to each aPUI system
+# 			has_province_flag = aPUI_$name$_flag
+# 		}
+# 		set_variable = {
+# 			which = aPUI_$name$_framevar
+# 			which = FROM
+# 		}
+# 	}
+# }
 # Make sure you are in the right scope! - Province is the assumed scope for province GUI
-change_aPUI_var_provincial = {
+change_aPUI_var_bar_provincial = {
 	# To change the 'currency' use  'change_aPUI_var = { name = <name> amount = 10 }' to increase it by 10.
 	# You can also specify the name of a variable if you wish to calculate the quantity instead of using a static value
 	[[amount] change_variable = { aPUI_$name$_var = $amount$ } ]
 	[[var_amount] change_variable = { which = aPUI_$name$_var which = $var_amount$ } ]
 	hidden_effect = {
 		cap_aPUI_var = { name = $name$ }
-		if = {
-			limit = { owner = { ai = no } }
-			update_aPUI_var_bar = { name = $name$ }
-		}
+		update_aPUI_var_bar = { name = $name$ }
 	}
 }
-set_aPUI_var_provincial = {
+set_aPUI_var_bar_provincial = {
 	# To change the 'currency' use  'change_aPUI_var = { name = <name> amount = 10 }' to increase it by 10.
 	# You can also specify the name of a variable if you wish to calculate the quantity instead of using a static value
 	[[amount] set_variable = { aPUI_$name$_var = $amount$ } ]
 	[[var_amount] set_variable = { which = aPUI_$name$_var which = $var_amount$ } ]
 	hidden_effect = {
 		cap_aPUI_var = { name = $name$ }
-		if = {
-			limit = { FROM = { ai = no } }
-			update_aPUI_var_bar = { name = $name$ }
-		}
+		update_aPUI_var_bar = { name = $name$ }
 	}
 }
 set_aPUI_cap = {
