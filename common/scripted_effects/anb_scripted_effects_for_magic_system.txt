@@ -288,7 +288,7 @@ update_mana_regen_vars = { #use whenever you change the mana-per-month amount
 
 			if = { #believe it or not, we do in fact have to hardcode this...
 				limit = { is_free_or_tributary_trigger = no }
-				divide_variable = { mages_mana_regen_val = 2 }
+				divide_variable = { mages_mana_regen_val = 2 } #SUBJECTS_HALVED_MANA
 			}
 
 			set_variable = { which = manaFoo which = mages_mana_regen_mult_val }
@@ -339,6 +339,12 @@ ai_magic_mana_pulse = {
 			which = ai_magic_modifier
 		}
 		multiply_variable = { ai_magic_value = 24 }
+
+		if = { #AI subjects also get halved mana
+			limit = { is_free_or_tributary_trigger = no }
+			divide_variable = { ai_magic_value = 2 } #SUBJECTS_HALVED_MANA
+		}
+
 		change_variable = { which = currentMana which = ai_magic_value }
 
 		random = { #AI reduces infamy passively
@@ -1591,7 +1597,7 @@ ban_magic = {
 
 unban_magic = { #so people don't have to remember the specific flag
 	clr_country_flag = banned_magic
-	hidden_effect = { country_event = { id = estate_organization.3 days = 1 } } #automagically set their estate to the 'default'
+	hidden_effect = { country_event = { id = anbennar_setup.6 days = 1 } } #automagically set their estate to the 'default'
 }
 
 ban_necromancy = {
