@@ -2806,10 +2806,6 @@ upgrade_building = {
 #Country effect - Make sure to make an own custom tooltip for it when using it "Gain �G$years$ years�! worth of Trade Income."
 add_years_of_trade_income = {
 	hidden_effect = {
-		set_variable = {
-			which = trade_years
-			value = $years$
-		}
 		export_to_variable = {
 			which = percentage_of_yearly_trade_income
 			value = trigger_value:trade_income_percentage
@@ -2826,52 +2822,11 @@ add_years_of_trade_income = {
 			which = yearly_trade_income
 			value = 12
 		}
-		while = {
-			limit = {
-				check_variable = {
-					which = trade_years
-					value = 1
-				}
-			}
-			set_variable = {
-				which = trade_income_added
-				which = yearly_trade_income
-			}
-			while = {
-				limit = {
-					check_variable = {
-						which = trade_income_added
-						value = 1
-					}
-				}
-				add_treasury = 1
-				subtract_variable = {
-					which = trade_income_added
-					value = 1
-				}
-			}
-			multiply_variable = {
-				which = trade_income_added
-				value = 100
-			}
-			while = {
-				limit = {
-					check_variable = {
-						which = trade_income_added
-						value = 1
-					}
-				}
-				add_treasury = 0.01
-				subtract_variable = {
-					which = trade_income_added
-					value = 1
-				}
-			}
-			subtract_variable = {
-				which = trade_years
-				value = 1
-			}
+		multiply_variable = {
+			which = yearly_trade_income
+			value = $years$
 		}
+		var_effect_granular = { effect = add_treasury var = yearly_trade_income sign = + }
 	}
 	[[custom_tooltip]
 		custom_tooltip = $custom_tooltip$
