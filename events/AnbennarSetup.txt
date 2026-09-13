@@ -285,11 +285,11 @@ country_event = {
 	}
 }
 
-#Base Setup for Mage Type - some tags can't set privileges in history files
+#Base Setup for Mage Type - some tags can't set privileges in history files, also for unbanning mages
 country_event = {
-	id =  anbennar_setup.6
-	title =  anbennar_setup.6.t
-	desc =  anbennar_setup.6.d
+	id = anbennar_setup.6
+	title = anbennar_setup.6.t
+	desc = anbennar_setup.6.d
 	picture = WAR_OF_THE_ROSES_eventPicture
 	
 	#fire_only_once = yes
@@ -306,23 +306,26 @@ country_event = {
 		
 		if = { #Various flags that you can put in your history files
 			limit = { has_country_flag = mage_organization_religious_flag }
+			clr_country_flag = mage_organization_religious_flag
 			set_estate_privilege = estate_mages_organization_religious
 		}
 		else_if = {
 			limit = { has_country_flag = mage_organization_state_flag }
+			clr_country_flag = mage_organization_state_flag
 			set_estate_privilege = estate_mages_organization_state
 		}
 		else_if = {
 			limit = { has_country_flag = mage_organization_guilds_flag }
+			clr_country_flag = mage_organization_guilds_flag
 			set_estate_privilege = estate_mages_organization_guilds
 		}
 		else_if = { #Regional orgs that we default to first
-			limit = { religion_group = bulwari }
-			set_estate_privilege = estate_mages_organization_magi_clans
-		}
-		else_if = {
 			limit = { has_custom_spell_list_of_group = { group = harpy } }
 			set_estate_privilege = estate_mages_organization_sanarenni
+		}
+		else_if = {
+			limit = { religion_group = bulwari }
+			set_estate_privilege = estate_mages_organization_magi_clans
 		}
 		else_if = {
 			limit = {
