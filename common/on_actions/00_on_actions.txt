@@ -3455,6 +3455,15 @@ on_battle_won_country = {
 	on_battle_won_country_effect = yes #1.35
 	on_battle_ended_effect = yes
 
+	#Mattabo - [First Victory]: won a battle against Gnollakaz (U09)
+	if = {
+		limit = {
+			ROOT = { tag = F70 has_country_flag = F70_gnollakaz_strike }
+			FROM = { tag = U09 }
+		}
+		ROOT = { country_event = { id = flavour_mattabo.4 } }
+	}
+
 	random_events = {
 		1000 = 0
 
@@ -4147,6 +4156,15 @@ on_battle_lost_province = {
 on_siege_won_country = {
 	grant_manpower_from_besieging_fort = yes
 	grant_manpower_from_besieging_fort_spirit_mil = yes
+
+	#Mattabo - [First Victory]: took the Gnollakaz (U09) capital
+	if = {
+		limit = {
+			ROOT = { tag = F70 has_country_flag = F70_gnollakaz_strike }
+			FROM = { is_capital_of = U09 }
+		}
+		ROOT = { country_event = { id = flavour_mattabo.4 } }
+	}
 	events = {
 		flavor_grombar.14
 		deepwoods.22
@@ -32554,6 +32572,45 @@ on_war_ended = { #ROOT - Winer FROM - Loser
 			}
 		}
 		remove_country_modifier = B28_slayer_of_corin
+	}
+	#Mattabo - [Mysterious Aid] lasts until the war with Gnollakaz (U09) is over
+	if = {
+		limit = {
+			OR = {
+				AND = {
+					has_country_modifier = F70_mysterious_aid
+					NOT = { war_with = U09 }
+				}
+				AND = {
+					FROM = {
+						has_country_modifier = F70_mysterious_aid
+						NOT = { war_with = U09 }
+					}
+				}
+			}
+
+		}
+		remove_country_modifier = F70_mysterious_aid
+		FROM = { remove_country_modifier = F70_mysterious_aid }
+	}
+	#Mattabo - clears the [First Victory] flag once the war with Gnollakaz (U09) is over
+	if = {
+		limit = {
+			OR = {
+				AND = {
+					has_country_flag = F70_gnollakaz_strike
+					NOT = { war_with = U09 }
+				}
+				AND = {
+					FROM = {
+						has_country_flag = F70_gnollakaz_strike
+						NOT = { war_with = U09 }
+					}
+				}
+			}
+		}
+		clr_country_flag = F70_gnollakaz_strike
+		FROM = { clr_country_flag = F70_gnollakaz_strike }
 	}
 	#Salla Fealgarn Oberon Spawn General
 

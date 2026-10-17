@@ -1,0 +1,3791 @@
+mattabo_1 = {
+	slot = 1
+	ai = yes
+	generic = no
+	has_country_shield = yes
+	potential = {
+		tag = F70
+	}
+	F70_contact_with_the_harpies = {
+		position = 4
+		required_missions = {
+			F70_repel_the_invaders
+		}
+		#The harpies of Duwarkani (F62) can be dealt with in three ways:
+		#  1. secure their friendship (they are independent, guaranteed and trusting us, while we are stronger)
+		#  2. infiltrate whoever owns them with a spy network
+		#  3. simply own them (annexed, or held by one of our subjects)
+		trigger = {
+			OR = {
+				#1. Secured good relations with the harpies
+				AND = {
+					exists = F62 #Duwarkani
+					F62 = {
+						is_subject = no #Independent
+						guaranteed_by = ROOT
+						trust = {
+							who = ROOT
+							value = 60
+						}
+					}
+					army_size = F62 #Our army is larger than Duwarkani's
+				}
+				#2. Deep infiltration of the harpy realm (or of its overlord)
+				F62 = {
+					tag_or_overlord_has_spy_network_from = {
+						who = ROOT #Our spy network in Duwarkani or its overlord
+						value = 25
+					}
+				}		
+				#3. Duwarkani is ours (annexed, or held by our subject)
+				6022 = { #Duwarkani
+					OR = {
+						owned_by = ROOT
+						owned_by_subject_of = ROOT
+					}
+				}
+			}
+		}
+		effect = {
+			if = {
+				#Friendship with the harpies was secured
+				limit = {
+					exists = F62 #Duwarkani
+					F62 = {
+						is_subject = no #Independent
+						guaranteed_by = ROOT
+						trust = {
+							who = ROOT
+							value = 60
+						}
+					}
+					army_size = F62 #Our army is larger than Duwarkani's
+				}
+				custom_tooltip = F70_contact_with_the_harpies_yes_tt
+				F62 = {
+					country_event = {
+						id = flavour_mattabo.11 #Mattabo Promise to Protect
+					}
+				}
+				#Friendship was not secured: preview the other outcome
+				custom_tooltip = F70_contact_with_the_harpies_otherwise_tt
+				tooltip = {
+					duwarkani_area = {
+						add_permanent_claim = ROOT
+					}
+				}
+				custom_tooltip = F70_contact_with_the_harpies_rebellious_harpies_tt
+			}
+			else = {
+				#The harpies are brought to heel
+				custom_tooltip = F70_contact_with_the_harpies_no_tt
+				tooltip = {
+					F62 = {
+						country_event = {
+							id = flavour_mattabo.11
+						}
+					}
+				}
+				custom_tooltip = F70_contact_with_the_harpies_otherwise_tt
+				duwarkani_area = {
+					add_permanent_claim = ROOT
+				}
+				custom_tooltip = F70_contact_with_the_harpies_rebellious_harpies_tt
+				hidden_effect = {
+					duwarkani_area = {
+						limit = {
+							NOT = { owned_by = ROOT }
+							NOT = { owned_by_subject_of = ROOT }
+						}
+						add_province_modifier = {
+							name = F70_rebellious_harpies
+							duration = 7300 #20 years
+						}
+					}
+				}
+			}
+		}
+	}
+	F70_reinforce_southern_strength = {
+		position = 6
+		required_missions = {
+			F70_contact_with_the_harpies
+		}
+		trigger = {
+			#All the provinces in the Duwarkani area are owned by Mattabo or our non-Tributary subjects
+			duwarkani_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			#At least 2 provinces in Duwarkani area have a barracks or training field
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 2
+				area = duwarkani_area
+				has_manpower_building_trigger = yes
+			}
+			#One of the following must be true
+			OR = {
+				marriage_with = F62 #Duwarkani
+				medium_tolerance_harpy_race_trigger = yes #Harpy Tolerance Level is Coexistence
+				high_tolerance_harpy_race_trigger = yes #Harpy Tolerance Level is Integrated or Primary
+			}
+		}
+		effect = {
+			#Gain permanent claims on the Khetapara region
+			khetapera_region = {
+				add_permanent_claim = ROOT
+			}
+			#Very Large Tolerance Increase of Harpies
+			largest_increase_of_harpy_tolerance_effect = yes
+		}
+	}
+	F70_the_guardians = {
+		position = 7
+		required_missions = {
+			F70_reinforce_southern_strength
+		}
+		trigger = {
+			#All the provinces in the Khetapera region are owned by us or our non-Tributary subjects
+			khetapera_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			#At least 4 provinces in the Khetapera region, owned by us or our non-Tributary subjects,
+			#have a barracks or a training field and at least 5 base manpower
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 4
+				region = khetapera_region
+				has_manpower_building_trigger = yes
+				base_manpower = 5
+			}
+		}
+		effect = {
+			#The Nzeri Standard Bearers are granted to the Nobility
+			set_estate_privilege = estate_nobility_nzeri_standard_bearers
+			custom_tooltip = F70_the_guardians_nzeri_standard_bearers_tt
+		}
+	}
+	F70_establish_military_service = {
+		position = 8
+		required_missions = {
+			F70_the_guardians
+		}
+		trigger = {
+			#At least 10k Shadow Warriors (the Mamluks special units) under our command
+			num_of_mamluks = 10
+			#At least 10 Human provinces of the Mother's Sorrow province group, owned by us,
+			#have a barracks or a training field
+			#(the same trigger as Duwarkani's `duwarkani_by_feather_and_camel`)
+			num_of_owned_provinces_with = {
+				value = 10
+				province_group = mothers_sorrow_group
+				culture_is_human = yes
+				has_manpower_building_trigger = yes
+			}
+			#One of the following must be true:
+			OR = {
+				army_tradition = 65
+				army_professionalism = 0.25
+			}
+		}
+		effect = {
+			#Gain the permanent country modifier [Systematic Training]
+			add_country_modifier = {
+				name = F70_systematic_training
+				duration = -1
+			}
+			#TODO: enable the Steward reform [Selective Military Service] - the reform does not
+			#      exist yet; add it to common/imperial_reforms/01_china.txt following the F66
+			#      Konolkhatep reforms, i.e. `empire = celestial_empire`,
+			#      `potential = { tag = F70 }` and
+			#      `trigger = { mission_completed = F70_establish_military_service }`
+			custom_tooltip = F70_establish_military_service_reform_tt
+		}
+	}
+	F70_targeted_training = {
+		position = 9
+		required_missions = {
+			F70_establish_military_service
+		}
+		#Muhaqaar (5483) is the seat of the mage-theocracy of F61 (see F70_settle_accounts /
+		#F70_in_a_magical_way). The design only talks about the province itself, so no
+		#ownership check is written here.
+		trigger = {
+			#Muhaqaar has been developed and built up: at least 20 development, a barracks
+			#or a training field, a mage tower, and at least a level 2 center of trade
+			5483 = { #Muhaqaar
+				development = 20
+				has_manpower_building_trigger = yes
+				has_building = mage_tower
+				province_has_center_of_trade_of_level = 2
+			}
+			#One of the following must be true:
+			OR = {
+				#1. The Mages have the [Mage Organization: State] privilege
+				has_estate_privilege = estate_mages_organization_state
+				#2. The Mages estate's loyalty is at least 50
+				estate_loyalty = {
+					estate = estate_mages
+					loyalty = 50
+				}
+			}
+			#One of the following must be true:
+			OR = {
+				#1. The Tower of Muhaqaar is at least Significant
+				#   (`tier = N` means "at least tier N", so tier 2 covers
+				#   Significant and Magnificent)
+				5483 = { #Muhaqaar
+					has_great_project = {
+						type = tower_of_muhaqaar
+						tier = 2
+					}
+				}
+				#2. The Battlemage Academy has reached at least stage 1
+				at_least_magic_project_level = {
+					project = battlemage_academy
+					level = 1
+				}
+			}
+		}
+		effect = {
+			#The Mages privilege [Mage Generals] is granted to the Mages
+			#TODO: add the Mages privilege `F70_mage_generals` to common/estate_privileges/
+			#      (Mages: loyalty 0, influence +5, max absolutism -10; National Tax
+			#      Modifier -10%, Land Leader Shock +1, and Shock Damage +15% for the
+			#      Shadow Warriors only, i.e. with `is_mamluks_modifier = yes`)
+			set_estate_privilege = F70_mage_generals
+		}
+	}
+	F70_gnomish_equipment = {
+		position = 10
+		required_missions = {
+			F70_targeted_training
+		}
+		#Koroshesh (463) is one of the Five Cities of Kheterata and is held by
+		#Koroshesh (L28) at game start; like the rest of the Kheterata region it
+		#has to be ours (or a subject's) before it can be developed, the same
+		#condition `F70_rebuild_irrigation_system` uses one step later.
+		trigger = {
+			#A level 4 Natural Scientist or a level 4 Gnomish advisor is employed
+			#(advisor levels 4 and 5 require the Cradle of Civilization DLC, in
+			#which case a level 3 administrative advisor does the job instead -
+			#the same DLC fallback `has_adm_advisor_4` / `has_adm_advisor_5` in
+			#common/scripted_triggers/anb_scripted_triggers.txt use)
+			if = {
+				limit = { has_dlc = "Cradle of Civilization" }
+				OR = {
+					employed_advisor = { type = natural_scientist skill = 4 }
+					employed_advisor = { culture = cliff_gnome skill = 4 } #Gnomish
+					employed_advisor = { culture = creek_gnome skill = 4 }
+					employed_advisor = { culture = imperial_gnome skill = 4 }
+					employed_advisor = { culture = delta_gnome skill = 4 }
+					employed_advisor = { culture = tinker_gnome skill = 4 }
+					employed_advisor = { culture = glacier_gnome skill = 4 }
+					employed_advisor = { culture = frontier_gnome skill = 4 }
+				}
+			}
+			else = {
+				#Without the DLC advisor skill caps at 3, so "level 4" reads as
+				#"at least level 3"
+				has_adm_advisor_3 = yes
+			}
+			#Koroshesh has been developed and built up
+			463 = { #Koroshesh
+				country_or_subject_holds = ROOT
+				development = 30
+				OR = {
+					has_building = workshop
+					has_building = counting_house
+				}
+				has_manufactory_trigger = yes
+			}
+			#One of the following must be true:
+			OR = {
+				medium_tolerance_gnomish_race_trigger = yes #Gnomish Tolerance Level is Coexistence
+				high_tolerance_gnomish_race_trigger = yes #Gnomish Tolerance Level is Integrated or Primary
+			}
+			#One of the following must be true:
+			OR = {
+				innovativeness = 20
+				mil_power = 200
+			}
+		}
+		effect = {
+			#The Gnomish Equipment are granted to the Merchant Guilds
+			#TODO: add the Burghers (Merchant Guilds) privilege `F70_gnomish_equipment`
+			#      to common/estate_privileges/03_burgher_privileges.txt and
+			#      register it in the burghers `privileges = { ... }` list in
+			#      common/estates/03_burghers.txt (the two orders have to stay
+			#      aligned); it has to be granted by missions, so follow
+			#      `estate_nobility_nzeri_standard_bearers` with
+			#      `is_valid = { has_estate_privilege = F70_gnomish_equipment }`,
+			#      `can_select = { has_estate_privilege = F70_gnomish_equipment }` and
+			#      `can_revoke = { always = no }`.
+			#      Stats: loyalty 0, influence +5, max absolutism -10 (plus the
+			#      usual `conditional_modifier` with
+			#      `trigger = { has_absolutism_reduction_for_estate_privileges = yes }`
+			#      giving `max_absolutism = 2` back), production efficiency -5%.
+			#      The design also lists "Shock Damage +15%, only to Shadow Warriors"
+			#      (`is_mamluks_modifier = yes`) for this privilege, but that has to
+			#      be its own `conditional_modifier` block, or the country-wide
+			#      production efficiency key would be restricted to the Shadow
+			#      Warriors as well (see .generic/anb_estate_privileges.md); the
+			#      privilege has to be added *before* this task can be finished.
+			set_estate_privilege = F70_gnomish_equipment
+			custom_tooltip = F70_gnomish_equipment_tt
+			#2B: 1B (Innovativeness 20) is the "we invented it ourselves" route;
+			#when it is *not* met the equipment has to be bought instead, which is
+			#what costs the 200 military power - and asking for `mil_power = 200`
+			#in the trigger above is exactly the "2B" alternative that guarantees
+			#we can actually pay it
+			if = {
+				limit = { NOT = { innovativeness = 20 } }
+				add_mil_power = -200
+			}
+		}
+	}
+	F70_reconcile_with_brothers = {
+		position = 11
+		required_missions = {
+			F70_gnomish_equipment
+		}
+		#The source screenshot ("Reconcile with Brothers") lists four hard
+		#requirements plus one "either/or" pair, and three effects. The Ahati are
+		#the two brotherhoods - the Northern one seated in Aakheta (466) and the
+		#Southern one in Ka-Obix (483) - so this mission is about mending the rift
+		#with them after the gnollish wars and giving the Northern Brotherhood the
+		#upper hand.
+		trigger = {
+			#Requirement 1: the Ahati estate is at 60 loyalty or more
+			estate_loyalty = {
+				estate = estate_ahati
+				loyalty = 60
+			}
+			#Requirement 2: the Ahati hold the [Grant Noble Titles] privilege
+			#(`estate_ahati_noble_titles` in
+			#`common/estate_privileges/estate_ahati_privileges.txt`)
+			has_estate_privilege = estate_ahati_noble_titles
+			#Requirement 3: the Ahati hold the [Encourage Militarization]
+			#privilege (`estate_ahati_militarization`, same file)
+			has_estate_privilege = estate_ahati_militarization
+			#Requirement 4: the Steward reform [Bronze Dragon Academy] is enacted
+			#(`build_academy_reform` in `common/imperial_reforms/01_china.txt`).
+			#`empire_of_china_reform_passed` is a trigger, so it can only ever be
+			#checked here - never written into an `effect` block.
+			empire_of_china_reform_passed = build_academy_reform
+			#Requirement 5: ONE of the two following branches
+			#  1. the Ahati have completed at least 3 of their own estate agendas
+			#  2. the Steward reform [Lessons of Dameria] is enacted
+			#The screenshot spells the second reform "Lessons of Dameira"; the
+			#reform in the repository is `lessons_dameria_reform` (display name
+			#"Lessons of Dameria"). It is the reform that unlocks the
+			#`khet_mandate_complete_ahati_agenda` decision ("Ahati: Leverage
+			#Authority", which auto-completes an Ahati agenda), so both branches
+			#amount to "we no longer depend on the agendas themselves".
+			OR = {
+				num_of_estate_agendas_completed = {
+					estate = estate_ahati
+					value = 3
+				}
+				empire_of_china_reform_passed = lessons_dameria_reform
+			}
+		}
+		effect = {
+			#Ahati Loyalty +10%
+			add_estate_loyalty = {
+				estate = estate_ahati
+				loyalty = 10
+			}
+			#Enable the Ahati privilege [Support Northern Brotherhood]
+			#(`estate_ahati_support_north`). Note that the privilege's own
+			#`is_valid` / `can_select` demand that we own the core province
+			#Aakheta (466); without it the privilege is judged invalid and is
+			#revoked again immediately, so it is worth taking Aakheta first.
+			set_estate_privilege = estate_ahati_support_north
+			#Gain the country modifier [Brothers of One Mind?] for 25 years
+			#(`F70_brothers_of_one_mind_but_actually_not` in
+			#`common/event_modifiers/anb_Mattabo_modifiers.txt`, whose keys are
+			#exactly Ahati Loyalty Equilibrium +10% and Shock Damage +5%). No
+			#`custom_tooltip` here: per the author's 2026-10-08 rule a missing
+			#display name loc key is never a reason to add one, and
+			#`add_country_modifier` brings its own tooltip line.
+			add_country_modifier = {
+				name = F70_brothers_of_one_mind_but_actually_not
+				duration = 9125
+			}
+		}
+	}
+	F70_learn_from_brothers = {
+		position = 13
+		required_missions = {
+			F70_reconcile_with_brothers
+		}
+		trigger = {
+			#The Ahati estate has the [Ahati Commanders] privilege
+			#(`estate_ahati_ahati_commanders`, defined in
+			#`common/estate_privileges/estate_ahati_privileges.txt`; the mission
+			#`F70_the_guardians` grants it, so it is normally already held here)
+			has_estate_privilege = estate_ahati_ahati_commanders
+			#A Commandant advisor of at least skill 4, or any military advisor of
+			#skill 5, is employed. Advisor levels 4 and 5 are both a Cradle of
+			#Civilization feature - without it advisor skill caps at 3 - so this
+			#whole requirement is DLC-gated, and the third branch spells that out
+			#with `has_dlc`, exactly like `has_mil_advisor_5` in
+			#common/scripted_triggers/anb_scripted_triggers.txt:2228 does. (The
+			#screenshot has no "or a level 3 advisor" fallback, unlike
+			#`F70_gnomish_equipment`, so none is added here.)
+			#(`employed_advisor`'s `skill` is an exact value, not a floor, so
+			#"at least 4" has to be spelled out per skill level.)
+			OR = {
+				commandant = 4
+				commandant = 5
+				AND = {
+					has_dlc = "Cradle of Civilization"
+					has_mil_advisor_5 = yes
+				}
+			}
+			#Aakheta (466) has been developed and built up
+			466 = { #Aakheta
+				development = 30
+				num_of_buildings_in_province = 4
+			}
+			#The Bronze Dragon Academy has reached at least the "Significant"
+			#level. A great project at tier 0 is Insignificant, 1 Noteworthy,
+			#2 Significant and 3 Monumental, and `tier = N` reads "at least N"
+			#(same read as this tree's `F70_targeted_training`, which asks for
+			#Tower of Muhaqaar at `tier = 2` = Significant). `tier = 2` is what
+			#matches the screenshot's "at least Significant"; `tier = 3` is the
+			#fully built academy and is a separate, later requirement.
+			466 = {
+				has_great_project = {
+					type = bronze_dragon_academy
+					tier = 2
+				}
+			}
+		}
+		effect = {
+			#The [Ahati Commanders] privilege is improved: Land Leader Manuever
+			#+1, Land Leader Siege +1, and (Shadow Warriors only) Discipline +5%.
+			#TODO: the whole effect is left unimplemented for now. Adding the
+			#      bonuses to the privilege means editing a file outside this
+			#      mission tree, and until every mission in the tree is written
+			#      the rule is "mission tree file only" (author decision
+			#      2026-10-08, recorded in .memory/mtb_mission/mt_progress.md
+			#      and .generic/anb_script_file_conventions.md), so the earlier
+			#      attempt - two `conditional_modifier` blocks in
+			#      `estate_ahati_ahati_commanders`
+			#      (common/estate_privileges/estate_ahati_privileges.txt) with
+			#      `trigger = { mission_completed = F70_learn_from_brothers }`,
+			#      one for `leader_land_manuever = 1` + `leader_siege = 1` and a
+			#      separate one for `discipline = 0.05` +
+			#      `is_mamluks_modifier = yes` - has been withdrawn and the
+			#      privilege file is back at HEAD.
+			#      When the tree is finished, re-apply that pair of blocks. Two
+			#      notes for then: they must stay two separate
+			#      `conditional_modifier` blocks, because
+			#      `is_mamluks_modifier = yes` scopes an entire block to the
+			#      Shadow Warriors and sharing one block would restrict the
+			#      leader pips to them as well; and the key spellings are
+			#      `leader_land_manuever` (the engine's spelling, not
+			#      `leader_land_maneuver`) and `leader_siege` (there is no
+			#      `leader_land_siege`). Do NOT edit the privilege's own
+			#      `benefits` instead - that would hand the bonuses to every
+			#      Ahati country that ever picks the privilege.
+			#      Nothing is applied in this effect, which also means no
+			#      `custom_tooltip` (author rule 2026-10-08: a missing loc key is
+			#      never a reason to add one; and this task's loc keys are
+			#      deliberately not added either, for the same mission-tree-only
+			#      reason).
+		}
+	}
+}
+mattabo_2 = {
+	slot = 2
+	ai = yes
+	generic = no
+	has_country_shield = yes
+	potential = {
+		tag = F70
+	}
+	F70_repel_the_invaders = {
+		position = 3
+		required_missions = {
+			F70_planned_victory
+		}
+		trigger = {
+			OR = {
+				NOT = { exists = U09 } #Gnollakaz
+				has_truce = U09 #Gnollakaz
+			}
+			#Our own starting provinces
+			mattabo_area = {
+				type = all
+				owned_by = ROOT
+			}
+			#Rakkaz's starting provinces
+			grixzakr_area = {
+				type = all
+				owned_by = ROOT
+			}
+			argazeen_area = {
+				type = all
+				owned_by = ROOT
+			}
+			garpix_rakkaz_area = {
+				type = all
+				owned_by = ROOT
+			}
+			siniwix_area = {
+				type = all
+				OR = {
+					owned_by = ROOT
+					province_id = 5464 
+				}
+			}
+		}
+		effect = {
+			add_war_exhaustion = -5
+			custom_tooltip = F70_repel_the_invaders_reward_tt
+			hidden_effect = {
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								previous_owner = U09 #Gnollakaz
+								NOT = { has_province_flag = F70_province_seized_from_gnollakaz }
+							}
+							set_province_flag = F70_province_seized_from_gnollakaz
+							add_treasury = 50
+							owner = {
+								add_prestige_or_monarch_power = { amount = 5 }
+							}
+						}
+					"
+				}
+				every_owned_province = {
+					limit = { has_province_flag = F70_province_seized_from_gnollakaz }
+					clr_province_flag = F70_province_seized_from_gnollakaz
+				}
+			}
+		}
+	}
+	F70_settle_accounts = {
+		position = 4
+		required_missions = {
+			F70_repel_the_invaders
+		}
+		#Muhaqaar (5483) is held by the Council of Sages of F61, but it may have changed hands
+		#(or been taken by an overlord) in the meantime, so everything is checked on the province.
+		#  1. the owner is pressured into submission (spy network, a bigger army and a proper insult)
+		#  2. or we simply own the province already (annexed, or held by one of our subjects)
+		trigger = {
+			diplomatic_reputation = 2
+			OR = {
+				#1. The owner of Muhaqaar is brought to heel
+				AND = {
+					5483 = { #Muhaqaar
+						owner = {
+							#1a. Our spy network in them (or in their overlord)
+							tag_or_overlord_has_spy_network_from = {
+								who = ROOT
+								value = 25
+							}
+							#1b. Our army is larger than theirs (or than their overlord's)
+							OR = {
+								NOT = { army_size = ROOT }
+								overlord = {
+									NOT = { army_size = ROOT }
+								}
+							}
+							#1c. We have insulted them (or their overlord)
+							OR = {
+								has_been_insulted_by_root = yes
+								overlord = {
+									has_been_insulted_by_root = yes
+								}
+							}
+						}
+					}
+				}
+				#2. Muhaqaar is ours already (annexed, or held by our subject)
+				5483 = { #Muhaqaar
+					OR = {
+						owned_by = ROOT
+						owned_by_subject_of = ROOT
+					}
+				}
+			}
+		}
+		effect = {
+			#A War Wizard joins us (3/8/4/2). `define_war_wizard` uses the fixed stat
+			#table of the war wizard project, so `level = 3` is fire 3 / shock 8 /
+			#manuever 4 / siege 2 (see define_war_wizard_sub_effect); this is
+			#deliberately not `create_war_wizard`, whose stats follow the Battlemage
+			#Academy and would therefore depend on that magic project's level.
+			define_war_wizard = { level = 3 }
+			#Permanent claims on both Muhaqaar areas
+			shena_muhaqaar_area = {
+				add_permanent_claim = ROOT
+			}
+			leta_muhaqaar_area = {
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	F70_in_a_magical_way = {
+		position = 5
+		required_missions = {
+			F70_settle_accounts
+			F70_learn_from_echenka
+		}
+		#Muhaqaar (5483) is the seat of the mage-theocracy of F61, the Council of Sages.
+		#The mission is completed either by keeping it as a loyal non-tributary subject,
+		#or by doing away with it entirely and taking the province for ourselves.
+		trigger = {
+			#One of the following must be true:
+			OR = {
+				#1. Our Mages are at least Proficient in Conjuration
+				is_estate_conjuration_level_1_minimum = yes
+				#2. The Mages estate has its research left unregulated
+				has_estate_privilege = estate_mages_reduced_research_regulations
+			}
+			#One of the following must be true:
+			OR = {
+				#1. Muhaqaar answers to us as something more than a mere tributary,
+				#   and is kept in line
+				F61 = { #Muhaqaar
+					is_subject_of = ROOT
+					is_subject_other_than_tributary_trigger = yes
+					NOT = { liberty_desire = 50 }
+				}
+				#2. Muhaqaar is gone, and its province is ours
+				AND = {
+					NOT = { exists = F61 }
+					5483 = { #Muhaqaar
+						owned_by = ROOT
+					}
+				}
+			}
+		}
+		effect = {
+			custom_tooltip = F70_in_a_magical_way_great_project_tt
+		}
+	}
+	F70_the_righteous_army = {
+		position = 6
+		required_missions = {
+			F70_in_a_magical_way
+		}
+		trigger = {
+			#We have won at least 5 wars
+			num_of_wars = { amount = 5 }
+			#Our patron is empowering our armies
+			OR = {
+				has_country_modifier = F70_patron_enpowers_our_armies
+				has_country_modifier = F70_patron_enpowers_our_armies_upgraded
+			}
+			#At least 8 of our provinces are home to the Shadow Warriors holy order
+			num_of_owned_provinces_with = {
+				value = 8
+				holy_order = shadow_warriors_order
+			}
+			#One of the following portents of the Shadow Pact is active
+			custom_trigger_tooltip = {
+				tooltip = F70_the_righteous_army_portent_tt
+				OR = {
+					shadow_pact_has_active_portent = { portent = wraith } #The Wraith
+					shadow_pact_has_active_portent = { portent = defiant } #The Defiant
+					shadow_pact_has_active_portent = { portent = mother } #The Mother
+				}
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = F70_mattabo_shadow_warriors_part_1
+				duration = -1
+			}
+			add_country_modifier = {
+				name = F70_mattabo_shadow_warriors_part_2
+				duration = -1
+			}
+		}
+	}
+	F70_communication_and_reflection = {
+		position = 7
+		required_missions = {
+			F70_a_successful_revenge
+			F70_the_righteous_army
+			F70_reinforce_southern_strength
+		}
+		trigger = {
+			#We have caused at least 50000 casualties
+			#(counted by the `count_total_land_units_killed_flag` counter,
+			# which is set in our history file)
+			check_variable = {
+				which = total_land_units_killed
+				value = 50000
+			}
+			#All the Nirakhetist provinces in the Duwarkani area have been developed
+			#at least once or have a temple or a cathedral
+			#(non-Nirakhetist provinces of the area are ignored)
+			duwarkani_area = {
+				type = all
+				OR = {
+					NOT = { religion = nirakhetist }
+					num_of_times_improved_by_owner = 1
+					has_tax_building_trigger = yes
+				}
+			}
+		}
+		effect = {
+			#Gain the permanent country modifier [Populist Missionary Approach]
+			add_country_modifier = {
+				name = F70_populist_missionary_approach
+				duration = -1
+			}
+			#The Clergy privilege [One Same Goal] now also covers the Nirakhetist faith:
+			#all Nirakhetist provinces we own gain its permanent modifier
+			custom_tooltip = F70_communication_and_reflection_one_same_goal_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = { religion = nirakhetist }
+					add_province_modifier = {
+						name = F70_one_same_goal
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	F70_deal_with_mariat = {
+		position = 8
+		required_missions = {
+			F70_communication_and_reflection
+			F70_a_brand_new_steward
+			F70_the_guardians
+		}
+		trigger = {
+			#The Merchant Guilds (Burghers) estate has the [Enforced Interfaith Dialog] privilege
+			has_estate_privilege = estate_burghers_enforced_interfaith_dialogue
+			#At least 15 provinces owned by us are Elikhetist or Nirakhetist and have a temple
+			#or a cathedral, or have been improved at least once by their current owner
+			#(or, in Sarhal - continent `africa` - every Elikhetist or Nirakhetist province
+			# is ours and has a temple/cathedral or has been improved by us: the two branches
+			# are equivalent when we own more than 15 of them there, the second one then
+			# covers the case of there not being enough Elikhetist/Nirakhetist provinces)
+			OR = {
+				num_of_owned_provinces_with = {
+					value = 15
+					OR = {
+						religion = elikhetist
+						religion = nirakhetist
+					}
+					OR = {
+						has_tax_building_trigger = yes
+						num_of_times_improved_by_owner = 1
+					}
+				}
+				africa = {
+					type = all
+					OR = {
+						AND = {
+							NOT = { religion = elikhetist }
+							NOT = { religion = nirakhetist }
+						}
+						AND = {
+							owned_by = ROOT
+							OR = {
+								has_tax_building_trigger = yes
+								num_of_times_improved_by_owner = 1
+							}
+						}
+					}
+				}
+			}
+			#One of the following must be true:
+			OR = {
+				#Clergy influence is lower than 40
+				NOT = {
+					estate_influence = {
+						estate = estate_church
+						influence = 40
+					}
+				}
+				#Clergy loyalty is at least 60
+				estate_loyalty = {
+					estate = estate_church
+					loyalty = 60
+				}
+			}
+		}
+		effect = {
+			#Hedonism +10
+			add_meritocracy = 10
+			#The design's "Enable the great project Great Pyramid of Elikhet and the related
+			#Steward Reform" points at the Steward reform `build_pyramid_reform`, whose display
+			#name IS "Great Pyramid of Elikhet": enacting it makes the great project buildable
+			#in Kheterat (the reform's `on_effect` adds it there). We are the Steward and own
+			#Kheterat (475) already (see F70_a_brand_new_steward), but both the reform and the
+			#monument are locked behind `religion_group = khetist` - which we have left behind
+			#by then (this tree converts us to shadow_pact, see F70_the_righteous_army).
+			#Completing this mission therefore unlocks both, exactly like F70_in_a_magical_way
+			#does for the Tower of Muhaqaar:
+			#  * `build_pyramid_reform` (common/imperial_reforms/01_china.txt) now also accepts
+			#    `mission_completed = F70_deal_with_mariat` in its religion OR (everything else
+			#    - Leviathan, peace, owning 475 without construction - is kept, since the
+			#    reform's `on_effect` builds the monument in 475)
+			#  * `elikhet_pyramid`'s `can_use_modifiers_trigger` and `can_upgrade_trigger`
+			#    (common/great_projects/anb_monuments_sarhal.txt) got the same branch
+			custom_tooltip = F70_deal_with_mariat_great_project_tt
+			#The Clergy privilege [One Same Goal] now also covers the Elikhetist faith:
+			#all Elikhetist provinces we own gain its permanent province modifier
+			#(the Nirakhetist half was added by F70_communication_and_reflection)
+			custom_tooltip = F70_deal_with_mariat_one_same_goal_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = { religion = elikhetist }
+					add_province_modifier = {
+						name = F70_one_same_goal
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	F70_something_necessary = {
+		position = 9
+		required_missions = {
+			F70_deal_with_mariat
+		}
+		trigger = {
+			#Our Prestige is at least 60
+			prestige = 60
+			#The Steward reform [Formalised Khet Guardians] has been enacted
+			#TODO: the reform `F70_formalised_khet_guardians_reform` does not exist yet; add it
+			#      to common/imperial_reforms/01_china.txt following the F66 Konolkhatep
+			#      reforms, i.e. `empire = celestial_empire`, `potential = { tag = F70 }` and
+			#      `trigger = { mission_completed = F70_deal_with_mariat }` (it has to be
+			#      enactable *before* this mission is completed, hence the previous mission
+			#      rather than this one - its display name is [Formalised Khet Guardians])
+			empire_of_china_reform_passed = F70_formalised_khet_guardians_reform
+			#The Ahati estate has the [Khet Guardians] privilege
+			#(this is the privilege that hands the Ahati over to the khet as their
+			# bodyguards; the reform above is what formalises that arrangement)
+			has_estate_privilege = estate_ahati_khet_guards
+			#Hedonism is at least 80
+			#(Hedonism is the Stewardship's name for `meritocracy` - see
+			# `CELESTIAL_EMPEROR_BENEFIT_DESC`: "Uses Hedonism Mechanics". This is also the
+			# resource `F70_deal_with_mariat` pays out 10 of)
+			meritocracy = 80
+		}
+		effect = {
+			#Henceforth, performing Ritual will now give us 10 mandate
+			#The Shadow Pact's [Perform Ritual] action is the `celebrate` effect of the
+			#religion (common/religions/00_anb_religion.txt). The flag below is what the
+			#global branch is meant to read, so that only that one file has to change:
+			#TODO: add the 10 Mandate payout to the Shadow Pact `celebrate` effect in
+			#      common/religions/00_anb_religion.txt, i.e.
+			#      `if = { limit = { is_emperor_of_china = yes
+			#                        has_country_flag = F70_improved_perform_ritual }
+			#              add_mandate = 10 }`
+			#      (the `is_emperor_of_china` guard is there so that a Steward who has lost
+			#      the Stewardship while still holding the flag does not call `add_mandate`;
+			#      `rakkaz_improved_perform_ritual` is the existing precedent)
+			#      Author decision 2026-10-06: the change outside this mission tree file was
+			#      withdrawn for now and is tracked here instead.
+			custom_tooltip = F70_something_necessary_ritual_tt
+			hidden_effect = {
+				set_country_flag = F70_improved_perform_ritual
+			}
+		}
+	}
+	F70_grand_sacrifice = {
+		position = 10
+		required_missions = {
+			F70_something_necessary
+			F70_targeted_training
+			F70_rebuild_irrigation_system
+		}
+		#The Grand Sacrifice is the great ritual that closes the contract with our
+		#patron: the Mages have to be at the height of their craft, and the realm has
+		#to be able to lay the three offerings (gems, incense and slaves) on the altar.
+		trigger = {
+			#Our Mages are at least Renowned in Conjuration
+			#(Renowned is level 2 of the school; the `_minimum` variant also covers
+			# Legendary as level 3, and its tooltip wording matches the reference
+			# mission line exactly)
+			is_estate_conjuration_level_2_minimum = yes
+			#We produce at least 3 units of gems
+			trade_goods_produced_amount = {
+				trade_goods = gems
+				amount = 3
+			}
+			#We produce at least 3 units of incense
+			trade_goods_produced_amount = {
+				trade_goods = incense
+				amount = 3
+			}
+			#We produce at least 10 units of slaves
+			trade_goods_produced_amount = {
+				trade_goods = slaves
+				amount = 10
+			}
+		}
+		effect = {
+			#Event [Grand Sacrifice]
+			#(`flavour_mattabo.20` is the Grand Sacrifice event; like every other event
+			# in events/Flavour_Mattabo_F70.txt it is still an empty placeholder, and
+			# its title/desc/option keys are not in localisation yet, so the tooltip
+			# line shows the raw `flavour_mattabo.20.t` key for now)
+			country_event = {
+				id = flavour_mattabo.20 #Grand Sacrifice
+			}
+		}
+	}
+	F70_restructure_the_priests = {
+		position = 11
+		required_missions = {
+			F70_grand_sacrifice
+		}
+		#The Grand Sacrifice has been made, the contract with our patron closed - what is
+		#left of the old Khetist church has to be turned into an instrument of the Steward.
+		trigger = {
+			#The Steward reform [Redefine the Duties of Priests] has been enacted
+			#TODO: the reform `F70_redefine_the_duties_of_priests_reform` does not exist yet;
+			#      add it to common/imperial_reforms/01_china.txt following the F66
+			#      Konolkhatep reforms, i.e. `empire = celestial_empire`,
+			#      `potential = { tag = F70 }` and
+			#      `trigger = { mission_completed = F70_restructure_the_priests }` (its
+			#      display name is [Redefine the Duties of Priests])
+			empire_of_china_reform_passed = F70_redefine_the_duties_of_priests_reform
+			#TTF (Tolerance of the True Faith) is at least 7
+			#(`tolerance_of_true_faith` is the Anbennar scripted trigger that wraps
+			# `has_global_modifier_value = { which = tolerance_own ... }` and its own
+			# `has_7_tolerance` tooltip; existing precedents are
+			# missions/Seghdihr_Missions.txt:3768 and missions/Ovdal_az_An_Missions.txt:969)
+			tolerance_of_true_faith = { amount = 7 }
+			#One of the following must be true:
+			OR = {
+				#1. The Clergy's influence is lower than 30
+				NOT = {
+					estate_influence = {
+						estate = estate_church
+						influence = 30
+					}
+				}
+				#2. The Clergy have fewer than 3 privileges
+				#(`num_of_estate_privileges` counts the privileges held by one estate;
+				# existing precedents are missions/Konolkhatep_Missions.txt:30 and
+				# missions/Thunderborn_Missions.txt:145)
+				NOT = {
+					num_of_estate_privileges = {
+						estate = estate_church
+						value = 3
+					}
+				}
+			}
+		}
+		effect = {
+			#TODO: the whole effect is left unimplemented for now (author decision
+			#      2026-10-08). What it has to do:
+			#      1. Strengthen the state edict [Enforce Religious Unity]
+			#         (`edict_religious_unity`, defined in
+			#         common/state_edicts/religious_unity.txt, which currently grants
+			#         `local_missionary_strength = 0.01` on its own) by another
+			#         `local_missionary_strength = 0.01` (the design's [Local Missionary
+			#         Strength +1%]), plus `tolerance_own = 1` (the design's [Local TTF
+			#         +1], the same key the `tolerance_of_true_faith` trigger above reads)
+			#         and `church_power_modifier = 0.025` (the design's [Religious Power
+			#         +2.5%]).
+			#      2. For every 5 states that enact this edict, 12.5% Religious Power,
+			#         up to a maximum of 50%. The four country modifiers this maps onto
+			#         are already defined in common/event_modifiers/anb_Mattabo_modifiers.txt
+			#         and are still unused anywhere in the repository:
+			#         `F70_restructure_the_priests_bonus_tier_1` (12.5%),
+			#         `_tier_2` (25%), `_tier_3` (37.5%) and `_tier_4` (50%).
+			#Waiting on the new modifier(s) below rather than guessing them:
+			#TODO: add the country modifier(s) that carry the three edict bonuses to
+			#      common/event_modifiers/anb_Mattabo_modifiers.txt
+			#TODO: add the state-count part of the effect. The state scope cannot be
+			#      counted with `all_states = { }` (that is a boolean, not a count), so
+			#      the intent is `calc_true_if = { amount = 4 all_states = { has_state_edict =
+			#      edict_religious_unity } }` - amount 4/8/12/16 picks tier 1/2/3/4 - and
+			#      then `add_country_modifier` the matching tier (existing precedent for
+			#      the 4-state step is missions/Eighard_Missions.txt:3382). Because the
+			#      tier has to follow the edict count rather than a single moment, this
+			#      belongs in a periodic scripted effect hung off the vanilla
+			#      `on_state_edict_changed` on_action (common/on_actions/), not in this
+			#      one-off block.
+			#Author decision 2026-10-08: no `custom_tooltip` is added for any of the lines
+			#above (neither the edict bonuses nor the tier), even though there is nothing
+			#to generate them yet - a missing tooltip is never a reason to add one.
+		}
+	}
+	F70_accumlated_discontent = {
+		position = 14
+		required_missions = {
+			F70_learn_from_brothers
+			F70_enough_is_enough
+			F70_restructure_the_priests
+		}
+		#This is the mission where the reforms of the two restructurings and of
+		#`F70_enough_is_enough` come home to roost: the court is clean, the four
+		#Kheteratan cities are garrisoned, and the Steward has accumulated enough
+		#personal power that the old elite no longer has a peaceful way out.
+		#(The id keeps the tree's spelling `accumlated` - it is referenced as such
+		#by the required missions of slot 3, and renaming it is a separate job.)
+		trigger = {
+			#Corruption is lower than 2
+			#(`corruption` is compared with `>=`, so "lower than 2" is written as a
+			# negated `corruption = 2`. Corruption runs on a 0-100 scale in this game
+			# - the vanilla dragon turtle events branch on `corruption = 3` / `9` /
+			# `18`, i.e. whole percents - which is why the screenshot's bare "2" is
+			# read as 2% and NOT as `2` on some 0-1 scale. This is the same
+			# negated-comparison idiom `NOT = { unrest = 0 }` uses all over
+			# `missions/`, and the engine's own line for it is
+			# `CORRUPTION_LESS_THAN` ("Corruption is less than §Y$VAL$%§W"), which
+			# already exists in `localisation/EU4_l_english.yml`, so no localisation
+			# gap is added. The tree checks corruption elsewhere too:
+			# `missions/Azkare_Missions.txt:821` and
+			# `missions/Konolkhatep_Missions.txt:1102` use the same shape.)
+			NOT = { corruption = 2 }
+			#Koroshesh, Aakheta, Nirat and Kheterat have at least 3k armies
+			#(The four Kheteratan cities of the screenshot map to provinces 463, 466,
+			# 473 and 475 - confirmed against `history/provinces/463 - Koroshesh.txt`,
+			# `466 - Aakheta.txt`, `473 - Nirat.txt` and `475 - Kheterat.txt`. They are
+			# the same five-cities group `F70_rebuild_irrigation_system` sends mage
+			# towers to and `F70_learn_from_brothers` develops Aakheta in.
+			#`num_of_units_in_province` takes `amount` in thousands, so `amount = 3`
+			# is "at least 3k" - the same convention the rest of this tree uses at
+			# `amount = 1` (1k) and `amount = 10` (10k). `who = ROOT` restricts the
+			# count to our own troops, and `owned_by = ROOT` pins each province down
+			# to us, so the armies cannot be parked in somebody else's city.)
+			463 = { #Koroshesh
+				owned_by = ROOT
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 3
+				}
+			}
+			466 = { #Aakheta
+				owned_by = ROOT
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 3
+				}
+			}
+			473 = { #Nirat
+				owned_by = ROOT
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 3
+				}
+			}
+			475 = { #Kheterat
+				owned_by = ROOT
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 3
+				}
+			}
+			#One of the following must be true:
+			#1. Have at least 50% Crown Land
+			#2. Absolutism at least 30
+			#(Both triggers are engine built-ins and bring their own tooltip lines,
+			# so they need no `custom_trigger_tooltip`. Requiring the crown to hold
+			# half the realm's land *or* to be sufficiently absolute is the design's
+			# way of saying "the Steward has taken enough power from the estates
+			# that they have no other way out" - which is what springboards the
+			# assassination attempt below.)
+			OR = {
+				crown_land_share = 50
+				absolutism = 30
+			}
+		}
+		effect = {
+			#Event [Attempted Assassination]
+			#(`flavour_mattabo.60` is that event - the first entry of the Revolt
+			# Events Chain group of `events/Flavour_Mattabo_F70.txt`, whose header
+			# comment literally reads "#Attempted Assassination". Like every other
+			# event in that file it is still an empty placeholder and its
+			# title/desc/option keys are not in localisation yet, so this tooltip
+			# line shows the raw `flavour_mattabo.60.t` key in game for now - the
+			# same situation as `F70_grand_sacrifice` with `flavour_mattabo.20`,
+			# `F70_root_of_them_all` with `flavour_mattabo.30` and
+			# `F70_enough_is_enough` with `flavour_mattabo.21`. This mission is the
+			# first thing in the tree to reach the Revolt chain, and `flavour_mattabo.60`
+			# is `is_triggered_only = yes`, so nothing else can fire it.)
+			country_event = {
+				id = flavour_mattabo.60 #Attempted Assassination
+			}
+			#Author decision 2026-10-08: a missing tooltip (or a missing loc key) is
+			#never a reason to add a `custom_tooltip`, so none is written here - the
+			#event line is left to the engine's own `country_event` tooltip.
+		}
+	}
+}
+mattabo_3 = {
+	slot = 3
+	ai = yes
+	generic = no
+	has_country_shield = yes
+	potential = {
+		tag = F70
+	}
+	F70_military_adventure = {
+		position = 1
+		icon = mission_missive
+		trigger = {
+			mattabo_area = {
+				has_state_edict = edict_promote_military_recruitment
+			}
+			has_ruler_leader_from = ROOT
+			trading_policy_in_node = {
+				node = 6029
+				policy = hostile_trading
+			}
+		}
+		effect = {
+			country_event = {
+				id = flavour_mattabo.1
+			}
+		}
+	}
+	F70_planned_victory = {
+		position = 2
+		icon = mission_missive
+		required_missions = {
+			F70_military_adventure
+		}
+		trigger = {
+			OR = {
+				AND = {
+					F71 = {
+						capital_scope = {
+							owned_by = ROOT	
+						}
+					}
+					is_in_war = {
+						defenders = F71
+						war_score = 50
+					}
+				}
+				AND = {
+					grixzakr_area = {
+						owned_by = ROOT
+						type = all
+					}
+					garpix_rakkaz_area = {
+						owned_by = ROOT
+						type = all
+					}
+					argazeen_area = {
+						owned_by = ROOT
+						type = all
+					}
+					siniwix_area = {
+						OR = {
+							owned_by = ROOT
+							province_id = 5464
+						}
+						type = all
+					}
+				}
+			}
+		}
+		effect = {
+			country_event = {
+				id = flavour_mattabo.2
+			}
+		}
+	}
+	F70_stabilize_the_state = {
+		position = 3
+		required_missions = {
+			F70_planned_victory
+		}
+		trigger = {
+			is_at_war = no
+			stability = 1
+			legitimacy = 90
+			OR = {
+				has_ruler = "Kaskanrit Irsmaset"
+				prestige = 30
+			}
+		}
+		effect = {
+			#TODO: rename to the final reform id once it is added to common/government_reforms/
+			add_government_reform = F70_salvation_committee_reform
+			if = {
+				limit = {
+					#Kaskanrit Irsmaset is still our regent
+					has_regency = yes
+					has_ruler = "Kaskanrit Irsmaset"
+				}
+				custom_tooltip = F70_stabilize_the_state_yes_tt
+				remove_heir = { allow_new_heir = no }
+				add_ruler_modifier = {
+					name = F70_ruler_is_a_decorated_general
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = F70_stabilize_the_state_no_tt
+				tooltip = {
+					remove_heir = { allow_new_heir = no }
+					add_ruler_modifier = {
+						name = F70_ruler_is_a_decorated_general
+						duration = -1
+					}
+				}
+				country_event = {
+					id = flavour_mattabo.100
+				}
+			}
+		}
+	}
+	F70_learn_from_echenka = {
+		position = 4
+		required_missions = {
+			F70_repel_the_invaders
+			F70_stabilize_the_state
+			F70_second_contact
+		}
+		trigger = {
+			#The Echenka culture has been promoted
+			accepted_culture = echenka
+			#Grixzakr state has Encourage Development
+			grixzakr_area = {
+				has_state_edict = edict_encourage_development
+			}
+			#One of the following must be true:
+			OR = {
+				#1. The Clergy estate has Clerical Education
+				has_estate_privilege = estate_church_clerical_education
+				#2. The Clergy estate has Allow Religious Delegation
+				#   (Clerical Advisory Council without the Domination DLC)
+				if = {
+					limit = { has_dlc = "Domination" }
+					has_estate_privilege = estate_church_religious_delegation
+				}
+				else = {
+					has_estate_privilege = estate_church_independent_inquisition
+				}
+			}
+		}
+		effect = {
+			#Change trade goods of Grixzakr to random other goods
+			5490 = { #Grixzakr
+				random_list = {
+					1 = { change_trade_goods = grain }
+					1 = { change_trade_goods = livestock }
+					1 = { change_trade_goods = wool }
+					1 = { change_trade_goods = copper }
+					1 = { change_trade_goods = iron }
+					1 = { change_trade_goods = cloth }
+				}
+			}
+			#Enable a decision: we can now make deals with our patron
+			custom_tooltip = F70_learn_from_echenka_patron_deal_tt
+			custom_tooltip = F70_learn_from_echenka_patron_deal_conjuration_tt
+			set_country_flag = F70_patron_deals_unlocked
+		}
+	}
+	F70_a_successful_revenge = {
+		position = 6
+		required_missions = {
+			F70_in_a_magical_way
+			F70_military_preparation
+		}
+		trigger = {
+			#Golkora is ours as a core province, or has fallen to the (non-gnollish) Steward of the Sorrow
+			479 = { #Golkora
+				OR = {
+					AND = {
+						owned_by = ROOT
+						is_core = ROOT
+					}
+					owner = {
+						is_emperor_of_china = yes
+						NOT = { culture_group = gnollish }
+					}
+				}
+			}
+			#At least 3 Irsmahapan provinces in Gol are our core provinces
+			num_of_owned_provinces_with = {
+				value = 3
+				region = gol_region
+				culture = irsmahapan
+				is_core = ROOT
+			}
+			#Ilzin Grizaka is our core province and at least 10k of our soldiers are stationed there
+			487 = { #Ilzin Grizaka
+				owned_by = ROOT
+				is_core = ROOT
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 10
+				}
+			}
+		}
+		effect = {
+			#Gnolls know their place once again
+			largest_decrease_of_gnollish_tolerance_effect = yes
+			custom_tooltip = can_claim_mandate
+			set_country_flag = can_claim_mandate
+			#Permanent claims on Kheterata Proper, Upper Sorrow and Lower Sorrow
+			kheterat_proper_area = {
+				add_permanent_claim = ROOT
+			}
+			upper_sorrow_area = {
+				add_permanent_claim = ROOT
+			}
+			lower_sorrow_area = {
+				add_permanent_claim = ROOT
+			}
+			#Permanent claims on every gnollish province of Kubaci
+			custom_tooltip = F70_a_successful_revenge_gnollish_kubaci_tt
+			hidden_effect = {
+				kubaci_region = {
+					limit = { culture_group = gnollish }
+					add_permanent_claim = ROOT
+				}
+			}
+			#The new capital of our gnollish subjects
+			487 = { #Ilzin Grizaka
+				change_trade_goods = slaves
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+			#If we still have [Eager to Return], it is replaced by [Further Ambition] for 20 years
+			if = {
+				limit = {
+					has_country_modifier = F70_eager_to_return
+				}
+				custom_tooltip = F70_a_successful_revenge_yes_tt
+				remove_country_modifier = F70_eager_to_return
+				add_country_modifier = {
+					name = F70_further_ambition
+					duration = 7300
+				}
+			}
+			else = {
+				custom_tooltip = F70_a_successful_revenge_no_tt
+				tooltip = {
+					remove_country_modifier = F70_eager_to_return
+					add_country_modifier = {
+						name = F70_further_ambition
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+	F70_a_brand_new_steward = {
+		position = 7
+		required_missions = {
+			F70_a_successful_revenge
+		}
+		trigger = {
+			#We are the Steward of the Sorrow
+			is_emperor_of_china = yes
+			#Kheterat is one of our core provinces
+			475 = { #Kheterat
+				owned_by = ROOT
+				is_core = ROOT
+			}
+		}
+		effect = {
+			#The cost to enact [Establish the Ahati] will be refunded once the estate is
+			#enabled (70 Mandate and 1 Stability) - the refund itself is paid out by
+			#`ahati_events.1`, which reads this flag
+			custom_tooltip = ahati_events.173.tooltip
+			hidden_effect = {
+				set_country_flag = free_ahati
+			}
+			#If we still have [Further Ambition], gain the permanent [Ambitious Spirit]
+			if = {
+				limit = {
+					has_country_modifier = F70_further_ambition
+				}
+				custom_tooltip = F70_a_brand_new_steward_yes_tt
+				add_country_modifier = {
+					name = F70_ambitious_spirit
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = F70_a_brand_new_steward_no_tt
+				tooltip = {
+					add_country_modifier = {
+						name = F70_ambitious_spirit
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	F70_reunite_kheterata = {
+		position = 8
+		required_missions = {
+			F70_a_brand_new_steward
+		}
+		trigger = {
+			#All the provinces of the Kheterata region are ours, except Rosutaaru
+			#and Elizna (the two provinces of the Elizna area). What Koroshesh
+			#holds counts as well, as long as Koroshesh is our subject
+			kheterata_region = {
+				type = all
+				OR = {
+					province_id = 494 #Rosutaaru
+					province_id = 496 #Elizna
+					owned_by = ROOT
+					AND = {
+						owned_by = L28 #Koroshesh
+						L28 = { is_subject_of = ROOT }
+					}
+				}
+			}
+			#Ka-Obix has been developed and built up
+			483 = { #Ka-Obix
+				development = 15
+				num_of_buildings_in_province = 3
+			}
+			#Golkora, Ilzin Grizaka and Niramit have become great hubs
+			479 = { #Golkora
+				OR = {
+					province_has_center_of_trade_of_level = 2
+					num_of_buildings_in_province = 3
+				}
+			}
+			487 = { #Ilzin Grizaka
+				OR = {
+					province_has_center_of_trade_of_level = 2
+					num_of_buildings_in_province = 3
+				}
+			}
+			5481 = { #Niramit
+				OR = {
+					province_has_center_of_trade_of_level = 2
+					num_of_buildings_in_province = 3
+				}
+			}
+			#The Ahati have been established as a Steward reform
+			empire_of_china_reform_passed = establish_ahati_reform
+		}
+		effect = {
+			#Our claims on the rest of the old kingdom
+			deshak_area = { add_permanent_claim = ROOT }
+			oris_area = { add_permanent_claim = ROOT }
+			383 = { #Desh-Al-Deshak
+				add_permanent_claim = ROOT
+			}
+			#We are Kheterata, and Ka-Obix is our new capital
+			override_country_name = KHETERATA
+			set_capital = 483 #Ka-Obix
+			#TODO: "NIs will change to Shadow Steward Ideas" - that idea set does
+			#      not exist yet. Add a second dynamic idea set
+			#      `F70_shadow_steward_ideas` to common/ideas/anb_country_ideas.txt
+			#      (start / bonus / 7 ideas / `free = yes`) with
+			#      `trigger = { tag = F70 has_country_flag = F70_shadow_steward_ideas }`,
+			#      add `NOT = { has_country_flag = F70_shadow_steward_ideas }` to the
+			#      trigger of the existing `F70_ideas` (same shape as Wineport's
+			#      `A16_ideas` / `A16_upgrade_ideas` pair) and then replace this
+			#      tooltip with the two effects written below
+			custom_tooltip = F70_reunite_kheterata_shadow_steward_ideas_tt
+			#hidden_effect = { set_country_flag = F70_shadow_steward_ideas }
+			#if = {
+			#	limit = { has_custom_ideas = no }
+			#	country_event = { id = ideagroups.1 } #Swap Ideas
+			#}
+		}
+	}
+	F70_rebuild_irrigation_system = {
+		position = 9
+		required_missions = {
+			F70_reunite_kheterata
+		}
+		trigger = {
+			#All the provinces along the Mother's Sorrow have 0 devastation
+			#("along the Mother's Sorrow" is this province group, the same scope the
+			# Steward's own decrees use - see common/decrees/00_china.txt)
+			mothers_sorrow_group = {
+				type = all
+				country_or_subject_holds = ROOT
+				NOT = { devastation = 0.01 }
+			}
+			#The Five Cities of Kheterata and Ka-Obix each have a mage tower
+			#(Kheterat, Nirat, Koroshesh, Golkora and Niramit - the same five provinces
+			# `five_cities_reform` in common/imperial_reforms/01_china.txt is built on -
+			# plus Ka-Obix, our new capital, which is *not* one of the Five Cities)
+			475 = { #Kheterat
+				has_building = mage_tower
+			}
+			473 = { #Nirat
+				has_building = mage_tower
+			}
+			463 = { #Koroshesh
+				has_building = mage_tower
+			}
+			479 = { #Golkora
+				has_building = mage_tower
+			}
+			5481 = { #Niramit
+				has_building = mage_tower
+			}
+			483 = { #Ka-Obix
+				has_building = mage_tower
+			}
+			#The Decree of Prosperity has been enacted
+			#(the Steward's decree `prosperity_decree`, defined in common/decrees/00_china.txt)
+			empire_of_china_has_active_decree = prosperity_decree
+			#Two of the following three must be true:
+			#1. The [The Three Urns] portent has been portented
+			#   (one of the Shadow Pact's church aspects; our religion by this point,
+			#    see F70_the_righteous_army - `shadow_pact_has_active_portent` is the
+			#    scripted trigger that ORs over the adm/dip/mil variants, and the exact
+			#    same `portent = three_urns` call is already made in
+			#    events/Shadow_pact.txt:80)
+			#2. The spell [Aid Construction] is active
+			#3. The spell [Reshape Terrain] is active
+			#(`has_cast_aid_construction` / `has_cast_reshape_terrain` are the engine's
+			# own spell triggers - Zokka's mission tree uses both side by side at
+			# Zokka_Missions.txt:1927)
+			#"Two of the following" is written as an if/else: with [Aid Construction]
+			# active one more of the outer pair suffices, otherwise both are needed.
+			# (The three portents are mutually exclusive church aspects, so no further
+			#  counting is needed.)
+			if = {
+				limit = { has_cast_aid_construction = yes }
+				OR = {
+					shadow_pact_has_active_portent = { portent = three_urns }
+					has_cast_reshape_terrain = yes
+				}
+			}
+			else = {
+				shadow_pact_has_active_portent = { portent = three_urns }
+				has_cast_reshape_terrain = yes
+			}
+		}
+		effect = {
+			#All the provinces along the Sorrow get the province modifier
+			#[Recovering Production] for 50 years:
+			#Local Development Cost -10%
+			#Local Good Produced Modifier +5%
+			#Yearly Prosperity Growth +0.25
+			#(the whole thing stays inside a hidden_effect, so no tooltip line is shown
+			# for it; per author decision 2026-10-08 a missing tooltip is never a reason
+			# to add a `custom_tooltip`, so none is written here)
+			hidden_effect = {
+				mothers_sorrow_group = {
+					limit = { country_or_subject_holds = ROOT }
+					add_province_modifier = {
+						name = F70_recovering_production
+						duration = 18250
+					}
+				}
+			}
+		}
+	}
+	F70_new_steward_new_governance = {
+		position = 10
+		required_missions = {
+			F70_rebuild_irrigation_system
+		}
+		trigger = {
+			#Our Religious Unity is at least 90%
+			religious_unity = 0.9
+			#Our Stability is at least 2
+			stability = 2
+			#All the provinces of the Mother's Sorrow province group have less than 0
+			#autonomy, or have recently had their autonomy reduced
+			#(`autonomy_decreased` is the vanilla province modifier handed out when
+			# autonomy is lowered, so it is what "recently reduced" translates to;
+			# the group is defined in map/provincegroup.txt and this is the same
+			# scope `F70_rebuild_irrigation_system` already uses)
+			mothers_sorrow_group = {
+				type = all
+				country_or_subject_holds = ROOT
+				OR = {
+					local_autonomy = 0
+					has_province_modifier = autonomy_decreased
+				}
+			}
+			#At least 10 provinces along the Mother's Sorrow have a courthouse or a town hall
+			#(`has_courthouse_building_trigger` covers both of them, and the upgraded
+			# versions, in common/scripted_triggers/00_scripted_triggers.txt)
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				province_group = mothers_sorrow_group
+				has_courthouse_building_trigger = yes
+			}
+			#One of the following must be true:
+			#  1. We have at least 40% Crown Land
+			#  2. All of our estates except the Ahati have at least 60 loyalty
+			#TODO: the second branch cannot be implemented as written - an estate is not
+			#      a legal scope in EU4, so there is no way to iterate over "all estates
+			#      except the Ahati" from a mission trigger (the Ahati themselves have
+			#      `ahati_loyalty` / `ahati_loyalty_modifier`, but the other estates
+			#      would each need to be named by hand, and the list of estates differs
+			#      per country). Author decision 2026-10-08: leave it out for now, so
+			#      this "one of the following" block is currently the Crown Land
+			#      requirement on its own. If it is ever implemented, wrap it in an
+			#      `OR = { has_crown_land_share = 40 <the estate checks> }`.
+			crown_land_share = 40
+		}
+		effect = {
+			#Gain the country modifier [Vigorous Reform] for 25 years:
+			#Mandate +0.1
+			#(the modifier line and the 10 Mandate are left to the engine: a
+			# `custom_tooltip` here would *suppress* the tooltip that
+			# `add_country_modifier` generates on its own. Per author decision
+			# 2026-10-08 no `custom_tooltip` is added for any missing text.)
+			add_country_modifier = {
+				name = F70_vigorous_reform
+				duration = 9125 #25 years
+			}
+			add_mandate = 10
+			#Enable the Steward reform [Enlarge the Committee]
+			#(a Steward reform - `empire = celestial_empire` - so it is passed through the
+			# Stewardship's reform screen rather than handed out by script: it is *not*
+			# granted here. `empire_of_china_reform_passed` is an engine *trigger*, so
+			# the reform instead makes completing this mission its enabling condition,
+			# exactly like the [Formalised Khet Guardians] reform hanging off
+			# `F70_deal_with_mariat`.)
+			#TODO: the reform `F70_enlarge_the_committee_reform` does not exist yet; add it
+			#      to common/imperial_reforms/01_china.txt following the F66 Konolkhatep
+			#      reforms, i.e. `empire = celestial_empire`, `potential = { tag = F70 }`
+			#      and `trigger = { mission_completed = F70_new_steward_new_governance }`
+			#      (its display name is [Enlarge the Committee])
+			#TODO: this effect also has no engine-generated line for "enable the reform"
+			#      (there is no effect that enables a Steward reform), and `add_mandate`
+			#      does not produce one either. No `custom_tooltip` is written for them -
+			#      per author decision 2026-10-08, a missing tooltip is *never* a reason
+			#      to add one; it just means this effect shows less in the mission tooltip.
+		}
+	}
+	F70_restructure_the_nobles = {
+		position = 11
+		required_missions = {
+			F70_new_steward_new_governance
+		}
+		#With the Steward's own council rebuilt, the old noble houses are next: the influence
+		#they hold over the Kheteratan heartland has to be broken and replaced by officials
+		#appointed by the Steward himself.
+		trigger = {
+			#The Steward reform [Promote New Officials] has been enacted
+			#TODO: the reform `F70_promote_new_officials_reform` does not exist yet;
+			#      add it to common/imperial_reforms/01_china.txt following the F66
+			#      Konolkhatep reforms, i.e. `empire = celestial_empire`,
+			#      `potential = { tag = F70 }` and
+			#      `trigger = { mission_completed = F70_restructure_the_nobles }` (its
+			#      display name is [Promote New Officials])
+			empire_of_china_reform_passed = F70_promote_new_officials_reform
+			#The states of Shena Muhaqaar, Golkora Stretch, Kheterat Proper, Lower Sorrow and
+			#the Coast of Tears have the [Centralization Effort] edict
+			#(`edict_centralization_effort` is defined in
+			# common/state_edicts/centralisation_edict.txt. `has_state_edict` is read in a
+			# province scope, so `type = all` + `owned_by = ROOT` in an area scope is the
+			# existing idiom for "the whole area is ours and the states holding it carry the
+			# edict" - same edict and same idiom as missions/Ibekisedara_Missions.txt:1572)
+			shena_muhaqaar_area = {
+				type = all
+				owned_by = ROOT
+				has_state_edict = edict_centralization_effort
+			}
+			golkora_stretch_area = {
+				type = all
+				owned_by = ROOT
+				has_state_edict = edict_centralization_effort
+			}
+			kheterat_proper_area = {
+				type = all
+				owned_by = ROOT
+				has_state_edict = edict_centralization_effort
+			}
+			lower_sorrow_area = {
+				type = all
+				owned_by = ROOT
+				has_state_edict = edict_centralization_effort
+			}
+			coast_of_tears_area = {
+				type = all
+				owned_by = ROOT
+				has_state_edict = edict_centralization_effort
+			}
+			#One of the following must be true:
+			OR = {
+				#1. The Nobility's influence is lower than 30
+				#(`estate_nobles` is this repository's Nobility estate, defined in
+				# common/estates/02_nobility.txt - not `estate_nobility`, which is not an id
+				# anywhere in the repo)
+				NOT = {
+					estate_influence = {
+						estate = estate_nobles
+						influence = 30
+					}
+				}
+				#2. The Nobility have fewer than 3 privileges
+				#(`num_of_estate_privileges` counts the privileges held by one estate;
+				# existing precedents are missions/Konolkhatep_Missions.txt:30 and
+				# missions/Thunderborn_Missions.txt:145)
+				NOT = {
+					num_of_estate_privileges = {
+						estate = estate_nobles
+						value = 3
+					}
+				}
+			}
+		}
+		effect = {
+			#TODO: the whole effect is left unimplemented for now, mirroring this mission's
+			#      twin `F70_restructure_the_priests`, whose effect was left as a TODO by the
+			#      author on 2026-10-08. What it has to do:
+			#      1. Strengthen the state edict [Centralization Effort]
+			#         (`edict_centralization_effort`, defined in
+			#         common/state_edicts/centralisation_edict.txt, which currently grants
+			#         `local_autonomy = -0.03` on its own) so that its [Monthly Autonomy
+			#         Change] line becomes -0.05, i.e. another -0.02. Either that edict's own
+			#         `modifier` block is raised to `local_autonomy = -0.05`, or - the
+			#         approach planned for `F70_restructure_the_priests` - a new country
+			#         modifier carrying the extra -0.02 (`global_autonomy = -0.02`) is added
+			#         to common/event_modifiers/anb_Mattabo_modifiers.txt and applied here.
+			#      2. For every 5 states that enact this edict, +0.1 Monthly Reform Progress,
+			#         up to a maximum of 0.5. The five country modifiers this maps onto are
+			#         already defined in common/event_modifiers/anb_Mattabo_modifiers.txt and
+			#         are still unused anywhere in the repository:
+			#         `F70_restructure_the_nobles_bonus_tier_1` (0.1), `_tier_2` (0.2),
+			#         `_tier_3` (0.3), `_tier_4` (0.4) and `_tier_5` (0.5).
+			#Waiting on the new modifier below rather than guessing it:
+			#TODO: add the country modifier carrying the extra -0.02 [Monthly Autonomy
+			#      Change] to common/event_modifiers/anb_Mattabo_modifiers.txt (raising
+			#      `edict_centralization_effort` itself to `local_autonomy = -0.05` would
+			#      strengthen the edict for every country using it, and is a change outside
+			#      the mission tree)
+			#TODO: add the state-count part of the effect. The state scope cannot be counted
+			#      with `all_states = { }` (that is a boolean, not a count), so the intent is
+			#      `calc_true_if = { amount = 5 all_states = { has_state_edict =
+			#      edict_centralization_effort } }` - amount 5/10/15/20/25 picks tier
+			#      1/2/3/4/5 - and then `add_country_modifier` the matching tier (existing
+			#      precedent for the 4-state step is missions/Eighard_Missions.txt:3382).
+			#      Because the tier has to follow the edict count rather than a single
+			#      moment, this belongs in a periodic scripted effect hung off the vanilla
+			#      `on_state_edict_changed` on_action (common/on_actions/), not in this
+			#      one-off block.
+			#Author decision 2026-10-08: no `custom_tooltip` is added for any of the lines
+			#above (neither the edict bonus nor the tier), even though there is nothing to
+			#generate them yet - a missing tooltip is never a reason to add one.
+		}
+	}
+	F70_root_of_them_all = {
+		position = 12
+		required_missions = {
+			F70_restructure_the_nobles
+			F70_restructure_the_priests
+		}
+		#The two restructurings are done, but the roots of the old order are still in
+		#place: the Steward has to show that the realm - and its patron - have moved on.
+		trigger = {
+			#We have celebrated the festival at least 10 times
+			#(the Shadow Pact's Perform Ritual action counts every celebration in the
+			# country variable `numOfRitualsPerformed` - incremented by the `celebrate`
+			# effect of the shadow_pact religion in common/religions/00_anb_religion.txt
+			# - and the same variable is already read by missions/Rakkaz_Missions.txt:1591
+			# and 2569. The wrapper below only supplies the tooltip text; the count is
+			# what is actually checked.)
+			custom_trigger_tooltip = {
+				tooltip = F70_root_of_them_all_festival_tt
+				check_variable = {
+					which = numOfRitualsPerformed
+					value = 10
+				}
+			}
+			#At least 7 Steward reforms have been enacted
+			#(`empire_of_china_num_reforms_passed` is the engine trigger that counts the
+			# reforms passed through the Stewardship's reform screen; existing precedents
+			# are missions/Kheteratan_Missions.txt:808 (5) and
+			# missions/Konolkhatep_Missions.txt:1594 (4). It brings its own tooltip, so
+			# no `custom_trigger_tooltip` is wrapped around it.)
+			empire_of_china_num_reforms_passed = 7
+		}
+		effect = {
+			#Event [Knowledge from our Patron]
+			#(`flavour_mattabo.30` is that event. Like every other event in
+			# events/Flavour_Mattabo_F70.txt it is still an empty placeholder, and its
+			# title/desc/option keys are not in localisation yet, so this tooltip line
+			# shows the raw `flavour_mattabo.30.t` key for now - the same situation as
+			# `F70_grand_sacrifice` with `flavour_mattabo.20`.)
+			country_event = {
+				id = flavour_mattabo.30 #Knowledge from Our Patron
+			}
+			#The reward itself - the permanent country modifier
+			# `F70_knowledge_from_our_patron` (Mages Estate Experience +15%, defined in
+			# common/event_modifiers/anb_Mattabo_modifiers.txt:117) - belongs to the
+			# event above, which is still empty. It is therefore NOT applied here: the
+			# author's 2026-10-08 decision for this tree is that the event owns its
+			# effects (`F70_grand_sacrifice` likewise only fires its event), and firing
+			# it is what keeps the modifier out of two places later.
+			#TODO: fill in `flavour_mattabo.30`'s `immediate`/option effects so that it
+			#      grants `F70_knowledge_from_our_patron` (permanent). The modifier is
+			#      already fully defined and still has no reference anywhere in the
+			#      repository, so the reward of this mission is currently a no-op.
+			#TODO: the reference screenshot also shows "Also enables Add [Knowledge from
+			#      our Patron] privilege for Mages Estate" - that Mages privilege does
+			#      not exist in common/estate_privileges/ yet. Per the author decision of
+			#      2026-10-06 estate privileges are left for a later, unified pass, so
+			#      nothing is written for it here.
+			#Author decision 2026-10-08: a missing tooltip (or a missing loc key) is
+			#never a reason to add a `custom_tooltip`, so none is written here - the
+			#event line is left to the engine's own `country_event` tooltip.
+		}
+	}
+	F70_enough_is_enough = {
+		position = 13
+		required_missions = {
+			F70_root_of_them_all
+		}
+		#The patron has been generous for long enough - the Khet itself is now to be
+		#bound, so that its gifts stop being a favour and start being an obligation.
+		trigger = {
+			#We can try to bind Khet now
+			#TODO: this requirement is not something this mission can check on its own - it
+			#      comes from the rest of the mission tree content that makes the attempt
+			#      possible in the first place. Nothing named "bind" exists anywhere in
+			#      missions/, events/, decisions/ or common/ yet, so there is no id, flag
+			#      or decision to check here. Wire the real condition in once that content
+			#      lands; until then this mission only evaluates the Hedonism requirement
+			#      below.
+			#Hedonism is at least 95
+			#(Hedonism is the Stewardship's name for `meritocracy` - see
+			# `CELESTIAL_EMPEROR_BENEFIT_DESC`: "Uses Hedonism Mechanics". The same
+			# resource is checked at 80 by `F70_something_necessary`, and
+			# `F70_deal_with_mariat` pays out 10 of it.)
+			meritocracy = 95
+		}
+		effect = {
+			#Event [Bind the Khet]
+			#(`flavour_mattabo.21` is that event - the one in the Contract Events group of
+			# events/Flavour_Mattabo_F70.txt. Like every other event in that file it is
+			# still an empty placeholder and its title/desc/option keys are not in
+			# localisation yet, so this tooltip line shows the raw `flavour_mattabo.21.t`
+			# key for now - the same situation as `F70_grand_sacrifice` with
+			# `flavour_mattabo.20` and `F70_root_of_them_all` with `flavour_mattabo.30`.)
+			country_event = {
+				id = flavour_mattabo.21 #Bind the Khet
+			}
+			#Author decision 2026-10-08: a missing tooltip (or a missing loc key) is
+			#never a reason to add a `custom_tooltip`, so none is written here - the
+			#event line is left to the engine's own `country_event` tooltip.
+		}
+	}
+	F70_his_real_face = {
+		position = 14
+		required_missions = {
+			F70_enough_is_enough
+		}
+		#The Khet has been dealt with behind closed doors; now the Steward calls it to the table.
+		trigger = {
+			#The Great Sorrow reaches at least stage 2
+			#Stage = the `level` of a magical project, checked by the scripted trigger
+			#`at_least_magic_project_level` (`common/scripted_triggers/anb_scripted_triggers_magic.txt:4363`),
+			#where `level = N` means "at least N" - the same reading `F70_targeted_training`
+			#uses for `battlemage_academy level = 1`. The wrapper is not decoration: the
+			#trigger is a raw `check_variable`, so unwrapped the mission would list
+			#`the_great_sorrow_level is at least 2` as its requirement line.
+			#TODO: The Great Sorrow does not exist yet - the author confirmed 2026-10-08 it
+			#      is a magical project still to be made, and no `the_great_sorrow` id exists
+			#      under common/, missions/, decisions/ or localisation/. The id above is a
+			#      proposal, so this requirement cannot be met until the project itself lands.
+			#TODO: the loc key `F70_his_real_face_great_sorrow_tt` is missing (only the tree
+			#      file may be touched until the tree is filled in, per the 2026-10-08 author
+			#      decision), so this line shows the raw key in game for now.
+			custom_trigger_tooltip = {
+				tooltip = F70_his_real_face_great_sorrow_tt
+				at_least_magic_project_level = {
+					project = the_great_sorrow
+					level = 2
+				}
+			}
+			#Conjuration: Legendary Level
+			#The Mages estate's schools run Novice -> Proficient -> Renowned -> Legendary,
+			#and the `is_estate_conjuration_level_*` triggers read one country flag each.
+			#Their own localisation gives the Legendary line as exactly
+			#`is_estate_conjuration_level_3` ("The [Mages] are Legendary in Conjuration",
+			#`localisation/anb_magic_system_l_english.yml:346`), so Legendary is level 3.
+			is_estate_conjuration_level_3 = yes
+		}
+		effect = {
+			#Event [A Meeting with our Patron]
+			#(`flavour_mattabo.22` is that event - the third entry of the Contract Events
+			# group in `events/Flavour_Mattabo_F70.txt`. Nothing calls it yet, so this
+			# mission is its first reference, and it is `is_triggered_only = yes`. Like the
+			# rest of that file it is still an empty placeholder without loc keys, so this
+			# line shows the raw `flavour_mattabo.22.t` key for now - the same situation
+			# `F70_grand_sacrifice`, `F70_root_of_them_all` and `F70_enough_is_enough` are in.)
+			country_event = {
+				id = flavour_mattabo.22 #A Meeting with Our Patron
+			}
+			#The event owns its rewards, as with `F70_root_of_them_all` - nothing is granted here.
+			#TODO: fill in `flavour_mattabo.22`'s `immediate`/option effects when the
+			#      event is written; it is currently an empty skeleton.
+			#Author decision 2026-10-08: a missing tooltip (or a missing loc key) is
+			#never a reason to add a `custom_tooltip`, so none is written here - the
+			#event line is left to the engine's own `country_event` tooltip.
+		}
+	}
+	F70_fulfilling_the_contract = {
+		position = 15
+		required_missions = {
+			F70_accumlated_discontent
+			F70_his_real_face
+			F70_cheer_for_ourselves
+		}
+		#The contract with our patron has never really been a matter of words - it has
+		#been a matter of the Shadow Swamp itself: the swamp and its world tree are the
+		#patron's share of the bargain, and the realm only collects once the hags are
+		#gone, the tree is freed and the temples have made our faith the one that
+		#matters out there. Each of the five lines of the reference screenshot is one
+		#requirement below.
+		trigger = {
+			#All the provinces in the Shadow Swamp region are owned by us
+			#(`shadow_swamp_region` is `map/region.txt:1101`, the region of the same
+			#name at the heart of Sarhal; it holds 13 areas and 47 provinces, 39 of
+			#which start under S70 Yezel Mora and 8 of which start uncolonised). The
+			#universal form is a plain condition block - `type = all` plus `owned_by =
+			#ROOT` - exactly the shape `khatalashya_tchoken_farms`
+			#(`missions/Khatalashya_Missions.txt:2556`) and `konolkhatep_cleanse_taint`
+			#(`missions/Konolkhatep_Missions.txt:2714`) use on this same region. Note
+			#that `owned_by` only counts full owners, so the 8 uncolonised provinces
+			#have to be colonised rather than left alone.
+			shadow_swamp_region = {
+				type = all
+				owned_by = ROOT
+			}
+			#At least 15 provinces in the Shadow Swamp region have a temple or a
+			#cathedral
+			#The counting form of the repository is
+			#`num_of_owned_provinces_with = { value = N <province triggers> }`
+			#(`missions/Adenica_Missions.txt:1561`, `missions/Bibyobi_Missions.txt:1028`),
+			#and `has_tax_building_trigger` is the scripted trigger that covers exactly
+			#temple + cathedral (`common/scripted_triggers/00_scripted_triggers.txt:1406`;
+			#precedents `missions/Bibyobi_Missions.txt:1031`,
+			#`missions/ChienBinhrung_Missions.txt:503`). It brings its own
+			#`has_tax_building_trigger_tt` tooltip, which already has a loc key.
+			num_of_owned_provinces_with = {
+				value = 15
+				region = shadow_swamp_region
+				has_tax_building_trigger = yes
+			}
+			#Yezel Mora does not exist anymore
+			#(S70 is the hag coven of the Shadow Swamp -
+			#`localisation/anb_countries_l_english.yml:2275`. The "tag is gone" form is
+			#`NOT = { exists = S70 }`; the surrounding region's own missions use it in
+			#the same way - `missions/Ibekisedara_Missions.txt:950`, `:1646`)
+			NOT = {
+				exists = S70
+			}
+			#Religious Power is at least 100
+			#("Religious Power" is the religion power pool itself, so the bare engine
+			#trigger is `church_power = N` - the tree already reads it in
+			#`F70_second_contact` (`church_power = 25`), and the repository uses it
+			#widely (161 occurrences under `missions/`). The engine prints its own line
+			#for it, so no `custom_trigger_tooltip` is wrapped around it.)
+			church_power = 100
+			#Shadowroot Matriarch has been purified
+			#Purifying the tree is the `purify_the_tree` decision
+			#(`decisions/Shadowswamp_Decisions.txt:2`), which swaps the
+			#`shadowroot_matriarch` great project at Sprigi Twani (6690) for
+			#`shadowroot_matriarch_purified` and sets the global flag
+			#`shadowtree_purified`. So "has been purified" is read as that global flag,
+			#which is also how the Duwarkani treat it
+			#(`missions/Duwarkani_missions.txt:870`, `duwarkani_destroy_the_hags_control`).
+			#The tooltip `shadowtree_purified_tt` already exists
+			#(`localisation/anb_sarhal_events_l_english.yml:61`), so this line reads as a
+			#finished sentence in game instead of a raw variable or key name - no new
+			#loc key is created by it. Deliberately not written as
+			#`6690 = { has_great_project = { type = shadowroot_matriarch_purified } }`:
+			#that form is about the building rather than the purification, and without
+			#an explicit `tier` it would lean on the engine's default tier line, while
+			#the flag is exactly what the decision sets and what every existing reader
+			#checks.
+			custom_trigger_tooltip = {
+				tooltip = shadowtree_purified_tt
+				has_global_flag = shadowtree_purified
+			}
+		}
+		effect = {
+			#Event [Something Amiss]
+			#(`flavour_mattabo.23` is the fourth entry of the Contract Events group in
+			#`events/Flavour_Mattabo_F70.txt:269` - [Something Amiss]. It is
+			#`is_triggered_only = yes` and nothing in the repository called it before
+			#this mission, so this is its first and only reference. Like the rest of
+			#that file it is still an empty placeholder without loc keys, so this line
+			#shows the raw `flavour_mattabo.23.t` key for now - the same situation
+			#`F70_grand_sacrifice`, `F70_root_of_them_all`, `F70_enough_is_enough` and
+			#`F70_his_real_face` are in with `.20` / `.30` / `.21` / `.22`.)
+			country_event = {
+				id = flavour_mattabo.23 #Something Amiss
+			}
+			#The event owns its rewards - nothing is granted here. The remaining
+			#unattached Contract Event is `flavour_mattabo.24` [Our Bright Future],
+			#which is the natural fit for the epilogue `F70_pleasant_cooperation`.
+			#TODO: fill in `flavour_mattabo.23`'s `immediate`/option effects when the
+			#      event is written; it is currently an empty skeleton, so the reward of
+			#      this mission is a no-op until then.
+			#Author decision 2026-10-08: a missing tooltip (or a missing loc key) is
+			#never a reason to add a `custom_tooltip`, so none is written here - the
+			#event line is left to the engine's own `country_event` tooltip.
+		}
+	}
+	F70_pleasant_cooperation = {
+		position = 16
+		required_missions = {
+			F70_fulfilling_the_contract
+		}
+		#The epilogue. `F70_fulfilling_the_contract` hands us the Shadow Swamp and
+		#the purified world tree, which is what this mission then declares to the
+		#rest of Sarhal: the hag coven is gone, so the core of the continent is
+		#clean. That is a statement about the world rather than about any one of
+		#our provinces, so it is carried by a country flag - `F70_beaten_yezel_mora`
+		#- which the reference screenshot has as its one visible line
+		#("Has ened the evil in the core of Sarhal", a typo for "has ended").
+		trigger = {
+			#Has ended the evil in the core of Sarhal
+			#(`Yezel Mora` = S70, the hag coven and the original holder of the 39
+			#settled provinces of the region - `localisation/anb_countries_l_english.yml:2275`.
+			#The flag is silent, so `custom_trigger_tooltip` is what turns the
+			#requirement row into the sentence from the screenshot; it is the
+			#established device for exactly this (the neighbouring
+			#`F70_fulfilling_the_contract` uses it for `shadowtree_purified` just
+			#above, and `missions/Ibekisedara_Missions.txt:950`, `:1646` read the
+			#same tag with a bare `NOT = { exists = S70 }`). The flag is also
+			#accepted on its own so that the mission stays completed once it has
+			#been passed, the way the repository's other "once achieved" missions
+			#read their own marker.
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = F70_pleasant_cooperation_evil_ended_tt
+					has_country_flag = F70_beaten_yezel_mora
+				}
+				NOT = {
+					exists = S70
+				}
+			}
+			#And the two things the contract was really about: the tree at the
+			#centre of the swamp and the faith that grew around it. Both are read
+			#exactly the way `F70_fulfilling_the_contract` reads them - the
+			#`purify_the_tree` decision (`decisions/Shadowswamp_Decisions.txt:31`)
+			#sets `shadowtree_purified` and swaps the `shadowroot_matriarch` great
+			#project for `shadowroot_matriarch_purified`, and 100 Religious Power
+			#is the pool itself (`church_power`, already used by
+			#`F70_second_contact` as `church_power = 25`).
+			custom_trigger_tooltip = {
+				tooltip = shadowtree_purified_tt
+				has_global_flag = shadowtree_purified
+			}
+			church_power = 100
+		}
+		effect = {
+			#Has ended the evil in the core of Sarhal
+			#The flag itself is silent, so the line the player reads is the
+			#`custom_tooltip` text; the flag is written inside the hidden block so
+			#that it is never announced anywhere as a raw flag name. This is a
+			#structural tooltip, not a "cover up a missing loc key" one - see
+			#`.generic/anb_script_file_conventions.md` section 5.3 - and unlike
+			#`add_country_modifier` it suppresses no engine-generated line
+			#(`set_country_flag` produces none, and the `country_event` line below
+			#is a separate effect). The pair needs the loc key
+			#`F70_pleasant_cooperation_evil_ended_tt` ("Has ended the evil in the
+			#core of Sarhal").
+			custom_tooltip = {
+				text = F70_pleasant_cooperation_evil_ended_tt
+				hidden_effect = {
+					set_country_flag = F70_beaten_yezel_mora
+				}
+			}
+			#Event [Our Bright Future]
+			#(`flavour_mattabo.24`, `events/Flavour_Mattabo_F70.txt:284`, the last
+			#entry of the Contract Events group). It was kept free on purpose for
+			#this mission when `.23` was attached to `F70_fulfilling_the_contract`
+			#on 2026-10-08, it is `is_triggered_only = yes`, and this is its first
+			#and only reference in the repository, so nothing else can fire it. It
+			#is still an empty skeleton without loc keys, so this line currently
+			#shows the raw `flavour_mattabo.24.t` key - the same intermediate state
+			#as `.20` / `.21` / `.22` / `.23` / `.30`.
+			country_event = {
+				id = flavour_mattabo.24 #Our Bright Future
+			}
+			#The event owns the epilogue's rewards; nothing is granted here.
+			#TODO: fill in `flavour_mattabo.24`'s `immediate`/option effects when
+			#      the event is written; until then the reward of this final
+			#      mission is a no-op.
+			#Author decision 2026-10-08: a missing tooltip (or a missing loc key)
+			#never justifies adding a `custom_tooltip` for one of the engine's own
+			#lines, so the `country_event` line is left to the engine.
+		}
+	}
+}
+mattabo_4 = {
+	slot = 4
+	ai = yes
+	generic = no
+	has_country_shield = yes
+	potential = {
+		tag = F70
+	}
+	F70_second_contact = {
+		position = 3
+		required_missions = {
+			F70_planned_victory
+		}
+		trigger = {
+			has_country_modifier = F70_shattered_illusion
+			#Mazu Makhara
+			5466 = {
+				num_of_units_in_province = {
+					who = ROOT
+					type = infantry
+					amount = 5
+				}
+			}
+			#No Ahati special units
+			NOT = {
+				num_of_janissaries = 1
+			}
+			church_power = 25
+			has_mana = {
+				amount = 25
+			}
+		}
+		effect = {
+			country_event = {
+				id = flavour_mattabo.7
+			}
+		}
+	}
+	F70_united_as_one = {
+		position = 4
+		required_missions = {
+			F70_second_contact
+		}
+		trigger = {
+			#At least one Clergy agenda has been completed
+			num_of_estate_agendas_completed = {
+				estate = estate_church
+				value = 1
+			}
+			#Fewer than 1 rebel army
+			NOT = { num_of_rebel_armies = 1 }
+			#One of the following must be true:
+			OR = {
+				#1. A Statesman advisor of at least level 2 is employed
+				statesman = 2
+				#2. A Theologian advisor of at least level 2 is employed
+				theologian = 2
+				#3. Any other DIP advisor of at least level 2 is employed
+				#   and we have at least 50 DIP power (which this mission then spends)
+				AND = {
+					employed_advisor = { category = dip skill = 2 }
+					dip_power = 50
+				}
+			}
+		}
+		effect = {
+			#If only option 3 is true, we pay 50 DIP power for it
+			if = {
+				limit = {
+					employed_advisor = { category = dip skill = 2 }
+					dip_power = 50
+					NOT = {
+						OR = {
+							statesman = 2
+							theologian = 2
+						}
+					}
+				}
+				add_dip_power = -50
+			}
+			#Remove [Shattered Illusion]
+			remove_country_modifier = F70_shattered_illusion
+			#TODO: add the Clergy privilege `F70_one_same_goal` to
+			#      common/estate_privileges/ (Clergy: loyalty -5, influence 0,
+			#      max absolutism -5) - its loc name is shared with the province modifier
+			set_estate_privilege = F70_one_same_goal
+			#All Aakhetist provinces we own gain the permanent modifier [One Same Goal]
+			custom_tooltip = F70_united_as_one_one_same_goal_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = { religion = aakhetist }
+					add_province_modifier = {
+						name = F70_one_same_goal
+						duration = -1
+					}
+				}
+			}
+			#If it is 1460 or earlier, gain [Eager to Return] for 20 years
+			if = {
+				limit = { NOT = { is_year = 1461 } }
+				custom_tooltip = F70_united_as_one_yes_tt
+				add_country_modifier = {
+					name = F70_eager_to_return
+					duration = 7300
+				}
+			}
+			else = {
+				custom_tooltip = F70_united_as_one_no_tt
+				tooltip = {
+					add_country_modifier = {
+						name = F70_eager_to_return
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+	F70_military_preparation = {
+		position = 5
+		required_missions = {
+			F70_united_as_one
+		}
+		trigger = {
+			if = {
+				limit = { has_dlc = "Domination" }
+				has_estate_privilege = estate_burghers_promote_burgher_bookkeeping
+			}
+			else = {
+				estate_loyalty = {
+					estate = estate_burghers
+					loyalty = 50
+				}
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 2
+				OR = {
+					trade_goods = wool
+					trade_goods = livestock
+					trade_goods = iron
+				}
+				num_of_times_improved_by_owner = 1
+			}
+		}
+		effect = {
+			#Gain permanent claims on the Gol region
+			gol_region = {
+				add_permanent_claim = ROOT
+			}
+			add_manpower = 10000
+			if = {
+				limit = { has_dlc = "Domination" }
+				custom_tooltip = F70_military_preparation_upgrade_privilege_tt
+				hidden_effect = {
+					set_country_flag = F70_bookkeeping_upgraded
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = F70_reliable_logistics
+					duration = -1
+				}
+			}
+		}
+	}
+	F70_blood_for_blood = {
+		position = 7
+		required_missions = {
+			F70_a_successful_revenge
+		}
+		trigger = {
+			#All the provinces in the Krahilyn area are owned by us
+			krahilyn_area = {
+				type = all
+				owned_by = ROOT
+			}
+			#Krahilzin has a castle and a marketplace or a workshop,
+			#and at least 10k of our soldiers are stationed there
+			5477 = { #Krahilzin
+				has_fort_building_trigger = yes
+				OR = {
+					has_trade_building_trigger = yes
+					has_production_building_trigger = yes
+				}
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 10
+				}
+			}
+			#The following provinces are ours and at least 1k of our soldiers are stationed
+			#in each of them (Krahilzin is already covered by the Krahilyn area check above)
+			487 = { #Ilzin Grizaka
+				owned_by = ROOT
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			5480 = { #Gnolkarr
+				owned_by = ROOT
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			5533 = { #Romaton
+				owned_by = ROOT
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			5475 = { #Saymas
+				owned_by = ROOT
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+		}
+		effect = {
+			#Ilzin Grizaka, Gnolkarr, Krahilzin, Romaton and Saymas change their trade goods
+			#to slaves, and gain the permanent province modifier [Gnollish Slaves]
+			hidden_effect = {
+				487 = { #Ilzin Grizaka
+					change_trade_goods = slaves
+					add_province_modifier = {
+						name = F70_gnollish_slaves
+						duration = -1
+					}
+				}
+				5480 = { #Gnolkarr
+					change_trade_goods = slaves
+					add_province_modifier = {
+						name = F70_gnollish_slaves
+						duration = -1
+					}
+				}
+				5477 = { #Krahilzin
+					change_trade_goods = slaves
+					add_province_modifier = {
+						name = F70_gnollish_slaves
+						duration = -1
+					}
+				}
+				5533 = { #Romaton
+					change_trade_goods = slaves
+					add_province_modifier = {
+						name = F70_gnollish_slaves
+						duration = -1
+					}
+				}
+				5475 = { #Saymas
+					change_trade_goods = slaves
+					add_province_modifier = {
+						name = F70_gnollish_slaves
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	F70_reclaim_the_lost_land = {
+		position = 9
+		required_missions = {
+			F70_reunite_kheterata
+		}
+		trigger = {
+			#All the provinces of the Deshak and Oris areas are our core provinces.
+			#("Desh-al-deshak" is the province Desh-Al-Deshak (383), the one the
+			# whole Deshak area is named for - `F70_reunite_kheterata` already
+			# gave us permanent claims on both areas, and the Akasik Mountains
+			# are the last part of the old Kheteratan heartland.)
+			deshak_area = {
+				type = all
+				owned_by = ROOT
+				is_core = ROOT
+			}
+			oris_area = {
+				type = all
+				owned_by = ROOT
+				is_core = ROOT
+			}
+			#Desh-Al-Deshak itself is our core province as well
+			#(it sits in the Middle Akasik area, not in the Deshak area)
+			383 = { #Desh-Al-Deshak
+				owned_by = ROOT
+				is_core = ROOT
+			}
+			#Hapak has a workshop and a marketplace
+			#(Hapak is one of the four provinces of the Oris area, so it is
+			# already covered by the core province requirement above. The two
+			# scripted triggers below check the whole building type, so the
+			# upgraded versions count as well: `has_production_building_trigger`
+			# also accepts a counting house, `has_trade_building_trigger` a trade
+			# depot or a stock exchange - both defined in
+			# common/scripted_triggers/00_scripted_triggers.txt)
+			397 = { #Hapak
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			#Desh-Al-Deshak has a castle, a marketplace, a trade center of at
+			#least level 2 and at least 3 buildings in total
+			383 = { #Desh-Al-Deshak
+				has_fort_building_trigger = yes #Castle (or an upgraded fort)
+				has_trade_building_trigger = yes
+				province_has_center_of_trade_of_level = 2
+				num_of_buildings_in_province = 3
+			}
+		}
+		effect = {
+			#Gain the permanent country modifier [Akasi Mineral Supply]:
+			#Regiment Costs -10%
+			#and permanent claims on the Akasik Mountains, Middle Akasik,
+			#Ekha and Akarat areas (granted visibly at the end of this effect)
+			add_country_modifier = {
+				name = F70_akasi_mineral_supply
+				duration = -1
+			}
+			#Gain permanent claims on the Akasik Mountains, Middle Akasik,
+			#Ekha and Akarat areas
+			akasik_mountains_area = { add_permanent_claim = ROOT }
+			middle_akasik_area = { add_permanent_claim = ROOT }
+			ekha_area = { add_permanent_claim = ROOT }
+			akarat_area = { add_permanent_claim = ROOT }
+		}
+	}
+	F70_eradicate_the_scourge = {
+		position = 10
+		required_missions = {
+			F70_reclaim_the_lost_land
+		}
+		#The source screenshot ("Eradicate the Scourge") lists six requirements and
+		#three effects. The Seascourge gnolls of Viakkoc (U07) made Kokerrat (393)
+		#their capital, and the lands of the Akasik region are the last gnollish
+		#holdouts of the old Kheteratan heartland, so this mission is about finishing
+		#them off and digesting their four areas for good.
+		#Province names follow the reference screenshot where the gnollish name is
+		#the one it uses: Kokerrat is 393, "Xulkerya" is 398 (its gnollish name in
+		#`common/province_names/gnollish.txt`) and Addsen is 385.
+		trigger = {
+			#Requirement 1: every province of the Akasik Mountains, Middle Akasik,
+			#Ekha and Akarat areas is our core province and has left Xhazobkult and
+			#Kvangahga behind (a province that still has [Religious Zeal] counts as
+			#freshly converted; uncolonized provinces have no owner at all and are
+			#therefore ignored, as in `F70_threat_at_the_doorstep`)
+			akasik_mountains_area = {
+				type = all
+				OR = {
+					is_city = no
+					AND = {
+						owned_by = ROOT
+						is_core = ROOT
+						OR = {
+							has_province_modifier = religious_zeal_at_conv
+							AND = {
+								NOT = { religion = xhazobkult }
+								NOT = { religion = kvangahga }
+							}
+						}
+					}
+				}
+			}
+			middle_akasik_area = {
+				type = all
+				OR = {
+					is_city = no
+					AND = {
+						owned_by = ROOT
+						is_core = ROOT
+						OR = {
+							has_province_modifier = religious_zeal_at_conv
+							AND = {
+								NOT = { religion = xhazobkult }
+								NOT = { religion = kvangahga }
+							}
+						}
+					}
+				}
+			}
+			ekha_area = {
+				type = all
+				OR = {
+					is_city = no
+					AND = {
+						owned_by = ROOT
+						is_core = ROOT
+						OR = {
+							has_province_modifier = religious_zeal_at_conv
+							AND = {
+								NOT = { religion = xhazobkult }
+								NOT = { religion = kvangahga }
+							}
+						}
+					}
+				}
+			}
+			akarat_area = {
+				type = all
+				OR = {
+					is_city = no
+					AND = {
+						owned_by = ROOT
+						is_core = ROOT
+						OR = {
+							has_province_modifier = religious_zeal_at_conv
+							AND = {
+								NOT = { religion = xhazobkult }
+								NOT = { religion = kvangahga }
+							}
+						}
+					}
+				}
+			}
+			#Requirements 2, 3 and 4: Addsen, Kokerrat and Xulkerya each have a
+			#regimental camp (or a conscription center) and a marketplace (or an
+			#upgraded trade building), and at least 1k of our soldiers are
+			#stationed in each of them.
+			#Regimental Camps and Conscription Centers are the forcelimit line of
+			#buildings, so the right scripted trigger is
+			#`has_forcelimit_building_trigger` - NOT `has_manpower_building_trigger`,
+			#which only covers barracks and training fields.
+			#(Ownership is already implied by the area checks above, but is spelled
+			# out here as well, following the rest of this tree.)
+			385 = { #Addsen
+				owned_by = ROOT
+				has_forcelimit_building_trigger = yes
+				has_trade_building_trigger = yes
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			393 = { #Kokerrat
+				owned_by = ROOT
+				has_forcelimit_building_trigger = yes
+				has_trade_building_trigger = yes
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			398 = { #Xulkerya
+				owned_by = ROOT
+				has_forcelimit_building_trigger = yes
+				has_trade_building_trigger = yes
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			#Requirement 5: Kokerrat has a castle as well (or an upgraded fort -
+			#`has_fort_building_trigger` accepts the whole fort line)
+			393 = { #Kokerrat
+				owned_by = ROOT
+				has_fort_building_trigger = yes
+			}
+			#Requirement 6: Ekha and Khasa each have a marketplace (or an upgraded
+			#trade building)
+			402 = { #Ekha
+				owned_by = ROOT
+				has_trade_building_trigger = yes
+			}
+			400 = { #Khasa
+				owned_by = ROOT
+				has_trade_building_trigger = yes
+			}
+			#Requirement 7: Viakkoc does not exist anymore (Viakkoc is the
+			#Seascourge pack U07, the gnollish state that holds Kokerrat at the start)
+			NOT = { exists = U07 } #Viakkoc
+		}
+		effect = {
+			#Effect 1: gain permanent claims on all the Sandfang gnoll culture
+			#provinces of the Bulwar subcontinent (i.e. `bulwar_superregion` in
+			#`map/superregion.txt`).
+			#The claim is left visible instead of being wrapped in a
+			#`hidden_effect`: `add_permanent_claim` generates its own tooltip line,
+			#and per the author decision of 2026-10-08 a missing or verbose tooltip
+			#is never a reason to add a `custom_tooltip` (see
+			#`.generic/anb_script_file_conventions.md`, section 5).
+			bulwar_superregion = {
+				limit = { culture = sandfang_gnoll }
+				add_permanent_claim = ROOT
+			}
+			#Effect 2: Addsen, Kokerrat and Xulkerya change their trade goods to
+			#Slaves and gain the permanent province modifier [Gnollish Slaves]
+			#(defined in `common/event_modifiers/anb_Mattabo_modifiers.txt`, it needs
+			#no `custom_tooltip`: `add_province_modifier` brings its own line, and
+			#the missing display name loc key is a known, accepted gap)
+			385 = { #Addsen
+				change_trade_goods = slaves
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+			393 = { #Kokerrat
+				change_trade_goods = slaves
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+			398 = { #Xulkerya
+				change_trade_goods = slaves
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+			#Effect 3: Ekha and Khasa gain the permanent province modifiers
+			#[Gnollish Slaves] and [Gnoll Export Port] (Local Trade Power +20), and a
+			#gnollish minority grows in both of them
+			402 = { #Ekha
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+				add_province_modifier = {
+					name = F70_gnoll_export_port
+					duration = -1
+				}
+				add_gnollish_minority_size_effect = yes
+			}
+			400 = { #Khasa
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+				add_province_modifier = {
+					name = F70_gnoll_export_port
+					duration = -1
+				}
+				add_gnollish_minority_size_effect = yes
+			}
+		}
+	}
+	F70_and_their_ilk = {
+		position = 12
+		required_missions = {
+			F70_eradicate_the_scourge
+		}
+		#The source screenshot ("And Their Ilk") lists three requirements and three
+		#effects. It is the epilogue of the Sandfang campaign of this tree: after
+		#`F70_eradicate_the_scourge` has taken the Akasik holdouts of the old
+		#Kheteratan heartland, this mission demands the rest of the Sandfang gnolls
+		#of the Bulwar subcontinent, their conversion away from the demon-
+		#worshipping Xhazobkult and the Kvangahga, and the integration of the six
+		#old packs of the Sur mountains (Krysdxif, Ekyrigrax, Ilzin Tluukt,
+		#Raboaggrax, Grixek and Ilzinxarr) as slave-trading workshops and markets
+		#of our realm.
+		trigger = {
+			#Requirement 1: every Sandfang gnoll culture province of the Bulwar
+			#subcontinent (i.e. `bulwar_superregion` in `map/superregion.txt`, the
+			#same scope `F70_eradicate_the_scourge` already uses for the Sandfang
+			#claims) is our own core province and has left Xhazobkult and Kvangahga
+			#behind (a province that still has [Religious Zeal] counts as freshly
+			#converted, as in `F70_take_the_initiative`).
+			#The non-Sandfang provinces of the superregion are exempted through the
+			#`OR` branch instead of a `limit = { culture = sandfang_gnoll }`: a
+			#`limit` inside a multi-object scope does NOT filter in a trigger (see
+			#`.generic/anb_script_file_conventions.md`, section 6.2). The same
+			#`superregion = { type = all OR = { ... } }` shape is used by
+			#`missions/Azkabar_missions.txt` (`F35_cleanse_the_garden`).
+			#Only `is_core = ROOT` is demanded, not `is_city = yes`: every Sandfang
+			#province of the superregion is a city, and `is_core` alone already
+			#implies ownership.
+			bulwar_superregion = {
+				type = all
+				OR = {
+					NOT = { culture = sandfang_gnoll }
+					AND = {
+						owned_by = ROOT
+						is_core = ROOT
+						OR = {
+							has_province_modifier = religious_zeal_at_conv
+							AND = {
+								NOT = { religion = xhazobkult }
+								NOT = { religion = kvangahga }
+							}
+						}
+					}
+				}
+			}
+			#Requirement 2: the six named provinces of the Sur mountains each have a
+			#workshop or a counting house AND a marketplace, and at least 1k of our
+			#soldiers are stationed in each of them.
+			#The reference screenshot names them by their gnollish names, which are
+			#defined in `common/province_names/gnollish.txt`:
+			#Krysdxif = 597 (spelled Krysdaxif there), Ekyrigrax = 688,
+			#Ilzin Tluukt = 691, Raboaggrax = 692 (spelled Raboaggrax there; the
+			#screenshot prints Raboaggraz), Grixek = 645 and Ilzinxarr = 686.
+			#The two building lines are scripted triggers that cover the whole
+			#upgrade path (`has_production_building_trigger` also accepts a counting
+			#house, `has_trade_building_trigger` a trade depot or a stock exchange),
+			#defined in `common/scripted_triggers/00_scripted_triggers.txt`.
+			597 = { #Krysdaxif (Krysdxif in the reference screenshot)
+				owned_by = ROOT
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			688 = { #Ekyrigrax
+				owned_by = ROOT
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			691 = { #Ilzin Tluukt
+				owned_by = ROOT
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			692 = { #Raboaggrax
+				owned_by = ROOT
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			645 = { #Grixek (Grxek in the reference screenshot)
+				owned_by = ROOT
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			686 = { #Ilzinxarr
+				owned_by = ROOT
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			#Requirement 3: the Bulwar subcontinent has a center of trade of at
+			#least level 2. `province_has_center_of_trade_of_level` accepts that
+			#level or higher, so one check covers both the level 2 and the level 3
+			#of the reference screenshot.
+			#The reference screenshot names the Gazraak and Dreksaret regions in
+			#this line, but neither region holds a single Sandfang gnoll province
+			#(both belong to `east_sarhal_superregion`, not to Bulwar) and the same
+			#requirement ends with "in Bulwar subcontinent", so the check is scoped
+			#to `bulwar_superregion`, consistent with requirement 1.
+			#The same shape `region = { any_province = { ... } }` is used by
+			#`F70_take_the_initiative` (`missions/Mattabo_Mission.txt`).
+			bulwar_superregion = {
+				any_province = {
+					owned_by = ROOT
+					province_has_center_of_trade_of_level = 2
+				}
+			}
+		}
+		effect = {
+			#Effect 1: gain the permanent country modifier [Eliminated Gnollish
+			#Threat] - Yearly Prestige +1, Trade Efficiency +10%.
+			#The modifier is defined in `common/event_modifiers/anb_Mattabo_modifiers.txt`
+			#and is wired up here for the first time; `duration = -1` makes it
+			#permanent, matching the reference screenshot.
+			#`add_country_modifier` generates its own tooltip line, and per the
+			#author decision of 2026-10-08 a missing display name loc key is never a
+			#reason to add a `custom_tooltip` (see
+			#`.generic/anb_script_file_conventions.md`, section 5).
+			add_country_modifier = {
+				name = F70_eliminated_gnollish_threat
+				duration = -1
+			}
+			#Effect 2: Krysdaxif, Ekyrigrax, Ilzin Tluukt, Raboaggrax, Grixek and
+			#Ilzinxarr change their trade goods to Slaves and gain the permanent
+			#province modifier [Gnollish Slaves] (defined in
+			#`common/event_modifiers/anb_Mattabo_modifiers.txt`; the reference
+			#mission tooltip only lists the modifier itself, so no trade goods line
+			#is promised there - the trade good change is the mechanical point of
+			#the mission).
+			#No `custom_tooltip`: `change_trade_goods` is silent but
+			#`add_province_modifier` brings its own line, and the missing display
+			#name loc key is a known, accepted gap.
+			597 = { #Krysdaxif (Krysdxif in the reference screenshot)
+				change_trade_goods = slaves
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+			688 = { #Ekyrigrax
+				change_trade_goods = slaves
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+			691 = { #Ilzin Tluukt
+				change_trade_goods = slaves
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+			692 = { #Raboaggrax
+				change_trade_goods = slaves
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+			645 = { #Grixek (Grxek in the reference screenshot)
+				change_trade_goods = slaves
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+			686 = { #Ilzinxarr
+				change_trade_goods = slaves
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+		}
+	}
+	F70_the_weak_serve_the_strong = {
+		position = 13
+		required_missions = {
+			F70_and_their_ilk
+		}
+		#The source screenshot ("The Weak Serve the Strong") lists three requirements
+		#and two effects, and it is the mission that turns the conquered Sandfang
+		#gnolls of `F70_and_their_ilk` from a defeated enemy into the labour force of
+		#our realm.
+		#The requirements read the realm's *gnollish* provinces as a whole (the
+		#screenshot does not name a region, and by this point in the tree the crown
+		#holds gnollish land in Kheterata, Bulwar and the Salahad alike), so province
+		#counts are written without a region scope; `culture_group = gnollish` is the
+		#same umbrella the rest of this tree uses (see `F70_diabolical_sisters` and
+		#`F70_take_the_initiative`), and the mission sits after the Sandfang
+		#campaign, so the provinces it counts are ours by then.
+		trigger = {
+			#Requirement 1: at least 20 of our gnollish provinces are garrisoned -
+			#each with a Castle (a fort) or a Regimental Camp / Conscription Center.
+			#`num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with` counts
+			#provinces held by us or by our non-sovereign subjects, which is exactly
+			#"our provinces" (the same trigger `F70_new_steward_new_governance` and
+			#`missions/Jaddari_Missions.txt:996` already use).
+			#The gnollish filter must GATE the two building lines, not sit next to
+			#them: a flat OR of the culture and the two building triggers would count
+			#any province with a fort, gnollish or not. Hence the explicit `AND`
+			#wrapper - the province must be gnollish AND have one of the two lines.
+			#Wasteland provinces can never satisfy `culture_group`, and an uncolonised
+			#province is never "owned", so neither can reach the count.
+			#Both building lines are the scripted triggers from
+			#`common/scripted_triggers/00_scripted_triggers.txt`, so each covers its
+			#whole upgrade path (`has_fort_building_trigger` any fort - a Castle in EU4
+			#is `fort_15th` - and `has_forcelimit_building_trigger` regimental camp /
+			#conscription center). They also carry their own `custom_trigger_tooltip`,
+			#so using them adds no localisation gap; see
+			#`.generic/anb_script_file_conventions.md`, section 7.3.
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 20
+				AND = {
+					culture_group = gnollish
+					OR = {
+						has_fort_building_trigger = yes
+						has_forcelimit_building_trigger = yes
+					}
+				}
+			}
+			#Requirement 2: [Krahgradir] is Significant.
+			#Krahgradir is the great project (not a province) defined in
+			#`common/great_projects/anb_monuments_sarhal.txt` with `start = 5477`
+			#(Krahilzin, in `krahilyn_area`, held by U09 Gnollakaz at game start).
+			#Great project tiers are 0 Insignificant / 1 Noteworthy / 2 Significant /
+			#3 Magnificent (`localisation/tmm_l_english.yml`), and `tier = N` reads "at
+			#least N", so `tier = 2` is the "Significant" of the screenshot - the same
+			#reading `F70_learn_from_brothers` and `F70_targeted_training` already use.
+			5477 = { #Krahilzin
+				has_great_project = {
+					type = krahgradir
+					tier = 2
+				}
+			}
+			#Requirement 3: all our gnollish provinces have unrest below 0.
+			#`unrest = -0.01` is the strict "below 0" of the screenshot: as with
+			#`NOT = { unrest = 0 }` (used all over `missions/` for "has unrest"), the
+			#engine compares `unrest >= N`, so asking for the smallest value below zero
+			#is the only way to express a strict inequality.
+			#NOTE for the reviewer: the [Gnollish Slaves] province modifier this tree
+			#hands out (`local_unrest = 2`, `common/event_modifiers/anb_Mattabo_modifiers.txt`)
+			#pushes those provinces *above* 0 unrest, so a province with the modifier
+			#cannot satisfy this requirement until the realm brings it back down.
+			#The screenshot demands it as written, so it is implemented as written
+			#rather than relaxed to "unrest = 0".
+			#This is a UNIVERSAL check ("all our gnollish provinces"), so it cannot be
+			#written with `any_owned_province`: an "any" scope only asks whether at
+			#least one province qualifies, which is not what the screenshot says. The
+			#universal form used by the rest of this repo is a scope holding a plain
+			#condition block that every province must pass, with the provinces that
+			#are meant to be skipped riding on one branch of an `OR` - exactly the
+			#shape `F70_and_their_ilk` uses for non-Sandfang provinces and
+			#`F70_eradicate_the_scourge` for uncolonised ones (see
+			#`.generic/anb_script_file_conventions.md`, section 6.2: a `limit` inside
+			#such a scope does NOT filter in a trigger).
+			#The outer scope is `all_province` rather than `all_owned_province`
+			#because the requirement covers the gnollish provinces held by our
+			#non-sovereign subjects as well; `country_or_non_sovereign_subject_holds`
+			#is the same "ours or a non-sovereign subject's" test the province counter
+			#of requirement 1 applies, so the two requirements measure the same set of
+			#provinces. A province passes when it is simply not gnollish, or when it is
+			#gnollish AND ours AND below 0 unrest.
+			all_province = {
+				OR = {
+					NOT = { culture_group = gnollish }
+					AND = {
+						country_or_non_sovereign_subject_holds = ROOT
+						unrest = -0.01
+					}
+				}
+			}
+		}
+		effect = {
+			#Effect 1: permanent power projection +10.
+			#`add_permanent_power_projection` is the permanent form and takes the
+			#`10_permanent_power_projection` type, exactly as
+			#`missions/Derannic_Missions.txt:3481` and
+			#`missions/Konolkhatep_Missions.txt:3354`, one of 20 uses of the effect
+			#across `missions/`, `common/` and `events/`. Its loc key already exists
+			#(`localisation/scandinavia_l_english.yml`), and unlike
+			#`add_country_modifier` it does NOT generate a tooltip line of its own, so
+			#the screenshot's line is spelled out with a `custom_tooltip` - the
+			#"describes something the engine shows no line for" case of
+			#`.generic/anb_script_file_conventions.md` section 5.3, which is also why
+			#`missions/Derannic_Missions.txt:3480` does the same. The key is not
+			#written yet: this mission's `_title`/`_desc` and this tooltip are all
+			#withheld under the "only touch the mission tree until the tree is full"
+			#constraint of 2026-10-08, so the tooltip currently shows its raw key name
+			#in game - the same accepted intermediate state as `F70_learn_from_brothers`
+			#and `F70_enough_is_enough`.
+			custom_tooltip = F70_the_weak_serve_the_strong_power_projection_tt
+			add_permanent_power_projection = {
+				type = 10_permanent_power_projection
+				amount = 10
+			}
+			#Effect 2: enable a province button that spends 20 mil power to convert the
+			#trade goods of a gnollish culture province to Slaves and give that
+			#province the [Gnollish Slaves] modifier.
+			#TODO: the button itself is an external file change - Anbennar's province
+			#button system lives in `common/custom_gui/provinceview.txt` (a
+			#`custom_button` in one of the five slots at the bottom of the file, plus a
+			#slot in `interface/provinceview.gui`, which repeats the button three
+			#times for the three province-panel states, and a sprite in
+			#`interface/provinceview.gfx`), and the alternative is a vanilla
+			#`province_decisions` block in `decisions/`. Both are outside the mission
+			#tree, so under the 2026-10-08 constraint the mission only sets the flag
+			#the button will read; nothing reads it yet, which is a known and accepted
+			#intermediate state (the same shape as `F70_improved_perform_ritual` in
+			#`F70_something_necessary`).
+			#The button, when built, must: be visible only to the country that
+			#completed this mission (the flag below), only in a province that is ours
+			#and gnollish (`culture_group = gnollish`) and does not already carry the
+			#`F70_gnollish_slaves` modifier; require 20 military power; and apply
+			#`change_trade_goods = slaves` plus a permanent `F70_gnollish_slaves`
+			#province modifier (both already used by `F70_and_their_ilk` and
+			#`F70_take_the_initiative`). It needs its own `_tt` loc key, which is also
+			#outside the mission tree. Do not add a `custom_tooltip` for it here yet:
+			#there is nothing to describe until the button exists.
+			set_country_flag = F70_the_weak_serve_the_strong_province_button
+		}
+	}
+	F70_cheer_for_ourselves = {
+		position = 14
+		required_missions = {
+			F70_enough_is_enough
+			F70_the_weak_serve_the_strong
+		}
+		#The Sorrow has been made whole again, and the realm finally has the
+		#breathing room to look at itself - and to celebrate what it has become.
+		trigger = {
+			#The Great Sorrow has been completed
+			#Stage = the `level` of a magical project, read by the scripted trigger
+			#`at_least_magic_project_level` (`common/scripted_triggers/anb_scripted_triggers_magic.txt:4363`,
+			#body `check_variable = { which = $project$_level value = $level$ }`), where
+			#`level = N` means "at least N" - the same reading `F70_his_real_face` uses.
+			#Level 5 is the top stage of a magical project, so "has been completed" is
+			#this check (the project runs level 0 -> 5).
+			#TODO: The Great Sorrow does not exist yet - the author confirmed 2026-10-08
+			#      it is a magical project still to be made, and no `the_great_sorrow` id
+			#      exists under common/, missions/, decisions/ or localisation/. The id
+			#      above is the same proposal `F70_his_real_face` already uses (stage 2),
+			#      so this requirement cannot be met until the project itself lands; the
+			#      two missions must move to the same id when it is created.
+			custom_trigger_tooltip = {
+				tooltip = F70_cheer_for_ourselves_great_sorrow_tt
+				at_least_magic_project_level = {
+					project = the_great_sorrow
+					level = 5
+				}
+			}
+			#For all the provinces along the Mother's Sorrow, one of the following
+			#must be true:
+			#  1. Is prosperous: Development is at least 13, has at least 2 buildings
+			#  2. Development is at least 17, has at least 3 buildings
+			#"Along the Mother's Sorrow" is the `mothers_sorrow_group` province group
+			#(`map/provincegroup.txt:376`), the same scope `F70_rebuild_irrigation_system`
+			#and `F70_new_steward_new_governance` already use.
+			#This is a UNIVERSAL check, so it is a plain condition block that every
+			#province in the group must pass - not an `any_`/`all_owned_province` scope
+			#(see `.generic/anb_script_file_conventions.md`, section 6.2: a `limit`
+			#inside such a scope does NOT filter in a trigger, so the provinces that are
+			#meant to be skipped ride on a branch of an `OR` instead).
+			#`development = N` in province scope is total development (base tax +
+			#production + manpower), the same trigger `F70_new_steward_new_governance`
+			#uses - hence the screenshot's "Development is at least 13" reads as one
+			#total, not three separate columns.
+			#`num_of_buildings_in_province` counts every building in the province, the
+			#same trigger `F70_reunite_kheterata` uses for its three-building checks.
+			mothers_sorrow_group = {
+				type = all
+				OR = {
+					#Provinces we do not hold are not ours to develop: the group reaches
+					#the length of the river, so a province still held by someone else
+					#(or not yet colonised) is skipped rather than failed.
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+					AND = {
+						development = 13
+						num_of_buildings_in_province = 2
+					}
+					AND = {
+						development = 17
+						num_of_buildings_in_province = 3
+					}
+				}
+			}
+			#The Five Cities of Kheterata (Kheterat, Nirat, Koroshesh, Golkora and
+			#Niramit - the same five provinces `five_cities_reform` in
+			#`common/imperial_reforms/01_china.txt` is built on, and the same ids
+			#`F70_rebuild_irrigation_system` lists) have:
+			#Development at least 30, and a manufactory building
+			475 = { #Kheterat
+				development = 30
+				has_manufactory_trigger = yes
+			}
+			473 = { #Nirat
+				development = 30
+				has_manufactory_trigger = yes
+			}
+			463 = { #Koroshesh
+				development = 30
+				has_manufactory_trigger = yes
+			}
+			479 = { #Golkora
+				development = 30
+				has_manufactory_trigger = yes
+			}
+			5481 = { #Niramit
+				development = 30
+				has_manufactory_trigger = yes
+			}
+			#...and have expanded their infrastructure at least once, or 250 adm
+			#power is on hand instead.
+			#`num_of_times_expanded_infrastructure` is a province trigger and the
+			#Expanded Infrastructure button is a Leviathan feature (there is no button
+			#without the DLC), so this follows the repository's DLC fallback shape:
+			#an `if`/`else` in the trigger that swaps the province requirement for a
+			#resource requirement (precedents `missions/ArgOrdstun_Missions.txt:858`,
+			#`missions/Averilibet_Missions.txt:623`), with the matching half of the
+			#fallback - paying the power - in the effect below. The screenshot's
+			#"(Or 50 adm for each if no Leviathan DLC)" prices it per missing city, so
+			#250 adm is the price when none of the five has expanded yet; the check
+			#below is the simple form `F70_ensure_enchanted_steel_supply` uses
+			#(50 adm there), i.e. "the power is on hand" rather than an exact per-city
+			#count.
+			if = {
+				limit = { has_dlc = "Leviathan" }
+				OR = {
+					475 = { num_of_times_expanded_infrastructure = 1 } #Kheterat
+					473 = { num_of_times_expanded_infrastructure = 1 } #Nirat
+					463 = { num_of_times_expanded_infrastructure = 1 } #Koroshesh
+					479 = { num_of_times_expanded_infrastructure = 1 } #Golkora
+					5481 = { num_of_times_expanded_infrastructure = 1 } #Niramit
+				}
+			}
+			else = { adm_power = 250 }
+		}
+		effect = {
+			#Prestige +100
+			#(left bare on purpose: `add_prestige` prints no tooltip line of its own -
+			#the repository's `add_prestige_excess_to_splendour_effect` wraps it in a
+			#`tooltip = { ... }` for exactly that reason - but per author decision
+			#2026-10-08 a missing line is never a reason to add a `custom_tooltip`, so
+			#the line simply stays visible-through-the-TODO below rather than being
+			#spelled out here)
+			add_prestige = 100
+			#Gain the permanent country modifier [Earthly Paradise]:
+			#Global Unrest -2
+			#Monthly Splendor +2
+			#`F70_earthly_paradise` already exists
+			#(`common/event_modifiers/anb_Mattabo_modifiers.txt:121`) and matches the
+			#screenshot line for line, but nothing has ever used it - this mission is
+			#its first reference. `duration = -1` is the permanent form used by the
+			#other permanent rewards of this tree.
+			add_country_modifier = {
+				name = F70_earthly_paradise
+				duration = -1
+			}
+			#TODO: "All the excess Prestige will be converted into each type of
+			#      Monarch Power" is NOT implemented - no such effect exists anywhere
+			#      in the repository. The closest existing scripted effect is
+			#      `add_prestige_excess_to_splendour_effect`
+			#      (`common/scripted_effects/anb_scripted_effects.txt:4022`), which
+			#      pays 10 Splendor per point of prestige above the 100 cap; the
+			#      pattern for "each type of Monarch Power" is
+			#      `add_republican_tradition_excess_to_mana_effect` (same file, line
+			#      3987), which rolls a `random_list` over `add_adm_power` /
+			#      `add_dip_power` / `add_mil_power` once the capped resource is full.
+			#      Writing it therefore means a new scripted effect in
+			#      `common/scripted_effects/` (an external file), which the 2026-10-08
+			#      "only touch the mission tree until the tree is full" constraint
+			#      forbids for now. When it is written it should follow the
+			#      `add_prestige_excess_to_splendour_effect` shape - `while` over the
+			#      excess, `if = { limit = { prestige = 100 } ... }` - with the payout
+			#      being `add_adm_power` / `add_dip_power` / `add_mil_power` instead of
+			#      `add_splendor`; the screenshot does not state a rate, and the
+			#      precedent effect in the tree (`F70_ensure_enchanted_steel_supply`)
+			#      spends 50 adm per missing city, so 50 of each power per point of
+			#      excess prestige is the reading to confirm with the author.
+			#      The effect will need its own loc key for the line it prints, which is
+			#      also outside the mission tree.
+			#No `custom_tooltip` is written for it here: per author decision 2026-10-08
+			#a missing tooltip (or a missing loc key) is never a reason to add one.
+		}
+	}
+}
+mattabo_5 = {
+	slot = 5
+	ai = yes
+	generic = no
+	has_country_shield = yes
+	potential = {
+		tag = F70
+	}
+	F70_visit_a_neighbour = {
+		position = 7
+		required_missions = {
+			F70_a_successful_revenge
+		}
+		#The Kubaci region is the home of the windhowler gnolls (F69 Irkorzik and its neighbours),
+		#and `F70_a_successful_revenge` already gave us permanent claims on their provinces.
+		trigger = {
+			#All the gnollish culture provinces in the Kubaci region are our core provinces
+			#(non-gnollish provinces of the region are ignored)
+			kubaci_region = {
+				type = all
+				OR = {
+					NOT = { culture_group = gnollish }
+					AND = {
+						owned_by = ROOT
+						is_core = ROOT
+					}
+				}
+			}
+			#Xhink Zughu (5735, franxhaz_area) has a marketplace or a workshop,
+			#a barracks or a training field, and at least 1k of our soldiers
+			#(ownership is already implied by the region check above, but is spelled out
+			# here so the requirement survives a culture change)
+			5735 = { #Xhink Zughu
+				owned_by = ROOT
+				OR = {
+					has_trade_building_trigger = yes
+					has_production_building_trigger = yes
+				}
+				has_manpower_building_trigger = yes
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			#Bazughu (5719, fanghasba_area) meets the same requirements
+			5719 = { #Bazughu
+				owned_by = ROOT
+				OR = {
+					has_trade_building_trigger = yes
+					has_production_building_trigger = yes
+				}
+				has_manpower_building_trigger = yes
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+		}
+		effect = {
+			#Gain permanent claims on every gnollish culture province of
+			#the Janama and West Salahad regions
+			custom_tooltip = F70_visit_a_neighbour_gnollish_claims_tt
+			hidden_effect = {
+				janama_region = {
+					limit = { culture_group = gnollish }
+					add_permanent_claim = ROOT
+				}
+				west_salahad_region = {
+					limit = { culture_group = gnollish }
+					add_permanent_claim = ROOT
+				}
+			}
+			#Henceforth, each [Gnollish Slaves] modifier reduces by 1 the corruption caused
+			#by setting a holy order in the state it is in
+			#TODO (author decision 2026-09-15): the mechanic itself is NOT implemented yet -
+			#     it needs either a branch in `on_holy_order_established`
+			#     (`common/on_actions/00_on_actions.txt`) or the same block appended to the
+			#     `per_province_effect` of every holy order in `common/holy_orders/`.
+			#     Nothing is shown for it in the mission tooltip: per author decision
+			#     2026-10-08 a missing tooltip is never a reason to add a `custom_tooltip`.
+			#Xhink Zughu and Bazughu change their trade goods to Slaves
+			#and gain the permanent province modifier [Gnollish Slaves]
+			5735 = { #Xhink Zughu
+				change_trade_goods = slaves
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+			5719 = { #Bazughu
+				change_trade_goods = slaves
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+		}
+	}
+	F70_threat_at_the_doorstep = {
+		position = 8
+		required_missions = {
+			F70_blood_for_blood
+			F70_visit_a_neighbour
+		}
+		#Fangaula and North Salahad are the two subcontinents that hold the windhowler gnollish
+		#homeland, i.e. the lands of our three rivals Irkorzik (F69), Brrtekuh (U10)
+		#and Tzilekal (F65).
+		trigger = {
+			#Every colonized windhowler gnollish province of the Fangaula subcontinent is our
+			#core province and is neither Xhazobkult nor Kvangahga anymore
+			#(a province that still has [Religious Zeal] counts as freshly converted;
+			#uncolonized provinces have no owner at all and are therefore ignored)
+			fangaula_superregion = {
+				type = all
+				OR = {
+					NOT = { culture = windhowler_gnoll }
+					is_city = no
+					AND = {
+						owned_by = ROOT
+						is_core = ROOT
+						OR = {
+							has_province_modifier = religious_zeal_at_conv
+							AND = {
+								NOT = { religion = xhazobkult }
+								NOT = { religion = kvangahga }
+							}
+						}
+					}
+				}
+			}
+			#The same holds for the windhowler gnollish provinces of North Salahad
+			north_salahad_superregion = {
+				type = all
+				OR = {
+					NOT = { culture = windhowler_gnoll }
+					is_city = no
+					AND = {
+						owned_by = ROOT
+						is_core = ROOT
+						OR = {
+							has_province_modifier = religious_zeal_at_conv
+							AND = {
+								NOT = { religion = xhazobkult }
+								NOT = { religion = kvangahga }
+							}
+						}
+					}
+				}
+			}
+			#At least one of our provinces in Fangaula has a level 2 (or higher) center of trade
+			fangaula_superregion = {
+				owned_by = ROOT
+				province_has_center_of_trade_of_level = 2
+			}
+			#Rostgrax has a marketplace or a workshop and at least 10k of our soldiers
+			#are stationed there
+			6098 = { #Rostgrax
+				owned_by = ROOT
+				OR = {
+					has_trade_building_trigger = yes
+					has_production_building_trigger = yes
+				}
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 10
+				}
+			}
+			#Bexanilu (the gnollish name of Agshzan) and Foxhorr Farrarr meet the same
+			#requirements, with at least 1k of our soldiers stationed in each of them
+			5437 = { #Bexanilu
+				owned_by = ROOT
+				OR = {
+					has_trade_building_trigger = yes
+					has_production_building_trigger = yes
+				}
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			5796 = { #Foxhorr Farrarr
+				owned_by = ROOT
+				OR = {
+					has_trade_building_trigger = yes
+					has_production_building_trigger = yes
+				}
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			#None of our three gnollish rivals exists anymore
+			NOT = { exists = F69 } #Irkorzik
+			NOT = { exists = U10 } #Brrtekuh
+			NOT = { exists = F65 } #Tzilekal
+		}
+		effect = {
+			#Gain permanent claims on the Siniwix, Kogzalla, Zallirkor and Dasmatus areas
+			#(the four gnollish areas that sit right beyond our new borders)
+			siniwix_area = {
+				add_permanent_claim = ROOT
+			}
+			kogzalla_area = {
+				add_permanent_claim = ROOT
+			}
+			zallirkor_area = {
+				add_permanent_claim = ROOT
+			}
+			dasmatus_area = {
+				add_permanent_claim = ROOT
+			}
+			#The great project [Oasis of Water Dreams] becomes buildable in Rostgrax
+			#TODO: the unlock itself lives in the `water_dreams_oasis` definition
+			#     (`common/great_projects/anb_monuments_sarhal.txt`, its `build_trigger`,
+			#     `can_use_modifiers_trigger` and `can_upgrade_trigger`).
+			custom_tooltip = F70_threat_at_the_doorstep_great_project_tt
+			#Rostgrax, Bexanilu and Foxhorr Farrarr change their trade goods to Slaves
+			#and gain the permanent province modifier [Gnollish Slaves]
+			6098 = { #Rostgrax
+				change_trade_goods = slaves
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+			5437 = { #Bexanilu
+				change_trade_goods = slaves
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+			5796 = { #Foxhorr Farrarr
+				change_trade_goods = slaves
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+		}
+	}
+	F70_diabolical_sisters = {
+		position = 9
+		required_missions = {
+			F70_threat_at_the_doorstep
+		}
+		#The "diabolical sisters" are the twin gnollish packs born of Maxota
+		#Gifter-of-Chains: Kogzalla (F55) and Koggraffa (F54). Their lands are the
+		#four areas we claimed in `F70_threat_at_the_doorstep`, so this mission is
+		#about digesting them and putting an end to the two sister packs for good.
+		trigger = {
+			#Every province of the Siniwix, Kogzalla, Zallirkor and Dasmatus areas is
+			#our core province and has left Xhazobkult and Kvangahga behind
+			#(a province that still has [Religious Zeal] counts as freshly converted).
+			#All the provinces of these four areas are settled, so no exemption for
+			#uncolonized land is needed here.
+			siniwix_area = {
+				type = all
+				owned_by = ROOT
+				is_core = ROOT
+				OR = {
+					has_province_modifier = religious_zeal_at_conv
+					AND = {
+						NOT = { religion = xhazobkult }
+						NOT = { religion = kvangahga }
+					}
+				}
+			}
+			kogzalla_area = {
+				type = all
+				owned_by = ROOT
+				is_core = ROOT
+				OR = {
+					has_province_modifier = religious_zeal_at_conv
+					AND = {
+						NOT = { religion = xhazobkult }
+						NOT = { religion = kvangahga }
+					}
+				}
+			}
+			zallirkor_area = {
+				type = all
+				owned_by = ROOT
+				is_core = ROOT
+				OR = {
+					has_province_modifier = religious_zeal_at_conv
+					AND = {
+						NOT = { religion = xhazobkult }
+						NOT = { religion = kvangahga }
+					}
+				}
+			}
+			dasmatus_area = {
+				type = all
+				owned_by = ROOT
+				is_core = ROOT
+				OR = {
+					has_province_modifier = religious_zeal_at_conv
+					AND = {
+						NOT = { religion = xhazobkult }
+						NOT = { religion = kvangahga }
+					}
+				}
+			}
+			#Kogzalla and Xhogrix each have a regimental camp (or a conscription
+			#center), a marketplace (or an upgraded trade building) and at least
+			#1k of our soldiers stationed in them.
+			#Regimental Camps and Conscription Centers are the forcelimit line of
+			#buildings, so the right scripted trigger is
+			#`has_forcelimit_building_trigger` - NOT `has_manpower_building_trigger`,
+			#which only covers barracks and training fields.
+			5462 = { #Kogzalla
+				owned_by = ROOT
+				has_forcelimit_building_trigger = yes
+				has_trade_building_trigger = yes
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			5667 = { #Xhogrix
+				owned_by = ROOT
+				has_forcelimit_building_trigger = yes
+				has_trade_building_trigger = yes
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			#Coburakaz and Invabuuz have a workshop (or a counting house)
+			5434 = { #Coburakaz
+				owned_by = ROOT
+				has_production_building_trigger = yes
+			}
+			5436 = { #Invabuuz
+				owned_by = ROOT
+				has_production_building_trigger = yes
+			}
+			#Coburakaz is at least a level 2 center of trade
+			5434 = { #Coburakaz
+				owned_by = ROOT
+				province_has_center_of_trade_of_level = 2
+			}
+			#Neither of the two sister packs exists anymore
+			NOT = { exists = F55 } #Kogzalla
+			NOT = { exists = F54 } #Koggraffa
+		}
+		effect = {
+			#Gain permanent claims on every gnollish culture province of the
+			#Gazraak and Dreksaret regions
+			custom_tooltip = F70_diabolical_sisters_gnollish_claims_tt
+			hidden_effect = {
+				gazraak_region = {
+					limit = { culture_group = gnollish }
+					add_permanent_claim = ROOT
+				}
+				dreksaret_region = {
+					limit = { culture_group = gnollish }
+					add_permanent_claim = ROOT
+				}
+			}
+			#Gain the permanent country modifier [Eastern Luxury Supply]:
+			#All Estates' Loyalty Equilibrium +5%, Global Unrest -1
+			#(the reference mission tooltip spells these two lines out, but no
+			# `custom_tooltip` is written for them - author decision 2026-10-08: a
+			# missing tooltip is never a reason to add one, so until
+			# `F70_eastern_luxury_supply` gets a display name loc key this line
+			# shows the raw modifier id)
+			add_country_modifier = {
+				name = F70_eastern_luxury_supply
+				duration = -1
+			}
+			#Coburakaz and Invabuuz gain the permanent province modifier
+			#[Gnollish Slaves]. The reference mission tooltip only lists the modifier
+			#itself, so their trade goods are deliberately left untouched here
+			#(unlike `F70_visit_a_neighbour` and `F70_threat_at_the_doorstep`).
+			5434 = { #Coburakaz
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+			5436 = { #Invabuuz
+				add_province_modifier = {
+					name = F70_gnollish_slaves
+					duration = -1
+				}
+			}
+		}
+	}
+	F70_take_the_initiative = {
+		position = 11
+		required_missions = {
+			F70_diabolical_sisters
+		}
+		#The gnollish packs of Gazraak and Dreksaret are the last Seascourge
+		#strongholds left in the Sorrow, and their lands are already under our
+		#permanent claims (see `F70_diabolical_sisters`). This mission is about
+		#taking the initiative - and their people - in hand: the core land of the
+		#three gnollish towns must be worked by our own officials, and the towns
+		#themselves become the slave markets that feed the rest of our realm.
+		trigger = {
+			#Every gnollish province of the Gazraak and Dreksaret regions is our
+			#core province and has left Xhazobkult and Kvangahga behind (a province
+			#that still has [Religious Zeal] counts as freshly converted).
+			#The non-gnollish provinces of these two regions (the Ofehibi and
+			#Raghamidesh lands of the Dreksaret area) are deliberately ignored.
+			#`limit` must NOT be used to do that here: inside a trigger, a multi
+			#object scope (region / area / province group) ignores a bare `limit`,
+			#so the culture exemption is spelled out as the first branch of the
+			#`OR` instead - `NOT = { culture_group = gnollish }` makes every
+			#non-gnollish province pass on its own, while every gnollish province
+			#has to satisfy the second branch.
+			#Every province of both regions is settled, so no exemption for
+			#uncolonized land is needed here.
+			gazraak_region = {
+				type = all
+				OR = {
+					NOT = { culture_group = gnollish }
+					AND = {
+						owned_by = ROOT
+						is_core = ROOT
+						OR = {
+							has_province_modifier = religious_zeal_at_conv
+							AND = {
+								NOT = { religion = xhazobkult }
+								NOT = { religion = kvangahga }
+							}
+						}
+					}
+				}
+			}
+			dreksaret_region = {
+				type = all
+				OR = {
+					NOT = { culture_group = gnollish }
+					AND = {
+						owned_by = ROOT
+						is_core = ROOT
+						OR = {
+							has_province_modifier = religious_zeal_at_conv
+							AND = {
+								NOT = { religion = xhazobkult }
+								NOT = { religion = kvangahga }
+							}
+						}
+					}
+				}
+			}
+			#The three gnollish towns of the two regions - Retukka, Tazrazeen and
+			#Yaikehaad - each have a workshop (or a counting house) or a
+			#marketplace (or an upgraded trade building), and at least 1k of our
+			#soldiers are stationed in each of them.
+			#Ownership and core status are already implied by the two region checks
+			#above, but are spelled out here as well, following the rest of this tree.
+			5441 = { #Retukka
+				owned_by = ROOT
+				OR = {
+					has_production_building_trigger = yes
+					has_trade_building_trigger = yes
+				}
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			5459 = { #Tazrazeen
+				owned_by = ROOT
+				OR = {
+					has_production_building_trigger = yes
+					has_trade_building_trigger = yes
+				}
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			5500 = { #Yaikehaad
+				owned_by = ROOT
+				OR = {
+					has_production_building_trigger = yes
+					has_trade_building_trigger = yes
+				}
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 1
+				}
+			}
+			#At least one province we own in Gazraak or Dreksaret is a center of trade
+			#of level 2 or better (a level 3 one counts as well -
+			#`province_has_center_of_trade_of_level` accepts that level or higher).
+			OR = {
+				gazraak_region = {
+					any_province = {
+						owned_by = ROOT
+						province_has_center_of_trade_of_level = 2
+					}
+				}
+				dreksaret_region = {
+					any_province = {
+						owned_by = ROOT
+						province_has_center_of_trade_of_level = 2
+					}
+				}
+			}
+		}
+		effect = {
+			#Gain the permanent country modifier [High-quality Labour]:
+			#Development Cost -10%
+			#(the reference mission tooltip spells the line out, but no
+			# `custom_tooltip` is written for it - author decision 2026-10-08: a
+			# missing tooltip is never a reason to add one, so until
+			# `F70_high_quality_labour` gets a display name loc key this line shows
+			# the raw modifier id)
+			add_country_modifier = {
+				name = F70_high_quality_labour
+				duration = -1
+			}
+			#Retukka, Tazrazeen and Yaikehaad change their trade goods to slaves and
+			#gain the permanent province modifier [Gnollish Slaves].
+			#The modifier is hidden the same way it is in `F70_blood_for_blood`, so
+			#that the three provinces are not listed twice in the tooltip.
+			hidden_effect = {
+				5441 = { #Retukka
+					change_trade_goods = slaves
+					add_province_modifier = {
+						name = F70_gnollish_slaves
+						duration = -1
+					}
+				}
+				5459 = { #Tazrazeen
+					change_trade_goods = slaves
+					add_province_modifier = {
+						name = F70_gnollish_slaves
+						duration = -1
+					}
+				}
+				5500 = { #Yaikehaad
+					change_trade_goods = slaves
+					add_province_modifier = {
+						name = F70_gnollish_slaves
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	F70_ensure_enchanted_steel_supply = {
+		position = 12
+		required_missions = {
+			F70_take_the_initiative
+		}
+		trigger = {
+			#Kvangraak itself has grown into a forge city: a base production of
+			#at least 10, a manufactory, and 10k of our soldiers stationed
+			#there (1 unit = 1k). `has_manufactory_trigger` is the repo's
+			#standard "has a manufactory" check.
+			5442 = { #Kvangraak
+				owned_by = ROOT
+				base_production = 10
+				has_manufactory_trigger = yes
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 10
+				}
+			}
+			#Its infrastructure has been expanded at least once. Without the
+			#Leviathan DLC that action does not exist at all, so the reference
+			#mission asks for 50 adm power instead - the effect below spends it.
+			if = {
+				limit = { has_dlc = "Leviathan" }
+				5442 = { num_of_times_expanded_infrastructure = 1 }
+			}
+			else = { adm_power = 50 }
+			#Every province of the Kvangraak area is ours and has both a
+			#workshop/counting house and barracks/training fields. `type = all`
+			#makes this an "every province" check (an area scope with plain
+			#province triggers is ambiguous).
+			kvangraak_area = {
+				type = all
+				owned_by = ROOT
+				has_production_building_trigger = yes
+				has_manpower_building_trigger = yes
+			}
+		}
+		effect = {
+			#The two cost lines of the reference screenshot ("Lose 10k armies
+			#in Kvangraak" and "Destroys the great project Esuvrem") are
+			#effects, so they are implemented with `kill_units` and
+			#`destroy_great_project` (both of them are province scoped).
+			5442 = { #Kvangraak
+				kill_units = {
+					who = ROOT
+					amount = 10
+				}
+				destroy_great_project = { type = esuvrem }
+			}
+			#Permanent country modifier [Enchanted Steel Equipment]:
+			#(Only to Shadow Warriors:) Fire Damage Received -10% and
+			#Shock Damage Received -10%. It has no display name loc key yet;
+			#per the 2026-10-08 decision no `custom_tooltip` is added for it,
+			#so this line shows the raw id until the key exists.
+			add_country_modifier = {
+				name = F70_enchanted_steel_equipment
+				duration = -1
+			}
+			#Without the Leviathan DLC the 50 adm power that stand in for the
+			#infrastructure requirement are paid here.
+			if = {
+				limit = { NOT = { has_dlc = "Leviathan" } }
+				add_adm_power = -50
+			}
+		}
+	}
+}

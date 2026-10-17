@@ -1,0 +1,1026 @@
+namespace = flavour_mattabo
+
+# =============================================================================
+# The Starting Events Chain
+# =============================================================================
+
+#Catch off Guard
+#Fired by the mission `F70_military_adventure` (missions/Mattabo_Mission.txt,
+#slot 3 position 1) as the payoff of the surprise attack: the realm had been
+#openly preparing for war (promote military recruitment edict in the Mattabo
+#area, the ruler himself in the field, hostile trading in the Aakheta node),
+#so Rakkaz is caught before it can arrange its defence. The mission's own
+#trigger is unchanged - this event is only its effect.
+country_event = {
+	id = flavour_mattabo.1
+	title = flavour_mattabo.1.t
+	desc = flavour_mattabo.1.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	#Single option, matching the reference screenshot's effect list:
+	#  Gains 5K Ahati Infantry in the capital
+	#  Gain permanent claims on all the Rakkaz starting provinces
+	#  Declare war on Rakkaz with Anti-Monstrous Conquest CB
+	#  Rakkaz won't accept any peace from now
+	#  Mattabo and Rakkaz cannot Call Allies in this war. Muhaqaar can't attend
+	#  this war either
+	#  Muhaqaar gains -25 opinion (+1 per year) and -10 trust on Mattabo
+	option = {
+		name = flavour_mattabo.1.a
+
+		# 1. Gains 5K Ahati Infantry in the capital.
+		capital_scope = {
+			janissary_infantry = ROOT
+			janissary_infantry = ROOT
+			janissary_infantry = ROOT
+			janissary_infantry = ROOT
+			janissary_infantry = ROOT
+		}
+
+		# 2. Gain permanent claims on all the Rakkaz starting provinces.
+		grixzakr_area = { add_permanent_claim = ROOT }
+		argazeen_area = { add_permanent_claim = ROOT }
+		garpix_rakkaz_area = { add_permanent_claim = ROOT }
+		5466 = { add_permanent_claim = ROOT } #Siniwix
+		5467 = { add_permanent_claim = ROOT } #Siniwix
+		5468 = { add_permanent_claim = ROOT } #Siniwix
+
+		# 3-5. Declare war on Rakkaz with the Anti-Monstrous Conquest CB, with
+		#      neither side allowed to call in allies, and Rakkaz refusing any
+		#      peace until the war runs its course.
+		hidden_effect = {
+			set_country_flag = no_callaction
+			set_country_flag = F70_strike_rakkaz
+
+			# 6. Muhaqaar can't attend this war either.
+			#    Muhaqaar (F61) is OUR OVERLORD - we are its march. In
+			#    `history/diplomacy/west_sarhal_and_horashesh.txt` the relation is
+			#    `march = { first = F61 second = F70 }`, and in this file format
+			#    **`first` is the overlord and `second` is the subject** (plainly
+			#    documented in `history/diplomacy/baashidi_diplomacy.txt:10~11`;
+			#    it is also consistent with the Aramoole-Gomuvuri entry there,
+			#    `second = L12`, and `vassalize = L12` in
+			#    `events/Flavour_Kuiika_L01.txt:195`). So F61 is the senior
+			#    partner and we are the junior one.
+			#    Why the `no_callaction` flag above is NOT enough: it only stops
+			#    us from calling in our ALLIES (that is the sole condition that
+			#    reads it - `common/diplomatic_actions/00_diplomatic_actions.txt:
+			#    3887`). An overlord being pulled into its subject's war is a
+			#    separate, involuntary mechanism, so the flag we set on ourselves
+			#    cannot keep our own overlord out.
+			#    What does work is a truce: two countries that are in a truce
+			#    cannot end up on the same side of a war (this is how the repo
+			#    keeps a country out of a conflict it would otherwise be dragged
+			#    into - `missions/Gasha_Missions.txt:40`,
+			#    `missions/Adshaw_Missions.txt:979`,
+			#    `common/scripted_effects/yrw_scripted_effects.txt:1318`). It is
+			#    written first so that it is already in place when the war starts
+			#    a few lines further down.
+			#    TODO (author review): the truce is mutual, so it also stops
+			#    Muhaqaar from being dragged into OUR OTHER wars for its
+			#    duration. If that turns out to be too broad, this line needs a
+			#    narrower mechanism (there is none in this repo today).
+			if = {
+				limit = { exists = F61 }
+				# 7. Muhaqaar gains -10 trust on Mattabo.
+				#    Declaring war behind our own overlord's back - and leaving
+				#    it out of the fighting - costs us its trust.
+				#    `add_trust` is an effect that needs no definition elsewhere,
+				#    so it is written inline.
+				#    TODO (author decision 2026-10-10, "only touch events/ for
+				#    now"): the "-25 opinion, decaying by +1 per year" half of the
+				#    same line is NOT implemented. An opinion penalty cannot be
+				#    written inline - `add_opinion` only accepts a modifier id -
+				#    so it needs a new entry in
+				#    `common/opinion_modifiers/anb_opinion_modifiers.txt`:
+				#        F70_caught_off_guard_opinion = {
+				#            opinion = -25
+				#            yearly_decay = 1
+				#        }
+				#    followed by `F61 = { add_opinion = { who = ROOT modifier =
+				#    F70_caught_off_guard_opinion } }` right here. That file is
+				#    outside the current "mission tree only" constraint, hence
+				#    the TODO.
+				F61 = {
+					add_truce_with = ROOT
+					add_trust = {
+						who = ROOT
+						value = -10
+					}
+				}
+			}
+		}
+
+		# The war itself. Guarded on Rakkaz still existing so that the option
+		# stays safe if F71 was annexed before this event was answered;
+		# `declare_war_with_cb` is the repo's standard forced-declaration effect
+		# (events/Aakhetist.txt:1291, decisions/OvdalLodhumDecisions.txt:305).
+		if = {
+			limit = { exists = F71 }
+			declare_war_with_cb = {
+				casus_belli = cb_civ_vs_monster
+				who = F71
+			}
+			hidden_effect = { F71 = { set_country_flag = no_callaction } }
+		}
+	}
+}
+
+#A Successful Strike
+#Fired by the mission `F70_planned_victory` (missions/Mattabo_Mission.txt,
+#slot 3 position 2) as the closing act of the war opened by `flavour_mattabo.1`:
+#the strike succeeded, so the peace is dictated on our terms instead of being
+#negotiated. The mission's own trigger is unchanged - this event is only its
+#effect.
+country_event = {
+	id = flavour_mattabo.2
+	title = flavour_mattabo.2.t
+	desc = flavour_mattabo.2.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	#Single option, matching the reference screenshot's effect list:
+	#  White Peace with Rakkaz
+	#  Cede every province in the Argazeen, Grixzakr, Garpix Rakkaz and Siniwix
+	#  areas owned by Rakkaz to Mattabo
+	#  Years of Separatism in these provinces -5
+	#  Cash 50
+	#  Mil 100
+	#  Event [Something Unexpected] in 30 days
+	option = {
+		name = flavour_mattabo.2.a
+
+		# 1. White Peace with Rakkaz.
+		#    `white_peace` is the repo's standard scripted peace effect
+		#    (events/Flavour_Hisost_Yamok_S23.txt:1243,
+		#    events/Flavour_HulazKrakazol_I20.txt:237). It is guarded on the war
+		#    still existing: the mission's trigger also accepts the "the four
+		#    areas are already ours" branch (missions/Mattabo_Mission.txt:
+		#    1164~1183), in which case there is nothing left to end.
+		if = {
+			limit = {
+				exists = F71
+				war_with = F71
+			}
+			white_peace = F71
+		}
+
+		# 2-3. Rakkaz cedes every province it owns in the four areas, and each
+		#      of those provinces loses 5 years of separatism.
+		#      Only `owned_by = F71` is checked - the screenshot says "owned by
+		#      Rakkaz", so third countries sitting in the same areas (5464 in
+		#      siniwix_area starts with F55) are left alone, and these are the
+		#      same four areas the mission checks.
+		#      "Years of Separatism" is `add_nationalism` (the mod's own wrapper
+		#      `add_years_of_separatism_in_owned_provinces` in
+		#      common/scripted_effects/anb_scripted_effects.txt:14077 just calls
+		#      it on every owned province). It is kept in the visible scope so it
+		#      generates its own tooltip line - no `custom_tooltip` (see
+		#      .generic/anb_script_file_conventions.md, section 5.1).
+		argazeen_area = {
+			limit = { owned_by = F71 }
+			cede_province = ROOT
+			add_nationalism = -5
+		}
+		grixzakr_area = {
+			limit = { owned_by = F71 }
+			cede_province = ROOT
+			add_nationalism = -5
+		}
+		garpix_rakkaz_area = {
+			limit = { owned_by = F71 }
+			cede_province = ROOT
+			add_nationalism = -5
+		}
+		siniwix_area = {
+			limit = { owned_by = F71 }
+			cede_province = ROOT
+			add_nationalism = -5
+		}
+
+		# 4. Cash 50.
+		add_treasury = 50
+
+		# 5. Mil 100.
+		add_mil_power = 100
+
+		# 6. Event [Something Unexpected] in 30 days: the spoils of the
+		#    successful strike lead straight into the next event of the starting
+		#    chain, `flavour_mattabo.3` (defined right below in this file).
+		country_event = {
+			id = flavour_mattabo.3
+			days = 30
+		}
+
+		# 7. Releasing the war-time locks set by `flavour_mattabo.1`.
+		#    Nothing else in the repo clears them (the only references are the
+		#    two `set_country_flag` calls in .1 and the two readers in
+		#    `requestpeace`, with no `clr_country_flag` anywhere), so the war's
+		#    conclusion is the right place to release both countries. Without
+		#    this Mattabo could never call allies again (`no_callaction` is read
+		#    by the call-ally diplomatic action,
+		#    common/diplomatic_actions/00_diplomatic_actions.txt:3887) and could
+		#    never offer peace to anyone again (the `#Mattabo` condition added to
+		#    `requestpeace`,
+		#    common/diplomatic_actions/00_diplomatic_actions.txt:4898~4909,
+		#    stays active whenever `F70_strike_rakkaz` is set).
+		hidden_effect = {
+			clr_country_flag = no_callaction
+			clr_country_flag = F70_strike_rakkaz
+			if = {
+				limit = { exists = F71 }
+				F71 = { clr_country_flag = no_callaction }
+			}
+		}
+	}
+}
+
+#Something Unexpected
+country_event = {
+	id = flavour_mattabo.3
+	title = flavour_mattabo.3.t
+	desc = flavour_mattabo.3.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.3.a
+
+		# Muhaqaar (F61) is our overlord, so it has to release us before the war
+		# starts, otherwise it would be dragged into it.
+		grant_independence = yes
+
+		#This Event are designed to fired in first 6 month.
+		U09 = {
+			declare_war_with_cb = {
+				casus_belli = cb_monster_vs_civ
+				who = ROOT
+			}
+		}
+		
+		set_country_flag = F70_gnollakaz_strike
+
+		kill_ruler = yes
+
+		# Kaskanrit Irsmaset takes over as regent while the heir is underage.
+		define_ruler = {
+			name = "Kaskanrit Irsmaset"
+			age = 35
+			adm = 3
+			dip = 2
+			mil = 5
+			fixed = yes
+			claim = 90
+			culture = irsmahapan
+			regency = yes
+		}
+		add_ruler_personality = strict_personality
+
+		define_ruler_to_general = {
+			fire = 1
+			shock = 5
+			manuever = 2
+			siege = 2
+		}
+
+		country_event = {
+			id = flavour_mattabo.5
+			days = 30
+		}
+	}
+}
+
+#First Victory (fired by the `on_battle_won_country` / `on_siege_won_country` hooks)
+country_event = {
+	id = flavour_mattabo.4
+	title = flavour_mattabo.4.t
+	desc = flavour_mattabo.4.d
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	trigger = {
+		tag = F70
+		has_country_flag = F70_gnollakaz_strike
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.4.a
+
+		add_manpower = 10000
+
+		clr_country_flag = F70_gnollakaz_strike
+	}
+}
+
+#Aid from Him?
+#Fired by `flavour_mattabo.3` (Something Unexpected) 30 days later: the patron
+#answers the regent, and the chain continues in `flavour_mattabo.6`.
+country_event = {
+	id = flavour_mattabo.5
+	title = flavour_mattabo.5.t
+	desc = flavour_mattabo.5.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.5.a
+
+		# Permanent Country Modifier [Shattered Illusion]:
+		# TTF -3, Tolerance of Heathens +3
+		add_country_modifier = {
+			name = F70_shattered_illusion
+			duration = -1
+		}
+
+		# Event [Mysterious Aid] in 30 days
+		country_event = {
+			id = flavour_mattabo.6
+			days = 30
+		}
+	}
+}
+
+#Mysterious Aid (removed by the `on_war_ended` hook once the war with Gnollakaz ends)
+country_event = {
+	id = flavour_mattabo.6
+	title = flavour_mattabo.6.t
+	desc = flavour_mattabo.6.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+		war_with = U09
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.6.a
+
+		add_country_modifier = {
+			name = F70_mysterious_aid
+			duration = -1
+		}
+	}
+}
+
+#A Bright New Way
+country_event = {
+	id = flavour_mattabo.7
+	title = flavour_mattabo.7.t
+	desc = flavour_mattabo.7.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.7.a
+
+		#Shadow Pact becomes Mattabo's state religion, ruler included
+		change_religion = shadow_pact
+		if = {
+			limit = { is_lesser_in_union = no }
+			set_ruler_religion = shadow_pact
+		}
+
+		#Mana -25 (the magic system's mana, not a monarch power)
+		change_mana = { amount = -25 }
+
+		capital_scope = {
+			infantry = ROOT
+			infantry = ROOT
+			infantry = ROOT
+			infantry = ROOT
+			infantry = ROOT
+			mamluks_infantry = ROOT
+			mamluks_infantry = ROOT
+			mamluks_infantry = ROOT
+			mamluks_infantry = ROOT
+			mamluks_infantry = ROOT
+			spawn_rebels = {
+				type = aakhetist_rebels
+				size = 1
+			}
+		}
+
+		#Permanent country modifier [Positive Contact]
+		add_country_modifier = {
+			name = F70_positive_contact
+			duration = -1
+		}
+	}
+}
+
+# =============================================================================
+# Vassal Events
+# =============================================================================
+
+#Mattabo Promise to Protect
+country_event = {
+	id = flavour_mattabo.11
+	title = flavour_mattabo.11.t
+	desc = flavour_mattabo.11.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F62 #Duwarkani
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.11.a
+	}
+}
+
+# =============================================================================
+# Contract Events
+# =============================================================================
+
+#Grand Sacrifice
+country_event = {
+	id = flavour_mattabo.20
+	title = flavour_mattabo.20.t
+	desc = flavour_mattabo.20.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.20.a
+	}
+}
+
+#Bind the Khet
+country_event = {
+	id = flavour_mattabo.21
+	title = flavour_mattabo.21.t
+	desc = flavour_mattabo.21.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.21.a
+	}
+}
+
+#A Meeting with Our Patron
+country_event = {
+	id = flavour_mattabo.22
+	title = flavour_mattabo.22.t
+	desc = flavour_mattabo.22.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.22.a
+	}
+}
+
+#Something Amiss
+country_event = {
+	id = flavour_mattabo.23
+	title = flavour_mattabo.23.t
+	desc = flavour_mattabo.23.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.23.a
+	}
+}
+
+#Our Bright Future
+country_event = {
+	id = flavour_mattabo.24
+	title = flavour_mattabo.24.t
+	desc = flavour_mattabo.24.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.24.a
+	}
+}
+
+# =============================================================================
+# Magical Project Events
+# =============================================================================
+
+#Knowledge from Our Patron
+country_event = {
+	id = flavour_mattabo.30
+	title = flavour_mattabo.30.t
+	desc = flavour_mattabo.30.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.30.a
+	}
+}
+
+#Obscure Knowledge
+country_event = {
+	id = flavour_mattabo.31
+	title = flavour_mattabo.31.t
+	desc = flavour_mattabo.31.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.31.a
+	}
+}
+
+#Khet's Curiosity
+country_event = {
+	id = flavour_mattabo.32
+	title = flavour_mattabo.32.t
+	desc = flavour_mattabo.32.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.32.a
+	}
+}
+
+#Everything is Ready
+country_event = {
+	id = flavour_mattabo.33
+	title = flavour_mattabo.33.t
+	desc = flavour_mattabo.33.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.33.a
+	}
+}
+
+#Where Are They
+country_event = {
+	id = flavour_mattabo.34
+	title = flavour_mattabo.34.t
+	desc = flavour_mattabo.34.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.34.a
+	}
+}
+
+#Genies' Disturbance
+country_event = {
+	id = flavour_mattabo.35
+	title = flavour_mattabo.35.t
+	desc = flavour_mattabo.35.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.35.a
+	}
+}
+
+#First Rebate
+country_event = {
+	id = flavour_mattabo.36
+	title = flavour_mattabo.36.t
+	desc = flavour_mattabo.36.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.36.a
+	}
+}
+
+#For the People
+country_event = {
+	id = flavour_mattabo.37
+	title = flavour_mattabo.37.t
+	desc = flavour_mattabo.37.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.37.a
+	}
+}
+
+#Dialogue on the Field Ridge
+country_event = {
+	id = flavour_mattabo.38
+	title = flavour_mattabo.38.t
+	desc = flavour_mattabo.38.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.38.a
+	}
+}
+
+#A Rescuer
+country_event = {
+	id = flavour_mattabo.39
+	title = flavour_mattabo.39.t
+	desc = flavour_mattabo.39.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.39.a
+	}
+}
+
+#Millennial-old Dream
+country_event = {
+	id = flavour_mattabo.40
+	title = flavour_mattabo.40.t
+	desc = flavour_mattabo.40.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.40.a
+	}
+}
+
+# =============================================================================
+# Revolt Events Chain
+# =============================================================================
+
+#Attempted Assassination
+country_event = {
+	id = flavour_mattabo.60
+	title = flavour_mattabo.60.t
+	desc = flavour_mattabo.60.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.60.a
+	}
+}
+
+#Conservative Counterattack
+country_event = {
+	id = flavour_mattabo.61
+	title = flavour_mattabo.61.t
+	desc = flavour_mattabo.61.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.61.a
+	}
+}
+
+#The People Have Been Swayed
+country_event = {
+	id = flavour_mattabo.62
+	title = flavour_mattabo.62.t
+	desc = flavour_mattabo.62.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.62.a
+	}
+}
+
+#Kheterat Manifesto
+country_event = {
+	id = flavour_mattabo.63
+	title = flavour_mattabo.63.t
+	desc = flavour_mattabo.63.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.63.a
+	}
+}
+
+#Suppressed Rebellion
+country_event = {
+	id = flavour_mattabo.70
+	title = flavour_mattabo.70.t
+	desc = flavour_mattabo.70.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.70.a
+	}
+}
+
+#Punish the Ringleaders
+country_event = {
+	id = flavour_mattabo.71
+	title = flavour_mattabo.71.t
+	desc = flavour_mattabo.71.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.71.a
+	}
+}
+
+#Belated Meeting
+country_event = {
+	id = flavour_mattabo.72
+	title = flavour_mattabo.72.t
+	desc = flavour_mattabo.72.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.72.a
+	}
+}
+
+# =============================================================================
+# Mechanic Events
+# =============================================================================
+
+#New Ruler Election
+country_event = {
+	id = flavour_mattabo.100
+	title = flavour_mattabo.100.t
+	desc = flavour_mattabo.100.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.100.a
+	}
+}
+
+#Deal with the Patron
+country_event = {
+	id = flavour_mattabo.101
+	title = flavour_mattabo.101.t
+	desc = flavour_mattabo.101.d
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = F70
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = flavour_mattabo.101.a
+	}
+}
