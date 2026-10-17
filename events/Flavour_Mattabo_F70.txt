@@ -54,9 +54,6 @@ country_event = {
 		5467 = { add_permanent_claim = ROOT } #Siniwix
 		5468 = { add_permanent_claim = ROOT } #Siniwix
 
-		# 3-5. Declare war on Rakkaz with the Anti-Monstrous Conquest CB, with
-		#      neither side allowed to call in allies, and Rakkaz refusing any
-		#      peace until the war runs its course.
 		hidden_effect = {
 			set_country_flag = no_callaction
 			set_country_flag = F70_strike_rakkaz
@@ -87,9 +84,7 @@ country_event = {
 			#    a few lines further down.
 			#    TODO (author review): the truce is mutual, so it also stops
 			#    Muhaqaar from being dragged into OUR OTHER wars for its
-			#    duration. If that turns out to be too broad, this line needs a
-			#    narrower mechanism (there is none in this repo today).
-			if = {
+				if = {
 				limit = { exists = F61 }
 				# 7. Muhaqaar gains -10 trust on Mattabo.
 				#    Declaring war behind our own overlord's back - and leaving
@@ -126,11 +121,12 @@ country_event = {
 		# (events/Aakhetist.txt:1291, decisions/OvdalLodhumDecisions.txt:305).
 		if = {
 			limit = { exists = F71 }
+			hidden_effect = { F71 = { set_country_flag = no_callaction } }
 			declare_war_with_cb = {
 				casus_belli = cb_civ_vs_monster
 				who = F71
 			}
-			hidden_effect = { F71 = { set_country_flag = no_callaction } }
+
 		}
 	}
 }
