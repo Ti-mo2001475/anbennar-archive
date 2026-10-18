@@ -320,7 +320,7 @@ country_event = {
 	option = {
 		name = flavour_mattabo.4.a
 
-		add_manpower = 10000
+		add_manpower = 10
 
 		clr_country_flag = F70_gnollakaz_strike
 	}
@@ -418,14 +418,16 @@ country_event = {
 
 		#Mana -25 (the magic system's mana, not a monarch power)
 		change_mana = { amount = -25 }
-
-		capital_scope = {
+		5466 = {
 			kill_units = { who = ROOT type = infantry amount = 5 }
 			mamluks_infantry = ROOT
 			mamluks_infantry = ROOT
 			mamluks_infantry = ROOT
 			mamluks_infantry = ROOT
 			mamluks_infantry = ROOT
+		
+		}
+		capital_scope = {
 			spawn_rebels = {
 				type = aakhetist_rebels
 				size = 1
@@ -459,10 +461,32 @@ country_event = {
 	immediate = {
 
 	}
-
 	option = {
 		name = flavour_mattabo.11.a
+		trigger = {
+			OR = {
+				total_development = 150
+				ai = no
+			}
+			
+		}
+		reverse_add_casus_belli = {
+        	type = cb_vassalize_mission
+            months = 240
+     	    target = FROM
+        }
 	}
+	option = {
+		name = flavour_mattabo.11.b
+		trigger = {
+			ai = yes
+			NOT = { total_development = 150 }
+		}
+		FROM = {
+			create_march = ROOT
+		}
+	}
+
 }
 
 # =============================================================================
