@@ -424,25 +424,21 @@ mattabo_2 = {
 			add_war_exhaustion = -5
 			custom_tooltip = F70_repel_the_invaders_reward_tt
 			hidden_effect = {
-				for = {
-					amount = 5
-					effect = "
-						random_owned_province = {
-							limit = {
-								previous_owner = U09 #Gnollakaz
-								NOT = { has_province_flag = F70_province_seized_from_gnollakaz }
-							}
-							set_province_flag = F70_province_seized_from_gnollakaz
-							owner = {
-								add_treasury = 50
-								add_prestige_or_monarch_power = { amount = 5 }
-							}
-						}
-					"
-				}
 				every_owned_province = {
-					limit = { has_province_flag = F70_province_seized_from_gnollakaz }
-					clr_province_flag = F70_province_seized_from_gnollakaz
+					limit = {
+						previous_owner = U09
+					}
+					change_variable = {
+						which = F70_seized_count
+						value = 1
+					}
+				}
+				if = { limit = { check_variable = { which = F70_seized_count value = 5} } set_variable = { which = F70_seized_count value = 5 } }
+				while = {
+					limit = { check_variable = { which = F70_seized_count value = 5 } }
+					add_treasury = 50
+					add_prestige_or_monarch_power = { amount = 5 }
+					subtract_variable = { which = F70_seized_count value = 1 }
 				}
 			}
 		}
@@ -1176,7 +1172,8 @@ mattabo_3 = {
 			#      add `NOT = { has_country_flag = F70_shadow_steward_ideas }` to the
 			#      trigger of the existing `F70_ideas` (same shape as Wineport's
 			#      `A16_ideas` / `A16_upgrade_ideas` pair) and then replace this
-			#      tooltip with the two effects written below
+			#      tooltip with the two effects written belowi
+			set_country_flag = F70_shadow_steward
 			custom_tooltip = F70_reunite_kheterata_shadow_steward_ideas_tt
 		}
 	}
@@ -1577,7 +1574,7 @@ mattabo_4 = {
 				statesman = 2
 				theologian = 2
 				AND = {
-					employed_advisor = { category = dip skill = 2 }
+					employed_advisor = { category = DIP skill = 2 }
 					dip_power = 50
 				}
 			}
@@ -1585,7 +1582,7 @@ mattabo_4 = {
 		effect = {
 			if = {
 				limit = {
-					employed_advisor = { category = dip skill = 2 }
+					employed_advisor = { category = DIP skill = 2 }
 					dip_power = 50
 					NOT = {
 						OR = {
@@ -1660,7 +1657,7 @@ mattabo_4 = {
 			gol_region = {
 				add_permanent_claim = ROOT
 			}
-			add_manpower = 10000
+			add_manpower = 10
 			if = {
 				limit = { has_dlc = "Domination" }
 				custom_tooltip = F70_military_preparation_upgrade_privilege_tt
