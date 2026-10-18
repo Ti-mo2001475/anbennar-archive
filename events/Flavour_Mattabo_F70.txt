@@ -39,11 +39,11 @@ country_event = {
 
 		# 1. Gains 5K Ahati Infantry in the capital.
 		capital_scope = {
-			janissary_infantry = ROOT
-			janissary_infantry = ROOT
-			janissary_infantry = ROOT
-			janissary_infantry = ROOT
-			janissary_infantry = ROOT
+			infantry = ROOT
+			infantry = ROOT
+			infantry = ROOT
+			infantry = ROOT
+			infantry = ROOT
 		}
 
 		# 2. Gain permanent claims on all the Rakkaz starting provinces.
@@ -225,18 +225,6 @@ country_event = {
 			days = 30
 		}
 
-		# 7. Releasing the war-time locks set by `flavour_mattabo.1`.
-		#    Nothing else in the repo clears them (the only references are the
-		#    two `set_country_flag` calls in .1 and the two readers in
-		#    `requestpeace`, with no `clr_country_flag` anywhere), so the war's
-		#    conclusion is the right place to release both countries. Without
-		#    this Mattabo could never call allies again (`no_callaction` is read
-		#    by the call-ally diplomatic action,
-		#    common/diplomatic_actions/00_diplomatic_actions.txt:3887) and could
-		#    never offer peace to anyone again (the `#Mattabo` condition added to
-		#    `requestpeace`,
-		#    common/diplomatic_actions/00_diplomatic_actions.txt:4898~4909,
-		#    stays active whenever `F70_strike_rakkaz` is set).
 		hidden_effect = {
 			clr_country_flag = no_callaction
 			clr_country_flag = F70_strike_rakkaz
@@ -350,6 +338,7 @@ country_event = {
 
 	trigger = {
 		tag = F70
+		is_at_war = yes	
 	}
 
 	immediate = {
@@ -431,11 +420,7 @@ country_event = {
 		change_mana = { amount = -25 }
 
 		capital_scope = {
-			infantry = ROOT
-			infantry = ROOT
-			infantry = ROOT
-			infantry = ROOT
-			infantry = ROOT
+			kill_units = { who = ROOT type = infantry amount = 5 }
 			mamluks_infantry = ROOT
 			mamluks_infantry = ROOT
 			mamluks_infantry = ROOT
