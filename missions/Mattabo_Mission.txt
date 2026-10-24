@@ -583,14 +583,17 @@ mattabo_2 = {
 				name = F70_populist_missionary_approach
 				duration = -1
 			}
-			custom_tooltip = F70_communication_and_reflection_one_same_goal_tt
-			hidden_effect = {
-				every_owned_province = {
-					limit = { religion = nirakhetist }
-					add_province_modifier = {
-						name = F70_one_same_goal
-						duration = -1
-					}
+			if = {
+				limit = { has_estate_privilege = estate_church_one_same_goal }
+				custom_tooltip = F70_nirakhetist_one_same_goal_tt
+				hidden_effect = {
+					every_owned_province = {
+						limit = { religion = nirakhetist }
+						add_province_modifier = {
+							name = F70_one_same_goal
+							duration = -1
+						}
+					}	
 				}
 			}
 		}
@@ -649,13 +652,16 @@ mattabo_2 = {
 		effect = {
 			add_meritocracy = 10
 			custom_tooltip = F70_deal_with_mariat_great_project_tt
-			custom_tooltip = F70_deal_with_mariat_one_same_goal_tt
-			hidden_effect = {
-				every_owned_province = {
-					limit = { religion = elikhetist }
-					add_province_modifier = {
-						name = F70_one_same_goal
-						duration = -1
+			if = {
+				limit = { has_estate_privilege = estate_church_one_same_goal }
+				custom_tooltip = F70_deal_with_mariat_one_same_goal_tt
+				hidden_effect = {
+					every_owned_province = {
+						limit = { religion = elikhetist }
+						add_province_modifier = {
+							name = F70_one_same_goal
+							duration = -1
+						}
 					}
 				}
 			}
@@ -848,14 +854,13 @@ mattabo_3 = {
 			mattabo_area = {
 				has_state_edict = edict_promote_military_recruitment
 			}
-			has_leader_with = {
-				is_monarch_leader = yes
-			}
+			is_monarch_leader = yes
 			
 			trading_policy_in_node = {
 				node = 6029
 				policy = hostile_trading
 			}
+			has_spy_network_in = { who = F71 value = 25 }
 		}
 		effect = {
 			country_event = {
@@ -930,13 +935,10 @@ mattabo_3 = {
 			add_government_reform = F70_salvation_committee_reform
 			if = {
 				limit = {
-					has_regency = yes
 					has_ruler = "Kaskanrit Irsmaset"
 				}
 				custom_tooltip = F70_stabilize_the_state_yes_tt
 				kill_heir = { allow_new_heir = no }
-				exile_ruler_as = { name = general_regency }
-				set_ruler = general_regency
 				add_ruler_modifier = {
 					name = F70_ruler_is_a_decorated_general
 					duration = -1
@@ -945,7 +947,7 @@ mattabo_3 = {
 			else = {
 				custom_tooltip = F70_stabilize_the_state_no_tt
 				tooltip = {
-					remove_heir = { allow_new_heir = no }
+					kill_heir = { allow_new_heir = no }
 					add_ruler_modifier = {
 						name = F70_ruler_is_a_decorated_general
 						duration = -1
@@ -1168,19 +1170,10 @@ mattabo_3 = {
 			}
 			override_country_name = KHETERATA
 			set_capital = 483 #Ka-Obix
-			#TODO: "NIs will change to Shadow Steward Ideas" - that idea set does
-			#      not exist yet. Add a second dynamic idea set
-			#      `F70_shadow_steward_ideas` to common/ideas/anb_country_ideas.txt
-			#      (start / bonus / 7 ideas / `free = yes`) with
-			#      `trigger = { tag = F70 has_country_flag = F70_shadow_steward_ideas }`,
-			#      add `NOT = { has_country_flag = F70_shadow_steward_ideas }` to the
-			#      trigger of the existing `F70_ideas` (same shape as Wineport's
-			#      `A16_ideas` / `A16_upgrade_ideas` pair) and then replace this
-			#      tooltip with the two effects written belowi
 			set_country_flag = F70_shadow_steward
-			custom_tooltip = F70_reunite_kheterata_shadow_steward_ideas_tt
+			swap_free_idea_group = yes
 		}
-		swap_free_idea_group = yes
+	
 	}
 	F70_rebuild_irrigation_system = {
 		position = 9
@@ -1550,9 +1543,6 @@ mattabo_4 = {
 					amount = 5
 				}
 			}
-			NOT = {
-				num_of_janissaries = 1
-			}
 			church_power = 25
 			has_mana = {
 				amount = 25
@@ -1579,7 +1569,7 @@ mattabo_4 = {
 				statesman = 2
 				theologian = 2
 				AND = {
-					employed_advisor = { category = DIP skill = 2 }
+					has_dip_advisor_2 = yes
 					dip_power = 50
 				}
 			}
@@ -1598,31 +1588,17 @@ mattabo_4 = {
 				}
 				add_dip_power = -50
 			}
-			remove_country_modifier = F70_shattered_illusion
-			#TODO: add the Clergy privilege `F70_one_same_goal` to
-			#      common/estate_privileges/ (Clergy: loyalty -5, influence 0,
-			#      max absolutism -5) - its loc name is shared with the province modifier
-			set_estate_privilege = F70_one_same_goal
-			custom_tooltip = F70_united_as_one_one_same_goal_tt
-			hidden_effect = {
-				every_owned_province = {
-					limit = { religion = aakhetist }
-					add_province_modifier = {
-						name = F70_one_same_goal
-						duration = -1
-					}
-				}
-			}
+			set_estate_privilege = estate_church_one_same_goal
 			if = {
 				limit = { NOT = { is_year = 1461 } }
-				custom_tooltip = F70_united_as_one_yes_tt
+				custom_tooltip = F70_before_1460_yes_tt
 				add_country_modifier = {
 					name = F70_eager_to_return
 					duration = 7300
 				}
 			}
 			else = {
-				custom_tooltip = F70_united_as_one_no_tt
+				custom_tooltip = F70_before_1460_no_tt
 				tooltip = {
 					add_country_modifier = {
 						name = F70_eager_to_return

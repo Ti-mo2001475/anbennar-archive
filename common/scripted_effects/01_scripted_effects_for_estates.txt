@@ -4024,6 +4024,36 @@ on_province_owner_change_estate_privileges_effect = {
 		}
 		else = { add_province_modifier = { name = estate_mages_development_of_mage_towers_improved_mod duration = -1 }  }
 	}
+	if = {
+		limit = { owner = { has_estate_privilege = estate_church_one_same_goal } }
+		if = {
+			limit = { religion = aakhetist }
+			add_province_modifier = {
+				name = F70_one_same_goal
+				duration = -1
+			}	
+		}
+		else_if = {
+			limit = { 
+				religion = elikhetist
+				owner = { mission_completed = F70_deal_with_mariat } 
+			}
+			add_province_modifier = {
+				name = F70_one_same_goal
+				duration = -1
+			}	
+		}
+		else_if = {
+			limit = { 
+				religion = nirakhetist
+				owner = { mission_completed = F70_communication_and_reflection } 
+			}
+			add_province_modifier = {
+				name = F70_one_same_goal
+				duration = -1
+			}	
+		}
+	}
 }
 
 on_province_tax_building_built_estate_privileges_effect = {

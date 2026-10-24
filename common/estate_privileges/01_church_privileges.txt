@@ -5951,3 +5951,45 @@ estate_church_ebbusubtu_festivities = { #Bulwar
 		factor = 10
 	}
 }
+estate_church_one_same_goal = {
+	icon = privilege_seek_support_of_clergy
+	max_absolutism = -5
+	loyalty = 0
+	influence = -0.05
+	is_valid = {
+		NOT = { has_country_flag = F70_goal_revoked }
+	}
+	can_revoke = {
+		always = yes
+	}
+	on_granted = {
+		custom_tooltip = F70_grant_goal_tt
+	}
+	on_granted_province = {
+		if = {
+			limit = { religion = aakhetist }
+			add_province_modifier = {
+				name = F70_one_same_goal
+				duration = -1
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = F70_revoke_goal_tt
+		add_stability = -1
+	}
+	on_revoked_province = {
+		remove_province_modifier = one_same_goal
+	}
+	on_invalid_province = {
+		remove_province_modifier = one_same_goal
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 10
+	}
+
+}
