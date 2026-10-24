@@ -52,7 +52,7 @@ country_event = {
 
 		hidden_effect = {
 			set_country_flag = no_callaction
-			set_country_flag = F70_strike_rakkaz}
+			set_country_flag = F70_strike_rakkaz
 			F61 = {
 				add_truce_with = ROOT
 				add_trust = {
@@ -62,20 +62,13 @@ country_event = {
 			}
 			
 		}
-
-		# The war itself. Guarded on Rakkaz still existing so that the option
-		# stays safe if F71 was annexed before this event was answered;
-		# `declare_war_with_cb` is the repo's standard forced-declaration effect
-		# (events/Aakhetist.txt:1291, decisions/OvdalLodhumDecisions.txt:305).
-		if = {
-			limit = { exists = F71 }
+		limit = { exists = F71 }
 			hidden_effect = { F71 = { set_country_flag = no_callaction } }
 			declare_war_with_cb = {
 				casus_belli = cb_civ_vs_monster
 				who = F71
 			}
 
-		}
 	}
 }
 
