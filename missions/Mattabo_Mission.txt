@@ -210,11 +210,7 @@ mattabo_1 = {
 			}
 		}
 		effect = {
-			#TODO: add the Mages privilege `F70_mage_generals` to common/estate_privileges/
-			#      (Mages: loyalty 0, influence +5, max absolutism -10; National Tax
-			#      Modifier -10%, Land Leader Shock +1, and Shock Damage +15% for the
-			#      Shadow Warriors only, i.e. with `is_mamluks_modifier = yes`)
-			set_estate_privilege = F70_mage_generals
+			set_estate_privilege = estate_mages_mage_generals
 		}
 	}
 	F70_gnomish_equipment = {
@@ -225,16 +221,7 @@ mattabo_1 = {
 		trigger = {
 			if = {
 				limit = { has_dlc = "Cradle of Civilization" }
-				OR = {
-					employed_advisor = { type = natural_scientist skill = 4 }
-					employed_advisor = { culture = cliff_gnome skill = 4 } #Gnomish
-					employed_advisor = { culture = creek_gnome skill = 4 }
-					employed_advisor = { culture = imperial_gnome skill = 4 }
-					employed_advisor = { culture = delta_gnome skill = 4 }
-					employed_advisor = { culture = tinker_gnome skill = 4 }
-					employed_advisor = { culture = glacier_gnome skill = 4 }
-					employed_advisor = { culture = frontier_gnome skill = 4 }
-				}
+				employed_advisor = { culture = delta_gnome skill = 4 
 			}
 			else = {
 				has_adm_advisor_3 = yes
@@ -258,27 +245,7 @@ mattabo_1 = {
 			}
 		}
 		effect = {
-			#TODO: add the Burghers (Merchant Guilds) privilege `F70_gnomish_equipment`
-			#      to common/estate_privileges/03_burgher_privileges.txt and
-			#      register it in the burghers `privileges = { ... }` list in
-			#      common/estates/03_burghers.txt (the two orders have to stay
-			#      aligned); it has to be granted by missions, so follow
-			#      `estate_nobility_nzeri_standard_bearers` with
-			#      `is_valid = { has_estate_privilege = F70_gnomish_equipment }`,
-			#      `can_select = { has_estate_privilege = F70_gnomish_equipment }` and
-			#      `can_revoke = { always = no }`.
-			#      Stats: loyalty 0, influence +5, max absolutism -10 (plus the
-			#      usual `conditional_modifier` with
-			#      `trigger = { has_absolutism_reduction_for_estate_privileges = yes }`
-			#      giving `max_absolutism = 2` back), production efficiency -5%.
-			#      The design also lists "Shock Damage +15%, only to Shadow Warriors"
-			#      (`is_mamluks_modifier = yes`) for this privilege, but that has to
-			#      be its own `conditional_modifier` block, or the country-wide
-			#      production efficiency key would be restricted to the Shadow
-			#      Warriors as well (see .generic/anb_estate_privileges.md); the
-			#      privilege has to be added *before* this task can be finished.
-			set_estate_privilege = F70_gnomish_equipment
-			custom_tooltip = F70_gnomish_equipment_tt
+			set_estate_privilege = estate_burgher_gnomish_equipment
 			if = {
 				limit = { NOT = { innovativeness = 20 } }
 				add_mil_power = -200
@@ -2404,10 +2371,7 @@ mattabo_5 = {
 			dasmatus_area = {
 				add_permanent_claim = ROOT
 			}
-			#TODO: the unlock itself lives in the `water_dreams_oasis` definition
-			#     (`common/great_projects/anb_monuments_sarhal.txt`, its `build_trigger`,
-			#     `can_use_modifiers_trigger` and `can_upgrade_trigger`).
-			custom_tooltip = F70_threat_at_the_doorstep_great_project_tt
+			custom_tooltip = F70_enable_water_dreams_oasis
 			6098 = { #Rostgrax
 				change_trade_goods = slaves
 				add_province_modifier = {

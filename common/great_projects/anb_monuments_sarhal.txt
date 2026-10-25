@@ -5296,20 +5296,39 @@ krahgradir = {
 
 	build_trigger = { }
 
-	can_use_modifiers_trigger = { 
-		culture_group = gnollish
-		owner = {
-			culture_group = gnollish 
-			NOT = { has_country_modifier = the_abolish_slavery_act }
+	can_use_modifiers_trigger = {
+		if = {
+			limit = { mission_completed = F70_blood_for_blood
+			custom_trigger_tooltip = {
+				tooltip = great_project_mt_enabled
+				always = yes
+			}
+		}
+		else ={ 
+			culture_group = gnollish
+			owner = {
+				culture_group = gnollish 
+				NOT = { has_country_modifier = the_abolish_slavery_act }
+			}
 		}
 	}
 
 	can_upgrade_trigger = { 
-		culture_group = gnollish
-		owner = {
-			culture_group = gnollish 
-			NOT = { has_country_modifier = the_abolish_slavery_act }
+		if = {
+			limit = { mission_completed = F70_blood_for_blood
+			custom_trigger_tooltip = {
+				tooltip = great_project_mt_enabled
+				always = yes
+			}
 		}
+		else ={ 
+			culture_group = gnollish
+			owner = {
+				culture_group = gnollish 
+				NOT = { has_country_modifier = the_abolish_slavery_act }
+			}
+		}
+
 		if = {
 			limit = {
 				has_great_project = { type = krahgradir tier = 1 }
