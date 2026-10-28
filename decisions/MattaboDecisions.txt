@@ -1,0 +1,31 @@
+country_decisions = {
+	deal_with_the_patron = {
+		major = yes
+		
+		potential = {
+			mission_completed = F70_learn_from_echenka
+		}
+		allow = {
+			hidden_trigger = { is_or_was_tag = { tag = F70 } }
+			custom_tooltip = {
+				tooltip = F70_patron_cooldown_tt
+				OR = {
+					AND = {
+						is_estate_conjuration_level_3 = yes
+						NOT = { has_country_flag = F70_patron_twice }
+						NOT = { has_country_modifier = F70_deal_with_patron_recently }
+					}
+					AND = {
+						NOT = { is_estate_conjuration_level_3 = yes }
+						NOT = { has_country_modifier= F70_deal_with_patron_recently }
+					}
+				}
+			}
+		}
+		effect = {
+			country_event = {
+				id = flavour_mattabo.101 
+			}
+		}
+	}
+}
