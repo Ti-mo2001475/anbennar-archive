@@ -583,7 +583,7 @@ establish_military_service_reform = {
 		is_mamluks_modifier = yes
 	}
 	on_effect = {
-		custom_tooltip = F70_shadow_warrior_refund_corruption_tt
+		custom_tooltip = F70_shadow_warrior_reduced_corruption_tt
 	}
 }
 
@@ -624,6 +624,46 @@ promote_new_officals = {
 	}
 }
 
+#Mattabo Unique
+reaffirm_the_duty_of_priests = {
+	empire = celestial_empire
+	potential = {
+		is_or_was_tag = { tag = F70 }
+	}
+	trigger = {
+		OR = {
+			dip = 4
+			monthly_dip = 9
+			full_idea_group = religious_ideas
+		}
+	}
+	emperor = {
+		tolerance_own = 2
+	}
+	on_action = {
+		custom_tooltip = F70_reroll_portent_once_more
+		set_country_flag = shadow_pact_extra_reroll
+	}
+}
+#Mattabo Unique
+enlarge_the_committee = {
+	empire = celestial_empire
+	potential = {
+		is_or_was_tag = { tag = F70 }
+		mission_completed = F70_new_steward_new_governance
+	}
+	trigger = {
+		OR = {	
+		mission_completed = F70_new_steward_new_governance
+		}
+	}
+	emperor = {
+		candidate_random_bonus = 1
+	}
+	on_action = {
+		custom_tootlip = F70_candidates_upgrade
+	}
+}
 #Samsumbat unique
 joint_military_training_reform = {
 	empire = celestial_empire
