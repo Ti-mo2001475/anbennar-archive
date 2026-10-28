@@ -312,36 +312,7 @@ mattabo_1 = {
 			}
 		}
 		effect = {
-			#TODO: the whole effect is left unimplemented for now. Adding the
-			#      bonuses to the privilege means editing a file outside this
-			#      mission tree, and until every mission in the tree is written
-			#      the rule is "mission tree file only" (author decision
-			#      2026-10-08, recorded in .memory/mtb_mission/mt_progress.md
-			#      and .generic/anb_script_file_conventions.md), so the earlier
-			#      attempt - two `conditional_modifier` blocks in
-			#      `estate_ahati_ahati_commanders`
-			#      (common/estate_privileges/estate_ahati_privileges.txt) with
-			#      `trigger = { mission_completed = F70_learn_from_brothers }`,
-			#      one for `leader_land_manuever = 1` + `leader_siege = 1` and a
-			#      separate one for `discipline = 0.05` +
-			#      `is_mamluks_modifier = yes` - has been withdrawn and the
-			#      privilege file is back at HEAD.
-			#      When the tree is finished, re-apply that pair of blocks. Two
-			#      notes for then: they must stay two separate
-			#      `conditional_modifier` blocks, because
-			#      `is_mamluks_modifier = yes` scopes an entire block to the
-			#      Shadow Warriors and sharing one block would restrict the
-			#      leader pips to them as well; and the key spellings are
-			#      `leader_land_manuever` (the engine's spelling, not
-			#      `leader_land_maneuver`) and `leader_siege` (there is no
-			#      `leader_land_siege`). Do NOT edit the privilege's own
-			#      `benefits` instead - that would hand the bonuses to every
-			#      Ahati country that ever picks the privilege.
-			#      Nothing is applied in this effect, which also means no
-			#      `custom_tooltip` (author rule 2026-10-08: a missing loc key is
-			#      never a reason to add one; and this task's loc keys are
-			#      deliberately not added either, for the same mission-tree-only
-			#      reason).
+			custom_tooltip = F70_upgrade_ahati_commander_tt
 		}
 	}
 }
@@ -726,35 +697,7 @@ mattabo_2 = {
 			}
 		}
 		effect = {
-			#TODO: the whole effect is left unimplemented for now (author decision
-			#      2026-10-08). What it has to do:
-			#      1. Strengthen the state edict [Enforce Religious Unity]
-			#         (`edict_religious_unity`, defined in
-			#         common/state_edicts/religious_unity.txt, which currently grants
-			#         `local_missionary_strength = 0.01` on its own) by another
-			#         `local_missionary_strength = 0.01` (the design's [Local Missionary
-			#         Strength +1%]), plus `tolerance_own = 1` (the design's [Local TTF
-			#         +1], the same key the `tolerance_of_true_faith` trigger above reads)
-			#         and `church_power_modifier = 0.025` (the design's [Religious Power
-			#         +2.5%]).
-			#      2. For every 5 states that enact this edict, 12.5% Religious Power,
-			#         up to a maximum of 50%. The four country modifiers this maps onto
-			#         are already defined in common/event_modifiers/anb_Mattabo_modifiers.txt
-			#         and are still unused anywhere in the repository:
-			#         `F70_restructure_the_priests_bonus_tier_1` (12.5%),
-			#         `_tier_2` (25%), `_tier_3` (37.5%) and `_tier_4` (50%).
-			#TODO: add the country modifier(s) that carry the three edict bonuses to
-			#      common/event_modifiers/anb_Mattabo_modifiers.txt
-			#TODO: add the state-count part of the effect. The state scope cannot be
-			#      counted with `all_states = { }` (that is a boolean, not a count), so
-			#      the intent is `calc_true_if = { amount = 4 all_states = { has_state_edict =
-			#      edict_religious_unity } }` - amount 4/8/12/16 picks tier 1/2/3/4 - and
-			#      then `add_country_modifier` the matching tier (existing precedent for
-			#      the 4-state step is missions/Eighard_Missions.txt:3382). Because the
-			#      tier has to follow the edict count rather than a single moment, this
-			#      belongs in a periodic scripted effect hung off the vanilla
-			#      `on_state_edict_changed` on_action (common/on_actions/), not in this
-			#      one-off block.
+			custom_tooltip = F70_strengthen_religious_unity_edict_tt
 		}
 	}
 	F70_accumlated_discontent = {
@@ -1172,26 +1115,18 @@ mattabo_3 = {
 				has_building = mage_tower
 			}
 			empire_of_china_has_active_decree = prosperity_decree
-			if = {
-				limit = { has_cast_aid_construction = yes }
-				OR = {
-					shadow_pact_has_active_portent = { portent = three_urns }
-					has_cast_reshape_terrain = yes
-				}
-			}
-			else = {
+			calc_true_if = {
+				amount = 2
+				has_cast_aid_construction = yes 
 				shadow_pact_has_active_portent = { portent = three_urns }
 				has_cast_reshape_terrain = yes
 			}
 		}
 		effect = {
-			hidden_effect = {
-				mothers_sorrow_group = {
-					limit = { country_or_subject_holds = ROOT }
-					add_province_modifier = {
-						name = F70_recovering_production
+			mothers_sorrow_group = {
+				add_province_modifier = {
+				name = F70_recovering_production
 						duration = 18250
-					}
 				}
 			}
 		}
@@ -1217,15 +1152,13 @@ mattabo_3 = {
 				province_group = mothers_sorrow_group
 				has_courthouse_building_trigger = yes
 			}
-			#TODO: the second branch cannot be implemented as written - an estate is not
-			#      a legal scope in EU4, so there is no way to iterate over "all estates
-			#      except the Ahati" from a mission trigger (the Ahati themselves have
-			#      `ahati_loyalty` / `ahati_loyalty_modifier`, but the other estates
-			#      would each need to be named by hand, and the list of estates differs
-			#      per country). Author decision 2026-10-08: leave it out for now, so
-			#      this "one of the following" block is currently the Crown Land
-			#      requirement on its own. If it is ever implemented, wrap it in an
-			#      `OR = { has_crown_land_share = 40 <the estate checks> }`.
+
+			estate_loyalty = { estate = estate_church  loyalty = 60 }
+			if = {
+				limit = { has_estate = estate_nobles }
+				estate_loyalty = { estate_nobles loyalty = 60 }
+			} 
+			estate_loyalty = { estate = estate_burghers loyalty = 60 }
 			crown_land_share = 40
 		}
 		effect = {
@@ -1300,39 +1233,7 @@ mattabo_3 = {
 			}
 		}
 		effect = {
-			#TODO: the whole effect is left unimplemented for now, mirroring this mission's
-			#      twin `F70_restructure_the_priests`, whose effect was left as a TODO by the
-			#      author on 2026-10-08. What it has to do:
-			#      1. Strengthen the state edict [Centralization Effort]
-			#         (`edict_centralization_effort`, defined in
-			#         common/state_edicts/centralisation_edict.txt, which currently grants
-			#         `local_autonomy = -0.03` on its own) so that its [Monthly Autonomy
-			#         Change] line becomes -0.05, i.e. another -0.02. Either that edict's own
-			#         `modifier` block is raised to `local_autonomy = -0.05`, or - the
-			#         approach planned for `F70_restructure_the_priests` - a new country
-			#         modifier carrying the extra -0.02 (`global_autonomy = -0.02`) is added
-			#         to common/event_modifiers/anb_Mattabo_modifiers.txt and applied here.
-			#      2. For every 5 states that enact this edict, +0.1 Monthly Reform Progress,
-			#         up to a maximum of 0.5. The five country modifiers this maps onto are
-			#         already defined in common/event_modifiers/anb_Mattabo_modifiers.txt and
-			#         are still unused anywhere in the repository:
-			#         `F70_restructure_the_nobles_bonus_tier_1` (0.1), `_tier_2` (0.2),
-			#         `_tier_3` (0.3), `_tier_4` (0.4) and `_tier_5` (0.5).
-			#TODO: add the country modifier carrying the extra -0.02 [Monthly Autonomy
-			#      Change] to common/event_modifiers/anb_Mattabo_modifiers.txt (raising
-			#      `edict_centralization_effort` itself to `local_autonomy = -0.05` would
-			#      strengthen the edict for every country using it, and is a change outside
-			#      the mission tree)
-			#TODO: add the state-count part of the effect. The state scope cannot be counted
-			#      with `all_states = { }` (that is a boolean, not a count), so the intent is
-			#      `calc_true_if = { amount = 5 all_states = { has_state_edict =
-			#      edict_centralization_effort } }` - amount 5/10/15/20/25 picks tier
-			#      1/2/3/4/5 - and then `add_country_modifier` the matching tier (existing
-			#      precedent for the 4-state step is missions/Eighard_Missions.txt:3382).
-			#      Because the tier has to follow the edict count rather than a single
-			#      moment, this belongs in a periodic scripted effect hung off the vanilla
-			#      `on_state_edict_changed` on_action (common/on_actions/), not in this
-			#      one-off block.
+			custom_tooltip = F70_strengthen_centralization_edict_tt
 		}
 	}
 	F70_root_of_them_all = {
@@ -1397,9 +1298,6 @@ mattabo_3 = {
 			#      is a magical project still to be made, and no `the_great_sorrow` id exists
 			#      under common/, missions/, decisions/ or localisation/. The id above is a
 			#      proposal, so this requirement cannot be met until the project itself lands.
-			#TODO: the loc key `F70_his_real_face_great_sorrow_tt` is missing (only the tree
-			#      file may be touched until the tree is filled in, per the 2026-10-08 author
-			#      decision), so this line shows the raw key in game for now.
 			custom_trigger_tooltip = {
 				tooltip = F70_his_real_face_great_sorrow_tt
 				at_least_magic_project_level = {
@@ -1467,17 +1365,10 @@ mattabo_3 = {
 					exists = S70
 				}
 			}
-			custom_trigger_tooltip = {
-				tooltip = shadowtree_purified_tt
-				has_global_flag = shadowtree_purified
-			}
-			church_power = 100
 		}
 		effect = {
 			custom_tooltip = F70_pleasant_cooperation_evil_ended_tt
-			hidden_effect = {
-				set_country_flag = F70_beaten_yezel_mora
-			}
+			set_country_flag = F70_beaten_yezel_mora
 			country_event = {
 				id = flavour_mattabo.24 #Our Bright Future
 			}

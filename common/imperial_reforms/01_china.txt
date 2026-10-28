@@ -562,6 +562,67 @@ integrate_medasi_reform = {
 		custom_tooltip = integrate_medasi_reform_tooltip
 	}
 }
+#Mattabo Unique
+establish_military_service_reform = {
+	empire = celestial_empire
+	potential = {
+		is_or_was_tag = { tag = F70 }
+		mission_completed = F70_establish_military_service
+	}
+	trigger = {
+		OR = {
+			mil = 4
+			monthly_mil = 9
+			has_estate_privilege = estate_ahati_meritocratic_recruitment_sw
+		}
+	}
+	emperor = {
+		
+		regiment_manpower_usage = -0.5
+		reinforce_speed = 0.25
+		is_mamluks_modifier = yes
+	}
+	on_effect = {
+		custom_tooltip = F70_shadow_warrior_refund_corruption_tt
+	}
+}
+
+#Mattabo Unique
+formalise_khet_guardians = {
+	empire = celestial_empire
+	potential = {
+		is_or_was_tag = { tag = F70 }
+	}
+	trigger = {
+		empire_of_china_num_reforms_passed = 2
+	}
+	emperor = {
+		meritocracy = 0.05
+	}
+	on_effect = {
+		custom_tooltip = ceremonial_barges_reform_tooltip 
+		set_country_flag = less_disruptive_khet
+	}
+}
+
+#Mattabo Unique
+promote_new_officals = {
+	empire = celestial_empire
+	potential = {
+		is_or_was_tag = { tag = F70 }
+	}
+	trigger = {
+		OR = {
+			adm = 4
+			monthly_adm = 9
+			full_idea_group = administrative_ideas
+		}
+	}
+	emperor = {
+		core_creation = -0.15
+		yearly_corruption = -0.05
+	}
+}
 
 #Samsumbat unique
 joint_military_training_reform = {
@@ -734,6 +795,7 @@ ceremonial_barges_reform = {
 	on_effect = {
 		add_meritocracy = -50
 		custom_tooltip = ceremonial_barges_reform_tooltip
+		set_country_flag = less_disruptive_khet
 	}
 }
 

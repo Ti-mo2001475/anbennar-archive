@@ -31,4 +31,21 @@ edict_centralization_effort = {
 			}
 		}
 	}
+	on_state_edict_enacted = {
+		if = {
+			limit = { mission_completed = F70_restructure_the_nobles }
+			add_province_modifier = {
+				name = F70_restructred_noble
+				duration = -1 
+			}
+			FROM = { F70_update_reform_modifier = yes }
+		}
+	}
+	on_state_edict_revoked = {
+		remove_province_modifer = F70_restructured_noble
+		if = {
+			limit = { FROM = {mission_completed = F70_restructure_the_nobles } }
+			FROM = { F70_update_reform_modifier = yes }
+		}
+	}
 }

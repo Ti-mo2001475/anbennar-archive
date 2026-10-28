@@ -37,4 +37,20 @@ edict_religious_unity = {
 			}
 		}
 	}
+	on_state_edict_enacted = {
+		if = {
+			limit = { FROM = { mission_completed = F70_restructure_the_priests } }
+			add_province_modifier = {
+				name = F70_restructure_priests
+				duration = -1
+			}
+		}
+	 }
+	on_state_edict_revoked = {
+		remove_province_modifier = F70_restructured_priests
+		if = {
+			limit = { FROM = { mission_completed = F70_restructure_the_priests } }
+			FROM = { F70_update_church_power_modifier = yes }
+		}
+	}
 }

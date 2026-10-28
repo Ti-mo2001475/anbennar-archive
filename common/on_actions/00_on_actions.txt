@@ -21627,8 +21627,15 @@ on_qizilbash_raised = {
 
 on_mamluks_raised = {
 	#Shadow Warriors (Sarhal)
-	owner = { add_corruption = 0.1 }
-	custom_tooltip = shadow_warriors_manpower_tt
+	if = {		
+		limit = { empire_of_china_reform_passed = establish_military_service_reform }
+		owner = { add_corruption = 0.02 }
+		custom_tooltip = F70_shadow_warrior_manpower_tt
+	}
+	else = {
+		owner = { add_corruption = 0.1 }
+		custom_tooltip = shadow_warriors_manpower_tt
+	}
 }
 
 on_geobukseon_raised = {
@@ -21670,6 +21677,13 @@ on_mandate_reform_passed = {
 			}
 		}
 		country_event = { id = khet_mandate.08 }
+	}
+	if = {
+		limit = { tag = F66 mission_completed = konolkhatep_expand_medasi }
+		change_variable = { num_china_reform = 1 }
+	}
+}
+
 	}
 	if = {
 		limit = { tag = F66 mission_completed = konolkhatep_expand_medasi }
@@ -32947,6 +32961,16 @@ on_war_ended = { #ROOT - Winer FROM - Loser
 			remove_province_modifier = V05_forbidden_plains_warscore
 		}
 	}
+	#Mattabo 
+	#Only When you lost war, this would be affected.
+	if = {
+		limit = { FROM = { mission_completed= F70_restructure_the_nobles } }
+		F70_update_reform_modifier = yes
+	}
+	if = {
+		limit = { FROM = { mission_completed = F70_restructure_the_priests } }
+		F70_update_church_power_modifier = yes
+	}
 }
 
 on_alliance_broken = { #ROOT - Original alliance creator, FROM - Alliance accepter
@@ -33041,13 +33065,6 @@ on_royal_marriage_broken = { #ROOT - Original marriage creator, FROM - Marriage 
 		if = {
 			limit = {
 				religion = molten_eternity
-				has_personal_deity = speaking_memory_tradition
-			}
-			change_variable = {
-				which = moltenEternityObligationVar
-				value = -150
-			}
-		}
 	}
 	FROM = { dragon_turtle_change_friendship = { dragon_turtle = makaoioi amount = -5 } }
 }
